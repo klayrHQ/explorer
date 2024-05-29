@@ -11,14 +11,17 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@repo/ui": "*",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "storybook": "^8.1.4",
-    "@repo/ui": "*"
+    "storybook": "^8.1.4"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.4.0",
+    "@repo/eslint-config": "*",
+    "@repo/tailwind-config": "*",
+    "@repo/typescript-config": "*",
     "@storybook/addon-essentials": "^8.1.4",
     "@storybook/addon-interactions": "^8.1.4",
     "@storybook/addon-links": "^8.1.4",
@@ -30,14 +33,11 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@repo/eslint-config": "*",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "eslint-plugin-storybook": "^0.8.0",
     "postcss": "^8",
-    "@repo/tailwind-config": "*",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5",
-    "@repo/typescript-config": "*"
+    "typescript": "^5"
   }
 }

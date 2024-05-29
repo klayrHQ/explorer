@@ -20,6 +20,7 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
+    "@mui/base": "^5.0.0-beta.40",
     "@repo/eslint-config": "*",
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
@@ -29,5 +30,8 @@
     "react": "^18.2.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@mui/base": "^5.0.0-beta.40"
   }
 }

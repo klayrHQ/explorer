@@ -27,12 +27,5 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ["..\\public"],
-  webpackFinal: async (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@repo/ui': path.resolve(__dirname, '../../packages/ui'),
-    };
-    return config;
-  },
 };
 export default config;

@@ -1,4 +1,6 @@
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Button as MuiButton } from '@mui/base'
 
 interface ButtonProps {
   primary?: boolean;
@@ -17,17 +19,13 @@ export const Button = ({
                        }: ButtonProps) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
-    <button
+    <MuiButton
       type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
+      className={['storybook-button text-blue-600 p-8', `storybook-button--${size}`, mode].join(' ')}
+      style={{backgroundColor: backgroundColor || "transparent"}}
       {...props}
     >
       {label}
-      <style jsx>{`
-        button {
-          background-color: ${backgroundColor};
-        }
-      `}</style>
-    </button>
+    </MuiButton>
   );
 };
