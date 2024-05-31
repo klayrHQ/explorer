@@ -15,17 +15,23 @@ const config: StorybookConfig = {
     "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
+
   addons: [
     getAbsolutePath("@storybook/addon-onboarding"),
     getAbsolutePath("@storybook/addon-links"),
     getAbsolutePath("@storybook/addon-essentials"),
     getAbsolutePath("@chromatic-com/storybook"),
     getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("@storybook/addon-mdx-gfm")
   ],
+
   framework: {
     name: getAbsolutePath("@storybook/nextjs"),
     options: {},
   },
+
   staticDirs: ["..\\public"],
+
+  docs: {}
 };
 export default config;

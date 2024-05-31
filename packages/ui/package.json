@@ -6,8 +6,17 @@
   ],
   "exports": {
     "./styles.css": "./dist/index.css",
+    "./theme.css": "./src/theme.css",
     "./card": "./src/card.tsx",
-    "./atoms": "./src/atoms/index.ts"
+    "./atoms": "./src/components/atoms/index.ts",
+    "./Utendo-Regular.ttf": "./src/assets/fonts/Utendo-Regular.ttf",
+    "./Utendo-Thin.ttf": "./src/assets/fonts/Utendo-Thin.ttf",
+    "./Utendo-ExtraLight.ttf": "./src/assets/fonts/Utendo-ExtraLight.ttf",
+    "./Utendo-Light.ttf": "./src/assets/fonts/Utendo-Light.ttf",
+    "./Utendo-Medium.ttf": "./src/assets/fonts/Utendo-Medium.ttf",
+    "./Utendo-Semibold.ttf": "./src/assets/fonts/Utendo-Semibold.ttf",
+    "./Utendo-Bold.ttf": "./src/assets/fonts/Utendo-Bold.ttf",
+    "./Utendo-ExtraBold.ttf": "./src/assets/fonts/Utendo-ExtraBold.ttf"
   },
   "license": "MIT",
   "scripts": {
