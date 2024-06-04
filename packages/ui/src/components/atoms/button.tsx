@@ -17,8 +17,8 @@ const buttonStyles = cva(
   {
     variants: {
       variant: {
-        primary: "bg-volt text-eerie",
-        secondary: "bg-azule text-white",
+        primary: "bg-volt hover:bg-voltDark text-eerie",
+        secondary: "bg-azule hover:bg-azuleDark text-white",
       },
       size: {
         small: "py-md px-lg",
