@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button as MuiButton } from '@mui/base';
-import {Typography} from "./typography";
+import {Typography} from "../base/typography";
 import {cva} from "class-variance-authority";
 
 interface ButtonProps {
@@ -17,7 +17,7 @@ const buttonStyles = cva(
   {
     variants: {
       variant: {
-        primary: "bg-volt hover:bg-voltDark text-eerie",
+        primary: "bg-volt hover:bg-voltDark text-gray-8",
         secondary: "bg-azule hover:bg-azuleDark text-white",
       },
       size: {
