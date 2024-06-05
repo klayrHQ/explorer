@@ -7,6 +7,10 @@ const meta = {
   component: Button,
   parameters: {
     layout: 'centered',
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/design/qA0fiq9j4kxSra103XXHS7/Klayr?node-id=9-302&t=GHLRHUNDnCu43LkY-4",
+    },
   },
   tags: ['autodocs'],
   args: { onClick: fn() },
