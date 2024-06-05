@@ -1,6 +1,7 @@
 import type { StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Button } from '@repo/ui/atoms';
+import ButtonDesign from '../assets/figma-designs/button.png';
 
 const meta = {
   title: 'Atoms/Button',
@@ -8,8 +9,8 @@ const meta = {
   parameters: {
     layout: 'centered',
     design: {
-      type: "figma",
-      url: "https://www.figma.com/design/qA0fiq9j4kxSra103XXHS7/Klayr?node-id=9-302&t=GHLRHUNDnCu43LkY-4",
+      type: "image",
+      url: ButtonDesign.src,
     },
   },
   tags: ['autodocs'],

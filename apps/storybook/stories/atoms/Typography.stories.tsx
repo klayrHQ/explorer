@@ -11,6 +11,9 @@ const meta = {
   },
   tags: ['autodocs'],
   args: { children: "Example Klayr text" },
+  argType: {
+    fontWeight: { control: { type: 'select', options: ["thin", "extralight", "light", "normal", "medium", "semibold", "bold", "extrabold"] } },
+  }
 };
 
 export default meta;

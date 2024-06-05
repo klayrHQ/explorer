@@ -1,42 +1,11 @@
 import React from 'react';
 import {cva} from "class-variance-authority";
-
-type Variant =
-  | "display-1"
-  | "display-2"
-  | "h1"
-  | "h2"
-  | "h3"
-  | "h4"
-  | "h5"
-  | "h6"
-  | "subheading"
-  | "body"
-  | "paragraph-sm"
-  | "paragraph-md"
-  | "paragraph-lg"
-  | "paragraph-xl"
-  | "footer"
-  | "caption"
-  | "code";
-
-type Component =
-  | "p"
-  | "span"
-  | "div"
-  | "label"
-  | "h1"
-  | "h2"
-  | "h3"
-  | "h4"
-  | "h5"
-  | "h6"
-  | "code";
+import {TypographyComponent, FontWeight, Variant} from "../../types/types";
 
 interface TypographyProps {
   children: React.ReactNode;
   variant?: Variant;
-  component?: Component;
+  component?: TypographyComponent;
   align?: "left" | "right" | "center";
   link?: boolean;
   color?: string;
@@ -44,6 +13,7 @@ interface TypographyProps {
   italic?: boolean;
   bold?: boolean;
   underline?: boolean;
+  fontWeight?: FontWeight;
 }
 
 const typographyStyles = cva(
@@ -100,6 +70,7 @@ export const Typography = ({
   italic,
   bold,
   underline,
+  fontWeight,
   children,
 }: TypographyProps) => {
   const Component = component as any;
@@ -116,6 +87,7 @@ export const Typography = ({
         className: [
           color ? `text-${color}` : "",
           className,
+          fontWeight ? `font-${fontWeight}` : "",
         ],
       })
     }

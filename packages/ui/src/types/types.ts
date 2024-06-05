@@ -1,0 +1,41 @@
+export type Variant =
+  | "display-1"
+  | "display-2"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "subheading"
+  | "body"
+  | "paragraph-sm"
+  | "paragraph-md"
+  | "paragraph-lg"
+  | "paragraph-xl"
+  | "footer"
+  | "caption"
+  | "code";
+
+export type TypographyComponent =
+  | "p"
+  | "span"
+  | "div"
+  | "label"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "code";
+
+export type FontWeight =
+  | "thin"
+  | "extralight"
+  | "light"
+  | "normal"
+  | "medium"
+  | "semibold"
+  | "bold"
+  | "extrabold"

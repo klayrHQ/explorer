@@ -4,6 +4,7 @@ import {
   borderWidth,
   colors,
   fontSize,
+  fontWeight,
   spacing,
 } from "./tailwind-classes";
 
@@ -65,6 +66,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(borderWidth, "border"),
     ...getKeyMap(borderRadius, "rounded"),
     ...getKeyMap(fontSize, "text"),
+    ...getKeyMap(fontWeight, "font"),
     ...getKeyMap(numberList, "h"),
     ...getKeyMap(numberList, "inset"),
     ...getKeyMap(numberList, "min-h"),
@@ -119,6 +121,7 @@ const config: Omit<Config, "content"> = {
       body: ["Utendo", "Inter", "Verdana", "sans-serif"],
       mono: ["monospace"],
     },
+    fontWeight,
     colors,
     borderWidth,
     borderRadius,
