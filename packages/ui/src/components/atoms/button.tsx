@@ -1,34 +1,59 @@
 import React from 'react';
-import { Button as MuiButton } from '@mui/base'
-import {cls} from "../../utils/functions";
+import { Button as MuiButton } from '@mui/base';
+import {Typography} from "./typography";
+import {cva} from "class-variance-authority";
 
 interface ButtonProps {
   variant?: "primary" | "secondary" | "transparent";
-  backgroundColor?: string;
+  className?: string;
   size?: 'small' | 'medium' | 'large';
+  fullWidth?: boolean;
   label: string;
   onClick?: () => void;
 }
 
+const buttonStyles = cva(
+  ["rounded-md"],
+  {
+    variants: {
+      variant: {
+        primary: "bg-volt hover:bg-voltDark text-eerie",
+        secondary: "bg-azule hover:bg-azuleDark text-white",
+      },
+      size: {
+        small: "py-md px-lg",
+        medium: "py-xl px-2xl",
+        large: "py-2xl px-3xl",
+      },
+      fullWidth: {
+        true: "w-full",
+        false: "w-auto mx-auto",
+      },
+    },
+  },
+);
+
 export const Button = ({
   variant = "primary",
+  className,
   size = 'medium',
-  backgroundColor,
+  fullWidth,
   label,
-  ...props
+  onClick,
 }: ButtonProps) => {
 
   return (
     <MuiButton
-      className={cls([
-        'rounded',
-        variant === "primary" ? "bg-volt text-eerie" : variant === "secondary" ? "bg-azule text-white" : "",
-        size === "small" ? "py-1 px-2" : size === "medium" ? "p-2" : "p-3",
-      ])}
+      className={buttonStyles({
+        variant,
+        size,
+        fullWidth,
+        className: className,
+      })}
+      onClick={onClick}
       type="button"
-      {...props}
     >
-      {label}
+      <Typography variant={size === "small" ? "paragraph-sm" : "body"}>{label}</Typography>
     </MuiButton>
   );
 };

@@ -10,13 +10,23 @@
   --color-lobster: #FF422D;
   --color-lobsterDark: #FF1208;
   --color-tulip: #FF878D;
+  --color-tulipDark: #EC676E;
   --color-sand: #EDEDCE;
   --color-sandDark: #DCDCA6;
   --color-green: #22C55E;
-
+  --color-greenDark: #118D57;
   --color-black: #000000;
   --color-white: #ffffff;
-  --color-gray: #94969C;
+
+  /* Grays */
+  --color-gray-1: #F5F5F6;
+  --color-gray-2: #E6E6E6;
+  --color-gray-3: #ECECED;
+  --color-gray-4: #CECFD2;
+  --color-gray-5: #94969C;
+  --color-gray-6: #333741;
+  --color-gray-7: #1F242F;
+  --color-gray-8: var(--color-darkBlue);
 }
 
 .dark {
@@ -24,5 +34,5 @@
 }
 
 .light {
-  --color-background: var(--color-white);
+  --color-background: var(--color-gray-1);
 }
