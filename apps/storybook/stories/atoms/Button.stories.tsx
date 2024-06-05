@@ -1,12 +1,17 @@
 import type { StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Button } from '@repo/ui/atoms';
+import ButtonDesign from '../assets/figma-designs/button.png';
 
 const meta = {
-  title: 'Example/Button',
+  title: 'Atoms/Button',
   component: Button,
   parameters: {
     layout: 'centered',
+    design: {
+      type: "image",
+      url: ButtonDesign.src,
+    },
   },
   tags: ['autodocs'],
   args: { onClick: fn() },

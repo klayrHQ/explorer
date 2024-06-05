@@ -53,7 +53,7 @@ export const Button = ({
       onClick={onClick}
       type="button"
     >
-      <Typography variant={size === "small" ? "paragraph-sm" : "body"}>{label}</Typography>
+      <Typography fontWeight={"semibold"} variant={size === "small" ? "paragraph-sm" : "body"}>{label}</Typography>
     </MuiButton>
   );
 };
