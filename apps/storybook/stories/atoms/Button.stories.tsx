@@ -3,7 +3,7 @@ import { fn } from '@storybook/test';
 import { Button } from '@repo/ui/atoms';
 
 const meta = {
-  title: 'Example/Button',
+  title: 'Atoms/Button',
   component: Button,
   parameters: {
     layout: 'centered',

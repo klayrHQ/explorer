@@ -4,7 +4,7 @@ import { fn } from '@storybook/test';
 import { Typography } from '@repo/ui/atoms';
 
 const meta = {
-  title: 'Example/Typography',
+  title: 'Atoms/Typography',
   component: Typography,
   parameters: {
     layout: 'centered',
