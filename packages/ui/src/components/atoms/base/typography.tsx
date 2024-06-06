@@ -61,7 +61,7 @@ const typographyStyles = cva(
 );
 
 export const Typography = ({
-  variant = "body1",
+  variant = "body",
   component = "span",
   className,
   color,
