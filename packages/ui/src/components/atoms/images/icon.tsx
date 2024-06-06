@@ -18,6 +18,6 @@ export const Icon = ({
   const Component = icons[icon];
 
   return (
-    <img alt={icon}  src={icons[icon].src}/>
+    <Component />
   );
 };

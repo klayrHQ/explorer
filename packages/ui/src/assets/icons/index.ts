@@ -20,7 +20,7 @@ import LayersThree from './layout/layers-three-01.svg';
 import Cube from './shapes/cube-01.svg';
 import Flag from './travel/flag-05.svg';
 import MarkerPin from './travel/marker-pin-05.svg';
-import Users from './users/users-01.svg';
+import { Users } from './users/users-01';
 
 export const icons = {
   ChevronDown,

@@ -32,6 +32,7 @@
   --color-background-primary: var(--color-darkBlue);
   --color-background-secondary: var(--color-gray-7);
   --color-background-tertiary: var(--color-gray-6);
+  --color-body: var(--color-gray-1);
 }
 
 .light {
@@ -39,4 +40,5 @@
   --color-background-primary: var(--color-gray-1);
   --color-background-secondary: var(--color-gray-2);
   --color-background-tertiary: var(--color-gray-3);
+  --color-body: var(--color-gray-8);
 }

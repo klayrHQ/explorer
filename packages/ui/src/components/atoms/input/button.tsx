@@ -10,15 +10,18 @@ interface ButtonProps {
   fullWidth?: boolean;
   label: string;
   onClick?: () => void;
+  align?: "left" | "center" | "right" | "none";
+  hovered?: boolean;
+  disabled?: boolean;
 }
 
 const buttonStyles = cva(
-  ["rounded-md"],
+  ["rounded-md block"],
   {
     variants: {
       variant: {
-        primary: "bg-volt hover:bg-voltDark text-gray-8",
-        secondary: "bg-azule hover:bg-azuleDark text-white",
+        primary: "text-gray-8",
+        secondary: "hover:bg-azuleDark text-white",
       },
       size: {
         small: "py-md px-lg",
@@ -27,9 +30,55 @@ const buttonStyles = cva(
       },
       fullWidth: {
         true: "w-full",
-        false: "w-auto mx-auto",
+        false: "w-auto",
+        undefined: "w-auto",
+      },
+      align: {
+        left: "mr-auto",
+        center: "mx-auto",
+        right: "ml-auto",
+        none: "",
+        undefined: "mx-auto",
       },
     },
+    compoundVariants:[
+      //hovered
+      {
+        hovered: true,
+        variant: "primary",
+        disabled: false,
+        className: "bg-voltDark",
+      },
+      {
+        hovered: false,
+        variant: "primary",
+        disabled: false,
+        className: "bg-volt hover:bg-voltDark",
+      },
+      {
+        hovered: true,
+        variant: "secondary",
+        disabled: false,
+        className: "bg-azuleDark",
+      },
+      {
+        hovered: false,
+        variant: "secondary",
+        disabled: false,
+        className: "bg-azule hover:bg-azuleDark",
+      },
+      //disabled
+      {
+        disabled: true,
+        variant: "primary",
+        className: "grayscale-6 bg-volt cursor-not-allowed",
+      },
+      {
+        disabled: true,
+        variant: "secondary",
+        className: "grayscale-6 bg-azule cursor-not-allowed",
+      },
+    ],
   },
 );
 
@@ -40,6 +89,9 @@ export const Button = ({
   fullWidth,
   label,
   onClick,
+  align,
+  hovered = false,
+  disabled = false,
 }: ButtonProps) => {
 
   return (
@@ -48,6 +100,9 @@ export const Button = ({
         variant,
         size,
         fullWidth,
+        align,
+        hovered,
+        disabled,
         className: className,
       })}
       onClick={onClick}
