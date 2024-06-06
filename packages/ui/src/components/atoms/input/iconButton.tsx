@@ -1,37 +1,30 @@
 import React from 'react';
 import { Button as MuiButton } from '@mui/base';
-import {Typography} from "../base/typography";
 import {cva} from "class-variance-authority";
+import {Icon} from "../images/icon";
+import {IconComponent} from "../../../types/types";
 
-interface ButtonProps {
-  variant?: "primary" | "secondary" | "transparent";
+interface IconButtonProps {
+  variant?: "primary" | "secondary" | "tertiary" | "semiTransparent" | "transparent" | "iconOnly"
   className?: string;
-  fullWidth?: boolean;
-  label: string | React.ReactNode;
+  icon: IconComponent;
   onClick?: () => void;
   align?: "left" | "center" | "right" | "none";
   hovered?: boolean;
   disabled?: boolean;
-  iconOnly?: boolean;
 }
 
-const buttonStyles = cva(
-  ["rounded-md flex items-center justify-center h-buttonHeight"],
+const iconButtonStyles = cva(
+  ["rounded-md block"],
   {
     variants: {
       variant: {
-        primary: "text-gray-8",
-        secondary: "text-gray-1",
-        transparent: "text-gray-1",
-      },
-      iconOnly: {
-        true: "p-xl w-iconButtonWidth",
-        false: "py-xl px-2xl",
-      },
-      fullWidth: {
-        true: "w-full",
-        false: "w-auto",
-        undefined: "w-auto",
+        primary: "text-gray-8 p-xl w-iconButtonWidth h-buttonHeight",
+        secondary: "text-gray-1 p-xl w-iconButtonWidth h-buttonHeight",
+        tertiary: "text-gray-1 p-xl w-iconButtonWidth h-buttonHeight",
+        semiTransparent: "text-gray-1 p-xl w-iconButtonWidth h-buttonHeight",
+        transparent: "p-xl w-iconButtonWidth h-buttonHeight",
+        iconOnly: "w-auto h-auto p-1",
       },
       align: {
         left: "mr-auto",
@@ -69,15 +62,39 @@ const buttonStyles = cva(
       },
       {
         hovered: true,
-        variant: "transparent",
+        variant: "tertiary",
         disabled: false,
         className: "bg-gray-7",
       },
       {
         hovered: false,
+        variant: "tertiary",
+        disabled: false,
+        className: "bg-gray-6 hover:bg-gray-7",
+      },
+      {
+        hovered: true,
+        variant: "semiTransparent",
+        disabled: false,
+        className: "bg-gray-6",
+      },
+      {
+        hovered: false,
+        variant: "semiTransparent",
+        disabled: false,
+        className: "bg-transparent hover:bg-gray-6",
+      },
+      {
+        hovered: true,
         variant: "transparent",
         disabled: false,
-        className: "transparent hover:bg-gray-7",
+        className: "text-gray-6",
+      },
+      {
+        hovered: false,
+        variant: "transparent",
+        disabled: false,
+        className: "text-gray-5 hover:text-gray-6",
       },
       //disabled
       {
@@ -99,38 +116,29 @@ const buttonStyles = cva(
   },
 );
 
-export const Button = ({
+export const IconButton = ({
   variant = "primary",
   className,
-  fullWidth,
-  label,
+  icon,
   onClick,
   align,
   hovered = false,
   disabled = false,
-  iconOnly = false,
-}: ButtonProps) => {
+}: IconButtonProps) => {
 
   return (
     <MuiButton
-      className={buttonStyles({
+      className={iconButtonStyles({
         variant,
-        fullWidth,
         align,
         hovered,
         disabled,
-        iconOnly,
         className: className,
       })}
       onClick={onClick}
       type="button"
     >
-      <Typography
-        className={"inline-flex items-center gap-2 leading-none"}
-        fontWeight={"semibold"}
-      >
-        {label}
-      </Typography>
+      <Icon color={"inherit"} icon={icon} />
     </MuiButton>
   );
 };

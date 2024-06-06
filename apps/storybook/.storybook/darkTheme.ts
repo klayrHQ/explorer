@@ -22,8 +22,13 @@ export default create({
   appBorderRadius: 4,
 
   // Toolbar default and active colors
-  barTextColor: '#ffffff',
+  barTextColor: '#F5F5F6',
   barSelectedColor: '#0D75FD',
   barHoverColor: '#0D75FD',
   barBg: '#0C111D',
+
+  // Form colors
+  inputBg: '#1F242F',
+  inputBorder: '#333741',
+  inputTextColor: '#F5F5F6',
 });

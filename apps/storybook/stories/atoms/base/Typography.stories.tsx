@@ -1,10 +1,9 @@
 import React from 'react';
 import type { StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { Typography } from '@repo/ui/atoms';
 
 const meta = {
-  title: 'Atoms/Typography',
+  title: 'Atoms/Base/Typography',
   component: Typography,
   parameters: {
     layout: 'centered',

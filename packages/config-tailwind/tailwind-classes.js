@@ -184,6 +184,32 @@ const cursor = {
   "zoom-out": "zoom-out",
 }
 
+const leading = {
+  "leading-3": null,
+  "leading-4": null,
+  "leading-5": null,
+  "leading-6": null,
+  "leading-7": null,
+  "leading-8": null,
+  "leading-9": null,
+  "leading-10": null,
+  "leading-none": null,
+  "leading-tight": null,
+  "leading-snug": null,
+  "leading-normal": null,
+  "leading-relaxed": null,
+  "leading-loose": null,
+}
+
+const height = {
+  buttonHeight: "44px",
+  inputHeight: "44px",
+}
+
+const width = {
+  iconButtonWidth: "44px",
+}
+
 export default {
   borderRadius,
   borderWidth,
@@ -195,4 +221,7 @@ export default {
   display,
   percentages,
   cursor,
+  leading,
+  height,
+  width,
 };

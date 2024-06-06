@@ -55,7 +55,7 @@ export type IconComponent =
   | "DataFlow"
   | "CryptoCurrency"
   | "Heart"
-  | "Login"
+  | "LogIn"
   | "SearchLg"
   | "Settings"
   | "Image"
@@ -87,4 +87,5 @@ export type ColorType =
   | "gray-5"
   | "gray-6"
   | "gray-7"
-  | "gray-8";
+  | "gray-8"
+  | "inherit";

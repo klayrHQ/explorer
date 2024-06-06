@@ -1,11 +1,11 @@
 import type { StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Button } from '@repo/ui/atoms';
-import ButtonDesign from '../assets/figma-designs/button.png';
+import { IconButton } from '@repo/ui/atoms';
+import ButtonDesign from '../../assets/figma-designs/button.png';
 
 const meta = {
-  title: 'Atoms/Button',
-  component: Button,
+  title: 'Atoms/Input/IconButton',
+  component: IconButton,
   parameters: {
     layout: 'centered',
     design: {
@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 const Template: Story = {
   render: (args) => (
     <div className={"w-[300px]"}>
-      <Button {...args} />
+      <IconButton {...args} />
     </div>
   ),
 }
@@ -32,7 +32,7 @@ export const Primary: Story = {
   ...Template,
   args: {
     variant: "primary",
-    label: 'Button',
+    icon: 'Users',
   },
 };
 
@@ -40,7 +40,23 @@ export const Secondary: Story = {
   ...Template,
   args: {
     variant: "secondary",
-    label: 'Button',
+    icon: 'Users',
+  },
+};
+
+export const Tertiary: Story = {
+  ...Template,
+  args: {
+    variant: "tertiary",
+    icon: 'Users',
+  },
+};
+
+export const SemiTransparent: Story = {
+  ...Template,
+  args: {
+    variant: "semiTransparent",
+    icon: 'Users',
   },
 };
 
@@ -48,7 +64,7 @@ export const Transparent: Story = {
   ...Template,
   args: {
     variant: "transparent",
-    label: 'Button',
+    icon: 'Users',
   },
 };
 
@@ -56,7 +72,7 @@ export const Disabled: Story = {
   ...Template,
   args: {
     disabled: true,
-    label: 'Button',
+    icon: 'Users',
   },
 };
 
@@ -64,22 +80,6 @@ export const Hovered: Story = {
   ...Template,
   args: {
     hovered: true,
-    label: 'Button',
-  },
-};
-
-export const Large: Story = {
-  ...Template,
-  args: {
-    size: 'large',
-    label: 'Button',
-  },
-};
-
-export const Small: Story = {
-  ...Template,
-  args: {
-    size: 'small',
-    label: 'Button',
+    icon: 'Users',
   },
 };

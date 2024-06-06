@@ -10,6 +10,9 @@ import {
   display,
   percentages,
   cursor,
+  leading,
+  height,
+  width,
 } from "./tailwind-classes";
 
 
@@ -80,13 +83,19 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(borderRadius, "rounded"),
     ...getKeyMap(fontSize, "text"),
     ...getKeyMap(fontWeight, "font"),
+    ...getKeyMap(height, "h"),
     ...getKeyMap(numberList, "h"),
     ...getKeyMap(numberList, "inset"),
+    ...getKeyMap(height, "min-h"),
     ...getKeyMap(numberList, "min-h"),
+    ...getKeyMap(height, "max-h"),
     ...getKeyMap(numberList, "max-h"),
+    ...getKeyMap(width, "w"),
     ...getKeyMap(numberList, "w"),
     ...getKeyMap(numberList, "min-w"),
+    ...getKeyMap(width, "min-w"),
     ...getKeyMap(numberList, "max-w"),
+    ...getKeyMap(width, "max-w"),
     ...getKeyMap(numberList, "m"),
     ...getKeyMap(spacing, "m"),
     ...getKeyMap(numberList, "mr"),
@@ -123,6 +132,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(percentages, "brightness"),
     ...getKeyMap(cursor, "cursor"),
     ...getKeyOnlyMap(display),
+    ...getKeyOnlyMap(leading),
   ],
   theme: {
     extend: {
@@ -131,6 +141,8 @@ const config: Omit<Config, "content"> = {
       screens,
       grayscale: percentages,
       brightness: percentages,
+      height,
+      width,
     },
     fontFamily: {
       sans: ["Utendo", "Inter", "Verdana", "sans-serif"],
