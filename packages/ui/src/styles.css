@@ -54,6 +54,7 @@
 }
 
 :root {
-    background-color: var(--color-background);
+    background-color: var(--color-background-primary);
+    color: var(--color-body);
     font-family: "Utendo", "Inter", "verdana", sans-serif;
 }

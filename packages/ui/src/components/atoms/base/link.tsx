@@ -19,7 +19,7 @@ export const Link = ({
   return (
     <a
       className={['text-volt p-4 bg-volt border-solid border-2 border-volt font-body', mode].join(' ')}
-      style={{backgroundColor: backgroundColor || "transparent"}}
+      style={{backgroundColor: backgroundColor || "transparent",}}
       {...props}
     >
       {label}

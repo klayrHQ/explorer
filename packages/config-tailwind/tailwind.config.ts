@@ -6,6 +6,13 @@ import {
   fontSize,
   fontWeight,
   spacing,
+  screens,
+  display,
+  percentages,
+  cursor,
+  leading,
+  height,
+  width,
 } from "./tailwind-classes";
 
 
@@ -14,6 +21,15 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `tablet:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `desktop:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `hover:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `focus:${prefix}-${key}`),
+  ];
+};
+const getKeyOnlyMap = (obj) => {
+  return [
+    ...Object.keys(obj).map((key) => key),
+    ...Object.keys(obj).map((key) => `tablet:${key}`),
+    ...Object.keys(obj).map((key) => `desktop:${key}`),
   ];
 };
 
@@ -67,13 +83,19 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(borderRadius, "rounded"),
     ...getKeyMap(fontSize, "text"),
     ...getKeyMap(fontWeight, "font"),
+    ...getKeyMap(height, "h"),
     ...getKeyMap(numberList, "h"),
     ...getKeyMap(numberList, "inset"),
+    ...getKeyMap(height, "min-h"),
     ...getKeyMap(numberList, "min-h"),
+    ...getKeyMap(height, "max-h"),
     ...getKeyMap(numberList, "max-h"),
+    ...getKeyMap(width, "w"),
     ...getKeyMap(numberList, "w"),
     ...getKeyMap(numberList, "min-w"),
+    ...getKeyMap(width, "min-w"),
     ...getKeyMap(numberList, "max-w"),
+    ...getKeyMap(width, "max-w"),
     ...getKeyMap(numberList, "m"),
     ...getKeyMap(spacing, "m"),
     ...getKeyMap(numberList, "mr"),
@@ -106,15 +128,21 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(spacing, "pl"),
     ...getKeyMap(numberList, "gap"),
     ...getKeyMap(spacing, "gap"),
+    ...getKeyMap(percentages, "grayscale"),
+    ...getKeyMap(percentages, "brightness"),
+    ...getKeyMap(cursor, "cursor"),
+    ...getKeyOnlyMap(display),
+    ...getKeyOnlyMap(leading),
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "glow-conic":
-          "conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg)",
-      },
       spacing,
       fontSize,
+      screens,
+      grayscale: percentages,
+      brightness: percentages,
+      height,
+      width,
     },
     fontFamily: {
       sans: ["Utendo", "Inter", "Verdana", "sans-serif"],
@@ -125,6 +153,7 @@ const config: Omit<Config, "content"> = {
     colors,
     borderWidth,
     borderRadius,
+    cursor,
   },
   plugins: [],
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import {cva} from "class-variance-authority";
-import {TypographyComponent, FontWeight, Variant} from "../../types/types";
+import {TypographyComponent, FontWeight, TypographyVariant} from "../../../types/types";
 
 interface TypographyProps {
   children: React.ReactNode;
-  variant?: Variant;
+  variant?: TypographyVariant;
   component?: TypographyComponent;
   align?: "left" | "right" | "center";
   link?: boolean;
@@ -61,7 +61,7 @@ const typographyStyles = cva(
 );
 
 export const Typography = ({
-  variant = "body1",
+  variant = "body",
   component = "span",
   className,
   color,
