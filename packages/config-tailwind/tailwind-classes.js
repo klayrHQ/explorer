@@ -63,6 +63,9 @@ const fontSize = {
   "paragraph-sm": ["14px", { lineHeight: "20px", }],
   footer: ["10px", { lineHeight: "16px", }],
   caption: ["12px", { lineHeight: "18px", }],
+  "icon-xl": ["32px"],
+  "icon-md": ["24px"],
+  "icon-sm": ["20px"],
 };
 
 const fontWeight = {
@@ -83,6 +86,7 @@ const spacing = {
   sm: "6px",
   md: "8px",
   lg: "10px",
+  lxl: "12px",
   xl: "14px",
   "2xl": "20px",
   "3xl": "24px",
@@ -204,6 +208,7 @@ const leading = {
 const height = {
   buttonHeight: "44px",
   inputHeight: "44px",
+  menuItemHeight: "48px",
 }
 
 const width = {
