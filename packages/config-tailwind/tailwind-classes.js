@@ -209,6 +209,8 @@ const height = {
 
 const width = {
   iconButtonWidth: "44px",
+  newsCard: '362px',
+  newsCardMobile: '382px'
 }
 
 export default {

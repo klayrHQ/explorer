@@ -9,6 +9,7 @@
     "./theme.css": "./src/theme.css",
     "./card": "./src/card.tsx",
     "./atoms": "./src/components/atoms/index.ts",
+    "./molecules": "./src/components/molecules/index.ts",
     "./icons": "./src/assets/icons/index.ts",
     "./Utendo-Regular.ttf": "./src/assets/fonts/Utendo-Regular.ttf",
     "./Utendo-Thin.ttf": "./src/assets/fonts/Utendo-Thin.ttf",
