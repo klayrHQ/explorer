@@ -10,6 +10,7 @@ interface ButtonProps {
   size?: "small" | "medium" | "large" | "inherit";
   icon: IconComponent;
   color?: ColorType;
+  hoverColor?: ColorType;
 }
 
 const iconStyles = cva(
@@ -17,9 +18,9 @@ const iconStyles = cva(
   {
     variants: {
       size: {
-        small: "text-caption",
-        medium: "text-paragraph-md",
-        large: "text-paragraph-xl",
+        small: "text-icon-sm",
+        medium: "text-icon-md",
+        large: "text-icon-lg",
         inherit: "text-inherit",
       },
     },
@@ -30,6 +31,7 @@ export const Icon = ({
   className = "",
   size = 'medium',
   color = 'gray-1',
+  hoverColor,
   icon,
 }: ButtonProps) => {
   const Component = icons[icon];
@@ -40,6 +42,7 @@ export const Icon = ({
         size,
         className: cls([
           color ? `text-${color}` : "",
+          hoverColor ? `hover:text-${hoverColor}` : "",
           className,
         ]),
       })}

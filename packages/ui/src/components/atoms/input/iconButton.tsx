@@ -33,6 +33,14 @@ const iconButtonStyles = cva(
         none: "",
         undefined: "mx-auto",
       },
+      hovered: {
+        true: "",
+        false: "",
+      },
+      disabled: {
+        true: "",
+        false: "",
+      },
     },
     compoundVariants:[
       //hovered
@@ -138,7 +146,7 @@ export const IconButton = ({
       onClick={onClick}
       type="button"
     >
-      <Icon color={"inherit"} icon={icon} />
+      <Icon color={"inherit"} icon={icon} size={"small"} />
     </MuiButton>
   );
 };
