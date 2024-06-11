@@ -13,6 +13,7 @@ import {
   leading,
   height,
   width,
+  shadow,
 } from "./tailwind-classes";
 
 
@@ -80,6 +81,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(colors, "text"),
     ...getKeyMap(colors, "bg"),
     ...getKeyMap(colors, "border"),
+    ...getKeyMap(colors, "shadow"),
     ...getKeyMap(borderWidth, "border"),
     ...getKeyMap(borderRadius, "rounded"),
     ...getKeyMap(fontSize, "text"),
@@ -132,6 +134,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(percentages, "grayscale"),
     ...getKeyMap(percentages, "brightness"),
     ...getKeyMap(cursor, "cursor"),
+    ...getKeyMap(shadow, "shadow"),
     ...getKeyOnlyMap(display),
     ...getKeyOnlyMap(leading),
   ],
@@ -144,6 +147,7 @@ const config: Omit<Config, "content"> = {
       brightness: percentages,
       height,
       width,
+      boxShadow: shadow,
     },
     fontFamily: {
       sans: ["Utendo", "Inter", "Verdana", "sans-serif"],

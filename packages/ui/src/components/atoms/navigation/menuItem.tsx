@@ -1,8 +1,10 @@
-import React, {cloneElement} from 'react';
+"use client";
+import React, {cloneElement, useState} from 'react';
 import {Typography} from "../base/typography";
 import {cva} from "class-variance-authority";
 import {Icon} from "../images/icon.tsx";
 import {IconComponent} from "../../../types/types.ts";
+import {SubMenu} from "../../molecules";
 
 export interface MenuItemProps {
     label: string | React.ReactNode
@@ -52,10 +54,22 @@ export const MenuItem = ({
     className,
     linkComponent,
 }: MenuItemProps) => {
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
+  const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
+
+  const handleHover = (event: React.MouseEvent<HTMLElement>, open: boolean) => {
+    if (open) {
+      setIsSubMenuOpen(true);
+      setAnchorElement(event.currentTarget);
+    } else {
+      setIsSubMenuOpen(false);
+      setAnchorElement(null);
+    }
+  }
 
   const menuItemInnerComponents =  (
     <Typography
-      className={"inline-flex items-center gap-2 leading-none"}
+      className={"inline-flex items-center gap-2 leading-none w-full"}
       color={"inherit"}
       fontWeight={"semibold"}
     >
@@ -79,6 +93,8 @@ export const MenuItem = ({
         disabled,
         className,
       })}
+      onMouseEnter={(event) => handleHover(event,true)}
+      onMouseLeave={(event) => handleHover(event,false)}
     >
       {linkComponent ? (
         cloneElement(linkComponent, {
@@ -87,6 +103,9 @@ export const MenuItem = ({
         })
       ) : (
         menuItemInnerComponents
+      )}
+      {subMenu && (
+        <SubMenu anchorElement={anchorElement} menuItems={subMenu} open={isSubMenuOpen} />
       )}
     </li>
   );

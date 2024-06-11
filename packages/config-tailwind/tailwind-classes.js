@@ -44,6 +44,14 @@ const colors = {
   "gray-6": "var(--color-gray-6)",
   "gray-7": "var(--color-gray-7)",
   "gray-8": "var(--color-gray-8)",
+  "shadow-gray-1": "var(--color-shadow-gray-1)",
+  "shadow-gray-2": "var(--color-shadow-gray-2)",
+  "shadow-gray-3": "var(--color-shadow-gray-3)",
+  "shadow-gray-4": "var(--color-shadow-gray-4)",
+  "shadow-gray-5": "var(--color-shadow-gray-5)",
+  "shadow-gray-6": "var(--color-shadow-gray-6)",
+  "shadow-gray-7": "var(--color-shadow-gray-7)",
+  "shadow-gray-8": "var(--color-shadow-gray-8)",
 };
 
 const fontSize = {
@@ -215,6 +223,10 @@ const width = {
   iconButtonWidth: "44px",
 }
 
+const shadow = {
+  md: "0px 0px 10px rgba(0, 0, 0, 0.3), -4px 0px 10px rgba(0, 0, 0, 0.3)",
+}
+
 export default {
   borderRadius,
   borderWidth,
@@ -229,4 +241,5 @@ export default {
   leading,
   height,
   width,
+  shadow,
 };

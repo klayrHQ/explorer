@@ -63,7 +63,8 @@ export type IconComponent =
   | "Cube"
   | "Flag"
   | "MarkerPin"
-  | "Users";
+  | "Users"
+  | string;
 
 export type ColorType =
   | "volt"

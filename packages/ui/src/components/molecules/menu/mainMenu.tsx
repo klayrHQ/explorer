@@ -1,18 +1,20 @@
 import {MenuItem, MenuItemProps} from "../../atoms";
 
 interface MainMenuProps {
-    menuItems: MenuItemProps[]
+  menuItems: MenuItemProps[]
+  minimized?: boolean
 }
 
 export const MainMenu = ({
-    menuItems,
+  menuItems,
+  minimized,
 }: MainMenuProps) => {
 
-    return (
-        <ul>
-            {menuItems.map((item, index) => (
-                <MenuItem icon={item.icon} key={`menu-item-${index + 1}`} label={item.label} />
-            ))}
-        </ul>
-    )
+  return (
+    <ul className={"p-xl bg-gray-8"}>
+      {menuItems.map((item, index) => (
+        <MenuItem key={`menu-item-${index + 1}`} minimized={minimized} {...item} />
+      ))}
+    </ul>
+  )
 }
