@@ -216,6 +216,7 @@ const leading = {
 const height = {
   buttonHeight: "44px",
   inputHeight: "44px",
+  badgeHeight: "26px",
   menuItemHeight: "48px",
 }
 
