@@ -222,6 +222,7 @@ const height = {
 
 const width = {
   iconButtonWidth: "44px",
+  sidebarWidth: "240px",
 }
 
 const shadow = {
