@@ -13,6 +13,7 @@ import {
   leading,
   height,
   width,
+  lineClamp,
   shadow,
 } from "./tailwind-classes";
 
@@ -137,6 +138,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(shadow, "shadow"),
     ...getKeyOnlyMap(display),
     ...getKeyOnlyMap(leading),
+    ...getKeyMap(lineClamp, 'line-clamp'),
   ],
   theme: {
     extend: {
