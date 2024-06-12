@@ -40,6 +40,14 @@ const buttonStyles = cva(
         none: "",
         undefined: "mx-auto",
       },
+      hovered: {
+        true: "",
+        false: "",
+      },
+      disabled: {
+        true: "",
+        false: "",
+      },
     },
     compoundVariants:[
       //hovered

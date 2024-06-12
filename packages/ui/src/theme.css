@@ -1,6 +1,6 @@
 :root {
   /* Base Colors */
-  --color-darkBlue: #050516;
+  --color-darkBlue: #0C111D;
   --color-volt: #D4FF00;
   --color-voltDark: #B8FF01;
   --color-azule: #0D75FD;
@@ -25,6 +25,16 @@
   --color-gray-6: #333741;
   --color-gray-7: #1F242F;
   --color-gray-8: var(--color-darkBlue);
+
+  /* Shadows */
+  --color-shadow-gray-1: rgba(245, 245, 246, 0.1);
+  --color-shadow-gray-2: rgba(230, 230, 230, 0.1);
+  --color-shadow-gray-3: rgba(236, 236, 237, 0.1);
+  --color-shadow-gray-4: rgba(206, 207, 210, 0.1);
+  --color-shadow-gray-5: rgba(148, 150, 156, 0.1);
+  --color-shadow-gray-6: rgba(51, 55, 65, 0.1);
+  --color-shadow-gray-7: rgba(31, 36, 47, 0.1);
+  --color-shadow-gray-8: rgba(5, 5, 22, 0.1);
 }
 
 .dark {

@@ -14,6 +14,7 @@ import {
   height,
   width,
   lineClamp,
+  shadow,
 } from "./tailwind-classes";
 
 
@@ -24,6 +25,7 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `desktop:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `focus:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `group-hover:${prefix}-${key}`),
   ];
 };
 const getKeyOnlyMap = (obj) => {
@@ -80,6 +82,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(colors, "text"),
     ...getKeyMap(colors, "bg"),
     ...getKeyMap(colors, "border"),
+    ...getKeyMap(colors, "shadow"),
     ...getKeyMap(borderWidth, "border"),
     ...getKeyMap(borderRadius, "rounded"),
     ...getKeyMap(fontSize, "text"),
@@ -132,6 +135,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(percentages, "grayscale"),
     ...getKeyMap(percentages, "brightness"),
     ...getKeyMap(cursor, "cursor"),
+    ...getKeyMap(shadow, "shadow"),
     ...getKeyOnlyMap(display),
     ...getKeyOnlyMap(leading),
     ...getKeyMap(lineClamp, 'line-clamp'),
@@ -145,6 +149,7 @@ const config: Omit<Config, "content"> = {
       brightness: percentages,
       height,
       width,
+      boxShadow: shadow,
     },
     fontFamily: {
       sans: ["Utendo", "Inter", "Verdana", "sans-serif"],
@@ -157,6 +162,24 @@ const config: Omit<Config, "content"> = {
     borderRadius,
     cursor,
   },
+  variantOrder: [
+    "first",
+    "last",
+    "odd",
+    "even",
+    "visited",
+    "checked",
+    "empty",
+    "read-only",
+    "group-hover",
+    "group-focus",
+    "focus-within",
+    "hover",
+    "focus",
+    "focus-visible",
+    "active",
+    "disabled",
+  ],
   plugins: [],
 };
 export default config;

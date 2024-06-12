@@ -44,6 +44,14 @@ const colors = {
   "gray-6": "var(--color-gray-6)",
   "gray-7": "var(--color-gray-7)",
   "gray-8": "var(--color-gray-8)",
+  "shadow-gray-1": "var(--color-shadow-gray-1)",
+  "shadow-gray-2": "var(--color-shadow-gray-2)",
+  "shadow-gray-3": "var(--color-shadow-gray-3)",
+  "shadow-gray-4": "var(--color-shadow-gray-4)",
+  "shadow-gray-5": "var(--color-shadow-gray-5)",
+  "shadow-gray-6": "var(--color-shadow-gray-6)",
+  "shadow-gray-7": "var(--color-shadow-gray-7)",
+  "shadow-gray-8": "var(--color-shadow-gray-8)",
 };
 
 const fontSize = {
@@ -63,6 +71,9 @@ const fontSize = {
   "paragraph-sm": ["14px", { lineHeight: "20px", }],
   footer: ["10px", { lineHeight: "16px", }],
   caption: ["12px", { lineHeight: "18px", }],
+  "icon-xl": ["32px"],
+  "icon-md": ["24px"],
+  "icon-sm": ["20px"],
 };
 
 const fontWeight = {
@@ -83,6 +94,7 @@ const spacing = {
   sm: "6px",
   md: "8px",
   lg: "10px",
+  lxl: "12px",
   xl: "14px",
   "2xl": "20px",
   "3xl": "24px",
@@ -207,6 +219,7 @@ const height = {
   badgeHeight: "26px",
   newsCardHeight: '240px',
   newsCardMobileHeight: '160px'
+  menuItemHeight: "48px",
 }
 
 const width = {
@@ -225,6 +238,10 @@ const lineClamp = {
   none: 'none',
 }
 
+const shadow = {
+  md: "0px 0px 10px rgba(0, 0, 0, 0.3), -4px 0px 10px rgba(0, 0, 0, 0.3)",
+}
+
 export default {
   borderRadius,
   borderWidth,
@@ -240,4 +257,5 @@ export default {
   height,
   width,
   lineClamp,
+  shadow,
 };
