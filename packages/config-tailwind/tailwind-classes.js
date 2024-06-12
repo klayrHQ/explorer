@@ -218,14 +218,14 @@ const height = {
   inputHeight: "44px",
   badgeHeight: "26px",
   newsCardHeight: '240px',
-  newsCardMobileHeight: '160px'
+  newsCardMobileHeight: '160px',
   menuItemHeight: "48px",
 }
 
 const width = {
   iconButtonWidth: "44px",
   newsCardWidth: '362px',
-  newsCardMobileWidth: '382px'
+  newsCardMobileWidth: '382px',
 }
 
 const lineClamp = {
