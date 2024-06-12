@@ -1,13 +1,15 @@
 import {cva} from "class-variance-authority";
 import {ReactNode} from "react";
+import {cls} from "../../../utils/functions.ts";
 
 interface FlexGridProps {
-  direction?: "row" | "column" | "row-reverse" | "column-reverse";
-  wrap?: boolean;
-  justify?: "start" | "end" | "center" | "between" | "around";
-  alignItems?: "start" | "end" | "center" | "between" | "around";
-  className?: string;
-  children: ReactNode;
+  direction?: "row" | "column" | "row-reverse" | "column-reverse"
+  wrap?: boolean
+  justify?: "normal" | "start" | "end" | "center" | "between" | "around"
+  alignItems?: "start" | "end" | "center"
+  gap?: "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10"
+  className?: string
+  children: ReactNode
 }
 
 const flexGridStyles = cva(
@@ -25,6 +27,7 @@ const flexGridStyles = cva(
         false: "flex-nowrap",
       },
       justify: {
+        normal: "justify-normal",
         start: "justify-start",
         end: "justify-end",
         center: "justify-center",
@@ -48,7 +51,7 @@ const flexGridStyles = cva(
   },
 )
 
-export const FlexGrid = ({ direction, wrap, justify, alignItems, className, children, }: FlexGridProps) => {
+export const FlexGrid = ({ direction, wrap, justify, alignItems, gap = "2", className, children, }: FlexGridProps) => {
   return (
     <div
       className={flexGridStyles({
@@ -56,7 +59,10 @@ export const FlexGrid = ({ direction, wrap, justify, alignItems, className, chil
         wrap,
         justify,
         alignItems,
-        className,
+        className: cls([
+          gap ? `gap-${gap}` : "",
+          className,
+        ]),
       })}
     >
       {children}

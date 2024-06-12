@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 const Template: Story = {
   render: (args) => (
-    <div className={"w-[240px]"}>
+    <div className={args.minimized ? "w-max" : "w-[240px]"}>
       <MainMenu {...args} />
     </div>
   ),
@@ -129,6 +129,22 @@ export const Disabled: Story = {
 export const WithSubmenu: Story = {
   ...Template,
   args: {
+    menuItems: [
+      menuItems[0],
+      {
+        label: 'Blockchain',
+        icon: 'DataFlow',
+        subMenu,
+      },
+      ...menuItems,
+    ]
+  },
+};
+
+export const Minimized: Story = {
+  ...Template,
+  args: {
+    minimized: true,
     menuItems: [
       menuItems[0],
       {

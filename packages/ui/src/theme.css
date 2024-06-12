@@ -35,20 +35,23 @@
   --color-shadow-gray-6: rgba(51, 55, 65, 0.1);
   --color-shadow-gray-7: rgba(31, 36, 47, 0.1);
   --color-shadow-gray-8: rgba(5, 5, 22, 0.1);
+
+  --color-backgroundDark: var(--color-darkBlue);
+  --color-backgroundLight: var(--color-gray-1);
 }
 
 .dark {
   --color-background: var(--color-darkBlue);
-  --color-background-primary: var(--color-darkBlue);
-  --color-background-secondary: var(--color-gray-7);
-  --color-background-tertiary: var(--color-gray-6);
+  --color-backgroundPrimary: var(--color-darkBlue);
+  --color-backgroundSecondary: var(--color-gray-7);
+  --color-backgroundTertiary: var(--color-gray-6);
   --color-body: var(--color-gray-1);
 }
 
 .light {
   --color-background: var(--color-gray-1);
-  --color-background-primary: var(--color-gray-1);
-  --color-background-secondary: var(--color-gray-2);
-  --color-background-tertiary: var(--color-gray-3);
+  --color-backgroundPrimary: var(--color-gray-1);
+  --color-backgroundSecondary: var(--color-gray-2);
+  --color-backgroundTertiary: var(--color-gray-3);
   --color-body: var(--color-gray-8);
 }

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+
 import {
   borderRadius,
   borderWidth,
@@ -14,9 +15,18 @@ import {
   height,
   width,
   shadow,
+  justify,
+  gridCols,
+  autoCols,
+  transition,
+  duration,
+  ease,
+  position,
+  overflow,
+  // @ts-ignore
 } from "./tailwind-classes";
 
-
+// @ts-ignore
 const getKeyMap = (obj, prefix) => {
   return [
     ...Object.keys(obj).map((key) => `${prefix}-${key}`),
@@ -27,6 +37,8 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `group-hover:${prefix}-${key}`),
   ];
 };
+
+// @ts-ignore
 const getKeyOnlyMap = (obj) => {
   return [
     ...Object.keys(obj).map((key) => key),
@@ -131,12 +143,28 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(spacing, "pl"),
     ...getKeyMap(numberList, "gap"),
     ...getKeyMap(spacing, "gap"),
+    ...getKeyMap(numberList, "top"),
+    ...getKeyMap(numberList, "bottom"),
+    ...getKeyMap(numberList, "left"),
+    ...getKeyMap(numberList, "right"),
     ...getKeyMap(percentages, "grayscale"),
     ...getKeyMap(percentages, "brightness"),
     ...getKeyMap(cursor, "cursor"),
     ...getKeyMap(shadow, "shadow"),
+    ...getKeyMap(justify, "justify"),
+    ...getKeyMap(gridCols, "grid-cols"),
+    ...getKeyMap(gridCols, "grid-rows"),
+    ...getKeyMap(autoCols, "auto-cols"),
+    ...getKeyMap(autoCols, "auto-rows"),
     ...getKeyOnlyMap(display),
     ...getKeyOnlyMap(leading),
+    ...getKeyOnlyMap(position),
+    ...getKeyMap(transition, "transition"),
+    ...getKeyMap(duration, "duration"),
+    ...getKeyMap(ease, "ease"),
+    ...getKeyMap(overflow, "overflow"),
+    ...getKeyMap(overflow, "overflow-x"),
+    ...getKeyMap(overflow, "overflow-y"),
   ],
   theme: {
     extend: {
@@ -159,6 +187,7 @@ const config: Omit<Config, "content"> = {
     borderWidth,
     borderRadius,
     cursor,
+    justify,
   },
   variantOrder: [
     "first",

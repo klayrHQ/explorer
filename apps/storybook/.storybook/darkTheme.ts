@@ -1,5 +1,5 @@
 import { create } from '@storybook/theming/create';
-import klayrV3Resized from '../stories/assets/klayr-v3-resized.png';
+import klayrV3Resized from '../stories/assets/images/klayr-v3-resized.png';
 
 export default create({
   base: 'dark',

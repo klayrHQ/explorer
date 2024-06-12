@@ -1,5 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 import {Sidebar} from "@repo/ui/organisms";
+import LogoImg from "../../assets/images/logo.svg";
 
 const meta = {
   title: 'Organisms/Layout/Sidebar',
@@ -64,8 +65,22 @@ const menuItems = [
   },
 ];
 
+const Template: Story = {
+  render: (args) => (
+    <div className={"w-sidebarWidth"}>
+      <Sidebar {...args} />
+    </div>
+  ),
+}
+
 export const Default: Story = {
+  ...Template,
   args: {
     menuItems,
+    logo: {
+      logoText: 'klayr',
+      logoSrc: LogoImg.src,
+      altText: 'klayr logo',
+    }
   },
 };
