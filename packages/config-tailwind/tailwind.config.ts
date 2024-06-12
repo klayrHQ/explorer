@@ -15,6 +15,7 @@ import {
   width,
   lineClamp,
   shadow,
+  objectFit,
 } from "./tailwind-classes";
 
 
@@ -139,6 +140,8 @@ const config: Omit<Config, "content"> = {
     ...getKeyOnlyMap(display),
     ...getKeyOnlyMap(leading),
     ...getKeyMap(lineClamp, 'line-clamp'),
+    ...getKeyMap(objectFit, "object"),
+
   ],
   theme: {
     extend: {
