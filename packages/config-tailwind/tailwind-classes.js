@@ -205,12 +205,24 @@ const height = {
   buttonHeight: "44px",
   inputHeight: "44px",
   badgeHeight: "26px",
+  newsCardHeight: '240px',
+  newsCardMobileHeight: '160px'
 }
 
 const width = {
   iconButtonWidth: "44px",
-  newsCard: '362px',
-  newsCardMobile: '382px'
+  newsCardWidth: '362px',
+  newsCardMobileWidth: '382px'
+}
+
+const lineClamp = {
+  1: '1',
+  2: '2',
+  3: '3',
+  4: '4',
+  5:  '5',
+  6: '6',
+  none: 'none',
 }
 
 export default {
@@ -227,4 +239,5 @@ export default {
   leading,
   height,
   width,
+  lineClamp,
 };

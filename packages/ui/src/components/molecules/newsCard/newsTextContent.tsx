@@ -1,9 +1,11 @@
+/* eslint-disable react/jsx-no-literals */
 import { cva } from 'class-variance-authority';
 import { Typography } from '../../atoms/base/typography';
 
 interface NewsTextContentProps {
   author: string;
   date: string;
+  component?: string;
   title: string;
   description: string;
   size?: 'desktop' | 'mobile';
@@ -15,8 +17,8 @@ const containerStyles = cva(
   {
     variants: {
       size: {
-        desktop: 'w-newsCard',
-        mobile: 'w-newsCardMobile',
+        desktop: 'w-newsCardWidth',
+        mobile: 'w-newsCardMobileWidth',
       },
     },
     defaultVariants: {
@@ -25,12 +27,12 @@ const containerStyles = cva(
   },
 );
 
-export const NewsTextContent = ({ author, date, title, description, size = 'desktop', className, }: NewsTextContentProps) => {
+export const NewsTextContent = ({ author, date, component,  title, description, size = 'desktop', className, }: NewsTextContentProps) => {
   return (
     <div className={containerStyles({ size, className: className,})}>
-      <Typography color="gray-5 mb-2" fontWeight="semibold" variant="paragraph-sm">{author} • {date}</Typography>
-      <Typography color="volt mb-4" fontWeight="bold" variant="h6">{title}</Typography>
-      <Typography color="gray-5 mb-4 line-clamp-3" fontWeight="normal" variant="paragraph-md">{description}</Typography>
+      <Typography className='mb-2' color="gray-5" component='p' fontWeight="semibold" variant="paragraph-sm">{author} • {date}</Typography>
+      <Typography className='mb-4' color="volt" component='h3' fontWeight="bold" variant="h6">{title}</Typography>
+      <Typography className='mb-4 line-clamp-3' color="gray-5 " component='p' fontWeight="normal" variant="paragraph-md">{description}</Typography>
     </div>
   );
 };

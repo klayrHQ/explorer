@@ -2,7 +2,7 @@ import { StoryObj } from "@storybook/react";
 import { NewsTextContent } from "@repo/ui/molecules";
 
 const meta = {
-  title: 'Molecule/NewsCard/CardText',
+  title: 'Molecules/NewsCard/CardText',
   component: NewsTextContent,
   tags: ['autodocs'],
   parameters: {
