@@ -218,6 +218,8 @@ const height = {
   inputHeight: "44px",
   badgeHeight: "26px",
   newsCardHeight: '240px',
+  newsCardContainerHeight: '424px',
+  newsCardContainerMobileHeight: '324px',
   newsCardMobileHeight: '160px',
   menuItemHeight: "48px",
 }
