@@ -24,7 +24,7 @@ import {
   ease,
   position,
   overflow,
-  // @ts-ignore
+  objectFit,
 } from "./tailwind-classes";
 
 // @ts-ignore
@@ -167,6 +167,8 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(overflow, "overflow-x"),
     ...getKeyMap(overflow, "overflow-y"),
     ...getKeyMap(lineClamp, 'line-clamp'),
+    ...getKeyMap(objectFit, "object"),
+
   ],
   theme: {
     extend: {

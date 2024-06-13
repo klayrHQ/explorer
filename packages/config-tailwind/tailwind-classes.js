@@ -241,6 +241,8 @@ const height = {
   inputHeight: "44px",
   badgeHeight: "26px",
   newsCardHeight: '240px',
+  newsCardContainerHeight: '424px',
+  newsCardContainerMobileHeight: '324px',
   newsCardMobileHeight: '160px',
   menuItemHeight: "48px",
   logoImgHeight: "23px",
@@ -343,6 +345,14 @@ const position = {
   sticky: "sticky",
 }
 
+const objectFit = {
+  'cover': 'cover',
+  'contain': 'contain',
+  'fill': 'fill',
+  'none': 'none',
+  'scale-down': 'scale-down',
+}
+
 export default {
   borderRadius,
   borderWidth,
@@ -367,4 +377,5 @@ export default {
   ease,
   position,
   overflow,
+  objectFit,
 };
