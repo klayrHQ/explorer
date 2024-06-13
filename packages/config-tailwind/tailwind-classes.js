@@ -218,6 +218,8 @@ const height = {
   inputHeight: "44px",
   badgeHeight: "26px",
   newsCardHeight: '240px',
+  newsCardContainerHeight: '424px',
+  newsCardContainerMobileHeight: '324px',
   newsCardMobileHeight: '160px',
   menuItemHeight: "48px",
 }
@@ -242,6 +244,14 @@ const shadow = {
   md: "0px 0px 10px rgba(0, 0, 0, 0.3), -4px 0px 10px rgba(0, 0, 0, 0.3)",
 }
 
+const objectFit = {
+  'cover': 'cover',
+  'contain': 'contain',
+  'fill': 'fill',
+  'none': 'none',
+  'scale-down': 'scale-down',
+}
+
 export default {
   borderRadius,
   borderWidth,
@@ -258,4 +268,5 @@ export default {
   width,
   lineClamp,
   shadow,
+  objectFit,
 };
