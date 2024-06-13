@@ -14,6 +14,7 @@ import {
   leading,
   height,
   width,
+  lineClamp,
   shadow,
   justify,
   gridCols,
@@ -165,6 +166,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(overflow, "overflow"),
     ...getKeyMap(overflow, "overflow-x"),
     ...getKeyMap(overflow, "overflow-y"),
+    ...getKeyMap(lineClamp, 'line-clamp'),
   ],
   theme: {
     extend: {
