@@ -34,6 +34,7 @@ export const Icon = ({
   hoverColor,
   icon,
 }: ButtonProps) => {
+  // @ts-ignore
   const Component = icons[icon];
 
   return (

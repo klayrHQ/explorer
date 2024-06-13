@@ -36,8 +36,13 @@
   --color-shadow-gray-7: rgba(31, 36, 47, 0.1);
   --color-shadow-gray-8: rgba(5, 5, 22, 0.1);
 
+  /* Backgrounds */
   --color-backgroundDark: var(--color-darkBlue);
   --color-backgroundLight: var(--color-gray-1);
+
+  /* States */
+  --color-error: var(--color-tulip);
+  --color-success: var(--color-green);
 }
 
 .dark {

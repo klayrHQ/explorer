@@ -22,6 +22,7 @@ const borderRadius = {
 };
 
 const colors = {
+  transparent: "transparent",
   primary: "var(--color-volt)",
   onPrimary: "var(--color-gray-8)",
   secondary: "var(--color-azule)",
@@ -32,6 +33,8 @@ const colors = {
   backgroundTertiary: "var(--color-backgroundTertiary)",
   backgroundDark: "var(--color-backgroundDark)",
   backgroundLight: "var(--color-backgroundLight)",
+  error: "var(--color-error)",
+  success: "var(--color-success)",
   volt: "var(--color-volt)",
   voltDark: "var(--color-voltDark)",
   azule: "var(--color-azule)",
@@ -343,6 +346,33 @@ const position = {
   sticky: "sticky",
 }
 
+const zIndex = {
+  auto: "auto",
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+  10: 10,
+  20: 20,
+  30: 30,
+  40: 40,
+  50: 50,
+  60: 60,
+  70: 70,
+  80: 80,
+  90: 90,
+  100: 100,
+  200: 200,
+  300: 300,
+  400: 400,
+  500: 500,
+  600: 600,
+  700: 700,
+  800: 800,
+  900: 900,
+  1000: 1000,
+}
+
 export default {
   borderRadius,
   borderWidth,
@@ -367,4 +397,5 @@ export default {
   ease,
   position,
   overflow,
+  zIndex,
 };

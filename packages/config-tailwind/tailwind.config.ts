@@ -24,6 +24,7 @@ import {
   ease,
   position,
   overflow,
+  zIndex,
   // @ts-ignore
 } from "./tailwind-classes";
 
@@ -96,6 +97,8 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(colors, "border"),
     ...getKeyMap(colors, "shadow"),
     ...getKeyMap(borderWidth, "border"),
+    ...getKeyMap(numberList, "ring"),
+    ...getKeyMap(numberList, "outline"),
     ...getKeyMap(borderRadius, "rounded"),
     ...getKeyMap(fontSize, "text"),
     ...getKeyMap(fontWeight, "font"),
@@ -145,9 +148,13 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(numberList, "gap"),
     ...getKeyMap(spacing, "gap"),
     ...getKeyMap(numberList, "top"),
+    ...getKeyMap(spacing, "top"),
     ...getKeyMap(numberList, "bottom"),
+    ...getKeyMap(spacing, "bottom"),
     ...getKeyMap(numberList, "left"),
+    ...getKeyMap(spacing, "left"),
     ...getKeyMap(numberList, "right"),
+    ...getKeyMap(spacing, "right"),
     ...getKeyMap(percentages, "grayscale"),
     ...getKeyMap(percentages, "brightness"),
     ...getKeyMap(cursor, "cursor"),
@@ -167,6 +174,8 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(overflow, "overflow-x"),
     ...getKeyMap(overflow, "overflow-y"),
     ...getKeyMap(lineClamp, 'line-clamp'),
+    ...getKeyMap(zIndex, 'z'),
+    ...getKeyMap(zIndex, '-z'),
   ],
   theme: {
     extend: {
@@ -178,6 +187,7 @@ const config: Omit<Config, "content"> = {
       height,
       width,
       boxShadow: shadow,
+      zIndex,
     },
     fontFamily: {
       sans: ["Utendo", "Inter", "Verdana", "sans-serif"],

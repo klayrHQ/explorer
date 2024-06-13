@@ -23,7 +23,8 @@ export const Sidebar = ({ menuItems, logo, }: SidebarProps) => {
   return (
     <FlexGrid
       className={cls([
-        "h-screen bg-gray-8 gap-8 relative transition-all duration-200 ease-in-out",
+        "h-screen bg-gray-8 gap-8 relative hidden desktop:flex",
+        "transition-all duration-200 ease-in-out",
         isMinimized ? "w-sidebarMinWidth px-sidebarMinSpacing py-6" : "w-sidebarWidth p-6",
       ])}
       direction={"column"}
