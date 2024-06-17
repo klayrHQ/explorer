@@ -5,6 +5,7 @@ import {cva} from "class-variance-authority";
 import {Icon} from "../images/icon.tsx";
 import {IconComponent} from "../../../types/types.ts";
 import {SubMenu} from "../../molecules";
+import {cls} from "../../../utils/functions.ts";
 
 export interface MenuItemProps {
     label: string | React.ReactNode
@@ -19,28 +20,33 @@ export interface MenuItemProps {
 }
 
 const menuItemStyles = cva(
-    [
-        "rounded-md",
-        "flex items-center",
-        "h-menuItemHeight w-full",
-        "p-lxl",
-        "group",
-    ],
-    {
-        variants: {
-            active: {
-                true: "bg-gray-7",
-            },
-            hovered: {
-                true: "bg-gray-7",
-                false: "bg-transparent",
-            },
-            disabled: {
-                true: "text-gray-1 hover:text-gray-1 grayscale-6 cursor-not-allowed",
-                false: "text-gray-4 hover:text-gray-1 hover:bg-gray-7 cursor-pointer",
-            },
-        },
+  [
+    "rounded-md",
+    "flex items-center",
+    "h-menuItemHeight",
+    "p-lxl",
+    "group",
+    "transition-all duration-200 ease-in-out",
+  ],
+  {
+    variants: {
+      minimized: {
+        true: "w-minimizedMenuItemWidth",
+        false: "w-full",
+      },
+      active: {
+        true: "bg-gray-7",
+      },
+      hovered: {
+        true: "bg-gray-7",
+        false: "bg-transparent",
+      },
+      disabled: {
+        true: "text-gray-1 hover:text-gray-1 grayscale-6 cursor-not-allowed",
+        false: "text-gray-4 hover:text-gray-1 hover:bg-gray-7 cursor-pointer",
+      },
     },
+  },
 );
 
 export const MenuItem = ({
@@ -73,11 +79,20 @@ export const MenuItem = ({
       color={"inherit"}
       fontWeight={"semibold"}
     >
-      <Icon className={"group-hover:text-gray-1"} color={"gray-5"} icon={icon} size={"medium"}/>
+      <div className={"w-menuIconWidth"}>
+        <Icon className={"group-hover:text-gray-1"} color={"gray-5"} icon={icon} size={"medium"}/>
+      </div>
       {
         !minimized && (
           <>
-            <span className={"pt-sm"}>{label}</span>
+            <span
+              className={cls([
+                "pt-2xs transition-all duration-200 ease-in-out overflow-hidden",
+                minimized ? "w-0" : "w-max",
+              ])}
+            >
+              {label}
+            </span>
             {subMenu && <Icon className={"ml-auto"} icon={"ChevronRight"} size={"small"}/>}
           </>
         )
@@ -92,6 +107,7 @@ export const MenuItem = ({
         hovered,
         disabled,
         className,
+        minimized,
       })}
       onMouseEnter={(event) => handleHover(event,true)}
       onMouseLeave={(event) => handleHover(event,false)}

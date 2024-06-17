@@ -16,7 +16,10 @@ interface ButtonProps {
 }
 
 const buttonStyles = cva(
-  ["rounded-md flex items-center justify-center h-buttonHeight"],
+  [
+    "rounded-md flex items-center justify-center h-buttonHeight",
+    "transition-all duration-200 ease-in-out",
+  ],
   {
     variants: {
       variant: {

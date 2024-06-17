@@ -68,6 +68,16 @@ export type IconComponent =
   | string;
 
 export type ColorType =
+  | "primary"
+  | "onPrimary"
+  | "secondary"
+  | "onSecondary"
+  | "background"
+  | "backgroundPrimary"
+  | "backgroundSecondary"
+  | "backgroundTertiary"
+  | "backgroundDark"
+  | "backgroundLight"
   | "volt"
   | "voltDark"
   | "azule"
@@ -90,4 +100,12 @@ export type ColorType =
   | "gray-6"
   | "gray-7"
   | "gray-8"
+  | "shadow-gray-1"
+  | "shadow-gray-2"
+  | "shadow-gray-3"
+  | "shadow-gray-4"
+  | "shadow-gray-5"
+  | "shadow-gray-6"
+  | "shadow-gray-7"
+  | "shadow-gray-8"
   | "inherit";

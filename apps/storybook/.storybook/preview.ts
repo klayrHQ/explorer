@@ -24,7 +24,20 @@ const preview: Preview = {
       },
     },
   },
-
+  decorators: [
+    (story, context) => {
+      const bgDefault = "#0C111D";
+      const bg = context?.globals?.backgrounds?.value;
+      if (bg === bgDefault) {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      }
+      return story();
+    },
+  ],
   tags: ["autodocs"]
 };
 

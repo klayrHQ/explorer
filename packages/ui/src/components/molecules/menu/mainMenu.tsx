@@ -11,7 +11,7 @@ export const MainMenu = ({
 }: MainMenuProps) => {
 
   return (
-    <ul className={"p-xl bg-gray-8"}>
+    <ul className={"bg-gray-8"}>
       {menuItems.map((item, index) => (
         <MenuItem key={`menu-item-${index + 1}`} minimized={minimized} {...item} />
       ))}
