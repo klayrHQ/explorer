@@ -21,6 +21,7 @@ import { Cube } from './shapes/cube-01';
 import { Flag } from './travel/flag-05';
 import { MarkerPin } from './travel/marker-pin-05';
 import { Users } from './users/users-01';
+import { ArrowUpRight } from './arrows/arrow-up-right';
 
 export const icons = {
   ChevronDown,
@@ -46,4 +47,5 @@ export const icons = {
   Flag,
   MarkerPin,
   Users,
+  ArrowUpRight,
 };

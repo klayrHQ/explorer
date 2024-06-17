@@ -64,6 +64,7 @@ export type IconComponent =
   | "Flag"
   | "MarkerPin"
   | "Users"
+  | "ArrowUpRight"
   | string;
 
 export type ColorType =
