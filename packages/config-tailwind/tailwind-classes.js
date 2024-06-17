@@ -261,6 +261,8 @@ const width = {
   logoImgWidth: "23px",
   newsCardWidth: '362px',
   newsCardMobileWidth: '382px',
+  performanceCardWidth: '208px',
+  performanceCardMobileWidth: '183px',
 }
 
 const lineClamp = {
@@ -353,6 +355,21 @@ const objectFit = {
   'scale-down': 'scale-down',
 }
 
+const colSpan = {
+  auto: "auto",
+  "span-1": "span 1 / span 1",
+  "span-2": "span 2 / span 2",
+  "span-3": "span 3 / span 3",
+  "span-4": "span 4 / span 4",
+  "span-5": "span 5 / span 5",
+  "span-6": "span 6 / span 6",
+  "span-7": "span 7 / span 7",
+  "span-8": "span 8 / span 8",
+  "span-9": "span 9 / span 9",
+  "span-Full": "1 / -1",
+
+}
+
 export default {
   borderRadius,
   borderWidth,
@@ -378,4 +395,5 @@ export default {
   position,
   overflow,
   objectFit,
+  colSpan,
 };

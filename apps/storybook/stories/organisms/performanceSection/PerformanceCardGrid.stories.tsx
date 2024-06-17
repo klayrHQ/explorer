@@ -1,9 +1,9 @@
 import { StoryObj } from "@storybook/react";
-import { PerformanceSection } from "@repo/ui/organisms";
+import { PerformanceCardGrid } from "@repo/ui/organisms";
 
 const meta = {
-  title: "Organisms/PerformanceSection/PerformanceSection",
-  component: PerformanceSection,
+  title: "Organisms/PerformanceSection/PerformanceCardGrid",
+  component: PerformanceCardGrid,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
@@ -60,6 +60,8 @@ export const Default: Story = {
         trend: true,
         icon: "",
         color: "green",
+        
+        
       },
     ],
   },

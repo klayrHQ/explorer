@@ -10,6 +10,7 @@ export interface PerformanceCardProps {
   statsVS: string;
   icon?: IconComponent;
   color: ColorType;
+  className?: string;
 }
 
 export const PerformanceCard = ({
@@ -20,9 +21,10 @@ export const PerformanceCard = ({
   trend,
   color,
   icon,
+  className,
 }: PerformanceCardProps) => {
   return (
-    <div className="flex flex-col gap-4 border rounded-xl border-gray-7 p-6 min-w-52">
+    <div className={`flex flex-col items-start gap-4 border rounded-xl border-gray-7 p-6 w-performanceCardWidthMobile desktop:w-performanceCardWidth ${className}`}>
       <Typography
         className=""
         color="gray-1"
