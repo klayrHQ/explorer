@@ -67,6 +67,7 @@ export const Default: Story = {
   args: {
     menuItems: subMenu,
     open: true,
+    anchorElement: null
   },
 };
 
@@ -74,5 +75,7 @@ export const WithMenuItem: Story = {
   ...MenuItemTemplate,
   args: {
     menuItems: subMenu,
+    open: false,
+    anchorElement: null
   },
 };

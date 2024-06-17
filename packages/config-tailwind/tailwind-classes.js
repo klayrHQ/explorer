@@ -22,6 +22,16 @@ const borderRadius = {
 };
 
 const colors = {
+  primary: "var(--color-volt)",
+  onPrimary: "var(--color-gray-8)",
+  secondary: "var(--color-azule)",
+  onSecondary: "var(--color-gray-1)",
+  background: "var(--color-background)",
+  backgroundPrimary: "var(--color-backgroundPrimary)",
+  backgroundSecondary: "var(--color-backgroundSecondary)",
+  backgroundTertiary: "var(--color-backgroundTertiary)",
+  backgroundDark: "var(--color-backgroundDark)",
+  backgroundLight: "var(--color-backgroundLight)",
   volt: "var(--color-volt)",
   voltDark: "var(--color-voltDark)",
   azule: "var(--color-azule)",
@@ -90,6 +100,7 @@ const fontWeight = {
 
 const spacing = {
   px: "1px",
+  "2xs": "2px",
   xs: "4px",
   sm: "6px",
   md: "8px",
@@ -98,6 +109,7 @@ const spacing = {
   xl: "14px",
   "2xl": "20px",
   "3xl": "24px",
+  sidebarMinSpacing: "22px",
 }
 
 const screens = {
@@ -132,6 +144,13 @@ const display = {
   "flex-col": null,
   "flex-col-reverse": null,
 };
+
+const overflow = {
+  auto: "auto",
+  hidden: "hidden",
+  visible: "visible",
+  scroll: "scroll",
+}
 
 const percentages = {
   1: "10%",
@@ -214,6 +233,10 @@ const leading = {
 }
 
 const height = {
+  screen: "100vh",
+  full: "100%",
+  max: "max-content",
+  min: "min-content",
   buttonHeight: "44px",
   inputHeight: "44px",
   badgeHeight: "26px",
@@ -222,10 +245,20 @@ const height = {
   newsCardContainerMobileHeight: '324px',
   newsCardMobileHeight: '160px',
   menuItemHeight: "48px",
+  logoImgHeight: "23px",
 }
 
 const width = {
+  screen: "100vw",
+  full: "100%",
+  max: "max-content",
+  min: "min-content",
+  menuIconWidth: "24px",
   iconButtonWidth: "44px",
+  sidebarWidth: "240px",
+  sidebarMinWidth: "88px",
+  minimizedMenuItemWidth: "48px",
+  logoImgWidth: "23px",
   newsCardWidth: '362px',
   newsCardMobileWidth: '382px',
 }
@@ -242,6 +275,74 @@ const lineClamp = {
 
 const shadow = {
   md: "0px 0px 10px rgba(0, 0, 0, 0.3), -4px 0px 10px rgba(0, 0, 0, 0.3)",
+}
+
+const justify = {
+  normal: "normal",
+  start: "flex-start",
+  end: "flex-end",
+  center: "center",
+  between: "space-between",
+  around: "space-around",
+  evenly: "space-evenly",
+  stretch: "stretch",
+}
+
+const gridCols = {
+  1: "repeat(1, minmax(0, 1fr))",
+  2: "repeat(2, minmax(0, 1fr))",
+  3: "repeat(3, minmax(0, 1fr))",
+  4: "repeat(4, minmax(0, 1fr))",
+  5: "repeat(5, minmax(0, 1fr))",
+  6: "repeat(6, minmax(0, 1fr))",
+  7: "repeat(7, minmax(0, 1fr))",
+  8: "repeat(8, minmax(0, 1fr))",
+  9: "repeat(9, minmax(0, 1fr))",
+  10: "repeat(10, minmax(0, 1fr))",
+  11: "repeat(11, minmax(0, 1fr))",
+  12: "repeat(12, minmax(0, 1fr))",
+  none: "none",
+  subgrid: "subgrid",
+}
+
+const autoCols = {
+  auto: "auto",
+  min: "min-content",
+  max: "max-content",
+  fr: "minmax(0, 1fr)",
+}
+
+const transition = {
+  none: null,
+  all: null,
+  DEFAULT: null,
+}
+
+const duration = {
+  75: "75ms",
+  100: "100ms",
+  150: "150ms",
+  200: "200ms",
+  300: "300ms",
+  500: "500ms",
+  700: "700ms",
+  1000: "1000ms",
+}
+
+const ease = {
+  linear: "linear",
+  in: "cubic-bezier(0.4, 0, 1, 1)",
+  out: "cubic-bezier(0, 0, 0.2, 1)",
+  "in-out": "cubic-bezier(0.4, 0, 0.2, 1)",
+}
+
+const position = {
+  static: "static",
+  clip: "clip",
+  fixed: "fixed",
+  absolute: "absolute",
+  relative: "relative",
+  sticky: "sticky",
 }
 
 const objectFit = {
@@ -268,5 +369,13 @@ export default {
   width,
   lineClamp,
   shadow,
+  justify,
+  gridCols,
+  autoCols,
+  transition,
+  duration,
+  ease,
+  position,
+  overflow,
   objectFit,
 };
