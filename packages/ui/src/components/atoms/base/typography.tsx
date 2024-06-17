@@ -17,7 +17,7 @@ interface TypographyProps {
 }
 
 const typographyStyles = cva(
-  ["border-none"],
+  ["border-none pt-sm"],
   {
     variants: {
       variant: {

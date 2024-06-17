@@ -11,7 +11,7 @@ const inputFieldStyles = cva(
   [
     "border-solid border rounded-md",
     "w-full",
-    "pt-lxl pb-lg px-lg",
+    "pt-xl pb-lg px-lg",
     "focus:ring-0 focus:outline-none",
     "resize-y",
     "bg-transparent",

@@ -16,7 +16,7 @@ const inputFieldStyles = cva(
   [
     "border-solid border rounded-md",
     "h-inputHeight w-full",
-    "pt-lxl pb-lg",
+    "pt-xl pb-lg",
     "focus:ring-0 focus:outline-none",
     "bg-transparent",
   ],
@@ -82,7 +82,7 @@ const inputFieldStyles = cva(
 
 export const InputField = ({ type = "text", variant = "onBgSecondary", className, icon, error, success, ...props}: InputFieldProps) => {
   return (
-    <div className={"relative z-1"}>
+    <div className={"relative z-1 w-full"}>
       {
         icon && (
           <Icon className={"absolute left-lg h-max top-0 bottom-0 my-auto -z-1"} color={"gray-5"} icon={icon} />

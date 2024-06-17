@@ -33,6 +33,15 @@ const colors = {
   backgroundTertiary: "var(--color-backgroundTertiary)",
   backgroundDark: "var(--color-backgroundDark)",
   backgroundLight: "var(--color-backgroundLight)",
+  onBackgroundHigh: "var(--color-onBackgroundHigh)",
+  onBackgroundMediumHigh: "var(--color-onBackgroundMediumHigh)",
+  onBackgroundMedium: "var(--color-onBackgroundMedium)",
+  onBackgroundLow: "var(--color-onBackgroundLow)",
+  onBackground: "var(--color-onBackground)",
+  onMenuHigh: "var(--color-onMenuHigh)",
+  onMenuMedium: "var(--color-onMenuMedium)",
+  onMenuLow: "var(--color-onMenuLow)",
+  onMenu: "var(--color-onMenu)",
   error: "var(--color-error)",
   success: "var(--color-success)",
   volt: "var(--color-volt)",
@@ -247,6 +256,10 @@ const height = {
   newsCardMobileHeight: '160px',
   menuItemHeight: "48px",
   logoImgHeight: "23px",
+  topbarHeight: "88px",
+  chainLogoHeight: "16px",
+  avatarHeight: "24px",
+  avatarLgHeight: "40px",
 }
 
 const width = {
@@ -262,6 +275,10 @@ const width = {
   logoImgWidth: "23px",
   newsCardWidth: '362px',
   newsCardMobileWidth: '382px',
+  searchBarWidth: '600px',
+  chainLogoWidth: "16px",
+  avatarWidth: "24px",
+  avatarLgWidth: "40px",
 }
 
 const lineClamp = {

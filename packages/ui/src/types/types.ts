@@ -108,3 +108,15 @@ export type ColorType =
   | "shadow-gray-7"
   | "shadow-gray-8"
   | "inherit";
+
+export type ChainType = {
+  chainId: string
+  chainName: string
+  chainLogo: string
+}
+
+export type NetworkType = {
+  networkId: string
+  networkName: string
+  connected: boolean
+}
