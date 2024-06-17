@@ -50,6 +50,8 @@ export type IconComponent =
   | "ChevronRightDouble"
   | "ChevronUpDouble"
   | "SwitchHorizontal"
+  | "TrendDown"
+  | "TrendUp"
   | "BarChartSquare"
   | "Data"
   | "DataFlow"
