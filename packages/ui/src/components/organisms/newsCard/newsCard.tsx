@@ -2,7 +2,7 @@ import { NewsCardImage, BadgeGroup } from "../../atoms";
 import { NewsTextContent } from "../../molecules";
 import { ColorType } from "../../../types/types";
 
-interface NewsCardProps {
+export interface NewsCardProps {
   badges: { colorVariant?: ColorType; label: string }[];
   author: string;
   date: string;
@@ -22,7 +22,7 @@ export const NewsCard = ({
   alt,
 }: NewsCardProps) => {
   return (
-    <div className="flex flex-col w-newsCardMobileWidth desktop:w-newsCardWidth h-newsCardContainerMobileHeight desktop:h-newsCardContainerHeight ">
+    <div className="flex flex-col w-newsCardMobileWidth desktop:w-newsCardWidth min-h-newsCardContainerMobileHeight desktop:min-h-newsCardContainerHeight ">
       <NewsCardImage alt={alt} src={src} />
       <NewsTextContent
         author={author}
