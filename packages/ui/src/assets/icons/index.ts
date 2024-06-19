@@ -7,6 +7,8 @@ import { ChevronLeftDouble } from './arrows/chevron-left-double';
 import { ChevronRightDouble } from './arrows/chevron-right-double';
 import { ChevronUpDouble } from './arrows/chevron-up-double';
 import { SwitchHorizontal } from './arrows/switch-horizontal-01';
+import { TrendDown } from './arrows/trend-down';
+import { TrendUp } from './arrows/trend-up';
 import { BarChartSquare } from './charts/bar-chart-square-02';
 import { Data } from './development/data';
 import { DataFlow } from './development/dataflow-03';
@@ -21,6 +23,7 @@ import { Cube } from './shapes/cube-01';
 import { Flag } from './travel/flag-05';
 import { MarkerPin } from './travel/marker-pin-05';
 import { Users } from './users/users-01';
+import { ArrowUpRight } from './arrows/arrow-up-right';
 import { CurrencyDollar } from "./finance/currency-dollar.tsx";
 import { Sun } from "./weather/sun.tsx";
 import { Menu } from './general/menu-01';
@@ -35,6 +38,8 @@ export const icons = {
   ChevronRightDouble,
   ChevronUpDouble,
   SwitchHorizontal,
+  TrendDown,
+  TrendUp,
   BarChartSquare,
   Data,
   DataFlow,
@@ -49,6 +54,7 @@ export const icons = {
   Flag,
   MarkerPin,
   Users,
+  ArrowUpRight,
   CurrencyDollar,
   Sun,
   Menu,

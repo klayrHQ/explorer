@@ -259,6 +259,8 @@ const height = {
   inputHeight: "44px",
   badgeHeight: "26px",
   newsCardHeight: '240px',
+  newsCardContainerHeight: '424px',
+  newsCardContainerMobileHeight: '324px',
   newsCardMobileHeight: '160px',
   menuItemHeight: "48px",
   menuItemSmallHeight: "34px",
@@ -284,6 +286,8 @@ const width = {
   logoImgWidth: "24px",
   newsCardWidth: '362px',
   newsCardMobileWidth: '382px',
+  performanceCardWidth: '208px',
+  performanceCardMobileWidth: '183px',
   searchBarWidth: '600px',
   chainLogoWidth: "16px",
   avatarWidth: "24px",
@@ -417,6 +421,29 @@ const grow = {
   DEFAULT: 1,
 }
 
+const objectFit = {
+  'cover': 'cover',
+  'contain': 'contain',
+  'fill': 'fill',
+  'none': 'none',
+  'scale-down': 'scale-down',
+}
+
+const colSpan = {
+  auto: "auto",
+  "span-1": "span 1 / span 1",
+  "span-2": "span 2 / span 2",
+  "span-3": "span 3 / span 3",
+  "span-4": "span 4 / span 4",
+  "span-5": "span 5 / span 5",
+  "span-6": "span 6 / span 6",
+  "span-7": "span 7 / span 7",
+  "span-8": "span 8 / span 8",
+  "span-9": "span 9 / span 9",
+  "span-Full": "1 / -1",
+
+}
+
 export default {
   borderRadius,
   borderWidth,
@@ -445,4 +472,6 @@ export default {
   whitespace,
   shrink,
   grow,
+  objectFit,
+  colSpan,
 };

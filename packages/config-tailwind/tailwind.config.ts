@@ -29,6 +29,8 @@ import {
   shrink,
   grow,
   // @ts-ignore
+  objectFit,
+  colSpan,
 } from "./tailwind-classes";
 
 // @ts-ignore
@@ -42,6 +44,8 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `focus:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `group-hover:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `last:${prefix}-${key}`),
+
   ];
 };
 
@@ -223,6 +227,9 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(whitespace, 'whitespace'),
     ...getKeyMap(shrink, 'shrink'),
     ...getKeyMap(grow, 'grow'),
+    ...getKeyMap(objectFit, "object"),
+    ...getKeyMap(colSpan, "col"),
+
   ],
   theme: {
     extend: {
