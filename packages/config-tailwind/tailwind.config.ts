@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
+import { classes } from "./tailwind-classes.ts";
 
-import {
+const {
   borderRadius,
   borderWidth,
   colors,
@@ -28,10 +29,9 @@ import {
   whitespace,
   shrink,
   grow,
-  // @ts-ignore
   objectFit,
   colSpan,
-} from "./tailwind-classes";
+} = classes;
 
 // @ts-ignore
 const getKeyMap = (obj, prefix) => {

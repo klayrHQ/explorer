@@ -1,3 +1,4 @@
+"use client"
 import {MainMenu} from "../../molecules";
 import {
   /*Button,

@@ -38,6 +38,8 @@ const colors = {
   onBackgroundMedium: "var(--color-onBackgroundMedium)",
   onBackgroundLow: "var(--color-onBackgroundLow)",
   onBackground: "var(--color-onBackground)",
+  onBackgroundDark: "var(--color-onBackgroundDark)",
+  onBackgroundLight: "var(--color-onBackgroundLight)",
   onMenuHigh: "var(--color-onMenuHigh)",
   onMenuMedium: "var(--color-onMenuMedium)",
   onMenuLow: "var(--color-onMenuLow)",
@@ -444,7 +446,7 @@ const colSpan = {
 
 }
 
-export default {
+export const classes = {
   borderRadius,
   borderWidth,
   colors,

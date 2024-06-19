@@ -88,7 +88,7 @@ export const Typography = ({
         bold,
         underline,
         className: [
-          color ? `text-${color}` : "",
+          color ? `text-${color}` : "text-body",
           className,
           fontWeight ? `font-${fontWeight}` : "",
           noPadding ? "" : "pt-2xs",
