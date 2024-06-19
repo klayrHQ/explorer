@@ -23,7 +23,8 @@ export const Sidebar = ({ menuItems, logo, }: SidebarProps) => {
   return (
     <FlexGrid
       className={cls([
-        "h-screen bg-gray-8 gap-8 relative transition-all duration-200 ease-in-out",
+        "h-screen bg-gray-8 gap-8 relative hidden desktop:flex",
+        "transition-all duration-200 ease-in-out",
         isMinimized ? "w-sidebarMinWidth px-sidebarMinSpacing py-6" : "w-sidebarWidth p-6",
       ])}
       direction={"column"}
@@ -31,10 +32,10 @@ export const Sidebar = ({ menuItems, logo, }: SidebarProps) => {
       <Logo {...logo} className={isMinimized ? "mx-auto" : ""} minimized={isMinimized} />
       <MainMenu menuItems={menuItems} minimized={isMinimized} />
       <IconButton
-        className={"absolute top-0 bottom-0 right-0 my-auto h-max"}
+        className={"absolute top-0 bottom-0 sidebarBp:top-auto sidebarBp:bottom-3xl right-0 my-auto h-max"}
         icon={isMinimized ? "ChevronRightDouble" : "ChevronLeftDouble"}
         onClick={toggleMinimized}
-        variant={"iconOnly"}
+        variant={"iconOnlyAlt"}
       />
       {/* Uncomment when implementing login functionality */}
       {/*<Button

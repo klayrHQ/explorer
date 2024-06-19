@@ -1,6 +1,7 @@
 export type TypographyVariant =
   | "display-1"
   | "display-2"
+  | "logo"
   | "h1"
   | "h2"
   | "h3"
@@ -67,6 +68,9 @@ export type IconComponent =
   | "MarkerPin"
   | "Users"
   | "ArrowUpRight"
+  | "CurrencyDollar"
+  | "Sun"
+  | "Menu"
   | string;
 
 export type ColorType =
@@ -111,3 +115,15 @@ export type ColorType =
   | "shadow-gray-7"
   | "shadow-gray-8"
   | "inherit";
+
+export type ChainType = {
+  chainId: string
+  chainName: string
+  chainLogo: string
+}
+
+export type NetworkType = {
+  networkId: string
+  networkName: string
+  connected: boolean
+}

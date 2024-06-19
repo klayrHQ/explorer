@@ -94,17 +94,17 @@ const buttonStyles = cva(
       {
         disabled: true,
         variant: "primary",
-        className: "grayscale-6 bg-volt cursor-not-allowed",
+        className: "grayscale-60p bg-volt cursor-not-allowed",
       },
       {
         disabled: true,
         variant: "secondary",
-        className: "grayscale-6 bg-azule cursor-not-allowed",
+        className: "grayscale-60p bg-azule cursor-not-allowed",
       },
       {
         disabled: true,
         variant: "transparent",
-        className: "grayscale-6 cursor-not-allowed",
+        className: "grayscale-60p cursor-not-allowed",
       },
     ],
   },

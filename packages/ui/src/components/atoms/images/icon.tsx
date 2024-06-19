@@ -7,7 +7,7 @@ import {cls} from "../../../utils/functions";
 interface ButtonProps {
   className?: string;
   //scales with font size, so inherit will adhere to the font size of the parent or a custom size can be set through the className prop
-  size?: "small" | "medium" | "large" | "inherit";
+  size?: "xs" | "small" | "medium" | "large" | "inherit";
   icon: IconComponent;
   color?: ColorType;
   hoverColor?: ColorType;
@@ -18,6 +18,7 @@ const iconStyles = cva(
   {
     variants: {
       size: {
+        xs: "text-icon-xs",
         small: "text-icon-sm",
         medium: "text-icon-md",
         large: "text-icon-lg",
@@ -34,6 +35,7 @@ export const Icon = ({
   hoverColor,
   icon,
 }: ButtonProps) => {
+  // @ts-ignore
   const Component = icons[icon];
 
   return (

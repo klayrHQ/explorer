@@ -1,60 +1,57 @@
 @import "./theme.css";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-@layer base {
-    @font-face {
-        font-family: 'Utendo';
-        font-weight: normal;
-        src: url('@repo/ui/Utendo-Regular.ttf') format('truetype');
-    }
 
-    @font-face {
-        font-family: 'Utendo';
-        font-weight: 100;
-        src: url('@repo/ui/Utendo-Thin.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Utendo';
-        font-weight: 200;
-        src: url('@repo/ui/Utendo-ExtraLight.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Utendo';
-        font-weight: 300;
-        src: url('@repo/ui/Utendo-Light.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Utendo';
-        font-weight: 500;
-        src: url('@repo/ui/Utendo-Medium.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Utendo';
-        font-weight: 600;
-        src: url('@repo/ui/Utendo-Semibold.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Utendo';
-        font-weight: 700;
-        src: url('@repo/ui/Utendo-Bold.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Utendo';
-        font-weight: 800;
-        src: url('@repo/ui/Utendo-ExtraBold.ttf') format('truetype');
-    }
+@font-face {
+    font-family: 'Utendo';
+    font-weight: normal;
+    src: url('@repo/ui/Utendo-Regular.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Utendo';
+    font-weight: 100;
+    src: url('@repo/ui/Utendo-Thin.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Utendo';
+    font-weight: 200;
+    src: url('@repo/ui/Utendo-ExtraLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Utendo';
+    font-weight: 300;
+    src: url('@repo/ui/Utendo-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Utendo';
+    font-weight: 500;
+    src: url('@repo/ui/Utendo-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Utendo';
+    font-weight: 600;
+    src: url('@repo/ui/Utendo-Semibold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Utendo';
+    font-weight: 700;
+    src: url('@repo/ui/Utendo-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Utendo';
+    font-weight: 800;
+    src: url('@repo/ui/Utendo-ExtraBold.ttf') format('truetype');
+}
+
+
 :root {
-    background-color: var(--color-background-primary);
+    background-color: var(--color-backgroundPrimary);
     color: var(--color-body);
     font-family: "Utendo", "Inter", "verdana", sans-serif;
 }

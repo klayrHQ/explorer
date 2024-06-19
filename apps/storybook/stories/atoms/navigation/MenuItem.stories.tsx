@@ -58,12 +58,20 @@ export const Minimized: Story = {
 
 export const IsParent: Story = {
   args: {
-    isParent: true,
+    subMenu: [],
   },
 };
 
 export const HasLink: Story = {
   args: {
     linkComponent: <a href="#"></a>,
+  },
+};
+
+export const Small: Story = {
+  args: {
+    variant: "small",
+    icon: "CurrencyDollar",
+    label: "Enable Light mode"
   },
 };
