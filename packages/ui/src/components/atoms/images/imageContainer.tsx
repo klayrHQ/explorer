@@ -1,5 +1,6 @@
 import {cva} from "class-variance-authority";
-import {cloneElement, ReactElement,} from "react";
+import {cloneElement, ReactElement} from "react";
+import {cls} from "../../../utils/functions.ts";
 
 interface ImageContainerProps {
   src: string
@@ -15,9 +16,9 @@ const imageContainerStyles = cva(
 {
   variants: {
     size: {
-      avatar: "w-8 h-8 rounded-full",
-      avatarLg: "w-12 h-12 rounded-full",
-      chainLogo: "w-16 h-16",
+      avatar: "w-avatarWidth h-avatarHeight rounded-full",
+      avatarLg: "w-avatarLgWidth h-avatarLgHeight rounded-full",
+      chainLogo: "w-chainLogoWidth h-chainLogoHeight",
     },
   },
   defaultVariants: {
@@ -38,9 +39,12 @@ export const ImageContainer = ({ size, src, alt, className, imgClassName, compon
           {
             src,
             alt,
-            className: imgClassName
+            className: cls([
+              "w-full h-full",
+              imgClassName,
+            ]),
           }) : (
-          <img src={src} alt={alt}/>
+          <img alt={alt} src={src}/>
         )
       }
     </div>

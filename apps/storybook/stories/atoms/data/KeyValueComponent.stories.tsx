@@ -15,22 +15,22 @@ type Story = StoryObj<typeof meta>;
 
 export const WithPlainText: Story = {
   args: {
-    keyValue: "MC",
+    keyValue: "MC: ",
     contentValue: "$27.324",
   },
 };
 
 export const WithValueComponent: Story = {
   args: {
-    keyValue: "KLY",
+    keyValue: "KLY: ",
     contentValue: (
-        <span>
-          {"$181.66"}
-          <Typography color={"green"} variant={"paragraph-sm"}>
-            <Icon className={"inline pb-1"} color={"inherit"} icon={"ChevronUp"} />
-            {"0.3 %"}
-          </Typography>
+      <Typography className={"inline-flex items-center"} color={"gray-5"} variant={"paragraph-sm"}>
+        {"$181.66"}
+        <span className={"text-green text-paragraph-sm inline-flex items-center"}>
+          <Icon className={"inline pb-1"} color={"inherit"} icon={"ChevronUp"} />
+          {"0.3 %"}
         </span>
+      </Typography>
     ),
   },
 };

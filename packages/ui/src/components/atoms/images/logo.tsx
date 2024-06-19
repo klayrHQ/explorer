@@ -24,7 +24,7 @@ export const Logo = ({
         <Typography
           component={"span"}
           fontWeight={"semibold"}
-          variant={"h3"}
+          variant={"logo"}
         >
           {logoText}
         </Typography>

@@ -9,10 +9,12 @@ export * from "./base/flexGrid";
 export * from "./base/grid";
 export * from "./images/icon";
 export * from "./images/logo";
+export * from "./images/imageContainer";
 export * from "./navigation/menuItem";
 export * from "./badges/badge";
 export * from "./badges/badgeIcon";
 export * from "./badges/badgeGroup";
-export * from "./data/keyValueComponent.tsx";
+export * from "./data/keyValueComponent";
+export * from "./notifications/notificationIcon";
 
 

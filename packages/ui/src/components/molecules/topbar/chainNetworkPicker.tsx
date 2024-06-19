@@ -1,26 +1,38 @@
 import {ChainType, NetworkType} from "../../../types/types.ts";
-import {KeyValueComponent} from "../../atoms";
+import {FlexGrid, KeyValueComponent} from "../../atoms";
 import {ImageContainer} from "../../atoms/images/imageContainer.tsx";
 import {StatusIcon} from "storybook/stories/atoms/base/statusIcon.tsx";
+import {ReactElement} from "react";
 
-interface ChainNetworkPickerProps {
+export interface ChainNetworkPickerProps {
   currentChain: ChainType
   currentNetwork: NetworkType
-  chains: ChainType[]
-  networks: NetworkType[]
+  chains?: ChainType[]
+  networks?: NetworkType[]
+  imgComponent?: ReactElement
+  className?: string
 }
 
-export const ChainNetworkPicker = ({ currentChain, currentNetwork, chains, networks }: ChainNetworkPickerProps) => {
+export const ChainNetworkPicker = ({ currentChain, currentNetwork, chains, networks, imgComponent, className, }: ChainNetworkPickerProps) => {
   return (
-    <>
+    <FlexGrid>
       <KeyValueComponent
-          keyValue={<ImageContainer src={currentChain.chainLogo} alt={currentChain.chainName} size={"chainLogo"} />}
-          contentValue={currentChain.chainName}
+        contentValue={currentChain.chainName}
+        hover
+        keyValue={
+        <ImageContainer
+          alt={currentChain.chainName}
+          component={imgComponent}
+          size={"chainLogo"}
+          src={currentChain.chainLogo}
+        />
+      }
       />
       <KeyValueComponent
-          keyValue={<StatusIcon connected={currentNetwork.connected} />}
-          contentValue={currentNetwork.networkName}
+        contentValue={currentNetwork.networkName}
+        hover
+        keyValue={<StatusIcon connected={currentNetwork.connected} />}
       />
-    </>
+    </FlexGrid>
   )
 }

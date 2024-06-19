@@ -20,9 +20,9 @@ export const SubMenu = ({
       open={open}
       placement={"right-start"}
     >
-      <ul className={"bg-gray-8 border-solid border-gray-7 border rounded-md min-w-48 shadow-md shadow-shadow-gray-6"}>
+      <ul className={"bg-gray-8 border-solid border-gray-7 border rounded-md min-w-48 shadow-md shadow-shadow-gray-6 overflow-hidden"}>
         {menuItems.map((item, index) => (
-          <MenuItem key={`menu-item-${index + 1}`} {...item} />
+          <MenuItem key={`menu-item-${index + 1}`} square {...item} />
         ))}
       </ul>
     </Popper>

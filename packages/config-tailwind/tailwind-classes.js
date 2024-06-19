@@ -1,7 +1,7 @@
 const borderWidth = {
   DEFAULT: "1px",
   0: "0px",
-  1: "0.1rem",
+  1: "1px",
   2: "2px",
   4: "4px",
   8: "8px",
@@ -96,6 +96,8 @@ const fontSize = {
   "icon-xl": ["32px"],
   "icon-md": ["24px"],
   "icon-sm": ["20px"],
+  "icon-xs": ["16px"],
+  "logo": ["34px", {lineHeight: "39px", }],
 };
 
 const fontWeight = {
@@ -119,6 +121,7 @@ const spacing = {
   lg: "10px",
   lxl: "12px",
   xl: "14px",
+  "1.5xl": "16px",
   "2xl": "20px",
   "3xl": "24px",
   sidebarMinSpacing: "22px",
@@ -127,6 +130,8 @@ const spacing = {
 const screens = {
   desktop: "1024px",
   tablet: "440px",
+  mobile: { max: "439px" },
+  sidebarBp: { "raw": "(max-height: 800px)" }
 };
 
 const display = {
@@ -165,16 +170,15 @@ const overflow = {
 }
 
 const percentages = {
-  1: "10%",
-  2: "20%",
-  3: "30%",
-  4: "40%",
-  5: "50%",
-  6: "60%",
-  7: "70%",
-  8: "80%",
-  9: "90%",
-  10: "100%",
+  "10p": "10%",
+  "20p": "20%",
+  "30p": "30%",
+  "40p": "40%",
+  "50p": "50%",
+  "60p": "60%",
+  "70p": "70%",
+  "80p": "80%",
+  "90p": "90%",
   "1/2": "50%",
   "1/3": "33.333333%",
   "2/3": "66.666667%",
@@ -246,17 +250,21 @@ const leading = {
 
 const height = {
   screen: "100vh",
+  screenUnderTopbar: "calc(100vh - 88px)",
+  screenUnderTopbarMobile: "calc(100vh - 76px)",
   full: "100%",
   max: "max-content",
   min: "min-content",
-  buttonHeight: "44px",
+  buttonHeight: "40px",
   inputHeight: "44px",
   badgeHeight: "26px",
   newsCardHeight: '240px',
   newsCardMobileHeight: '160px',
   menuItemHeight: "48px",
-  logoImgHeight: "23px",
+  menuItemSmallHeight: "34px",
+  logoImgHeight: "24px",
   topbarHeight: "88px",
+  topbarMobileHeight: "76px",
   chainLogoHeight: "16px",
   avatarHeight: "24px",
   avatarLgHeight: "40px",
@@ -268,11 +276,12 @@ const width = {
   max: "max-content",
   min: "min-content",
   menuIconWidth: "24px",
-  iconButtonWidth: "44px",
+  menuIconSmallWidth: "16px",
+  iconButtonWidth: "40px",
   sidebarWidth: "240px",
   sidebarMinWidth: "88px",
   minimizedMenuItemWidth: "48px",
-  logoImgWidth: "23px",
+  logoImgWidth: "24px",
   newsCardWidth: '362px',
   newsCardMobileWidth: '382px',
   searchBarWidth: '600px',
@@ -390,6 +399,24 @@ const zIndex = {
   1000: 1000,
 }
 
+const whitespace = {
+  normal: "normal",
+  nowrap: "nowrap",
+  pre: "pre",
+  "pre-line": "pre-line",
+  "pre-wrap": "pre-wrap",
+}
+
+const shrink = {
+  0: 0,
+  DEFAULT: 1,
+}
+
+const grow = {
+  0: 0,
+  DEFAULT: 1,
+}
+
 export default {
   borderRadius,
   borderWidth,
@@ -415,4 +442,7 @@ export default {
   position,
   overflow,
   zIndex,
+  whitespace,
+  shrink,
+  grow,
 };

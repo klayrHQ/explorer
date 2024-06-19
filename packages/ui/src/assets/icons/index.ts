@@ -21,6 +21,9 @@ import { Cube } from './shapes/cube-01';
 import { Flag } from './travel/flag-05';
 import { MarkerPin } from './travel/marker-pin-05';
 import { Users } from './users/users-01';
+import { CurrencyDollar } from "./finance/currency-dollar.tsx";
+import { Sun } from "./weather/sun.tsx";
+import { Menu } from './general/menu-01';
 
 export const icons = {
   ChevronDown,
@@ -46,4 +49,7 @@ export const icons = {
   Flag,
   MarkerPin,
   Users,
+  CurrencyDollar,
+  Sun,
+  Menu,
 };

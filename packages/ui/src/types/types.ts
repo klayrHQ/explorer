@@ -1,6 +1,7 @@
 export type TypographyVariant =
   | "display-1"
   | "display-2"
+  | "logo"
   | "h1"
   | "h2"
   | "h3"
@@ -64,6 +65,9 @@ export type IconComponent =
   | "Flag"
   | "MarkerPin"
   | "Users"
+  | "CurrencyDollar"
+  | "Sun"
+  | "Menu"
   | string;
 
 export type ColorType =

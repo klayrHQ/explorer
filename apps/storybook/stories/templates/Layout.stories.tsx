@@ -1,24 +1,27 @@
 import type { StoryObj } from '@storybook/react';
-import {Topbar} from "@repo/ui/organisms";
+import {Layout} from "@repo/ui/templates";
 import Logo from "@/stories/assets/images/logo.svg";
-import {chainNetworkData, kpisObject, mobileMenuItems, optionsMenuItems} from "@/stories/utils/mockup";
+import {chainNetworkData, kpisObject, menuItems, mobileMenuItems} from "@/stories/utils/mockup";
+import {Typography} from "@repo/ui/atoms";
 
 const meta = {
-  title: 'Organisms/Layout/Topbar',
-  component: Topbar,
+  title: 'Templates/Layout',
+  component: Layout,
   parameters: {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
   args: {
-    kpis: kpisObject,
+    menuItems,
+    mobileMenuItems,
     chainNetworkData,
-    optionsMenuItems,
-    mobileMenuItems: mobileMenuItems,
+    kpis: kpisObject,
     logo: {
       logoSrc: Logo.src,
       altText: "Logo",
+      logoText: "klayr"
     },
+    children: <Typography variant={"h2"} component={"h1"}>Content</Typography>,
   }
 };
 
@@ -29,9 +32,3 @@ export const Default: Story = {
   args: {
   },
 };
-
-/*export const NewFavourite: Story = {
-  args: {
-    newFavourite: true,
-  },
-};*/

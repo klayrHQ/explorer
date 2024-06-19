@@ -8,22 +8,22 @@ import {SubMenu} from "../../molecules";
 import {cls} from "../../../utils/functions.ts";
 
 export interface MenuItemProps {
-    label: string | React.ReactNode
-    active?: boolean
-    hovered?: boolean
-    disabled?: boolean
-    minimized?: boolean
-    icon: IconComponent
-    subMenu?: MenuItemProps[]
-    className?: string
-    linkComponent?: React.PropsWithChildren<React.ReactElement>
+  label: string | React.ReactNode
+  active?: boolean
+  hovered?: boolean
+  disabled?: boolean
+  minimized?: boolean
+  icon: IconComponent
+  subMenu?: MenuItemProps[]
+  className?: string
+  linkComponent?: React.PropsWithChildren<React.ReactElement>
+  variant?: "default" | "small"
+  square?: boolean
 }
 
 const menuItemStyles = cva(
   [
-    "rounded-md",
     "flex items-center",
-    "h-menuItemHeight",
     "p-lxl",
     "group",
     "transition-all duration-200 ease-in-out",
@@ -45,20 +45,30 @@ const menuItemStyles = cva(
         true: "text-gray-1 hover:text-gray-1 grayscale-6 cursor-not-allowed",
         false: "text-gray-4 hover:text-gray-1 hover:bg-gray-7 cursor-pointer",
       },
+      variant: {
+        default: "h-menuItemHeight",
+        small: "h-menuItemSmallHeight",
+      },
+      square: {
+        true: "",
+        false: "rounded-xs",
+      },
     },
   },
 );
 
 export const MenuItem = ({
-    label,
-    active = false,
-    hovered = false,
-    disabled = false,
-    minimized = false,
-    icon,
-    subMenu,
-    className,
-    linkComponent,
+  label,
+  active = false,
+  hovered = false,
+  disabled = false,
+  minimized = false,
+  icon,
+  subMenu,
+  className,
+  linkComponent,
+  variant = "default",
+  square = false,
 }: MenuItemProps) => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
@@ -79,15 +89,15 @@ export const MenuItem = ({
       color={"inherit"}
       fontWeight={"semibold"}
     >
-      <div className={"w-menuIconWidth"}>
-        <Icon className={"group-hover:text-gray-1"} color={"gray-5"} icon={icon} size={"medium"}/>
+      <div className={variant === "default" ? "w-menuIconWidth" : "w-menuIconSmallWidth"}>
+        <Icon className={"group-hover:text-gray-1"} color={"gray-5"} icon={icon} size={variant === "default" ? "medium" : "xs"}/>
       </div>
       {
         !minimized && (
           <>
             <span
               className={cls([
-                "pt-2xs transition-all duration-200 ease-in-out overflow-hidden",
+                "pt-xs transition-all duration-200 ease-in-out overflow-hidden",
                 minimized ? "w-0" : "w-max",
               ])}
             >
@@ -108,6 +118,8 @@ export const MenuItem = ({
         disabled,
         className,
         minimized,
+        variant,
+        square,
       })}
       onMouseEnter={(event) => handleHover(event,true)}
       onMouseLeave={(event) => handleHover(event,false)}

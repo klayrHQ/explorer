@@ -2,8 +2,13 @@
 import {FlexGrid, Input, Typography} from "../../atoms";
 import {Popper} from "@mui/base";
 import React, { useState} from "react";
+import {cls} from "../../../utils/functions.ts";
 
-export const Search = () => {
+interface SearchProps {
+  className?: string
+}
+
+export const Search = ({ className, }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
 
@@ -13,29 +18,29 @@ export const Search = () => {
   }
 
   return (
-    <div className={"w-full desktop:w-searchBarWidth"}>
+    <div className={cls(["w-full max-w-searchBarWidth", className])}>
       <Input
         icon={"SearchLg"}
-        onFocus={(event) => handleFocus(event, true)}
         onBlur={(event) => handleFocus(event,false)}
+        onFocus={(event) => handleFocus(event, true)}
         placeholder={"Search"}
         type={"text"}
         variant={"onBgPrimary"}
       />
       <Popper
-          anchorEl={anchorEl}
-          open={open}
-          placement={"bottom"}
-          popperOptions={{
-            modifiers: [
-              {
-                name: 'offset',
-                options: {
-                  offset: [0, 10],
-                },
+        anchorEl={anchorEl}
+        open={open}
+        placement={"bottom"}
+        popperOptions={{
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 10],
               },
-            ],
-          }}
+            },
+          ],
+        }}
       >
         <FlexGrid className={"rounded-md border-solid border-gray-7 border w-searchBarWidth p-4"} direction={"column"}>
           <Typography>Search Results</Typography>
