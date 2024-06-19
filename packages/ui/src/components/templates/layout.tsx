@@ -9,6 +9,7 @@ interface LayoutProps {
   logo: {
     logoSrc: string
     altText: string
+    logoText: string
   }
   kpis: {
     keyValue: string | ReactNode

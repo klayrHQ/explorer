@@ -26,14 +26,14 @@ const preview: Preview = {
   },
   decorators: [
     (story, context) => {
-      const bgDefault = "#0C111D";
+      const bgLight = "#FFFFFF";
       const bg = context?.globals?.backgrounds?.value;
-      if (bg === bgDefault) {
-        document.documentElement.classList.remove('light');
-        document.documentElement.classList.add('dark');
-      } else {
+      if (bg === bgLight) {
         document.documentElement.classList.remove('dark');
         document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
       }
       return story();
     },

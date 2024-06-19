@@ -22,6 +22,7 @@ export const Logo = ({
       {
         logoText && !minimized &&
         <Typography
+          color={"onBackgroundDark"}
           component={"span"}
           fontWeight={"semibold"}
           variant={"logo"}

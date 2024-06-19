@@ -36,9 +36,12 @@
   --color-shadow-gray-7: rgba(31, 36, 47, 0.1);
   --color-shadow-gray-8: rgba(5, 5, 22, 0.1);
 
-  /* Backgrounds */
+  /* Constant colors */
   --color-backgroundDark: var(--color-darkBlue);
   --color-backgroundLight: var(--color-gray-1);
+
+  --color-onBackgroundDark: var(--color-gray-1);
+  --color-onBackgroundLight: var(--color-gray-8);
 
   /* States */
   --color-error: var(--color-tulip);
