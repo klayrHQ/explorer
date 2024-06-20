@@ -229,7 +229,8 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(grow, 'grow'),
     ...getKeyMap(objectFit, "object"),
     ...getKeyMap(colSpan, "col"),
-
+    "border-collapse",
+    "border-spacing-0",
   ],
   theme: {
     extend: {

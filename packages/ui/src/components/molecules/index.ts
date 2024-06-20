@@ -5,3 +5,4 @@ export * from "./performanceCard/performanceCard";
 export * from "./topbar/chainNetworkPicker";
 export * from "./topbar/optionsMenu";
 export * from "./topbar/mobileMenu";
+export * from "./data/table";

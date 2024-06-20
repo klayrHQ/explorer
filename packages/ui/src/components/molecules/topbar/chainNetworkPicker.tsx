@@ -23,7 +23,7 @@ export const ChainNetworkPicker = ({ currentChain, currentNetwork, chains, netwo
         <ImageContainer
           alt={currentChain.chainName}
           component={imgComponent}
-          size={"chainLogo"}
+          variant={"chainLogo"}
           src={currentChain.chainLogo}
         />
       }

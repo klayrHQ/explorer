@@ -17,6 +17,8 @@ export * from "./badges/badge";
 export * from "./badges/badgeIcon";
 export * from "./badges/badgeGroup";
 export * from "./data/keyValueComponent";
+export * from "./data/table/tableRow";
+export * from "./data/table/tableCell";
 export * from "./notifications/notificationIcon";
 
 

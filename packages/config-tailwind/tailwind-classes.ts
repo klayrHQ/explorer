@@ -44,6 +44,9 @@ const colors = {
   onMenuMedium: "var(--color-onMenuMedium)",
   onMenuLow: "var(--color-onMenuLow)",
   onMenu: "var(--color-onMenu)",
+  borderLow: "var(--color-borderLow)",
+  borderMedium: "var(--color-borderMedium)",
+  borderHigh: "var(--color-borderHigh)",
   error: "var(--color-error)",
   success: "var(--color-success)",
   volt: "var(--color-volt)",
@@ -443,7 +446,6 @@ const colSpan = {
   "span-8": "span 8 / span 8",
   "span-9": "span 9 / span 9",
   "span-Full": "1 / -1",
-
 }
 
 export const classes = {
