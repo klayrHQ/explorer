@@ -36,6 +36,7 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `desktop:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `focus:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `focus:hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `group-hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `last:${prefix}-${key}`),
 

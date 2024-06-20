@@ -1,5 +1,6 @@
 export * from "./input/button";
 export * from "./input/iconButton";
+export * from "./input/select";
 export * from "./base/typography";
 export * from "./base/flexGrid";
 export * from "./base/grid";
