@@ -19,7 +19,6 @@ module.exports = {
         "import/no-named-as-default": 2,
         "import/no-unused-modules": 2,
         "import/no-absolute-path": 2,
-        "import/no-unresolved": 2,
         "import/first": 2,
         "import/no-useless-path-segments": 2,
         "react/jsx-key": 2,

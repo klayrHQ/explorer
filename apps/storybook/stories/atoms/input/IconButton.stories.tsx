@@ -14,8 +14,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+type Template = Omit<Story, "args">;
 
-const Template: Story = {
+const Template: Template = {
   render: (args) => (
     <div className={"w-[300px]"}>
       <IconButton {...args} />

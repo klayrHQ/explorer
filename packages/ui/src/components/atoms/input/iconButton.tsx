@@ -1,17 +1,19 @@
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
 import { Button as MuiButton } from '@mui/base';
 import {cva} from "class-variance-authority";
 import {Icon} from "../images/icon";
-import {IconComponent} from "../../../types/types";
+import {ColorType, IconComponent} from "../../../types/types";
 
-interface IconButtonProps {
-  variant?: "primary" | "secondary" | "tertiary" | "semiTransparent" | "transparent" | "iconOnly"
-  className?: string;
-  icon: IconComponent;
-  onClick?: () => void;
-  align?: "left" | "center" | "right" | "none";
-  hovered?: boolean;
-  disabled?: boolean;
+interface IconButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "tertiary" | "semiTransparent" | "transparent" | "bordered" | "iconOnly" | "iconOnlyAlt"
+  className?: string
+  icon: IconComponent
+  onClick?: MouseEventHandler<HTMLButtonElement>
+  align?: "left" | "center" | "right" | "none"
+  active?: boolean
+  hovered?: boolean
+  disabled?: boolean
+  color?: ColorType
 }
 
 const iconButtonStyles = cva(
@@ -19,12 +21,14 @@ const iconButtonStyles = cva(
   {
     variants: {
       variant: {
-        primary: "text-gray-8 p-xl w-iconButtonWidth h-buttonHeight",
-        secondary: "text-gray-1 p-xl w-iconButtonWidth h-buttonHeight",
-        tertiary: "text-gray-1 p-xl w-iconButtonWidth h-buttonHeight",
-        semiTransparent: "text-gray-1 p-xl w-iconButtonWidth h-buttonHeight",
-        transparent: "p-xl w-iconButtonWidth h-buttonHeight",
+        primary: "text-gray-8 w-iconButtonWidth h-buttonHeight",
+        secondary: "text-gray-1 w-iconButtonWidth h-buttonHeight",
+        tertiary: "text-gray-1 w-iconButtonWidth h-buttonHeight",
+        semiTransparent: "text-gray-1 w-iconButtonWidth h-buttonHeight",
+        transparent: "w-iconButtonWidth h-buttonHeight",
+        bordered: "border border-backgroundSecondary w-iconButtonWidth h-buttonHeight",
         iconOnly: "w-auto h-auto p-1",
+        iconOnlyAlt: "w-auto h-auto p-1",
       },
       align: {
         left: "mr-auto",
@@ -38,6 +42,10 @@ const iconButtonStyles = cva(
         false: "",
       },
       disabled: {
+        true: "",
+        false: "",
+      },
+      active: {
         true: "",
         false: "",
       },
@@ -104,21 +112,130 @@ const iconButtonStyles = cva(
         disabled: false,
         className: "text-gray-5 hover:text-gray-6",
       },
+      {
+        hovered: true,
+        variant: "bordered",
+        disabled: false,
+        className: "text-onBackgroundHigh bg-backgroundSecondary",
+      },
+      {
+        hovered: false,
+        variant: "bordered",
+        disabled: false,
+        className: "text-onBackgroundMedium hover:bg-backgroundSecondary hover:text-onBackgroundHigh",
+      },
+      {
+        hovered: true,
+        variant: "iconOnly",
+        disabled: false,
+        className: "text-gray-6",
+      },
+      {
+        hovered: false,
+        variant: "iconOnly",
+        disabled: false,
+        className: "text-gray-5 hover:text-gray-6",
+      },
+      //active
+      {
+        active: true,
+        variant: "primary",
+        disabled: false,
+        className: "bg-voltDark",
+      },
+      {
+        active: false,
+        variant: "primary",
+        disabled: false,
+        className: "bg-volt hover:bg-voltDark",
+      },
+      {
+        active: true,
+        variant: "secondary",
+        disabled: false,
+        className: "bg-azuleDark",
+      },
+      {
+        active: false,
+        variant: "secondary",
+        disabled: false,
+        className: "bg-azule hover:bg-azuleDark",
+      },
+      {
+        active: true,
+        variant: "tertiary",
+        disabled: false,
+        className: "bg-gray-7",
+      },
+      {
+        active: false,
+        variant: "tertiary",
+        disabled: false,
+        className: "bg-gray-6 hover:bg-gray-7",
+      },
+      {
+        active: true,
+        variant: "semiTransparent",
+        disabled: false,
+        className: "bg-gray-6",
+      },
+      {
+        active: false,
+        variant: "semiTransparent",
+        disabled: false,
+        className: "bg-transparent hover:bg-gray-6",
+      },
+      {
+        active: true,
+        variant: "transparent",
+        disabled: false,
+        className: "text-gray-6",
+      },
+      {
+        active: false,
+        variant: "transparent",
+        disabled: false,
+        className: "text-gray-5 hover:text-gray-6",
+      },
+      {
+        active: true,
+        variant: "bordered",
+        disabled: false,
+        className: "text-onBackgroundHigh bg-backgroundSecondary",
+      },
+      {
+        active: false,
+        variant: "bordered",
+        disabled: false,
+        className: "text-onBackgroundMedium hover:bg-backgroundSecondary hover:text-onBackgroundHigh",
+      },
+      {
+        active: true,
+        variant: "iconOnly",
+        disabled: false,
+        className: "text-gray-6",
+      },
+      {
+        active: false,
+        variant: "iconOnly",
+        disabled: false,
+        className: "text-gray-5 hover:text-gray-6",
+      },
       //disabled
       {
         disabled: true,
         variant: "primary",
-        className: "grayscale-6 bg-volt cursor-not-allowed",
+        className: "grayscale-60p bg-volt cursor-not-allowed",
       },
       {
         disabled: true,
         variant: "secondary",
-        className: "grayscale-6 bg-azule cursor-not-allowed",
+        className: "grayscale-60p bg-azule cursor-not-allowed",
       },
       {
         disabled: true,
         variant: "transparent",
-        className: "grayscale-6 cursor-not-allowed",
+        className: "grayscale-60p cursor-not-allowed",
       },
     ],
   },
@@ -132,6 +249,9 @@ export const IconButton = ({
   align,
   hovered = false,
   disabled = false,
+  active = false,
+  color,
+  ...props
 }: IconButtonProps) => {
 
   return (
@@ -141,12 +261,14 @@ export const IconButton = ({
         align,
         hovered,
         disabled,
+        active,
         className: className,
       })}
       onClick={onClick}
       type="button"
+      {...props}
     >
-      <Icon color={"inherit"} icon={icon} size={"small"} />
+      <Icon className={"mx-auto"} color={color ?? "inherit"} icon={icon} size={"small"} />
     </MuiButton>
   );
 };

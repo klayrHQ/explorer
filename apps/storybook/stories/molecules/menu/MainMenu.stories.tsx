@@ -12,8 +12,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+type Template = Omit<Story, "args">;
 
-const Template: Story = {
+const Template: Template = {
   render: (args) => (
     <div className={args.minimized ? "w-max" : "w-[240px]"}>
       <MainMenu {...args} />

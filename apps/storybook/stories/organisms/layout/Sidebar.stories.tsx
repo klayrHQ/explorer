@@ -1,6 +1,7 @@
 import type { StoryObj } from '@storybook/react';
 import {Sidebar} from "@repo/ui/organisms";
 import LogoImg from "../../assets/images/logo.svg";
+import {menuItems} from "@/stories/utils/mockup";
 
 const meta = {
   title: 'Organisms/Layout/Sidebar',
@@ -13,59 +14,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+type Template = Omit<Story, "args">;
 
-const subMenu = [
-  {
-    label: 'Users',
-    icon: 'Users',
-  },
-  {
-    label: 'Validators',
-    icon: 'Flag',
-  },
-  {
-    label: 'Blocks',
-    icon: 'Cube',
-  },
-  {
-    label: 'Tokens',
-    icon: 'CryptoCurrency',
-  },
-  {
-    label: 'Nodes',
-    icon: 'MarkerPin',
-  },
-];
-
-const menuItems = [
-  {
-    label: 'Dashboard',
-    icon: 'BarChartSquare',
-  },
-  {
-    label: 'Blockchain',
-    icon: 'DataFlow',
-    subMenu,
-  },
-  {
-    label: 'Transactions',
-    icon: 'SwitchHorizontal',
-  },
-  {
-    label: 'Stakes',
-    icon: 'LayersThree',
-  },
-  {
-    label: 'Chains',
-    icon: 'Data',
-  },
-  {
-    label: 'NFTs',
-    icon: 'Image',
-  },
-];
-
-const Template: Story = {
+const Template: Template = {
   render: (args) => (
     <div className={"w-sidebarWidth"}>
       <Sidebar {...args} />

@@ -1,7 +1,7 @@
 const borderWidth = {
   DEFAULT: "1px",
   0: "0px",
-  1: "0.1rem",
+  1: "1px",
   2: "2px",
   4: "4px",
   8: "8px",
@@ -22,6 +22,7 @@ const borderRadius = {
 };
 
 const colors = {
+  transparent: "transparent",
   primary: "var(--color-volt)",
   onPrimary: "var(--color-gray-8)",
   secondary: "var(--color-azule)",
@@ -32,6 +33,19 @@ const colors = {
   backgroundTertiary: "var(--color-backgroundTertiary)",
   backgroundDark: "var(--color-backgroundDark)",
   backgroundLight: "var(--color-backgroundLight)",
+  onBackgroundHigh: "var(--color-onBackgroundHigh)",
+  onBackgroundMediumHigh: "var(--color-onBackgroundMediumHigh)",
+  onBackgroundMedium: "var(--color-onBackgroundMedium)",
+  onBackgroundLow: "var(--color-onBackgroundLow)",
+  onBackground: "var(--color-onBackground)",
+  onBackgroundDark: "var(--color-onBackgroundDark)",
+  onBackgroundLight: "var(--color-onBackgroundLight)",
+  onMenuHigh: "var(--color-onMenuHigh)",
+  onMenuMedium: "var(--color-onMenuMedium)",
+  onMenuLow: "var(--color-onMenuLow)",
+  onMenu: "var(--color-onMenu)",
+  error: "var(--color-error)",
+  success: "var(--color-success)",
   volt: "var(--color-volt)",
   voltDark: "var(--color-voltDark)",
   azule: "var(--color-azule)",
@@ -84,6 +98,8 @@ const fontSize = {
   "icon-xl": ["32px"],
   "icon-md": ["24px"],
   "icon-sm": ["20px"],
+  "icon-xs": ["16px"],
+  "logo": ["34px", {lineHeight: "39px", }],
 };
 
 const fontWeight = {
@@ -107,6 +123,7 @@ const spacing = {
   lg: "10px",
   lxl: "12px",
   xl: "14px",
+  "1.5xl": "16px",
   "2xl": "20px",
   "3xl": "24px",
   sidebarMinSpacing: "22px",
@@ -115,6 +132,8 @@ const spacing = {
 const screens = {
   desktop: "1024px",
   tablet: "440px",
+  mobile: { max: "439px" },
+  sidebarBp: { "raw": "(max-height: 800px)" }
 };
 
 const display = {
@@ -153,16 +172,15 @@ const overflow = {
 }
 
 const percentages = {
-  1: "10%",
-  2: "20%",
-  3: "30%",
-  4: "40%",
-  5: "50%",
-  6: "60%",
-  7: "70%",
-  8: "80%",
-  9: "90%",
-  10: "100%",
+  "10p": "10%",
+  "20p": "20%",
+  "30p": "30%",
+  "40p": "40%",
+  "50p": "50%",
+  "60p": "60%",
+  "70p": "70%",
+  "80p": "80%",
+  "90p": "90%",
   "1/2": "50%",
   "1/3": "33.333333%",
   "2/3": "66.666667%",
@@ -234,10 +252,12 @@ const leading = {
 
 const height = {
   screen: "100vh",
+  screenUnderTopbar: "calc(100vh - 88px)",
+  screenUnderTopbarMobile: "calc(100vh - 76px)",
   full: "100%",
   max: "max-content",
   min: "min-content",
-  buttonHeight: "44px",
+  buttonHeight: "40px",
   inputHeight: "44px",
   badgeHeight: "26px",
   newsCardHeight: '240px',
@@ -245,7 +265,13 @@ const height = {
   newsCardContainerMobileHeight: '324px',
   newsCardMobileHeight: '160px',
   menuItemHeight: "48px",
-  logoImgHeight: "23px",
+  menuItemSmallHeight: "34px",
+  logoImgHeight: "24px",
+  topbarHeight: "88px",
+  topbarMobileHeight: "76px",
+  chainLogoHeight: "16px",
+  avatarHeight: "24px",
+  avatarLgHeight: "40px",
 }
 
 const width = {
@@ -254,15 +280,20 @@ const width = {
   max: "max-content",
   min: "min-content",
   menuIconWidth: "24px",
-  iconButtonWidth: "44px",
+  menuIconSmallWidth: "16px",
+  iconButtonWidth: "40px",
   sidebarWidth: "240px",
   sidebarMinWidth: "88px",
   minimizedMenuItemWidth: "48px",
-  logoImgWidth: "23px",
+  logoImgWidth: "24px",
   newsCardWidth: '362px',
   newsCardMobileWidth: '382px',
   performanceCardWidth: '208px',
   performanceCardMobileWidth: '183px',
+  searchBarWidth: '600px',
+  chainLogoWidth: "16px",
+  avatarWidth: "24px",
+  avatarLgWidth: "40px",
 }
 
 const lineClamp = {
@@ -347,6 +378,51 @@ const position = {
   sticky: "sticky",
 }
 
+const zIndex = {
+  auto: "auto",
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+  10: 10,
+  20: 20,
+  30: 30,
+  40: 40,
+  50: 50,
+  60: 60,
+  70: 70,
+  80: 80,
+  90: 90,
+  100: 100,
+  200: 200,
+  300: 300,
+  400: 400,
+  500: 500,
+  600: 600,
+  700: 700,
+  800: 800,
+  900: 900,
+  1000: 1000,
+}
+
+const whitespace = {
+  normal: "normal",
+  nowrap: "nowrap",
+  pre: "pre",
+  "pre-line": "pre-line",
+  "pre-wrap": "pre-wrap",
+}
+
+const shrink = {
+  0: 0,
+  DEFAULT: 1,
+}
+
+const grow = {
+  0: 0,
+  DEFAULT: 1,
+}
+
 const objectFit = {
   'cover': 'cover',
   'contain': 'contain',
@@ -370,7 +446,7 @@ const colSpan = {
 
 }
 
-export default {
+export const classes = {
   borderRadius,
   borderWidth,
   colors,
@@ -394,6 +470,10 @@ export default {
   ease,
   position,
   overflow,
+  zIndex,
+  whitespace,
+  shrink,
+  grow,
   objectFit,
   colSpan,
 };

@@ -13,8 +13,8 @@
   --color-sandDark: #DCDCA6;
   --color-green: #22C55E;
   --color-greenDark: #118D57;
-  --color-black: #000000;
-  --color-white: #ffffff;
+  --color-black: #1A1A1A;
+  --color-white: #F8F9FD;
 
   /* Grays */
   --color-gray-1: #F5F5F6;
@@ -36,15 +36,34 @@
   --color-shadow-gray-7: rgba(31, 36, 47, 0.1);
   --color-shadow-gray-8: rgba(5, 5, 22, 0.1);
 
+  /* Constant colors */
   --color-backgroundDark: var(--color-darkBlue);
   --color-backgroundLight: var(--color-gray-1);
-}
 
-.dark {
+  --color-onBackgroundDark: var(--color-gray-1);
+  --color-onBackgroundLight: var(--color-gray-8);
+
+  /* States */
+  --color-error: var(--color-tulip);
+  --color-success: var(--color-green);
+
+  /* Darkmode === Default*/
   --color-background: var(--color-darkBlue);
   --color-backgroundPrimary: var(--color-darkBlue);
   --color-backgroundSecondary: var(--color-gray-7);
   --color-backgroundTertiary: var(--color-gray-6);
+
+  --color-onBackground: var(--color-gray-1);
+  --color-onBackgroundHigh: var(--color-gray-1);
+  --color-onBackgroundMediumHigh: var(--color-gray-3);
+  --color-onBackgroundMedium: var(--color-gray-4);
+  --color-onBackgroundLow: var(--color-gray-5);
+
+  --color-onMenu: var(--color-gray-1);
+  --color-onMenuHigh: var(--color-gray-1);
+  --color-onMenuMedium: var(--color-gray-4);
+  --color-onMenuLow: var(--color-gray-5);
+
   --color-body: var(--color-gray-1);
 }
 
@@ -53,5 +72,17 @@
   --color-backgroundPrimary: var(--color-gray-1);
   --color-backgroundSecondary: var(--color-gray-2);
   --color-backgroundTertiary: var(--color-gray-3);
+
+  --color-onBackground: var(--color-gray-8);
+  --color-onBackgroundHigh: var(--color-gray-8);
+  --color-onBackgroundMediumHigh: var(--color-gray-7);
+  --color-onBackgroundMedium: var(--color-gray-6);
+  --color-onBackgroundLow: var(--color-gray-5);
+
+  --color-onMenu: var(--color-gray-8);
+  --color-onMenuHigh: var(--color-gray-8);
+  --color-onMenuMedium: var(--color-gray-6);
+  --color-onMenuLow: var(--color-gray-5);
+
   --color-body: var(--color-gray-8);
 }

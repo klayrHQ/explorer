@@ -22,9 +22,10 @@ export const Logo = ({
       {
         logoText && !minimized &&
         <Typography
+          color={"onBackgroundDark"}
           component={"span"}
           fontWeight={"semibold"}
-          variant={"h3"}
+          variant={"logo"}
         >
           {logoText}
         </Typography>
