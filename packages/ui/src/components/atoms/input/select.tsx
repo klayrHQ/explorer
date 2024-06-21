@@ -13,7 +13,7 @@ interface Option {
   }
 
 const selectStyles = cva(
-  "justify-start border rounded-md border-gray-6 focus:outline-none hover:border-gray-5 bg-none text-gray-1 text-paragraph-sm ",
+  "justify-start border rounded-md border-gray-7 focus:outline-none hover:border-gray-5 bg-none text-gray-1 text-paragraph-sm bg-backgroundDark ",
   {
     variants: {
       width: {
@@ -29,7 +29,7 @@ const selectStyles = cva(
   },
 );
 
-interface CustomSelectProps {
+export interface CustomSelectProps {
   placeholder?: string;
   defaultValue?: string;
   width?: "sm" | "md" | "lg" | "xl";
@@ -85,7 +85,7 @@ export const CustomSelect = ({
             )}
           />
         )}
-        <Typography variant="paragraph-sm">{selectedOption.label} </Typography>
+        <Typography fontWeight="semibold" variant="paragraph-sm">{selectedOption.label} </Typography>
       </div>
     ) : null;
   };
@@ -116,7 +116,7 @@ export const CustomSelect = ({
       {listboxVisible && (
         <ul
           className={clsx(
-            "absolute mt-2 border border-gray-7 rounded-md z-10",
+            "absolute mt-2 border border-gray-7 rounded-md bg-gray-8 z-10", //bg-color?
             selectStyles({ width, }),
           )}
           role="listbox"
