@@ -294,6 +294,8 @@ const width = {
   chainLogoWidth: "16px",
   avatarWidth: "24px",
   avatarLgWidth: "40px",
+  selectXLWidth: "360px",
+  selectSMWidth: "120px",
 }
 
 const lineClamp = {

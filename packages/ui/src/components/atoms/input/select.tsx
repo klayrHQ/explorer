@@ -1,112 +1,165 @@
 import * as React from "react";
-import {
-  Select as BaseSelect,
-  Option as BaseOption,
-  SelectRootSlotProps,
-} from "@mui/base";
 import { cva } from "class-variance-authority";
 import { Typography } from "../base/typography";
-import { Icon } from "../images/icon"; // Ensure you have the icon library installed
+import { Icon } from "../images/icon";
 import { clsx } from "clsx";
 
+interface Option {
+    value: string;
+    label: string;
+    labelIcon?: string;
+    labelImage?: string;
+    labelCircleColor?: string;
+  }
 
 const selectStyles = cva(
-  "flex items-center justify-start border rounded-md border-gray-6 focus:outline-none hover:border-gray-5 bg-none text-gray-1 text-paragraph-sm",
+  "justify-start border rounded-md border-gray-6 focus:outline-none hover:border-gray-5 bg-none text-gray-1 text-paragraph-sm ",
   {
     variants: {
-      disabled: {
-        true: "cursor-not-allowed text-gray-1",
-        false: "cursor-pointer",
+      width: {
+        sm: "min-w-36",
+        md: "min-w-40",
+        lg: "min-w-64",
+        xl: "min-w-selectXLWidth",
       },
     },
     defaultVariants: {
-      disabled: false,
+      width: "md",
     },
-  }
+  },
 );
 
-// Custom Button Component for Select Root
-const Button = React.forwardRef(function Button<
-  TValue extends {},
-  Multiple extends boolean,
->(
-  props: SelectRootSlotProps<TValue, Multiple>,
-  ref: React.ForwardedRef<HTMLButtonElement>
-) {
-  const { ownerState, ...other } = props;
-  return (
-    <button
-      type="button"
-      {...other}
-      className="flex items-center justify-between min-w-36 gap-2 px-4 py-2"
-      ref={ref}
-    >
-      {other.children}
-      <Icon
-        color="gray-6"
-        hoverColor="gray-3"
-        icon="ChevronDown"
-        size="small"
-      />
-    </button>
-  );
-});
-
 interface CustomSelectProps {
-  disabled?: boolean;
-  iconPosition?: "left" | "right" | "none";
+  placeholder?: string;
   defaultValue?: string;
-  options: { value: string; label: string, labelIcon?: string, }[];
+  width?: "sm" | "md" | "lg" | "xl";
+  options:  Option[];
 }
 
-// eslint-disable-next-line react/no-multi-comp
 export const CustomSelect = ({
   options,
   defaultValue,
-  disabled,
-  iconPosition,
+  placeholder,
+  width = "md",
 }: CustomSelectProps) => {
-  const styles = selectStyles({ disabled,});
+  const styles = selectStyles({  width, });
+  const [selectedValue, setSelectedValue] = React.useState<string | undefined>(
+    defaultValue,
+  );
+  const [listboxVisible, setListboxVisible] = React.useState<boolean>(false);
+
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+    setListboxVisible(false);
+  };
+
+  const renderSelectedValue = (
+    value: string | undefined,
+    options: Option[],
+  ) => {
+    const selectedOption = value
+      ? options.find((option) => option.value === value)
+      : null;
+    return selectedOption ? (
+      <div className="flex items-center">
+        {selectedOption.labelIcon && (
+          <Icon
+            className="mr-2 "
+            hoverColor="gray-3"
+            icon={selectedOption.labelIcon}
+            size="inherit"
+          />
+        )}
+        {selectedOption.labelImage && (
+          <img
+            alt="icon"
+            className="mr-2 w-4 h-4"
+            src={selectedOption.labelImage}
+          />
+        )}
+        {selectedOption.labelCircleColor && (
+          <div
+            className={clsx(
+              "mr-2 w-2 h-2 rounded-full",
+              `bg-${selectedOption.labelCircleColor}`,
+            )}
+          />
+        )}
+        <Typography variant="paragraph-sm">{selectedOption.label} </Typography>
+      </div>
+    ) : null;
+  };
 
   return (
     <div className={styles}>
-      <BaseSelect
-        defaultValue={defaultValue}
-        disabled={disabled}
-        slotProps={{
-          root: {
-            className: "flex items-center justify-center",
-          },
-          listbox: {
-            className:
-              "mt-2 px-2 py-1 border border-gray-7 rounded-md shadow-lg",
-          },
-        }}
-        slots={{
-          root: Button,
-        }}
-      >
-        {options.map((option) => (
-          <BaseOption
-            className={clsx(
-              "cursor-pointer list-none p-2 mt-1 flex items-center justify-start w-full rounded-md min-w-36 transition duration-150 ease-in-out   ",
-              {
-                "hover:bg-voltDark hover:text-gray-7": !disabled,
-                "focus:bg-gray-7 focus:text-white": !disabled,
-                "focus:hover:bg-voltDark focus:hover:text-gray-7": !disabled,
-              }
-            )}
-            key={option.value}
-            value={option.value}
-          >
-            {option.labelIcon && (
-              <Icon className="mr-2" icon={option.labelIcon} size="inherit" /> // Render the icon if it exists
-            )}
-            <Typography variant="paragraph-sm">{option.label}</Typography>
-          </BaseOption>
-        ))}
-      </BaseSelect>
+      <div className="relative">
+        <button
+          className={clsx(
+            "flex items-center justify-between gap-2 px-4 py-2",
+            selectStyles({ width, }),
+          )}
+          onClick={() => setListboxVisible(!listboxVisible)}
+          type="button"
+        >
+          {renderSelectedValue(selectedValue, options) || (
+            <span className="placeholder">{placeholder ?? " "}</span>
+          )}
+          <Icon
+            color="gray-6"
+            hoverColor="gray-3"
+            icon="ChevronDown"
+            size="small"
+          />
+        </button>
+      </div>
+
+      {listboxVisible && (
+        <ul
+          className={clsx(
+            "absolute mt-2 border border-gray-7 rounded-md z-10",
+            selectStyles({ width, }),
+          )}
+          role="listbox"
+        >
+          {options.map((option) => (
+            <li
+              className={clsx(
+                "cursor-pointer list-none  px-4 py-2 flex items-center justify-start w-full rounded-md hover:bg-voltDark hover:text-gray-7 transition duration-150 ease-in-out",
+                {
+                  "bg-gray-7": selectedValue === option.value,
+                },
+              )}
+              key={option.value}
+              onClick={() => handleSelect(option.value)}
+              value={option.value}
+            >
+              {option.labelIcon && (
+                <Icon
+                  className="mr-2 hover:text-gray-7"
+                  icon={option.labelIcon}
+                  size="inherit"
+                />
+              )}
+              {option.labelImage && (
+                <img
+                  alt="icon"
+                  className="mr-2 w-4 h-4"
+                  src={option.labelImage}
+                />
+              )}
+              {option.labelCircleColor && (
+                <div
+                  className={clsx(
+                    "mr-2 w-2 h-2 rounded-full",
+                    `bg-${option.labelCircleColor}`,
+                  )}
+                />
+              )}
+              <Typography variant="paragraph-sm">{option.label}</Typography>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
-  

@@ -1,10 +1,8 @@
-// src/stories/Select.stories.tsx
-
 import { StoryObj } from '@storybook/react';
 import { CustomSelect } from '@repo/ui/atoms'; 
 
 const meta = {
-  title: 'Atoms/Input/CustomSelect',
+  title: 'Atoms/Input/Select',
   component: CustomSelect,
   parameters: {
     layout: 'centered',
@@ -16,8 +14,11 @@ const meta = {
         options: ['left', 'right', 'none'],
       },
     },
-    disabled: {
-      control: 'boolean',
+    width: {
+      control: {
+        type: 'select',
+        options: ['sm', 'md', 'lg', 'xl'],
+      },
     },
   },
 };
@@ -25,45 +26,59 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const Stats: Story = {
+  args: {
+    options: [
+      { value: 'oneHourAgo', label: 'One hour ago' },
+      { value: 'yesterday', label: 'Yesterday'},
+      { value: 'lastWeek', label: 'Last week'},
+      { value: 'lastMonth', label: 'Last month' },
+      { value: 'lastYear', label: 'Last year', },
+    ],
+   
+  
+    defaultValue: 'lastMonth',
+    width: 'md',
+  },
+};
 
-export const Default = {
+export const Network: Story = {
+  args: {
+    options: [
+      { value: 'testnet', label: 'Testnet', labelCircleColor: 'green' },
+      { value: 'mainnet', label: 'Mainnet', labelCircleColor: 'lobster' },
+    
+    ],
+  
+  
+    defaultValue: 'testnet',
+    width: 'xl',
+  },
+};
+
+export const Chain: Story = {
+  args: {
+    options: [
+      { value: 'klayr', label: 'Klayr-main', labelImage: 'https://explorer.klayr.dev/_next/static/media/logo.f350e9f3.svg' },
+      { value: 'mainnet', label: 'Mainnet', labelImage: 'https://placekitten.com/200/300' },
+    ],
+  
+    defaultValue: 'klayr',
+   
+    width: 'xl',
+  },
+};
+
+export const Icon: Story = {
     args: {
         options: [
-            { value: 'oneHourAgo', label: 'One hour ago', labelIcon: 'Heart' },
-            { value: 'yesterday', label: 'Yesterday', labelIcon: 'LayersThree' },
-            { value: 'lastWeek', label: 'Last week' },
-            { value: 'lastMonth', label: 'Last month' },
-            { value: 'lastYear', label: 'Last year' },
+            { value: 'favorite', label: 'Favorite', labelIcon: 'Heart' },
+            { value: 'users', label: 'Users', labelIcon: 'Users' },
+            { value: 'settings', label: 'Settings', labelIcon: 'Settings' },
         ],
-        disabled: false,
-        iconPosition: 'none',
-        defaultValue: 'lastWeek',
+      
+        defaultValue: 'settings',
+         
+        width: 'sm',
         },
-    }
-
-
-
-
-export const LeftIcon = {
-    args : {
-        options: [
-          { value: 'testnet', label: 'Testnet' },
-          { value: 'mainnet', label: 'Mainnet' },
-        ],
-        disabled: false,
-        iconPosition: 'left',
-        defaultValue: 'testnet',
-      },
-}
-
-
-export const RightIcon = {
-    args : {
-        options: [
-          { value: 'testnet', label: 'Testnet' },
-            { value: 'mainnet', label: 'Mainnet' },
-        ],
-        disabled: false,
-        iconPosition: 'right',
-        },
-}
+};
