@@ -31,6 +31,7 @@ const {
   grow,
   objectFit,
   colSpan,
+  alignItems,
 } = classes;
 
 // @ts-ignore
@@ -230,6 +231,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(grow, 'grow'),
     ...getKeyMap(objectFit, "object"),
     ...getKeyMap(colSpan, "col"),
+    ...getKeyMap(alignItems, "items"),
     "border-collapse",
     "border-spacing-0",
   ],

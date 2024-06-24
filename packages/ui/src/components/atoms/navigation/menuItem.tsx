@@ -97,7 +97,7 @@ export const MenuItem = ({
           <>
             <span
               className={cls([
-                "pt-xs transition-all duration-200 ease-in-out overflow-hidden",
+                "transition-all duration-200 ease-in-out overflow-hidden",
                 minimized ? "w-0" : "w-max",
               ])}
             >

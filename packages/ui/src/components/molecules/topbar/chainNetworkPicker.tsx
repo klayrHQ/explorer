@@ -22,16 +22,17 @@ export const ChainNetworkPicker = ({ currentChain, currentNetwork, chains, netwo
         keyValue={
         <ImageContainer
           alt={currentChain.chainName}
+          className={"mt-px"}
           component={imgComponent}
-          variant={"chainLogo"}
           src={currentChain.chainLogo}
+          variant={"chainLogo"}
         />
       }
       />
       <KeyValueComponent
         contentValue={currentNetwork.networkName}
         hover
-        keyValue={<StatusIcon connected={currentNetwork.connected} />}
+        keyValue={<StatusIcon className={"mt-px"} connected={currentNetwork.connected} />}
       />
     </FlexGrid>
   )

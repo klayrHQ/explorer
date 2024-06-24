@@ -8,7 +8,7 @@ interface FlexGridProps {
   wrap?: boolean
   justify?: "normal" | "start" | "end" | "center" | "between" | "around"
   alignItems?: "start" | "end" | "center"
-  gap?: "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "xs" | "sm" | "md" | "lg" | "xl" | "1.5xl" | "2xl" | "3xl"
+  gap?: "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "xs" | "sm" | "md" | "lg" | "xl" | "1.5xl" | "2xl" | "3xl" | "4xl"
   className?: string
   children: ReactNode
 }

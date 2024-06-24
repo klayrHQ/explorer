@@ -8,8 +8,6 @@ export interface PerformanceCardProps {
   percentage: string;
   trend: boolean;
   statsVS: string;
-  icon?: IconComponent;
-  color: ColorType;
   className?: string;
 }
 
@@ -19,8 +17,6 @@ export const PerformanceCard = ({
   percentage,
   statsVS,
   trend,
-  color,
-  icon,
   className,
 }: PerformanceCardProps) => {
   return (

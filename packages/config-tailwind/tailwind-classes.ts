@@ -129,6 +129,7 @@ const spacing = {
   "1.5xl": "16px",
   "2xl": "20px",
   "3xl": "24px",
+  "4xl": "32px",
   sidebarMinSpacing: "22px",
 }
 
@@ -257,6 +258,7 @@ const height = {
   screen: "100vh",
   screenUnderTopbar: "calc(100vh - 88px)",
   screenUnderTopbarMobile: "calc(100vh - 76px)",
+  app: "1136px",
   full: "100%",
   max: "max-content",
   min: "min-content",
@@ -450,6 +452,14 @@ const colSpan = {
   "span-Full": "1 / -1",
 }
 
+const alignItems = {
+  start: "flex-start",
+  end: "flex-end",
+  center: "center",
+  baseline: "baseline",
+  stretch: "stretch",
+}
+
 export const classes = {
   borderRadius,
   borderWidth,
@@ -480,4 +490,5 @@ export const classes = {
   grow,
   objectFit,
   colSpan,
+  alignItems,
 };

@@ -116,7 +116,8 @@ export type ColorType =
   | "shadow-gray-6"
   | "shadow-gray-7"
   | "shadow-gray-8"
-  | "inherit";
+  | "inherit"
+  | string;
 
 export type ChainType = {
   chainId: string

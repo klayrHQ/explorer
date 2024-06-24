@@ -15,8 +15,8 @@ export const PerformanceSection = ({
   options,
 }: PerformanceSectionProps) => {
   return (
-    <FlexGrid component="article" direction="column" gap="8">
-      <div className=" hidden desktop:flex items-center justify-between ">
+    <FlexGrid className={"w-full"} component="article" direction="column" gap="8">
+      <div className="w-full hidden desktop:flex items-center justify-between ">
         <FlexGrid  direction="row" gap="2">
           <Typography
             className="hover:text-gray-4"
@@ -25,7 +25,6 @@ export const PerformanceSection = ({
             fontWeight="bold"
             variant="h4"
           >
-           
             <a href="/performance">
               Klayr performance
             </a>
