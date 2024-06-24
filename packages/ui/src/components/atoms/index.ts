@@ -1,5 +1,6 @@
 export * from "./input/button";
 export * from "./input/iconButton";
+export * from "./input/select";
 export * from "./input/input";
 export * from "./input/inputField";
 export * from "./input/textAreaField";
