@@ -296,6 +296,8 @@ const width = {
   avatarLgWidth: "40px",
   selectXLWidth: "360px",
   selectSMWidth: "120px",
+  modalWidth: "544px", 
+  modalWidthMobile: "382px",
 }
 
 const lineClamp = {

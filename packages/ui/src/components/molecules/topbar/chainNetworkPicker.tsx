@@ -6,7 +6,9 @@ import {ReactElement} from "react";
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType
+  setCurrentChain: (chain: ChainType) => void
   currentNetwork: NetworkType
+  setCurrentNetwork: (network: NetworkType) => void
   chains?: ChainType[]
   networks?: NetworkType[]
   imgComponent?: ReactElement
@@ -33,6 +35,7 @@ export const ChainNetworkPicker = ({ currentChain, currentNetwork, chains, netwo
         hover
         keyValue={<StatusIcon connected={currentNetwork.connected} />}
       />
+      <mOdel></mOdel>
     </FlexGrid>
   )
 }

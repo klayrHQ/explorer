@@ -71,6 +71,7 @@ export type IconComponent =
   | "CurrencyDollar"
   | "Sun"
   | "Menu"
+  | "CrossClose"
   | string;
 
 export type ColorType =

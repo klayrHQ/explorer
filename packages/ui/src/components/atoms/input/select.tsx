@@ -1,10 +1,11 @@
-import * as React from "react";
+import { useState } from "react";
 import { cva } from "class-variance-authority";
 import { Typography } from "../base/typography";
 import { Icon } from "../images/icon";
 import { clsx } from "clsx";
+import {ClickAwayListener} from "@mui/base";
 
-interface Option {
+export interface Option {
     value: string;
     label: string;
     labelIcon?: string;
@@ -34,6 +35,7 @@ export interface CustomSelectProps {
   defaultValue?: string;
   width?: "sm" | "md" | "lg" | "xl";
   options:  Option[];
+  onChange?: (value: string) => void; 
 }
 
 export const CustomSelect = ({
@@ -41,16 +43,20 @@ export const CustomSelect = ({
   defaultValue,
   placeholder,
   width = "md",
+    onChange,
 }: CustomSelectProps) => {
   const styles = selectStyles({  width, });
-  const [selectedValue, setSelectedValue] = React.useState<string | undefined>(
+  const [selectedValue, setSelectedValue] = useState<string | undefined>(
     defaultValue,
   );
-  const [listboxVisible, setListboxVisible] = React.useState<boolean>(false);
+  const [listboxVisible, setListboxVisible] = useState<boolean>(false);
 
   const handleSelect = (value: string) => {
     setSelectedValue(value);
     setListboxVisible(false);
+    if (onChange) {
+      onChange(value);
+    }
   };
 
   const renderSelectedValue = (
@@ -114,6 +120,7 @@ export const CustomSelect = ({
       </div>
 
       {listboxVisible && (
+        <ClickAwayListener onClickAway={() => setListboxVisible(false)}>
         <ul
           className={clsx(
             "absolute mt-2 border border-gray-7 rounded-md bg-gray-8 z-10", //bg-color?
@@ -159,6 +166,7 @@ export const CustomSelect = ({
             </li>
           ))}
         </ul>
+        </ClickAwayListener>
       )}
     </div>
   );
