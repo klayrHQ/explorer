@@ -13,9 +13,14 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+type Template = Omit<Story, "args">;
 
+const Template: Template =  {
+  render: (args) => <div className={"max-w-screen"}><TableContainer {...args} /></div>
+};
 
 export const Default: Story = {
+  ...Template,
   args: {
     keyPrefix: "sb-table",
     rows,
@@ -24,6 +29,7 @@ export const Default: Story = {
 };
 
 export const WithPagination: Story = {
+  ...Template,
   args: {
     keyPrefix: "sb-table",
     rows,
@@ -33,6 +39,7 @@ export const WithPagination: Story = {
 };
 
 export const WithFilters: Story = {
+  ...Template,
   args: {
     keyPrefix: "sb-table",
     rows,
@@ -42,6 +49,7 @@ export const WithFilters: Story = {
 };
 
 export const WithPaginationAndFilters: Story = {
+  ...Template,
   args: {
     keyPrefix: "sb-table",
     rows,

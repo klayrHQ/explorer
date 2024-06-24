@@ -13,9 +13,13 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+type Template = Omit<Story, "args">;
 
-
+const Template: Template =  {
+  render: (args) => <div className={"max-w-screen"}><Table {...args} /></div>
+};
 export const Default: Story = {
+  ...Template,
   args: {
     keyPrefix: "sb-table",
     rows,

@@ -1,7 +1,7 @@
-import {HTMLAttributes, ReactNode} from "react";
-import {TableRow} from "../../atoms/data/table/tableRow.tsx";
+import {HTMLAttributes} from "react";
+import {TableRow} from "../../atoms";
 import {TableCellType} from "../../../types/types.ts";
-import {TableCell} from "../../atoms/data/table/tableCell.tsx";
+import {TableCell} from "../../atoms";
 import {cls} from "../../../utils/functions.ts";
 
 export interface TableProps extends HTMLAttributes<HTMLTableElement>{
@@ -13,14 +13,15 @@ export interface TableProps extends HTMLAttributes<HTMLTableElement>{
 
 export const Table = ({ className, headCols, rows, keyPrefix, pagination, ...props }: TableProps) => {
   return (
-    <table
-      className={cls([
-        className,
-        "w-full text-paragraph-sm",
-      ])}
-      {...props}
-    >
-      <thead>
+    <div className={"w-full max-w-full overflow-auto"}>
+      <table
+        className={cls([
+          className,
+          "w-full max-w-full text-paragraph-sm",
+        ])}
+        {...props}
+      >
+        <thead>
         <TableRow className={"text-onBackgroundLow font-medium"}>
           {headCols?.map((col, index) => (
             <TableCell
@@ -32,8 +33,8 @@ export const Table = ({ className, headCols, rows, keyPrefix, pagination, ...pro
             </TableCell>
           ))}
         </TableRow>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         {rows?.map((row, rowIndex) => (
           <TableRow key={`${keyPrefix}-tr-${rowIndex + 1}`}>
             {row.cells.map((cell, cellIndex) => (
@@ -47,7 +48,8 @@ export const Table = ({ className, headCols, rows, keyPrefix, pagination, ...pro
             ))}
           </TableRow>
         ))}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   );
 }
