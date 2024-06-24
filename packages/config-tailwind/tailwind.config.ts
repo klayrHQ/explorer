@@ -264,8 +264,8 @@ const config: Omit<Config, "content"> = {
       }
     },
     fontFamily: {
-      sans: ["Utendo", "Inter", "Verdana", "sans-serif"],
-      body: ["Utendo", "Inter", "Verdana", "sans-serif"],
+      sans: ["Poppins", "Inter", "Verdana", "sans-serif"],
+      body: ["Poppins", "Inter", "Verdana", "sans-serif"],
       mono: ["monospace"],
     },
     fontWeight,

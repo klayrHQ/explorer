@@ -132,5 +132,5 @@ export type NetworkType = {
 
 export type TableCellType = {
   className?: string
-  content: ReactNode
+  children: ReactNode
 } & Omit<HTMLAttributes<HTMLTableCellElement>, "children" | "content">;

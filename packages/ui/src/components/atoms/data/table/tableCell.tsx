@@ -15,7 +15,7 @@ export const TableCell = ({ type, children, className, lastRow, ...props }: Tabl
       className={cls([
         className,
         type === "head" ? "py-lg px-3xl border-t-0" : "py-xl px-3xl border-t-1 border-t-borderLow ",
-        lastRow ? "border-b-0" : "border-b-1 border-b-borderLow",
+        lastRow ? "border-b-0" : "border-b-1 border-borderLow",
       ])}
       {...props}
     >

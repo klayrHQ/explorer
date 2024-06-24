@@ -143,37 +143,37 @@ export const optionsMenuItems = [
 export const rows = Array.from({ length: 5 }, (_, index) => ({
   cells: [
     {
-      content: <Typography>{`Cell ${index + 1}.1`}</Typography>,
+      children: <Typography>{`Cell ${index + 1}.1`}</Typography>,
     },
     {
-      content: <Typography>{`Cell ${index + 1}.2`}</Typography>,
+      children: <Typography>{`Cell ${index + 1}.2`}</Typography>,
     },
     {
-      content: <Typography>{`Cell ${index + 1}.3`}</Typography>,
+      children: <Typography>{`Cell ${index + 1}.3`}</Typography>,
     },
     {
-      content: <Typography>{`Cell ${index + 1}.4`}</Typography>,
+      children: <Typography>{`Cell ${index + 1}.4`}</Typography>,
     },
     {
-      content: <Typography>{`Cell ${index + 1}.5`}</Typography>,
+      children: <Typography>{`Cell ${index + 1}.5`}</Typography>,
     },
   ],
 }));
 
 export const headCols = [
   {
-    content: <Typography color={"inherit"}>{"Header 1"}</Typography>,
+    children: <Typography color={"inherit"}>{"Header 1"}</Typography>,
   },
   {
-    content: <Typography color={"inherit"}>{"Header 2"}</Typography>,
+    children: <Typography color={"inherit"}>{"Header 2"}</Typography>,
   },
   {
-    content: <Typography color={"inherit"}>{"Header 3"}</Typography>,
+    children: <Typography color={"inherit"}>{"Header 3"}</Typography>,
   },
   {
-    content: <Typography color={"inherit"}>{"Header 4"}</Typography>,
+    children: <Typography color={"inherit"}>{"Header 4"}</Typography>,
   },
   {
-    content: <Typography color={"inherit"}>{"Header 5"}</Typography>,
+    children: <Typography color={"inherit"}>{"Header 5"}</Typography>,
   },
 ];

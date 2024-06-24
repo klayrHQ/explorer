@@ -28,7 +28,7 @@ export const Table = ({ className, headCols, rows, keyPrefix, pagination, ...pro
               key={`${keyPrefix}-th-${index + 1}`}
               type={"head"}
             >
-              {col.content}
+              {col.children}
             </TableCell>
           ))}
         </TableRow>
@@ -42,7 +42,7 @@ export const Table = ({ className, headCols, rows, keyPrefix, pagination, ...pro
                 lastRow={rowIndex === rows.length - 1}
                 {...cell}
               >
-                {cell.content}
+                {cell.children}
               </TableCell>
             ))}
           </TableRow>

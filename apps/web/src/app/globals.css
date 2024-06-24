@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/*@layer base {
   @font-face {
     font-family: 'Utendo';
     font-weight: normal;
@@ -50,10 +50,10 @@
     font-weight: 800;
     src: url('../assets/fonts/Utendo-ExtraBold.ttf') format('truetype');
   }
-}
+}*/
 
 :root {
   background-color: var(--color-backgroundPrimary);
   color: var(--color-body);
-  font-family: "Utendo", "Inter", "verdana", sans-serif;
+  font-family: "Poppins", "Inter", "verdana", sans-serif;
 }
