@@ -190,7 +190,7 @@ export const performanceStats = [
 
 export const newsItems = [
   {
-    badges: [{colorVariant: "volt", label: 'Development', }, {colorVariant: "azule", label: 'Marketing' }, {colorVariant: "tulip", label: 'Blockchain' ,}],
+    badges: [{colorVariant: "volt", label: 'Development', }, {colorVariant: "azule", label: 'Marketing',}, {colorVariant: "tulip", label: 'Blockchain',}],
     author: 'Lara Malta',
     date: '23 Apr 2024',
     title: 'Exploring the blockchain',
@@ -199,7 +199,7 @@ export const newsItems = [
     alt: 'NFT Image',
   },
   {
-    badges: [{colorVariant: "sand", label: 'NFTs', }, {colorVariant: "azule", label: 'Marketing' ,}],
+    badges: [{colorVariant: "sand", label: 'NFTs', }, {colorVariant: "azule", label: 'Marketing',}],
     author: 'Jurre Machielsen',
     date: '12 Mar 2022',
     title: 'Launch of Klayr token',
@@ -208,7 +208,7 @@ export const newsItems = [
     alt: 'Klayr Token Image',
   },
   {
-    badges: [{colorVariant: "green", label: 'Design' ,}, {colorVariant: "volt", label: 'Development', }],
+    badges: [{colorVariant: "green", label: 'Design' ,}, {colorVariant: "volt", label: 'Development',}],
     author: 'Lara Malta',
     date: '19 Feb 2022',
     title: 'Migration issues',
