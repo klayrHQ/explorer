@@ -232,8 +232,13 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(objectFit, "object"),
     ...getKeyMap(colSpan, "col"),
     ...getKeyMap(alignItems, "items"),
+    ...getKeyMap(numberList, "translate-y"),
+    ...getKeyMap(numberList, "translate-x"),
     "border-collapse",
     "border-spacing-0",
+    "flex-wrap",
+    "flex-nowrap",
+    "flex-wrap-reverse",
   ],
   theme: {
     extend: {
@@ -264,6 +269,14 @@ const config: Omit<Config, "content"> = {
         ...height,
         ...width,
         ...spacing,
+      },
+      flexWrap: {
+        wrap: "wrap",
+        "wrap-reverse": "wrap-reverse",
+        nowrap: "nowrap",
+      },
+      translate: {
+        ...numberList,
       }
     },
     fontFamily: {

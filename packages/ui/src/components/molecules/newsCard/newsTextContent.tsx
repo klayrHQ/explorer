@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-literals */
-import { Typography } from "../../atoms/base/typography";
+import { Typography } from "../../atoms";
 
 interface NewsTextContentProps {
   author: string;
@@ -17,7 +17,7 @@ export const NewsTextContent = ({
   description,
 }: NewsTextContentProps) => {
   return (
-    <div className="flex flex-col mb-3 desktop:mb-5 mt-5 w-newsCardMobileWidth desktop:w-newsCardWidth">
+    <div className="flex flex-col mb-3 desktop:mb-5 mt-5 w-full">
       <Typography
         className="mb-1"
         color="gray-5"

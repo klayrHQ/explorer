@@ -22,7 +22,7 @@ export const NewsCard = ({
   alt,
 }: NewsCardProps) => {
   return (
-    <div className="flex flex-col w-newsCardMobileWidth desktop:w-newsCardWidth min-h-newsCardContainerMobileHeight desktop:min-h-newsCardContainerHeight ">
+    <div className="flex flex-col w-newsCardMobileWidth desktop:w-newsCardWidth min-h-newsCardContainerMobileHeight desktop:min-h-newsCardContainerHeight max-w-full">
       <NewsCardImage alt={alt} src={src} />
       <NewsTextContent
         author={author}
