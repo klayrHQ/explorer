@@ -207,6 +207,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(width, "right"),
     ...getKeyMap(percentages, "grayscale"),
     ...getKeyMap(percentages, "brightness"),
+    ...getKeyMap(percentages, "opacity"),
     ...getKeyMap(cursor, "cursor"),
     ...getKeyMap(shadow, "shadow"),
     ...getKeyMap(justify, "justify"),
@@ -247,6 +248,7 @@ const config: Omit<Config, "content"> = {
       screens,
       grayscale: percentages,
       brightness: percentages,
+      opacity: percentages,
       height: {
         ...height,
         ...percentages,

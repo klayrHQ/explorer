@@ -73,6 +73,7 @@ export type IconComponent =
   | "CurrencyDollar"
   | "Sun"
   | "Menu"
+  | "CrossClose"
   | string;
 
 export type ColorType =
@@ -137,3 +138,11 @@ export type TableCellType = {
 } & Omit<HTMLAttributes<HTMLTableCellElement>, "children" | "content">;
 
 export type LinkComponent = PropsWithChildren<ReactElement>;
+
+export type Option = {
+  value: string;
+  label: string;
+  labelIcon?: string;
+  labelImage?: string;
+  labelCircleColor?: string;
+};
