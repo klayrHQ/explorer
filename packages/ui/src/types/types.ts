@@ -73,6 +73,7 @@ export type IconComponent =
   | "CurrencyDollar"
   | "Sun"
   | "Menu"
+  | "CrossClose"
   | string;
 
 export type ColorType =
@@ -134,3 +135,11 @@ export type TableCellType = {
   className?: string
   children: ReactNode
 } & Omit<HTMLAttributes<HTMLTableCellElement>, "children" | "content">;
+
+export type Option = {
+  value: string;
+  label: string;
+  labelIcon?: string;
+  labelImage?: string;
+  labelCircleColor?: string;
+};
