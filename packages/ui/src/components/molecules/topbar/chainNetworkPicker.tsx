@@ -89,8 +89,8 @@ export const ChainNetworkPicker = ({
             <ImageContainer
               alt={currentChain.chainName}
               component={imgComponent}
-              size={"chainLogo"}
               src={currentChain.chainLogo}
+              variant={"chainLogo"}
             />
           }
           onClick={() => setIsModalOpen(true)}

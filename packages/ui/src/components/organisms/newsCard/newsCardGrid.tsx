@@ -1,7 +1,7 @@
 import { NewsCard, NewsCardProps } from "./newsCard";
 import {IconComponent, LinkComponent} from "../../../types/types";
 import {FlexGrid} from "../../atoms";
-import {SectionHeader} from "../../atoms/base/sectionHeader.tsx";
+import {SectionHeader} from "../layout/sectionHeader.tsx";
 
 interface NewsCardGridProps {
   newsCards: NewsCardProps[];

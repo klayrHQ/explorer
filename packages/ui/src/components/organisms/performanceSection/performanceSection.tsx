@@ -3,7 +3,7 @@ import { PerformanceCardProps } from "../../molecules";
 import { Typography } from "../../atoms";
 import { FlexGrid } from "../../atoms";
 import { CustomSelect, CustomSelectProps } from "../../atoms";
-import {SectionHeader} from "../../atoms/base/sectionHeader.tsx";
+import {SectionHeader} from "../layout/sectionHeader.tsx";
 import {LinkComponent} from "../../../types/types.ts";
 
 interface PerformanceSectionProps {
