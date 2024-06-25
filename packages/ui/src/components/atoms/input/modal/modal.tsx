@@ -33,7 +33,7 @@ export const Modal = ({
       <div
         className={` bg-backgroundSecondary text-white rounded-lg shadow-lg  outline-none relative w-modalWidthMobile desktop:w-modalWidth`}
       >
-        <FlexGrid alignItems="center" className="py-8 px-6" component='div' justify="between">
+        <FlexGrid alignItems="center" className="pt-8 pb-4 desktop:pb-6 px-6" component='div' justify="between">
           {title && (
             <Typography fontWeight="bold" variant="h4">
               {title}
@@ -41,22 +41,24 @@ export const Modal = ({
           )}
           <IconButton
             align="none"
-            className="w-2 h-2"
+            className="w-3 h-3"
             icon="CrossClose"
             onClick={onClose}
             variant="transparent"
           />
         </FlexGrid>
         <div className="px-6 my-6">{children}</div>
-        <FlexGrid alignItems="center" className="pb-6 px-6" gap="1" justify="end">
+        <FlexGrid alignItems="center" className="pb-6 px-6 desktop:mt-8" gap="1" justify="end">
           <Button
             align="none"
+            className="hidden desktop:flex"
             label="Cancel"
             onClick={onClose}
             variant="transparent"
           />
           <Button
             align="none"
+            className="w-full desktop:w-auto"
             label="Save"
             onClick={onSave}
           />

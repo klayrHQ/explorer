@@ -294,8 +294,8 @@ const width = {
   chainLogoWidth: "16px",
   avatarWidth: "24px",
   avatarLgWidth: "40px",
-  selectXLWidth: "360px",
-  selectSMWidth: "120px",
+  selectXLWidth: "384px",
+  selectSMWidth: "222px",
   modalWidth: "544px", 
   modalWidthMobile: "382px",
 }

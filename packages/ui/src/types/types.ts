@@ -128,3 +128,11 @@ export type NetworkType = {
   networkName: string
   connected: boolean
 }
+
+export type Option = {
+  value: string;
+  label: string;
+  labelIcon?: string;
+  labelImage?: string;
+  labelCircleColor?: string;
+};
