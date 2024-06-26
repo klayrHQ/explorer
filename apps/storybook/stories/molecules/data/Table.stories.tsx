@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 import { Table } from '@repo/ui/molecules';
-import {headCols, rows} from "@/stories/utils/mockup";
+import {headCols, rows, rowsAlt} from "@/stories/utils/mockup";
 
 const meta = {
   title: 'Molecules/Data/Table',
@@ -26,3 +26,12 @@ export const Default: Story = {
     headCols,
   },
 };
+
+export const WithPremadeCells = {
+  ...Template,
+  args: {
+    keyPrefix: "sb-table-2",
+    rows: rowsAlt,
+    headCols,
+  }
+}

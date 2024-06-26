@@ -1,4 +1,4 @@
-import {Icon, Typography} from "@repo/ui/atoms";
+import {Icon, TableCell, Typography} from "@repo/ui/atoms";
 import Logo from "@/stories/assets/images/logo.svg";
 import {DefaultImageComponent} from "@/stories/utils/constants";
 
@@ -159,6 +159,16 @@ export const rows = Array.from({ length: 5 }, (_, index) => ({
     },
   ],
 }));
+
+export const rowsAlt = Array.from({ length: 5 }, (_, index) => (
+  <>
+    <TableCell><Typography>{`Cell ${index + 1}.1`}</Typography></TableCell>
+    <TableCell><Typography>{`Cell ${index + 1}.2`}</Typography></TableCell>
+    <TableCell><Typography>{`Cell ${index + 1}.3`}</Typography></TableCell>
+    <TableCell><Typography>{`Cell ${index + 1}.4`}</Typography></TableCell>
+    <TableCell><Typography>{`Cell ${index + 1}.5`}</Typography></TableCell>
+  </>
+));
 
 export const headCols = [
   {
