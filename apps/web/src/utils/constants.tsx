@@ -142,6 +142,12 @@ export const optionsMenuItems = [
   },
 ];
 
+export const logo = {
+  altText: "Klayr",
+  logoSrc: Logo.src,
+  logoText: "Klayr",
+};
+
 export const performanceStatsSelectOptions = [
   { value: "oneHourAgo", label: "One hour ago",},
   { value: "yesterday", label: "Yesterday",},

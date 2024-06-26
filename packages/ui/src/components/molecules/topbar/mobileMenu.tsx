@@ -27,10 +27,7 @@ export const MobileMenu = ({ className, menuItems, chainNetworkData, }: MobileMe
         </FlexGrid>
       </nav>
       <FlexGrid className={"w-full mt-auto border-t-solid border-t-1 border-t-backgroundSecondary pt-3xl px-md"} justify={"center"}>
-        <ChainNetworkPicker
-          currentChain={chainNetworkData.currentChain}
-          currentNetwork={chainNetworkData.currentNetwork}
-        />
+        <ChainNetworkPicker {...chainNetworkData} />
       </FlexGrid>
     </FlexGrid>
   )

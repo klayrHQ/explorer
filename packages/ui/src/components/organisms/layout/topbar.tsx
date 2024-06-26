@@ -92,11 +92,7 @@ export const Topbar = ({
             <KeyValueComponent key={`key-value-${index + 1}`} {...item} />
           ))
         }
-        <ChainNetworkPicker
-          currentChain={chainNetworkData.currentChain}
-          currentNetwork={chainNetworkData.currentNetwork}
-          imgComponent={chainNetworkData.imgComponent}
-        />
+        <ChainNetworkPicker {...chainNetworkData} />
         {/*<FlexGrid gap={"md"}>*/}
           {/* todo uncomment when adding favourites */}
           {/*<div className={"relative"}>
