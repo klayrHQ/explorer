@@ -2,9 +2,10 @@ import "./globals.css";
 import "@repo/ui/theme.css";
 import type { Metadata } from "next";
 import { ReactNode } from "react";
-import {Layout} from "@repo/ui/templates";
 import Logo from "../assets/images/logo.svg"
 import {chainNetworkData, kpisObject, menuItems, mobileMenuItems} from "../utils/constants.tsx";
+import {Layout} from "../components/layout/layoutClient.tsx";
+import {ChainNetworkProvider} from "../providers/chainNetworkProvider.tsx";
 
 export const metadata: Metadata = {
   title: "Klayr Explorer",
@@ -19,19 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Layout
-          chainNetworkData={chainNetworkData}
-          kpis={kpisObject}
-          logo={{
-            logoSrc: Logo.src,
-            altText: "Klayr Explorer",
-            logoText: "klayr",
-          }}
-          menuItems={menuItems}
-          mobileMenuItems={mobileMenuItems}
-        >
+      <ChainNetworkProvider>
+        <Layout>
           {children}
         </Layout>
+      </ChainNetworkProvider>
       </body>
     </html>
   );

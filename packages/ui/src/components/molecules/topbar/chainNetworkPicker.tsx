@@ -1,7 +1,8 @@
+"use client"
 import React, { useState } from "react";
 import { ChainType, NetworkType } from "../../../types/types.ts";
 import { FlexGrid, KeyValueComponent, Typography } from "../../atoms";
-import { ImageContainer } from "../../atoms/images/imageContainer.tsx";
+import { ImageContainer } from "../../atoms";
 import { StatusIcon } from "storybook/stories/atoms/base/statusIcon.tsx";
 import { ReactElement } from "react";
 import { Modal, CustomSelect } from "../../atoms";
@@ -89,8 +90,8 @@ export const ChainNetworkPicker = ({
             <ImageContainer
               alt={currentChain.chainName}
               component={imgComponent}
-              size={"chainLogo"}
               src={currentChain.chainLogo}
+              variant={"chainLogo"}
             />
           }
           onClick={() => setIsModalOpen(true)}
@@ -98,10 +99,9 @@ export const ChainNetworkPicker = ({
         <KeyValueComponent
           contentValue={currentNetwork.networkName}
           hover
-          keyValue={<StatusIcon connected={currentNetwork.connected} />}
+          keyValue={<StatusIcon connected={currentNetwork.connected}/>}
         />
       </FlexGrid>
-
       <Modal
         onClose={handleClose}
         onSave={handleSave}
