@@ -37,16 +37,15 @@ export const ChainNetworkPicker = ({
   );
 
 
-  const chainOptions = chains.map((chain) => ({
+  const chainOptions = chains?.map((chain) => ({
     label: chain.chainName,
     value: chain.chainId,
-    labelImage: chain.chainLogo,
+    labelImage: chain.logo,
   }));
 
-  const networkOptions = networks.map((network) => ({
+  const networkOptions = networks?.map((network) => ({
     label: network.networkName,
     value: network.networkId,
-    labelCircleColor: network.connected ? "success" : "error",
   }));
 
 
@@ -84,22 +83,22 @@ export const ChainNetworkPicker = ({
     <FlexGrid>
       <FlexGrid onClick={handleOpen}>
         <KeyValueComponent
-          contentValue={currentChain.chainName}
+          contentValue={currentChain?.chainName || "Select chain"}
           hover
           keyValue={
             <ImageContainer
-              alt={currentChain.chainName}
+              alt={currentChain?.chainName}
               component={imgComponent}
-              src={currentChain.chainLogo}
+              src={currentChain?.logo}
               variant={"chainLogo"}
             />
           }
           onClick={() => setIsModalOpen(true)}
         />
         <KeyValueComponent
-          contentValue={currentNetwork.networkName}
+          contentValue={currentNetwork?.networkName || "Select network"}
           hover
-          keyValue={<StatusIcon connected={currentNetwork.connected}/>}
+          keyValue={<StatusIcon className={"mt-2xs"} connected={currentNetwork?.connected}/>}
         />
       </FlexGrid>
       <Modal
@@ -109,26 +108,26 @@ export const ChainNetworkPicker = ({
         title="Select environments"
       >
         <FlexGrid alignItems="start" direction="column" gap="4" justify="end">
-          <FlexGrid alignItems="center" justify="between">
+          <FlexGrid alignItems="center" className={"w-full"} justify="between">
             <Typography color="onBackgroundLow" variant="paragraph-md">
               On chain
             </Typography>
             <CustomSelect
-              defaultValue={currentChain.chainId}
+              defaultValue={currentChain?.chainId}
               onChange={(value) => handleChainChange(value)}
               options={chainOptions}
             />
           </FlexGrid>
-          <div className="flex items-center justify-between">
+          <FlexGrid alignItems={"center"} className="w-full" justify={"between"}>
             <Typography color="onBackgroundLow" variant="paragraph-md">
               On network
             </Typography>
             <CustomSelect
-              defaultValue={currentNetwork.networkId}
+              defaultValue={currentNetwork?.networkId}
               onChange={(value) => handleNetworkChange(value)}
               options={networkOptions}
             />
-          </div>
+          </FlexGrid>
         </FlexGrid>
       </Modal>
     </FlexGrid>
