@@ -7,7 +7,7 @@ import {cls} from "../../../utils/functions";
 interface ButtonProps {
   className?: string;
   //scales with font size, so inherit will adhere to the font size of the parent or a custom size can be set through the className prop
-  size?: "" | "small" | "medium" | "large" | "inherit";
+  size?: "xs" | "small" | "medium" | "large" | "inherit";
   icon: IconComponent;
   color?: ColorType;
   hoverColor?: ColorType;

@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import { cva } from "class-variance-authority";
 import { Typography } from "../base/typography";

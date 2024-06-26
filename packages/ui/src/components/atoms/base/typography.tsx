@@ -63,7 +63,7 @@ const typographyStyles = cva(
 );
 
 export const Typography = ({
-  variant = "body",
+  variant,
   component = "span",
   className,
   color,
@@ -88,10 +88,10 @@ export const Typography = ({
         bold,
         underline,
         className: [
-          color ? `text-${color}` : "text-body",
+          color ? `text-${color}` : "",
           className,
           fontWeight ? `font-${fontWeight}` : "",
-          noPadding ? "" : "pt-2xs",
+          noPadding ? "" : "pt-xs",
         ],
       })
     }

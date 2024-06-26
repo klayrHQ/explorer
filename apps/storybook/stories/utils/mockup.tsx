@@ -1,4 +1,4 @@
-import {Icon, Typography} from "@repo/ui/atoms";
+import {Icon, TableCell, Typography} from "@repo/ui/atoms";
 import Logo from "@/stories/assets/images/logo.svg";
 import {DefaultImageComponent} from "@/stories/utils/constants";
 
@@ -137,5 +137,53 @@ export const optionsMenuItems = [
   {
     label: "Set Currency",
     icon: "CurrencyDollar",
+  },
+];
+
+export const rows = Array.from({ length: 5 }, (_, index) => ({
+  cells: [
+    {
+      children: <Typography>{`Cell ${index + 1}.1`}</Typography>,
+    },
+    {
+      children: <Typography>{`Cell ${index + 1}.2`}</Typography>,
+    },
+    {
+      children: <Typography>{`Cell ${index + 1}.3`}</Typography>,
+    },
+    {
+      children: <Typography>{`Cell ${index + 1}.4`}</Typography>,
+    },
+    {
+      children: <Typography>{`Cell ${index + 1}.5`}</Typography>,
+    },
+  ],
+}));
+
+export const rowsAlt = Array.from({ length: 5 }, (_, index) => (
+  <>
+    <TableCell><Typography>{`Cell ${index + 1}.1`}</Typography></TableCell>
+    <TableCell><Typography>{`Cell ${index + 1}.2`}</Typography></TableCell>
+    <TableCell><Typography>{`Cell ${index + 1}.3`}</Typography></TableCell>
+    <TableCell><Typography>{`Cell ${index + 1}.4`}</Typography></TableCell>
+    <TableCell><Typography>{`Cell ${index + 1}.5`}</Typography></TableCell>
+  </>
+));
+
+export const headCols = [
+  {
+    children: <Typography color={"inherit"}>{"Header 1"}</Typography>,
+  },
+  {
+    children: <Typography color={"inherit"}>{"Header 2"}</Typography>,
+  },
+  {
+    children: <Typography color={"inherit"}>{"Header 3"}</Typography>,
+  },
+  {
+    children: <Typography color={"inherit"}>{"Header 4"}</Typography>,
+  },
+  {
+    children: <Typography color={"inherit"}>{"Header 5"}</Typography>,
   },
 ];

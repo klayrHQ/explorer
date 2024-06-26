@@ -141,3 +141,9 @@ export const optionsMenuItems = [
     icon: "CurrencyDollar",
   },
 ];
+
+export const logo = {
+  altText: "Klayr",
+  logoSrc: Logo.src,
+  logoText: "Klayr",
+};

@@ -231,7 +231,8 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(grow, 'grow'),
     ...getKeyMap(objectFit, "object"),
     ...getKeyMap(colSpan, "col"),
-
+    "border-collapse",
+    "border-spacing-0",
   ],
   theme: {
     extend: {
@@ -266,8 +267,8 @@ const config: Omit<Config, "content"> = {
       }
     },
     fontFamily: {
-      sans: ["Utendo", "Inter", "Verdana", "sans-serif"],
-      body: ["Utendo", "Inter", "Verdana", "sans-serif"],
+      sans: ["Poppins", "Inter", "Verdana", "sans-serif"],
+      body: ["Poppins", "Inter", "Verdana", "sans-serif"],
       mono: ["monospace"],
     },
     fontWeight,

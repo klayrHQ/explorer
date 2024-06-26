@@ -64,6 +64,10 @@
   --color-onMenuMedium: var(--color-gray-4);
   --color-onMenuLow: var(--color-gray-5);
 
+  --color-borderLow: var(--color-gray-7);
+  --color-borderMedium: var(--color-gray-6);
+  --color-borderHigh: var(--color-gray-5);
+
   --color-body: var(--color-gray-1);
 }
 
@@ -83,6 +87,10 @@
   --color-onMenuHigh: var(--color-gray-8);
   --color-onMenuMedium: var(--color-gray-6);
   --color-onMenuLow: var(--color-gray-5);
+
+  --color-borderLow: var(--color-gray-4);
+  --color-borderMedium: var(--color-gray-5);
+  --color-borderHigh: var(--color-gray-6);
 
   --color-body: var(--color-gray-8);
 }

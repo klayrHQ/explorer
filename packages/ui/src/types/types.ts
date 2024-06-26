@@ -1,3 +1,5 @@
+import {HTMLAttributes, ReactNode} from "react";
+
 export type TypographyVariant =
   | "display-1"
   | "display-2"
@@ -128,6 +130,11 @@ export type NetworkType = {
   networkName: string
   connected: boolean
 }
+
+export type TableCellType = {
+  className?: string
+  children: ReactNode
+} & Omit<HTMLAttributes<HTMLTableCellElement>, "children" | "content">;
 
 export type Option = {
   value: string;
