@@ -1,6 +1,7 @@
 import { FlexGrid, Icon, Typography } from "../../atoms";
 import { trimFour, trimSix } from "../../../utils/functions";
 import { Badge } from "../../atoms";
+import { ImageName } from "./imageName";
 
 
 
@@ -19,7 +20,7 @@ export const TransactionBanner = (transactionsData: any) => {
             </Typography>
           </FlexGrid>
           <div className="w-transitionBannerContainerWidth ">
-          Oliver send Panzer the amount of 342 KLY in type <Badge borderColor="gray-1" className="flex-grow-0" colorVariant="green" label="Token Transfer"/> over 36 min ago and was  <Badge backgroundColor="green" borderColor="green" className=" " colorVariant="lobster" opacity="40"  label="Successful" /></div> 
+          <ImageName imageUrl="https://i.pinimg.com/236x/a5/67/94/a567940c61eb580455d8f886f55d21b1.jpg" name="Oliver" />send Panzer the amount of 342 KLY in type <Badge borderColor="gray-1" className="flex-grow-0" colorVariant="green" label="Token Transfer"/> over 36 min ago and was  <Badge backgroundColor="green" borderColor="green" className=" " colorVariant="lobster" opacity="40"  label="Successful" /></div> 
         </div>
        
         <div className="border border-onBackground rounded-xl"  >
