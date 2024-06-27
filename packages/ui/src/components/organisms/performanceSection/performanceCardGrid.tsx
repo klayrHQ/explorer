@@ -10,7 +10,7 @@ interface PerformanceCardGridProps {
 
 export const PerformanceCardGrid = ({ stats, }: PerformanceCardGridProps) => {
   return (
-    <Grid columns="2" desktopCols="5" desktopGap="6" gap="4">
+    <Grid className={"w-full"} columns="2" desktopCols="5" desktopGap="6" gap="4">
       {stats.map((stat, index) => (
         <PerformanceCard
         // eslint-disable-next-line react/no-array-index-key

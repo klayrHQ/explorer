@@ -31,6 +31,7 @@ const {
   grow,
   objectFit,
   colSpan,
+  alignItems,
 } = classes;
 
 // @ts-ignore
@@ -231,7 +232,14 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(grow, 'grow'),
     ...getKeyMap(objectFit, "object"),
     ...getKeyMap(colSpan, "col"),
-
+    ...getKeyMap(alignItems, "items"),
+    ...getKeyMap(numberList, "translate-y"),
+    ...getKeyMap(numberList, "translate-x"),
+    "border-collapse",
+    "border-spacing-0",
+    "flex-wrap",
+    "flex-nowrap",
+    "flex-wrap-reverse",
   ],
   theme: {
     extend: {
@@ -263,11 +271,19 @@ const config: Omit<Config, "content"> = {
         ...height,
         ...width,
         ...spacing,
+      },
+      flexWrap: {
+        wrap: "wrap",
+        "wrap-reverse": "wrap-reverse",
+        nowrap: "nowrap",
+      },
+      translate: {
+        ...numberList,
       }
     },
     fontFamily: {
-      sans: ["Utendo", "Inter", "Verdana", "sans-serif"],
-      body: ["Utendo", "Inter", "Verdana", "sans-serif"],
+      sans: ["Poppins", "Inter", "Verdana", "sans-serif"],
+      body: ["Poppins", "Inter", "Verdana", "sans-serif"],
       mono: ["monospace"],
     },
     fontWeight,

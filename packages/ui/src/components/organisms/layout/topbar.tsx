@@ -62,7 +62,7 @@ export const Topbar = ({
         <Logo altText={logo.altText} className={"shrink-0"} logoSrc={logo.logoSrc} />
         {/*<IconButton align={"none"} className={"shrink-0"} icon={"SearchLg"} variant={"bordered"} />*/}
       </FlexGrid>
-      <FlexGrid className={"desktop:hidden whitespace-nowrap"} gap={"md"}>
+      <FlexGrid alignItems={"center"} className={"desktop:hidden whitespace-nowrap"} gap={"md"}>
         {
           kpis.map((item, index) => (
             <KeyValueComponent key={`key-value-${index + 1}`} {...item} />
@@ -92,11 +92,7 @@ export const Topbar = ({
             <KeyValueComponent key={`key-value-${index + 1}`} {...item} />
           ))
         }
-        <ChainNetworkPicker
-          currentChain={chainNetworkData.currentChain}
-          currentNetwork={chainNetworkData.currentNetwork}
-          imgComponent={chainNetworkData.imgComponent}
-        />
+        <ChainNetworkPicker {...chainNetworkData} />
         {/*<FlexGrid gap={"md"}>*/}
           {/* todo uncomment when adding favourites */}
           {/*<div className={"relative"}>

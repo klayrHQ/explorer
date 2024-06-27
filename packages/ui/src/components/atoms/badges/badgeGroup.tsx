@@ -9,7 +9,7 @@ interface BadgeGroupProps {
 
 export const BadgeGroup = ({ badges, className, }: BadgeGroupProps) => {
     return (
-        <div className={cls(['flex gap-2', className])}>
+        <div className={cls(['flex gap-2 flex-wrap', className])}>
             {badges.slice(0, 3).map((badge) => (
                 <Badge colorVariant={badge.colorVariant} key={badge.label} label={badge.label} />
             ))}

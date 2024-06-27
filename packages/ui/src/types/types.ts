@@ -1,3 +1,5 @@
+import {HTMLAttributes, PropsWithChildren, ReactElement, ReactNode} from "react";
+
 export type TypographyVariant =
   | "display-1"
   | "display-2"
@@ -116,19 +118,28 @@ export type ColorType =
   | "shadow-gray-6"
   | "shadow-gray-7"
   | "shadow-gray-8"
-  | "inherit";
+  | "inherit"
+  | string;
 
 export type ChainType = {
   chainId: string
   chainName: string
-  chainLogo: string
+  logo: string
+  networks: Omit<NetworkType, "connected">[]
 }
 
 export type NetworkType = {
   networkId: string
   networkName: string
-  connected: boolean
+  connected?: boolean
 }
+
+export type TableCellType = {
+  className?: string
+  children: ReactNode
+} & Omit<HTMLAttributes<HTMLTableCellElement>, "children" | "content">;
+
+export type LinkComponent = PropsWithChildren<ReactElement>;
 
 export type Option = {
   value: string;

@@ -1,7 +1,8 @@
 @import "./theme.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 
-@font-face {
+/*@font-face {
     font-family: 'Utendo';
     font-weight: normal;
     src: url('@repo/ui/Utendo-Regular.ttf') format('truetype');
@@ -47,11 +48,11 @@
     font-family: 'Utendo';
     font-weight: 800;
     src: url('@repo/ui/Utendo-ExtraBold.ttf') format('truetype');
-}
+}*/
 
 
 :root {
     background-color: var(--color-backgroundPrimary);
     color: var(--color-body);
-    font-family: "Utendo", "Inter", "verdana", sans-serif;
+    font-family: "Poppins", "Inter", "verdana", sans-serif;
 }

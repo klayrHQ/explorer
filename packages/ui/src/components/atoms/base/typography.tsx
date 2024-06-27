@@ -14,7 +14,6 @@ export interface TypographyProps {
   bold?: boolean;
   underline?: boolean;
   fontWeight?: FontWeight;
-  noPadding?: boolean;
 }
 
 const typographyStyles = cva(
@@ -63,7 +62,7 @@ const typographyStyles = cva(
 );
 
 export const Typography = ({
-  variant = "body",
+  variant,
   component = "span",
   className,
   color,
@@ -74,7 +73,6 @@ export const Typography = ({
   underline,
   fontWeight,
   children,
-  noPadding,
 }: TypographyProps) => {
   const Component = component as any;
 
@@ -88,10 +86,9 @@ export const Typography = ({
         bold,
         underline,
         className: [
-          color ? `text-${color}` : "text-body",
+          color ? `text-${color}` : "",
           className,
           fontWeight ? `font-${fontWeight}` : "",
-          noPadding ? "" : "pt-2xs",
         ],
       })
     }

@@ -6,4 +6,4 @@ export * from "./topbar/chainNetworkPicker";
 export * from "./topbar/optionsMenu";
 export * from "./topbar/mobileMenu";
 export * from "./transaction/transactionBanner";
-
+export * from "./data/table";

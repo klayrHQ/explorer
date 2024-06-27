@@ -15,10 +15,13 @@ export * from "./images/imageContainer";
 export * from "./images/newsCardImage";
 export * from "./input/iconButton";
 export * from "./navigation/menuItem";
+export * from "./navigation/link";
 export * from "./badges/badge";
 export * from "./badges/badgeIcon";
 export * from "./badges/badgeGroup";
 export * from "./data/keyValueComponent";
+export * from "./data/table/tableRow";
+export * from "./data/table/tableCell";
 export * from "./notifications/notificationIcon";
 
 

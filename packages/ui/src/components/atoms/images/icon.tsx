@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import {ColorType, IconComponent} from '../../../types/types';
 import { icons } from '../../../assets/icons';
 import {cva} from "class-variance-authority";
@@ -6,8 +6,9 @@ import {cls} from "../../../utils/functions";
 
 interface ButtonProps {
   className?: string;
+  style?: CSSProperties
   //scales with font size, so inherit will adhere to the font size of the parent or a custom size can be set through the className prop
-  size?: "" | "small" | "medium" | "large" | "inherit";
+  size?: "xs" | "small" | "medium" | "large" | "inherit" | "custom";
   icon: IconComponent;
   color?: ColorType;
   hoverColor?: ColorType;
@@ -23,6 +24,7 @@ const iconStyles = cva(
         medium: "text-icon-md",
         large: "text-icon-lg",
         inherit: "text-inherit",
+        custom: "",
       },
     },
   },
@@ -30,6 +32,7 @@ const iconStyles = cva(
 
 export const Icon = ({
   className = "",
+  style,
   size = 'medium',
   color = 'gray-1',
   hoverColor,
@@ -48,6 +51,7 @@ export const Icon = ({
           className,
         ]),
       })}
+      style={style}
     />
   );
 };

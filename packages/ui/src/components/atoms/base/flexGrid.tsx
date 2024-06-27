@@ -35,7 +35,8 @@ interface FlexGridProps {
     | "xl"
     | "1.5xl"
     | "2xl"
-    | "3xl";
+    | "3xl"
+    | "4xl";
   onClick?: () => void;
   className?: string;
   children: ReactNode;
