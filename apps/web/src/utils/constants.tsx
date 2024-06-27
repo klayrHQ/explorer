@@ -237,5 +237,5 @@ export const defaultChain = {
       networkName: "Mainnet",
       networkId: "01000001",
     },
-  ]
+  ],
 };

@@ -130,7 +130,7 @@ export type ChainType = {
 export type NetworkType = {
   networkId: string
   networkName: string
-  connected: boolean
+  connected?: boolean
 }
 
 export type TableCellType = {
