@@ -25,7 +25,17 @@ export const TopbarClient = ({ logo, mobileMenuItems, }: TopbarClientProps ) => 
 
   return (
     <Topbar
-      chainNetworkData={{currentChain, setCurrentChain, currentNetwork, setCurrentNetwork, chains, networks,}} 
+      chainNetworkData={{
+        currentChain,
+        setCurrentChain,
+        currentNetwork: {
+          connected: true,
+          ...currentNetwork,
+        },
+        setCurrentNetwork,
+        chains,
+        networks,
+      }}
       kpis={kpisObject}
       logo={logo}
       mobileMenuItems={mobileMenuItems}

@@ -1,8 +1,8 @@
-import {Typography} from "./typography.tsx";
-import {Icon} from "../images/icon.tsx";
-import {FlexGrid} from "./flexGrid.tsx";
+import {Typography} from "../../atoms/base/typography.tsx";
+import {Icon} from "../../atoms/images/icon.tsx";
+import {FlexGrid} from "../../atoms/base/flexGrid.tsx";
 import {LinkComponent} from "../../../types/types.ts";
-import {Link} from "../navigation/link.tsx";
+import {Link} from "../../atoms/navigation/link.tsx";
 import {cls} from "../../../utils/functions.ts";
 
 interface SectionHeaderProps {
@@ -41,18 +41,17 @@ export const SectionHeader = ({ title, titleSize = "lg", subTitle, count, classN
               <Icon
                 className={cls([
                   "group-hover:text-gray-4",
-                  titleSize === "lg" ? "text-heading-3" : "text-heading-5",
+                  titleSize === "lg" ? "text-heading-4" : "text-heading-6",
                 ])}
                 icon="ArrowUpRight"
                 size={"custom"}
-                style={{transform: titleSize === "lg" ? "translateY(4px)" : "translateY(2.5px)",}}
+                style={{transform: titleSize === "lg" ? "translateY(6px)" : "translateY(2.5px)",}}
               />
             </FlexGrid>
           </Link>
         ) : (
-          <FlexGrid direction="row" gap="2">
+          <FlexGrid direction="row" gap="xl">
             <Typography
-              className="hover:text-gray-4"
               color="gray-1"
               component="h4"
               fontWeight="bold"
@@ -62,12 +61,12 @@ export const SectionHeader = ({ title, titleSize = "lg", subTitle, count, classN
             </Typography>
             {
               count && (
-                <div className={"bg-secondary rounded-sm p-md"}>
+                <div className={"bg-secondary rounded-sm px-md pb-xs pt-2xs h-max mt-xs"}>
                   <Typography
                     color="onSecondary"
                     variant="paragraph-sm"
                   >
-                    ({count})
+                    {count}
                   </Typography>
                 </div>
               )

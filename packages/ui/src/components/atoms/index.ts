@@ -15,6 +15,7 @@ export * from "./images/imageContainer";
 export * from "./images/newsCardImage";
 export * from "./input/iconButton";
 export * from "./navigation/menuItem";
+export * from "./navigation/link";
 export * from "./badges/badge";
 export * from "./badges/badgeIcon";
 export * from "./badges/badgeGroup";

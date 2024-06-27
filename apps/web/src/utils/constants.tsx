@@ -119,16 +119,16 @@ export const kpisObject = [
 
 export const chainNetworkData = {
   currentChain: {
-    chainName: "Klayr-main",
+    chainName: "Klayr",
     chainId: "00000000",
-    chainLogo: Logo.src,
+    logo: Logo.src,
   },
   currentNetwork: {
     networkName: "Testnet",
     networkId: "01000000",
     connected: true,
   },
-  imgComponent: DefaultImageComponent,
+  imgComponent: "a",
 }
 
 export const optionsMenuItems = [
@@ -223,3 +223,19 @@ export const newsItems = [
     alt: 'Migration Issues Image',
   },
 ];
+
+export const defaultChain = {
+  chainName: "Klayr-main",
+  chainId: "00000000",
+  logo: "https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g",
+  networks: [
+    {
+      networkName: "Testnet",
+      networkId: "01000000",
+    },
+    {
+      networkName: "Mainnet",
+      networkId: "01000001",
+    },
+  ],
+};

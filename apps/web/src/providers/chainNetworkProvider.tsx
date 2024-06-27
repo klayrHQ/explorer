@@ -1,8 +1,19 @@
 "use client"
 import React, {useEffect} from "react"
 import {createContext, useContext, useState} from "react"
-import {ChainType, NetworkType} from "@repo/ui/types";
-import {chainNetworkData} from "../utils/constants.tsx";
+import {chainNetworkData, defaultChain} from "../utils/constants.tsx";
+
+type NetworkType = {
+  networkId: string,
+  networkName: string,
+}
+
+type ChainType = {
+  chainId: string,
+  chainName: string,
+  logo: string,
+  networks: NetworkType[]
+}
 
 export interface ChainNetworkContextProps {
   currentChain: ChainType;
@@ -17,24 +28,47 @@ export const ChainNetworkContext = createContext<ChainNetworkContextProps>({} as
 
 export const useChainNetwork = () => useContext(ChainNetworkContext)
 export const ChainNetworkProvider = ({ children, }: {children: any}) => {
-  const [currentChain, setCurrentChain] = useState<ChainType>(chainNetworkData.currentChain);
-  const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(chainNetworkData.currentNetwork);
+  const [currentChain, setCurrentChain] = useState<ChainType>(defaultChain);
+  const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(defaultChain.networks[0]);
   const [chains, setChains] = useState<ChainType[]>([]);
   const [networks, setNetworks] = useState<NetworkType[]>([]);
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   // get chains from api
   useEffect(() => {
-    // set chains
-    setChains([])
+    const getChains = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch("/api/chains", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+
+        if (chains) {
+          const chains = await response.json()
+          setChains(chains.chains)
+          console.log(chains)
+        }
+      } catch (error) {
+        console.error("Error fetching chains", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    getChains()
   }, []);
 
   // get networks from current chain and set currentNetwork to first network
   useEffect(() => {
     if (currentChain) {
       // get networks from current chain
-      setNetworks([])
+      setNetworks(currentChain.networks)
       // set currentNetwork to first network
-      setCurrentNetwork({} as NetworkType)
+      setCurrentNetwork(currentChain.networks[0])
     }
   }, [currentChain]);
 

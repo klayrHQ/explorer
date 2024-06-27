@@ -2,10 +2,8 @@ import "./globals.css";
 import "@repo/ui/theme.css";
 import type { Metadata } from "next";
 import { ReactNode } from "react";
-import Logo from "../assets/images/logo.svg"
-import {chainNetworkData, kpisObject, menuItems, mobileMenuItems} from "../utils/constants.tsx";
-import {Layout} from "../components/layout/layoutClient.tsx";
-import {ChainNetworkProvider} from "../providers/chainNetworkProvider.tsx";
+import {Layout} from "../../components/layout/layoutClient.tsx";
+import {ChainNetworkProvider} from "../../providers/chainNetworkProvider.tsx";
 
 export const metadata: Metadata = {
   title: "Klayr Explorer",

@@ -123,13 +123,14 @@ export type ColorType =
 export type ChainType = {
   chainId: string
   chainName: string
-  chainLogo: string
+  logo: string
+  networks: Omit<NetworkType, "connected">[]
 }
 
 export type NetworkType = {
   networkId: string
   networkName: string
-  connected: boolean
+  connected?: boolean
 }
 
 export type TableCellType = {
