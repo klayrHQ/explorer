@@ -130,6 +130,7 @@ const spacing = {
   "2xl": "20px",
   "3xl": "24px",
   "4xl": "32px",
+  "5xl": "48px",
   sidebarMinSpacing: "22px",
 }
 

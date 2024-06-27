@@ -1,11 +1,12 @@
 "use client";
-import React, {cloneElement, useState} from 'react';
+import React, {useState} from 'react';
 import {Typography} from "../base/typography";
 import {cva} from "class-variance-authority";
 import {Icon} from "../images/icon.tsx";
 import {IconComponent} from "../../../types/types.ts";
 import {SubMenu} from "../../molecules";
 import {cls} from "../../../utils/functions.ts";
+import {Link} from "./link.tsx";
 
 export interface MenuItemProps {
   label: string | React.ReactNode
@@ -17,6 +18,7 @@ export interface MenuItemProps {
   subMenu?: MenuItemProps[]
   className?: string
   linkComponent?: React.PropsWithChildren<React.ReactElement>
+  href?: string
   variant?: "default" | "small"
   square?: boolean
 }
@@ -67,6 +69,7 @@ export const MenuItem = ({
   subMenu,
   className,
   linkComponent,
+  href,
   variant = "default",
   square = false,
 }: MenuItemProps) => {
@@ -124,11 +127,10 @@ export const MenuItem = ({
       onMouseEnter={(event) => handleHover(event,true)}
       onMouseLeave={(event) => handleHover(event,false)}
     >
-      {linkComponent ? (
-        cloneElement(linkComponent, {
-          children: menuItemInnerComponents,
-          className: "h-max flex",
-        })
+      {href ? (
+        <Link className={"h-max flex"} component={linkComponent} href={href}>
+          {menuItemInnerComponents}
+        </Link>
       ) : (
         menuItemInnerComponents
       )}
