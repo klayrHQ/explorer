@@ -2,7 +2,7 @@ import React from 'react';
 import {cva} from "class-variance-authority";
 import {TypographyComponent, FontWeight, TypographyVariant} from "../../../types/types";
 
-interface TypographyProps {
+export interface TypographyProps {
   children: React.ReactNode;
   variant?: TypographyVariant;
   component?: TypographyComponent;

@@ -298,6 +298,8 @@ const width = {
   selectSMWidth: "222px",
   modalWidth: "544px", 
   modalWidthMobile: "382px",
+  transitionBannerWidth: "1136px",
+  transitionBannerContainerWidth: "700px",
 }
 
 const lineClamp = {

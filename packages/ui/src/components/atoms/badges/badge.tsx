@@ -3,14 +3,16 @@ import { Typography } from "../base/typography";
 import { BadgeIcon } from "./badgeIcon";
 
 type BadgeProps = {
+  borderColor?: ColorType;
   colorVariant?: ColorType;
+  backgroundColor?: ColorType | string;
   label: string;
   className?: string;
 };
 
-export const Badge = ({ colorVariant, className, label, }: BadgeProps) => {
+export const Badge = ({ colorVariant, className, label, borderColor='backgroundTertiary', backgroundColor='transparent' }: BadgeProps) => {
   return (
-    <div className="flex items-center gap-1.5 p-2 rounded-md bg-transparent border border-gray-6 h-badgeHeight">
+    <div className={`inline-flex items-center gap-1.5 p-2 rounded-md bg-${backgroundColor} border border-${borderColor} h-badgeHeight ${className}`}>
       <BadgeIcon colorVariant={colorVariant} />
       <Typography className="pt-0.5" variant="paragraph-sm">{label}</Typography>
     </div>
