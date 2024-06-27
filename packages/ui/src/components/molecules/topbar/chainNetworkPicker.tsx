@@ -36,7 +36,7 @@ export const ChainNetworkPicker = ({
     currentNetwork,
   );
 
-  
+
   const chainOptions = chains.map((chain) => ({
     label: chain.chainName,
     value: chain.chainId,

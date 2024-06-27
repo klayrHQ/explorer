@@ -1,4 +1,4 @@
-import {HTMLAttributes, ReactNode} from "react";
+import {HTMLAttributes, PropsWithChildren, ReactElement, ReactNode} from "react";
 
 export type TypographyVariant =
   | "display-1"
@@ -117,7 +117,8 @@ export type ColorType =
   | "shadow-gray-6"
   | "shadow-gray-7"
   | "shadow-gray-8"
-  | "inherit";
+  | "inherit"
+  | string;
 
 export type ChainType = {
   chainId: string
@@ -135,6 +136,8 @@ export type TableCellType = {
   className?: string
   children: ReactNode
 } & Omit<HTMLAttributes<HTMLTableCellElement>, "children" | "content">;
+
+export type LinkComponent = PropsWithChildren<ReactElement>;
 
 export type Option = {
   value: string;

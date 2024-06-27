@@ -18,7 +18,7 @@ export const Logo = ({
 }: LogoProps) => {
   return (
     <FlexGrid className={className}>
-      <img alt={altText} className={"h-logoImgHeight w-logoImgWidth mt-sm mb-lxl"} src={logoSrc}/>
+      <img alt={altText} className={"h-logoImgHeight w-logoImgWidth mt-md mb-lxl"} src={logoSrc}/>
       {
         logoText && !minimized &&
         <Typography

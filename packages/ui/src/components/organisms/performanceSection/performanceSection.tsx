@@ -1,40 +1,32 @@
 import { PerformanceCardGrid } from "./performanceCardGrid";
-import { PerformanceCardProps } from "../../molecules/performanceCard/performanceCard";
+import { PerformanceCardProps } from "../../molecules";
 import { Typography } from "../../atoms";
-import { FlexGrid } from "../../atoms/base/flexGrid";
-import { CustomSelect, CustomSelectProps } from "../../atoms/input/select";
-import { Icon } from "../../atoms/images/icon";
+import { FlexGrid } from "../../atoms";
+import { CustomSelect, CustomSelectProps } from "../../atoms";
+import {SectionHeader} from "../../atoms/base/sectionHeader.tsx";
+import {LinkComponent} from "../../../types/types.ts";
 
 interface PerformanceSectionProps {
   stats: PerformanceCardProps[];
   options: CustomSelectProps["options"];
+  href?: string;
+  linkComponent?: LinkComponent;
 }
 
 export const PerformanceSection = ({
   stats,
   options,
+  href,
+  linkComponent,
 }: PerformanceSectionProps) => {
   return (
-    <FlexGrid component="article" direction="column" gap="8">
-      <div className=" hidden desktop:flex items-center justify-between ">
-        <FlexGrid  direction="row" gap="2">
-          <Typography
-            className="hover:text-gray-4"
-            color="gray-1"
-            component="h4"
-            fontWeight="bold"
-            variant="h4"
-          >
-           
-            <a href="/performance">
-              Klayr performance
-            </a>
-          </Typography>
-          <Icon className="w-8 h-8" icon="ArrowUpRight" />
-          {/*Icon size not working  */}
-        </FlexGrid>
+    <FlexGrid className={"w-full"} component="article" direction="column" gap="8">
+      <div className="w-full flex items-center justify-between ">
+        <SectionHeader className={"hidden desktop:flex"} href={href} linkComponent={linkComponent} title={"Performance"} titleSize={"lg"} />
+        <SectionHeader className={"flex desktop:hidden"} href={href} linkComponent={linkComponent} title={"Performance"} titleSize={"sm"} />
         <FlexGrid alignItems="center" gap="3">
           <Typography
+            className={"hidden desktop:inline"}
             color="gray-5"
             component="p"
             fontWeight="semibold"

@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react";
+import * as React from "react";
 import { cva } from "class-variance-authority";
 import { Typography } from "../base/typography";
 import { Icon } from "../images/icon";

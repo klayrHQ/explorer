@@ -1,35 +1,25 @@
 import { NewsCard, NewsCardProps } from "./newsCard";
-import { Typography } from "../../atoms/base/typography";
-import { Icon } from "../../atoms/images/icon";
-import { IconComponent } from "../../../types/types";
+import {IconComponent, LinkComponent} from "../../../types/types";
+import {FlexGrid} from "../../atoms";
+import {SectionHeader} from "../../atoms/base/sectionHeader.tsx";
 
 interface NewsCardGridProps {
   newsCards: NewsCardProps[];
   icon?: IconComponent;
+  href?: string;
+  linkComponent?: LinkComponent;
 }
 
-export const NewsCardGrid = ({ newsCards, }: NewsCardGridProps) => {
+export const NewsCardGrid = ({ newsCards, href, linkComponent, }: NewsCardGridProps) => {
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex gap-2">
-        <Typography
-          color="gray-1"
-          component="h6"
-          fontWeight="bold"
-          variant="h6"
-        >
-          <a className="hover:underline" href="/news">
-            Klayr announcements
-          </a>
-        </Typography>
-        <Icon icon="ArrowUpRight" />
-      </div>
-      <div className="flex flex-col desktop:flex-row gap-6">
+    <FlexGrid className="w-full" direction={"column"} gap={"6"}>
+      <SectionHeader href={href} linkComponent={linkComponent} title={"Klayr Announcements"} titleSize={"sm"} />
+      <div className="w-full flex flex-col desktop:flex-row gap-6 justify-between">
         {newsCards.map((newsCard, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <NewsCard key={index} {...newsCard} />
         ))}
       </div>
-    </div>
+    </FlexGrid>
   );
 };
