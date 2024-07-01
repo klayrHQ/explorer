@@ -37,7 +37,6 @@ export const TransactionBanner = ({ id, blockHeight, blockId, amount, symbol, se
        @media (min-width: 1024px) {
         background-position: right -50px top 35%;
         background-size: 50%;
-
     `}
     >
       <div className="flex items-start justify-between p-6 desktop:flex-row flex-col gap-5">
