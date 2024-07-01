@@ -1,10 +1,10 @@
 "use client"
-import { FlexGrid } from "@repo/ui/atoms";
+import {FlexGrid, Tooltip, Typography} from "@repo/ui/atoms";
 import {SectionHeader, TableContainer} from "@repo/ui/organisms";
 import {useEffect, useState} from "react";
 import {TableCellType} from "@repo/ui/types";
 import {TransactionType} from "../../utils/types.ts";
-import {shortString} from "@repo/ui/utils";
+import {fromNowFormatter, shortString} from "@repo/ui/utils";
 
 export const Transactions = () => {
   const [transactions, setTransactions] = useState<TransactionType[] | []>([]);
@@ -66,7 +66,11 @@ export const Transactions = () => {
           children: transaction?.block?.height,
         },
         {
-          children: new Date(transaction.block.timestamp).toDateString(),
+          children: (
+              <Tooltip placement={"top"} text={new Date(transaction.block.timestamp * 1000).toDateString()}>
+                <Typography className={"whitespace-nowrap"} color={"onBackgroundLow"}>{fromNowFormatter(transaction.block.timestamp * 1000)}</Typography>
+              </Tooltip>
+          ),
         },
         {
           children: transaction?.moduleCommand,
