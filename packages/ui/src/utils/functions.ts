@@ -8,6 +8,10 @@ export const cls = (classes: (undefined | null | boolean | string)[]) => classes
 export const trimSix = (str: string) => str.length > 6 ? str.slice(0, 6) + "..." + str.slice(-6): str;
 export const trimFour = (str: string) => str.length > 4 ? str.slice(0, 4) + "..." + str.slice(-4): str;
 
+export function replaceColonWithSpace(text: string) {
+  return text.replace(/:/g, ' ');
+}
+
 dayjs.extend(relativeTime, {
   thresholds: [
     { l: "s", r: 59, d: "second" },
@@ -64,3 +68,5 @@ export const fromNowFormatter =  (value: any) => {
 
     return date.fromNow();
   }
+
+

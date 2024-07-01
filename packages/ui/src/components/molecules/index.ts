@@ -5,6 +5,6 @@ export * from "./performanceCard/performanceCard";
 export * from "./topbar/chainNetworkPicker";
 export * from "./topbar/optionsMenu";
 export * from "./topbar/mobileMenu";
-export * from "./transaction/transactionBanner";
-export * from "./transaction/imageName";
+export * from "../organisms/transaction/transactionBanner";
+export * from "../atoms/account/avatarAddress";
 export * from "./data/table";

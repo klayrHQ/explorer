@@ -1,9 +1,13 @@
 import { Typography } from "../../atoms";
 import { Badge } from "../../atoms";
-import { ImageName } from "./imageName";
+import { ImageName } from "../../atoms/account/avatarAddress";
 import { Currency } from "../../atoms/base/currency";
 import { trimSix, trimFour } from "../../../utils/functions";
-import {dayjs, fromNowFormatter} from "../../../utils/functions";
+import {
+  dayjs,
+  fromNowFormatter,
+  replaceColonWithSpace,
+} from "../../../utils/functions";
 
 interface TransactionBannerProps {
   amount: string | number;
@@ -34,9 +38,15 @@ export const BannerText = ({
   timestamp,
   badgeColor,
 }: TransactionBannerProps) => {
+
+  const date = dayjs(timestamp * 1000);
+
+  const fromNowPrefix = dayjs().diff(date, "hour") >= 1 ? "on" : "over";
   
+
   return (
     <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-6">
+      {/* SENDER */}
       <ImageName
         imageUrl={
           senderImageUrl ||
@@ -44,7 +54,12 @@ export const BannerText = ({
         }
         name={senderName || trimFour(senderAddress)}
       />
-      <Typography variant="paragraph-md" color="onBackgroundMedium">send</Typography>
+
+      <Typography variant="paragraph-md" color="onBackgroundMedium">
+        send
+      </Typography>
+
+      {/* RECEIVER */}
       {receiverAddress && (
         <ImageName
           imageUrl={
@@ -54,23 +69,39 @@ export const BannerText = ({
           name={receiverName || trimFour(receiverAddress)}
         />
       )}
-      <Typography variant="paragraph-md" color="onBackgroundMedium">the amount of</Typography>
+
+      <Typography variant="paragraph-md" color="onBackgroundMedium">
+        the amount of
+      </Typography>
+
+      {/* AMOUNT */}
       <Currency amount={amount} symbol={symbol} />
-      <Typography variant="paragraph-md" color="onBackgroundMedium">in type</Typography>
+
+      <Typography variant="paragraph-md" color="onBackgroundMedium">
+        in type
+      </Typography>
+
+      {/* MODULE COMMAND */}
       <Badge
         borderColor="gray-1"
         className="flex-grow-0 capitalize"
         colorVariant={badgeColor || "green"}
-        label={moduleCommand || "Transfer"}
+        label={replaceColonWithSpace(moduleCommand)}
       />
-      {/* <Typography variant="paragraph-md">over </Typography> */}
-      <Typography fontWeight="semibold" variant="paragraph-md">
 
-        {/* {dayjs(timestamp * 1000).format("YYYY-MM-DD HH:mm:ss")} */}
-        {fromNowFormatter(timestamp * 1000)}
-
+      {/* TIMESTAMP */}
+      <Typography variant="paragraph-md" color="onBackgroundMedium">
+        {fromNowPrefix}
       </Typography>
-      <Typography variant="paragraph-md" color="onBackgroundMedium">and was</Typography>
+      <Typography fontWeight="semibold" variant="paragraph-md">
+        {fromNowFormatter(timestamp * 1000)}
+      </Typography>
+
+      <Typography variant="paragraph-md" color="onBackgroundMedium">
+        and was
+      </Typography>
+
+      {/* EXECUTION STATUS */}
       {executionStatus === "successful" ? (
         <Badge
           backgroundColor="greenOpacity"
