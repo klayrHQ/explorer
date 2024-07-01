@@ -9,13 +9,13 @@ export interface ImageNameProps {
 
 export const ImageName = ({ imageUrl, name, className, }: ImageNameProps) => {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className={`inline-flex items-center  gap-1 ${className}`}>
       <ImageContainer
         alt={name}
         src={imageUrl}
         variant="avatar"
       />
-      <Typography className="pt-1.5" fontWeight="semibold" variant="paragraph-md">{name}</Typography>
+      <Typography fontWeight="semibold" variant="paragraph-md">{name}</Typography>
     </div>
   );
 };

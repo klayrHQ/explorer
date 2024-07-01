@@ -1,6 +1,6 @@
 import { Typography, TypographyProps } from "@repo/ui/atoms";
 
-interface CurrencyProps extends TypographyProps {
+interface CurrencyProps extends Omit<TypographyProps, 'children'> {
     amount: string | number;
     sign?: string;
     symbol?: string;
@@ -8,15 +8,15 @@ interface CurrencyProps extends TypographyProps {
 
 export const Currency = ({
     amount,
-    sign = "$",
-    symbol = "KLY",
+    sign, 
+    symbol,
     ...props
 }: CurrencyProps) => {
     return (
-        <Typography {...props}>
-            {sign}
+        <Typography {...props} className="inline-flex gap-0.5" fontWeight="semibold">
+           <div>{sign} </div> 
             {amount}
-            {symbol}
+            <div>{symbol}</div>
         </Typography>
     );
 };

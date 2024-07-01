@@ -240,6 +240,9 @@ const config: Omit<Config, "content"> = {
     "flex-wrap",
     "flex-nowrap",
     "flex-wrap-reverse",
+    "capitalize",
+    "bg-no-repeat",
+
   ],
   theme: {
     extend: {

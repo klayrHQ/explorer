@@ -63,6 +63,8 @@ const colors = {
   greenDark: "var(--color-greenDark)",
   black: "var(--color-black)",
   white: "var(--color-white)",
+  greenOpacity: "var(--color-greenOpacity)",
+  redOpacity: "var(--color-redOpacity)",
   "gray-1": "var(--color-gray-1)",
   "gray-2": "var(--color-gray-2)",
   "gray-3": "var(--color-gray-3)",
@@ -304,7 +306,9 @@ const width = {
   modalWidth: "544px", 
   modalWidthMobile: "382px",
   transitionBannerWidth: "1136px",
+  transitionBannerWidthMobile: "382px",
   transitionBannerContainerWidth: "700px",
+  transitionBannerContainerWidthMobile: "334px",
 }
 
 const lineClamp = {
