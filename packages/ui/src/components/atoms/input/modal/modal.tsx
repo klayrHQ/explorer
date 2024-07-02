@@ -48,10 +48,10 @@ export const Modal = ({
           />
         </FlexGrid>
         <div className="px-6 my-6">{children}</div>
-        <FlexGrid alignItems="center" className="pb-6 px-6 desktop:mt-8" gap="1" justify="end">
+        <FlexGrid alignItems="center" className="pb-6 px-6 desktop:mt-8 " gap="1" justify="end">
           <Button
             align="none"
-            className="hidden desktop:flex"
+            className="hidden desktop:flex text-gray-5 hover:text-gray-1"
             label="Cancel"
             onClick={onClose}
             variant="transparent"
