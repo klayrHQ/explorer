@@ -50,7 +50,7 @@ export const PerformanceCard = ({
             className="mr-1"
             color={trend ? "green" : ("lobster" as ColorType)}
             component="p"
-            fontWeight="normal"
+            fontWeight="semibold"
             variant="caption"
           >
             {percentage}
