@@ -40,14 +40,14 @@ export const PerformanceCard = ({
         >
           {value}
         </Typography>
-        <div className="flex ">
+        <div className="flex items-center">
           <Icon
             color={trend ? "lobster" : ("lobster" as ColorType)}
             icon={trend ? "TrendUp" : "TrendDown"}
             size="small"
           />
           <Typography
-            className="mr-1"
+            className="mr-1 ml-0.5" 
             color={trend ? "green" : ("lobster" as ColorType)}
             component="p"
             fontWeight="semibold"
