@@ -35,7 +35,7 @@ export const PerformanceSection = ({
           >
             Show stats vs
           </Typography>
-          <CustomSelect defaultValue="lastMonth" options={options} width="md" />
+          <CustomSelect defaultValue="lastMonth" backgroundColor="darkBlue" options={options} width="md" />
         </FlexGrid>
       </div>
 
