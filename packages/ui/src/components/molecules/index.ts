@@ -8,3 +8,5 @@ export * from "./topbar/mobileMenu";
 export * from "../organisms/transaction/transactionBanner";
 export * from "../atoms/account/avatarAddress";
 export * from "./data/table";
+export * from "./transaction/bannerCard";
+export * from "./transaction/bannerText";
