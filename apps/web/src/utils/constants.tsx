@@ -1,6 +1,7 @@
 import {Icon, Typography} from "@repo/ui/atoms";
 import Logo from "../assets/images/logo.svg";
 import Image from "next/image";
+import {DefaultLinkComponent} from "storybook/stories/utils/constants.tsx";
 
 export const DefaultImageComponent = <Image alt={""} height={"1"} src={""} width={"1"} />;
 
@@ -83,6 +84,8 @@ export const menuItems = [
   {
     label: 'Transactions',
     icon: 'SwitchHorizontal',
+    href: "/transactions",
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Stakes',

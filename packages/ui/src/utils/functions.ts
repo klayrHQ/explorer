@@ -5,6 +5,16 @@ import util from "util";
 
 export const cls = (classes: (undefined | null | boolean | string)[]) => classes.filter(Boolean).join(" ");
 
+export const shortString = (string: string, length: number, ellipsisPlacement: "center" | "end") => {
+  if (!string) return "";
+  if (string.length <= length) return string;
+  if (ellipsisPlacement === "center") {
+    return `${string.slice(0, length / 2)}...${string.slice(-length / 2)}`;
+  } else {
+    return `${string.slice(0, length - 3)}...`;
+  }
+}
+
 export const trimSix = (str: string) => str.length > 6 ? str.slice(0, 6) + "..." + str.slice(-6): str;
 export const trimFour = (str: string) => str.length > 4 ? str.slice(0, 4) + "..." + str.slice(-4): str;
 
@@ -57,16 +67,14 @@ export {
 }
 
 export const fromNowFormatter =  (value: any) => {
-    if (!value) {
-      return "N/A";
-    }
-    const date = dayjs(value);
+  if (!value) {
+    return "N/A";
+  }
+  const date = dayjs(value);
 
-    if (dayjs().diff(date, "hour") >= 1) {
-      return date.format("DD MMM 'YY HH:mm");
-    }
-
-    return date.fromNow();
+  if (dayjs().diff(date, "hour") >= 1) {
+    return date.format("DD MMM 'YY HH:mm");
   }
 
-
+  return date.fromNow();
+}
