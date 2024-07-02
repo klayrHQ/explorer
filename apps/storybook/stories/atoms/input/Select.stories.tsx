@@ -39,6 +39,7 @@ export const Stats: Story = {
   
     defaultValue: 'lastMonth',
     width: 'md',
+    backgroundColor: 'darkBlue'
   },
 };
 

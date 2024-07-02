@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 import util from "util";
+
 export const cls = (classes: (undefined | null | boolean | string)[]) => classes.filter(Boolean).join(" ");
 
 export const shortString = (string: string, length: number, ellipsisPlacement: "center" | "end") => {
@@ -14,6 +15,13 @@ export const shortString = (string: string, length: number, ellipsisPlacement: "
   }
 }
 
+export const trimSix = (str: string) => str.length > 6 ? str.slice(0, 6) + "..." + str.slice(-6): str;
+export const trimFour = (str: string) => str.length > 4 ? str.slice(0, 4) + "..." + str.slice(-4): str;
+
+export function replaceColonWithSpace(text: string) {
+  return text.replace(/:/g, ' ');
+}
+
 dayjs.extend(relativeTime, {
   thresholds: [
     { l: "s", r: 59, d: "second", },
@@ -22,6 +30,7 @@ dayjs.extend(relativeTime, {
   ],
 });
 dayjs.extend(updateLocale);
+
 dayjs.updateLocale("en", {
   relativeTime: {
     future: (result: string) => {
@@ -52,14 +61,17 @@ dayjs.updateLocale("en", {
     mm: "%dm",
   },
 });
+
 export {
   dayjs,
 }
+
 export const fromNowFormatter =  (value: any) => {
   if (!value) {
     return "N/A";
   }
   const date = dayjs(value);
+
   if (dayjs().diff(date, "hour") >= 1) {
     return date.format("DD MMM 'YY HH:mm");
   }

@@ -43,6 +43,10 @@
   --color-onBackgroundDark: var(--color-gray-1);
   --color-onBackgroundLight: var(--color-gray-8);
 
+  /* Opacity colors */
+  --color-greenOpacity: rgba(34, 197, 94, 0.4);
+  --color-redOpacity: rgba(255, 135, 141, 0.40);
+
   /* States */
   --color-error: var(--color-tulip);
   --color-success: var(--color-green);
