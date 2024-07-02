@@ -1,10 +1,12 @@
 "use client"
-import {FlexGrid, Tooltip, Typography} from "@repo/ui/atoms";
+import {FlexGrid, Tooltip, Typography, UserAccountCard, Currency, Badge} from "@repo/ui/atoms";
 import {SectionHeader, TableContainer} from "@repo/ui/organisms";
 import {useEffect, useState} from "react";
 import {TableCellType} from "@repo/ui/types";
 import {TransactionType} from "../../utils/types.ts";
-import {fromNowFormatter, shortString} from "@repo/ui/utils";
+import {fromNowFormatter, replaceColonWithSpace, shortString} from "@repo/ui/utils";
+import {decimals} from "../../utils/constants.tsx";
+import Link from "next/link";
 
 export const Transactions = () => {
   const [transactions, setTransactions] = useState<TransactionType[] | []>([]);
@@ -60,7 +62,11 @@ export const Transactions = () => {
     return {
       cells: [
         {
-          children: shortString(transaction?.id, 12, "center"),
+          children: (
+            <Typography className={"hover:underline"} link>
+              <Link href={"#"}>{shortString(transaction?.id, 12, "center")}</Link>
+            </Typography>
+          ),
         },
         {
           children: transaction?.block?.height,
@@ -73,28 +79,53 @@ export const Transactions = () => {
           ),
         },
         {
-          children: transaction?.moduleCommand,
+          children: <Badge label={replaceColonWithSpace(transaction?.moduleCommand)} />,
         },
         {
-          children: shortString(transaction?.sender?.address, 12, "center"),
+          children: <UserAccountCard address={transaction?.sender?.address} name={transaction?.sender?.name} />,
         },
         {
-          children: shortString(transaction?.meta?.recipient?.address, 12, "center"),
+          children: (
+            transaction?.meta?.recipient ?
+            (
+              <UserAccountCard address={transaction?.meta?.recipient?.address} name={transaction?.meta?.recipient?.name} />
+            ) : (
+              "-"
+            )
+          ),
         },
         {
-          children: transaction?.params?.amount,
+          children: (
+            <Currency
+              amount={transaction?.params?.amount}
+              className={"align-middle"}
+              color={"onBackgroundLow"}
+              decimals={decimals}
+              symbol={"KLY"}
+              variant={"paragraph-sm"}
+            />
+          ),
         },
         {
-          children: transaction?.fee,
+          children: (
+            <Currency
+              amount={transaction?.fee}
+              className={"align-middle"}
+              color={"onBackgroundLow"}
+              decimals={5}
+              symbol={"KLY"}
+              variant={"paragraph-sm"}
+            />
+          ),
         },
       ],
     };
   });
 
   return (
-    <FlexGrid className="w-full max-w-app mx-auto" direction={"column"} gap={"5xl"}>
+    <FlexGrid className="w-full mx-auto" direction={"column"} gap={"5xl"}>
       <SectionHeader
-        count={100}
+        count={transactions?.length}
         subTitle={"Overview of all transactions on the blockchain"}
         title={"Transactions"}
       />

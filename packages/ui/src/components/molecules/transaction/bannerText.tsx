@@ -55,7 +55,7 @@ export const BannerText = ({
         name={senderName || trimFour(senderAddress)}
       />
 
-      <Typography variant="paragraph-md" color="onBackgroundMedium">
+      <Typography color="onBackgroundMedium" variant="paragraph-md">
         send
       </Typography>
 
@@ -70,14 +70,14 @@ export const BannerText = ({
         />
       )}
 
-      <Typography variant="paragraph-md" color="onBackgroundMedium">
+      <Typography color="onBackgroundMedium" variant="paragraph-md">
         the amount of
       </Typography>
 
       {/* AMOUNT */}
-      <Currency amount={amount} symbol={symbol} />
+      <Currency amount={amount} fontWeight={"semibold"} symbol={symbol} />
 
-      <Typography variant="paragraph-md" color="onBackgroundMedium">
+      <Typography color="onBackgroundMedium" variant="paragraph-md">
         in type
       </Typography>
 
@@ -90,14 +90,14 @@ export const BannerText = ({
       />
 
       {/* TIMESTAMP */}
-      <Typography variant="paragraph-md" color="onBackgroundMedium">
+      <Typography color="onBackgroundMedium" variant="paragraph-md">
         {fromNowPrefix}
       </Typography>
       <Typography fontWeight="semibold" variant="paragraph-md">
         {fromNowFormatter(timestamp * 1000)}
       </Typography>
 
-      <Typography variant="paragraph-md" color="onBackgroundMedium">
+      <Typography color="onBackgroundMedium" variant="paragraph-md">
         and was
       </Typography>
 

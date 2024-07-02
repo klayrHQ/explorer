@@ -11,9 +11,9 @@ type BadgeProps = {
 };
 
 
-export const Badge = ({ colorVariant, className, label, borderColor='backgroundTertiary', backgroundColor='transparent', }: BadgeProps) => {
+export const Badge = ({ colorVariant = "primary", className, label, borderColor='backgroundTertiary', backgroundColor='transparent', }: BadgeProps) => {
   return (
-    <div className={`inline-flex items-center gap-1.5 p-2 rounded-md bg-${backgroundColor} border border-${borderColor} h-badgeHeight ${className}`}>
+    <div className={`whitespace-nowrap capitalize inline-flex items-center gap-1.5 p-2 rounded-md bg-${backgroundColor} border border-${borderColor} h-badgeHeight ${className}`}>
       <BadgeIcon colorVariant={colorVariant} />
       <Typography variant="paragraph-sm">{label}</Typography>
     </div>

@@ -11,6 +11,7 @@ export * from "./base/flexGrid";
 export * from "./base/grid";
 export * from "./base/tooltip";
 export * from "./base/statusIcon";
+export * from "./base/currency";
 export * from "./images/icon";
 export * from "./images/logo";
 export * from "./images/imageContainer";
@@ -25,5 +26,7 @@ export * from "./data/keyValueComponent";
 export * from "./data/table/tableRow";
 export * from "./data/table/tableCell";
 export * from "./notifications/notificationIcon";
+export * from "./account/userAccountCard";
+export * from "./account/avatar/avatar";
 
 

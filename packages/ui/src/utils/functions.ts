@@ -77,3 +77,12 @@ export const fromNowFormatter =  (value: any) => {
   }
   return date.fromNow();
 }
+
+export const parseBeddows = (beddows: number, decimals: number = 2) => {
+  if (beddows) {
+    const amountFromBeddows = beddows / 100000000;
+    return amountFromBeddows.toFixed(decimals);
+  }
+
+  return 0;
+}

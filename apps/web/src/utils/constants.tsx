@@ -242,3 +242,5 @@ export const defaultChain = {
     },
   ],
 };
+
+export const decimals = 3;
