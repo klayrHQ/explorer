@@ -47,7 +47,7 @@ export const PerformanceCard = ({
             size="small"
           />
           <Typography
-            className="ml-0.5 mr-1"
+            className="mr-1"
             color={trend ? "green" : ("lobster" as ColorType)}
             component="p"
             fontWeight="normal"
