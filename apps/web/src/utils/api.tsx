@@ -29,7 +29,7 @@ const post = async (call: string, data: any) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      }
+      },
   );
 
   return (await response.json())
