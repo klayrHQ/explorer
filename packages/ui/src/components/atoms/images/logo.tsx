@@ -3,6 +3,7 @@ import {Typography} from "../base/typography.tsx";
 
 export interface LogoProps {
   logoSrc: string
+  logoFullSrc?: string
   altText: string
   logoText?: string
   minimized?: boolean
@@ -11,6 +12,7 @@ export interface LogoProps {
 
 export const Logo = ({
   logoSrc = "",
+  logoFullSrc,
   altText = "logo",
   logoText,
   minimized,
@@ -18,7 +20,7 @@ export const Logo = ({
 }: LogoProps) => {
   return (
     <FlexGrid className={className}>
-      <img alt={altText} className={"h-logoImgHeight w-logoImgWidth mt-md mb-lxl"} src={logoSrc}/>
+      <img alt={altText} className={"h-logoImgHeight w-logoImgWidth mt-md mb-lxl"} src={!minimized && logoFullSrc ? logoFullSrc : logoSrc }/>
       {
         logoText && !minimized &&
         <Typography
@@ -30,6 +32,17 @@ export const Logo = ({
           {logoText}
         </Typography>
       }
+       {/* {
+        logoText && !minimized &&
+        <Typography
+          color={"onBackgroundDark"}
+          component={"span"}
+          fontWeight={"semibold"}
+          variant={"logo"}
+        >
+          {logoText}
+        </Typography>
+      } */}
     </FlexGrid>
 
   )

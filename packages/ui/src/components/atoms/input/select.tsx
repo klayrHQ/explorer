@@ -9,7 +9,7 @@ import { ClickAwayListener } from "@mui/base";
 import { Option } from "../../../types/types";
 
 const selectStyles = cva(
-  "justify-start border rounded-md border-backgroundTertiary focus:outline-none hover:border-gray-5 bg-none text-gray-1 text-paragraph-sm bg-backgroundSecondary ",
+  "justify-start border border-backgroundTertiary focus:outline-none  text-gray-1 text-paragraph-sm  ",
   {
     variants: {
       width: {
@@ -18,17 +18,23 @@ const selectStyles = cva(
         lg: "min-w-64",
         xl: "min-w-selectSMWidth desktop:min-w-selectXLWidth",
       },
+      backgroundColor: {
+        darkBlue: "bg-darkBlue",
+        bgSecondary: "bg-gray-7",
     },
     defaultVariants: {
       width: "md",
+      backgroundColor: "bgSecondary",
     },
   },
+}
 );
 
 export interface CustomSelectProps {
   placeholder?: string;
   defaultValue?: string;
   width?: "sm" | "md" | "lg" | "xl";
+  backgroundColor?: "darkBlue" | "bgSecondary";
   options: Option[];
   onChange?: (value: string) => void;
 }
@@ -39,6 +45,7 @@ export const CustomSelect = ({
   placeholder,
   width = "xl",
   onChange,
+  backgroundColor = "bgSecondary",
 }: CustomSelectProps) => {
   const styles = selectStyles({ width, });
   const [selectedValue, setSelectedValue] = useState<string | undefined>(
@@ -66,7 +73,7 @@ export const CustomSelect = ({
         {selectedOption.labelIcon && (
           <Icon
             className="mr-2 "
-            hoverColor="gray-3"
+            hoverColor="darkBlue"
             icon={selectedOption.labelIcon}
             size="inherit"
           />
@@ -98,8 +105,9 @@ export const CustomSelect = ({
       <div>
         <button
           className={clsx(
-            "relative flex items-center justify-between bg-backgroundSecondary gap-2 px-4 py-2",
-            selectStyles({ width, }),
+            "relative flex items-center justify-between bg-darkBlue gap-2 p-3 group transition-all ", 
+             listboxVisible ? "rounded-t-md" : "rounded-md",
+            selectStyles({ width, backgroundColor }),
           )}
           onClick={() => setListboxVisible(!listboxVisible)}
           type="button"
@@ -108,10 +116,11 @@ export const CustomSelect = ({
             <span className="placeholder">{placeholder ?? " "}</span>
           )}
           <Icon
-            color="gray-6"
-            hoverColor="gray-3"
+            color={listboxVisible ? "gray-1" : "gray-6"}
+            hoverColor="gray-1"
             icon="ChevronDown"
             size="small"
+            className="group-hover:text-gray-1 transition-all"
           />
         </button>
       </div>
@@ -120,17 +129,17 @@ export const CustomSelect = ({
         <ClickAwayListener onClickAway={() => setListboxVisible(false)}>
           <ul
             className={clsx(
-              "absolute mt-2 border border-backgroundTertiary rounded-md  bg-backgroundSecondary z-10", //bg-color?
-              selectStyles({ width, }),
+              "absolute border border-backgroundTertiary border-t-0 bg-darkBlue z-10 rounded-b-md overflow-hidden ", 
+              selectStyles({ width, backgroundColor }),
             )}
             role="listbox"
           >
             {options.map((option) => (
               <li
                 className={clsx(
-                  "cursor-pointer list-none  px-4 py-2 flex items-center justify-start w-full rounded-md hover:bg-voltDark hover:text-gray-7 transition duration-150 ease-in-out",
+                  "cursor-pointer list-none p-3 flex items-center justify-start w-full hover:bg-gray-6 transition-all",
                   {
-                    "bg-backgroundTertiary": selectedValue === option.value,
+                    "bg-darkblue": selectedValue === option.value,
                   },
                 )}
                 key={option.value}
@@ -139,7 +148,7 @@ export const CustomSelect = ({
               >
                 {option.labelIcon && (
                   <Icon
-                    className="mr-2 hover:text-gray-7"
+                    className="mr-2"
                     icon={option.labelIcon}
                     size="inherit"
                   />
