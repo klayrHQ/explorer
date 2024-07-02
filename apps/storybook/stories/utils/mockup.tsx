@@ -104,7 +104,7 @@ export const kpisObject = [
         {"$181.66"}
         <span className={"text-green text-paragraph-sm inline-flex items-center"}>
           <Icon className={"inline pb-1"} color={"inherit"} icon={"ArrowUpRight"} />
-          {"0.3 %"}
+          {"0.3%"}
         </span>
       </Typography>
     ),
