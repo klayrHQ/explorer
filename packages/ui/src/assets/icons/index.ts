@@ -42,7 +42,6 @@ export const icons = {
   SwitchHorizontal,
   TrendDown,
   TrendUp,
-  TrendUpBold,
   BarChartSquare,
   Data,
   DataFlow,
