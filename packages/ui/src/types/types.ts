@@ -55,6 +55,7 @@ export type IconComponent =
   | "SwitchHorizontal"
   | "TrendDown"
   | "TrendUp"
+  | "TrendUpBold"
   | "BarChartSquare"
   | "Data"
   | "DataFlow"

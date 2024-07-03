@@ -235,6 +235,8 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(alignItems, "items"),
     ...getKeyMap(numberList, "translate-y"),
     ...getKeyMap(numberList, "translate-x"),
+    ...getKeyMap(numberList, "-translate-y"),
+    ...getKeyMap(numberList, "-translate-x"),
     "border-collapse",
     "border-spacing-0",
     "flex-wrap",
@@ -280,9 +282,6 @@ const config: Omit<Config, "content"> = {
         "wrap-reverse": "wrap-reverse",
         nowrap: "nowrap",
       },
-      translate: {
-        ...numberList,
-      }
     },
     fontFamily: {
       sans: ["Poppins", "Inter", "Verdana", "sans-serif"],

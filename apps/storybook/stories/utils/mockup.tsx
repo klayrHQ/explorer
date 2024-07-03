@@ -100,10 +100,10 @@ export const kpisObject = [
   {
     keyValue: "KLY: ",
     contentValue: (
-      <Typography className={"inline-flex items-center"} color={"gray-5"} variant={"paragraph-sm"}>
+      <Typography className={"inline-flex items-center justify-center"} fontWeight="medium" color={"gray-5"} variant={"paragraph-sm"}>
         {"$181.66"}
-        <span className={"text-green text-paragraph-sm inline-flex items-center"}>
-          <Icon className={"inline pb-1"} color={"inherit"} icon={"ArrowUpRight"} />
+        <span className={"text-green text-paragraph-sm inline-flex items-center justify-center font-semibold"}>
+          <Icon className={"inline ml-1 mb-px mr-0.5 w-3.5 h-3.5"} color={"inherit"} icon={"TrendUpBold"} />
           {"0.3%"}
         </span>
       </Typography>

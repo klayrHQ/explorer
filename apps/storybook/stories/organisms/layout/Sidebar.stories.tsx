@@ -1,6 +1,7 @@
 import type { StoryObj } from '@storybook/react';
 import {Sidebar} from "@repo/ui/organisms";
 import LogoImg from "../../assets/images/logo.svg";
+import LogoText from "../../assets/images/logoText.svg";
 import {menuItems} from "@/stories/utils/mockup";
 
 const meta = {
@@ -31,6 +32,7 @@ export const Default: Story = {
     logo: {
       logoText: 'klayr',
       logoSrc: LogoImg.src,
+      logoFullSrc: LogoText.src,
       altText: 'klayr logo',
     }
   },
