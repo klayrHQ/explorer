@@ -24,9 +24,9 @@ export function replaceColonWithSpace(text: string) {
 
 dayjs.extend(relativeTime, {
   thresholds: [
-    { l: "s", r: 59, d: "second" },
-    { l: "m", r: 299, d: "second" },
-    { l: "mm", r: 60, d: "minute" },
+    { l: "s", r: 59, d: "second", },
+    { l: "m", r: 299, d: "second", },
+    { l: "mm", r: 60, d: "minute", },
   ],
 });
 dayjs.extend(updateLocale);
@@ -63,7 +63,7 @@ dayjs.updateLocale("en", {
 });
 
 export {
-  dayjs
+  dayjs,
 }
 
 export const fromNowFormatter =  (value: any) => {
@@ -75,6 +75,5 @@ export const fromNowFormatter =  (value: any) => {
   if (dayjs().diff(date, "hour") >= 1) {
     return date.format("DD MMM 'YY HH:mm");
   }
-
   return date.fromNow();
 }

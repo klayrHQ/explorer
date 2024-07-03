@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ChainType, NetworkType } from "../../../types/types.ts";
 import { FlexGrid, KeyValueComponent, Typography } from "../../atoms";
 import { ImageContainer } from "../../atoms";
-import { StatusIcon } from "storybook/stories/atoms/base/statusIcon.tsx";
+import { StatusIcon } from "../../atoms";
 import { ReactElement } from "react";
 import { Modal, CustomSelect } from "../../atoms";
 
