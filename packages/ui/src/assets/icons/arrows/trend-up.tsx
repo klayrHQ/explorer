@@ -1,12 +1,12 @@
 export const TrendUp = ({ className, }: { className?: string }) => {
   return (
     <svg
-      className={className}
-      fill="none"
-      strokeWidth="1.5"
-      viewBox="0 0 14 14"
-      width="14"
-  height="14"
+    className={className}
+    fill="none"
+    height="1em"
+    strokeWidth="1.5"
+    viewBox="0 0 14 14"
+    width={"1em"}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

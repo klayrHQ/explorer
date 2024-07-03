@@ -9,7 +9,6 @@ import { ChevronUpDouble } from './arrows/chevron-up-double';
 import { SwitchHorizontal } from './arrows/switch-horizontal-01';
 import { TrendDown } from './arrows/trend-down';
 import { TrendUp } from './arrows/trend-up';
-import { TrendUpBold } from './arrows/trend-up-bold';
 import { BarChartSquare } from './charts/bar-chart-square-02';
 import { Data } from './development/data';
 import { DataFlow } from './development/dataflow-03';

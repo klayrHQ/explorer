@@ -103,7 +103,7 @@ export const kpisObject = [
       <Typography className={"inline-flex items-center justify-center"} fontWeight="medium" color={"gray-5"} variant={"paragraph-sm"}>
         {"$181.66"}
         <span className={"text-green text-paragraph-sm inline-flex items-center justify-center font-semibold"}>
-          <Icon className={"inline ml-1 mb-px mr-0.5 w-3.5 h-3.5"} color={"inherit"} icon={"TrendUpBold"} />
+          <Icon className={"inline ml-1 mb-px mr-0.5 w-3.5 h-3.5 stroke-2"} color={"inherit"} icon={"TrendUp"} />
           {"0.3%"}
         </span>
       </Typography>
