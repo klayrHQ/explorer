@@ -29,6 +29,7 @@ import { CurrencyDollar } from "./finance/currency-dollar.tsx";
 import { Sun } from "./weather/sun.tsx";
 import { Menu } from './general/menu-01';
 import { CrossClose } from './general/x-close.tsx';
+import { Eye } from './general/eye.tsx';
 
 export const icons = {
   ChevronDown,
@@ -62,4 +63,5 @@ export const icons = {
   Menu,
   CrossClose,
   ArrowRight,
+  Eye,
 };

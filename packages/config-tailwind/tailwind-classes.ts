@@ -324,8 +324,8 @@ const lineClamp = {
 }
 
 const shadow = {
-  md: "0px 0px 10px rgba(0, 0, 0, 0.3), -4px 0px 10px rgba(0, 0, 0, 0.3)",
-  below: "6px 6px 20px rgba(0, 0, 0, 0.3), -6px 6px 20px rgba(0, 0, 0, 0.3)",
+  md: "var(--shadow-md)",
+  below: "var(--shadow-below)",
 }
 
 const justify = {

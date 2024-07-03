@@ -75,6 +75,7 @@ export type IconComponent =
   | "Menu"
   | "CrossClose"
   | "ArrowRight"
+  | "Eye"
   | string;
 
 export type ColorType =

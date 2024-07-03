@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {TableCellType} from "@repo/ui/types";
 import {TransactionType} from "../../utils/types.ts";
 import {fromNowFormatter, replaceColonWithSpace, shortString} from "@repo/ui/utils";
-import {decimals} from "../../utils/constants.tsx";
+import {commandColors, decimals} from "../../utils/constants.tsx";
 import Link from "next/link";
 
 export const Transactions = () => {
@@ -59,6 +59,7 @@ export const Transactions = () => {
   ];
 
   const rows = transactions?.map((transaction) => {
+    const command = transaction?.moduleCommand.split(":")[1];
     return {
       cells: [
         {
@@ -73,13 +74,18 @@ export const Transactions = () => {
         },
         {
           children: (
-              <Tooltip placement={"top"} text={new Date(transaction.block.timestamp * 1000).toDateString()}>
-                <Typography className={"whitespace-nowrap"} color={"onBackgroundLow"}>{fromNowFormatter(transaction.block.timestamp * 1000)}</Typography>
-              </Tooltip>
+            <Tooltip placement={"top"} text={new Date(transaction.block.timestamp * 1000).toDateString()}>
+              <Typography className={"whitespace-nowrap"} color={"onBackgroundLow"}>{fromNowFormatter(transaction.block.timestamp * 1000)}</Typography>
+            </Tooltip>
           ),
         },
         {
-          children: <Badge label={replaceColonWithSpace(transaction?.moduleCommand)} />,
+          children: (
+            <Badge 
+              colorVariant={commandColors[command]}
+              label={replaceColonWithSpace(transaction?.moduleCommand)}
+            />
+          ),
         },
         {
           children: <UserAccountCard address={transaction?.sender?.address} name={transaction?.sender?.name} />,

@@ -9,7 +9,6 @@ export * from "./input/label";
 export * from "./base/typography";
 export * from "./base/flexGrid";
 export * from "./base/grid";
-export * from "./base/tooltip";
 export * from "./base/statusIcon";
 export * from "./base/currency";
 export * from "./images/icon";
@@ -28,5 +27,5 @@ export * from "./data/table/tableCell";
 export * from "./notifications/notificationIcon";
 export * from "./account/userAccountCard";
 export * from "./account/avatar/avatar";
-
-
+export * from "./utilities/tooltip.tsx";
+export * from "./utilities/popover";
