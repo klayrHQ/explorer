@@ -44,7 +44,7 @@ export const PerformanceCard = ({
           <Icon
             color={trend ? "lobster" : ("lobster" as ColorType)}
             icon={trend ? "TrendUp" : "TrendDown"}
-            size="small"
+            size="inherit"
           />
           <Typography
             className="mr-1 ml-0.5" 
