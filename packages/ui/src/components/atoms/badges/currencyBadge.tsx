@@ -12,8 +12,8 @@ type BadgeProps = {
 
 export const CurrencyBadge = ({ className,  borderColor='success', backgroundColor='greenOpacity', amount, symbol }: BadgeProps) => {
   return (
-    <div className={`inline-flex items-center gap-1.5 p-2 rounded-md bg-${backgroundColor} border border-${borderColor} ${className}`}>
-      <Currency amount={amount} symbol={symbol} />
+    <div className={`inline-flex items-center gap-1.5 p-1.5 rounded-md bg-${backgroundColor} border border-${borderColor} ${className}`}>
+      <Currency amount={amount} symbol={symbol} variant="caption"   fontWeight="normal" />
     </div>
-  );
+  ); 
 };

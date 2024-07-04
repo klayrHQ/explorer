@@ -1,29 +1,10 @@
 import { Typography } from "../../atoms";
-import { Badge } from "../../atoms";
 import { CurrencyBadge } from "../../atoms/badges/currencyBadge";
-import { ImageName } from "../../atoms/account/avatarAddress";
 import { Currency } from "../../atoms/base/currency";
-import { trimSix, trimFour } from "../../../utils/functions";
-import {
-  dayjs,
-  fromNowFormatter,
-  replaceColonWithSpace,
-} from "../../../utils/functions";
 
-interface TransactionBannerProps {
-  amount?: string | number;
-  symbol?: string;
+export interface ValidatorBannerTextProps {
   senderName?: string | null;
-  senderAddress: string;
-  senderImageUrl?: string | null;
-  receiverName?: string | null;
-  receiverAddress?: string;
-  receiverImageUrl?: string | null;
-  moduleCommand?: string;
-  executionStatus?: string;
-  timestamp?: number;
-  badgeColor?: string;
-  stakes?: string | number;
+  stakes?: number;
   value?: string | number;
   valueSymbol?: string;
   selfStake?: string | number;
@@ -32,16 +13,16 @@ interface TransactionBannerProps {
   capacitySymbol?: string;
 }
 
-export const BannerText = ({
+export const ValidatorBannerText = ({
   senderName,
-  stakes,
+  stakes = 0,
   value,
   valueSymbol,
   selfStake,
   selfStakeSymbol,
   capacity,
   capacitySymbol,
-}: TransactionBannerProps) => {
+}: ValidatorBannerTextProps) => {
   const getStakeWord = (stake: number) => {
     return stake > 1 ? "stakes" : "stake";
   };
@@ -53,7 +34,7 @@ export const BannerText = ({
       </Typography>
 
       <Typography fontWeight="semibold" variant="paragraph-md">
-        {stakes} [getStakeWord(stakes)]
+        {stakes} {getStakeWord(stakes)}
       </Typography>
 
       <Typography variant="paragraph-md" color="onBackgroundMedium">

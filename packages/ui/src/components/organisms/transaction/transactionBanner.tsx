@@ -32,7 +32,7 @@ export const TransactionBanner = ({ id, blockHeight, blockId, amount, symbol, se
     <BannerFrame image={image}>
           <div className="items-start justify-start flex flex-col">
           <FlexGrid alignItems="center" gap="4" justify="start">
-            <Icon color="white" icon="ArrowRight" />
+            <Icon color="white" icon="ArrowRight" className="hover:-translate-x-0.5 cursor-pointer transition-transform"/>
   
             <h3 className="text-heading-6 desktop:text-heading-3 ml-2 text-white font-bold">
               <span className="mr-3">Transaction</span>

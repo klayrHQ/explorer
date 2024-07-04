@@ -10,3 +10,4 @@ export * from "../atoms/account/avatarAddress";
 export * from "./data/table";
 export * from "./transaction/bannerCard";
 export * from "./transaction/bannerText";
+export * from "./validator/validatorBannerText";
