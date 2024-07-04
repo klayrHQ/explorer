@@ -48,7 +48,11 @@ const colors = {
   borderMedium: "var(--color-borderMedium)",
   borderHigh: "var(--color-borderHigh)",
   error: "var(--color-error)",
+  errorBg: "var(--color-errorBg)",
+  warning: "var(--color-warning)",
+  warningBg: "var(--color-warningBg)",
   success: "var(--color-success)",
+  successBg: "var(--color-successBg)",
   volt: "var(--color-volt)",
   voltDark: "var(--color-voltDark)",
   azule: "var(--color-azule)",
@@ -280,6 +284,8 @@ const height = {
   chainLogoHeight: "16px",
   avatarHeight: "24px",
   avatarLgHeight: "40px",
+  trHeight: "72px",
+  thHeight: "44px",
 }
 
 const width = {

@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority";
 import React, { ReactNode } from "react";
 import { cls } from "../../../utils/functions.ts";
 
-interface FlexGridProps {
+interface FlexGridProps extends React.HTMLAttributes<any> {
   component?:
     | "div"
     | "section"
@@ -89,11 +89,13 @@ export const FlexGrid = ({
   onClick,
   className,
   children,
+  ...props
 }: FlexGridProps) => {
   const Component = component;
 
   return (
     <Component
+      {...props}
       className={flexGridStyles({
         direction,
         wrap,

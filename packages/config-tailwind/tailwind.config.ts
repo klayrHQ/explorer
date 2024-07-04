@@ -243,6 +243,9 @@ const config: Omit<Config, "content"> = {
     "capitalize",
     "bg-no-repeat",
     "align-middle",
+    "group-hover:flex",
+    "group-hover:block",
+    "group-hover:inline",
   ],
   theme: {
     extend: {

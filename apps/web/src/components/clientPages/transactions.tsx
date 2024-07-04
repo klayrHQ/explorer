@@ -1,5 +1,6 @@
 "use client"
-import {FlexGrid, Tooltip, Typography, UserAccountCard, Currency, Badge} from "@repo/ui/atoms";
+import {FlexGrid, Tooltip, Typography, UserAccountCard, Currency, Badge, Icon} from "@repo/ui/atoms";
+import {TxDataPopover} from "@repo/ui/molecules";
 import {SectionHeader, TableContainer} from "@repo/ui/organisms";
 import {useEffect, useState} from "react";
 import {TableCellType} from "@repo/ui/types";
@@ -61,6 +62,15 @@ export const Transactions = () => {
   const rows = transactions?.map((transaction) => {
     const command = transaction?.moduleCommand.split(":")[1];
     return {
+      rowDetails: (
+        <TxDataPopover
+          txData={{
+            status: transaction?.executionStatus || "pending",
+            data: transaction?.params?.data,
+            nonce: transaction?.nonce,
+          }}
+        />
+      ),
       cells: [
         {
           children: (
@@ -70,7 +80,20 @@ export const Transactions = () => {
           ),
         },
         {
-          children: transaction?.block?.height,
+          children: (
+            <Typography className={"group whitespace-nowrap inline-flex gap-sm items-center"}>
+              {transaction?.block?.height}
+              <Tooltip placement={"bottom"} text={"Copy to clipboard"}>
+                <Icon
+                  className={"group-hover:inline hidden cursor-pointer"}
+                  icon={"Copy"}
+                  //onClick={() => navigator.clipboard.writeText(transaction?.block?.height.toString())}
+                  size={"2xs"}
+                />
+              </Tooltip>
+            </Typography>
+          ),
+          className: "min-w-[120px]",
         },
         {
           children: (

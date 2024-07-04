@@ -59,8 +59,12 @@
   --color-redOpacity: rgba(255, 135, 141, 0.40);
 
   /* States */
-  --color-error: var(--color-tulip);
+  --color-error: var(--color-lobster);
+  --color-errorBg: rgba(255, 135, 141, 0.4);
+  --color-warning: var(--color-sandDark);
+  --color-warningBg: rgba(237, 237, 206, 0.4);
   --color-success: var(--color-green);
+  --color-successBg: rgba(34, 197, 94, 0.4);
 
   /* Darkmode === Default*/
   --color-background: var(--color-darkBlue);

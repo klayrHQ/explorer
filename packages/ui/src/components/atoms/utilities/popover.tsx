@@ -6,23 +6,28 @@ import {cls} from "../../../utils/functions.ts";
 
 interface PopoverProps extends Omit<PopperProps, "open"> {
   button?: ReactElement;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
   children: ReactNode;
+  containerClassName?: string;
   className?: string;
 }
 
 export const Popover = ({
   button,
+  isOpen,
+  setIsOpen,
   children,
+  containerClassName,
   className,
   popperOptions,
   ...props
 }: PopoverProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   return (
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
-      <div>
+      <div className={containerClassName}>
         {
           button ? (
             cloneElement(button, {
@@ -51,7 +56,7 @@ export const Popover = ({
           >
             <div
               className={cls([
-                "bg-background shadow-md border-solid border-1 border-borderLow rounded-md px-3xl py-xl",
+                "bg-background shadow-md border-solid border-1 border-borderLow rounded-md",
                 className,
               ])}
             >

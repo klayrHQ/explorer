@@ -10,6 +10,7 @@ export * from "./base/typography";
 export * from "./base/flexGrid";
 export * from "./base/grid";
 export * from "./base/statusIcon";
+export * from "./base/statusTag";
 export * from "./base/currency";
 export * from "./images/icon";
 export * from "./images/logo";
