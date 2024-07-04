@@ -1,12 +1,12 @@
-export const TrendDown = ({ className, }: { className?: string }) => {
+export const TrendDown = ({ className }: { className?: string }) => {
   return (
     <svg
       className={className}
       fill="none"
-      height="1em"
-      strokeWidth="2"
+      strokeWidth="1.5"
       viewBox="0 0 14 14"
-      width={"1em"}
+      width="1em"
+      height="1em"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -18,4 +18,3 @@ export const TrendDown = ({ className, }: { className?: string }) => {
     </svg>
   );
 };
-  

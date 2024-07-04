@@ -10,8 +10,8 @@ const meta = {
   tags: ["autodocs"],
   args: {
     badges: [
-      { colorVariant: "green", label: "Development" },
-      { colorVariant: "tulip", label: "Blockchain" },
+      { colorVariant: "greenDark", label: "Development" },
+      { colorVariant: "tulipDark", label: "Blockchain" },
     ],
   },
 };

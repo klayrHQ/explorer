@@ -1,42 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   xmlns="http://www.w3.org/2000/svg"
-   id="Logo_s"
-   data-name="Logo&amp;apos;s"
-   viewBox="0 0 141.72999 141.72999"
-   version="1.1"
-   width="141.73"
-   height="141.73">
-  <defs
-     id="defs4">
-    <style
-       id="style2">
-      .cls-1 {
-        fill: #1a1a1a;
-      }
-
-      .cls-1, .cls-2 {
-        stroke-width: 0px;
-      }
-
-      .cls-2 {
-        fill: #d4ff00;
-      }
-    </style>
-  </defs>
-  <g
-     id="g10"
-     transform="translate(-98.529999,-77.949997)">
-    <rect
-       class="cls-2"
-       x="98.529999"
-       y="77.949997"
-       width="141.73"
-       height="141.73"
-       id="rect6" />
-    <polygon
-       class="cls-1"
-       points="188.23,195.91 188.23,177.07 131.72,177.07 131.72,120.56 150.56,120.56 150.56,139.4 188.23,139.4 188.23,120.56 169.4,120.56 169.4,101.73 207.07,101.73 207.07,195.91 "
-       id="polygon8" />
-  </g>
+<svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1160_900)">
+<path d="M0.921875 24.1712H25.0782V0H0.921875V24.1712Z" fill="#D4FF00"/>
+<path d="M18.0529 5.7749V18.4112H15.5227V15.8809H7.9469V8.29025H10.4771V10.8205H15.5227V8.29025H12.9925V5.7749H18.0529Z" fill="#0C111D"/>
+</g>
+<defs>
+<clipPath id="clip0_1160_900">
+<rect width="24.1563" height="24.1712" fill="white" transform="translate(0.921875)"/>
+</clipPath>
+</defs>
 </svg>

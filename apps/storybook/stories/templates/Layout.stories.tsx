@@ -1,8 +1,10 @@
 import type { StoryObj } from '@storybook/react';
 import {Layout} from "@repo/ui/templates";
 import Logo from "@/stories/assets/images/logo.svg";
+import LogoText from "@/stories/assets/images/logoText.svg";
 import {chainNetworkData, kpisObject, menuItems, mobileMenuItems} from "@/stories/utils/mockup";
 import {Typography} from "@repo/ui/atoms";
+import { log } from 'console';
 
 const meta = {
   title: 'Templates/Layout',
@@ -18,6 +20,7 @@ const meta = {
     kpis: kpisObject,
     logo: {
       logoSrc: Logo.src,
+      logoFullSrc: LogoText.src,
       altText: "Logo",
       logoText: "klayr"
     },
