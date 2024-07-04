@@ -28,9 +28,9 @@ export const SectionHeader = ({ title, titleSize = "lg", subTitle, count, classN
       {
         href ? (
           <Link component={linkComponent} href={href}>
-            <FlexGrid className={"group"} direction="row" gap="2">
+            <FlexGrid className={"group"} justify="center" direction="row" gap="2">
               <Typography
-                className="group-hover:text-gray-4"
+                className=""
                 color="gray-1"
                 component={titleSize === "lg" ? "h1" : "h2"}
                 fontWeight="bold"
@@ -40,12 +40,11 @@ export const SectionHeader = ({ title, titleSize = "lg", subTitle, count, classN
               </Typography>
               <Icon
                 className={cls([
-                  "group-hover:text-gray-4",
-                  titleSize === "lg" ? "text-heading-4" : "text-heading-6",
+                  "group-hover:text-volt group-hover:translate-x-px group-hover:-translate-y-px transition-transform duration-300  ease-in-out" ,
+                  titleSize === "lg" ? "text-heading-4 mt-1.5" : "text-heading-6 mt-1",
                 ])}
                 icon="ArrowUpRight"
                 size={"custom"}
-                style={{transform: titleSize === "lg" ? "translateY(6px)" : "translateY(2.5px)",}}
               />
             </FlexGrid>
           </Link>
@@ -61,7 +60,7 @@ export const SectionHeader = ({ title, titleSize = "lg", subTitle, count, classN
             </Typography>
             {
               count && (
-                <div className={"bg-secondary rounded-sm px-md pb-xs pt-2xs h-max mt-xs"}>
+                <div className={"bg-secondary rounded-sm px-md pb-xs pt-2xs h-max mt-xs "}>
                   <Typography
                     color="onSecondary"
                     variant="paragraph-sm"

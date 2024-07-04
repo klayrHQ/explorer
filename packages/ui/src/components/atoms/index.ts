@@ -9,6 +9,8 @@ export * from "./input/label";
 export * from "./base/typography";
 export * from "./base/flexGrid";
 export * from "./base/grid";
+export * from "./base/tooltip";
+export * from "./base/statusIcon";
 export * from "./images/icon";
 export * from "./images/logo";
 export * from "./images/imageContainer";

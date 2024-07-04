@@ -21,6 +21,7 @@ export const Stats: Story = {
       { value: "lastMonth", label: "Last month" },
       { value: "lastYear", label: "Last year" },
     ],
+    href: "/",
 
     stats: [
         {

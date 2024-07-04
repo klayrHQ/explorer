@@ -18,10 +18,10 @@ export const KeyValueComponent = ({ keyValue, contentValue, onClick,  color = "g
       <FlexGrid
         alignItems={"center"}
         className={cls([
-          "group",
+          "group ml-4",
           hover ? "cursor-pointer" : "",
         ])}
-        gap={"xs"}
+        gap={"sm"}
       >
         {
           typeof keyValue === "string" ? (
@@ -30,6 +30,7 @@ export const KeyValueComponent = ({ keyValue, contentValue, onClick,  color = "g
                 hover ? "group-hover:text-gray-3" : "",
                 "inline-flex items-center",
               ])}
+              fontWeight="medium"
               color={color}
               variant={size}
             >
@@ -46,6 +47,7 @@ export const KeyValueComponent = ({ keyValue, contentValue, onClick,  color = "g
               ])}
               color={color}
               variant={size}
+              fontWeight="medium"
             >
               {contentValue}
             </Typography>
