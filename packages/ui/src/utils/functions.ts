@@ -66,14 +66,14 @@ export {
   dayjs,
 }
 
-export const fromNowFormatter =  (value: any) => {
+export const fromNowFormatter =  (value: any, format?: string) => {
   if (!value) {
     return "N/A";
   }
   const date = dayjs(value);
 
   if (dayjs().diff(date, "hour") >= 1) {
-    return date.format("DD MMM 'YY HH:mm");
+    return date.format(format ?? "DD MMM 'YY HH:mm");
   }
   return date.fromNow();
 }
@@ -85,4 +85,7 @@ export const parseBeddows = (beddows: number, decimals: number = 2) => {
   }
 
   return 0;
+}
+export const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text);
 }

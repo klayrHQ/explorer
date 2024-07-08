@@ -26,7 +26,7 @@ export const TableRow = ({ children, className, rowDetails, type = "body", ...pr
       {children}
       {
         rowDetails && (
-          <>
+          <TableCell className={"desktop:border-none desktop:absolute top-0 bottom-0 my-auto right-0"}>
             <Popover
               button={
                 <IconButton
@@ -38,35 +38,16 @@ export const TableRow = ({ children, className, rowDetails, type = "body", ...pr
                 />
               }
               containerClassName={cls([
-                "desktop:absolute top-0 bottom-0 my-auto right-3xl group-hover:flex items-center justify-center",
-                openDetails ? "flex" : "hidden flex",
+                "desktop:group-hover:flex items-center justify-center",
+                openDetails ? "flex" : "desktop:hidden",
               ])}
               isOpen={openDetails}
+              placement={"bottom-end"}
               setIsOpen={setOpenDetails}
             >
               {rowDetails}
             </Popover>
-            <TableCell className={"desktop:hidden"}>
-              <Popover
-                button={
-                  <IconButton
-                    icon={"Eye"}
-                    onClick={() => {
-                      setOpenDetails(!openDetails);
-                    }}
-                    variant={"quaternary"}
-                  />
-                }
-                containerClassName={cls([
-                  "flex items-center justify-center",
-                ])}
-                isOpen={openDetails}
-                setIsOpen={setOpenDetails}
-              >
-                {rowDetails}
-              </Popover>
-            </TableCell>
-          </>
+          </TableCell>
         )
       }
     </tr>

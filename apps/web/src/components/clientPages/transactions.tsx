@@ -5,12 +5,21 @@ import {SectionHeader, TableContainer} from "@repo/ui/organisms";
 import {useEffect, useState} from "react";
 import {TableCellType} from "@repo/ui/types";
 import {TransactionType} from "../../utils/types.ts";
-import {fromNowFormatter, replaceColonWithSpace, shortString} from "@repo/ui/utils";
+import {copyToClipboard, dayjs, fromNowFormatter, replaceColonWithSpace, shortString} from "@repo/ui/utils";
 import {commandColors, decimals} from "../../utils/constants.tsx";
 import Link from "next/link";
 
 export const Transactions = () => {
   const [transactions, setTransactions] = useState<TransactionType[] | []>([]);
+  const [copyTooltipText, setCopyTooltipText] = useState<string>("Copy to clipboard");
+
+  const handleCopy = (text: string) => {
+    copyToClipboard(text);
+    setCopyTooltipText("Copied to clipboard!");
+    setTimeout(() => {
+      setCopyTooltipText("Copy to clipboard");
+    }, 2000);
+  }
 
   useEffect(() => {
     const getTransactions = async () => {
@@ -81,24 +90,25 @@ export const Transactions = () => {
         },
         {
           children: (
-            <Typography className={"group whitespace-nowrap inline-flex gap-sm items-center"}>
+            <Typography className={"whitespace-nowrap inline-flex gap-sm items-center"}>
               {transaction?.block?.height}
-              <Tooltip placement={"bottom"} text={"Copy to clipboard"}>
-                <Icon
-                  className={"group-hover:inline hidden cursor-pointer"}
-                  icon={"Copy"}
-                  //onClick={() => navigator.clipboard.writeText(transaction?.block?.height.toString())}
-                  size={"2xs"}
-                />
+              <Tooltip placement={"bottom"} text={copyTooltipText}>
+                <span onClick={() => handleCopy(transaction?.block?.height.toString())}>
+                  <Icon
+                    className={"desktop:group-hover/child:inline desktop:hidden cursor-pointer"}
+                    icon={"Copy"}
+                    size={"2xs"}
+                  />
+                </span>
               </Tooltip>
             </Typography>
           ),
-          className: "min-w-[120px]",
+          className: "group/child min-w-[120px]",
         },
         {
           children: (
-            <Tooltip placement={"top"} text={new Date(transaction.block.timestamp * 1000).toDateString()}>
-              <Typography className={"whitespace-nowrap"} color={"onBackgroundLow"}>{fromNowFormatter(transaction.block.timestamp * 1000)}</Typography>
+            <Tooltip placement={"top"} text={dayjs(transaction.block.timestamp * 1000).format("DD MMM YYYY HH:mm")}>
+              <Typography className={"whitespace-nowrap"} color={"onBackgroundLow"}>{fromNowFormatter(transaction.block.timestamp * 1000, "DD MMM YYYY")}</Typography>
             </Tooltip>
           ),
         },

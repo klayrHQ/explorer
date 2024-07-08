@@ -477,6 +477,15 @@ const alignItems = {
   stretch: "stretch",
 }
 
+const textAlign = {
+  left: "left",
+  center: "center",
+  right: "right",
+  justify: "justify",
+  start: "start",
+  end: "end",
+}
+
 export const classes = {
   borderRadius,
   borderWidth,
@@ -508,4 +517,5 @@ export const classes = {
   objectFit,
   colSpan,
   alignItems,
+  textAlign,
 };

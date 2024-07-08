@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React, {CSSProperties, HTMLAttributes} from 'react';
 import {ColorType, IconComponent} from '../../../types/types';
 import { icons } from '../../../assets/icons';
 import {cva} from "class-variance-authority";
@@ -12,6 +12,7 @@ interface ButtonProps {
   icon: IconComponent;
   color?: ColorType;
   hoverColor?: ColorType;
+  onClick?: () => void;
 }
 
 const iconStyles = cva(
@@ -39,6 +40,7 @@ export const Icon = ({
   color = 'gray-1',
   hoverColor,
   icon,
+  onClick,
 }: ButtonProps) => {
   // @ts-ignore
   const Component = icons[icon];
@@ -53,6 +55,7 @@ export const Icon = ({
           className,
         ]),
       })}
+      onClick={onClick}
       style={style}
     />
   );
