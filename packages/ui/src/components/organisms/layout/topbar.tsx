@@ -53,7 +53,7 @@ export const Topbar = ({
       alignItems={"center"}
       className={cls([
         "w-full h-topbarMobileHeight desktop:h-topbarHeight bg-gray-8 p-3xl desktop:pl-0 dekstop:py-0 pr-3xl",
-        "gap-4 desktop:gap-8",
+        "gap-4 desktop:gap-8" ,
       ])}
       component={"header"}
       justify={"between"}
@@ -65,7 +65,7 @@ export const Topbar = ({
       <FlexGrid alignItems={"center"} className={"desktop:hidden whitespace-nowrap"} gap={"md"}>
         {
           kpis.map((item, index) => (
-            <KeyValueComponent key={`key-value-${index + 1}`} {...item} />
+            <KeyValueComponent key={`key-value-${index + 1}`} {...item}/>
           ))
         }
         <div className={"relative"}>

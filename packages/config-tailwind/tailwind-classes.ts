@@ -127,6 +127,7 @@ const fontWeight = {
 const spacing = {
   px: "1px",
   "2xs": "2px",
+  "2.5xs": "2.5px",
   xs: "4px",
   sm: "6px",
   md: "8px",

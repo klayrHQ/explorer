@@ -1,6 +1,7 @@
 import type { StoryObj } from '@storybook/react';
 import {Topbar} from "@repo/ui/organisms";
 import Logo from "@/stories/assets/images/logo.svg";
+import LogoText from "@/stories/assets/images/logoText.svg";
 import {chainNetworkData, kpisObject, mobileMenuItems, optionsMenuItems} from "@/stories/utils/mockup";
 
 const meta = {
@@ -17,7 +18,9 @@ const meta = {
     mobileMenuItems: mobileMenuItems,
     logo: {
       logoSrc: Logo.src,
+      logoFullSrc: LogoText.src,
       altText: "Logo",
+      logoText: "klayr"
     },
   }
 };
