@@ -35,6 +35,8 @@
   --color-shadow-gray-6: rgba(51, 55, 65, 0.1);
   --color-shadow-gray-7: rgba(31, 36, 47, 0.1);
   --color-shadow-gray-8: rgba(5, 5, 22, 0.1);
+  --color-shadow-xs: rgba(16, 24, 40, 0.05);
+
 
   /* Constant colors */
   --color-backgroundDark: var(--color-darkBlue);

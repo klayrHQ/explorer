@@ -6,7 +6,7 @@ type BadgeProps = {
   borderColor?: ColorType;
   colorVariant?: ColorType;
   backgroundColor?: ColorType | string;
-  label: string;
+  label?: string;
   className?: string;
   padding?: string;
   variant?: TypographyVariant | undefined;
@@ -17,7 +17,7 @@ export const Badge = ({ colorVariant, className, label, borderColor='backgroundT
   return (
     <div className={`inline-flex items-center gap-1.5 p-${padding} rounded-md bg-${backgroundColor} border border-${borderColor} h-badgeHeight ${className}`}>
       <BadgeIcon colorVariant={colorVariant} />
-      <Typography variant={variant}>{label}</Typography>
+      { label && <Typography variant={variant}>{label}</Typography> }
     </div>
   );
 };

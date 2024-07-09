@@ -1,6 +1,7 @@
 import { Typography } from "../../atoms";
 import { CurrencyBadge } from "../../atoms/badges/currencyBadge";
 import { Currency } from "../../atoms/base/currency";
+import { Badge } from "../../atoms";
 
 export interface ValidatorBannerTextProps {
   senderName?: string | null;
@@ -9,8 +10,7 @@ export interface ValidatorBannerTextProps {
   valueSymbol?: string;
   selfStake?: string | number;
   selfStakeSymbol?: string;
-  capacity?: string | number;
-  capacitySymbol?: string;
+  capacity?: number;
 }
 
 export const ValidatorBannerText = ({
@@ -21,7 +21,6 @@ export const ValidatorBannerText = ({
   selfStake,
   selfStakeSymbol,
   capacity,
-  capacitySymbol,
 }: ValidatorBannerTextProps) => {
   const getStakeWord = (stake: number) => {
     return stake > 1 ? "stakes" : "stake";
@@ -53,7 +52,25 @@ export const ValidatorBannerText = ({
         and capacity of
       </Typography>
 
-      <CurrencyBadge amount={capacity ?? 0} symbol={capacitySymbol} />
+      {capacity && capacity > 100 ? (
+        <Badge
+          label={`${capacity}%`}
+          padding="1.5"
+          variant="caption"
+          colorVariant="success"
+          borderColor="success"
+          backgroundColor="greenOpacity"
+        />
+      ) : (
+        <Badge
+          label={`${capacity}%`}
+          padding="1.5"
+          variant="caption"
+          colorVariant="error"
+          borderColor="error"
+          backgroundColor="redOpacity"
+        />
+      )}
     </div>
   );
 };

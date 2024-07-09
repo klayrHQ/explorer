@@ -8,7 +8,7 @@ import { Icon } from "../../atoms";
 
 interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBannerHeaderProps {
   image: string;
-  senderName: string;
+  senderName?: string;
 }
 
 export const ValidatorBanner = ({
@@ -21,7 +21,6 @@ export const ValidatorBanner = ({
   selfStake,
   selfStakeSymbol,
   capacity,
-  capacitySymbol,
     online,
     notificationValue,
     imageUrl,
@@ -53,7 +52,6 @@ export const ValidatorBanner = ({
           selfStake={selfStake}
           selfStakeSymbol={selfStakeSymbol}
           capacity={capacity}
-          capacitySymbol={capacitySymbol}
           {...props} 
         />
       </FlexGrid>

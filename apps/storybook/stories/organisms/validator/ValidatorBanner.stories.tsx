@@ -25,7 +25,6 @@ export const Default: Story = {
     selfStake: 50,
     selfStakeSymbol: "KLY",
     capacity: 452,
-    capacitySymbol: "KLY",
     online: true,
     imageUrl: "https://i.pinimg.com/236x/a5/67/94/a567940c61eb580455d8f886f55d21b1.jpg",
     notificationValue: 1,
@@ -44,7 +43,24 @@ export const NoReceiverName: Story = {
         selfStake: 50,
         selfStakeSymbol: "KLY",
         capacity: 452,
-        capacitySymbol: "KLY",
+        online: false,
+        imageUrl: "https://i.pinimg.com/236x/a5/67/94/a567940c61eb580455d8f886f55d21b1.jpg",
+        notificationValue: 1,
+    
+      },
+};
+
+
+export const CapacityLow: Story = {
+    args: {
+        senderAddress: "klyvrkr6k3r86znn6n8y8ftyc5298b8gqew4bd4s8",
+        image: BannerBG.src,
+        stakes: 100,
+        value: 500,
+        valueSymbol: "KLY",
+        selfStake: 50,
+        selfStakeSymbol: "KLY",
+        capacity: 78,
         online: false,
         imageUrl: "https://i.pinimg.com/236x/a5/67/94/a567940c61eb580455d8f886f55d21b1.jpg",
         notificationValue: 1,
@@ -63,7 +79,6 @@ export const StakeFailed: Story = {
         selfStake: 50,
         selfStakeSymbol: "KLY",
         capacity: 452,
-        capacitySymbol: "KLY",
         imageUrl: "https://i.pinimg.com/236x/a5/67/94/a567940c61eb580455d8f886f55d21b1.jpg",
         notificationValue: 1,
     
