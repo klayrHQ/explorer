@@ -34,14 +34,14 @@ export const ValidatorBanner = ({
     <BannerFrame image={image}>
     
       <FlexGrid direction="column" justify="between">
-        <FlexGrid alignItems="start" gap="4" justify="start">
-         <div className="pr-1">
+        <FlexGrid alignItems="center" gap="4" justify="start">
+        
              <Icon
             color="white"
             icon="ArrowRight"
             className="hover:-translate-x-0.5 cursor-pointer transition-transform"
           />
-         </div>
+         
          
           <ValidatorBannerHeader notificationValue={notificationValue} name={name} imageUrl={imageUrl}  senderName={senderName} senderAddress={senderAddress} online={online}/>
         </FlexGrid>

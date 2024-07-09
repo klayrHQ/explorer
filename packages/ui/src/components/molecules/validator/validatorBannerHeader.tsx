@@ -2,8 +2,6 @@ import { trimSix } from "../../../utils/functions";
 import { Badge, Typography } from "../../atoms";
 import { CopyIcon } from "../../atoms/input/copyIcon";
 import { ImageNotification } from "../../atoms";
-import { Popover } from "../../atoms/utilities/popover";
-import { IconButton } from "../../atoms/input/iconButton";
 import { useState } from "react";
 
 export interface ValidatorBannerHeaderProps {
@@ -23,7 +21,6 @@ export const ValidatorBannerHeader = ({
   imageUrl,
   name = "User Avatar",
 }: ValidatorBannerHeaderProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex justify-between items-center">
       <div className="flex gap-2 items-center">

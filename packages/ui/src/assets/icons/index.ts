@@ -30,6 +30,10 @@ import { Sun } from "./weather/sun.tsx";
 import { Menu } from './general/menu-01';
 import { CrossClose } from './general/x-close.tsx';
 import { Copy } from './general/copy.tsx';
+import { DotsVertical } from './general/dots-vertical.tsx';
+import { Trash } from './general/trash.tsx';
+import { User } from './users/user.tsx';
+import { Plus } from './general/plus.tsx';
 
 export const icons = {
   ChevronDown,
@@ -63,5 +67,9 @@ export const icons = {
   Menu,
   CrossClose,
   ArrowRight,
-  Copy
+  Copy,
+  DotsVertical,
+  Trash,
+  User,
+  Plus,
 };
