@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import {cva} from "class-variance-authority";
 import {TypographyComponent, FontWeight, TypographyVariant} from "../../../types/types";
 
@@ -14,6 +14,7 @@ export interface TypographyProps {
   bold?: boolean;
   underline?: boolean;
   fontWeight?: FontWeight;
+  style?: CSSProperties;
 }
 
 const typographyStyles = cva(
@@ -73,25 +74,28 @@ export const Typography = ({
   underline,
   fontWeight,
   children,
+  style,
 }: TypographyProps) => {
   const Component = component as any;
 
   return (
-    <Component className={
-      typographyStyles({
-        variant,
-        align,
-        link,
-        italic,
-        bold,
-        underline,
-        className: [
-          color ? `text-${color}` : "",
-          className,
-          fontWeight ? `font-${fontWeight}` : "",
-        ],
-      })
-    }
+    <Component
+      className={
+        typographyStyles({
+          variant,
+          align,
+          link,
+          italic,
+          bold,
+          underline,
+          className: [
+            color ? `text-${color}` : "",
+            className,
+            fontWeight ? `font-${fontWeight}` : "",
+          ],
+        })
+      }
+      style={style}
     >
       {children}
     </Component>

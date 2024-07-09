@@ -13,6 +13,7 @@ interface FlexGridProps extends React.HTMLAttributes<any> {
     | "ul"
     | "main";
   direction?: "row" | "column" | "row-reverse" | "column-reverse";
+  mobileDirection?: "row" | "column" | "row-reverse" | "column-reverse";
   wrap?: boolean;
   justify?: "normal" | "start" | "end" | "center" | "between" | "around";
   alignItems?: "start" | "end" | "center";
@@ -37,6 +38,7 @@ interface FlexGridProps extends React.HTMLAttributes<any> {
     | "2xl"
     | "3xl"
     | "4xl"
+    | "4.5xl"
     | "5xl";
   onClick?: () => void;
   className?: string;
@@ -45,12 +47,6 @@ interface FlexGridProps extends React.HTMLAttributes<any> {
 
 const flexGridStyles = cva(["flex"], {
   variants: {
-    direction: {
-      row: "flex-row",
-      column: "flex-col",
-      "row-reverse": "flex-row-reverse",
-      "column-reverse": "flex-col-reverse",
-    },
     wrap: {
       true: "flex-wrap",
       false: "flex-nowrap",
@@ -72,7 +68,6 @@ const flexGridStyles = cva(["flex"], {
     },
   },
   defaultVariants: {
-    direction: "row",
     wrap: false,
     justify: "start",
     alignItems: "start",
@@ -82,6 +77,7 @@ const flexGridStyles = cva(["flex"], {
 export const FlexGrid = ({
   component = "div",
   direction,
+  mobileDirection,
   wrap,
   justify,
   alignItems,
@@ -97,11 +93,18 @@ export const FlexGrid = ({
     <Component
       {...props}
       className={flexGridStyles({
-        direction,
         wrap,
         justify,
         alignItems,
-        className: cls([gap ? `gap-${gap}` : "", className]),
+        className: cls([
+          gap ? `gap-${gap}` : "",
+          className,
+          !mobileDirection ?
+            // todo change back to {direction ?? "row"} and {mobileDirection} after fixing the issue
+            `flex-column desktop:flex-${direction ? direction === "column" ? "col" : direction : "row"}`
+            :
+            `flex-${mobileDirection === "column" ? "col" : mobileDirection} desktop:flex-${direction ? direction === "column" ? "col" : direction : "row"}`,
+        ]),
       })}
       onClick={onClick}
     >

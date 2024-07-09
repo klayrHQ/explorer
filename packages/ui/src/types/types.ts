@@ -77,6 +77,7 @@ export type IconComponent =
   | "ArrowRight"
   | "Eye"
   | "Copy"
+  | "Info"
   | string;
 
 export type ColorType =
