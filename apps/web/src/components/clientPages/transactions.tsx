@@ -6,12 +6,13 @@ import {useEffect, useState} from "react";
 import {TableCellType} from "@repo/ui/types";
 import {TransactionType} from "../../utils/types.ts";
 import {copyToClipboard, dayjs, fromNowFormatter, replaceColonWithSpace, shortString} from "@repo/ui/utils";
-import {commandColors, decimals} from "../../utils/constants.tsx";
+import {commandColors, decimals, getTableSkeletons} from "../../utils/constants.tsx";
 import Link from "next/link";
 
 export const Transactions = () => {
   const [transactions, setTransactions] = useState<TransactionType[] | []>([]);
   const [copyTooltipText, setCopyTooltipText] = useState<string>("Copy to clipboard");
+  const [loading, setLoading] = useState<boolean>(true);
 
   const handleCopy = (text: string) => {
     copyToClipboard(text);
@@ -24,6 +25,7 @@ export const Transactions = () => {
   useEffect(() => {
     const getTransactions = async () => {
       try {
+        setLoading(true);
         const response = await fetch('/api/transactions', {
           method: 'GET',
           headers: {
@@ -36,6 +38,8 @@ export const Transactions = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
     getTransactions();
@@ -68,7 +72,7 @@ export const Transactions = () => {
     },
   ];
 
-  const rows = transactions?.map((transaction) => {
+  const rows = !loading ? transactions?.map((transaction) => {
     const command = transaction?.moduleCommand.split(":")[1];
     return {
       rowDetails: (
@@ -159,7 +163,7 @@ export const Transactions = () => {
         },
       ],
     };
-  });
+  }) : getTableSkeletons(tableHead.length);
 
   return (
     <FlexGrid className="w-full mx-auto" direction={"column"} gap={"5xl"}>

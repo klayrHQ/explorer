@@ -33,6 +33,7 @@ const {
   colSpan,
   alignItems,
   textAlign,
+  animate,
 } = classes;
 
 // @ts-ignore
@@ -239,6 +240,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(numberList, "-translate-y"),
     ...getKeyMap(numberList, "-translate-x"),
     ...getKeyMap(textAlign, "text"),
+    ...getKeyMap(animate, "animate"),
     "border-collapse",
     "border-spacing-0",
     "flex-wrap",
