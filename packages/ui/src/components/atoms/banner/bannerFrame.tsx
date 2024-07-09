@@ -19,7 +19,7 @@ export const BannerFrame = ({ children, image }:BannerFrameProps) => {
                 background-size: 50%;
             `}
         >
-            <div className="flex items-start justify-between p-6 desktop:flex-row flex-col gap-5">
+            <div className="flex items-center justify-between p-6 desktop:flex-row flex-col gap-5">
                 {children}
             </div>
             

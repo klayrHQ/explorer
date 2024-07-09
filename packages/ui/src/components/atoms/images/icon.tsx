@@ -8,7 +8,7 @@ interface ButtonProps {
   className?: string;
   style?: CSSProperties
   //scales with font size, so inherit will adhere to the font size of the parent or a custom size can be set through the className prop
-  size?: "xs" | "small" | "medium" | "large" | "inherit" | "custom";
+  size?: "xxs" | "xs" | "small" | "medium" | "large" | "inherit" | "custom";
   icon: IconComponent;
   color?: ColorType;
   hoverColor?: ColorType;
@@ -19,6 +19,7 @@ const iconStyles = cva(
   {
     variants: {
       size: {
+        xxs: "text-icon-xxs",
         xs: "text-icon-xs",
         small: "text-icon-sm",
         medium: "text-icon-md",

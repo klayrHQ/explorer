@@ -26,5 +26,6 @@ export * from "./data/table/tableRow";
 export * from "./data/table/tableCell";
 export * from "./notifications/notificationIcon";
 export * from "./banner/bannerFrame";
+export * from "./images/imageNotification";
 
 

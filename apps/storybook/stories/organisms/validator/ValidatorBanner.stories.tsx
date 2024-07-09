@@ -17,6 +17,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     senderName: "Alex303",
+    senderAddress: "klyvrkr6k3r86znn6n8y8ftyc5298b8gqew4bd4s8",
     image: BannerBG.src,
     stakes: 100,
     value: 500,
@@ -25,34 +26,46 @@ export const Default: Story = {
     selfStakeSymbol: "KLY",
     capacity: 452,
     capacitySymbol: "KLY",
-    // Add any other necessary props here
+    online: true,
+    imageUrl: "https://i.pinimg.com/236x/a5/67/94/a567940c61eb580455d8f886f55d21b1.jpg",
+    notificationValue: 1,
+
+    
   },
 };
 
 export const NoReceiverName: Story = {
-  args: {
-    senderName: "Alex303",
-    image: BannerBG.src,
-    stakes: 100,
-    value: 500,
-    valueSymbol: "KLY",
-    selfStake: 50,
-    selfStakeSymbol: "KLY",
-    capacity: 452,
-    capacitySymbol: "KLY",
-  },
+    args: {
+        senderAddress: "klyvrkr6k3r86znn6n8y8ftyc5298b8gqew4bd4s8",
+        image: BannerBG.src,
+        stakes: 100,
+        value: 500,
+        valueSymbol: "KLY",
+        selfStake: 50,
+        selfStakeSymbol: "KLY",
+        capacity: 452,
+        capacitySymbol: "KLY",
+        online: false,
+        imageUrl: "https://i.pinimg.com/236x/a5/67/94/a567940c61eb580455d8f886f55d21b1.jpg",
+        notificationValue: 1,
+    
+      },
 };
 
 export const StakeFailed: Story = {
-  args: {
-    senderName: "John Doe",
-    image: BannerBG.src,
-    stakes: 1,
-    value: 1,
-    valueSymbol: "KLY",
-    selfStake: 0,
-    selfStakeSymbol: "KLY",
-    capacity: 500,
-    capacitySymbol: "KLY",
-  },
+    args: {
+        senderName: "Alex303",
+        senderAddress: "klyvrkr6k3r86znn6n8y8ftyc5298b8gqew4bd4s8",
+        image: BannerBG.src,
+        stakes: 100,
+        value: 500,
+        valueSymbol: "KLY",
+        selfStake: 50,
+        selfStakeSymbol: "KLY",
+        capacity: 452,
+        capacitySymbol: "KLY",
+        imageUrl: "https://i.pinimg.com/236x/a5/67/94/a567940c61eb580455d8f886f55d21b1.jpg",
+        notificationValue: 1,
+    
+      },
 };

@@ -105,6 +105,7 @@ const fontSize = {
   "icon-md": ["24px"],
   "icon-sm": ["20px"],
   "icon-xs": ["16px"],
+  "icon-xxs": ["12px"],
   "logo": ["34px", {lineHeight: "39px", }],
 };
 

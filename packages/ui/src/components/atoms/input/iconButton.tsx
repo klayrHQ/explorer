@@ -1,11 +1,11 @@
-import React, {MouseEventHandler} from 'react';
+import React, {forwardRef, MouseEventHandler} from 'react';
 import { Button as MuiButton } from '@mui/base';
 import {cva} from "class-variance-authority";
 import {Icon} from "../images/icon";
 import {ColorType, IconComponent} from "../../../types/types";
 
 interface IconButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "tertiary" | "semiTransparent" | "transparent" | "bordered" | "iconOnly" | "iconOnlyAlt"
+  variant?: "primary" | "secondary" | "tertiary" | "quaternary" | "semiTransparent" | "transparent" | "bordered" | "iconOnly" | "iconOnlyAlt"
   className?: string
   icon: IconComponent
   onClick?: MouseEventHandler<HTMLButtonElement>
@@ -24,6 +24,7 @@ const iconButtonStyles = cva(
         primary: "text-gray-8 w-iconButtonWidth h-buttonHeight",
         secondary: "text-gray-1 w-iconButtonWidth h-buttonHeight",
         tertiary: "text-gray-1 w-iconButtonWidth h-buttonHeight",
+        quaternary: "text-gray-1 w-iconButtonWidth h-buttonHeight bg-backgroundTertiary",
         semiTransparent: "text-gray-1 w-iconButtonWidth h-buttonHeight",
         transparent: "w-iconButtonWidth h-buttonHeight",
         bordered: "border border-backgroundSecondary w-iconButtonWidth h-buttonHeight",
@@ -241,21 +242,25 @@ const iconButtonStyles = cva(
   },
 );
 
-export const IconButton = ({
-  variant = "primary",
-  className,
-  icon,
-  onClick,
-  align,
-  hovered = false,
-  disabled = false,
-  active = false,
-  color,
-  ...props
-}: IconButtonProps) => {
+export const IconButton = forwardRef((
+  {
+    variant = "primary",
+    className,
+    icon,
+    onClick,
+    align,
+    hovered = false,
+    disabled = false,
+    active = false,
+    color,
+    ...props
+  }: IconButtonProps,
+  ref: React.Ref<HTMLButtonElement>,
+) => {
 
   return (
     <MuiButton
+      {...props}
       className={iconButtonStyles({
         variant,
         align,
@@ -265,10 +270,10 @@ export const IconButton = ({
         className: className,
       })}
       onClick={onClick}
+      ref={ref}
       type="button"
-      {...props}
     >
       <Icon className={"mx-auto"} color={color ?? "inherit"} icon={icon} size={"small"} />
     </MuiButton>
   );
-};
+});

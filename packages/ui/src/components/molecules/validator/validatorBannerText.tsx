@@ -28,7 +28,7 @@ export const ValidatorBannerText = ({
   };
 
   return (
-    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-6">
+    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5">
       <Typography variant="paragraph-md" color="onBackgroundMedium">
         {senderName} has a total of
       </Typography>
