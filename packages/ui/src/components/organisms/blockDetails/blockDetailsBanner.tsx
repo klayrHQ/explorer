@@ -29,7 +29,7 @@ export const BlockDetailsBanner = ({
             icon="ArrowRight"
             className="hover:-translate-x-0.5 cursor-pointer transition-transform"
           />
-          <h3 className="text-heading-6 desktop:text-heading-3 ml-2 text-white font-bold">
+          <h3 className="text-heading-4 desktop:text-heading-3 ml-2 text-white font-bold">
               <span className="mr-2">Block</span>
               {block}
             </h3>
