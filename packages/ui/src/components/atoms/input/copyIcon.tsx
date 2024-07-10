@@ -1,3 +1,5 @@
+'use client';
+
 // components/CopyToClipboardButton.js
 import { useState } from 'react';
 import { Icon } from '../images/icon';

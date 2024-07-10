@@ -1,15 +1,16 @@
-import React from 'react';
-import { Button as MuiButton } from '@mui/base';
+import React, {ForwardedRef, forwardRef, Ref} from 'react';
+import {Button as MuiButton, ButtonOwnProps} from '@mui/base';
 import {Typography} from "../base/typography";
 import {cva} from "class-variance-authority";
 
-interface ButtonProps {
+interface ButtonProps extends ButtonOwnProps {
   variant?: "primary" | "secondary" | "transparent";
   className?: string;
   fullWidth?: boolean;
   label: string | React.ReactNode;
-  onClick?: () => void;
+  onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
   align?: "left" | "center" | "right" | "none";
+  active?: boolean;
   hovered?: boolean;
   disabled?: boolean;
   iconOnly?: boolean;
@@ -48,6 +49,10 @@ const buttonStyles = cva(
         false: "",
       },
       disabled: {
+        true: "",
+        false: "",
+      },
+      active: {
         true: "",
         false: "",
       },
@@ -90,6 +95,43 @@ const buttonStyles = cva(
         disabled: false,
         className: "transparent hover:bg-gray-7",
       },
+      //active
+      {
+        active: true,
+        variant: "primary",
+        disabled: false,
+        className: "bg-voltDark",
+      },
+      {
+        active: false,
+        variant: "primary",
+        disabled: false,
+        className: "bg-volt hover:bg-voltDark",
+      },
+      {
+        active: true,
+        variant: "secondary",
+        disabled: false,
+        className: "bg-azuleDark",
+      },
+      {
+        active: false,
+        variant: "secondary",
+        disabled: false,
+        className: "bg-azule hover:bg-azuleDark",
+      },
+      {
+        active: true,
+        variant: "transparent",
+        disabled: false,
+        className: "text-gray-6",
+      },
+      {
+        active: false,
+        variant: "transparent",
+        disabled: false,
+        className: "text-gray-5 hover:text-gray-6",
+      },
       //disabled
       {
         disabled: true,
@@ -110,30 +152,38 @@ const buttonStyles = cva(
   },
 );
 
-export const Button = ({
-  variant = "primary",
-  className,
-  fullWidth,
-  label,
-  onClick,
-  align,
-  hovered = false,
-  disabled = false,
-  iconOnly = false,
-}: ButtonProps) => {
-
+// eslint-disable-next-line react/display-name
+export const Button = forwardRef((
+  {
+    variant = "primary",
+    className,
+    fullWidth,
+    label,
+    onClick,
+    align,
+    active,
+    hovered = false,
+    disabled = false,
+    iconOnly = false,
+    ...props
+  }: ButtonProps,
+  ref: Ref<HTMLButtonElement>,
+) => {
   return (
     <MuiButton
+      {...props}
       className={buttonStyles({
         variant,
         fullWidth,
         align,
+        active,
         hovered,
         disabled,
         iconOnly,
         className: className,
       })}
       onClick={onClick}
+      ref={ref}
       type="button"
     >
       <Typography
@@ -144,4 +194,4 @@ export const Button = ({
       </Typography>
     </MuiButton>
   );
-};
+});
