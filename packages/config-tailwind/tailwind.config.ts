@@ -244,6 +244,7 @@ const config: Omit<Config, "content"> = {
     "flex-wrap-reverse",
     "capitalize",
     "bg-no-repeat",
+    "truncate",
 
   ],
   theme: {

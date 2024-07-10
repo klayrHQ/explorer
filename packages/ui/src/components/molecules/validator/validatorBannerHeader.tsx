@@ -1,4 +1,4 @@
-import { trimSix } from "../../../utils/functions";
+import { trimSix, trimFour } from "../../../utils/functions";
 import { Badge, Typography } from "../../atoms";
 import { CopyIcon } from "../../atoms/input/copyIcon";
 import { ImageNotification } from "../../atoms";
@@ -33,8 +33,9 @@ export const ValidatorBannerHeader = ({
         />
         {senderName ? (
           <div className="flex flex-col ">
-            <div className=" ">
-                <h3 className="text-heading-4 desktop:text-heading-3 font-bold">{senderName}</h3>
+            <div className="  w-full max-w-24">
+                <h3 className="text-heading-4 desktop:text-heading-3 font-bold hidden desktop:inline-flex">{senderName}</h3>
+                <h3 className="text-heading-4 desktop:text-heading-3 font-bold desktop:hidden truncate ">{senderName}</h3>
             </div>
 
             <div className="flex gap-2 items-center">
@@ -42,8 +43,17 @@ export const ValidatorBannerHeader = ({
                 variant="caption"
                 fontWeight="normal"
                 color="onBackgroundMedium"
+                className="hidden desktop:flex"
               >
                 {trimSix(senderAddress)}
+              </Typography>
+              <Typography
+                variant="caption"
+                fontWeight="normal"
+                color="onBackgroundMedium"
+                className="desktop:hidden"
+              >
+                {trimFour(senderAddress)}
               </Typography>
               <CopyIcon size="xxs" content={senderAddress} />
             </div>
@@ -76,9 +86,9 @@ export const ValidatorBannerHeader = ({
             />
           )}
         </div>
-        <div className="flex desktop:hidden"> 
+        <div className="flex items-center desktop:hidden"> 
           {online ? (
-            <div className=" flex items-center justify-center w-5 h-5 rounded-sm border-1 border-success shadow-sm">
+            <div className=" flex items-center justify-center w-5 h-5 mr-0.5 rounded-sm border-1 border-success shadow-sm">
                 <BadgeIcon colorVariant="success" width="1.5" height="1.5" />
             </div>
           ) : (

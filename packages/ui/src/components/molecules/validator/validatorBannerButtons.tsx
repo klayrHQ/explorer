@@ -86,7 +86,7 @@ export const ValidatorBannerButtons = () => {
 
         {/* BUTTON STAKE NOW */}
       <Button label="Stake now" variant="primary" className="hidden desktop:flex" />
-      <Button label="Stake" variant="primary" className="flex desktop:hidden" />
+      <Button label="Stake" variant="primary" className="flex items-center desktop:hidden" />
     </div>
   );
 };
