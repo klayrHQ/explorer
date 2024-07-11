@@ -9,7 +9,7 @@ import { ClickAwayListener } from "@mui/base";
 import { Option } from "../../../types/types";
 
 const selectStyles = cva(
-  "justify-start border border-backgroundTertiary focus:outline-none  text-gray-1 text-paragraph-sm  ",
+  "justify-start border border-backgroundTertiary focus:outline-none outline-none  text-gray-1 text-paragraph-sm focus:border-backgroundTertiary",
   {
     variants: {
       width: {
@@ -105,7 +105,7 @@ export const CustomSelect = ({
       <div>
         <button
           className={clsx(
-            "relative flex items-center justify-between bg-darkBlue gap-2 p-3 group transition-all ", 
+            "relative flex items-center justify-between bg-darkBlue gap-2 p-3 group focus-visible:border-backgroundTertiary  focus:border-backgroundTertiary transition-all ", 
              listboxVisible ? "rounded-t-md" : "rounded-md",
             selectStyles({ width, backgroundColor }),
           )}
