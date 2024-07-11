@@ -1,5 +1,6 @@
 import {Icon, Typography} from "@repo/ui/atoms";
 import Logo from "../assets/images/logo.svg";
+import LogoText from "../assets/images/logoText.svg";
 import Image from "next/image";
 import {DefaultLinkComponent} from "storybook/stories/utils/constants.tsx";
 
@@ -149,6 +150,7 @@ export const logo = {
   altText: "Klayr",
   logoSrc: Logo.src,
   logoText: "Klayr",
+  logoFullSrc: LogoText.src,
 };
 
 export const performanceStatsSelectOptions = [
