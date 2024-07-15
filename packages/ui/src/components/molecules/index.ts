@@ -11,3 +11,4 @@ export * from "./data/table";
 export * from "./data/txDataPopover";
 export * from "./transaction/bannerCard";
 export * from "./transaction/bannerText";
+export * from "./validator/validatorBannerText";

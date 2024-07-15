@@ -7,4 +7,6 @@ export * from "./newsCard/newsCard";
 export * from "./newsCard/newsCardGrid";
 export * from "./search/search.tsx";
 export * from "./table/tableContainer.tsx";
+export * from "./validator/validatorBanner.tsx";
+export * from "./blockDetails/blockDetailsBanner.tsx";
 export * from "./sections/detailsSection.tsx";

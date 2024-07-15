@@ -27,6 +27,8 @@ export * from "./data/skeletonComponent";
 export * from "./data/table/tableRow";
 export * from "./data/table/tableCell";
 export * from "./notifications/notificationIcon";
+export * from "./banner/bannerFrame";
+export * from "./images/imageNotification";
 export * from "./account/userAccountCard";
 export * from "./account/avatar/avatar";
 export * from "./utilities/tooltip";

@@ -29,6 +29,10 @@ import { CurrencyDollar } from "./finance/currency-dollar.tsx";
 import { Sun } from "./weather/sun.tsx";
 import { Menu } from './general/menu-01';
 import { CrossClose } from './general/x-close.tsx';
+import { DotsVertical } from './general/dots-vertical.tsx';
+import { Trash } from './general/trash.tsx';
+import { User } from './users/user.tsx';
+import { Plus } from './general/plus.tsx';
 import { Eye } from './general/eye.tsx';
 import {Copy} from "./general/copy-01.tsx";
 import {Info} from "./general/help-circle.tsx";
@@ -65,7 +69,11 @@ export const icons = {
   Menu,
   CrossClose,
   ArrowRight,
-  Eye,
   Copy,
+  DotsVertical,
+  Trash,
+  User,
+  Plus,
+  Eye,
   Info,
 };

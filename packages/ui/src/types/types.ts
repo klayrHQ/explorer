@@ -75,8 +75,12 @@ export type IconComponent =
   | "Menu"
   | "CrossClose"
   | "ArrowRight"
-  | "Eye"
   | "Copy"
+  | "DotsVertical"
+  | "Trash"
+  | "User"
+  | "Plus"
+  | "Eye"
   | "Info"
   | string;
 
