@@ -138,6 +138,7 @@ const spacing = {
   "2xl": "20px",
   "3xl": "24px",
   "4xl": "32px",
+  "4.5xl": "36px",
   "5xl": "48px",
   sidebarMinSpacing: "22px",
 }
@@ -497,6 +498,12 @@ const animate = {
   bounce: "bounce",
 }
 
+const textOverflow = {
+  truncate: null,
+  "text-ellipsis": null,
+  "text-clip": null,
+}
+
 export const classes = {
   borderRadius,
   borderWidth,
@@ -530,4 +537,5 @@ export const classes = {
   alignItems,
   textAlign,
   animate,
+  textOverflow,
 };

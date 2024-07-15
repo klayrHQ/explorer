@@ -34,6 +34,7 @@ const {
   alignItems,
   textAlign,
   animate,
+  textOverflow,
 } = classes;
 
 // @ts-ignore
@@ -59,6 +60,14 @@ const getKeyOnlyMap = (obj) => {
     ...Object.keys(obj).map((key) => key),
     ...Object.keys(obj).map((key) => `tablet:${key}`),
     ...Object.keys(obj).map((key) => `desktop:${key}`),
+    ...Object.keys(obj).map((key) => `mobile:${key}`),
+    ...Object.keys(obj).map((key) => `sidebarBp:${key}`),
+    ...Object.keys(obj).map((key) => `hover:${key}`),
+    ...Object.keys(obj).map((key) => `focus:${key}`),
+    ...Object.keys(obj).map((key) => `focus:hover:${key}`),
+    ...Object.keys(obj).map((key) => `group-hover:${key}`),
+    ...Object.keys(obj).map((key) => `last:${key}`),
+    ...Object.keys(obj).map((key) => `!${key}`),
   ];
 };
 
@@ -241,6 +250,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(numberList, "-translate-x"),
     ...getKeyMap(textAlign, "text"),
     ...getKeyMap(animate, "animate"),
+    ...getKeyOnlyMap(textOverflow),
     "border-collapse",
     "border-spacing-0",
     "flex-wrap",

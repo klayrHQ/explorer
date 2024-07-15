@@ -31,6 +31,7 @@ import { Menu } from './general/menu-01';
 import { CrossClose } from './general/x-close.tsx';
 import { Eye } from './general/eye.tsx';
 import {Copy} from "./general/copy-01.tsx";
+import {Info} from "./general/help-circle.tsx";
 
 export const icons = {
   ChevronDown,
@@ -66,4 +67,5 @@ export const icons = {
   ArrowRight,
   Eye,
   Copy,
+  Info,
 };
