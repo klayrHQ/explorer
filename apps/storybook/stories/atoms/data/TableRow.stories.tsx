@@ -19,7 +19,7 @@ export const Default: Story = {
   args: {
     children: rows[0].cells.map((cell, index) => (
       <TableCell key={`sb-cell-${index + 1}`}>
-        <Typography>{cell.content}</Typography>
+        <Typography>{cell.children}</Typography>
       </TableCell>
     )),
   },
@@ -29,7 +29,7 @@ export const TableHead: Story = {
   args: {
     children: headCols.map((cell, index) => (
       <TableCell key={`sb-cell-${index + 1}`} type={"head"}>
-        <Typography>{cell.content}</Typography>
+        <Typography>{cell.children}</Typography>
       </TableCell>
     )),
   },

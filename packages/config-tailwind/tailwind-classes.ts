@@ -284,6 +284,7 @@ const height = {
   topbarMobileHeight: "76px",
   chainLogoHeight: "16px",
   avatarHeight: "24px",
+  avatarMdHeight: "30px",
   avatarLgHeight: "40px",
   trHeight: "72px",
   thHeight: "44px",
@@ -309,6 +310,7 @@ const width = {
   searchBarWidth: '600px',
   chainLogoWidth: "16px",
   avatarWidth: "24px",
+  avatarMdWidth: "30px",
   avatarLgWidth: "40px",
   selectXLWidth: "384px",
   selectSMWidth: "222px",
@@ -487,6 +489,14 @@ const textAlign = {
   end: "end",
 }
 
+const animate = {
+  none: "none",
+  spin: "spin",
+  ping: "ping",
+  pulse: "pulse",
+  bounce: "bounce",
+}
+
 export const classes = {
   borderRadius,
   borderWidth,
@@ -519,4 +529,5 @@ export const classes = {
   colSpan,
   alignItems,
   textAlign,
+  animate,
 };

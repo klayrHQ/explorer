@@ -1,4 +1,4 @@
-import {Icon, Typography} from "@repo/ui/atoms";
+import {Icon, SkeletonComponent, Typography} from "@repo/ui/atoms";
 import Logo from "../assets/images/logo.svg";
 import Image from "next/image";
 import {DefaultLinkComponent} from "storybook/stories/utils/constants.tsx";
@@ -252,4 +252,16 @@ export const commandColors: Record<string, ColorType> = {
   claimRewards: "tulip",
   unlock: "gray-1",
   changeCommission: "green",
+}
+
+export const getTableSkeletons = (cells: number) => {
+  return Array.from({length: 10,}, (_) => {
+    return {
+      cells: Array.from({length: cells,}, (_) => {
+        return {
+          children: <SkeletonComponent height="6" width="full" />,
+        };
+      }),
+    };
+  });
 }
