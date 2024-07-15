@@ -39,7 +39,7 @@ export const TabButtons: React.FC<TabButtonsProps> = ({ tabs }) => {
           >
             <div className="flex gap-2">
               <Icon color="" icon={tab.icon} />
-              <Typography variant="paragraph-lg" color="">
+              <Typography fontWeight="semibold" variant="paragraph-lg" color="">
                 {tab.label}
               </Typography>
             </div>
