@@ -40,8 +40,9 @@ export const TransactionBanner = ({ id, blockHeight, blockId, amount, symbol, se
             </h3>
           </FlexGrid>
           <BannerText
-            timestamp={timestamp}
             amount={amount}
+            badgeColor={badgeColor}
+            executionStatus={executionStatus}
             moduleCommand={moduleCommand}
             receiverAddress={receiverAddress}
             receiverImageUrl={receiverImageUrl}
@@ -49,9 +50,8 @@ export const TransactionBanner = ({ id, blockHeight, blockId, amount, symbol, se
             senderAddress={senderAddress}
             senderImageUrl={senderImageUrl}
             senderName={senderName}
-            badgeColor={badgeColor}
             symbol={symbol}
-            executionStatus={executionStatus}
+            timestamp={timestamp}
           />
         </div>
         <BannerCard

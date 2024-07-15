@@ -3,7 +3,7 @@ import { fn } from '@storybook/test';
 import {Tooltip} from '@repo/ui/atoms';
 
 const meta = {
-  title: 'Atoms/Base/Tooltip',
+  title: 'Atoms/Utilities/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',

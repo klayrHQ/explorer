@@ -5,6 +5,7 @@ import { BadgeIcon } from "./badgeIcon";
 type BadgeProps = {
   borderColor?: ColorType;
   colorVariant?: ColorType;
+  typographyVariant?: TypographyVariant;
   backgroundColor?: ColorType | string;
   label?: string;
   className?: string;
@@ -13,11 +14,11 @@ type BadgeProps = {
 };
 
 
-export const Badge = ({ colorVariant, className, label, borderColor='backgroundTertiary', backgroundColor='transparent', padding='2', variant='paragraph-sm' }: BadgeProps) => {
+export const Badge = ({ colorVariant = "primary", typographyVariant = "paragraph-sm", className, label, borderColor='backgroundTertiary', padding='2', backgroundColor='transparent', }: BadgeProps) => {
   return (
-    <div className={`inline-flex items-center gap-1.5 p-${padding} rounded-md bg-${backgroundColor} border border-${borderColor} h-badgeHeight ${className}`}>
+    <div className={`whitespace-nowrap capitalize inline-flex items-center gap-1.5 p-${padding} rounded-md bg-${backgroundColor} border border-${borderColor} h-badgeHeight ${className}`}>
       <BadgeIcon colorVariant={colorVariant} />
-      { label && <Typography variant={variant}>{label}</Typography> }
+      <Typography variant={typographyVariant}>{label}</Typography>
     </div>
   );
 };

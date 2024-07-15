@@ -48,7 +48,11 @@ const colors = {
   borderMedium: "var(--color-borderMedium)",
   borderHigh: "var(--color-borderHigh)",
   error: "var(--color-error)",
+  errorBg: "var(--color-errorBg)",
+  warning: "var(--color-warning)",
+  warningBg: "var(--color-warningBg)",
   success: "var(--color-success)",
+  successBg: "var(--color-successBg)",
   volt: "var(--color-volt)",
   voltDark: "var(--color-voltDark)",
   azule: "var(--color-azule)",
@@ -135,6 +139,7 @@ const spacing = {
   "2xl": "20px",
   "3xl": "24px",
   "4xl": "32px",
+  "4.5xl": "36px",
   "5xl": "48px",
   sidebarMinSpacing: "22px",
 }
@@ -281,7 +286,10 @@ const height = {
   topbarMobileHeight: "76px",
   chainLogoHeight: "16px",
   avatarHeight: "24px",
+  avatarMdHeight: "30px",
   avatarLgHeight: "40px",
+  trHeight: "72px",
+  thHeight: "44px",
 }
 
 const width = {
@@ -304,6 +312,7 @@ const width = {
   searchBarWidth: '600px',
   chainLogoWidth: "16px",
   avatarWidth: "24px",
+  avatarMdWidth: "30px",
   avatarLgWidth: "40px",
   selectXLWidth: "384px",
   selectSMWidth: "222px",
@@ -326,8 +335,8 @@ const lineClamp = {
 }
 
 const shadow = {
-  md: "0px 0px 10px rgba(0, 0, 0, 0.3), -4px 0px 10px rgba(0, 0, 0, 0.3)",
-  below: "6px 6px 20px rgba(0, 0, 0, 0.3), -6px 6px 20px rgba(0, 0, 0, 0.3)",
+  md: "var(--shadow-md)",
+  below: "var(--shadow-below)",
 }
 
 const justify = {
@@ -473,6 +482,29 @@ const alignItems = {
   stretch: "stretch",
 }
 
+const textAlign = {
+  left: "left",
+  center: "center",
+  right: "right",
+  justify: "justify",
+  start: "start",
+  end: "end",
+}
+
+const animate = {
+  none: "none",
+  spin: "spin",
+  ping: "ping",
+  pulse: "pulse",
+  bounce: "bounce",
+}
+
+const textOverflow = {
+  truncate: null,
+  "text-ellipsis": null,
+  "text-clip": null,
+}
+
 export const classes = {
   borderRadius,
   borderWidth,
@@ -504,4 +536,7 @@ export const classes = {
   objectFit,
   colSpan,
   alignItems,
+  textAlign,
+  animate,
+  textOverflow,
 };

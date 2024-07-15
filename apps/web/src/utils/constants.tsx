@@ -1,8 +1,9 @@
-import {Icon, Typography} from "@repo/ui/atoms";
+import {Icon, SkeletonComponent, Typography} from "@repo/ui/atoms";
 import Logo from "../assets/images/logo.svg";
 import LogoText from "../assets/images/logoText.svg";
 import Image from "next/image";
 import {DefaultLinkComponent} from "storybook/stories/utils/constants.tsx";
+import {ColorType} from "@repo/ui/types";
 
 export const DefaultImageComponent = <Image alt={""} height={"1"} src={""} width={"1"} />;
 
@@ -244,3 +245,25 @@ export const defaultChain = {
     },
   ],
 };
+
+export const decimals = 3;
+
+export const commandColors: Record<string, ColorType> = {
+  transfer: "volt",
+  stake: "azule",
+  claimRewards: "tulip",
+  unlock: "gray-1",
+  changeCommission: "green",
+}
+
+export const getTableSkeletons = (cells: number) => {
+  return Array.from({length: 10,}, (_) => {
+    return {
+      cells: Array.from({length: cells,}, (_) => {
+        return {
+          children: <SkeletonComponent height="6" width="full" />,
+        };
+      }),
+    };
+  });
+}

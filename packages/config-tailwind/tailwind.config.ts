@@ -32,6 +32,9 @@ const {
   objectFit,
   colSpan,
   alignItems,
+  textAlign,
+  animate,
+  textOverflow,
 } = classes;
 
 // @ts-ignore
@@ -47,7 +50,7 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `focus:hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `group-hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `last:${prefix}-${key}`),
-
+    ...Object.keys(obj).map((key) => `!${prefix}-${key}`),
   ];
 };
 
@@ -57,6 +60,14 @@ const getKeyOnlyMap = (obj) => {
     ...Object.keys(obj).map((key) => key),
     ...Object.keys(obj).map((key) => `tablet:${key}`),
     ...Object.keys(obj).map((key) => `desktop:${key}`),
+    ...Object.keys(obj).map((key) => `mobile:${key}`),
+    ...Object.keys(obj).map((key) => `sidebarBp:${key}`),
+    ...Object.keys(obj).map((key) => `hover:${key}`),
+    ...Object.keys(obj).map((key) => `focus:${key}`),
+    ...Object.keys(obj).map((key) => `focus:hover:${key}`),
+    ...Object.keys(obj).map((key) => `group-hover:${key}`),
+    ...Object.keys(obj).map((key) => `last:${key}`),
+    ...Object.keys(obj).map((key) => `!${key}`),
   ];
 };
 
@@ -237,6 +248,9 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(numberList, "translate-x"),
     ...getKeyMap(numberList, "-translate-y"),
     ...getKeyMap(numberList, "-translate-x"),
+    ...getKeyMap(textAlign, "text"),
+    ...getKeyMap(animate, "animate"),
+    ...getKeyOnlyMap(textOverflow),
     "border-collapse",
     "border-spacing-0",
     "flex-wrap",
@@ -245,7 +259,13 @@ const config: Omit<Config, "content"> = {
     "capitalize",
     "bg-no-repeat",
     "truncate",
-
+    "align-middle",
+    "group-hover:flex",
+    "group-hover:block",
+    "group-hover:inline",
+    "desktop:group-hover:flex",
+    "desktop:group-hover:block",
+    "desktop:group-hover:inline",
   ],
   theme: {
     extend: {

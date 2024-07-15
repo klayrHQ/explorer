@@ -13,7 +13,7 @@ export const TableContainer = ({ className, pagination, filters, tableClassName,
     <FlexGrid
       className={cls([
         className,
-        "w-full border-collapse border-solid border-borderLow border-1 rounded-xl",
+        "w-full border-collapse border-solid border-borderLow border-1 rounded-xl overflow-hidden",
       ])}
       direction={"column"}
       gap={"0"}

@@ -9,8 +9,9 @@ export * from "./input/label";
 export * from "./base/typography";
 export * from "./base/flexGrid";
 export * from "./base/grid";
-export * from "./base/tooltip";
 export * from "./base/statusIcon";
+export * from "./base/statusTag";
+export * from "./base/currency";
 export * from "./images/icon";
 export * from "./images/logo";
 export * from "./images/imageContainer";
@@ -22,10 +23,13 @@ export * from "./badges/badge";
 export * from "./badges/badgeIcon";
 export * from "./badges/badgeGroup";
 export * from "./data/keyValueComponent";
+export * from "./data/skeletonComponent";
 export * from "./data/table/tableRow";
 export * from "./data/table/tableCell";
 export * from "./notifications/notificationIcon";
 export * from "./banner/bannerFrame";
 export * from "./images/imageNotification";
-
-
+export * from "./account/userAccountCard";
+export * from "./account/avatar/avatar";
+export * from "./utilities/tooltip";
+export * from "./utilities/popover";

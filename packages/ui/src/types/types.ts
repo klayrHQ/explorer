@@ -80,6 +80,8 @@ export type IconComponent =
   | "Trash"
   | "User"
   | "Plus"
+  | "Eye"
+  | "Info"
   | string;
 
 export type ColorType =
