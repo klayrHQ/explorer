@@ -1,7 +1,7 @@
 "use client"
 import {Popper} from "@mui/base";
 import {CSSProperties, ReactNode, useState} from "react";
-import {Typography} from "./typography.tsx";
+import {Typography} from "../base/typography.tsx";
 import {cls} from "../../../utils/functions.ts";
 
 interface TooltipProps {

@@ -18,23 +18,34 @@
 
   /* Grays */
   --color-gray-1: #F5F5F6;
+  --rgb-gray-1: 245, 245, 246;
   --color-gray-2: #E6E6E6;
+  --rgb-gray-2: 230, 230, 230;
   --color-gray-3: #ECECED;
+  --rgb-gray-3: 236, 236, 237;
   --color-gray-4: #CECFD2;
+  --rgb-gray-4: 206, 207, 210;
   --color-gray-5: #94969C;
+  --rgb-gray-5: 148, 150, 156;
   --color-gray-6: #333741;
+  --rgb-gray-6: 51, 55, 65;
   --color-gray-7: #1F242F;
+  --rgb-gray-7: 31, 36, 47;
   --color-gray-8: var(--color-darkBlue);
+  --rgb-gray-8: 5, 5, 22;
 
   /* Shadows */
-  --color-shadow-gray-1: rgba(245, 245, 246, 0.1);
-  --color-shadow-gray-2: rgba(230, 230, 230, 0.1);
-  --color-shadow-gray-3: rgba(236, 236, 237, 0.1);
-  --color-shadow-gray-4: rgba(206, 207, 210, 0.1);
-  --color-shadow-gray-5: rgba(148, 150, 156, 0.1);
-  --color-shadow-gray-6: rgba(51, 55, 65, 0.1);
-  --color-shadow-gray-7: rgba(31, 36, 47, 0.1);
-  --color-shadow-gray-8: rgba(5, 5, 22, 0.1);
+  --color-shadow-gray-1: rgba(245, 245, 246, 0.01);
+  --color-shadow-gray-2: rgba(230, 230, 230, 0.01);
+  --color-shadow-gray-3: rgba(236, 236, 237, 0.01);
+  --color-shadow-gray-4: rgba(206, 207, 210, 0.01);
+  --color-shadow-gray-5: rgba(148, 150, 156, 0.01);
+  --color-shadow-gray-6: rgba(51, 55, 65, 0.01);
+  --color-shadow-gray-7: rgba(31, 36, 47, 0.01);
+  --color-shadow-gray-8: rgba(5, 5, 22, 0.01);
+
+  --shadow-md: 0 0 6px 20px rgba(var(--rgb-gray-3), 0.01), -6px 6px 16px -8px rgba(var(--rgb-gray-3), 0.08);
+  --shadow-below: 6px 6px 20px rgba(var(--rgb-gray-3), 0.01), -6px 6px 20px rgba(var(--rgb-gray-3), 0.08);
 
   /* Constant colors */
   --color-backgroundDark: var(--color-darkBlue);
@@ -48,8 +59,12 @@
   --color-redOpacity: rgba(255, 135, 141, 0.40);
 
   /* States */
-  --color-error: var(--color-tulip);
+  --color-error: var(--color-lobster);
+  --color-errorBg: rgba(255, 135, 141, 0.4);
+  --color-warning: var(--color-sandDark);
+  --color-warningBg: rgba(237, 237, 206, 0.4);
   --color-success: var(--color-green);
+  --color-successBg: rgba(34, 197, 94, 0.4);
 
   /* Darkmode === Default*/
   --color-background: var(--color-darkBlue);

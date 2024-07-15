@@ -32,6 +32,7 @@ const {
   objectFit,
   colSpan,
   alignItems,
+  textAlign,
 } = classes;
 
 // @ts-ignore
@@ -47,7 +48,7 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `focus:hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `group-hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `last:${prefix}-${key}`),
-
+    ...Object.keys(obj).map((key) => `!${prefix}-${key}`),
   ];
 };
 
@@ -237,6 +238,7 @@ const config: Omit<Config, "content"> = {
     ...getKeyMap(numberList, "translate-x"),
     ...getKeyMap(numberList, "-translate-y"),
     ...getKeyMap(numberList, "-translate-x"),
+    ...getKeyMap(textAlign, "text"),
     "border-collapse",
     "border-spacing-0",
     "flex-wrap",
@@ -244,7 +246,13 @@ const config: Omit<Config, "content"> = {
     "flex-wrap-reverse",
     "capitalize",
     "bg-no-repeat",
-
+    "align-middle",
+    "group-hover:flex",
+    "group-hover:block",
+    "group-hover:inline",
+    "desktop:group-hover:flex",
+    "desktop:group-hover:block",
+    "desktop:group-hover:inline",
   ],
   theme: {
     extend: {

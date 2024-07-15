@@ -48,7 +48,11 @@ const colors = {
   borderMedium: "var(--color-borderMedium)",
   borderHigh: "var(--color-borderHigh)",
   error: "var(--color-error)",
+  errorBg: "var(--color-errorBg)",
+  warning: "var(--color-warning)",
+  warningBg: "var(--color-warningBg)",
   success: "var(--color-success)",
+  successBg: "var(--color-successBg)",
   volt: "var(--color-volt)",
   voltDark: "var(--color-voltDark)",
   azule: "var(--color-azule)",
@@ -281,6 +285,8 @@ const height = {
   chainLogoHeight: "16px",
   avatarHeight: "24px",
   avatarLgHeight: "40px",
+  trHeight: "72px",
+  thHeight: "44px",
 }
 
 const width = {
@@ -325,8 +331,8 @@ const lineClamp = {
 }
 
 const shadow = {
-  md: "0px 0px 10px rgba(0, 0, 0, 0.3), -4px 0px 10px rgba(0, 0, 0, 0.3)",
-  below: "6px 6px 20px rgba(0, 0, 0, 0.3), -6px 6px 20px rgba(0, 0, 0, 0.3)",
+  md: "var(--shadow-md)",
+  below: "var(--shadow-below)",
 }
 
 const justify = {
@@ -472,6 +478,15 @@ const alignItems = {
   stretch: "stretch",
 }
 
+const textAlign = {
+  left: "left",
+  center: "center",
+  right: "right",
+  justify: "justify",
+  start: "start",
+  end: "end",
+}
+
 export const classes = {
   borderRadius,
   borderWidth,
@@ -503,4 +518,5 @@ export const classes = {
   objectFit,
   colSpan,
   alignItems,
+  textAlign,
 };

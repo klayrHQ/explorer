@@ -54,7 +54,7 @@
       "tokenID":"0000000000000000",
       "amount":"100000000",
       "recipientAddress":"klyst5q7e24f56oe7nxxsyts9fnsfz7yzodu6bq53",
-      "data":""
+      "data":"Test transfer"
     },
     "signatures":[
       "a6568a16e6611c1882ed95e85f6ce2e330f727324d24dce795b88e53baaf882323603acd6d7623132103ae36aa3030197e4ffdd44cca7b00f5b32e784833ae08"

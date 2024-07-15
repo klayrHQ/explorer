@@ -1,22 +1,34 @@
 import { Typography, TypographyProps } from "@repo/ui/atoms";
+import {cls, parseBeddows} from "../../../utils/functions.ts";
 
 interface CurrencyProps extends Omit<TypographyProps, 'children'> {
-    amount: string | number;
-    sign?: string;
-    symbol?: string;
+  amount: string | number;
+  sign?: string;
+  symbol?: string;
+  decimals?: number;
 }
 
 export const Currency = ({
-    amount,
-    sign, 
-    symbol,
-    ...props
+  amount,
+  sign,
+  symbol,
+  decimals,
+  className,
+  ...props
 }: CurrencyProps) => {
-    return (
-        <Typography {...props} className="inline-flex gap-0.5" fontWeight="semibold">
-           <div>{sign} </div> 
-            {amount}
-            <div>{symbol}</div>
-        </Typography>
-    );
+  return (
+    <Typography {...props} className={cls(["inline-flex gap-0.5", className])}>
+      {
+        amount ? (
+          <>
+            <span>{sign} </span>
+            {parseBeddows(Number(amount), decimals)}
+            <span>{symbol}</span>
+          </>
+        ) : (
+          "-"
+        )
+      }
+    </Typography>
+  );
 };

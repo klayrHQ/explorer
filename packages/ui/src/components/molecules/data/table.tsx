@@ -7,7 +7,7 @@ import {cls} from "../../../utils/functions.ts";
 export interface TableProps extends HTMLAttributes<HTMLTableElement>{
   keyPrefix: string;
   headCols?: TableCellType[]
-  rows?: { cells: TableCellType[] }[] | NonNullable<ReactNode>[]
+  rows?: { cells: TableCellType[], rowDetails?: ReactNode, }[] | NonNullable<ReactNode>[]
   pagination?: boolean;
 }
 
@@ -22,7 +22,7 @@ export const Table = ({ className, headCols, rows, keyPrefix, pagination, ...pro
         {...props}
       >
         <thead>
-        <TableRow className={"text-onBackgroundLow font-medium"}>
+        <TableRow className={"text-onBackgroundLow font-medium"} type={"head"}>
           {headCols?.map((col, index) => (
             <TableCell
               className={col.className}
@@ -36,8 +36,11 @@ export const Table = ({ className, headCols, rows, keyPrefix, pagination, ...pro
         </thead>
         <tbody>
           {rows?.map((row, rowIndex) => (
-            <TableRow key={`${keyPrefix}-tr-${rowIndex + 1}`}>
-              {typeof row === 'object' && 'cells' in row ? (
+            <TableRow
+              key={`${keyPrefix}-tr-${rowIndex + 1}`}
+              rowDetails={typeof row === "object" && "rowDetails" in row && row.rowDetails}
+            >
+              {typeof row === "object" && "cells" in row ? (
                 row.cells.map((cell, cellIndex) => (
                   <TableCell
                     key={`${keyPrefix}-td-${rowIndex + 1}-${cellIndex + 1}`}
