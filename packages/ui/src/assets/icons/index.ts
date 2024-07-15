@@ -36,6 +36,8 @@ import { Plus } from './general/plus.tsx';
 import { Eye } from './general/eye.tsx';
 import {Copy} from "./general/copy-01.tsx";
 import {Info} from "./general/help-circle.tsx";
+import { InfoSquare } from './general/info-square.tsx';
+import { List } from './general/list.tsx';
 
 export const icons = {
   ChevronDown,
@@ -76,4 +78,6 @@ export const icons = {
   Plus,
   Eye,
   Info,
+  InfoSquare,
+  List,
 };

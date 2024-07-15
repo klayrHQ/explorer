@@ -6,6 +6,7 @@ export * from "./input/inputField";
 export * from "./input/modal/modal";
 export * from "./input/textAreaField";
 export * from "./input/label";
+export * from "./input/tabButtons";
 export * from "./base/typography";
 export * from "./base/flexGrid";
 export * from "./base/grid";
