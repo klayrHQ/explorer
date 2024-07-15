@@ -1,0 +1,116 @@
+[
+  {
+    "id": "382b22c19980774b3c53504fd2e82995cec1354534051d50e48dd537db964a73",
+    "module": "dynamicReward",
+    "name": "rewardMinted",
+    "data": {
+      "amount": "100000000",
+      "reduction": 0
+    },
+    "topics": [
+      "03",
+      "klysod8bj35gmndy94yehxm25nybg5os6ycysejsm"
+    ],
+    "index": 0,
+    "block": {
+      "id": "01967dba384998026fe028119bd099ecf073c05c045381500a93d1a7c7307e5b",
+      "height": 8350681,
+      "timestamp": 1613323667
+    }
+  },
+  {
+    "id": "abc123c19980774b3c53504fd2e82995cec1354534051d50e48dd537db964a74",
+    "module": "dynamicReward",
+    "name": "rewardMinted",
+    "data": {
+      "amount": "200000000",
+      "reduction": 5
+    },
+    "topics": [
+      "03",
+      "xnsod8bj35gmndy94yehxm25nybg5os6ycysejsm"
+    ],
+    "index": 1,
+    "block": {
+      "id": "01967dba384998026fe028119bd099ecf073c05c045381500a93d1a7c7307e5c",
+      "height": 8350682,
+      "timestamp": 1613323677
+    }
+  },
+  {
+    "id": "def456c19980774b3c53504fd2e82995cec1354534051d50e48dd537db964a75",
+    "module": "dynamicReward",
+    "name": "rewardMinted",
+    "data": {
+      "amount": "150000000",
+      "reduction": 3
+    },
+    "topics": [
+      "03",
+      "ymrod8bj35gmndy94yehxm25nybg5os6ycysejsm"
+    ],
+    "index": 2,
+    "block": {
+      "id": "01967dba384998026fe028119bd099ecf073c05c045381500a93d1a7c7307e5d",
+      "height": 8350683,
+      "timestamp": 1613323687
+    }
+  },
+  {
+    "id": "ghi789c19980774b3c53504fd2e82995cec1354534051d50e48dd537db964a76",
+    "module": "dynamicReward",
+    "name": "rewardMinted",
+    "data": {
+      "amount": "180000000",
+      "reduction": 2
+    },
+    "topics": [
+      "03",
+      "znrod8bj35gmndy94yehxm25nybg5os6ycysejsm"
+    ],
+    "index": 3,
+    "block": {
+      "id": "01967dba384998026fe028119bd099ecf073c05c045381500a93d1a7c7307e5e",
+      "height": 8350684,
+      "timestamp": 1613323697
+    }
+  },
+  {
+    "id": "jkl012c19980774b3c53504fd2e82995cec1354534051d50e48dd537db964a77",
+    "module": "dynamicReward",
+    "name": "rewardMinted",
+    "data": {
+      "amount": "120000000",
+      "reduction": 1
+    },
+    "topics": [
+      "03",
+      "tmsod8bj35gmndy94yehxm25nybg5os6ycysejsm"
+    ],
+    "index": 4,
+    "block": {
+      "id": "01967dba384998026fe028119bd099ecf073c05c045381500a93d1a7c7307e5f",
+      "height": 8350685,
+      "timestamp": 1613323707
+    }
+  },
+  {
+    "id": "mno345c19980774b3c53504fd2e82995cec1354534051d50e48dd537db964a78",
+    "module": "dynamicReward",
+    "name": "rewardMinted",
+    "data": {
+      "amount": "170000000",
+      "reduction": 4
+    },
+    "topics": [
+      "03",
+      "unsod8bj35gmndy94yehxm25nybg5os6ycysejsm"
+    ],
+    "index": 5,
+    "block": {
+      "id": "01967dba384998026fe028119bd099ecf073c05c045381500a93d1a7c7307e60",
+      "height": 8350686,
+      "timestamp": 1613323717
+    }
+  }
+]
