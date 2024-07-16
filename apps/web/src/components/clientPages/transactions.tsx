@@ -27,11 +27,11 @@ export const Transactions = () => {
     const getTransactions = async () => {
       try {
         setLoading(true);
-        const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
+        const { data, } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
           params: {
             limit: '10', // TODO: hardcoded params for now, implement with pagination
-            height: '195894:229894'
-          }
+            height: '195894:229894',
+          },
         })
 
         if (data?.data) {

@@ -6,8 +6,8 @@ const gatewayClient = axios.create({
 	headers: {
 		'Content-Type': 'application/json',
 		Accept: 'application/json',
-		'Access-Control-Allow-Methods': 'POST,GET'
-	}
+		'Access-Control-Allow-Methods': 'POST,GET',
+	},
 })
 
 gatewayClient.interceptors.response.use(
@@ -17,7 +17,7 @@ gatewayClient.interceptors.response.use(
 	(error: AxiosError) => {
 		console.error('Interceptor', 'response', 'error', error)
 		Promise.reject(error)
-	}
+	},
 )
 
 export default gatewayClient
