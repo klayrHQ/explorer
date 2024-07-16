@@ -1,6 +1,18 @@
+export interface GatewayRes<T> {
+  data: T
+  meta: MetaTransaction
+}
+
+export interface MetaTransaction {
+  count: number
+  offset: number
+  total: number
+}
+
 export interface TransactionType {
   id: string
-  moduleCommand: string
+  module: string
+  command: string
   nonce: string
   fee: string
   minFee: string
@@ -11,6 +23,10 @@ export interface TransactionType {
   signatures: string[]
   executionStatus: string
   index: number
+  recipient: {
+    address: string
+    name?: string
+  }
   meta: MetaType
 }
 
