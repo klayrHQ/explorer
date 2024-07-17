@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ["@repo/eslint-config/custom.js"],
+  extends: ['@repo/eslint-config/custom.js', 'prettier'],
 };

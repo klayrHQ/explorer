@@ -13,6 +13,7 @@
   "dependencies": {
     "@repo/ui": "*",
     "next": "14.2.3",
+    "prettier": "^3.3.3",
     "react": "^18",
     "react-dom": "^18",
     "storybook": "^8.1.5"
