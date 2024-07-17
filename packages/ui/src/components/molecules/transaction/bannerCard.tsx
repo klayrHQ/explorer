@@ -9,7 +9,7 @@ interface BannerCardProps {
 export const BannerCard = ({blockHeight, blockId,}: BannerCardProps) => {
   return (
     <div className="border border-onBackground rounded-xl z-20  w-transitionBannerContainerWidthMobile desktop:w-auto">
-      <div className="p-6 flex items-start flex-col gap-4">
+      <div className="p-6 flex items-start flex-col">
         <Typography
           className="text-right"
           color="white"
@@ -18,7 +18,7 @@ export const BannerCard = ({blockHeight, blockId,}: BannerCardProps) => {
         >
           Block height
         </Typography>
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center items-start">
           <Typography
             className="text-right"
             color="white"
@@ -28,8 +28,8 @@ export const BannerCard = ({blockHeight, blockId,}: BannerCardProps) => {
             #{blockHeight}
           </Typography>
           <Typography
-            className="text-right mt-2"
-            color="white"
+            className="text-right"
+            color="onBackgroundMedium"
             variant="caption"
           >
             {trimSix(

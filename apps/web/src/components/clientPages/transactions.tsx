@@ -21,7 +21,7 @@ export const Transactions = () => {
     setTimeout(() => {
       setCopyTooltipText("Copy to clipboard");
     }, 2000);
-  }
+  };
 
   useEffect(() => {
     const getTransactions = async () => {
@@ -43,9 +43,9 @@ export const Transactions = () => {
       } finally {
         setLoading(false);
       }
-    }
+    };
     getTransactions();
-  }, [])
+  }, []);
 
   const tableHead: TableCellType[] = [
     {
@@ -89,7 +89,7 @@ export const Transactions = () => {
         {
           children: (
             <Typography className={"hover:underline"} link>
-              <Link href={"#"}>{shortString(transaction?.id, 12, "center")}</Link>
+              <Link href={`transactions/${transaction.id}`}>{shortString(transaction?.id, 12, "center")}</Link>
             </Typography>
           ),
         },
@@ -180,4 +180,4 @@ export const Transactions = () => {
       />
     </FlexGrid>
   );
-}
+};
