@@ -19,7 +19,7 @@ interface TransactionBannerProps {
   receiverAddress?: string | undefined;
   receiverImageUrl?: string | null;
   moduleCommand: string;
-  executionStatus?: string;
+  executionStatus?: boolean;
   timestamp: number;
   badgeColor?: string;
   blockHeight: number;
