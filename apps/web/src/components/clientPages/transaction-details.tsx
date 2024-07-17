@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { TransactionType } from "../../utils/types";
 import { TransactionBanner } from "@repo/ui/molecules";
+import BannerBG from '../../assets/images/bannerBG.png'
 
 export const TransactionDetails = ({ params, }: { params: { id: string } }) => {
   const { id, } = params;
@@ -40,7 +41,7 @@ export const TransactionDetails = ({ params, }: { params: { id: string } }) => {
         blockId={transaction?.block.id || ""}
         executionStatus={transaction?.executionStatus}
         id={transaction?.id || ""}
-        image={transaction?.params?.tokenID || ""}
+        image={BannerBG.src}
         moduleCommand={transaction?.moduleCommand || ""}
         receiverAddress={transaction?.params?.recipientAddress}
         receiverName={transaction?.meta?.recipient?.name}
