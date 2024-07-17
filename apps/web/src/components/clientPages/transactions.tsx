@@ -125,8 +125,7 @@ export const Transactions = () => {
                   <Tooltip placement={"bottom"} text={copyTooltipText}>
                     <span
                       onClick={() =>
-                        handleCopy(transaction?.block?.height.toString())
-                      }
+                        handleCopy(transaction?.block?.height.toString())}
                     >
                       <Icon
                         className={
@@ -146,7 +145,7 @@ export const Transactions = () => {
                 <Tooltip
                   placement={"top"}
                   text={dayjs(transaction.block.timestamp * 1000).format(
-                    "DD MMM YYYY HH:mm"
+                    "DD MMM YYYY HH:mm",
                   )}
                 >
                   <Typography
@@ -155,7 +154,7 @@ export const Transactions = () => {
                   >
                     {fromNowFormatter(
                       transaction.block.timestamp * 1000,
-                      "DD MMM YYYY"
+                      "DD MMM YYYY",
                     )}
                   </Typography>
                 </Tooltip>

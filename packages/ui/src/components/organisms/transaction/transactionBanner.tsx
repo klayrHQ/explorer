@@ -2,11 +2,11 @@
 
 import { FlexGrid, Icon } from "../../atoms";
 import { trimFour } from "../../../utils/functions";
-
 import { BannerText } from "../../molecules/transaction/bannerText";
 import { BannerCard } from "../../molecules/transaction/bannerCard";
 import { css } from "@emotion/react";
 import { BannerFrame } from "../../atoms/banner/bannerFrame";
+import Link from "next/link";
 
 interface TransactionBannerProps {
   id: string;
@@ -49,11 +49,14 @@ export const TransactionBanner = ({
     <BannerFrame image={image}>
       <div className="items-start justify-start flex flex-col">
         <FlexGrid alignItems="center" gap="4" justify="start">
-          <Icon
-            className="hover:-translate-x-0.5 cursor-pointer transition-transform"
-            color="white"
-            icon="ArrowRight"
-          />
+          <Link href="/transactions">
+            {" "}
+            <Icon
+              className="hover:-translate-x-0.5 cursor-pointer transition-transform"
+              color="white"
+              icon="ArrowRight"
+            />
+          </Link>
 
           <h3 className="text-heading-6 desktop:text-heading-3 text-white font-bold">
             <span className="mr-2">Transaction</span>
