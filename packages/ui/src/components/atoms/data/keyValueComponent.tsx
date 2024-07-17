@@ -22,6 +22,8 @@ export const KeyValueComponent = ({ keyValue, contentValue, onClick,  color = "g
           hover ? "cursor-pointer" : "",
         ])}
         gap={"sm"}
+        mobileDirection={"row"}
+        onClick={onClick}
       >
         {
           typeof keyValue === "string" ? (
@@ -30,8 +32,8 @@ export const KeyValueComponent = ({ keyValue, contentValue, onClick,  color = "g
                 hover ? "group-hover:text-gray-3" : "",
                 "inline-flex items-center",
               ])}
-              fontWeight="medium"
               color={color}
+              fontWeight="medium"
               variant={size}
             >
               {keyValue}
@@ -46,8 +48,8 @@ export const KeyValueComponent = ({ keyValue, contentValue, onClick,  color = "g
                 "inline-flex items-center",
               ])}
               color={color}
-              variant={size}
               fontWeight="medium"
+              variant={size}
             >
               {contentValue}
             </Typography>

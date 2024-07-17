@@ -21,7 +21,7 @@ export const Input = ({ variant = "onBgSecondary", label, labelColor, labelPosit
   return (
     <FlexGrid
       alignItems={"center"}
-      direction={labelPosition === "top" ? "column" : labelPosition === "right" ? "row-reverse" : "row"}
+      direction={labelPosition === "top" ? "col" : labelPosition === "right" ? "row-reverse" : "row"}
       gap={"4"}
       justify={type === "checkbox" ? "start" : "between"}
     >
@@ -35,7 +35,7 @@ export const Input = ({ variant = "onBgSecondary", label, labelColor, labelPosit
         ) : type === "checkbox" ? (
           <input name={name} type="checkbox" {...props} />
         ) : type === "radio" ? (
-          <FlexGrid direction="column">
+          <FlexGrid direction="col">
             {
               options?.map((option) => (
                 <Label className={"flex flex-row-reverse gap-2"} key={`${name}-${option}`} label={option}>

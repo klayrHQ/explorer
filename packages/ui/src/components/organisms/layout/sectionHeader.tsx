@@ -1,8 +1,8 @@
-import {Typography} from "../../atoms/base/typography.tsx";
-import {Icon} from "../../atoms/images/icon.tsx";
-import {FlexGrid} from "../../atoms/base/flexGrid.tsx";
+import {Typography} from "../../atoms";
+import {Icon} from "../../atoms";
+import {FlexGrid} from "../../atoms";
 import {LinkComponent} from "../../../types/types.ts";
-import {Link} from "../../atoms/navigation/link.tsx";
+import {Link} from "../../atoms";
 import {cls} from "../../../utils/functions.ts";
 
 interface SectionHeaderProps {
@@ -23,12 +23,12 @@ export const SectionHeader = ({ title, titleSize = "lg", subTitle, count, classN
         className,
         fullWidth ? "w-full" : "",
       ])}
-      direction={"column"}
+      direction={"col"}
     >
       {
         href ? (
           <Link component={linkComponent} href={href}>
-            <FlexGrid className={"group"} justify="center" direction="row" gap="2">
+            <FlexGrid className={"group"} gap="2" justify="center" mobileDirection="row">
               <Typography
                 className=""
                 color="gray-1"
@@ -49,7 +49,7 @@ export const SectionHeader = ({ title, titleSize = "lg", subTitle, count, classN
             </FlexGrid>
           </Link>
         ) : (
-          <FlexGrid direction="row" gap="xl">
+          <FlexGrid gap="xl" mobileDirection="row">
             <Typography
               color="gray-1"
               component="h4"

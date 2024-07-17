@@ -20,7 +20,7 @@ export const PerformanceSection = ({
   linkComponent,
 }: PerformanceSectionProps) => {
   return (
-    <FlexGrid className={"w-full"} component="article" direction="column" gap="8">
+    <FlexGrid className={"w-full"} component="article" direction="col" gap="8">
       <div className="w-full flex items-center justify-between ">
         <SectionHeader className={"hidden desktop:flex"} href={href} linkComponent={linkComponent} title={"Performance"} titleSize={"lg"} />
         <SectionHeader className={"flex desktop:hidden"} href={href} linkComponent={linkComponent} title={"Performance"} titleSize={"sm"} />
@@ -35,7 +35,7 @@ export const PerformanceSection = ({
           >
             Show stats vs
           </Typography>
-          <CustomSelect defaultValue="lastMonth" backgroundColor="darkBlue" options={options} width="md" />
+          <CustomSelect backgroundColor="darkBlue" defaultValue="lastMonth" options={options} width="md" />
         </FlexGrid>
       </div>
 

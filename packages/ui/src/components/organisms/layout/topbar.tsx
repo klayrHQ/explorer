@@ -57,12 +57,13 @@ export const Topbar = ({
       ])}
       component={"header"}
       justify={"between"}
+      mobileDirection={"row"}
     >
       <FlexGrid className={"desktop:hidden"} gap={"3xl"}>
         <Logo altText={logo.altText} className={"shrink-0"} logoSrc={logo.logoSrc} />
         {/*<IconButton align={"none"} className={"shrink-0"} icon={"SearchLg"} variant={"bordered"} />*/}
       </FlexGrid>
-      <FlexGrid alignItems={"center"} className={"desktop:hidden whitespace-nowrap"} gap={"md"}>
+      <FlexGrid alignItems={"center"} className={"desktop:hidden whitespace-nowrap"} gap={"md"} mobileDirection={"row"}>
         {
           kpis.map((item, index) => (
             <KeyValueComponent key={`key-value-${index + 1}`} {...item}/>

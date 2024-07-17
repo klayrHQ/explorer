@@ -32,7 +32,7 @@ export const ValidatorBanner = ({
   return (
     <BannerFrame image={image}>
     
-      <FlexGrid direction="column" justify="between">
+      <FlexGrid direction="col" justify="between">
         <FlexGrid alignItems="center" gap="4" justify="start">
         
              <Icon
