@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { TransactionType } from "../../utils/types";
+import { GatewayRes, TransactionType } from "../../utils/types";
 import { TransactionBanner } from "@repo/ui/molecules";
 import BannerBG from '../../assets/images/bannerBG.png'
+import gatewayClient from "../../network/gatewayClient";
 
 export const TransactionDetails = ({ params, }: { params: { id: string } }) => {
   const { id, } = params;
@@ -14,15 +15,14 @@ export const TransactionDetails = ({ params, }: { params: { id: string } }) => {
     const getTransaction = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/transaction/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
+        const { data, } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
+          params: {
+            transactionID: id,
           },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setTransaction(data.transaction);
+        })
+
+        if (data?.data) {
+          setTransaction(data.data[0]);
         }
       } catch (error) {
         console.error(error);
@@ -42,7 +42,7 @@ export const TransactionDetails = ({ params, }: { params: { id: string } }) => {
         executionStatus={transaction?.executionStatus}
         id={transaction?.id || ""}
         image={BannerBG.src}
-        moduleCommand={transaction?.moduleCommand || ""}
+        moduleCommand={`${transaction?.module}:${transaction?.command}` || ""}
         receiverAddress={transaction?.params?.recipientAddress}
         receiverName={transaction?.meta?.recipient?.name}
         senderAddress={transaction?.sender?.address || ""}
