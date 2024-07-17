@@ -19,7 +19,7 @@ interface TransactionBannerProps {
   receiverAddress?: string;
   receiverImageUrl?: string | null;
   moduleCommand?: string;
-  executionStatus?: string;
+  executionStatus?: boolean;
   timestamp?: number;
   badgeColor?: string;
 }
@@ -105,7 +105,7 @@ export const BannerText = ({
       </Typography>
 
       {/* EXECUTION STATUS */}
-      {executionStatus === "successful" ? (
+      {executionStatus ? (
         <Badge
           backgroundColor="greenOpacity"
           borderColor="success"
