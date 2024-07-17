@@ -43,7 +43,7 @@
   --color-shadow-gray-6: rgba(51, 55, 65, 0.01);
   --color-shadow-gray-7: rgba(31, 36, 47, 0.01);
   --color-shadow-gray-8: rgba(5, 5, 22, 0.01);
-
+  --color-shadow-xs: rgba(16, 24, 40, 0.05);
   --shadow-md: 0 0 6px 20px rgba(var(--rgb-gray-3), 0.01), -6px 6px 16px -8px rgba(var(--rgb-gray-3), 0.08);
   --shadow-below: 6px 6px 20px rgba(var(--rgb-gray-3), 0.01), -6px 6px 20px rgba(var(--rgb-gray-3), 0.08);
 

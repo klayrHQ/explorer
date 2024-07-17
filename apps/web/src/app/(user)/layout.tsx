@@ -4,8 +4,12 @@ import type { Metadata } from "next";
 import { ReactNode } from "react";
 import {Layout} from "../../components/layout/layoutClient.tsx";
 import {ChainNetworkProvider} from "../../providers/chainNetworkProvider.tsx";
+import Favicon from '../../public/images/favicon.ico' 
 
 export const metadata: Metadata = {
+  icons:[{
+    rel: 'icon', url: Favicon.src,
+  }],
   title: "Klayr Explorer",
   description: "Your go-to place for all things Klayr",
 };

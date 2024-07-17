@@ -1,5 +1,6 @@
 import {Icon, SkeletonComponent, Typography} from "@repo/ui/atoms";
 import Logo from "../assets/images/logo.svg";
+import LogoText from "../assets/images/logoText.svg";
 import Image from "next/image";
 import {DefaultLinkComponent} from "storybook/stories/utils/constants.tsx";
 import {ColorType} from "@repo/ui/types";
@@ -110,7 +111,7 @@ export const kpisObject = [
         {"$181.66"}
         <span className={"text-green text-paragraph-sm inline-flex items-center gap-1"}>
           <Icon className={"mt-px"} color={"inherit"} icon={"TrendUp"} size={"xs"} />
-          {"0.3 %"}
+          {"0.3%"}
         </span>
       </Typography>
     ),
@@ -150,6 +151,7 @@ export const logo = {
   altText: "Klayr",
   logoSrc: Logo.src,
   logoText: "Klayr",
+  logoFullSrc: LogoText.src,
 };
 
 export const performanceStatsSelectOptions = [

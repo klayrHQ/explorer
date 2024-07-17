@@ -4,13 +4,14 @@ import {TxDataPopover} from "@repo/ui/molecules";
 import {SectionHeader, TableContainer} from "@repo/ui/organisms";
 import {useEffect, useState} from "react";
 import {TableCellType} from "@repo/ui/types";
-import {TransactionType} from "../../utils/types.ts";
+import {GatewayRes, TransactionType} from "../../utils/types.ts";
 import {copyToClipboard, dayjs, fromNowFormatter, replaceColonWithSpace, shortString} from "@repo/ui/utils";
 import {commandColors, decimals, getTableSkeletons} from "../../utils/constants.tsx";
 import Link from "next/link";
+import gatewayClient from "../../network/gatewayClient.ts";
 
 export const Transactions = () => {
-  const [transactions, setTransactions] = useState<TransactionType[] | []>([]);
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [copyTooltipText, setCopyTooltipText] = useState<string>("Copy to clipboard");
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -20,30 +21,31 @@ export const Transactions = () => {
     setTimeout(() => {
       setCopyTooltipText("Copy to clipboard");
     }, 2000);
-  }
+  };
 
   useEffect(() => {
     const getTransactions = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/transactions', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
+        const { data, } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
+          params: {
+            limit: '10', // TODO: hardcoded params for now, implement with pagination
+            height: '195894:229894',
           },
-        });
-        if(response) {
-          const data = await response.json();
-          setTransactions(data.transactions);
-        }
+        })
+
+        if (data?.data) {
+          const transactions: TransactionType[] = data.data;
+          setTransactions(transactions);
+        } 
       } catch (error) {
         console.error(error);
       } finally {
         setLoading(false);
       }
-    }
+    };
     getTransactions();
-  }, [])
+  }, []);
 
   const tableHead: TableCellType[] = [
     {
@@ -73,7 +75,6 @@ export const Transactions = () => {
   ];
 
   const rows = !loading ? transactions?.map((transaction) => {
-    const command = transaction?.moduleCommand.split(":")[1];
     return {
       rowDetails: (
         <TxDataPopover
@@ -88,7 +89,7 @@ export const Transactions = () => {
         {
           children: (
             <Typography className={"hover:underline"} link>
-              <Link href={"#"}>{shortString(transaction?.id, 12, "center")}</Link>
+              <Link href={`transactions/${transaction.id}`}>{shortString(transaction?.id, 12, "center")}</Link>
             </Typography>
           ),
         },
@@ -119,8 +120,8 @@ export const Transactions = () => {
         {
           children: (
             <Badge 
-              colorVariant={commandColors[command]}
-              label={replaceColonWithSpace(transaction?.moduleCommand)}
+              colorVariant={commandColors[transaction.command]}
+              label={replaceColonWithSpace(`${transaction?.module}:${transaction?.command}`)}
             />
           ),
         },
@@ -129,9 +130,9 @@ export const Transactions = () => {
         },
         {
           children: (
-            transaction?.meta?.recipient ?
+            transaction?.recipient ?
             (
-              <UserAccountCard address={transaction?.meta?.recipient?.address} name={transaction?.meta?.recipient?.name} />
+              <UserAccountCard address={transaction?.recipient?.address} name={transaction?.recipient?.name} />
             ) : (
               "-"
             )
@@ -179,4 +180,4 @@ export const Transactions = () => {
       />
     </FlexGrid>
   );
-}
+};

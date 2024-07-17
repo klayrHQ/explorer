@@ -10,17 +10,17 @@ import {
 } from "../../../utils/functions";
 
 interface TransactionBannerProps {
-  amount: string | number;
-  symbol: string;
+  amount?: string | number;
+  symbol?: string;
   senderName?: string | null;
   senderAddress: string;
   senderImageUrl?: string | null;
   receiverName?: string | null;
   receiverAddress?: string;
   receiverImageUrl?: string | null;
-  moduleCommand: string;
+  moduleCommand?: string;
   executionStatus?: string;
-  timestamp: number;
+  timestamp?: number;
   badgeColor?: string;
 }
 
@@ -35,7 +35,7 @@ export const BannerText = ({
   receiverImageUrl,
   moduleCommand,
   executionStatus,
-  timestamp,
+  timestamp=1,
   badgeColor,
 }: TransactionBannerProps) => {
 
@@ -45,7 +45,7 @@ export const BannerText = ({
   
 
   return (
-    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-6">
+    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
       <ImageName
         imageUrl={
@@ -75,7 +75,7 @@ export const BannerText = ({
       </Typography>
 
       {/* AMOUNT */}
-      <Currency amount={amount} fontWeight={"semibold"} symbol={symbol} />
+      <Currency amount={amount ?? 0} fontWeight={"semibold"} symbol={symbol} />
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         in type
@@ -86,7 +86,7 @@ export const BannerText = ({
         borderColor="gray-1"
         className="flex-grow-0 capitalize"
         colorVariant={badgeColor || "green"}
-        label={replaceColonWithSpace(moduleCommand)}
+        label={replaceColonWithSpace(moduleCommand ?? "")}
       />
 
       {/* TIMESTAMP */}
