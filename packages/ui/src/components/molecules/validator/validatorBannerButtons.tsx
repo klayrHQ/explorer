@@ -25,7 +25,7 @@ export const ValidatorBannerButtons = () => {
         }
       >
         {/* POPPER CHILDREN */}
-        <FlexGrid direction="column" gap="0" className="">
+        <FlexGrid direction="col" gap="0" className="">
           {/* VIEW AS USER */}
           <FlexGrid
             direction="row"

@@ -10,9 +10,10 @@ interface KeyValueProps {
   color?: ColorType;
   size?: TypographyVariant
   hover?: boolean;
+  onClick?: () => void;
 }
 
-export const KeyValueComponent = ({ keyValue, contentValue, color = "gray-5", size = "paragraph-sm", hover, }: KeyValueProps) => {
+export const KeyValueComponent = ({ keyValue, contentValue, onClick,  color = "gray-5", size = "paragraph-sm", hover, }: KeyValueProps) => {
     return (
       <FlexGrid
         alignItems={"center"}
@@ -22,6 +23,7 @@ export const KeyValueComponent = ({ keyValue, contentValue, color = "gray-5", si
         ])}
         gap={"sm"}
         mobileDirection={"row"}
+        onClick={onClick}
       >
         {
           typeof keyValue === "string" ? (
