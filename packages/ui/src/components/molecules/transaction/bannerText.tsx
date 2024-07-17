@@ -3,6 +3,7 @@ import { Badge } from "../../atoms";
 import { ImageName } from "../../atoms/account/avatarAddress";
 import { Currency } from "../../atoms/base/currency";
 import { trimSix, trimFour } from "../../../utils/functions";
+import { UserAccountCard } from "../../atoms";
 import {
   dayjs,
   fromNowFormatter,
@@ -12,10 +13,10 @@ import {
 interface TransactionBannerProps {
   amount?: string | number;
   symbol?: string;
-  senderName?: string | null;
+  senderName?: string;
   senderAddress: string;
   senderImageUrl?: string | null;
-  receiverName?: string | null;
+  receiverName?: string;
   receiverAddress?: string;
   receiverImageUrl?: string | null;
   moduleCommand?: string;
@@ -45,13 +46,7 @@ export const BannerText = ({
   return (
     <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
-      <ImageName
-        imageUrl={
-          senderImageUrl ||
-          "https://i.pinimg.com/originals/33/43/f1/3343f1d93df9126c9123917f67893927.jpg"
-        }
-        name={senderName || trimFour(senderAddress)}
-      />
+      <UserAccountCard address={senderAddress} addressColor="onBackground" addressVariant={'paragraph-md'} fontWeight="semibold" name={senderName} nameColor="onBackground" nameVariant={'paragraph-md'} size={24} width="auto"/>
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         send
@@ -59,13 +54,7 @@ export const BannerText = ({
 
       {/* RECEIVER */}
       {receiverAddress && (
-        <ImageName
-          imageUrl={
-            receiverImageUrl ||
-            "https://i.pinimg.com/originals/33/43/f1/3343f1d93df9126c9123917f67893927.jpg"
-          }
-          name={receiverName || trimFour(receiverAddress)}
-        />
+         <UserAccountCard address={receiverAddress} addressColor="onBackground" addressVariant={'paragraph-md'} fontWeight="semibold" name={receiverName} nameColor="onBackground" size={24} width="auto" />
       )}
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">

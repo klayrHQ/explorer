@@ -10,7 +10,6 @@ type BadgeProps = {
   label?: string;
   className?: string;
   padding?: string;
-  variant?: TypographyVariant | undefined;
 };
 
 

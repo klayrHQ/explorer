@@ -1,20 +1,56 @@
-import {FlexGrid, ImageContainer, Typography} from "@repo/ui/atoms";
-import {shortString} from "@repo/ui/utils";
-import {Avatar} from "./avatar/avatar.tsx";
+import { FlexGrid, ImageContainer, Typography } from "@repo/ui/atoms";
+import { shortString } from "@repo/ui/utils";
+import { Avatar } from "./avatar/avatar.tsx";
+import { TypographyVariant, FontWeight } from "../../../types/types.ts";
 
 interface UserAccountCardProps {
-  address: string
-  name?: string
+  address: string;
+  name?: string;
+  size?: number;
+  nameColor?: string;
+  nameVariant?: TypographyVariant;
+  addressColor?: string;
+  addressVariant?: TypographyVariant;
+  width?: string;
+  fontWeight?: FontWeight;
 }
 
-export const UserAccountCard = ({ address, name, }: UserAccountCardProps) => {
+export const UserAccountCard = ({
+  address,
+  name,
+  size = 32,
+  nameColor = "onBackgroundMediumHigh",
+  nameVariant = "paragraph-sm",
+  addressColor = "onBackgroundLow",
+  addressVariant = "caption",
+  width = "full",
+  fontWeight = "normal",
+}: UserAccountCardProps) => {
   return (
-    <FlexGrid alignItems={"center"} className={"w-full cursor-pointer"} gap={"md"}>
-      <Avatar address={address} circle size={32} />
+    <FlexGrid
+      alignItems={"center"}
+      className={`w-${width} cursor-pointer`}
+      gap={"md"}
+    >
+      <Avatar address={address} circle size={size} />
       <FlexGrid direction={"column"} gap={"0"}>
-        <Typography className={"leading-none"} color={"onBackgroundMediumHigh"} variant={"paragraph-sm"}>{name}</Typography>
-        <Typography className={"leading-none"} color={"onBackgroundLow"} variant={"caption"}>{shortString(address, 12, "center")}</Typography>
+        <Typography
+          className={"leading-none"}
+          color={nameColor}
+          fontWeight={fontWeight}
+          variant={nameVariant}
+        >
+          {name}
+        </Typography>
+        <Typography
+          className={"leading-none"}
+          color={addressColor}
+          fontWeight={fontWeight}
+          variant={addressVariant}
+        >
+          {shortString(address, 12, "center")}
+        </Typography>
       </FlexGrid>
     </FlexGrid>
-  )
-}
+  );
+};

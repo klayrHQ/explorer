@@ -12,10 +12,10 @@ interface TransactionBannerProps {
   id: string;
   amount: string | number;
   symbol: string;
-  senderName?: string | null;
+  senderName?: string;
   senderAddress: string;
   senderImageUrl?: string | null;
-  receiverName?: string | null;
+  receiverName?: string;
   receiverAddress?: string | undefined;
   receiverImageUrl?: string | null;
   moduleCommand: string;
