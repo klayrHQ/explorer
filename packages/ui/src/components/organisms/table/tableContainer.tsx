@@ -15,7 +15,7 @@ export const TableContainer = ({ className, pagination, filters, tableClassName,
         className,
         "w-full border-collapse border-solid border-borderLow border-1 rounded-xl overflow-hidden",
       ])}
-      direction={"column"}
+      direction={"col"}
       gap={"0"}
     >
       {

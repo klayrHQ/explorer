@@ -1,7 +1,11 @@
-"use client"
-import {NewsCardGrid, PerformanceSection} from "@repo/ui/organisms";
-import {newsItems, performanceStats, performanceStatsSelectOptions} from "../../utils/constants.tsx";
-import {FlexGrid} from "@repo/ui/atoms";
+'use client';
+import { NewsCardGrid, PerformanceSection } from '@repo/ui/organisms';
+import {
+  newsItems,
+  performanceStats,
+  performanceStatsSelectOptions,
+} from '../../utils/constants.tsx';
+import { FlexGrid } from '@repo/ui/atoms';
 
 export const Home = () => {
   /*const [news, setNews] = useState(newsItems)
@@ -28,9 +32,13 @@ export const Home = () => {
   }, []);*/
 
   return (
-    <FlexGrid className="w-full max-w-app mx-auto" direction={"column"} gap={"4xl"}>
-      <PerformanceSection href={"#"} options={performanceStatsSelectOptions} stats={performanceStats} />
-      <NewsCardGrid href={"https://klayr.xyz/blog"} newsCards={newsItems} />
+    <FlexGrid className="w-full max-w-app mx-auto" direction={'col'} gap={'4xl'}>
+      <PerformanceSection
+        href={'#'}
+        options={performanceStatsSelectOptions}
+        stats={performanceStats}
+      />
+      <NewsCardGrid href={'https://klayr.xyz/blog'} newsCards={newsItems} />
     </FlexGrid>
   );
-}
+};

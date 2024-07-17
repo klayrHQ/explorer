@@ -17,7 +17,7 @@ export const InSearchResult: Story = {
   render: () => (
     <FlexGrid className={"w-[200px]"}>
       <SkeletonComponent className={"shrink-0"} height="avatarMdHeight" width="avatarMdWidth" />
-      <FlexGrid className={"w-full"} direction={"column"}>
+      <FlexGrid className={"w-full"} direction={"col"}>
         <SkeletonComponent height="3" width="full" />
         <SkeletonComponent height="3" width="full" />
       </FlexGrid>

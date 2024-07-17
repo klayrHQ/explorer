@@ -1,19 +1,19 @@
-"use client"
-import React, {useEffect} from "react"
-import {createContext, useContext, useState} from "react"
-import {chainNetworkData, defaultChain} from "../utils/constants.tsx";
+'use client';
+import React, { useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
+import { chainNetworkData, defaultChain } from '../utils/constants.tsx';
 
 type NetworkType = {
-  networkId: string,
-  networkName: string,
-}
+  networkId: string;
+  networkName: string;
+};
 
 type ChainType = {
-  chainId: string,
-  chainName: string,
-  logo: string,
-  networks: NetworkType[]
-}
+  chainId: string;
+  chainName: string;
+  logo: string;
+  networks: NetworkType[];
+};
 
 export interface ChainNetworkContextProps {
   currentChain: ChainType;
@@ -24,10 +24,12 @@ export interface ChainNetworkContextProps {
   networks?: NetworkType[];
 }
 
-export const ChainNetworkContext = createContext<ChainNetworkContextProps>({} as ChainNetworkContextProps)
+export const ChainNetworkContext = createContext<ChainNetworkContextProps>(
+  {} as ChainNetworkContextProps,
+);
 
-export const useChainNetwork = () => useContext(ChainNetworkContext)
-export const ChainNetworkProvider = ({ children, }: {children: any}) => {
+export const useChainNetwork = () => useContext(ChainNetworkContext);
+export const ChainNetworkProvider = ({ children }: { children: any }) => {
   const [currentChain, setCurrentChain] = useState<ChainType>(defaultChain);
   const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(defaultChain.networks[0]);
   const [chains, setChains] = useState<ChainType[]>([]);
@@ -39,36 +41,36 @@ export const ChainNetworkProvider = ({ children, }: {children: any}) => {
   useEffect(() => {
     const getChains = async () => {
       try {
-        setLoading(true)
-        const response = await fetch("/api/chains", {
-          method: "GET",
+        setLoading(true);
+        const response = await fetch('/api/chains', {
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        })
+        });
 
         if (chains) {
-          const chains = await response.json()
-          setChains(chains.chains)
-          console.log(chains)
+          const chains = await response.json();
+          setChains(chains.chains);
+          console.log(chains);
         }
       } catch (error) {
-        console.error("Error fetching chains", error)
+        console.error('Error fetching chains', error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    getChains()
+    getChains();
   }, []);
 
   // get networks from current chain and set currentNetwork to first network
   useEffect(() => {
     if (currentChain) {
       // get networks from current chain
-      setNetworks(currentChain.networks)
+      setNetworks(currentChain.networks);
       // set currentNetwork to first network
-      setCurrentNetwork(currentChain.networks[0])
+      setCurrentNetwork(currentChain.networks[0]);
     }
   }, [currentChain]);
 
@@ -93,5 +95,5 @@ export const ChainNetworkProvider = ({ children, }: {children: any}) => {
     >
       {children}
     </ChainNetworkContext.Provider>
-  )
-}
+  );
+};

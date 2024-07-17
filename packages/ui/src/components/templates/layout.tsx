@@ -24,7 +24,7 @@ export const Layout = ({ children, logo, kpis, chainNetworkData, menuItems, mobi
   return (
     <FlexGrid className={"bg-backgroundDark"} direction={"row"} gap={"0"}>
       <Sidebar logo={logo} menuItems={menuItems} />
-      <FlexGrid className={"w-full"} direction={"column"} gap={"0"}>
+      <FlexGrid className={"w-full"} direction={"col"} gap={"0"}>
         <Topbar chainNetworkData={chainNetworkData} kpis={kpis} logo={logo} mobileMenuItems={mobileMenuItems}/>
         <main
           className={cls([

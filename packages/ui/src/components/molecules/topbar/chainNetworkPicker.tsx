@@ -15,7 +15,6 @@ export interface ChainNetworkPickerProps {
   chains?: ChainType[];
   networks?: NetworkType[];
   imgComponent?: ReactElement;
-  className?: string;
 }
 
 export const ChainNetworkPicker = ({
@@ -26,7 +25,6 @@ export const ChainNetworkPicker = ({
   chains = [],
   networks = [],
   imgComponent,
-  className,
 }: ChainNetworkPickerProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChain, setSelectedChain] = useState<ChainType | null>(
@@ -107,10 +105,10 @@ export const ChainNetworkPicker = ({
         open={isModalOpen}
         title="Select environments"
       >
-        <FlexGrid alignItems="start" direction="column" gap="4" justify="end">
+        <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
           <FlexGrid alignItems="center" className={"w-full"} justify="between">
             <Typography color="onBackgroundLow" variant="paragraph-md">
-              On chain
+              {"On chain"}
             </Typography>
             <CustomSelect
               defaultValue={currentChain?.chainId}
@@ -120,7 +118,7 @@ export const ChainNetworkPicker = ({
           </FlexGrid>
           <FlexGrid alignItems={"center"} className="w-full" justify={"between"}>
             <Typography color="onBackgroundLow" variant="paragraph-md">
-              On network
+              {"On network"}
             </Typography>
             <CustomSelect
               defaultValue={currentNetwork?.networkId}

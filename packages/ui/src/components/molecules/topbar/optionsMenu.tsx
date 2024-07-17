@@ -26,7 +26,7 @@ export const OptionsMenu = ({ menuItems, open, anchorElement, }: OptionsMenuProp
     >
       <FlexGrid
         className={"bg-gray-8 border-solid border-gray-7 border rounded-md min-w-48 shadow-md shadow-shadow-gray-6"}
-        direction={"column"}
+        direction={"col"}
         gap={"1"}
       >
         {

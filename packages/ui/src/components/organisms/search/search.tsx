@@ -42,8 +42,8 @@ export const Search = ({ className, }: SearchProps) => {
           ],
         }}
       >
-        <FlexGrid className={"rounded-md border-solid border-gray-7 border w-searchBarWidth p-4"} direction={"column"}>
-          <Typography>Search Results</Typography>
+        <FlexGrid className={"rounded-md border-solid border-gray-7 border w-searchBarWidth p-4"} direction={"col"}>
+          <Typography>{"Search Results"}</Typography>
         </FlexGrid>
       </Popper>
     </div>

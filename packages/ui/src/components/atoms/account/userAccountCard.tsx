@@ -1,4 +1,4 @@
-import { FlexGrid, ImageContainer, Typography } from "@repo/ui/atoms";
+import { FlexGrid, Typography } from "@repo/ui/atoms";
 import { shortString } from "@repo/ui/utils";
 import { Avatar } from "./avatar/avatar.tsx";
 import { TypographyVariant, FontWeight } from "../../../types/types.ts";
@@ -31,9 +31,10 @@ export const UserAccountCard = ({
       alignItems={"center"}
       className={`w-${width} cursor-pointer`}
       gap={"md"}
+      mobileDirection={"row"}
     >
       <Avatar address={address} circle size={size} />
-      <FlexGrid direction={"column"} gap={"0"}>
+      <FlexGrid direction={"col"} gap={"0"}>
         <Typography
           className={"leading-none"}
           color={nameColor}

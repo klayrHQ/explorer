@@ -15,10 +15,10 @@ export const MobileMenu = ({ className, menuItems, chainNetworkData, }: MobileMe
         "bg-backgroundDark p-3xl w-screen h-screenUnderTopbarMobile",
         className,
       ])}
-      direction={"column"}
+      direction={"col"}
     >
       <nav>
-        <FlexGrid component={"ul"} direction={"column"}>
+        <FlexGrid component={"ul"} direction={"col"}>
           {
             menuItems.map((item, index) => (
               <MenuItem key={`mobile-menu-item-${index + 1}`} {...item} />

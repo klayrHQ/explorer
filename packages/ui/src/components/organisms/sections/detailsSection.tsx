@@ -16,11 +16,11 @@ interface DetailsSectionsProps {
 
 export const DetailsSection = ({ title, data, }: DetailsSectionsProps) => {
   return (
-    <FlexGrid className={"w-full"} component={"section"} direction={"column"} gap={"4.5xl"}>
+    <FlexGrid className={"w-full"} component={"section"} direction={"col"} gap={"4.5xl"}>
       <SectionHeader title={title} titleSize={"sm"} />
       <FlexGrid
         className={"w-full"}
-        direction={"column"}
+        direction={"col"}
         gap={"3xl"}
         mobileDirection={"row"}
         wrap
@@ -33,7 +33,7 @@ export const DetailsSection = ({ title, data, }: DetailsSectionsProps) => {
               gap={"1.5xl"}
               justify={"between"}
               key={`details-section-${index + 1}`}
-              mobileDirection={"column"}
+              mobileDirection={"col"}
             >
               <FlexGrid
                 alignItems={"center"}
