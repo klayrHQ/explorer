@@ -58,6 +58,7 @@ export const Transactions = () => {
         setLoading(false);
       }
     };
+    
     getTransactions();
   }, []);
 
