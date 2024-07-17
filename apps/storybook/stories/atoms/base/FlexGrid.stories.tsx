@@ -13,8 +13,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+type Template = Omit<Story, 'args'>;
 
-const Template: Story = {
+const Template: Template = {
   render: (args) => (
     <FlexGrid {...args} className={"w-[400px] h-[400px]"}>
       <div className="w-16 h-16 bg-primary py-2 px-3"><Typography variant={"h2"} color={"onPrimary"}>1</Typography></div>
@@ -35,7 +36,7 @@ export const DirectionRow: Story = {
 export const DirectionColumn: Story = {
   ...Template,
   args: {
-    direction: "column",
+    direction: "col",
     children: [],
   },
 };

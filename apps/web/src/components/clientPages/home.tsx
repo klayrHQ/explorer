@@ -28,7 +28,7 @@ export const Home = () => {
   }, []);*/
 
   return (
-    <FlexGrid className="w-full max-w-app mx-auto" direction={"column"} gap={"4xl"}>
+    <FlexGrid className="w-full max-w-app mx-auto" direction={"col"} gap={"4xl"}>
       <PerformanceSection href={"#"} options={performanceStatsSelectOptions} stats={performanceStats} />
       <NewsCardGrid href={"https://klayr.xyz/blog"} newsCards={newsItems} />
     </FlexGrid>

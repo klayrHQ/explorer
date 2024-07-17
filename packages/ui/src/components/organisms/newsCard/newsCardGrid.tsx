@@ -12,7 +12,7 @@ interface NewsCardGridProps {
 
 export const NewsCardGrid = ({ newsCards, href, linkComponent, }: NewsCardGridProps) => {
   return (
-    <FlexGrid className="w-full" direction={"column"} gap={"6"}>
+    <FlexGrid className="w-full" direction={"col"} gap={"6"}>
       <SectionHeader href={href} linkComponent={linkComponent} title={"Klayr Announcements"} titleSize={"sm"} />
       <div className="w-full flex flex-col desktop:flex-row gap-6 justify-between group">
         {newsCards.map((newsCard, index) => (

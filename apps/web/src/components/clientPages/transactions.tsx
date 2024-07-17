@@ -166,7 +166,7 @@ export const Transactions = () => {
   }) : getTableSkeletons(tableHead.length);
 
   return (
-    <FlexGrid className="w-full mx-auto" direction={"column"} gap={"5xl"}>
+    <FlexGrid className="w-full mx-auto" direction={"col"} gap={"5xl"}>
       <SectionHeader
         count={transactions?.length}
         subTitle={"Overview of all transactions on the blockchain"}

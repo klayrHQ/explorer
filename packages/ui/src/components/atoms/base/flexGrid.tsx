@@ -12,8 +12,8 @@ interface FlexGridProps extends React.HTMLAttributes<any> {
     | "footer"
     | "ul"
     | "main";
-  direction?: "row" | "column" | "row-reverse" | "column-reverse";
-  mobileDirection?: "row" | "column" | "row-reverse" | "column-reverse";
+  direction?: "row" | "col" | "row-reverse" | "col-reverse";
+  mobileDirection?: "row" | "col" | "row-reverse" | "col-reverse";
   wrap?: boolean;
   justify?: "normal" | "start" | "end" | "center" | "between" | "around";
   alignItems?: "start" | "end" | "center";
@@ -101,9 +101,9 @@ export const FlexGrid = ({
           className,
           !mobileDirection ?
             // todo change back to {direction ?? "row"} and {mobileDirection} after fixing the issue
-            `flex-column desktop:flex-${direction ? direction === "column" ? "col" : direction : "row"}`
+            `flex-col desktop:flex-${direction ?? "row"}`
             :
-            `flex-${mobileDirection === "column" ? "col" : mobileDirection} desktop:flex-${direction ? direction === "column" ? "col" : direction : "row"}`,
+            `flex-${mobileDirection} desktop:flex-${direction ?? "row"}`,
         ]),
       })}
       onClick={onClick}
