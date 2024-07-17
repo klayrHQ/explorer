@@ -47,7 +47,7 @@ export const TransactionDetails = ({ params, }: { params: { id: string } }) => {
         receiverName={transaction?.meta?.recipient?.name}
         senderAddress={transaction?.sender?.address || ""}
         senderName={transaction?.sender?.name}
-        symbol={transaction?.params?.tokenID || ""}
+        symbol={"KLY"}
         timestamp={transaction?.block.timestamp || 0}
       />
     </div>

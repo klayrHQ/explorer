@@ -35,14 +35,12 @@ export const BannerText = ({
   receiverImageUrl,
   moduleCommand,
   executionStatus,
-  timestamp=1,
+  timestamp = 1,
   badgeColor,
 }: TransactionBannerProps) => {
-
   const date = dayjs(timestamp * 1000);
 
   const fromNowPrefix = dayjs().diff(date, "hour") >= 1 ? "on" : "over";
-  
 
   return (
     <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5">
@@ -75,7 +73,12 @@ export const BannerText = ({
       </Typography>
 
       {/* AMOUNT */}
-      <Currency amount={amount ?? 0} fontWeight={"semibold"} symbol={symbol} />
+      <Currency
+        amount={amount ?? 0}
+        decimals={3}
+        fontWeight="semibold"
+        symbol={symbol}
+      />
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         in type
