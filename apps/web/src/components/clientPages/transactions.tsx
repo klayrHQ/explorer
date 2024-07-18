@@ -58,7 +58,7 @@ export const Transactions = () => {
         setLoading(false);
       }
     };
-    
+
     getTransactions();
   }, []);
 
@@ -202,7 +202,13 @@ export const Transactions = () => {
         subTitle={'Overview of all transactions on the blockchain'}
         title={'Transactions'}
       />
-      <TableContainer headCols={tableHead} keyPrefix={'transactions'} rows={rows} />
+      <TableContainer
+        totalPages={23}
+        pagination
+        headCols={tableHead}
+        keyPrefix={'transactions'}
+        rows={rows}
+      />
     </FlexGrid>
   );
 };
