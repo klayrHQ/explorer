@@ -15,7 +15,7 @@ interface DetailsSectionsProps {
   }[];
 }
 
-export const DetailsSection = ({ title, data }: DetailsSectionsProps) => {
+export const DetailsSection = ({ title, data, }: DetailsSectionsProps) => {
   return (
     <FlexGrid className={'w-full'} component={'section'} direction={'col'} gap={'4.5xl'}>
       <SectionHeader title={title} titleSize={'sm'} />
@@ -27,11 +27,11 @@ export const DetailsSection = ({ title, data }: DetailsSectionsProps) => {
         mobileDirection={'row'}
         wrap
       >
-        {data.map(({ label, value, mobileWidth }, index) => (
+        {data.map(({ label, value, mobileWidth, }, index) => (
           <FlexGrid
-            className={cls(['w-full', mobileWidth === 'half' ? 'col-span-1' : 'col-span-2'])}
+            className={cls(['w-full desktop:gap-1.5xl', mobileWidth === 'half' ? 'col-span-1' : 'col-span-2'])}
             direction={'row'}
-            gap={'1.5xl'}
+            gap={'0'}
             justify={'between'}
             key={`details-section-${index + 1}`}
             mobileDirection={'col'}
@@ -56,7 +56,7 @@ export const DetailsSection = ({ title, data }: DetailsSectionsProps) => {
                     color={'onBackgroundLow'}
                     icon={'Info'}
                     size={'small'}
-                    style={{ fontSize: '19px' }}
+                    style={{ fontSize: '19px', }}
                   />
                 </Tooltip>
               )}
