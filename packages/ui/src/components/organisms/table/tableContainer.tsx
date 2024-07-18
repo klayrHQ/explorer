@@ -30,7 +30,7 @@ export const TableContainer = ({
       {filters && <FlexGrid className={'p-3xl border-b-1 border-borderLow'}>{'Filters'}</FlexGrid>}
       <Table className={tableClassName} {...props} />
       {pagination && (
-        <FlexGrid className={'px-3xl py-lg border-t-1 border-borderLow'}>
+        <FlexGrid className={'px-3xl py-lg border-t-1 border-borderLow w-full'}>
           <Pagination initialNumber={1} pages={pages || []} />
         </FlexGrid>
       )}

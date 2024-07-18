@@ -29,7 +29,7 @@ export const Pagination: React.FC<NumberListProps> = ({ pages, initialNumber }) 
       case currentNumber === pages.length - 2:
         return [...pages.slice(0, 2), '...', ...pages.slice(-4)];
       case currentNumber === pages.length - 3:
-        return [...pages.slice(0, 2), '...', ...pages.slice(-4)];
+        return [...pages.slice(0, 2), '...', ...pages.slice(-5)];
       case currentNumber > 3 && currentNumber < pages.length - 3:
         return [
           ...pages.slice(0, 2),
@@ -46,7 +46,7 @@ export const Pagination: React.FC<NumberListProps> = ({ pages, initialNumber }) 
   };
 
   return (
-    <FlexGrid alignItems="center" className="w-full" gap="5xl" justify="between">
+    <FlexGrid alignItems="center" className="w-full" justify="between">
       <div className="flex">
         {displayPages().map((number, index) => (
           <div

@@ -202,7 +202,13 @@ export const Transactions = () => {
         subTitle={'Overview of all transactions on the blockchain'}
         title={'Transactions'}
       />
-      <TableContainer headCols={tableHead} keyPrefix={'transactions'} rows={rows} />
+      <TableContainer
+        pages={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+        pagination
+        headCols={tableHead}
+        keyPrefix={'transactions'}
+        rows={rows}
+      />
     </FlexGrid>
   );
 };
