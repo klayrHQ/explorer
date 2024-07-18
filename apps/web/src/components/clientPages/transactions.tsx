@@ -203,7 +203,7 @@ export const Transactions = () => {
         title={'Transactions'}
       />
       <TableContainer
-        pages={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+        totalPages={23}
         pagination
         headCols={tableHead}
         keyPrefix={'transactions'}

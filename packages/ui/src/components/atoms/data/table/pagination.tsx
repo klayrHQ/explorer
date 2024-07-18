@@ -5,12 +5,18 @@ import { Button } from '../../input/button';
 import { FlexGrid } from '../../base/flexGrid';
 
 interface NumberListProps {
-  pages: number[];
+  totalPages: number;
   initialNumber: number;
 }
 
-export const Pagination: React.FC<NumberListProps> = ({ pages, initialNumber }) => {
+export const Pagination = ({ totalPages, initialNumber }: NumberListProps) => {
   const [currentNumber, setCurrentNumber] = useState(initialNumber);
+
+  const generatePageArray = (totalPages: number) => {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  };
+
+  const pages = generatePageArray(totalPages);
 
   if (pages.length <= 1) {
     return null;

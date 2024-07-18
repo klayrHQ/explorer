@@ -29,6 +29,7 @@ export const Default: Story = {
     keyPrefix: 'sb-table',
     rows,
     headCols,
+    totalPages: 0,
   },
 };
 
@@ -39,7 +40,7 @@ export const WithPagination: Story = {
     rows,
     headCols,
     pagination: true,
-    pages: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    totalPages: 15,
   },
 };
 
@@ -50,6 +51,7 @@ export const WithFilters: Story = {
     rows,
     headCols,
     filters: true,
+    totalPages: 0,
   },
 };
 
@@ -61,6 +63,6 @@ export const WithPaginationAndFilters: Story = {
     headCols,
     pagination: true,
     filters: true,
-    pages: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    totalPages: 15,
   },
 };

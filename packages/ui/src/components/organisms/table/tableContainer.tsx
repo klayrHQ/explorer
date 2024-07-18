@@ -7,7 +7,7 @@ interface TableContainerProps extends TableProps {
   pagination?: boolean;
   filters?: boolean;
   tableClassName?: string;
-  pages?: number[];
+  totalPages: number;
 }
 
 export const TableContainer = ({
@@ -15,7 +15,7 @@ export const TableContainer = ({
   pagination,
   filters,
   tableClassName,
-  pages,
+  totalPages,
   ...props
 }: TableContainerProps) => {
   return (
@@ -31,7 +31,7 @@ export const TableContainer = ({
       <Table className={tableClassName} {...props} />
       {pagination && (
         <FlexGrid className={'px-3xl py-lg border-t-1 border-borderLow w-full'}>
-          <Pagination initialNumber={1} pages={pages || []} />
+          <Pagination initialNumber={1} totalPages={totalPages || 0} />
         </FlexGrid>
       )}
     </FlexGrid>
