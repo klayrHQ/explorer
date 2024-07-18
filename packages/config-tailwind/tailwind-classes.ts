@@ -290,6 +290,7 @@ const height = {
   avatarLgHeight: "40px",
   trHeight: "72px",
   thHeight: "44px",
+  pagNumHeight: "34px",
 }
 
 const width = {
@@ -322,6 +323,8 @@ const width = {
   transitionBannerWidthMobile: "382px",
   transitionBannerContainerWidth: "700px",
   transitionBannerContainerWidthMobile: "334px",
+  pagNumWidth: "34px",
+
 }
 
 const lineClamp = {
