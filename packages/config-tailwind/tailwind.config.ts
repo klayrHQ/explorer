@@ -35,6 +35,7 @@ const {
   textAlign,
   animate,
   textOverflow,
+  rotate,
 } = classes;
 
 // @ts-ignore
@@ -254,6 +255,7 @@ const config: Omit<Config, 'content'> = {
     ...getKeyMap(width, 'basis'),
     ...getKeyMap(numberList, 'basis'),
     ...getKeyMap(percentages, 'basis'),
+    ...getKeyMap(rotate, 'rotate'),
     'border-collapse',
     'border-spacing-0',
     'flex-wrap',
@@ -306,6 +308,7 @@ const config: Omit<Config, 'content'> = {
         'wrap-reverse': 'wrap-reverse',
         nowrap: 'nowrap',
       },
+      rotate,
     },
     fontFamily: {
       sans: ['Poppins', 'Inter', 'Verdana', 'sans-serif'],

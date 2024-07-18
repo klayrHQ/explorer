@@ -19,12 +19,17 @@ export const Currency = ({
   ...props
 }: CurrencyProps) => {
   return (
-    <Typography {...props} className={cls(['inline-flex gap-0.5', className])}>
+    <Typography {...props} className={cls(['gap-0.5', className])}>
       {amount ? (
         <>
-          <span>{sign} </span>
+          {sign && <span>{sign}</span>}
           {parseBeddows(Number(amount), decimals)}
-          <span>{symbol}</span>
+          {symbol && (
+            <span>
+              {'\u00A0'}
+              {symbol}
+            </span>
+          )}
         </>
       ) : (
         '-'
@@ -32,7 +37,7 @@ export const Currency = ({
       {marketValue && (
         <>
           {'\u00A0|\u00A0'}
-          <span>{'$'} </span>
+          <span>{'$'}</span>
           {marketValue.toFixed(2)}
         </>
       )}

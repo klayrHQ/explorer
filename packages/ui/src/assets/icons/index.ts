@@ -24,9 +24,9 @@ import { Flag } from './travel/flag-05';
 import { MarkerPin } from './travel/marker-pin-05';
 import { Users } from './users/users-01';
 import { ArrowUpRight } from './arrows/arrow-up-right';
-import { ArrowRight} from './arrows/arrow-right';
-import { CurrencyDollar } from "./finance/currency-dollar.tsx";
-import { Sun } from "./weather/sun.tsx";
+import { ArrowLeft } from './arrows/arrow-left.tsx';
+import { CurrencyDollar } from './finance/currency-dollar.tsx';
+import { Sun } from './weather/sun.tsx';
 import { Menu } from './general/menu-01';
 import { CrossClose } from './general/x-close.tsx';
 import { DotsVertical } from './general/dots-vertical.tsx';
@@ -34,10 +34,11 @@ import { Trash } from './general/trash.tsx';
 import { User } from './users/user.tsx';
 import { Plus } from './general/plus.tsx';
 import { Eye } from './general/eye.tsx';
-import {Copy} from "./general/copy-01.tsx";
-import {Info} from "./general/help-circle.tsx";
+import { Copy } from './general/copy-01.tsx';
+import { Info } from './general/help-circle.tsx';
 import { InfoSquare } from './general/info-square.tsx';
 import { List } from './general/list.tsx';
+import { ArrowRight } from './arrows/arrow-right.tsx';
 
 export const icons = {
   ChevronDown,
@@ -71,6 +72,7 @@ export const icons = {
   Menu,
   CrossClose,
   ArrowRight,
+  ArrowLeft,
   Copy,
   DotsVertical,
   Trash,

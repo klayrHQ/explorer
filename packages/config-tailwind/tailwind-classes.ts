@@ -506,6 +506,14 @@ const textOverflow = {
   'text-clip': null,
 };
 
+const rotate = {
+  0: '0deg',
+  45: '45deg',
+  90: '90deg',
+  180: '180deg',
+  270: '270deg',
+};
+
 export const classes = {
   borderRadius,
   borderWidth,
@@ -540,4 +548,5 @@ export const classes = {
   textAlign,
   animate,
   textOverflow,
+  rotate,
 };

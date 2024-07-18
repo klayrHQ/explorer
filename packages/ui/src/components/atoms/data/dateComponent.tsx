@@ -1,6 +1,6 @@
-import { FlexGrid } from './flexGrid.tsx';
-import { Typography } from './typography.tsx';
-import { StatusIcon } from './statusIcon.tsx';
+import { FlexGrid } from '../base/flexGrid.tsx';
+import { Typography } from '../base/typography.tsx';
+import { StatusIcon } from '../base/statusIcon.tsx';
 import dayjs from 'dayjs';
 import { fromNowFormatter } from '../../../utils/functions.ts';
 
@@ -17,18 +17,30 @@ export const DateComponent = ({
   format,
   confirmationTime,
 }: DateComponentProps) => {
+  const date = dayjs(timestamp);
+
   return (
     <FlexGrid direction={'col'}>
       <Typography>
         {variant === 'fromNowOnly' ||
           (variant === 'full' && (
             <>
-              {dayjs(dayjs(timestamp)).fromNow()}
-              {variant === 'full' && <span>{'\u00A0|\u00A0'}</span>}
+              <span>{dayjs(date).fromNow()}</span>
+              <br className={'desktop:hidden'} />
+              {variant === 'full' && (
+                <span className={'hidden desktop:inline'}>{'\u00A0|\u00A0'}</span>
+              )}
             </>
           ))}
         {variant === 'dateOnly' ||
-          (variant === 'full' && dayjs(timestamp).format(format ?? 'DD MMM YYYY HH:mm:ss | Z UTC'))}
+          (variant === 'full' && (
+            <>
+              <span>{dayjs(timestamp).format(format ?? 'DD MMM YYYY HH:mm:ss')}</span>
+              <br className={'desktop:hidden'} />
+              <span className={'hidden desktop:inline'}>{'\u00A0|\u00A0'}</span>
+              <span>{dayjs(timestamp).format(format ?? 'Z UTC')}</span>
+            </>
+          ))}
         {variant === 'default' && fromNowFormatter(timestamp)}
       </Typography>
       {confirmationTime && (

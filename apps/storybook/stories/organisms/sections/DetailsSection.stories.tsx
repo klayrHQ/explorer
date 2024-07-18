@@ -1,6 +1,18 @@
 import type { StoryObj } from '@storybook/react';
 import { DetailsSection } from '@repo/ui/organisms';
-import { Currency, DateComponent, UserAccountCard } from '@repo/ui/atoms';
+import {
+  ChainToChainComponent,
+  Currency,
+  DateComponent,
+  FlexGrid,
+  Icon,
+  ImageContainer,
+  KeyValueComponent,
+  Typography,
+  UserAccountCard,
+} from '@repo/ui/atoms';
+import { DefaultImageComponent } from '@/stories/utils/constants';
+import Logo from '@/stories/assets/images/logo.svg';
 
 const meta = {
   title: 'Organisms/Sections/DetailsSection',
@@ -40,6 +52,7 @@ export const Transactions: Story = {
           tooltip: 'The module that the transaction belongs to',
         },
         value: 'Token',
+        mobileWidth: 'half',
       },
       {
         label: {
@@ -47,25 +60,41 @@ export const Transactions: Story = {
           tooltip: 'The command that the transaction belongs to',
         },
         value: 'Transfer',
+        mobileWidth: 'half',
       },
       {
         label: {
           label: 'Date',
         },
-        value: <DateComponent confirmationTime={2} timestamp={1629782400000} variant={'full'} />,
+        value: <DateComponent confirmationTime={2} timestamp={1721295081000} variant={'full'} />,
       },
       {
         label: {
           label: 'Amount',
         },
-        value: <Currency amount={34200000000} marketValue={634.34} symbol={'KLY'} />,
+        value: (
+          <Currency
+            amount={34200000000}
+            className={'truncate max-w-full'}
+            marketValue={634.34}
+            symbol={'KLY'}
+          />
+        ),
         mobileWidth: 'half',
       },
       {
         label: {
           label: 'Fee',
         },
-        value: <Currency amount={12300000} decimals={4} marketValue={0.246} symbol={'KLY'} />,
+        value: (
+          <Currency
+            amount={12300000}
+            className={'truncate max-w-full'}
+            decimals={4}
+            marketValue={0.246}
+            symbol={'KLY'}
+          />
+        ),
         mobileWidth: 'half',
       },
       {
@@ -132,13 +161,31 @@ export const Transactions: Story = {
         label: {
           label: 'Token',
         },
-        value: 'KLY',
+        value: (
+          <KeyValueComponent
+            keyValue={
+              <ImageContainer
+                alt={'token logo'}
+                component={DefaultImageComponent}
+                src={Logo.src}
+                variant={'chainLogo'}
+              />
+            }
+            contentValue={<Typography variant={'paragraph-lg'}>{'KLY'}</Typography>}
+          />
+        ),
       },
       {
         label: {
           label: 'Chains',
         },
-        value: 'Klayr-mainchain -> Tokenfactory',
+        value: (
+          <ChainToChainComponent
+            from={{ logo: Logo.src, name: 'Klayr-mainchain' }}
+            to={{ logo: Logo.src, name: 'Tokenfactory' }}
+            imageComponent={DefaultImageComponent}
+          />
+        ),
       },
       {
         label: {
