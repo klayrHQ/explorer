@@ -11,7 +11,7 @@ interface DetailsSectionsProps {
       tooltip?: string;
     };
     value: ReactNode;
-    mobileWidth?: 'full' | 'half';
+    mobileWidth?: 'full' | 'half' | string;
   }[];
 }
 
