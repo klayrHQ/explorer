@@ -38,16 +38,16 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       <TransactionBanner
         amount={transaction?.params?.amount || '0'}
         blockHeight={transaction?.block.height || 0}
-        blockId={transaction?.block.id || ''}
-        executionStatus={transaction?.executionStatus}
-        id={transaction?.id || ''}
+        blockId={transaction?.block.id || ""}
+        executionStatus={transaction?.block.isFinal}
+        id={transaction?.id || ""}
         image={BannerBG.src}
         moduleCommand={`${transaction?.module}:${transaction?.command}` || ''}
         receiverAddress={transaction?.params?.recipientAddress}
         receiverName={transaction?.meta?.recipient?.name}
         senderAddress={transaction?.sender?.address || ''}
         senderName={transaction?.sender?.name}
-        symbol={transaction?.params?.tokenID || ''}
+        symbol={"KLY"}
         timestamp={transaction?.block.timestamp || 0}
       />
     </div>
