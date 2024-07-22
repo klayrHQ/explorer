@@ -62,8 +62,15 @@ export interface RecipientType {
 
 export interface BlockDetailsType {
   id: string;
-  generatorAddress: string;
+  generator: GeneratorType;
   numberOfTransactions: number;
   reward: string;
   isFinal: boolean;
+  validatorHash: string;
+  height: number;
+}
+
+interface GeneratorType {
+  address: string;
+  name: string;
 }
