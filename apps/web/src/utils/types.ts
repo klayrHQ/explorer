@@ -59,3 +59,22 @@ export interface RecipientType {
   publicKey: any;
   name: any;
 }
+
+export interface EventsType {
+  id: number;
+  height: number;
+  module: string;
+  name: string;
+  data: EventsDataType;
+  topics: string[];
+  index: number;
+  block: BlockType;
+}
+
+export interface EventsDataType {
+  address?: string;
+  tokenID?: string;
+  amount?: string;
+  result?: number;
+  reduction?: number;
+}
