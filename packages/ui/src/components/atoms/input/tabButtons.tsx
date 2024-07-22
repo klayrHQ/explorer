@@ -6,6 +6,7 @@ import { Icon } from '../images/icon';
 import { Typography } from '../base/typography';
 import { IconComponent } from '../../../types/types';
 import { ReactNode } from 'react';
+import {cls} from "../../../utils/functions.ts";
 
 interface TabData {
   value: number;
@@ -16,11 +17,12 @@ interface TabData {
 
 interface TabButtonsProps {
   tabs: TabData[];
+  width?: string;
 }
 
-export const TabButtons = ({ tabs, }: TabButtonsProps) => {
+export const TabButtons = ({ tabs, width, }: TabButtonsProps) => {
   return (
-    <Tabs className={'flex flex-col gap-1.5xl'} defaultValue={1}>
+    <Tabs className={cls(['flex flex-col gap-1.5xl', width ? `w-${width}` : ' w-full'])} defaultValue={1}>
       <TabsList className="flex gap-2 bg-background active:text-lobster">
         {tabs.map((tab) => (
           <Tab
