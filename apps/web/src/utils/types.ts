@@ -60,6 +60,14 @@ export interface RecipientType {
   name: any;
 }
 
+export interface BlockDetailsType {
+  id: string;
+  generatorAddress: string;
+  numberOfTransactions: number;
+  reward: string;
+  isFinal: boolean;
+}
+
 export interface EventsType {
   id: number;
   height: number;
