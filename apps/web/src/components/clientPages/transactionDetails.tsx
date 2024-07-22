@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { GatewayRes, TransactionType } from '../../utils/types';
+import {EventsType, GatewayRes, TransactionType} from '../../utils/types';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
 import gatewayClient from '../../network/gatewayClient';
@@ -10,16 +10,18 @@ import {
   DateComponent,
   FlexGrid,
   ImageContainer,
-  KeyValueComponent,
+  KeyValueComponent, SkeletonComponent,
   TabButtons, Typography,
   UserAccountCard
 } from "@repo/ui/atoms";
-import {DetailsSection} from "@repo/ui/organisms";
+import {DetailsSection, SectionHeader, TableContainer} from "@repo/ui/organisms";
 import {DefaultImageComponent} from "storybook/stories/utils/constants.tsx";
+import {getTableSkeletons} from "../../utils/constants.tsx";
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [transaction, setTransaction] = useState<TransactionType>();
+  const [events, setEvents] = useState<EventsType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -43,6 +45,30 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
     };
     getTransaction();
   }, [id]);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      if (transaction) {
+        try {
+          setLoading(true);
+          const {data} = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
+            params: {
+              height: transaction.block.height,
+            },
+          });
+
+          if (data?.data) {
+            setEvents(data.data);
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    getEvents();
+  }, [transaction]);
 
   const details = [
     {
@@ -71,13 +97,12 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Date',
       },
-      value: (
+      value: transaction?.block?.timestamp ? (
         <DateComponent
-          //confirmationTime={2}
-          timestamp={(transaction?.block?.timestamp ?? 0) * 1000}
+          timestamp={transaction?.block?.timestamp * 1000}
           variant={'full'}
         />
-      ),
+      ) : '',
     },
     ... transaction?.params?.amount ? [{
       label: {
@@ -200,18 +225,48 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
     }] : [],
   ];
 
+  const eventsRows = !loading ? events?.map((event) => {
+    return {
+      cells: [
+        {
+          children:  <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>{event.module}</Typography>,
+          className: 'desktop:w-1/5',
+        },
+        {
+          children: <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>{event.name}</Typography>,
+        },
+      ]
+    }
+  }) : getTableSkeletons(7);
+
   const tabs = [
     {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: <DetailsSection title={'Transaction Details'} data={details} />,
+      content: <DetailsSection data={details} title={'Transaction Details'} />,
     },
     {
       value: 2,
       label: 'Events',
       icon: 'List',
-      content: <div>Metadata</div>,
+      content: (
+          <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+            <SectionHeader count={events?.length} title={'Transaction events'} />
+            <TableContainer
+                keyPrefix={'tx-events'}
+                headCols={[
+                  {
+                    children: <Typography variant={'paragraph-md'}>{'Module'}</Typography>,
+                  },
+                  {
+                    children: <Typography variant={'paragraph-md'}>{'Name'}</Typography>,
+                  },
+                ]}
+                rows={eventsRows}
+            />
+          </FlexGrid>
+      ),
     },
   ]
 

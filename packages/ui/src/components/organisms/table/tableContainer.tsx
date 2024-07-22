@@ -7,7 +7,7 @@ interface TableContainerProps extends TableProps {
   pagination?: boolean;
   filters?: boolean;
   tableClassName?: string;
-  totalPages: number;
+  totalPages?: number;
 }
 
 export const TableContainer = ({
