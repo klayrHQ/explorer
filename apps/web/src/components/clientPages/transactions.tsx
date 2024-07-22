@@ -23,11 +23,23 @@ import {
 import { commandColors, decimals, getTableSkeletons } from '../../utils/constants.tsx';
 import Link from 'next/link';
 import gatewayClient from '../../network/gatewayClient.ts';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export const Transactions = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
+  const [totalTxs, setTotalTxs] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
+  const defaultLimit = '10';
+
+  useEffect(() => {
+    router.push(pathname + '?' + `page=${pageNumber}`);
+  }, [pageNumber]);
 
   const handleCopy = (text: string) => {
     copyToClipboard(text);
@@ -41,16 +53,19 @@ export const Transactions = () => {
     const getTransactions = async () => {
       try {
         setLoading(true);
+        const offset =
+          Number(searchParams.get('page')) * Number(searchParams.get('limit') ?? defaultLimit);
         const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
           params: {
-            limit: '10', // TODO: hardcoded params for now, implement with pagination
-            height: '195894:229894',
+            limit: searchParams.get('limit') || defaultLimit,
+            offset,
           },
         });
 
         if (data?.data) {
           const transactions: TransactionType[] = data.data;
           setTransactions(transactions);
+          setTotalTxs(data.meta.total);
         }
       } catch (error) {
         console.error(error);
@@ -60,7 +75,7 @@ export const Transactions = () => {
     };
 
     getTransactions();
-  }, []);
+  }, [searchParams]);
 
   const tableHead: TableCellType[] = [
     {
@@ -198,12 +213,14 @@ export const Transactions = () => {
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
       <SectionHeader
-        count={transactions?.length}
+        count={totalTxs}
         subTitle={'Overview of all transactions on the blockchain'}
         title={'Transactions'}
       />
       <TableContainer
-        totalPages={23}
+        currentNumber={pageNumber}
+        setCurrentNumber={setPageNumber}
+        totalPages={totalTxs / Number(defaultLimit)}
         pagination
         headCols={tableHead}
         keyPrefix={'transactions'}
