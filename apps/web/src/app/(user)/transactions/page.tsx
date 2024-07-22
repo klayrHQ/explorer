@@ -1,6 +1,10 @@
-import {Transactions} from "../../../components/clientPages/transactions.tsx";
-
+import { Suspense } from 'react';
+import { Transactions } from '../../../components/clientPages/transactions.tsx';
 
 export default function Page() {
-  return (<Transactions />);
+  return (
+    <Suspense>
+      <Transactions />
+    </Suspense>
+  );
 }

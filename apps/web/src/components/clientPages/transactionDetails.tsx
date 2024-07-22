@@ -4,18 +4,8 @@ import { GatewayRes, TransactionType } from '../../utils/types';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
 import gatewayClient from '../../network/gatewayClient';
-import {
-  ChainToChainComponent,
-  Currency,
-  DateComponent,
-  FlexGrid,
-  ImageContainer,
-  KeyValueComponent,
-  TabButtons, Typography,
-  UserAccountCard
-} from "@repo/ui/atoms";
-import {DetailsSection} from "@repo/ui/organisms";
-import {DefaultImageComponent} from "storybook/stories/utils/constants.tsx";
+import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '@repo/ui/atoms';
+import { DetailsSection } from '@repo/ui/organisms';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -79,20 +69,24 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         />
       ),
     },
-    ... transaction?.params?.amount ? [{
-      label: {
-        label: 'Amount',
-      },
-      value: (
-        <Currency
-          amount={transaction?.params?.amount}
-          className={'truncate max-w-full'}
-          marketValue={undefined}
-          symbol={'KLY'}
-        />
-      ),
-      mobileWidth: 'half',
-    }] : [],
+    ...(transaction?.params?.amount
+      ? [
+          {
+            label: {
+              label: 'Amount',
+            },
+            value: (
+              <Currency
+                amount={transaction?.params?.amount}
+                className={'truncate max-w-full'}
+                marketValue={undefined}
+                symbol={'KLY'}
+              />
+            ),
+            mobileWidth: 'half',
+          },
+        ]
+      : []),
     {
       label: {
         label: 'Fee',
@@ -126,24 +120,32 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       ),
       mobileWidth: 'half',
     },
-    ... transaction?.recipient ? [{
-      label: {
-        label: 'To',
-      },
-      value: (
-        <UserAccountCard
-          address={transaction?.recipient?.address ?? ''}
-          name={transaction?.recipient?.name}
-        />
-      ),
-      mobileWidth: 'half',
-    }] : [],
-    ... transaction?.sender?.publicKey ? [{
-      label: {
-        label: 'Sender Public Key',
-      },
-      value: transaction?.sender?.publicKey,
-    }] : [],
+    ...(transaction?.recipient
+      ? [
+          {
+            label: {
+              label: 'To',
+            },
+            value: (
+              <UserAccountCard
+                address={transaction?.recipient?.address ?? ''}
+                name={transaction?.recipient?.name}
+              />
+            ),
+            mobileWidth: 'half',
+          },
+        ]
+      : []),
+    ...(transaction?.sender?.publicKey
+      ? [
+          {
+            label: {
+              label: 'Sender Public Key',
+            },
+            value: transaction?.sender?.publicKey,
+          },
+        ]
+      : []),
     {
       label: {
         label: 'Block',
@@ -192,12 +194,16 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         />
       ),
     },*/
-    ... transaction?.params?.data ? [{
-      label: {
-        label: 'Data',
-      },
-      value: transaction?.params?.data,
-    }] : [],
+    ...(transaction?.params?.data
+      ? [
+          {
+            label: {
+              label: 'Data',
+            },
+            value: transaction?.params?.data,
+          },
+        ]
+      : []),
   ];
 
   const tabs = [
@@ -205,7 +211,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: <DetailsSection title={'Transaction Details'} data={details} />,
+      content: <DetailsSection data={details} title={'Transaction Details'} />,
     },
     {
       value: 2,
@@ -213,7 +219,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       icon: 'List',
       content: <div>Metadata</div>,
     },
-  ]
+  ];
 
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>

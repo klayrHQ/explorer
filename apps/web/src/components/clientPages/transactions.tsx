@@ -37,7 +37,7 @@ export const Transactions = () => {
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
   const defaultLimit = '10';
 
-  const handleSetPageNumber = (number: number) => {
+  const handleSetPageNumber = async (number: number) => {
     setPageNumber(number);
     router.push(pathname + '?' + `page=${number}`);
   };
@@ -222,12 +222,12 @@ export const Transactions = () => {
       />
       <TableContainer
         currentNumber={pageNumber}
-        setCurrentNumber={handleSetPageNumber}
-        totalPages={totalTxs / Number(defaultLimit)}
-        pagination
         headCols={tableHead}
         keyPrefix={'transactions'}
+        pagination
         rows={rows}
+        setCurrentNumber={handleSetPageNumber}
+        totalPages={totalTxs / Number(defaultLimit)}
       />
     </FlexGrid>
   );
