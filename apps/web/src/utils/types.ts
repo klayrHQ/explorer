@@ -59,3 +59,11 @@ export interface RecipientType {
   publicKey: any;
   name: any;
 }
+
+export interface BlockDetailsType {
+  id: string;
+  generatorAddress: string;
+  numberOfTransactions: number;
+  reward: string;
+  isFinal: boolean;
+}
