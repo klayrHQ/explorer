@@ -23,11 +23,24 @@ import {
 import { commandColors, decimals, getTableSkeletons } from '../../utils/constants.tsx';
 import Link from 'next/link';
 import gatewayClient from '../../network/gatewayClient.ts';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export const Transactions = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
+  const [totalTxs, setTotalTxs] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
+  const defaultLimit = '10';
+
+  const handleSetPageNumber = async (number: number) => {
+    setPageNumber(number);
+    router.push(pathname + '?' + `page=${number}`);
+  };
 
   const handleCopy = (text: string) => {
     copyToClipboard(text);
@@ -41,16 +54,21 @@ export const Transactions = () => {
     const getTransactions = async () => {
       try {
         setLoading(true);
+        const limit = Number(searchParams.get('limit')) || defaultLimit;
+        const page = Number(searchParams.get('page')) || 1;
+        const offset = (page - 1) * Number(limit);
+
         const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
           params: {
-            limit: '10', // TODO: hardcoded params for now, implement with pagination
-            height: '195894:229894',
+            limit: searchParams.get('limit') || defaultLimit,
+            offset: offset,
           },
         });
 
-        if (data?.data) {
+        if (data) {
           const transactions: TransactionType[] = data.data;
           setTransactions(transactions);
+          setTotalTxs(data.meta.total);
         }
       } catch (error) {
         console.error(error);
@@ -60,7 +78,7 @@ export const Transactions = () => {
     };
 
     getTransactions();
-  }, []);
+  }, [searchParams]);
 
   const tableHead: TableCellType[] = [
     {
@@ -198,16 +216,18 @@ export const Transactions = () => {
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
       <SectionHeader
-        count={transactions?.length}
+        count={totalTxs}
         subTitle={'Overview of all transactions on the blockchain'}
         title={'Transactions'}
       />
       <TableContainer
-        totalPages={23}
-        pagination
+        currentNumber={pageNumber}
         headCols={tableHead}
         keyPrefix={'transactions'}
+        pagination
         rows={rows}
+        setCurrentNumber={handleSetPageNumber}
+        totalPages={totalTxs / Number(defaultLimit)}
       />
     </FlexGrid>
   );

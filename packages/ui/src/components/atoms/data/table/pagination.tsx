@@ -1,17 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
 import { Button } from '../../input/button';
 import { FlexGrid } from '../../base/flexGrid';
 
 interface NumberListProps {
   totalPages: number;
-  initialNumber: number;
+  currentNumber: number;
+  setCurrentNumber: (number: number) => void;
 }
 
-export const Pagination = ({ totalPages, initialNumber }: NumberListProps) => {
-  const [currentNumber, setCurrentNumber] = useState(initialNumber);
-
+export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: NumberListProps) => {
   const generatePageArray = (totalPages: number) => {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   };

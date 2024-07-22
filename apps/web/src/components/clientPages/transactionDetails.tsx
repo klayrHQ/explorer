@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import {EventsType, GatewayRes, TransactionType} from '../../utils/types';
+import { EventsType, GatewayRes, TransactionType } from '../../utils/types';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
 import gatewayClient from '../../network/gatewayClient';
@@ -10,13 +10,15 @@ import {
   DateComponent,
   FlexGrid,
   ImageContainer,
-  KeyValueComponent, SkeletonComponent,
-  TabButtons, Typography,
-  UserAccountCard
-} from "@repo/ui/atoms";
-import {DetailsSection, SectionHeader, TableContainer} from "@repo/ui/organisms";
-import {DefaultImageComponent} from "storybook/stories/utils/constants.tsx";
-import {getTableSkeletons} from "../../utils/constants.tsx";
+  KeyValueComponent,
+  SkeletonComponent,
+  TabButtons,
+  Typography,
+  UserAccountCard,
+} from '@repo/ui/atoms';
+import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
+import { DefaultImageComponent } from 'storybook/stories/utils/constants.tsx';
+import { getTableSkeletons } from '../../utils/constants.tsx';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -51,7 +53,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       if (transaction) {
         try {
           setLoading(true);
-          const {data} = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
+          const { data } = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
             params: {
               height: transaction.block.height,
             },
@@ -98,26 +100,29 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'Date',
       },
       value: transaction?.block?.timestamp ? (
-        <DateComponent
-          timestamp={transaction?.block?.timestamp * 1000}
-          variant={'full'}
-        />
-      ) : '',
-    },
-    ... transaction?.params?.amount ? [{
-      label: {
-        label: 'Amount',
-      },
-      value: (
-        <Currency
-          amount={transaction?.params?.amount}
-          className={'truncate max-w-full'}
-          marketValue={undefined}
-          symbol={'KLY'}
-        />
+        <DateComponent timestamp={transaction?.block?.timestamp * 1000} variant={'full'} />
+      ) : (
+        ''
       ),
-      mobileWidth: 'half',
-    }] : [],
+    },
+    ...(transaction?.params?.amount
+      ? [
+          {
+            label: {
+              label: 'Amount',
+            },
+            value: (
+              <Currency
+                amount={transaction?.params?.amount}
+                className={'truncate max-w-full'}
+                marketValue={undefined}
+                symbol={'KLY'}
+              />
+            ),
+            mobileWidth: 'half',
+          },
+        ]
+      : []),
     {
       label: {
         label: 'Fee',
@@ -151,24 +156,32 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       ),
       mobileWidth: 'half',
     },
-    ... transaction?.recipient ? [{
-      label: {
-        label: 'To',
-      },
-      value: (
-        <UserAccountCard
-          address={transaction?.recipient?.address ?? ''}
-          name={transaction?.recipient?.name}
-        />
-      ),
-      mobileWidth: 'half',
-    }] : [],
-    ... transaction?.sender?.publicKey ? [{
-      label: {
-        label: 'Sender Public Key',
-      },
-      value: transaction?.sender?.publicKey,
-    }] : [],
+    ...(transaction?.recipient
+      ? [
+          {
+            label: {
+              label: 'To',
+            },
+            value: (
+              <UserAccountCard
+                address={transaction?.recipient?.address ?? ''}
+                name={transaction?.recipient?.name}
+              />
+            ),
+            mobileWidth: 'half',
+          },
+        ]
+      : []),
+    ...(transaction?.sender?.publicKey
+      ? [
+          {
+            label: {
+              label: 'Sender Public Key',
+            },
+            value: transaction?.sender?.publicKey,
+          },
+        ]
+      : []),
     {
       label: {
         label: 'Block',
@@ -217,27 +230,41 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         />
       ),
     },*/
-    ... transaction?.params?.data ? [{
-      label: {
-        label: 'Data',
-      },
-      value: transaction?.params?.data,
-    }] : [],
+    ...(transaction?.params?.data
+      ? [
+          {
+            label: {
+              label: 'Data',
+            },
+            value: transaction?.params?.data,
+          },
+        ]
+      : []),
   ];
 
-  const eventsRows = !loading ? events?.map((event) => {
-    return {
-      cells: [
-        {
-          children:  <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>{event.module}</Typography>,
-          className: 'desktop:w-1/5',
-        },
-        {
-          children: <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>{event.name}</Typography>,
-        },
-      ]
-    }
-  }) : getTableSkeletons(7);
+  const eventsRows = !loading
+    ? events?.map((event) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>
+                  {event.module}
+                </Typography>
+              ),
+              className: 'desktop:w-1/5',
+            },
+            {
+              children: (
+                <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>
+                  {event.name}
+                </Typography>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(7);
 
   const tabs = [
     {
@@ -251,24 +278,24 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       label: 'Events',
       icon: 'List',
       content: (
-          <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-            <SectionHeader count={events?.length} title={'Transaction events'} />
-            <TableContainer
-                keyPrefix={'tx-events'}
-                headCols={[
-                  {
-                    children: <Typography variant={'paragraph-md'}>{'Module'}</Typography>,
-                  },
-                  {
-                    children: <Typography variant={'paragraph-md'}>{'Name'}</Typography>,
-                  },
-                ]}
-                rows={eventsRows}
-            />
-          </FlexGrid>
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          <SectionHeader count={events?.length} title={'Transaction events'} />
+          <TableContainer
+            headCols={[
+              {
+                children: <Typography variant={'paragraph-md'}>{'Module'}</Typography>,
+              },
+              {
+                children: <Typography variant={'paragraph-md'}>{'Name'}</Typography>,
+              },
+            ]}
+            keyPrefix={'tx-events'}
+            rows={eventsRows}
+          />
+        </FlexGrid>
       ),
     },
-  ]
+  ];
 
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
