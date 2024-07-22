@@ -38,7 +38,7 @@ export const Currency = ({
         <>
           {'\u00A0|\u00A0'}
           <span>{'$'}</span>
-          {marketValue.toFixed(2)}
+          {marketValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2,})}
         </>
       )}
     </Typography>
