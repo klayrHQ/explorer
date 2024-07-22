@@ -37,9 +37,10 @@ export const Transactions = () => {
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
   const defaultLimit = '10';
 
-  useEffect(() => {
-    router.push(pathname + '?' + `page=${pageNumber}`);
-  }, [pageNumber]);
+  const handleSetPageNumber = (number: number) => {
+    setPageNumber(number);
+    router.push(pathname + '?' + `page=${number}`);
+  };
 
   const handleCopy = (text: string) => {
     copyToClipboard(text);
@@ -53,16 +54,18 @@ export const Transactions = () => {
     const getTransactions = async () => {
       try {
         setLoading(true);
-        const offset =
-          Number(searchParams.get('page')) * Number(searchParams.get('limit') ?? defaultLimit);
+        const limit = Number(searchParams.get('limit')) || defaultLimit;
+        const page = Number(searchParams.get('page')) || 1;
+        const offset = (page - 1) * Number(limit);
+
         const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
           params: {
             limit: searchParams.get('limit') || defaultLimit,
-            offset,
+            offset: offset,
           },
         });
 
-        if (data?.data) {
+        if (data) {
           const transactions: TransactionType[] = data.data;
           setTransactions(transactions);
           setTotalTxs(data.meta.total);
@@ -219,7 +222,7 @@ export const Transactions = () => {
       />
       <TableContainer
         currentNumber={pageNumber}
-        setCurrentNumber={setPageNumber}
+        setCurrentNumber={handleSetPageNumber}
         totalPages={totalTxs / Number(defaultLimit)}
         pagination
         headCols={tableHead}
