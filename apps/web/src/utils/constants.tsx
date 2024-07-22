@@ -62,6 +62,8 @@ export const subMenu = [
   {
     label: 'Blocks',
     icon: 'Cube',
+    href: '/blocks',
+    linkComponent: DefaultLinkComponent
   },
   {
     label: 'Tokens',
