@@ -13,6 +13,7 @@ interface UserAccountCardProps {
   addressVariant?: TypographyVariant;
   width?: string;
   fontWeight?: FontWeight;
+  nameOnly?: boolean;
 }
 
 export const UserAccountCard = ({
@@ -25,6 +26,7 @@ export const UserAccountCard = ({
   addressVariant = 'caption',
   width = 'full',
   fontWeight = 'normal',
+  nameOnly = false,
 }: UserAccountCardProps) => {
   return (
     <FlexGrid
@@ -35,22 +37,46 @@ export const UserAccountCard = ({
     >
       <Avatar address={address} circle size={size} />
       <FlexGrid direction={'col'} gap={'0'}>
-        <Typography
-          className={'leading-none'}
-          color={nameColor}
-          fontWeight={fontWeight}
-          variant={nameVariant}
-        >
-          {name}
-        </Typography>
-        <Typography
-          className={'leading-none'}
-          color={addressColor}
-          fontWeight={fontWeight}
-          variant={addressVariant}
-        >
-          {shortString(address, 12, 'center')}
-        </Typography>
+        {name && nameOnly && (
+          <Typography
+            className={'leading-none'}
+            color={nameColor}
+            fontWeight={fontWeight}
+            variant={nameVariant}
+          >
+            {name}
+          </Typography>
+        )}
+        {name && !nameOnly && (
+          <>
+            <Typography
+              className={'leading-none'}
+              color={nameColor}
+              fontWeight={fontWeight}
+              variant={nameVariant}
+            >
+              {name}
+            </Typography>
+            <Typography
+              className={'leading-none'}
+              color={addressColor}
+              fontWeight={fontWeight}
+              variant={addressVariant}
+            >
+              {shortString(address, 12, 'center')}
+            </Typography>
+          </>
+        )}
+        {!name && (
+          <Typography
+            className={'leading-none'}
+            color={addressColor}
+            fontWeight={fontWeight}
+            variant={addressVariant}
+          >
+            {shortString(address, 12, 'center')}
+          </Typography>
+        )}
       </FlexGrid>
     </FlexGrid>
   );

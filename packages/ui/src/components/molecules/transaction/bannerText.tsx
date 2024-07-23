@@ -1,14 +1,10 @@
-import { Typography } from "../../atoms";
-import { Badge } from "../../atoms";
-import { ImageName } from "../../atoms/account/avatarAddress";
-import { Currency } from "../../atoms/base/currency";
-import { trimSix, trimFour } from "../../../utils/functions";
-import { UserAccountCard } from "../../atoms";
-import {
-  dayjs,
-  fromNowFormatter,
-  replaceColonWithSpace,
-} from "../../../utils/functions";
+import { Typography } from '../../atoms';
+import { Badge } from '../../atoms';
+import { ImageName } from '../../atoms/account/avatarAddress';
+import { Currency } from '../../atoms/base/currency';
+import { trimSix, trimFour } from '../../../utils/functions';
+import { UserAccountCard } from '../../atoms';
+import { dayjs, fromNowFormatter, replaceColonWithSpace } from '../../../utils/functions';
 
 interface TransactionBannerProps {
   amount?: string | number;
@@ -41,12 +37,22 @@ export const BannerText = ({
 }: TransactionBannerProps) => {
   const date = dayjs(timestamp * 1000);
 
-  const fromNowPrefix = dayjs().diff(date, "hour") >= 1 ? "on" : "over";
+  const fromNowPrefix = dayjs().diff(date, 'hour') >= 1 ? 'on' : 'over';
 
   return (
     <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
-      <UserAccountCard address={senderAddress} addressColor="onBackground" addressVariant={'paragraph-md'} fontWeight="semibold" name={senderName} nameColor="onBackground" nameVariant={'paragraph-md'} size={24} width="auto"/>
+      <UserAccountCard
+        address={senderAddress}
+        addressColor="onBackground"
+        addressVariant={'paragraph-md'}
+        fontWeight="semibold"
+        name={senderName}
+        nameColor="onBackground"
+        nameVariant={'paragraph-md'}
+        size={24}
+        width="auto"
+      />
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         send
@@ -54,7 +60,17 @@ export const BannerText = ({
 
       {/* RECEIVER */}
       {receiverAddress && (
-         <UserAccountCard address={receiverAddress} addressColor="onBackground" addressVariant={'paragraph-md'} fontWeight="semibold" name={receiverName} nameColor="onBackground" size={24} width="auto" />
+        <UserAccountCard
+          address={receiverAddress}
+          addressColor="onBackground"
+          addressVariant={'paragraph-md'}
+          fontWeight="semibold"
+          name={receiverName}
+          nameColor="onBackground"
+          nameOnly
+          size={24}
+          width="auto"
+        />
       )}
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
@@ -62,12 +78,7 @@ export const BannerText = ({
       </Typography>
 
       {/* AMOUNT */}
-      <Currency
-        amount={amount ?? 0}
-        decimals={3}
-        fontWeight="semibold"
-        symbol={symbol}
-      />
+      <Currency amount={amount ?? 0} decimals={3} fontWeight="semibold" symbol={symbol} />
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         in type
@@ -77,8 +88,8 @@ export const BannerText = ({
       <Badge
         borderColor="gray-1"
         className="flex-grow-0 capitalize"
-        colorVariant={badgeColor || "green"}
-        label={replaceColonWithSpace(moduleCommand ?? "")}
+        colorVariant={badgeColor || 'green'}
+        label={replaceColonWithSpace(moduleCommand ?? '')}
       />
 
       {/* TIMESTAMP */}
