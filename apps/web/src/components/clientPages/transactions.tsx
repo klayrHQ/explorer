@@ -6,7 +6,7 @@ import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useEffect, useState } from 'react';
 import { GatewayRes, TransactionType } from '../../utils/types.ts';
 import {
-  getTransactionRows,
+  createTransactionRows,
   transactionTableHead
 } from '../../utils/constants.tsx';
 import gatewayClient from '../../network/gatewayClient.ts';
@@ -59,7 +59,7 @@ export const Transactions = () => {
     getTransactions();
   }, [searchParams]);
 
-  const rows = getTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText)
+  const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText)
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>

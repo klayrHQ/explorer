@@ -1,7 +1,7 @@
 'use client';
 import gatewayClient from '../../network/gatewayClient';
 import React, { useEffect, useState } from 'react';
-import { GatewayRes, BlockDetailsType, TransactionType } from '../../utils/types';
+import {GatewayRes, BlockDetailsType, TransactionType, EventsType} from '../../utils/types';
 import {
   BlockDetailsBanner,
   DetailsSection,
@@ -16,12 +16,13 @@ import {
   TabButtons,
   UserAccountCard,
 } from '@repo/ui/atoms';
-import {getTransactionRows, transactionTableHead} from "../../utils/constants.tsx";
+import {eventsTableHead, createEventsRows, createTransactionRows, transactionTableHead} from "../../utils/constants.tsx";
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [block, setBlock] = useState<BlockDetailsType>();
   const [transactions, setTransactions] = useState<TransactionType[]>();
+  const [events, setEvents] = useState<EventsType[]>();
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -70,6 +71,31 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
 
     if (block?.numberOfTransactions && block?.numberOfTransactions >= 0) getTransactions();
   }, [id, block]);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      try {
+        setLoading(true);
+        const { data } = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
+          params: {
+            height: block?.height,
+          },
+        });
+
+        if (data?.data) {
+          setEvents(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (block) {
+      getEvents();
+    }
+  }, [block]);
 
   const details = [
     {
@@ -146,7 +172,8 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
     },
   ];
 
-  const transactionRows = getTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
+  const transactionRows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
+  const eventsRows = createEventsRows(events, loading);
 
   const tabs = [
     {
@@ -160,7 +187,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       label: 'Transactions',
       icon: 'List',
       content: (
-        <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
+        <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4.5xl'}>
           <SectionHeader
             count={transactions?.length}
             title={'Block Transactions'}
@@ -177,7 +204,16 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: 3,
       label: 'Events',
       icon: 'List',
-      content: 'Events',
+      content: (
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          <SectionHeader count={events?.length} title={'Block events'} />
+          <TableContainer
+            headCols={eventsTableHead}
+            keyPrefix={'tx-events'}
+            rows={eventsRows}
+          />
+        </FlexGrid>
+      ),
     },
   ];
 

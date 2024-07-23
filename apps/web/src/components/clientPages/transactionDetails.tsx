@@ -5,20 +5,14 @@ import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
 import gatewayClient from '../../network/gatewayClient';
 import {
-  ChainToChainComponent,
   Currency,
   DateComponent,
   FlexGrid,
-  ImageContainer,
-  KeyValueComponent,
-  SkeletonComponent,
   TabButtons,
-  Typography,
   UserAccountCard,
 } from '@repo/ui/atoms';
 import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
-import { DefaultImageComponent } from 'storybook/stories/utils/constants.tsx';
-import { getTableSkeletons } from '../../utils/constants.tsx';
+import {eventsTableHead, createEventsRows} from '../../utils/constants.tsx';
 import Link from 'next/link';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
@@ -243,29 +237,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       : []),
   ];
 
-  const eventsRows = !loading
-    ? events?.map((event) => {
-        return {
-          cells: [
-            {
-              children: (
-                <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>
-                  {event.module}
-                </Typography>
-              ),
-              className: 'desktop:w-1/5',
-            },
-            {
-              children: (
-                <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>
-                  {event.name}
-                </Typography>
-              ),
-            },
-          ],
-        };
-      })
-    : getTableSkeletons(7);
+  const eventsRows = createEventsRows(events, loading);
 
   const tabs = [
     {
@@ -282,14 +254,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader count={events?.length} title={'Transaction events'} />
           <TableContainer
-            headCols={[
-              {
-                children: <Typography variant={'paragraph-md'}>{'Module'}</Typography>,
-              },
-              {
-                children: <Typography variant={'paragraph-md'}>{'Name'}</Typography>,
-              },
-            ]}
+            headCols={eventsTableHead}
             keyPrefix={'tx-events'}
             rows={eventsRows}
           />
