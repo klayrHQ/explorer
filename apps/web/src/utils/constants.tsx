@@ -1,9 +1,20 @@
-import { Icon, SkeletonComponent, Typography } from '@repo/ui/atoms';
+import {
+  Badge,
+  Currency,
+  Icon,
+  SkeletonComponent,
+  Tooltip,
+  Typography,
+  UserAccountCard,
+} from '@repo/ui/atoms';
 import Logo from '../assets/images/logo.svg';
 import LogoText from '../assets/images/logoText.svg';
 import Image from 'next/image';
 import { DefaultLinkComponent } from 'storybook/stories/utils/constants.tsx';
-import { ColorType } from '@repo/ui/types';
+import {ColorType, TableCellType} from '@repo/ui/types';
+import { TxDataPopover } from '@repo/ui/molecules';
+import Link from 'next/link';
+import {copyToClipboard, dayjs, fromNowFormatter, replaceColonWithSpace, shortString} from '@repo/ui/utils';
 
 export const DefaultImageComponent = <Image alt={''} height={'1'} src={''} width={'1'} />;
 
@@ -287,3 +298,156 @@ export const getTableSkeletons = (cells: number) => {
     };
   });
 };
+
+export const getTransactionRows = (transactions, loading, copyTooltipText, setCopyTooltipText) => {
+  const handleCopy = (text: string) => {
+    copyToClipboard(text);
+    setCopyTooltipText('Copied to clipboard!');
+    setTimeout(() => {
+      setCopyTooltipText('Copy to clipboard');
+    }, 2000);
+  };
+
+  return !loading ?
+    transactions ? transactions?.map((transaction) => {
+        return {
+          rowDetails: (
+            <TxDataPopover
+              txData={{
+                status: transaction?.executionStatus || 'pending',
+                data: transaction?.params?.data,
+                nonce: transaction?.nonce,
+              }}
+            />
+          ),
+          cells: [
+            {
+              children: (
+                <Typography className={'hover:underline'} link>
+                  <Link href={`transactions/${transaction.id}`}>
+                    {shortString(transaction?.id, 12, 'center')}
+                  </Link>
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography className={'whitespace-nowrap inline-flex gap-sm items-center'}>
+                  {transaction?.block?.height}
+                  <Tooltip placement={'bottom'} text={copyTooltipText}>
+                    <span onClick={() => handleCopy(transaction?.block?.height.toString())}>
+                      <Icon
+                        className={'desktop:group-hover/child:inline desktop:hidden cursor-pointer'}
+                        icon={'Copy'}
+                        size={'2xs'}
+                      />
+                    </span>
+                  </Tooltip>
+                </Typography>
+              ),
+              className: 'group/child min-w-[120px]',
+            },
+            {
+              children: (
+                <Tooltip
+                  placement={'top'}
+                  text={dayjs(transaction.block.timestamp * 1000).format('DD MMM YYYY HH:mm')}
+                >
+                  <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
+                    {fromNowFormatter(transaction.block.timestamp * 1000, 'DD MMM YYYY')}
+                  </Typography>
+                </Tooltip>
+              ),
+            },
+            {
+              children: (
+                <Badge
+                  colorVariant={commandColors[transaction.command]}
+                  label={replaceColonWithSpace(`${transaction?.module}:${transaction?.command}`)}
+                />
+              ),
+            },
+            {
+              children: (
+                <UserAccountCard
+                  address={transaction?.sender?.address}
+                  name={transaction?.sender?.name}
+                />
+              ),
+            },
+            {
+              children: transaction?.recipient ? (
+                <UserAccountCard
+                  address={transaction?.recipient?.address}
+                  name={transaction?.recipient?.name}
+                />
+              ) : (
+                '-'
+              ),
+            },
+            {
+              children: (
+                <Currency
+                  amount={transaction?.params?.amount}
+                  className={'align-middle'}
+                  color={'onBackgroundLow'}
+                  decimals={decimals}
+                  symbol={'KLY'}
+                  variant={'paragraph-sm'}
+                />
+              ),
+            },
+            {
+              children: (
+                <Currency
+                  amount={transaction?.fee}
+                  className={'align-middle'}
+                  color={'onBackgroundLow'}
+                  decimals={5}
+                  symbol={'KLY'}
+                  variant={'paragraph-sm'}
+                />
+              ),
+            },
+          ],
+        };
+      })
+    : [
+        {
+          cells: [
+            {
+              children: <Typography>No transactions found</Typography>,
+              colSpan: transactionTableHead.length,
+            },
+          ],
+        },
+      ]
+    : getTableSkeletons(transactionTableHead.length);
+};
+
+export const transactionTableHead: TableCellType[] = [
+  {
+    children: 'Transaction ID',
+  },
+  {
+    children: 'Height',
+  },
+  {
+    children: 'Date',
+  },
+  {
+    children: 'Type',
+  },
+  {
+    children: 'From',
+  },
+  {
+    children: 'To',
+  },
+  {
+    children: 'Amount',
+  },
+  {
+    children: 'Fee',
+  },
+];

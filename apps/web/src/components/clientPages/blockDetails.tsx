@@ -1,14 +1,28 @@
 'use client';
 import gatewayClient from '../../network/gatewayClient';
 import React, { useEffect, useState } from 'react';
-import { GatewayRes, BlockDetailsType } from '../../utils/types';
-import {BlockDetailsBanner, DetailsSection, SectionHeader, TableContainer} from '@repo/ui/organisms';
+import { GatewayRes, BlockDetailsType, TransactionType } from '../../utils/types';
+import {
+  BlockDetailsBanner,
+  DetailsSection,
+  SectionHeader,
+  TableContainer,
+} from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
-import {Currency, DateComponent, FlexGrid, TabButtons, Typography, UserAccountCard} from "@repo/ui/atoms";
+import {
+  Currency,
+  DateComponent,
+  FlexGrid,
+  TabButtons,
+  UserAccountCard,
+} from '@repo/ui/atoms';
+import {getTransactionRows, transactionTableHead} from "../../utils/constants.tsx";
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [block, setBlock] = useState<BlockDetailsType>();
+  const [transactions, setTransactions] = useState<TransactionType[]>();
+  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -20,7 +34,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
             blockID: id,
           },
         });
-        console.log('data', data);
+        console.log('block', data);
         if (data?.data) {
           setBlock(data.data[0]);
         }
@@ -30,8 +44,32 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         setLoading(false);
       }
     };
+
     getBlock();
   }, [id]);
+
+  useEffect(() => {
+    const getTransactions = async () => {
+      try {
+        setLoading(true);
+        const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
+          params: {
+            blockID: id,
+          },
+        });
+        console.log('transactions', data);
+        if (data?.data) {
+          setTransactions(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (block?.numberOfTransactions && block?.numberOfTransactions >= 0) getTransactions();
+  }, [id, block]);
 
   const details = [
     {
@@ -61,10 +99,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         label: 'Generator',
       },
       value: (
-        <UserAccountCard
-          address={block?.generator?.address ?? ''}
-          name={block?.generator?.name}
-        />
+        <UserAccountCard address={block?.generator?.address ?? ''} name={block?.generator?.name} />
       ),
     },
     {
@@ -105,9 +140,13 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
           marketValue={undefined}
           symbol={'KLY'}
         />
-      ) : '-',
+      ) : (
+        '-'
+      ),
     },
   ];
+
+  const transactionRows = getTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
 
   const tabs = [
     {
@@ -120,7 +159,19 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: 2,
       label: 'Transactions',
       icon: 'List',
-      content: 'Transactions',
+      content: (
+        <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
+          <SectionHeader
+            count={transactions?.length}
+            title={'Block Transactions'}
+          />
+          <TableContainer
+            headCols={transactionTableHead}
+            keyPrefix={'transactions'}
+            rows={transactionRows}
+          />
+        </FlexGrid>
+      ),
     },
     {
       value: 3,
@@ -131,7 +182,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   ];
 
   return (
-    <FlexGrid direction={"col"} gap={'5xl'} >
+    <FlexGrid direction={'col'} gap={'5xl'}>
       <BlockDetailsBanner
         reward={block?.reward || '0'}
         symbol="KLY"
