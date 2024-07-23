@@ -34,7 +34,7 @@ export const Blocks = () => {
   };
 
   useEffect(() => {
-    const getTransactions = async () => {
+    const getBlocks = async () => {
       try {
         setLoading(true);
         const limit = Number(searchParams.get('limit')) || defaultLimit;
@@ -60,7 +60,7 @@ export const Blocks = () => {
       }
     };
 
-    getTransactions();
+    getBlocks();
   }, [searchParams]);
 
   const tableHead: TableCellType[] = [
