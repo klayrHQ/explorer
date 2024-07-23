@@ -129,7 +129,7 @@ export const Blocks = () => {
             {
               //todo change to seed reveal when it exists in data
               children: <Typography
-                  color={'onBackgroundLow'}>{shortString(block.validatorsHash, 12, 'center')}</Typography>,
+                  color={'onBackgroundLow'}>{shortString(block.validatorHash, 12, 'center')}</Typography>,
             },
             {
               children: <Typography
