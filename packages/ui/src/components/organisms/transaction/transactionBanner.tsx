@@ -78,9 +78,7 @@ export const TransactionBanner = ({
           timestamp={timestamp}
         />
       </div>
-      <Link href={`/blocks/${blockId}`}>
         <BannerCard blockHeight={blockHeight} blockId={blockId} />
-      </Link>
     </BannerFrame>
   );
 };
