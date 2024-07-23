@@ -7,9 +7,9 @@ interface BannerCardProps {
   blockId: string;
 }
 
-export const BannerCard = ({ blockHeight, blockId, }: BannerCardProps) => {
+export const BannerCard = ({ blockHeight, blockId }: BannerCardProps) => {
   return (
-    <div className="border border-onBackground rounded-xl z-20  w-transitionBannerContainerWidthMobile desktop:w-auto">
+    <div className="border border-onBackground rounded-xl max-w-transitionBannerContainerWidthMobile hidden desktop:flex desktop:w-auto">
       <div className="p-6 flex items-start flex-col">
         <Typography
           className="text-right"
