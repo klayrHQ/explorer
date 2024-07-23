@@ -15,6 +15,7 @@ import {ColorType, TableCellType} from '@repo/ui/types';
 import { TxDataPopover } from '@repo/ui/molecules';
 import Link from 'next/link';
 import {copyToClipboard, dayjs, fromNowFormatter, replaceColonWithSpace, shortString} from '@repo/ui/utils';
+import {TransactionType} from "./types.ts";
 
 export const DefaultImageComponent = <Image alt={''} height={'1'} src={''} width={'1'} />;
 
@@ -299,7 +300,7 @@ export const getTableSkeletons = (cells: number) => {
   });
 };
 
-export const getTransactionRows = (transactions, loading, copyTooltipText, setCopyTooltipText) => {
+export const getTransactionRows = (transactions: TransactionType[] | undefined, loading: boolean, copyTooltipText: string, setCopyTooltipText: (text: string) => void) => {
   const handleCopy = (text: string) => {
     copyToClipboard(text);
     setCopyTooltipText('Copied to clipboard!');
