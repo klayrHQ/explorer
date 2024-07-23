@@ -1,5 +1,6 @@
-import { FlexGrid } from "../base/flexGrid.tsx";
-import { Typography } from "../base/typography.tsx";
+import { FlexGrid } from '../base/flexGrid.tsx';
+import { Typography } from '../base/typography.tsx';
+import Link from 'next/link';
 
 export interface LogoProps {
   logoSrc: string;
@@ -11,27 +12,25 @@ export interface LogoProps {
 }
 
 export const Logo = ({
-  logoSrc = "",
+  logoSrc = '',
   logoFullSrc,
-  altText = "logo",
+  altText = 'logo',
   minimized,
   className,
 }: LogoProps) => {
   return (
-    <FlexGrid className={className}>
-      {!minimized && logoFullSrc ? (
-        <img
-          alt={altText}
-          className={" mt-md mb-lxl"}
-          src={ logoFullSrc}
-        />
-      ) : (
-        <img
-          alt={altText}
-          className={"h-logoImgHeight w-logoImgWidth mt-md mb-lxl"}
-          src={ logoSrc}
-        />
-      )}
-    </FlexGrid>
+    <Link href="/">
+      <FlexGrid className={className}>
+        {!minimized && logoFullSrc ? (
+          <img alt={altText} className={' mt-md mb-lxl'} src={logoFullSrc} />
+        ) : (
+          <img
+            alt={altText}
+            className={'h-logoImgHeight w-logoImgWidth mt-md mb-lxl'}
+            src={logoSrc}
+          />
+        )}
+      </FlexGrid>
+    </Link>
   );
 };
