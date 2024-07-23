@@ -70,7 +70,7 @@ export interface BlockDetailsType {
   assetRoot: string;
   eventRoot: string;
   transactionRoot: string;
-  validatorHash: string;
+  validatorsHash: string;
   generator: BlockGeneratorType;
   maxHeightPrevoted: number;
   maxHeightGenerated: number;
