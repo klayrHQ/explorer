@@ -61,16 +61,38 @@ export interface RecipientType {
 }
 
 export interface BlockDetailsType {
+  height: number;
   id: string;
-  generator: GeneratorType;
+  version: number;
+  timestamp: number;
+  previousBlockID: string;
+  stateRoot: string;
+  assetRoot: string;
+  eventRoot: string;
+  transactionRoot: string;
+  validatorsHash: string;
+  generator: BlockGeneratorType;
+  maxHeightPrevoted: number;
+  maxHeightGenerated: number;
+  impliesMaxPrevotes: boolean;
+  signature: string;
+  aggregatedCommit: {};
   numberOfTransactions: number;
+  numberOfAssets: number;
   reward: string;
   isFinal: boolean;
-  validatorHash: string;
-  height: number;
+  totalBurnt: string;
+  networkFee: string;
+  totalForged: string;
+  assets: BlockAssetType[];
 }
 
-interface GeneratorType {
+export interface BlockAssetType {
+  module: string;
+  data: string;
+}
+
+export interface BlockGeneratorType {
   address: string;
   name: string;
 }

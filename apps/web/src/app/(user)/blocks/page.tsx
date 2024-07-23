@@ -1,6 +1,11 @@
 import {Blocks} from "../../../components/clientPages/blocks.tsx";
+import {Suspense} from "react";
 
 
 export default function Page() {
-  return (<Blocks />);
+  return (
+      <Suspense>
+        <Blocks />
+      </Suspense>
+  );
 }

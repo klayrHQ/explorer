@@ -1,25 +1,57 @@
 "use client"
 import {useEffect, useState} from "react";
-import {BlockDetailsType, GatewayRes} from "../../utils/types.ts";
+import {BlockDetailsType, GatewayRes,} from "../../utils/types.ts";
 import gatewayClient from "../../network/gatewayClient.ts";
-import {FlexGrid} from "@repo/ui/atoms";
+import {
+  FlexGrid,
+  KeyValueComponent,
+  StatusIcon,
+  Tooltip,
+  Typography,
+  UserAccountCard
+} from "@repo/ui/atoms";
+import {SectionHeader, TableContainer} from "@repo/ui/organisms";
+import {TableCellType} from "@repo/ui/types";
+import Link from "next/link";
+import {dayjs, fromNowFormatter, shortString} from "@repo/ui/utils";
+import {getTableSkeletons} from "../../utils/constants.tsx";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
 export const Blocks = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [blocks, setBlocks] = useState<BlockDetailsType[]>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [totalBlocks, setTotalBlocks] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
+  const defaultLimit = '10';
+
+  const handleSetPageNumber = async (number: number) => {
+    setPageNumber(number);
+    router.push(pathname + '?' + `page=${number}`);
+  };
 
   useEffect(() => {
-    const getBlock = async () => {
+    const getBlocks = async () => {
       try {
         setLoading(true);
-        const { data } = await gatewayClient.get<GatewayRes<BlockDetailsType[]>>('blocks', {
+        const limit = Number(searchParams.get('limit')) || defaultLimit;
+        const page = Number(searchParams.get('page')) || 1;
+        const offset = (page - 1) * Number(limit);
+
+        const {data} = await gatewayClient.get<GatewayRes<BlockDetailsType[]>>('blocks', {
           params: {
-            limit: '10', // TODO: hardcoded params for now, implement with pagination
+            limit: searchParams.get('limit') || defaultLimit,
+            offset: offset,
           },
         });
-        console.log('data', data);
-        if (data?.data) {
-          setBlocks(data.data);
+
+        if (data) {
+          const blocks: BlockDetailsType[] = data.data;
+          setBlocks(blocks);
+          setTotalBlocks(data.meta.total);
         }
       } catch (error) {
         console.error(error);
@@ -27,12 +59,111 @@ export const Blocks = () => {
         setLoading(false);
       }
     };
-    getBlock();
-  }, []);
+
+    getBlocks();
+  }, [searchParams]);
+
+  const tableHead: TableCellType[] = [
+    {
+      children: 'Block ID',
+    },
+    {
+      children: 'Height',
+    },
+    {
+      children: 'Date',
+    },
+    {
+      children: 'Generator',
+    },
+    {
+      children: 'Seed reveal',
+    },
+    {
+      children: 'Transactions',
+    },
+    {
+      children: 'Events',
+    },
+    {
+      children: 'Assets',
+    },
+  ];
+
+  const rows = !loading
+      ? blocks?.map((block) => {
+        return {
+          cells: [
+            {
+              children: (
+                  <KeyValueComponent
+                      keyValue={<StatusIcon connected={block.isFinal}/>}
+                      contentValue={<Link href={`/blocks/${block.id}`}><Typography
+                          link>{shortString(block.id, 12, 'center')}</Typography></Link>}
+                  />
+              ),
+            },
+            {
+              children: <Typography color={'onBackgroundLow'}>{block.height.toLocaleString()}</Typography>,
+            },
+            {
+              children: (
+                  <Tooltip
+                      placement={'top'}
+                      text={dayjs(block.timestamp * 1000).format('DD MMM YYYY HH:mm')}
+                  >
+                    <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
+                      {fromNowFormatter(block.timestamp * 1000, 'DD MMM YYYY')}
+                    </Typography>
+                  </Tooltip>
+              ),
+            },
+            {
+              children: (
+                  <UserAccountCard
+                      address={block.generator.address}
+                      name={block.generator.name}
+                  />
+              ),
+            },
+            {
+              //todo change to seed reveal when it exists in data
+              children: <Typography
+                  color={'onBackgroundLow'}>{shortString(block.validatorsHash, 12, 'center')}</Typography>,
+            },
+            {
+              children: <Typography
+                  color={'onBackgroundLow'}>{(block.numberOfTransactions || 0).toLocaleString()}</Typography>,
+            },
+            {
+              //todo get from data
+              children: <Typography color={'onBackgroundLow'}>{0}</Typography>,
+            },
+            {
+              children: <Typography
+                  color={'onBackgroundLow'}>{(block.numberOfAssets || 0).toLocaleString()}</Typography>,
+            },
+          ],
+        };
+      })
+      : getTableSkeletons(tableHead.length);
 
   return (
-      <FlexGrid>
-        <div/>
+      <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
+        <SectionHeader
+            count={totalBlocks}
+            subTitle={'Overview of all blocks on the blockchain'}
+            title={'Blocks'}
+        />
+        <TableContainer
+            currentNumber={pageNumber}
+            headCols={tableHead}
+            keyPrefix={'blocks'}
+            pagination
+            rows={rows}
+            setCurrentNumber={handleSetPageNumber}
+            totalPages={totalBlocks / Number(defaultLimit)}
+        />
       </FlexGrid>
   );
 }
