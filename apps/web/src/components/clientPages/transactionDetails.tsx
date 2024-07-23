@@ -19,6 +19,7 @@ import {
 import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { DefaultImageComponent } from 'storybook/stories/utils/constants.tsx';
 import { getTableSkeletons } from '../../utils/constants.tsx';
+import Link from 'next/link';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -186,13 +187,13 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Block',
       },
-      value: transaction?.block?.id,
+      value: <Link href={`/blocks/${transaction?.block?.id}`}>{transaction?.block?.id}</Link>,
     },
     {
       label: {
         label: 'Block Height',
       },
-      value: transaction?.block?.height,
+      value: <Link href={`/blocks/${transaction?.block?.id}`}>{transaction?.block?.height}</Link>,
     },
     /*{
       label: {
