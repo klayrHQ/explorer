@@ -63,7 +63,7 @@ export const subMenu = [
     label: 'Blocks',
     icon: 'Cube',
     href: '/blocks',
-    linkComponent: DefaultLinkComponent
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Tokens',
@@ -79,6 +79,7 @@ export const menuItems = [
   {
     label: 'Dashboard',
     icon: 'BarChartSquare',
+    href: '/',
   },
   {
     label: 'Blockchain',
