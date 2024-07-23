@@ -44,7 +44,7 @@ export const Transactions = () => {
 
   const handleCopy = (text: string) => {
     copyToClipboard(text);
-    setCopyTooltipText('Copied to clipboard!');
+    setCopyTooltipText('Copied');
     setTimeout(() => {
       setCopyTooltipText('Copy to clipboard');
     }, 2000);
