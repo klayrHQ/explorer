@@ -25,7 +25,7 @@ export const BlockDetailsBanner = ({
   return (
     <BannerFrame image={image}>
       <div className="items-start justify-start flex flex-col">
-        <FlexGrid alignItems="center" gap="4" justify="start">
+        <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
           <Link href="/blocks">
             <Icon
               className="hover:-translate-x-0.5 cursor-pointer transition-transform"

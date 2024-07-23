@@ -1,16 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React from "react";
+import { css } from '@emotion/react';
+import React from 'react';
 
 interface BannerFrameProps {
   children?: React.ReactNode;
   image: any;
 }
 
-export const BannerFrame = ({ children, image, }: BannerFrameProps) => {
+export const BannerFrame = ({ children, image }: BannerFrameProps) => {
   return (
     <div
-      className="bg-azule bg-no-repeat bg-right h-auto w-transitionBannerWidthMobile desktop:w-full rounded-xl relative "
+      className="bg-azule bg-no-repeat bg-right h-auto  w-auto desktop:min-w-full rounded-xl relative "
       css={css`
             background-image: url(${image});
             background-position: right -105px top -45px;

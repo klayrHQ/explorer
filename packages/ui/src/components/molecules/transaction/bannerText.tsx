@@ -49,6 +49,7 @@ export const BannerText = ({
         fontWeight="semibold"
         name={senderName}
         nameColor="onBackground"
+        nameOnly
         nameVariant={'paragraph-md'}
         size={24}
         width="auto"
