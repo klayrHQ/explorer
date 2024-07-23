@@ -48,7 +48,7 @@ export const TransactionBanner = ({
   return (
     <BannerFrame image={image}>
       <div className="items-start justify-start flex flex-col">
-        <FlexGrid alignItems="center" gap="4" justify="start">
+        <FlexGrid alignItems="center" direction="row" gap="4" justify="start" mobileDirection="row">
           <Link href="/transactions">
             {' '}
             <Icon
@@ -78,7 +78,7 @@ export const TransactionBanner = ({
           timestamp={timestamp}
         />
       </div>
-        <BannerCard blockHeight={blockHeight} blockId={blockId} />
+      <BannerCard blockHeight={blockHeight} blockId={blockId} />
     </BannerFrame>
   );
 };
