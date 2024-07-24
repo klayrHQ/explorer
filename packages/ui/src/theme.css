@@ -13,6 +13,8 @@
   --color-sandDark: #DCDCA6;
   --color-green: #22C55E;
   --color-greenDark: #118D57;
+  --color-yellow: #CA8A04;
+  --color-yellowDark: #b07A04;
   --color-black: #1A1A1A;
   --color-white: #F8F9FD;
 
@@ -61,8 +63,8 @@
   /* States */
   --color-error: var(--color-lobster);
   --color-errorBg: rgba(255, 135, 141, 0.4);
-  --color-warning: var(--color-sandDark);
-  --color-warningBg: rgba(237, 237, 206, 0.4);
+  --color-warning: var(--color-yellow);
+  --color-warningBg: rgba(202, 138, 4, 0.4);
   --color-success: var(--color-green);
   --color-successBg: rgba(34, 197, 94, 0.4);
 

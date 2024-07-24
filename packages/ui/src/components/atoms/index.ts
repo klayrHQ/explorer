@@ -31,6 +31,7 @@ export * from "./data/skeletonComponent";
 export * from "./data/table/tableRow";
 export * from "./data/table/tableCell";
 export * from "./data/table/pagination";
+export * from "./data/jsonViewer";
 export * from "./notifications/notificationIcon";
 export * from "./banner/bannerFrame";
 export * from "./images/imageNotification";
