@@ -27,7 +27,7 @@ export const SectionHeader = ({
   fullWidth,
 }: SectionHeaderProps) => {
   return (
-    <FlexGrid className={cls([className, fullWidth ? 'w-full' : ''])} direction={'col'}>
+    <FlexGrid className={cls([className, 'gap-6', fullWidth && 'w-full'])} direction={'col'}>
       {href ? (
         <Link component={linkComponent} href={href}>
           <FlexGrid className={'group'} gap="2" justify="center" mobileDirection="row">
