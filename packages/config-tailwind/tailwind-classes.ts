@@ -303,6 +303,7 @@ const width = {
   menuIconSmallWidth: '16px',
   iconButtonWidth: '40px',
   sidebarWidth: '240px',
+  sidebarMaxWidth: '500px',
   sidebarMinWidth: '88px',
   minimizedMenuItemWidth: '48px',
   logoImgWidth: '24px',

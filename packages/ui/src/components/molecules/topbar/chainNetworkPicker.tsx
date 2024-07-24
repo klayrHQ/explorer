@@ -1,11 +1,11 @@
-"use client"
-import React, { useState } from "react";
-import { ChainType, NetworkType } from "../../../types/types.ts";
-import { FlexGrid, KeyValueComponent, Typography } from "../../atoms";
-import { ImageContainer } from "../../atoms";
-import { StatusIcon } from "../../atoms";
-import { ReactElement } from "react";
-import { Modal, CustomSelect } from "../../atoms";
+'use client';
+import React, { useState } from 'react';
+import { ChainType, NetworkType } from '../../../types/types.ts';
+import { FlexGrid, KeyValueComponent, Typography } from '../../atoms';
+import { ImageContainer } from '../../atoms';
+import { StatusIcon } from '../../atoms';
+import { ReactElement } from 'react';
+import { Modal, CustomSelect } from '../../atoms';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType;
@@ -27,13 +27,8 @@ export const ChainNetworkPicker = ({
   imgComponent,
 }: ChainNetworkPickerProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedChain, setSelectedChain] = useState<ChainType | null>(
-    currentChain,
-  );
-  const [selectedNetwork, setSelectedNetwork] = useState<NetworkType | null>(
-    currentNetwork,
-  );
-
+  const [selectedChain, setSelectedChain] = useState<ChainType | null>(currentChain);
+  const [selectedNetwork, setSelectedNetwork] = useState<NetworkType | null>(currentNetwork);
 
   const chainOptions = chains?.map((chain) => ({
     label: chain.chainName,
@@ -45,7 +40,6 @@ export const ChainNetworkPicker = ({
     label: network.networkName,
     value: network.networkId,
   }));
-
 
   const handleClose = () => {
     setIsModalOpen(false);
@@ -79,24 +73,24 @@ export const ChainNetworkPicker = ({
 
   return (
     <FlexGrid>
-      <FlexGrid onClick={handleOpen}>
+      <FlexGrid gap="1.5xl" onClick={handleOpen}>
         <KeyValueComponent
-          contentValue={currentChain?.chainName || "Select chain"}
+          contentValue={currentChain?.chainName || 'Select chain'}
           hover
           keyValue={
             <ImageContainer
               alt={currentChain?.chainName}
               component={imgComponent}
               src={currentChain?.logo}
-              variant={"chainLogo"}
+              variant={'chainLogo'}
             />
           }
           onClick={() => setIsModalOpen(true)}
         />
         <KeyValueComponent
-          contentValue={currentNetwork?.networkName || "Select network"}
+          contentValue={currentNetwork?.networkName || 'Select network'}
           hover
-          keyValue={<StatusIcon className={"mt-2xs"} connected={currentNetwork?.connected}/>}
+          keyValue={<StatusIcon className={'mt-2xs'} connected={currentNetwork?.connected} />}
         />
       </FlexGrid>
       <Modal
@@ -106,9 +100,9 @@ export const ChainNetworkPicker = ({
         title="Select environments"
       >
         <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
-          <FlexGrid alignItems="center" className={"w-full"} justify="between">
+          <FlexGrid alignItems="center" className={'w-full'} justify="between">
             <Typography color="onBackgroundLow" variant="paragraph-md">
-              {"On chain"}
+              {'On chain'}
             </Typography>
             <CustomSelect
               defaultValue={currentChain?.chainId}
@@ -116,9 +110,9 @@ export const ChainNetworkPicker = ({
               options={chainOptions}
             />
           </FlexGrid>
-          <FlexGrid alignItems={"center"} className="w-full" justify={"between"}>
+          <FlexGrid alignItems={'center'} className="w-full" justify={'between'}>
             <Typography color="onBackgroundLow" variant="paragraph-md">
-              {"On network"}
+              {'On network'}
             </Typography>
             <CustomSelect
               defaultValue={currentNetwork?.networkId}
