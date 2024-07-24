@@ -51,8 +51,8 @@ export const SectionHeader = ({
           </FlexGrid>
         </Link>
       ) : (
-        <FlexGrid gap="xl" mobileDirection="row">
-          <Typography color="gray-1" component="h4" fontWeight="bold" variant="h4">
+        <FlexGrid alignItems="center" gap="3" justify="center" mobileDirection="row">
+          <Typography color="gray-1" component="h3" fontWeight="bold" variant="h3">
             {title}
           </Typography>
           {count && (
