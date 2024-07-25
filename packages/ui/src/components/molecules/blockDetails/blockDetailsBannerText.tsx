@@ -71,11 +71,11 @@ export const BlockDetailsBannerText = ({
         />
       ) : (
         <Badge
-          backgroundColor="redOpacity"
-          borderColor="error"
+          backgroundColor="warningOpacity"
+          borderColor="warning"
           className="flex-grow-0"
-          colorVariant="error"
-          label="Failed"
+          colorVariant="warning"
+          label="Unfinalized"
         />
       )}
     </div>
