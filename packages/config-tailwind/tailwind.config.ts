@@ -257,6 +257,7 @@ const config: Omit<Config, 'content'> = {
     ...getKeyMap(numberList, 'basis'),
     ...getKeyMap(percentages, 'basis'),
     ...getKeyMap(rotate, 'rotate'),
+    ...getKeyMap(rotate, '-rotate'),
     ...getKeyMap(wordBreak, 'break'),
     'border-collapse',
     'border-spacing-0',
@@ -273,6 +274,8 @@ const config: Omit<Config, 'content'> = {
     'desktop:group-hover:flex',
     'desktop:group-hover:block',
     'desktop:group-hover:inline',
+    'font-body',
+    'font-mono',
   ],
   theme: {
     extend: {

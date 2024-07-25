@@ -9,6 +9,7 @@ import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organism
 import { eventsTableHead } from '../../utils/constants.tsx';
 import Link from 'next/link';
 import { createEventsRows } from '../../utils/helper.tsx';
+import {DataType} from "@repo/ui/types";
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -239,7 +240,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: <DetailsSection data={details} title={'Transaction Details'} />,
+      content: <DetailsSection data={details} json={transaction as unknown as DataType} title={'Transaction Details'} />,
     },
     {
       value: 2,

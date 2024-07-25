@@ -63,6 +63,7 @@ const iconButtonStyles = cva(
         hovered: false,
         variant: "primary",
         disabled: false,
+        active: false,
         className: "bg-volt hover:bg-voltDark",
       },
       {
@@ -75,6 +76,7 @@ const iconButtonStyles = cva(
         hovered: false,
         variant: "secondary",
         disabled: false,
+        active: false,
         className: "bg-azule hover:bg-azuleDark",
       },
       {
@@ -87,6 +89,7 @@ const iconButtonStyles = cva(
         hovered: false,
         variant: "tertiary",
         disabled: false,
+        active: false,
         className: "bg-gray-6 hover:bg-gray-7",
       },
       {
@@ -99,6 +102,7 @@ const iconButtonStyles = cva(
         hovered: false,
         variant: "semiTransparent",
         disabled: false,
+        active: false,
         className: "bg-transparent hover:bg-gray-6",
       },
       {
@@ -111,6 +115,7 @@ const iconButtonStyles = cva(
         hovered: false,
         variant: "transparent",
         disabled: false,
+        active: false,
         className: "text-gray-5 hover:text-gray-6",
       },
       {
@@ -123,6 +128,7 @@ const iconButtonStyles = cva(
         hovered: false,
         variant: "bordered",
         disabled: false,
+        active: false,
         className: "text-onBackgroundMedium hover:bg-backgroundSecondary hover:text-onBackgroundHigh",
       },
       {
@@ -135,91 +141,78 @@ const iconButtonStyles = cva(
         hovered: false,
         variant: "iconOnly",
         disabled: false,
+        active: false,
         className: "text-gray-5 hover:text-gray-6",
       },
       //active
       {
         active: true,
         variant: "primary",
-        disabled: false,
         className: "bg-voltDark",
       },
       {
         active: false,
         variant: "primary",
-        disabled: false,
         className: "bg-volt hover:bg-voltDark",
       },
       {
         active: true,
         variant: "secondary",
-        disabled: false,
         className: "bg-azuleDark",
       },
       {
         active: false,
         variant: "secondary",
-        disabled: false,
         className: "bg-azule hover:bg-azuleDark",
       },
       {
         active: true,
         variant: "tertiary",
-        disabled: false,
         className: "bg-gray-7",
       },
       {
         active: false,
         variant: "tertiary",
-        disabled: false,
         className: "bg-gray-6 hover:bg-gray-7",
       },
       {
         active: true,
         variant: "semiTransparent",
-        disabled: false,
         className: "bg-gray-6",
       },
       {
         active: false,
         variant: "semiTransparent",
-        disabled: false,
         className: "bg-transparent hover:bg-gray-6",
       },
       {
         active: true,
         variant: "transparent",
-        disabled: false,
         className: "text-gray-6",
       },
       {
         active: false,
         variant: "transparent",
-        disabled: false,
         className: "text-gray-5 hover:text-gray-6",
       },
       {
         active: true,
         variant: "bordered",
-        disabled: false,
         className: "text-onBackgroundHigh bg-backgroundSecondary",
       },
       {
         active: false,
         variant: "bordered",
-        disabled: false,
         className: "text-onBackgroundMedium hover:bg-backgroundSecondary hover:text-onBackgroundHigh",
       },
       {
         active: true,
         variant: "iconOnly",
-        disabled: false,
         className: "text-gray-6",
       },
       {
         active: false,
         variant: "iconOnly",
-        disabled: false,
         className: "text-gray-5 hover:text-gray-6",
       },
       //disabled
@@ -242,6 +235,7 @@ const iconButtonStyles = cva(
   },
 );
 
+// eslint-disable-next-line react/display-name
 export const IconButton = forwardRef((
   {
     variant = "primary",
