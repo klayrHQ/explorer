@@ -89,7 +89,7 @@ export interface BlockDetailsType {
 
 export interface BlockAssetType {
   module: string;
-  data: string;
+  data: any;
 }
 
 export interface BlockGeneratorType {

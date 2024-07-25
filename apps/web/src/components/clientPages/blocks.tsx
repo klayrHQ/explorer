@@ -1,21 +1,22 @@
-"use client"
-import {useEffect, useState} from "react";
-import {BlockDetailsType, GatewayRes,} from "../../utils/types.ts";
-import gatewayClient from "../../network/gatewayClient.ts";
+'use client';
+import { useEffect, useState } from 'react';
+import { BlockDetailsType, GatewayRes } from '../../utils/types.ts';
+import gatewayClient from '../../network/gatewayClient.ts';
 import {
   FlexGrid,
   KeyValueComponent,
   StatusIcon,
   Tooltip,
   Typography,
-  UserAccountCard
-} from "@repo/ui/atoms";
-import {SectionHeader, TableContainer} from "@repo/ui/organisms";
-import {TableCellType} from "@repo/ui/types";
-import Link from "next/link";
-import {dayjs, fromNowFormatter, shortString} from "@repo/ui/utils";
-import {getTableSkeletons} from "../../utils/constants.tsx";
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
+  UserAccountCard,
+} from '@repo/ui/atoms';
+import { SectionHeader, TableContainer } from '@repo/ui/organisms';
+import { TableCellType } from '@repo/ui/types';
+import Link from 'next/link';
+import { dayjs, fromNowFormatter, shortString } from '@repo/ui/utils';
+import { getTableSkeletons } from '../../utils/constants.tsx';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
 
 export const Blocks = () => {
   const searchParams = useSearchParams();
@@ -41,12 +42,14 @@ export const Blocks = () => {
         const page = Number(searchParams.get('page')) || 1;
         const offset = (page - 1) * Number(limit);
 
-        const {data} = await gatewayClient.get<GatewayRes<BlockDetailsType[]>>('blocks', {
+        const { data } = await gatewayClient.get<GatewayRes<BlockDetailsType[]>>('blocks', {
           params: {
             limit: searchParams.get('limit') || defaultLimit,
             offset: offset,
+            includeAssets: true,
           },
         });
+        console.log(data.data);
 
         if (data) {
           const blocks: BlockDetailsType[] = data.data;
@@ -91,79 +94,90 @@ export const Blocks = () => {
   ];
 
   const rows = !loading
-      ? blocks?.map((block) => {
+    ? blocks?.map((block) => {
         return {
           cells: [
             {
               children: (
-                  <KeyValueComponent
-                      keyValue={<StatusIcon connected={block.isFinal}/>}
-                      contentValue={<Link href={`/blocks/${block.id}`}><Typography
-                          link>{shortString(block.id, 12, 'center')}</Typography></Link>}
-                  />
-              ),
-            },
-            {
-              children: <Typography color={'onBackgroundLow'}>{block.height.toLocaleString()}</Typography>,
-            },
-            {
-              children: (
-                  <Tooltip
-                      placement={'top'}
-                      text={dayjs(block.timestamp * 1000).format('DD MMM YYYY HH:mm')}
-                  >
-                    <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
-                      {fromNowFormatter(block.timestamp * 1000, 'DD MMM YYYY')}
-                    </Typography>
-                  </Tooltip>
+                <KeyValueComponent
+                  keyValue={<StatusIcon connected={block.isFinal} />}
+                  contentValue={
+                    <Link href={`/blocks/${block.id}`}>
+                      <Typography link>{shortString(block.id, 12, 'center')}</Typography>
+                    </Link>
+                  }
+                />
               ),
             },
             {
               children: (
-                  <UserAccountCard
-                      address={block.generator.address}
-                      name={block.generator.name}
-                  />
+                <Typography color={'onBackgroundLow'}>{block.height.toLocaleString()}</Typography>
+              ),
+            },
+            {
+              children: (
+                <Tooltip
+                  placement={'top'}
+                  text={dayjs(block.timestamp * 1000).format('DD MMM YYYY HH:mm')}
+                >
+                  <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
+                    {fromNowFormatter(block.timestamp * 1000, 'DD MMM YYYY')}
+                  </Typography>
+                </Tooltip>
+              ),
+            },
+            {
+              children: (
+                <UserAccountCard address={block.generator.address} name={block.generator.name} />
               ),
             },
             {
               //todo change to seed reveal when it exists in data
-              children: <Typography
-                  color={'onBackgroundLow'}>{shortString(block.validatorsHash, 12, 'center')}</Typography>,
+              children: (
+                <Typography color={'onBackgroundLow'}>
+                  {shortString(getSeedRevealFromAssets(block.assets), 12, 'center')}
+                </Typography>
+              ),
             },
             {
-              children: <Typography
-                  color={'onBackgroundLow'}>{(block.numberOfTransactions || 0).toLocaleString()}</Typography>,
+              children: (
+                <Typography color={'onBackgroundLow'}>
+                  {(block.numberOfTransactions || 0).toLocaleString()}
+                </Typography>
+              ),
             },
             {
               //todo get from data
               children: <Typography color={'onBackgroundLow'}>{0}</Typography>,
             },
             {
-              children: <Typography
-                  color={'onBackgroundLow'}>{(block.numberOfAssets || 0).toLocaleString()}</Typography>,
+              children: (
+                <Typography color={'onBackgroundLow'}>
+                  {(block.numberOfAssets || 0).toLocaleString()}
+                </Typography>
+              ),
             },
           ],
         };
       })
-      : getTableSkeletons(tableHead.length);
+    : getTableSkeletons(tableHead.length);
 
   return (
-      <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
-        <SectionHeader
-            count={totalBlocks}
-            subTitle={'Overview of all blocks on the blockchain'}
-            title={'Blocks'}
-        />
-        <TableContainer
-            currentNumber={pageNumber}
-            headCols={tableHead}
-            keyPrefix={'blocks'}
-            pagination
-            rows={rows}
-            setCurrentNumber={handleSetPageNumber}
-            totalPages={totalBlocks / Number(defaultLimit)}
-        />
-      </FlexGrid>
+    <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
+      <SectionHeader
+        count={totalBlocks}
+        subTitle={'Overview of all blocks on the blockchain'}
+        title={'Blocks'}
+      />
+      <TableContainer
+        currentNumber={pageNumber}
+        headCols={tableHead}
+        keyPrefix={'blocks'}
+        pagination
+        rows={rows}
+        setCurrentNumber={handleSetPageNumber}
+        totalPages={totalBlocks / Number(defaultLimit)}
+      />
+    </FlexGrid>
   );
-}
+};

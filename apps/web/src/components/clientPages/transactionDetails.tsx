@@ -45,7 +45,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
           setLoading(true);
           const { data } = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
             params: {
-              height: transaction.block.height,
+              transactionID: transaction.id,
             },
           });
 

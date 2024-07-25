@@ -30,7 +30,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
             blockID: id,
           },
         });
-        console.log('block', data);
+
         if (data?.data) {
           setBlock(data.data[0]);
         }
@@ -53,7 +53,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
             blockID: id,
           },
         });
-        console.log('transactions', data);
+
         if (data?.data) {
           setTransactions(data.data);
         }
@@ -73,7 +73,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         setLoading(true);
         const { data } = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
           params: {
-            height: block?.height,
+            height: `${block?.height}:${block?.height}`,
           },
         });
 
