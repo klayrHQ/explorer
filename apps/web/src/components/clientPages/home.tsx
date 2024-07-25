@@ -32,7 +32,7 @@ export const Home = () => {
   }, []);*/
 
   return (
-    <FlexGrid className="w-full max-w-app mx-auto" direction={'col'} gap={'4xl'}>
+    <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4xl'}>
       <PerformanceSection
         href={'#'}
         options={performanceStatsSelectOptions}

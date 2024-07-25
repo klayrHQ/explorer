@@ -146,9 +146,9 @@ const spacing = {
 };
 
 const screens = {
-  desktop: '1024px',
-  tablet: '440px',
   mobile: { max: '439px' },
+  tablet: '440px',
+  desktop: '1024px',
   sidebarBp: { raw: '(max-height: 800px)' },
 };
 
