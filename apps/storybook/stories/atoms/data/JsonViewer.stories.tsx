@@ -5,7 +5,7 @@ const meta = {
   title: 'Atoms/Data/JsonViewer',
   component: JsonViewer,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
   },
   tags: ['autodocs'],
 };
@@ -39,6 +39,14 @@ const mockJson = {
       },
     ],
   },
+  params2:{
+    stakes:[
+      {
+        validatorAddress:"kly9un3crrxx6r7wg9woqkav8brwarnfakakct2q8",
+        amount:"195000000000",
+      },
+    ],
+  },
   signatures:[
     "91cba908c158d079aae3a475c6bf5322a814b1c53fe05381458add8f519f17de73ca3d6d8273671aa1392da9ec2f70b4c2d15b796c01bb573a2ef242331d1b01"
   ],
@@ -49,5 +57,19 @@ const mockJson = {
 export const Default: Story = {
   args: {
     data: mockJson,
+  },
+};
+
+export const WithCopy: Story = {
+  args: {
+    data: mockJson,
+    copy: true,
+  },
+};
+
+export const StartOpen: Story = {
+  args: {
+    data: mockJson,
+    startOpen: true,
   },
 };

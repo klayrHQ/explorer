@@ -1,7 +1,7 @@
-"use client"
-import {CSSProperties, useState} from "react";
-import {cls, copyToClipboard} from "../../../utils/functions.ts";
-import {Icon} from "../images/icon.tsx";
+'use client';
+import { CSSProperties, useState } from 'react';
+import { cls, copyToClipboard } from '../../../utils/functions.ts';
+import { Icon } from '../images/icon.tsx';
 
 type DataValueType = string | number | boolean | null | object | undefined;
 
@@ -9,34 +9,39 @@ type DataType = Record<string, string | number | object | boolean | null | undef
 
 interface JsonViewerProps {
   data: DataType;
+  customStyles?: Record<string, CSSProperties>;
+  copy?: boolean;
+  startOpen?: boolean;
+  className?: string;
 }
 
-export const JsonViewer = ({ data, }: JsonViewerProps) => {
+export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: JsonViewerProps) => {
   const [openObjects, setOpenObjects] = useState<string[]>([]);
-  
-  const styles: Record<string, CSSProperties>  = {
-    number: {
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+
+  const styles: Record<string, CSSProperties> = {
+    number: customStyles?.number ?? {
       color: 'var(--color-tulip)',
     },
-    string: {
+    string: customStyles?.string ?? {
       color: 'var(--color-green)',
     },
-    boolean: {
+    boolean: customStyles?.boolean ?? {
       color: 'var(--color-azule)',
     },
-    null: {
+    null: customStyles?.null ?? {
       color: 'var(--color-lobster)',
     },
-    comma: {
+    comma: customStyles?.comma ?? {
       color: 'var(--color-white)',
     },
-    key: {
+    key: customStyles?.key ?? {
       color: 'var(--color-white)',
     },
-    brackets: {
+    brackets: customStyles?.brackets ?? {
       color: 'var(--color-white)',
     },
-  }
+  };
 
   const handleOpenItems = (key: string) => {
     if (openObjects.includes(key)) {
@@ -44,7 +49,7 @@ export const JsonViewer = ({ data, }: JsonViewerProps) => {
     } else {
       setOpenObjects([...openObjects, key]);
     }
-  }
+  };
 
   const valueSpan = (value: DataValueType, type: string, key: number | string) => {
     const isNotObject = type !== 'object';
@@ -65,25 +70,33 @@ export const JsonViewer = ({ data, }: JsonViewerProps) => {
         ) : Array.isArray(value) ? (
           <>
             <span>{'['}</span>
-            {
-              openObjects.includes(key.toString()) ? (
+            {startOpen ? (
+              !openObjects.includes(key.toString()) ? (
                 <div className={'ml-xl'}>{formattedArrayValue(value, key)}</div>
               ) : (
                 <span>{'...'}</span>
               )
-            }
+            ) : openObjects.includes(key.toString()) ? (
+              <div className={'ml-xl'}>{formattedArrayValue(value, key)}</div>
+            ) : (
+              <span>{'...'}</span>
+            )}
             <span>{']'}</span>
           </>
         ) : value !== null ? (
           <>
             <span>{'{'}</span>
-            {
-              openObjects.includes(key.toString()) ? (
-                <div className={'ml-xl'}>{formattedData(value as DataType)}</div>
+            {startOpen ? (
+              !openObjects.includes(key.toString()) ? (
+                <div className={'ml-xl'}>{formattedData(value as DataType, key)}</div>
               ) : (
                 <span>{'...'}</span>
               )
-            }
+            ) : openObjects.includes(key.toString()) ? (
+              <div className={'ml-xl'}>{formattedData(value as DataType, key)}</div>
+            ) : (
+              <span>{'...'}</span>
+            )}
             <span>{'}'}</span>
           </>
         ) : (
@@ -92,44 +105,46 @@ export const JsonViewer = ({ data, }: JsonViewerProps) => {
         <span style={styles.comma}>{','}</span>
       </span>
     );
-  }
+  };
 
-  const formattedArrayValue = (data: any[], key: number | string) => {
+  const formattedArrayValue = (data: any[], key: number | string, parentKey?: string | number) => {
     return data.map((value: DataValueType, subIndex) => {
       const type = typeof value;
       const isNotObject = type !== 'object';
 
       return (
-        /* todo make sure it adds the key from every parent if nested multiple times */
-        <div className={'ml-xl'} key={`${key}-${subIndex + 1}`}>
+        <div className={'ml-xl'} key={`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex + 1}`}>
           {!isNotObject && value !== null && (
             <span
               className={'inline cursor-pointer text-caption'}
-              /* todo make sure it adds the key from every parent if nested multiple times */
-              onClick={() => handleOpenItems(`${key}-${subIndex}`)}
+              onClick={() => handleOpenItems(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`)}
             >
               {'\u25BC '}
             </span>
           )}
-          {/* todo make sure it adds the key from every parent if nested multiple times */}
-          {valueSpan(value, type, `${key}-${subIndex}`)}
+          {valueSpan(value, type, `${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`)}
         </div>
       );
     });
   };
 
-  const formattedData = (data: DataType) => {
+  const formattedData = (data: DataType, parentKey?: string | number) => {
     return Object.entries(data).map(([key, value]) => {
       //console.log(key, value)
       const type = typeof value;
       const isNotObject = type !== 'object';
 
       return (
-        <div className={'relative group'} key={key}>
+        <div
+          className={`relative`}
+          key={`${parentKey ? `${parentKey}-` : ''}${key}`}
+          onMouseEnter={() => setHoveredItem(`${parentKey ? `${parentKey}-` : ''}${key}`)}
+          onMouseLeave={() => setHoveredItem(null)}
+        >
           {!isNotObject && value !== null && (
             <span
               className={'inline cursor-pointer text-caption'}
-              onClick={() => handleOpenItems(key)}
+              onClick={() => handleOpenItems(`${parentKey ? `${parentKey}-` : ''}${key}`)}
             >
               {'\u25BC '}
             </span>
@@ -138,31 +153,34 @@ export const JsonViewer = ({ data, }: JsonViewerProps) => {
             {key}
             {': '}
           </span>
-          {valueSpan(value, type, key)}
-          {/*<Icon
-            className={'absolute right-md top-0 bottom-0 my-auto hidden group-hover:block cursor-pointer'}
-            color={'volt'}
-            icon={'Copy'}
-            onClick={() => copyToClipboard(JSON.stringify(value))}
-            size={'xs'}
-          />*/}
+          {valueSpan(value, type, `${parentKey ? `${parentKey}-` : ''}${key}`)}
+          {copy && (
+            <span
+              className={cls([
+                'absolute right-md top-0 bottom-0 my-auto cursor-pointer h-max',
+                hoveredItem === `${parentKey ? `${parentKey}-` : ''}${key}` ? 'block' : 'hidden',
+              ])}
+              onClick={() => copyToClipboard(JSON.stringify(value))}
+            >
+              <Icon color={'white'} icon={'Copy'} size={'xs'} />
+            </span>
+          )}
         </div>
       );
     });
   };
 
   return (
-    <>
-      {JSON.stringify(openObjects)}
-      <div
-        className={cls([
-          'rounded-md p-3xl bg-backgroundPrimary',
-          'font-mono text-paragraph-md break-words',
-          'border-borderMedium border-1 border-solid',
-        ])}
-      >
-        {formattedData(data)}
-      </div>
-    </>
+    <div
+      className={cls([
+        'rounded-md p-3xl bg-backgroundPrimary',
+        'font-mono text-paragraph-md break-words',
+        'border-borderMedium border-1 border-solid',
+        'w-full',
+        className,
+      ])}
+    >
+      {formattedData(data)}
+    </div>
   );
-}
+};
