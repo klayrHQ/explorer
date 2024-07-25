@@ -8,7 +8,7 @@ export const NewsCardImage = ({ src, alt, }: NewsImageProps) => {
     <div>
       <img
         alt={alt}
-        className="rounded-2xl object-cover w-newsCardMobileWidth h-newsCardMobileHeight desktop:w-newsCardWidth desktop:h-newsCardHeight"
+        className="rounded-2xl object-cover w-full h-newsCardMobileHeight desktop:h-newsCardHeight"
         src={src}
       />
     </div>

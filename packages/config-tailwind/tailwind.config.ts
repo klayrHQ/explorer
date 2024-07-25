@@ -43,8 +43,8 @@ const {
 const getKeyMap = (obj, prefix) => {
   return [
     ...Object.keys(obj).map((key) => `${prefix}-${key}`),
-    ...Object.keys(obj).map((key) => `tablet:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `desktop:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `tablet:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `mobile:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `sidebarBp:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `hover:${prefix}-${key}`),
@@ -60,8 +60,8 @@ const getKeyMap = (obj, prefix) => {
 const getKeyOnlyMap = (obj) => {
   return [
     ...Object.keys(obj).map((key) => key),
-    ...Object.keys(obj).map((key) => `tablet:${key}`),
     ...Object.keys(obj).map((key) => `desktop:${key}`),
+    ...Object.keys(obj).map((key) => `tablet:${key}`),
     ...Object.keys(obj).map((key) => `mobile:${key}`),
     ...Object.keys(obj).map((key) => `sidebarBp:${key}`),
     ...Object.keys(obj).map((key) => `hover:${key}`),

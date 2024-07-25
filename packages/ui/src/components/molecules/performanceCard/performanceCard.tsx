@@ -1,6 +1,6 @@
-import { Typography } from "../../atoms/base/typography";
-import { Icon } from "../../atoms/images/icon";
-import { ColorType, IconComponent } from "../../../types/types";
+import { Typography } from "../../atoms";
+import { Icon } from "../../atoms";
+import { ColorType } from "../../../types/types";
 
 export interface PerformanceCardProps {
   title: string;
@@ -20,7 +20,7 @@ export const PerformanceCard = ({
   className,
 }: PerformanceCardProps) => {
   return (
-    <div className={`flex flex-col items-start gap-4 border rounded-xl border-gray-7 p-6 w-performanceCardWidthMobile desktop:w-performanceCardWidth ${className}`}>
+    <div className={`flex flex-col items-start gap-4 border rounded-xl border-gray-7 p-6 w-full ${className}`}>
       <Typography
         className=""
         color="gray-1"

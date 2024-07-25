@@ -5,16 +5,16 @@ interface MainMenuProps {
   minimized?: boolean;
 }
 
-export const MainMenu = ({ menuItems, minimized }: MainMenuProps) => {
+export const MainMenu = ({ menuItems, minimized, }: MainMenuProps) => {
   return (
-    <nav>
+    <nav className={'w-full'}>
       <ul className={'bg-gray-8 w-full'}>
         {menuItems.map((item, index) => (
           <MenuItem
             key={`menu-item-${index + 1}`}
             minimized={minimized}
             {...item}
-            className="mb-2 last:mb-0"
+            className={'mb-2 last:mb-0'}
           />
         ))}
       </ul>
