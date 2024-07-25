@@ -49,7 +49,7 @@ export const createTransactionRows = (
               {
                 children: (
                   <Typography className={'hover:underline'} link>
-                    <Link href={`transactions/${transaction.id}`}>
+                    <Link href={`/transactions/${transaction.id}`}>
                       {shortString(transaction?.id, 12, 'center')}
                     </Link>
                   </Typography>
