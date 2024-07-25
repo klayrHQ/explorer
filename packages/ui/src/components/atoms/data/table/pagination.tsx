@@ -54,7 +54,7 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
       <div className="flex">
         {displayPages().map((number, index) => (
           <div
-            className={`w-9 h-9 flex items-center justify-center cursor-pointer ${
+            className={`min-w-9 min-h-9 p-2 flex items-center justify-center cursor-pointer ${
               number === currentNumber
                 ? 'bg-onBackground rounded-full text-background'
                 : 'text-onBackgroundLow'
@@ -68,9 +68,9 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
         ))}
       </div>
 
-      <FlexGrid gap="4">
+      <FlexGrid alignItems="center" className="w-full desktop:w-auto" gap="4" mobileDirection="row">
         <Button
-          className="border-1 border-backgroundSecondary"
+          className="border-1 w-full desktop:w-auto border-backgroundSecondary"
           label="Previous"
           onClick={() => {
             const currentIndex = pages.indexOf(currentNumber);
@@ -81,7 +81,7 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
           variant="transparent"
         />
         <Button
-          className="border-1 border-backgroundSecondary"
+          className="border-1 w-full desktop:w-auto border-backgroundSecondary"
           label="Next"
           onClick={() => {
             const currentIndex = pages.indexOf(currentNumber);
