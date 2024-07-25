@@ -517,6 +517,13 @@ const rotate = {
   270: '270deg',
 };
 
+const wordBreak = {
+  normal: 'normal',
+  words: 'break-word',
+  all: 'break-all',
+  keep: 'keep-all',
+};
+
 export const classes = {
   borderRadius,
   borderWidth,
@@ -552,4 +559,5 @@ export const classes = {
   animate,
   textOverflow,
   rotate,
+  wordBreak,
 };
