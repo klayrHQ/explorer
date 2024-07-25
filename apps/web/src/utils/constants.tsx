@@ -121,7 +121,9 @@ export const kpisObject = [
         variant={'paragraph-sm'}
       >
         {'$181.66'}
-        <span className={'text-green text-paragraph-sm inline-flex items-center gap-1'}>
+        <span
+          className={'text-green text-paragraph-sm font-semibold inline-flex items-center gap-1'}
+        >
           <Icon className={'mt-px'} color={'inherit'} icon={'TrendUp'} size={'xs'} />
           {'0.3%'}
         </span>
