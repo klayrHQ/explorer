@@ -1,29 +1,12 @@
 'use client';
-import {
-  FlexGrid,
-  Tooltip,
-  Typography,
-  UserAccountCard,
-  Currency,
-  Badge,
-  Icon,
-} from '@repo/ui/atoms';
-import { TxDataPopover } from '@repo/ui/molecules';
+import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useEffect, useState } from 'react';
-import { TableCellType } from '@repo/ui/types';
 import { GatewayRes, TransactionType } from '../../utils/types.ts';
-import {
-  copyToClipboard,
-  dayjs,
-  fromNowFormatter,
-  replaceColonWithSpace,
-  shortString,
-} from '@repo/ui/utils';
-import { commandColors, decimals, getTableSkeletons } from '../../utils/constants.tsx';
-import Link from 'next/link';
+import { transactionTableHead } from '../../utils/constants.tsx';
 import gatewayClient from '../../network/gatewayClient.ts';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { createTransactionRows } from '../../utils/helper.tsx';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
@@ -40,14 +23,6 @@ export const Transactions = () => {
   const handleSetPageNumber = async (number: number) => {
     setPageNumber(number);
     router.push(pathname + '?' + `page=${number}`);
-  };
-
-  const handleCopy = (text: string) => {
-    copyToClipboard(text);
-    setCopyTooltipText('Copied');
-    setTimeout(() => {
-      setCopyTooltipText('Copy to clipboard');
-    }, 2000);
   };
 
   useEffect(() => {
@@ -80,138 +55,7 @@ export const Transactions = () => {
     getTransactions();
   }, [searchParams]);
 
-  const tableHead: TableCellType[] = [
-    {
-      children: 'Transaction ID',
-    },
-    {
-      children: 'Height',
-    },
-    {
-      children: 'Date',
-    },
-    {
-      children: 'Type',
-    },
-    {
-      children: 'From',
-    },
-    {
-      children: 'To',
-    },
-    {
-      children: 'Amount',
-    },
-    {
-      children: 'Fee',
-    },
-  ];
-
-  const rows = !loading
-    ? transactions?.map((transaction) => {
-        return {
-          rowDetails: (
-            <TxDataPopover
-              txData={{
-                status: transaction?.executionStatus || 'pending',
-                data: transaction?.params?.data,
-                nonce: transaction?.nonce,
-              }}
-            />
-          ),
-          cells: [
-            {
-              children: (
-                <Typography className={'hover:underline'} link>
-                  <Link href={`transactions/${transaction.id}`}>
-                    {shortString(transaction?.id, 12, 'center')}
-                  </Link>
-                </Typography>
-              ),
-            },
-            {
-              children: (
-                <Typography className={'whitespace-nowrap inline-flex gap-sm items-center'}>
-                  {transaction?.block?.height}
-                  <Tooltip placement={'bottom'} text={copyTooltipText}>
-                    <span onClick={() => handleCopy(transaction?.block?.height.toString())}>
-                      <Icon
-                        className={'desktop:group-hover/child:inline desktop:hidden cursor-pointer'}
-                        icon={'Copy'}
-                        size={'2xs'}
-                      />
-                    </span>
-                  </Tooltip>
-                </Typography>
-              ),
-              className: 'group/child min-w-[120px]',
-            },
-            {
-              children: (
-                <Tooltip
-                  placement={'top'}
-                  text={dayjs(transaction.block.timestamp * 1000).format('DD MMM YYYY HH:mm')}
-                >
-                  <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
-                    {fromNowFormatter(transaction.block.timestamp * 1000, 'DD MMM YYYY')}
-                  </Typography>
-                </Tooltip>
-              ),
-            },
-            {
-              children: (
-                <Badge
-                  colorVariant={commandColors[transaction.command]}
-                  label={replaceColonWithSpace(`${transaction?.module}:${transaction?.command}`)}
-                />
-              ),
-            },
-            {
-              children: (
-                <UserAccountCard
-                  address={transaction?.sender?.address}
-                  name={transaction?.sender?.name}
-                />
-              ),
-            },
-            {
-              children: transaction?.recipient ? (
-                <UserAccountCard
-                  address={transaction?.recipient?.address}
-                  name={transaction?.recipient?.name}
-                />
-              ) : (
-                '-'
-              ),
-            },
-            {
-              children: (
-                <Currency
-                  amount={transaction?.params?.amount}
-                  className={'align-middle'}
-                  color={'onBackgroundLow'}
-                  decimals={decimals}
-                  symbol={'KLY'}
-                  variant={'paragraph-sm'}
-                />
-              ),
-            },
-            {
-              children: (
-                <Currency
-                  amount={transaction?.fee}
-                  className={'align-middle'}
-                  color={'onBackgroundLow'}
-                  decimals={5}
-                  symbol={'KLY'}
-                  variant={'paragraph-sm'}
-                />
-              ),
-            },
-          ],
-        };
-      })
-    : getTableSkeletons(tableHead.length);
+  const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
@@ -222,7 +66,7 @@ export const Transactions = () => {
       />
       <TableContainer
         currentNumber={pageNumber}
-        headCols={tableHead}
+        headCols={transactionTableHead}
         keyPrefix={'transactions'}
         pagination
         rows={rows}

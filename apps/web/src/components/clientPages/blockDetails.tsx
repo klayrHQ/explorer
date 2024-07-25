@@ -1,14 +1,24 @@
 'use client';
 import gatewayClient from '../../network/gatewayClient';
 import React, { useEffect, useState } from 'react';
-import { GatewayRes, BlockDetailsType } from '../../utils/types';
-import {BlockDetailsBanner, DetailsSection, SectionHeader, TableContainer} from '@repo/ui/organisms';
+import { GatewayRes, BlockDetailsType, TransactionType, EventsType } from '../../utils/types';
+import {
+  BlockDetailsBanner,
+  DetailsSection,
+  SectionHeader,
+  TableContainer,
+} from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
-import {Currency, DateComponent, FlexGrid, TabButtons, Typography, UserAccountCard} from "@repo/ui/atoms";
+import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '@repo/ui/atoms';
+import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx';
+import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [block, setBlock] = useState<BlockDetailsType>();
+  const [transactions, setTransactions] = useState<TransactionType[]>();
+  const [events, setEvents] = useState<EventsType[]>();
+  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -20,7 +30,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
             blockID: id,
           },
         });
-        console.log('data', data);
+        console.log('block', data);
         if (data?.data) {
           setBlock(data.data[0]);
         }
@@ -30,8 +40,57 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         setLoading(false);
       }
     };
+
     getBlock();
   }, [id]);
+
+  useEffect(() => {
+    const getTransactions = async () => {
+      try {
+        setLoading(true);
+        const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
+          params: {
+            blockID: id,
+          },
+        });
+        console.log('transactions', data);
+        if (data?.data) {
+          setTransactions(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (block?.numberOfTransactions && block?.numberOfTransactions >= 0) getTransactions();
+  }, [id, block]);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      try {
+        setLoading(true);
+        const { data } = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
+          params: {
+            height: block?.height,
+          },
+        });
+
+        if (data?.data) {
+          setEvents(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (block) {
+      getEvents();
+    }
+  }, [block]);
 
   const details = [
     {
@@ -61,10 +120,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         label: 'Generator',
       },
       value: (
-        <UserAccountCard
-          address={block?.generator?.address ?? ''}
-          name={block?.generator?.name}
-        />
+        <UserAccountCard address={block?.generator?.address ?? ''} name={block?.generator?.name} />
       ),
     },
     {
@@ -105,9 +161,19 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
           marketValue={undefined}
           symbol={'KLY'}
         />
-      ) : '-',
+      ) : (
+        '-'
+      ),
     },
   ];
+
+  const transactionRows = createTransactionRows(
+    transactions,
+    loading,
+    copyTooltipText,
+    setCopyTooltipText,
+  );
+  const eventsRows = createEventsRows(events, loading);
 
   const tabs = [
     {
@@ -120,18 +186,32 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: 2,
       label: 'Transactions',
       icon: 'List',
-      content: 'Transactions',
+      content: (
+        <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4.5xl'}>
+          <SectionHeader count={transactions?.length} title={'Block Transactions'} />
+          <TableContainer
+            headCols={transactionTableHead}
+            keyPrefix={'transactions'}
+            rows={transactionRows}
+          />
+        </FlexGrid>
+      ),
     },
     {
       value: 3,
       label: 'Events',
       icon: 'List',
-      content: 'Events',
+      content: (
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          <SectionHeader count={events?.length} title={'Block events'} />
+          <TableContainer headCols={eventsTableHead} keyPrefix={'tx-events'} rows={eventsRows} />
+        </FlexGrid>
+      ),
     },
   ];
 
   return (
-    <FlexGrid direction={"col"} gap={'5xl'} >
+    <FlexGrid direction={'col'} gap={'5xl'}>
       <BlockDetailsBanner
         reward={block?.reward || '0'}
         symbol="KLY"

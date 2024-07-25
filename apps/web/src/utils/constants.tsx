@@ -1,9 +1,14 @@
-import { Icon, SkeletonComponent, Typography } from '@repo/ui/atoms';
+import {
+  Icon,
+  SkeletonComponent,
+  Typography,
+} from '@repo/ui/atoms';
 import Logo from '../assets/images/logo.svg';
 import LogoText from '../assets/images/logoText.svg';
 import Image from 'next/image';
 import { DefaultLinkComponent } from 'storybook/stories/utils/constants.tsx';
-import { ColorType } from '@repo/ui/types';
+import { ColorType, TableCellType } from '@repo/ui/types';
+import React from 'react';
 
 export const DefaultImageComponent = <Image alt={''} height={'1'} src={''} width={'1'} />;
 
@@ -289,3 +294,39 @@ export const getTableSkeletons = (cells: number) => {
     };
   });
 };
+
+export const transactionTableHead: TableCellType[] = [
+  {
+    children: 'Transaction ID',
+  },
+  {
+    children: 'Height',
+  },
+  {
+    children: 'Date',
+  },
+  {
+    children: 'Type',
+  },
+  {
+    children: 'From',
+  },
+  {
+    children: 'To',
+  },
+  {
+    children: 'Amount',
+  },
+  {
+    children: 'Fee',
+  },
+];
+
+export const eventsTableHead = [
+  {
+    children: <Typography variant={'paragraph-md'}>{'Module'}</Typography>,
+  },
+  {
+    children: <Typography variant={'paragraph-md'}>{'Name'}</Typography>,
+  },
+]
