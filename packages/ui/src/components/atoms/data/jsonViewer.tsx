@@ -58,14 +58,13 @@ export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: 
 
     return (
       <span style={styles[type]}>
-        {/* @ts-ignore */}
         {isNotObject ? (
           isString ? (
             `"${value}"`
           ) : isBoolean ? (
             value?.toString()
           ) : (
-            value
+            value?.toString()
           )
         ) : Array.isArray(value) ? (
           <>
