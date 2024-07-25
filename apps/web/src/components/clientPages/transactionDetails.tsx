@@ -4,16 +4,11 @@ import { EventsType, GatewayRes, TransactionType } from '../../utils/types';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
 import gatewayClient from '../../network/gatewayClient';
-import {
-  Currency,
-  DateComponent,
-  FlexGrid,
-  TabButtons,
-  UserAccountCard,
-} from '@repo/ui/atoms';
+import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '@repo/ui/atoms';
 import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
-import {eventsTableHead, createEventsRows} from '../../utils/constants.tsx';
+import { eventsTableHead } from '../../utils/constants.tsx';
 import Link from 'next/link';
+import { createEventsRows } from '../../utils/helper.tsx';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -253,11 +248,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader count={events?.length} title={'Transaction events'} />
-          <TableContainer
-            headCols={eventsTableHead}
-            keyPrefix={'tx-events'}
-            rows={eventsRows}
-          />
+          <TableContainer headCols={eventsTableHead} keyPrefix={'tx-events'} rows={eventsRows} />
         </FlexGrid>
       ),
     },

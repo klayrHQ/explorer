@@ -1,7 +1,7 @@
 'use client';
 import gatewayClient from '../../network/gatewayClient';
 import React, { useEffect, useState } from 'react';
-import {GatewayRes, BlockDetailsType, TransactionType, EventsType} from '../../utils/types';
+import { GatewayRes, BlockDetailsType, TransactionType, EventsType } from '../../utils/types';
 import {
   BlockDetailsBanner,
   DetailsSection,
@@ -9,14 +9,9 @@ import {
   TableContainer,
 } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
-import {
-  Currency,
-  DateComponent,
-  FlexGrid,
-  TabButtons,
-  UserAccountCard,
-} from '@repo/ui/atoms';
-import {eventsTableHead, createEventsRows, createTransactionRows, transactionTableHead} from "../../utils/constants.tsx";
+import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '@repo/ui/atoms';
+import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx';
+import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -172,7 +167,12 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
     },
   ];
 
-  const transactionRows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
+  const transactionRows = createTransactionRows(
+    transactions,
+    loading,
+    copyTooltipText,
+    setCopyTooltipText,
+  );
   const eventsRows = createEventsRows(events, loading);
 
   const tabs = [
@@ -188,10 +188,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       icon: 'List',
       content: (
         <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4.5xl'}>
-          <SectionHeader
-            count={transactions?.length}
-            title={'Block Transactions'}
-          />
+          <SectionHeader count={transactions?.length} title={'Block Transactions'} />
           <TableContainer
             headCols={transactionTableHead}
             keyPrefix={'transactions'}
@@ -207,11 +204,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader count={events?.length} title={'Block events'} />
-          <TableContainer
-            headCols={eventsTableHead}
-            keyPrefix={'tx-events'}
-            rows={eventsRows}
-          />
+          <TableContainer headCols={eventsTableHead} keyPrefix={'tx-events'} rows={eventsRows} />
         </FlexGrid>
       ),
     },

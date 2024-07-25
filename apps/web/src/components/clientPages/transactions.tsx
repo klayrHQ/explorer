@@ -1,16 +1,12 @@
 'use client';
-import {
-  FlexGrid,
-} from '@repo/ui/atoms';
+import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useEffect, useState } from 'react';
 import { GatewayRes, TransactionType } from '../../utils/types.ts';
-import {
-  createTransactionRows,
-  transactionTableHead
-} from '../../utils/constants.tsx';
+import { transactionTableHead } from '../../utils/constants.tsx';
 import gatewayClient from '../../network/gatewayClient.ts';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { createTransactionRows } from '../../utils/helper.tsx';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
@@ -59,7 +55,7 @@ export const Transactions = () => {
     getTransactions();
   }, [searchParams]);
 
-  const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText)
+  const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
