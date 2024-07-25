@@ -69,6 +69,7 @@ const colors = {
   white: 'var(--color-white)',
   greenOpacity: 'var(--color-greenOpacity)',
   redOpacity: 'var(--color-redOpacity)',
+  warningOpacity: 'var(--color-warningOpacity)',
   darkBlue: 'var(--color-darkBlue)',
   'gray-1': 'var(--color-gray-1)',
   'gray-2': 'var(--color-gray-2)',
