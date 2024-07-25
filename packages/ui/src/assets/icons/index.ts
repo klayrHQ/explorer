@@ -39,6 +39,7 @@ import { Info } from './general/help-circle.tsx';
 import { InfoSquare } from './general/info-square.tsx';
 import { List } from './general/list.tsx';
 import { ArrowRight } from './arrows/arrow-right.tsx';
+import {CodeSquare} from "./development/code-square-02.tsx";
 
 export const icons = {
   ChevronDown,
@@ -82,4 +83,5 @@ export const icons = {
   Info,
   InfoSquare,
   List,
+  CodeSquare,
 };

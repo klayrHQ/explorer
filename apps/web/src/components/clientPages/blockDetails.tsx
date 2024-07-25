@@ -12,6 +12,7 @@ import BannerBG from '../../assets/images/bannerBG.png';
 import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '@repo/ui/atoms';
 import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx';
 import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
+import {DataType} from "@repo/ui/types";
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -180,7 +181,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: <DetailsSection data={details} title={'Block Details'} />,
+      content: <DetailsSection data={details} json={block as unknown as DataType} title={'Block Details'} />,
     },
     {
       value: 2,

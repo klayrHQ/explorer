@@ -2,10 +2,7 @@
 import { CSSProperties, useState } from 'react';
 import { cls, copyToClipboard } from '../../../utils/functions.ts';
 import { Icon } from '../images/icon.tsx';
-
-type DataValueType = string | number | boolean | null | object | undefined;
-
-type DataType = Record<string, string | number | object | boolean | null | undefined>;
+import {DataType, DataValueType} from "../../../types/types.ts";
 
 interface JsonViewerProps {
   data: DataType;
@@ -115,7 +112,12 @@ export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: 
         <div className={'ml-xl'} key={`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex + 1}`}>
           {!isNotObject && value !== null && (
             <span
-              className={'inline cursor-pointer text-caption'}
+              className={cls([
+                'inline-block cursor-pointer text-caption mr-xs',
+                startOpen ?
+                  !openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`) ? '-rotate-90' : '' :
+                  openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`) ? '-rotate-90' : '',
+              ])}
               onClick={() => handleOpenItems(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`)}
             >
               {'\u25BC '}
@@ -135,14 +137,22 @@ export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: 
 
       return (
         <div
-          className={`relative`}
+          className={cls([
+            'relative',
+            hoveredItem === `${parentKey ? `${parentKey}-` : ''}${key}` ? 'bg-backgroundSecondary' : ',',
+          ])}
           key={`${parentKey ? `${parentKey}-` : ''}${key}`}
           onMouseEnter={() => setHoveredItem(`${parentKey ? `${parentKey}-` : ''}${key}`)}
           onMouseLeave={() => setHoveredItem(null)}
         >
           {!isNotObject && value !== null && (
             <span
-              className={'inline cursor-pointer text-caption'}
+              className={cls([
+                'inline-block cursor-pointer text-caption mr-xs',
+                !startOpen ?
+                  !openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}`) ? '-rotate-90' : '' :
+                  openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}`) ? '-rotate-90' : '',
+              ])}
               onClick={() => handleOpenItems(`${parentKey ? `${parentKey}-` : ''}${key}`)}
             >
               {'\u25BC '}
@@ -156,7 +166,7 @@ export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: 
           {copy && (
             <span
               className={cls([
-                'absolute right-md top-0 bottom-0 my-auto cursor-pointer h-max',
+                'absolute right-xs bottom-2xs my-auto cursor-pointer h-max',
                 hoveredItem === `${parentKey ? `${parentKey}-` : ''}${key}` ? 'block' : 'hidden',
               ])}
               onClick={() => copyToClipboard(JSON.stringify(value))}

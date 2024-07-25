@@ -83,6 +83,7 @@ export type IconComponent =
   | 'Plus'
   | 'Eye'
   | 'Info'
+  | 'CodeSquare'
   | string;
 
 export type ColorType =
@@ -156,3 +157,7 @@ export type Option = {
   labelImage?: string;
   labelCircleColor?: string;
 };
+
+export type DataValueType = string | number | boolean | null | object | undefined;
+
+export type DataType = Record<string, DataValueType>;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal as BaseModal } from '@mui/base';
-import { Button } from '../button';
 import { IconButton } from '../iconButton';
 import { Typography } from '../../base/typography';
 import { FlexGrid } from '../../base/flexGrid';
@@ -9,17 +8,16 @@ import { Backdrop } from './modalBackdrop';
 interface SliderProps {
   open: boolean;
   onClose: () => void;
-  onSave: () => void;
   title: string;
   children: React.ReactNode;
 }
 
-export const Slider = ({ open, onClose, onSave, title, children }: SliderProps) => {
+export const Slider = ({ open, onClose, title, children, }: SliderProps) => {
   return (
     <>
-      <BaseModal onClose={onClose} open={open} slots={{ backdrop: Backdrop }}>
+      <BaseModal onClose={onClose} open={open} slots={{ backdrop: Backdrop, }}>
         <div
-          className={`fixed top-0 right-0 h-full w-1/3 transform transition-all duration-300 ease-out ${
+          className={`overflow-y-auto fixed top-0 right-0 h-full w-1/3 transform transition-all duration-300 ease-out ${
             open ? 'translate-x-0 ' : 'translate-x-full'
           } bg-backgroundSecondary shadow-lg`}
         >

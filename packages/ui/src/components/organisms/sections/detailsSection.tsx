@@ -1,7 +1,19 @@
-import { FlexGrid, Icon, Tooltip, Typography } from '../../atoms';
-import { ReactNode } from 'react';
+'use client';
+import {
+  Button,
+  FlexGrid,
+  Icon,
+  IconButton,
+  JsonViewer,
+  Popover,
+  Slider,
+  Tooltip,
+  Typography,
+} from '../../atoms';
+import { ReactNode, useState } from 'react';
 import { SectionHeader } from '../layout/sectionHeader.tsx';
-import { cls } from '../../../utils/functions.ts';
+import { cls, copyToClipboard } from '../../../utils/functions.ts';
+import { DataType } from '../../../types/types.ts';
 
 interface DetailsSectionsProps {
   title: string;
@@ -13,12 +25,54 @@ interface DetailsSectionsProps {
     value: ReactNode;
     mobileWidth?: 'full' | 'half' | string;
   }[];
+  json?: DataType;
 }
 
-export const DetailsSection = ({ title, data, }: DetailsSectionsProps) => {
+export const DetailsSection = ({ title, data, json, }: DetailsSectionsProps) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [jsonOpen, setJsonOpen] = useState(false);
+
   return (
     <FlexGrid className={'w-full'} component={'section'} direction={'col'} gap={'4.5xl'}>
-      <SectionHeader title={title} titleSize={'sm'} />
+      <FlexGrid className={'w-full'} justify={'between'} mobileDirection={'row'}>
+        <SectionHeader title={title} titleSize={'sm'} />
+        {json && (
+          <Popover
+            button={
+              <IconButton
+                active={menuOpen}
+                align={'none'}
+                icon={'DotsVertical'}
+                variant={'semiTransparent'}
+              />
+            }
+            isOpen={menuOpen}
+            placement={'bottom-end'}
+            setIsOpen={setMenuOpen}
+          >
+            <Button
+              label={
+              <Typography className={'inline-flex items-center gap-sm'} color={'onBackgroundMedium'}>
+                <Icon color={'onBackgroundLow'} icon={'CodeSquare'} size={'xs'} />
+                {'View as .json'}
+              </Typography>
+            }
+              onClick={() => setJsonOpen(true)}
+              variant={'transparent'}
+            />
+            <Slider onClose={() => setJsonOpen(false)} open={jsonOpen} title={'View as .json'}>
+              <FlexGrid direction={'col'} gap={'3xl'}>
+                <JsonViewer copy data={json} startOpen />
+                <Button
+                  align={'right'}
+                  label={'Copy'}
+                  onClick={() => copyToClipboard(JSON.stringify(json, null, 2))}
+                />
+              </FlexGrid>
+            </Slider>
+          </Popover>
+        )}
+      </FlexGrid>
       <FlexGrid
         className={'w-full grid grid-cols-2 desktop:flex'}
         direction={'col'}
@@ -29,7 +83,10 @@ export const DetailsSection = ({ title, data, }: DetailsSectionsProps) => {
       >
         {data.map(({ label, value, mobileWidth, }, index) => (
           <FlexGrid
-            className={cls(['w-full desktop:gap-1.5xl', mobileWidth === 'half' ? 'col-span-1' : 'col-span-2'])}
+            className={cls([
+              'w-full desktop:gap-1.5xl',
+              mobileWidth === 'half' ? 'col-span-1' : 'col-span-2',
+            ])}
             direction={'row'}
             gap={'0'}
             justify={'between'}
