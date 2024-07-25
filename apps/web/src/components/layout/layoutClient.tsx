@@ -13,7 +13,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         <TopbarClient logo={logo} mobileMenuItems={mobileMenuItems} />
         <main
           className={cls([
-            'w-full h-screenUnderTopbarMobile desktop:h-screenUnderTopbar bg-background p-3xl',
+            'w-full h-screenUnderTopbarMobile desktop:h-screenUnderTopbar bg-background p-8',
             'overflow-y-auto overflow-x-hidden',
             'border-t-backgroundSecondary border-t-1 border-solid',
             'desktop:border-l-backgroundSecondary desktop:border-l-1',
