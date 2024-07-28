@@ -130,7 +130,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Seed reveal',
       },
-      value: block?.assets ? getSeedRevealFromAssets(block?.assets) : ' ',
+      value: block?.assets ? getSeedRevealFromAssets(block?.assets) : '-',
     },
     {
       label: {
