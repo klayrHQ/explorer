@@ -132,7 +132,6 @@ export const Blocks = () => {
               ),
             },
             {
-              //todo change to seed reveal when it exists in data
               children: (
                 <Typography color={'onBackgroundLow'}>
                   {shortString(getSeedRevealFromAssets(block.assets), 12, 'center')}
