@@ -7,7 +7,7 @@ export * from "./input/modal/modal";
 export * from "./input/textAreaField";
 export * from "./input/label";
 export * from "./input/tabButtons";
-export * from "./input/modal/slider";
+export * from "./utilities/SlideInModal.tsx";
 export * from "./base/typography";
 export * from "./base/flexGrid";
 export * from "./base/grid";

@@ -1,21 +1,21 @@
 import React from 'react';
 import { Modal as BaseModal } from '@mui/base';
-import { IconButton } from '../iconButton';
-import { Typography } from '../../base/typography';
-import { FlexGrid } from '../../base/flexGrid';
-import { Backdrop } from './modalBackdrop';
+import { IconButton } from '../input/iconButton';
+import { Typography } from '../base/typography';
+import { FlexGrid } from '../base/flexGrid';
+import { Backdrop } from '../input/modal/modalBackdrop';
 
-interface SliderProps {
+interface SlideInModalProps {
   open: boolean;
   onClose: () => void;
   title: string;
   children: React.ReactNode;
 }
 
-export const Slider = ({ open, onClose, title, children, }: SliderProps) => {
+export const SlideInModal = ({ open, onClose, title, children }: SlideInModalProps) => {
   return (
     <>
-      <BaseModal onClose={onClose} open={open} slots={{ backdrop: Backdrop, }}>
+      <BaseModal onClose={onClose} open={open} slots={{ backdrop: Backdrop }}>
         <div
           className={`overflow-y-auto fixed top-0 right-0 h-full w-1/3 transform transition-all duration-300 ease-out ${
             open ? 'translate-x-0 ' : 'translate-x-full'
