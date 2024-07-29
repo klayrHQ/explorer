@@ -143,7 +143,7 @@ export const createTransactionRows = (
           {
             cells: [
               {
-                children: <Typography>No transactions found</Typography>,
+                children: <Typography>{'No transactions found'}</Typography>,
                 colSpan: transactionTableHead.length,
               },
             ],

@@ -12,7 +12,7 @@ import BannerBG from '../../assets/images/bannerBG.png';
 import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '@repo/ui/atoms';
 import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx';
 import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
-import {DataType} from "@repo/ui/types";
+import { DataType } from '@repo/ui/types';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -181,7 +181,13 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: <DetailsSection data={details} json={block as unknown as DataType} title={'Block Details'} />,
+      content: (
+        <DetailsSection
+          data={details}
+          json={block as unknown as DataType}
+          title={'Block Details'}
+        />
+      ),
     },
     {
       value: 2,
@@ -214,14 +220,14 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <BlockDetailsBanner
-        reward={block?.reward || '0'}
-        symbol="KLY"
         generatorAddress={block?.generator.address || ''}
+        generatorName={block?.generator.name || ''}
+        height={block?.height || 0}
+        image={BannerBG.src}
         isFinal={block?.isFinal || false}
         numberOfTransactions={block?.numberOfTransactions || 0}
-        image={BannerBG.src}
-        height={block?.height || 0}
-        generatorName={block?.generator.name || ''}
+        reward={block?.reward || '0'}
+        symbol="KLY"
       />
       <TabButtons tabs={tabs} />
     </FlexGrid>
