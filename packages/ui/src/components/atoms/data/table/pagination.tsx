@@ -2,6 +2,9 @@
 
 import { Button } from '../../input/button';
 import { FlexGrid } from '../../base/flexGrid';
+import { IconButton } from '../../input/iconButton';
+import { Typography } from '../../base/typography';
+import { Input } from '../../input/input';
 
 interface NumberListProps {
   totalPages: number;
@@ -50,8 +53,9 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
   };
 
   return (
-    <FlexGrid alignItems="center" className="w-full" justify="between">
-      <div className="flex gap-0.5">
+    <div className="flex items-end desktop:items-center justify-between w-full gap-3 flex-col desktop:flex-row">
+      {/* DESKTOP PAGINATION */}
+      <div className="gap-0.5 hidden desktop:flex">
         {displayPages().map((number, index) => (
           <div
             className={`min-w-9 h-9 max-h-9 p-2 flex items-center justify-center cursor-pointer ${
@@ -68,7 +72,60 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
         ))}
       </div>
 
-      <FlexGrid alignItems="center" className="w-full desktop:w-auto" gap="4" mobileDirection="row">
+      {/* MOBILE PAGINATION */}
+      <div className="flex gap-6 items-center justify-between desktop:hidden w-full">
+        <div>
+          <IconButton
+            className="text-paragraph-sm"
+            color="onBackground"
+            icon="ChevronLeft"
+            onClick={() => setCurrentNumber(currentNumber - 1)}
+            variant="bordered"
+          />
+        </div>
+
+        <div className="flex items-center">
+          <Typography color="onBackgroundLow" variant="paragraph-sm">
+            {'Page'}
+          </Typography>
+          <Typography
+            className="mx-2 p-1.5 h-9 max-h-9 min-w-9 flex items-center justify-center bg-onBackground rounded-full text-background"
+            color="background"
+            variant="paragraph-sm"
+          >
+            {currentNumber}
+          </Typography>
+          <Typography color="onBackgroundLow" variant="paragraph-sm">
+            {'of'} {pages.length}
+          </Typography>
+        </div>
+        <div>
+          <IconButton
+            icon="ChevronRight"
+            onClick={() => setCurrentNumber(currentNumber + 1)}
+            variant="bordered"
+          />
+        </div>
+      </div>
+
+      {/* PAGE GO */}
+      <div className="flex items-center gap-2">
+        <Typography color="onBackgroundLow" variant="paragraph-sm">
+          {'Page'}
+        </Typography>
+        <Input className="max-w-11 h-11 max-h-11 text-paragraph-sm" variant="onBgPrimary"></Input>
+        <Typography color="onBackground" fontWeight="semibold" variant="paragraph-sm">
+          {'Go'}
+        </Typography>
+      </div>
+
+      {/* DESKTOP BUTTONS */}
+      <FlexGrid
+        alignItems="center"
+        className="w-auto hidden desktop:flex"
+        gap="4"
+        mobileDirection="row"
+      >
         <Button
           className="border-1 w-full desktop:w-auto border-backgroundSecondary"
           label="Previous"
@@ -92,6 +149,6 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
           variant="transparent"
         />
       </FlexGrid>
-    </FlexGrid>
+    </div>
   );
 };
