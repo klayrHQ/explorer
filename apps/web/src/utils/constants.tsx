@@ -1,8 +1,4 @@
-import {
-  Icon,
-  SkeletonComponent,
-  Typography,
-} from '@repo/ui/atoms';
+import { Icon, SkeletonComponent, Typography } from '@repo/ui/atoms';
 import Logo from '../assets/images/logo.svg';
 import LogoText from '../assets/images/logoText.svg';
 import Image from 'next/image';
@@ -16,10 +12,12 @@ export const mobileMenuItems = [
   {
     label: 'Dashboard',
     icon: 'BarChartSquare',
+    href: '/',
   },
   {
     label: 'Transactions',
     icon: 'SwitchHorizontal',
+    href: '/transactions',
   },
   {
     label: 'Users',
@@ -32,6 +30,7 @@ export const mobileMenuItems = [
   {
     label: 'Blocks',
     icon: 'Cube',
+    href: '/blocks',
   },
   {
     label: 'Tokens',
@@ -329,4 +328,4 @@ export const eventsTableHead = [
   {
     children: <Typography variant={'paragraph-md'}>{'Name'}</Typography>,
   },
-]
+];
