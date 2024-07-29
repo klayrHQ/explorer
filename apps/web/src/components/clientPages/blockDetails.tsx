@@ -221,14 +221,14 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <BlockDetailsBanner
-        reward={block?.reward || '0'}
-        symbol="KLY"
         generatorAddress={block?.generator.address || ''}
+        generatorName={block?.generator.name || ''}
+        height={block?.height || 0}
+        image={BannerBG.src}
         isFinal={block?.isFinal || false}
         numberOfTransactions={block?.numberOfTransactions || 0}
-        image={BannerBG.src}
-        height={block?.height || 0}
-        generatorName={block?.generator.name || ''}
+        reward={block?.reward || '0'}
+        symbol="KLY"
       />
       <TabButtons tabs={tabs} />
     </FlexGrid>

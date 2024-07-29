@@ -102,12 +102,12 @@ export const Blocks = () => {
             {
               children: (
                 <KeyValueComponent
-                  keyValue={<StatusIcon connected={block.isFinal} />}
                   contentValue={
                     <Link href={`/blocks/${block.id}`}>
                       <Typography link>{shortString(block.id, 12, 'center')}</Typography>
                     </Link>
                   }
+                  keyValue={<StatusIcon connected={block.isFinal} />}
                 />
               ),
             },
@@ -136,14 +136,16 @@ export const Blocks = () => {
             },
             {
               children: (
-                <Tooltip
-                  placement={'top'}
-                  text={dayjs(block.timestamp * 1000).format('DD MMM YYYY HH:mm')}
-                >
-                  <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
-                    {fromNowFormatter(block.timestamp * 1000, 'DD MMM YYYY')}
-                  </Typography>
-                </Tooltip>
+                <div className="flex items-center">
+                  <Tooltip
+                    placement={'top'}
+                    text={dayjs(block.timestamp * 1000).format('DD MMM YYYY HH:mm')}
+                  >
+                    <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
+                      {fromNowFormatter(block.timestamp * 1000, 'DD MMM YYYY')}
+                    </Typography>
+                  </Tooltip>
+                </div>
               ),
             },
             {
