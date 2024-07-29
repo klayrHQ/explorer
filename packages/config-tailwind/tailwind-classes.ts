@@ -267,9 +267,9 @@ const leading = {
 };
 
 const height = {
-  screen: '100vh',
-  screenUnderTopbar: 'calc(100vh - 88px)',
-  screenUnderTopbarMobile: 'calc(100vh - 76px)',
+  screen: '100dvh',
+  screenUnderTopbar: 'calc(100dvh - 88px)',
+  screenUnderTopbarMobile: 'calc(100dvh - 76px)',
   full: '100%',
   max: 'max-content',
   min: 'min-content',

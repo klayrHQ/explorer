@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { cva } from 'class-variance-authority';
 import { cls } from '../../../utils/functions.ts';
 
@@ -35,8 +35,8 @@ interface GridProps {
     | 'subgrid';
   autoCols?: 'auto' | 'min' | 'max' | 'fr';
   autoRows?: 'auto' | 'min' | 'max' | 'fr';
-  gap?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
-  tabletGap?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
+  gap?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
+  tabletGap?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
   tabletCols?:
     | '1'
     | '2'
@@ -67,7 +67,7 @@ interface GridProps {
     | '12'
     | 'none'
     | 'subgrid';
-  desktopGap?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
+  desktopGap?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
   desktopCols?:
     | '1'
     | '2'
@@ -100,6 +100,7 @@ interface GridProps {
     | 'subgrid';
   className?: string;
   children: ReactNode;
+  style?: CSSProperties;
 }
 
 const gridStyles = cva(['grid']);
@@ -118,6 +119,7 @@ export const Grid = ({
   gap = '2',
   className,
   children,
+  style,
 }: GridProps) => {
   return (
     <div
@@ -137,6 +139,7 @@ export const Grid = ({
           className,
         ]),
       })}
+      style={style}
     >
       {children}
     </div>
