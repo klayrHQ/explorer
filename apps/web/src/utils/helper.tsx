@@ -1,8 +1,8 @@
 import { EventsType, TransactionType } from './types.ts';
 import {
-  copyToClipboard,
   dayjs,
   fromNowFormatter,
+  handleCopy,
   replaceColonWithSpace,
   shortString,
 } from '@repo/ui/utils';
@@ -24,14 +24,6 @@ export const createTransactionRows = (
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
 ) => {
-  const handleCopy = (text: string) => {
-    copyToClipboard(text);
-    setCopyTooltipText('Copied!');
-    setTimeout(() => {
-      setCopyTooltipText('Copy to clipboard');
-    }, 2000);
-  };
-
   return !loading
     ? transactions
       ? transactions?.map((transaction) => {
@@ -57,10 +49,18 @@ export const createTransactionRows = (
               },
               {
                 children: (
-                  <Typography className={'whitespace-nowrap inline-flex gap-sm items-center'}>
-                    {transaction?.block?.height}
+                  <Typography
+                    className={'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer'}
+                    color={'onBackgroundLow'}
+                  >
+                    {transaction?.block?.height.toLocaleString()}
                     <Tooltip placement={'bottom'} text={copyTooltipText}>
-                      <span onClick={() => handleCopy(transaction?.block?.height.toString())}>
+                      <span
+                        className={'w-4 block'}
+                        onClick={() =>
+                          handleCopy(transaction?.block?.height.toString(), setCopyTooltipText)
+                        }
+                      >
                         <Icon
                           className={
                             'desktop:group-hover/child:inline desktop:hidden cursor-pointer'

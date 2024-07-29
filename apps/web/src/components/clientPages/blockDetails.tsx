@@ -13,6 +13,7 @@ import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '
 import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx';
 import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
 import { DataType } from '@repo/ui/types';
+import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -29,6 +30,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         const { data } = await gatewayClient.get<GatewayRes<BlockDetailsType[]>>('blocks', {
           params: {
             blockID: id,
+            includeAssets: true,
           },
         });
 
@@ -128,8 +130,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Seed reveal',
       },
-      //todo get seed reveal from data when available
-      value: block?.validatorsHash,
+      value: block?.assets ? getSeedRevealFromAssets(block?.assets) : '-',
     },
     {
       label: {

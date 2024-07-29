@@ -1,10 +1,10 @@
 import { StoryObj } from '@storybook/react';
-import { Slider, Button } from '@repo/ui/atoms';
+import { SlideInModal, Button } from '@repo/ui/atoms';
 import { useState } from 'react';
 
 const meta = {
-  title: 'Atoms/Input/Slider',
-  component: Slider,
+  title: 'Atoms/Input/SlideInModal',
+  component: SlideInModal,
   parameters: {
     layout: 'centered',
   },
@@ -32,7 +32,7 @@ const Template = () => {
   return (
     <div>
       <Button label="Open" onClick={handleOpenModal} />
-      <Slider
+      <SlideInModal
         open={isModalOpen}
         onClose={handleCloseModal}
         onSave={handleSave}
@@ -43,7 +43,7 @@ const Template = () => {
           quia eos doloribus, accusamus itaque. Quaerat, consequuntur. Sunt illo quis fuga
           aspernatur quos minima consectetur eligendi delectus.
         </p>
-      </Slider>
+      </SlideInModal>
     </div>
   );
 };
