@@ -51,7 +51,7 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
 
   return (
     <FlexGrid alignItems="center" className="w-full" justify="between">
-      <div className="flex">
+      <div className="flex gap-0.5">
         {displayPages().map((number, index) => (
           <div
             className={`min-w-9 h-9 max-h-9 p-2 flex items-center justify-center cursor-pointer ${
