@@ -9,7 +9,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <FlexGrid className={'bg-backgroundDark'} direction={'row'} gap={'0'}>
       <Sidebar logo={logo} menuItems={menuItems} />
-      <Grid className={'w-full'} gap={'0'}>
+      <Grid className={'w-full overflow-hidden'} gap={'0'}>
         <TopbarClient logo={logo} mobileMenuItems={mobileMenuItems} />
         <main
           className={cls([
