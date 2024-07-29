@@ -1,9 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BlockDetailsType, GatewayRes } from '../../utils/types.ts';
 import gatewayClient from '../../network/gatewayClient.ts';
 import {
   FlexGrid,
+  Icon,
   KeyValueComponent,
   StatusIcon,
   Tooltip,
@@ -13,7 +14,7 @@ import {
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { TableCellType } from '@repo/ui/types';
 import Link from 'next/link';
-import { dayjs, fromNowFormatter, shortString } from '@repo/ui/utils';
+import { dayjs, fromNowFormatter, handleCopy, shortString } from '@repo/ui/utils';
 import { getTableSkeletons } from '../../utils/constants.tsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
@@ -24,6 +25,7 @@ export const Blocks = () => {
   const pathname = usePathname();
 
   const [blocks, setBlocks] = useState<BlockDetailsType[]>();
+  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
   const [totalBlocks, setTotalBlocks] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
@@ -111,8 +113,26 @@ export const Blocks = () => {
             },
             {
               children: (
-                <Typography color={'onBackgroundLow'}>{block.height.toLocaleString()}</Typography>
+                <Typography
+                  className={'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer'}
+                  color={'onBackgroundLow'}
+                >
+                  {block?.height.toLocaleString()}
+                  <Tooltip placement={'bottom'} text={copyTooltipText}>
+                    <span
+                      className={'w-4 block'}
+                      onClick={() => handleCopy(block?.height.toString(), setCopyTooltipText)}
+                    >
+                      <Icon
+                        className={'desktop:group-hover/child:inline desktop:hidden cursor-pointer'}
+                        icon={'Copy'}
+                        size={'2xs'}
+                      />
+                    </span>
+                  </Tooltip>
+                </Typography>
               ),
+              className: 'group/child min-w-[120px]',
             },
             {
               children: (

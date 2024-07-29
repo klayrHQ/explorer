@@ -31,17 +31,17 @@ export function replaceColonWithSpace(text: string) {
 
 dayjs.extend(relativeTime, {
   thresholds: [
-    { l: 's', r: 59, d: 'second', },
-    { l: 'm', r: 299, d: 'second', },
-    { l: 'mm', r: 60, d: 'minute', },
-    { l: 'h', r: 1, },
-    { l: 'hh', r: 23, d: 'hour', },
-    { l: 'd', r: 1, },
-    { l: 'dd', r: 29, d: 'day', },
-    { l: 'M', r: 1, },
-    { l: 'MM', r: 11, d: 'month', },
-    { l: 'y', r: 1, },
-    { l: 'yy', d: 'year', },
+    { l: 's', r: 59, d: 'second' },
+    { l: 'm', r: 299, d: 'second' },
+    { l: 'mm', r: 60, d: 'minute' },
+    { l: 'h', r: 1 },
+    { l: 'hh', r: 23, d: 'hour' },
+    { l: 'd', r: 1 },
+    { l: 'dd', r: 29, d: 'day' },
+    { l: 'M', r: 1 },
+    { l: 'MM', r: 11, d: 'month' },
+    { l: 'y', r: 1 },
+    { l: 'yy', d: 'year' },
   ],
 });
 dayjs.extend(updateLocale);
@@ -74,14 +74,14 @@ dayjs.updateLocale('en', {
       return `${Math.floor(number / 60)}m ${seconds}s`;
     },
     mm: '%dm',
-    h: "an hour",
-    hh: "%d hours",
-    d: "a day",
-    dd: "%d days",
-    M: "a month",
-    MM: "%d months",
-    y: "a year",
-    yy: "%d years",
+    h: 'an hour',
+    hh: '%d hours',
+    d: 'a day',
+    dd: '%d days',
+    M: 'a month',
+    MM: '%d months',
+    y: 'a year',
+    yy: '%d years',
   },
 });
 
@@ -112,4 +112,12 @@ export const parseBeddows = (beddows: number, decimals: number = 2) => {
 };
 export const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text);
+};
+
+export const handleCopy = (text: string, setText: (text: string) => void) => {
+  copyToClipboard(text);
+  setText('Copied!');
+  setTimeout(() => {
+    setText('Copy to clipboard');
+  }, 2000);
 };
