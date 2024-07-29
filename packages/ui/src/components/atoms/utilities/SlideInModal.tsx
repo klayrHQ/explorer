@@ -17,11 +17,16 @@ export const SlideInModal = ({ open, onClose, title, children }: SlideInModalPro
     <>
       <BaseModal onClose={onClose} open={open} slots={{ backdrop: Backdrop }}>
         <div
-          className={`overflow-y-auto fixed top-0 right-0 h-full w-1/3 transform transition-all duration-300 ease-out ${
+          className={`overflow-y-auto fixed top-0 right-0 h-full w-full desktop:w-1/3 transform transition-all duration-300 ease-out ${
             open ? 'translate-x-0 ' : 'translate-x-full'
           } bg-backgroundSecondary shadow-lg`}
         >
-          <FlexGrid alignItems="center" className="pt-8 pb-4 desktop:pb-6 px-6" justify="between">
+          <FlexGrid
+            alignItems="center"
+            className="pt-8 pb-4 desktop:pb-6 px-6"
+            justify="between"
+            mobileDirection="row"
+          >
             {title && (
               <Typography fontWeight="bold" variant="h4">
                 {title}
