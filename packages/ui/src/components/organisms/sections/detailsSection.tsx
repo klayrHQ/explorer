@@ -6,7 +6,7 @@ import {
   IconButton,
   JsonViewer,
   Popover,
-  Slider,
+  SlideInModal,
   Tooltip,
   Typography,
 } from '../../atoms';
@@ -28,7 +28,7 @@ interface DetailsSectionsProps {
   json?: DataType;
 }
 
-export const DetailsSection = ({ title, data, json, }: DetailsSectionsProps) => {
+export const DetailsSection = ({ title, data, json }: DetailsSectionsProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [jsonOpen, setJsonOpen] = useState(false);
 
@@ -52,15 +52,22 @@ export const DetailsSection = ({ title, data, json, }: DetailsSectionsProps) => 
           >
             <Button
               label={
-              <Typography className={'inline-flex items-center gap-sm'} color={'onBackgroundMedium'}>
-                <Icon color={'onBackgroundLow'} icon={'CodeSquare'} size={'xs'} />
-                {'View as .json'}
-              </Typography>
-            }
+                <Typography
+                  className={'inline-flex items-center gap-sm'}
+                  color={'onBackgroundMedium'}
+                >
+                  <Icon color={'onBackgroundLow'} icon={'CodeSquare'} size={'xs'} />
+                  {'View as .json'}
+                </Typography>
+              }
               onClick={() => setJsonOpen(true)}
               variant={'transparent'}
             />
-            <Slider onClose={() => setJsonOpen(false)} open={jsonOpen} title={'View as .json'}>
+            <SlideInModal
+              onClose={() => setJsonOpen(false)}
+              open={jsonOpen}
+              title={'View as .json'}
+            >
               <FlexGrid direction={'col'} gap={'3xl'}>
                 <JsonViewer copy data={json} startOpen />
                 <Button
@@ -69,7 +76,7 @@ export const DetailsSection = ({ title, data, json, }: DetailsSectionsProps) => 
                   onClick={() => copyToClipboard(JSON.stringify(json, null, 2))}
                 />
               </FlexGrid>
-            </Slider>
+            </SlideInModal>
           </Popover>
         )}
       </FlexGrid>
@@ -81,7 +88,7 @@ export const DetailsSection = ({ title, data, json, }: DetailsSectionsProps) => 
         mobileDirection={'row'}
         wrap
       >
-        {data.map(({ label, value, mobileWidth, }, index) => (
+        {data.map(({ label, value, mobileWidth }, index) => (
           <FlexGrid
             className={cls([
               'w-full desktop:gap-1.5xl',
@@ -113,7 +120,7 @@ export const DetailsSection = ({ title, data, json, }: DetailsSectionsProps) => 
                     color={'onBackgroundLow'}
                     icon={'Info'}
                     size={'small'}
-                    style={{ fontSize: '19px', }}
+                    style={{ fontSize: '19px' }}
                   />
                 </Tooltip>
               )}
