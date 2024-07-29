@@ -5,6 +5,7 @@ import { FlexGrid } from '../../base/flexGrid';
 import { IconButton } from '../../input/iconButton';
 import { Typography } from '../../base/typography';
 import { Input } from '../../input/input';
+import { useState, useEffect } from 'react';
 
 interface NumberListProps {
   totalPages: number;
@@ -13,6 +14,8 @@ interface NumberListProps {
 }
 
 export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: NumberListProps) => {
+  const [pageNumber, setPageNumber] = useState('');
+
   const generatePageArray = (totalPages: number) => {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   };
@@ -52,71 +55,97 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
     }
   };
 
-  return (
-    <div className="flex items-end desktop:items-center justify-between w-full gap-3 flex-col desktop:flex-row">
-      {/* DESKTOP PAGINATION */}
-      <div className="gap-0.5 hidden desktop:flex">
-        {displayPages().map((number, index) => (
-          <div
-            className={`min-w-9 h-9 max-h-9 p-2 flex items-center justify-center cursor-pointer ${
-              number === currentNumber
-                ? 'bg-onBackground rounded-full text-background'
-                : 'text-onBackgroundLow'
-            }`}
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-            onClick={() => typeof number === 'number' && setCurrentNumber(number)}
-          >
-            {number}
-          </div>
-        ))}
-      </div>
+  const handleInputChange = (e: any) => {
+    setPageNumber(e.target.value);
+  };
 
-      {/* MOBILE PAGINATION */}
-      <div className="flex gap-6 items-center justify-between desktop:hidden w-full">
-        <div>
-          <IconButton
-            className="text-paragraph-sm"
-            color="onBackground"
-            icon="ChevronLeft"
-            onClick={() => setCurrentNumber(currentNumber - 1)}
-            variant="bordered"
-          />
+  const handleGoClick = () => {
+    const page = parseInt(pageNumber, 10);
+    if (!isNaN(page) && page > 0 && page <= totalPages) {
+      setCurrentNumber(page);
+      setPageNumber('');
+    }
+  };
+
+  return (
+    <div className="flex justify-between w-full ">
+      <div className="w-full flex flex-col gap-3 items-end desktop:flex-row desktop:items-center desktop:gap-6">
+        {/* DESKTOP PAGINATION */}
+        <div className="gap-0.5 hidden desktop:flex">
+          {displayPages().map((number, index) => (
+            <div
+              className={`min-w-9 h-9 max-h-9 p-2 flex items-center justify-center cursor-pointer ${
+                number === currentNumber
+                  ? 'bg-onBackground rounded-full text-background'
+                  : 'text-onBackgroundLow'
+              }`}
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+              onClick={() => typeof number === 'number' && setCurrentNumber(number)}
+            >
+              {number}
+            </div>
+          ))}
         </div>
 
-        <div className="flex items-center">
+        {/* MOBILE PAGINATION */}
+        <div className="flex gap-6 items-center justify-between desktop:hidden w-full">
+          <div>
+            <IconButton
+              className="text-paragraph-sm"
+              color="onBackground"
+              icon="ChevronLeft"
+              onClick={() => setCurrentNumber(currentNumber - 1)}
+              variant="bordered"
+            />
+          </div>
+
+          <div className="flex items-center">
+            <Typography color="onBackgroundLow" variant="paragraph-sm">
+              {'Page'}
+            </Typography>
+            <Typography
+              className="mx-2 p-1.5 h-9 max-h-9 min-w-9 flex items-center justify-center bg-onBackground rounded-full text-background"
+              color="background"
+              variant="paragraph-sm"
+            >
+              {currentNumber}
+            </Typography>
+            <Typography color="onBackgroundLow" variant="paragraph-sm">
+              {'of'} {pages.length}
+            </Typography>
+          </div>
+          <div>
+            <IconButton
+              icon="ChevronRight"
+              onClick={() => setCurrentNumber(currentNumber + 1)}
+              variant="bordered"
+            />
+          </div>
+        </div>
+
+        {/* PAGE GO */}
+        <div className="flex items-center gap-2">
           <Typography color="onBackgroundLow" variant="paragraph-sm">
             {'Page'}
           </Typography>
-          <Typography
-            className="mx-2 p-1.5 h-9 max-h-9 min-w-9 flex items-center justify-center bg-onBackground rounded-full text-background"
-            color="background"
-            variant="paragraph-sm"
-          >
-            {currentNumber}
-          </Typography>
-          <Typography color="onBackgroundLow" variant="paragraph-sm">
-            {'of'} {pages.length}
-          </Typography>
-        </div>
-        <div>
-          <IconButton
-            icon="ChevronRight"
-            onClick={() => setCurrentNumber(currentNumber + 1)}
-            variant="bordered"
+          <Input
+            className="max-w-11 h-11 max-h-11 text-paragraph-sm"
+            onChange={handleInputChange}
+            value={pageNumber}
+            variant="onBgPrimary"
           />
+          <div onClick={handleGoClick}>
+            <Typography
+              color="onBackground"
+              fontWeight="semibold"
+              style={{ cursor: 'pointer' }}
+              variant="paragraph-sm"
+            >
+              {'Go'}
+            </Typography>
+          </div>
         </div>
-      </div>
-
-      {/* PAGE GO */}
-      <div className="flex items-center gap-2">
-        <Typography color="onBackgroundLow" variant="paragraph-sm">
-          {'Page'}
-        </Typography>
-        <Input className="max-w-11 h-11 max-h-11 text-paragraph-sm" variant="onBgPrimary"></Input>
-        <Typography color="onBackground" fontWeight="semibold" variant="paragraph-sm">
-          {'Go'}
-        </Typography>
       </div>
 
       {/* DESKTOP BUTTONS */}
