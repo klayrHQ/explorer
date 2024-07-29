@@ -54,7 +54,7 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
       <div className="flex">
         {displayPages().map((number, index) => (
           <div
-            className={`min-w-9 min-h-9 p-2 flex items-center justify-center cursor-pointer ${
+            className={`min-w-9 h-9 max-h-9 p-2 flex items-center justify-center cursor-pointer ${
               number === currentNumber
                 ? 'bg-onBackground rounded-full text-background'
                 : 'text-onBackgroundLow'
