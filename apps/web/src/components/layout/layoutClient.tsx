@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { FlexGrid } from '@repo/ui/atoms';
+import { FlexGrid, Grid } from '@repo/ui/atoms';
 import { Sidebar } from '@repo/ui/organisms';
 import { cls } from '@repo/ui/utils';
 import { TopbarClient } from './topbarClient.tsx';
@@ -9,7 +9,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <FlexGrid className={'bg-backgroundDark'} direction={'row'} gap={'0'}>
       <Sidebar logo={logo} menuItems={menuItems} />
-      <FlexGrid className={'w-full'} direction={'col'} gap={'0'}>
+      <Grid className={'w-full'} gap={'0'}>
         <TopbarClient logo={logo} mobileMenuItems={mobileMenuItems} />
         <main
           className={cls([
@@ -22,7 +22,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         >
           {children}
         </main>
-      </FlexGrid>
+      </Grid>
     </FlexGrid>
   );
 };
