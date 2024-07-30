@@ -81,7 +81,7 @@ export const createTransactionRows = (
                     </Tooltip>
                   </Typography>
                 ),
-                className: 'group/child min-w-[120px]',
+                className: 'group/child',
               },
               {
                 children: (

@@ -149,6 +149,8 @@ const screens = {
   mobile: { max: '439px' },
   tablet: '440px',
   desktop: '1024px',
+  desktopLg: '1200px',
+  desktopXl: '1600px',
   sidebarBp: { raw: '(max-height: 800px)' },
 };
 

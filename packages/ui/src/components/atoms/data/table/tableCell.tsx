@@ -19,8 +19,8 @@ export const TableCell = forwardRef(
         className={cls([
           className,
           type === 'head'
-            ? 'py-lg px-3xl border-t-0 h-thHeight text-left font-medium'
-            : 'py-xl px-3xl border-t-1 border-t-borderLow h-trHeight',
+            ? 'py-lg px-3xl desktop:px-1.5xl desktopXl:px-3xl border-t-0 h-thHeight text-left font-medium'
+            : 'py-xl px-3xl desktop:px-1.5xl desktopXl:px-3xl border-t-1 border-t-borderLow h-trHeight',
           lastRow ? 'border-b-0' : 'border-b-1 border-borderLow',
         ])}
         {...props}
