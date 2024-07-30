@@ -277,7 +277,6 @@ const height = {
   min: 'min-content',
   buttonHeight: '40px',
   inputHeight: '44px',
-  badgeHeight: '26px',
   newsCardHeight: '240px',
   newsCardContainerHeight: '424px',
   newsCardContainerMobileHeight: '324px',
