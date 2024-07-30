@@ -1,15 +1,15 @@
-import React, {ForwardedRef, forwardRef, Ref} from 'react';
-import {Button as MuiButton, ButtonOwnProps} from '@mui/base';
-import {Typography} from "../base/typography";
-import {cva} from "class-variance-authority";
+import React, { ForwardedRef, forwardRef, Ref } from 'react';
+import { Button as MuiButton, ButtonOwnProps } from '@mui/base';
+import { Typography } from '../base/typography';
+import { cva } from 'class-variance-authority';
 
 interface ButtonProps extends ButtonOwnProps {
-  variant?: "primary" | "secondary" | "transparent";
+  variant?: 'primary' | 'secondary' | 'transparent';
   className?: string;
   fullWidth?: boolean;
   label: string | React.ReactNode;
   onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
-  align?: "left" | "center" | "right" | "none";
+  align?: 'left' | 'center' | 'right' | 'none';
   active?: boolean;
   hovered?: boolean;
   disabled?: boolean;
@@ -18,180 +18,179 @@ interface ButtonProps extends ButtonOwnProps {
 
 const buttonStyles = cva(
   [
-    "rounded-md flex items-center justify-center h-buttonHeight",
-    "transition-all duration-200 ease-in-out",
+    'rounded-md flex items-center justify-center h-buttonHeight',
+    'transition-all duration-200 ease-in-out',
   ],
   {
     variants: {
       variant: {
-        primary: "text-gray-8",
-        secondary: "text-gray-1",
-        transparent: "text-gray-1",
+        primary: 'text-gray-8',
+        secondary: 'text-gray-1',
+        transparent: 'text-gray-1',
       },
       iconOnly: {
-        true: "p-xl w-iconButtonWidth",
-        false: "py-xl px-2xl",
+        true: 'p-xl w-iconButtonWidth',
+        false: 'py-xl px-2xl',
       },
       fullWidth: {
-        true: "w-full",
-        false: "w-auto",
-        undefined: "w-auto",
+        true: 'w-full',
+        false: 'w-auto',
+        undefined: 'w-auto',
       },
       align: {
-        left: "mr-auto",
-        center: "mx-auto",
-        right: "ml-auto",
-        none: "",
-        undefined: "mx-auto",
+        left: 'mr-auto',
+        center: 'mx-auto',
+        right: 'ml-auto',
+        none: '',
+        undefined: 'mx-auto',
       },
       hovered: {
-        true: "",
-        false: "",
+        true: '',
+        false: '',
       },
       disabled: {
-        true: "",
-        false: "",
+        true: '',
+        false: '',
       },
       active: {
-        true: "",
-        false: "",
+        true: '',
+        false: '',
       },
     },
-    compoundVariants:[
+    compoundVariants: [
       //hovered
       {
         hovered: true,
-        variant: "primary",
+        variant: 'primary',
         disabled: false,
-        className: "bg-voltDark",
+        className: 'bg-voltDark',
       },
       {
         hovered: false,
-        variant: "primary",
+        variant: 'primary',
         disabled: false,
-        className: "bg-volt hover:bg-voltDark",
+        className: 'bg-volt hover:bg-voltDark',
       },
       {
         hovered: true,
-        variant: "secondary",
+        variant: 'secondary',
         disabled: false,
-        className: "bg-azuleDark",
+        className: 'bg-azuleDark',
       },
       {
         hovered: false,
-        variant: "secondary",
+        variant: 'secondary',
         disabled: false,
-        className: "bg-azule hover:bg-azuleDark",
+        className: 'bg-azule hover:bg-azuleDark',
       },
       {
         hovered: true,
-        variant: "transparent",
+        variant: 'transparent',
         disabled: false,
-        className: "bg-gray-7",
+        className: 'bg-gray-7',
       },
       {
         hovered: false,
-        variant: "transparent",
+        variant: 'transparent',
         disabled: false,
-        className: "transparent hover:bg-gray-7",
+        className: 'transparent hover:bg-gray-7',
       },
       //active
       {
         active: true,
-        variant: "primary",
+        variant: 'primary',
         disabled: false,
-        className: "bg-voltDark",
+        className: 'bg-voltDark',
       },
       {
         active: false,
-        variant: "primary",
+        variant: 'primary',
         disabled: false,
-        className: "bg-volt hover:bg-voltDark",
+        className: 'bg-volt hover:bg-voltDark',
       },
       {
         active: true,
-        variant: "secondary",
+        variant: 'secondary',
         disabled: false,
-        className: "bg-azuleDark",
+        className: 'bg-azuleDark',
       },
       {
         active: false,
-        variant: "secondary",
+        variant: 'secondary',
         disabled: false,
-        className: "bg-azule hover:bg-azuleDark",
+        className: 'bg-azule hover:bg-azuleDark',
       },
       {
         active: true,
-        variant: "transparent",
+        variant: 'transparent',
         disabled: false,
-        className: "text-gray-6",
+        className: 'text-gray-6',
       },
       {
         active: false,
-        variant: "transparent",
+        variant: 'transparent',
         disabled: false,
-        className: "text-gray-5 hover:text-gray-6",
+        className: 'text-gray-5 hover:text-gray-6',
       },
       //disabled
       {
         disabled: true,
-        variant: "primary",
-        className: "grayscale-60p bg-volt cursor-not-allowed",
+        variant: 'primary',
+        className: 'grayscale-60p bg-volt cursor-not-allowed',
       },
       {
         disabled: true,
-        variant: "secondary",
-        className: "grayscale-60p bg-azule cursor-not-allowed",
+        variant: 'secondary',
+        className: 'grayscale-60p bg-azule cursor-not-allowed',
       },
       {
         disabled: true,
-        variant: "transparent",
-        className: "grayscale-60p cursor-not-allowed",
+        variant: 'transparent',
+        className: 'grayscale-60p cursor-not-allowed',
       },
     ],
   },
 );
 
 // eslint-disable-next-line react/display-name
-export const Button = forwardRef((
-  {
-    variant = "primary",
-    className,
-    fullWidth,
-    label,
-    onClick,
-    align,
-    active,
-    hovered = false,
-    disabled = false,
-    iconOnly = false,
-    ...props
-  }: ButtonProps,
-  ref: Ref<HTMLButtonElement>,
-) => {
-  return (
-    <MuiButton
-      {...props}
-      className={buttonStyles({
-        variant,
-        fullWidth,
-        align,
-        active,
-        hovered,
-        disabled,
-        iconOnly,
-        className: className,
-      })}
-      onClick={onClick}
-      ref={ref}
-      type="button"
-    >
-      <Typography
-        className={"inline-flex items-center gap-2 leading-none"}
-        fontWeight={"semibold"}
+export const Button = forwardRef(
+  (
+    {
+      variant = 'primary',
+      className,
+      fullWidth,
+      label,
+      onClick,
+      align,
+      active,
+      hovered = false,
+      disabled = false,
+      iconOnly = false,
+      ...props
+    }: ButtonProps,
+    ref: Ref<HTMLButtonElement>,
+  ) => {
+    return (
+      <MuiButton
+        {...props}
+        className={buttonStyles({
+          variant,
+          fullWidth,
+          align,
+          active,
+          hovered,
+          disabled,
+          iconOnly,
+          className: className,
+        })}
+        onClick={onClick}
+        ref={ref}
+        type="button"
       >
-        {label}
-      </Typography>
-    </MuiButton>
-  );
-});
+        <Typography className={'inline-flex items-center gap-2'} fontWeight={'semibold'}>
+          {label}
+        </Typography>
+      </MuiButton>
+    );
+  },
+);

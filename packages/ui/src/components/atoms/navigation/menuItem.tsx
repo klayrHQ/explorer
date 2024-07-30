@@ -83,7 +83,7 @@ export const MenuItem = ({
 
   const menuItemInnerComponents = (
     <Typography
-      className={'inline-flex items-center gap-2 leading-none w-full'}
+      className={'inline-flex items-center gap-2 w-full'}
       color={'inherit'}
       fontWeight={'semibold'}
     >

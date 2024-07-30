@@ -58,7 +58,7 @@ export const Transactions = () => {
   const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
 
   return (
-    <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
+    <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
       <SectionHeader
         count={totalTxs}
         subTitle={'Overview of all transactions on the blockchain'}
