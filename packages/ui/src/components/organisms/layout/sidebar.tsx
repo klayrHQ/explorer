@@ -27,12 +27,16 @@ export const Sidebar = ({ menuItems, logo }: SidebarProps) => {
         'h-screen bg-gray-8 gap-8 relative hidden desktop:flex',
         'transition-all duration-200 ease-in-out',
         isMinimized
-          ? 'w-sidebarMinWidth px-sidebarMinSpacing py-6'
+          ? 'w-sidebarMinWidth px-sidebarMinSpacing py-6 items-center'
           : 'min-w-sidebarWidth w-1/5 max-w-sidebarMaxWidth  p-6',
       ])}
       direction={'col'}
     >
-      <Logo {...logo} className={isMinimized ? 'mx-auto' : ''} minimized={isMinimized} />
+      <Logo
+        {...logo}
+        className={isMinimized ? ' items-center justify-center' : ''}
+        minimized={isMinimized}
+      />
       <MainMenu menuItems={menuItems} minimized={isMinimized} />
       <IconButton
         className={
