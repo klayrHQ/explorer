@@ -16,7 +16,7 @@ type BadgeProps = {
 export const Badge = ({
   colorVariant = 'primary',
   variant,
-  typographyVariant = 'paragraph-sm',
+  typographyVariant = 'caption',
   className,
   label,
   borderColor = 'backgroundTertiary',
