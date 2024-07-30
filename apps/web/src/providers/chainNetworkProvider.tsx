@@ -52,7 +52,6 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
         if (chains) {
           const chains = await response.json();
           setChains(chains.chains);
-          console.log(chains);
         }
       } catch (error) {
         console.error('Error fetching chains', error);

@@ -51,7 +51,6 @@ export const Blocks = () => {
             includeAssets: true,
           },
         });
-        console.log(data.data);
 
         if (data) {
           const blocks: BlockDetailsType[] = data.data;
