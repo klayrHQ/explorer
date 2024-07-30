@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={'overflow-hidden'} suppressHydrationWarning>
+    <html lang="en">
+      <body className={'overflow-hidden'}>
         <ChainNetworkProvider>
           <Layout>{children}</Layout>
         </ChainNetworkProvider>
