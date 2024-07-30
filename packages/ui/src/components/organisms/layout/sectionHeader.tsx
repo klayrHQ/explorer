@@ -14,11 +14,13 @@ interface SectionHeaderProps {
   href?: string;
   linkComponent?: LinkComponent;
   fullWidth?: boolean;
+  titleSizeNotLink?: 'h3' | 'h4' | 'h5' | 'h6';
 }
 
 export const SectionHeader = ({
   title,
   titleSize = 'lg',
+  titleSizeNotLink = 'h3',
   subTitle,
   count,
   className,
@@ -55,7 +57,12 @@ export const SectionHeader = ({
         </Link>
       ) : (
         <FlexGrid alignItems="center" gap="3" justify="center" mobileDirection="row">
-          <Typography color="gray-1" component="h3" fontWeight="bold" variant="h3">
+          <Typography
+            color="gray-1"
+            component={titleSizeNotLink}
+            fontWeight="bold"
+            variant={titleSizeNotLink}
+          >
             {title}
           </Typography>
           {count && (

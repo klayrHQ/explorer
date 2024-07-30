@@ -196,7 +196,11 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       icon: 'List',
       content: (
         <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4.5xl'}>
-          <SectionHeader count={transactions?.length} title={'Block transactions'} />
+          <SectionHeader
+            count={transactions?.length}
+            title={'Block transactions'}
+            titleSizeNotLink={'h5'}
+          />
           <TableContainer
             headCols={transactionTableHead}
             keyPrefix={'transactions'}
@@ -211,7 +215,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       icon: 'List',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader count={events?.length} title={'Block events'} />
+          <SectionHeader count={events?.length} title={'Block events'} titleSizeNotLink={'h5'} />
           <TableContainer headCols={eventsTableHead} keyPrefix={'tx-events'} rows={eventsRows} />
         </FlexGrid>
       ),
