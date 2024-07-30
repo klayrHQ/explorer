@@ -44,7 +44,7 @@ export const UserAccountCard = ({
         )}
         {name && !nameOnly && (
           <>
-            <Typography color={nameColor} fontWeight={fontWeight} variant={nameVariant}>
+            <Typography color={nameColor} fontWeight={'semibold'} variant={nameVariant}>
               {name}
             </Typography>
             <Typography color={addressColor} fontWeight={fontWeight} variant={addressVariant}>
