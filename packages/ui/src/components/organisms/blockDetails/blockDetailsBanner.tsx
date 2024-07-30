@@ -34,7 +34,7 @@ export const BlockDetailsBanner = ({
             />
           </Link>
 
-          <h3 className="text-heading-4 desktop:text-heading-3 ml-2 text-white font-bold">
+          <h3 className="text-heading-4 desktop:text-heading-3 text-white font-bold">
             <span className="mr-2">Block</span>
             {height}
           </h3>
