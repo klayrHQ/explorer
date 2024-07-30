@@ -115,7 +115,7 @@ export const kpisObject = [
     keyValue: 'KLY: ',
     contentValue: (
       <Typography
-        className={'inline-flex items-center gap-2'}
+        className={'inline-flex items-center gap-1'}
         color={'gray-5'}
         variant={'paragraph-sm'}
       >
