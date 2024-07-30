@@ -7,7 +7,15 @@ import {
   shortString,
 } from '@repo/ui/utils';
 import { TxDataPopover } from '@repo/ui/molecules';
-import { Badge, Currency, Icon, Tooltip, Typography, UserAccountCard } from '@repo/ui/atoms';
+import {
+  Badge,
+  Currency,
+  Icon,
+  JsonViewer,
+  Tooltip,
+  Typography,
+  UserAccountCard,
+} from '@repo/ui/atoms';
 import Link from 'next/link';
 import React from 'react';
 import {
@@ -17,6 +25,7 @@ import {
   getTableSkeletons,
   transactionTableHead,
 } from './constants.tsx';
+import {DataType} from "@repo/ui/types";
 
 export const createTransactionRows = (
   transactions: TransactionType[] | undefined,
@@ -156,6 +165,7 @@ export const createEventsRows = (events: EventsType[] | undefined, loading: bool
   return !loading
     ? events?.map((event) => {
         return {
+          rowDetails: <JsonViewer className={'!border-0'} copy data={{data: event.data as unknown as DataType}} startOpen />,
           cells: [
             {
               children: (
