@@ -56,7 +56,7 @@ export const BannerText = ({
       />
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
-        send
+        {'send'}
       </Typography>
 
       {/* RECEIVER */}
@@ -75,14 +75,14 @@ export const BannerText = ({
       )}
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
-        the amount of
+        {'the amount of'}
       </Typography>
 
       {/* AMOUNT */}
       <Currency amount={amount ?? 0} decimals={3} fontWeight="semibold" symbol={symbol} />
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
-        in type
+        {'in type'}
       </Typography>
 
       {/* MODULE COMMAND */}
@@ -102,7 +102,7 @@ export const BannerText = ({
       </Typography>
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
-        and was
+        {'and is'}
       </Typography>
 
       {/* EXECUTION STATUS */}
