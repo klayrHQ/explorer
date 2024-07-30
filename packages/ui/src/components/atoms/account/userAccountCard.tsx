@@ -38,42 +38,22 @@ export const UserAccountCard = ({
       <Avatar address={address} circle size={size} />
       <FlexGrid direction={'col'} gap={'0'}>
         {name && nameOnly && (
-          <Typography
-            className={'leading-none'}
-            color={nameColor}
-            fontWeight={fontWeight}
-            variant={nameVariant}
-          >
+          <Typography color={nameColor} fontWeight={fontWeight} variant={nameVariant}>
             {name}
           </Typography>
         )}
         {name && !nameOnly && (
           <>
-            <Typography
-              className={'leading-none'}
-              color={nameColor}
-              fontWeight={fontWeight}
-              variant={nameVariant}
-            >
+            <Typography color={nameColor} fontWeight={fontWeight} variant={nameVariant}>
               {name}
             </Typography>
-            <Typography
-              className={'leading-none'}
-              color={addressColor}
-              fontWeight={fontWeight}
-              variant={addressVariant}
-            >
+            <Typography color={addressColor} fontWeight={fontWeight} variant={addressVariant}>
               {shortString(address, 12, 'center')}
             </Typography>
           </>
         )}
         {!name && (
-          <Typography
-            className={'leading-none'}
-            color={addressColor}
-            fontWeight={fontWeight}
-            variant={addressVariant}
-          >
+          <Typography color={addressColor} fontWeight={fontWeight} variant={addressVariant}>
             {shortString(address, 12, 'center')}
           </Typography>
         )}
