@@ -140,6 +140,7 @@ export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: 
           className={cls([
             'relative',
             hoveredItem === `${parentKey ? `${parentKey}-` : ''}${key}` ? 'bg-backgroundSecondary' : ',',
+            copy && 'pr-6',
           ])}
           key={`${parentKey ? `${parentKey}-` : ''}${key}`}
           onMouseEnter={() => setHoveredItem(`${parentKey ? `${parentKey}-` : ''}${key}`)}
