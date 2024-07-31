@@ -84,6 +84,7 @@ export const menuItems = [
     label: 'Dashboard',
     icon: 'BarChartSquare',
     href: '/',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Blockchain',
