@@ -111,7 +111,7 @@ export const MenuItem = ({
   );
 
   return href ? (
-    <Link className={'h-max flex'} component={linkComponent} href={href}>
+    <Link className={'h-max flex w-full'} component={linkComponent} href={href}>
       <li
         className={menuItemStyles({
           active: isActive,
