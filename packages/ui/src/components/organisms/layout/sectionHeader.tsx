@@ -65,7 +65,7 @@ export const SectionHeader = ({
           >
             {title}
           </Typography>
-          {count && (
+          {count !== undefined && count !== null && (
             <div
               className={
                 'bg-secondary rounded-sm p-2 h-9 min-w-9 flex items-center justify-center '
