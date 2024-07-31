@@ -323,9 +323,9 @@ export const transactionTableHead: TableCellType[] = [
 
 export const eventsTableHead = [
   {
-    children: <Typography variant={'paragraph-md'}>{'Module'}</Typography>,
+    children: <Typography variant={'paragraph-sm'}>{'Module'}</Typography>,
   },
   {
-    children: <Typography variant={'paragraph-md'}>{'Name'}</Typography>,
+    children: <Typography variant={'paragraph-sm'}>{'Name'}</Typography>,
   },
 ];
