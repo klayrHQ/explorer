@@ -89,7 +89,7 @@ export const MenuItem = ({
 
   const menuItemInnerComponents = (
     <Typography
-      className={'inline-flex items-center gap-3 w-full'}
+      className={'inline-flex items-center gap-3 w-full '}
       color={'inherit'}
       fontWeight={'semibold'}
     >
@@ -111,7 +111,7 @@ export const MenuItem = ({
   );
 
   return href ? (
-    <Link className={'h-max flex w-full'} component={linkComponent} href={href}>
+    <Link className={'h-max flex w-full mb-2'} component={linkComponent} href={href}>
       <li
         className={menuItemStyles({
           active: isActive,
