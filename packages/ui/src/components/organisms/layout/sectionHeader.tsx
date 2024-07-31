@@ -9,7 +9,7 @@ interface SectionHeaderProps {
   title: string;
   titleSize?: 'lg' | 'sm';
   subTitle?: string;
-  count?: number;
+  count?: number | string;
   className?: string;
   href?: string;
   linkComponent?: LinkComponent;
