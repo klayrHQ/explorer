@@ -1,5 +1,5 @@
 import './globals.css';
-import '@repo/ui/theme.css';
+import '@repo/ui/styles.css';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import { Layout } from '../../components/layout/layoutClient.tsx';

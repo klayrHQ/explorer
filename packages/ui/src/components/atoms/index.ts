@@ -39,3 +39,4 @@ export * from "./account/userAccountCard";
 export * from "./account/avatar/avatar";
 export * from "./utilities/tooltip";
 export * from "./utilities/popover";
+export * from "./utilities/transitions/slideFromRight";

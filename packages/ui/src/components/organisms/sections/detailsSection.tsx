@@ -60,7 +60,7 @@ export const DetailsSection = ({ title, data, json }: DetailsSectionsProps) => {
                   {'View as .json'}
                 </Typography>
               }
-              onClick={() => setJsonOpen(true)}
+              onClick={() => setJsonOpen(!jsonOpen)}
               variant={'transparent'}
             />
             <SlideInModal
