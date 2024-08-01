@@ -169,7 +169,7 @@ export const createEventsRows = (events: EventsType[] | undefined, loading: bool
           cells: [
             {
               children: (
-                <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>
+                <Typography color={'onBackgroundHigh'} variant={'paragraph-sm'}>
                   {event.module}
                 </Typography>
               ),
@@ -177,7 +177,7 @@ export const createEventsRows = (events: EventsType[] | undefined, loading: bool
             },
             {
               children: (
-                <Typography color={'onBackgroundHigh'} variant={'paragraph-md'}>
+                <Typography color={'onBackgroundHigh'} variant={'paragraph-sm'}>
                   {event.name}
                 </Typography>
               ),
