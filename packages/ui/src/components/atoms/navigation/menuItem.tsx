@@ -7,6 +7,7 @@ import { IconComponent } from '../../../types/types.ts';
 import { SubMenu } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
 import { Link } from './link.tsx';
+import { usePathname } from 'next/navigation';
 
 export interface MenuItemProps {
   label: string | React.ReactNode;
@@ -36,7 +37,6 @@ const menuItemStyles = cva(
       },
       hovered: {
         true: 'bg-gray-7',
-        false: 'bg-transparent',
       },
       disabled: {
         true: 'text-gray-1 hover:text-gray-1 grayscale-6 cursor-not-allowed',
@@ -71,6 +71,12 @@ export const MenuItem = ({
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
 
+  const currentPath = usePathname();
+
+  const firstPartOfCurrentPath = currentPath.split('/')[1];
+  const firstPartOfHref = href?.split('/')[1];
+  const isActive = firstPartOfCurrentPath === firstPartOfHref;
+
   const handleHover = (event: React.MouseEvent<HTMLElement>, open: boolean) => {
     if (open) {
       setIsSubMenuOpen(true);
@@ -83,7 +89,7 @@ export const MenuItem = ({
 
   const menuItemInnerComponents = (
     <Typography
-      className={'inline-flex items-center gap-2 w-full'}
+      className={'inline-flex items-center gap-3 w-full '}
       color={'inherit'}
       fontWeight={'semibold'}
     >
@@ -105,10 +111,10 @@ export const MenuItem = ({
   );
 
   return href ? (
-    <Link className={'h-max flex'} component={linkComponent} href={href}>
+    <Link className={'h-max flex w-full mb-2'} component={linkComponent} href={href}>
       <li
         className={menuItemStyles({
-          active,
+          active: isActive,
           hovered,
           disabled,
           className,
@@ -128,7 +134,7 @@ export const MenuItem = ({
   ) : (
     <li
       className={menuItemStyles({
-        active,
+        active: isActive,
         hovered,
         disabled,
         className,

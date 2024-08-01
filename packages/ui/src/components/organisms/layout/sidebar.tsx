@@ -9,7 +9,7 @@ import {
   LogoProps,
   MenuItemProps,
 } from '../../atoms';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cls } from '../../../utils/functions.ts';
 
 interface SidebarProps {
@@ -19,7 +19,19 @@ interface SidebarProps {
 
 export const Sidebar = ({ menuItems, logo }: SidebarProps) => {
   const [isMinimized, setIsMinimized] = useState(false);
-  const toggleMinimized = () => setIsMinimized(!isMinimized);
+
+  useEffect(() => {
+    const savedState = localStorage.getItem('sidebarMinimized');
+    if (savedState !== null) {
+      setIsMinimized(JSON.parse(savedState));
+    }
+  }, []);
+
+  const toggleMinimized = () => {
+    const newState = !isMinimized;
+    setIsMinimized(newState);
+    localStorage.setItem('sidebarMinimized', JSON.stringify(newState));
+  };
 
   return (
     <FlexGrid
