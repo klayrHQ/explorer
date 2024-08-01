@@ -1,0 +1,45 @@
+/* Legend */
+.MuiChartsLegend-mark {
+  clip-path: circle(50% at 50% 50%);
+}
+
+/* Pie chart */
+.MuiPieArc-root.MuiPieArc-root {
+  stroke-width: 0;
+}
+
+/* Tooltip */
+.MuiChartsTooltip-root.MuiChartsTooltip-root {
+  background-color: var(--color-backgroundPrimary);
+  font-family: "Poppins", "Inter", "verdana", sans-serif;
+  font-size: 12px;
+  box-shadow: var(--shadow-md);
+  border-radius: 6px;
+}
+
+.MuiChartsTooltip-valueCell.MuiChartsTooltip-valueCell, .MuiChartsTooltip-labelCell.MuiChartsTooltip-labelCell {
+  color: var(--color-onBackgroundHigh);
+}
+
+.MuiChartsTooltip-valueCell.MuiChartsTooltip-valueCell {
+  font-weight: 600;
+}
+
+.MuiChartsTooltip-cell.MuiChartsTooltip-cell {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+td:first-of-type.MuiChartsTooltip-cell.MuiChartsTooltip-cell {
+  padding-left: 10px;
+}
+
+td:last-of-type.MuiChartsTooltip-cell.MuiChartsTooltip-cell {
+  padding-right: 10px;
+}
+
+.MuiChartsTooltip-mark.MuiChartsTooltip-mark {
+  border: none;
+  height: 10px;
+  width: 10px;
+}

@@ -11,6 +11,7 @@
   */
 
   /* Typography */
+  --font-family: 'Poppins', 'Inter', 'Verdana', 'sans-serif';
   --heading-1-size: 34px;
   --heading-1-lineHeight: 44px;
   --heading-2-size: 33px;
