@@ -21,6 +21,7 @@ export interface MenuItemProps {
   href?: string;
   variant?: 'default' | 'small';
   square?: boolean;
+  onClick?: () => void;
 }
 
 const menuItemStyles = cva(
@@ -67,6 +68,7 @@ export const MenuItem = ({
   href,
   variant = 'default',
   square = false,
+  onClick,
 }: MenuItemProps) => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
@@ -105,8 +107,13 @@ export const MenuItem = ({
   );
 
   return href ? (
-    <Link className={'h-max flex'} component={linkComponent} href={href}>
-      <li
+    <li
+      className={'h-max flex w-full'}
+      onMouseEnter={(event) => handleHover(event, true)}
+      onMouseLeave={(event) => handleHover(event, false)}
+      onClick={onClick}
+    >
+      <Link
         className={menuItemStyles({
           active,
           hovered,
@@ -116,15 +123,15 @@ export const MenuItem = ({
           variant,
           square,
         })}
-        onMouseEnter={(event) => handleHover(event, true)}
-        onMouseLeave={(event) => handleHover(event, false)}
+        component={linkComponent}
+        href={href}
       >
         {menuItemInnerComponents}
         {subMenu && (
           <SubMenu anchorElement={anchorElement} menuItems={subMenu} open={isSubMenuOpen} />
         )}
-      </li>
-    </Link>
+      </Link>
+    </li>
   ) : (
     <li
       className={menuItemStyles({
@@ -138,6 +145,7 @@ export const MenuItem = ({
       })}
       onMouseEnter={(event) => handleHover(event, true)}
       onMouseLeave={(event) => handleHover(event, false)}
+      onClick={onClick}
     >
       {menuItemInnerComponents}
       {subMenu && (

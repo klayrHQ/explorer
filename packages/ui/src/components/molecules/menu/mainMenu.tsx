@@ -1,4 +1,4 @@
-import { MenuItem, MenuItemProps } from '../../atoms';
+import {FlexGrid, MenuItem, MenuItemProps} from '../../atoms';
 
 interface MainMenuProps {
   menuItems: MenuItemProps[];
@@ -8,16 +8,15 @@ interface MainMenuProps {
 export const MainMenu = ({ menuItems, minimized, }: MainMenuProps) => {
   return (
     <nav className={'w-full'}>
-      <ul className={'bg-gray-8 w-full'}>
+      <FlexGrid className={'bg-gray-8 w-full'} component={'ul'} direction={'col'} gap={'md'}>
         {menuItems.map((item, index) => (
           <MenuItem
             key={`menu-item-${index + 1}`}
             minimized={minimized}
             {...item}
-            className={'mb-2 last:mb-0'}
           />
         ))}
-      </ul>
+      </FlexGrid>
     </nav>
   );
 };
