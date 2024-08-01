@@ -1,17 +1,9 @@
 @import "./theme.css";
+@import "./charts.css";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 :root {
   background-color: var(--color-backgroundPrimary);
   color: var(--color-body);
   font-family: "Poppins", "Inter", "verdana", sans-serif;
-}
-
-/* Charts */
-.MuiChartsLegend-mark {
-  clip-path: circle(50% at 50% 50%);
-}
-
-.MuiPieArc-root.MuiPieArc-root {
-  stroke-width: 0;
 }

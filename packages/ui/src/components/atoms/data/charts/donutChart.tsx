@@ -44,6 +44,13 @@ export const DonutChart = ({
           innerRadius: sizeAuto ? '45%' : size ? size / 4 : 25,
           outerRadius: sizeAuto ? '90%' : size ? size / 2 : 50,
           cx: sizeAuto ? undefined : chartOffset ? chartOffset : size ? size / 2 : 50,
+          highlightScope: {
+            highlight: 'item',
+            fade: 'none',
+          },
+          highlighted: {
+            additionalRadius: size ? size / 10 : 5,
+          }
         },
       ]}
       slotProps={{
@@ -52,7 +59,7 @@ export const DonutChart = ({
             fontSize: '14px',
             fontWeight: 'bold',
             fontFamily: 'var(--font-family)',
-            fill: 'var(--color-onBackgroundHigh)',
+            fill: 'var(--color-onBackgroundMedium)',
           },
           itemMarkWidth: 8,
           itemMarkHeight: 8,
