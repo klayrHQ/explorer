@@ -167,8 +167,11 @@ export const Blocks = () => {
               ),
             },
             {
-              //todo get from data
-              children: <Typography color={'onBackgroundLow'}>{0}</Typography>,
+              children: (
+                <Typography color={'onBackgroundLow'}>
+                  {(block.numberOfEvents || 0).toLocaleString()}
+                </Typography>
+              ),
             },
             {
               children: (
