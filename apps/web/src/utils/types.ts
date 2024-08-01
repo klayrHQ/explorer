@@ -18,7 +18,7 @@ export interface TransactionType {
   minFee: string;
   size: number;
   block: BlockType;
-  sender: SenderType;
+  sender: AccountType;
   params: ParamsType;
   signatures: string[];
   executionStatus: string;
@@ -37,12 +37,6 @@ export interface BlockType {
   isFinal: boolean;
 }
 
-export interface SenderType {
-  address: string;
-  publicKey: string;
-  name: string;
-}
-
 export interface ParamsType {
   tokenID: string;
   amount: string;
@@ -51,13 +45,7 @@ export interface ParamsType {
 }
 
 export interface MetaType {
-  recipient: RecipientType;
-}
-
-export interface RecipientType {
-  address: string;
-  publicKey: any;
-  name: any;
+  recipient: AccountType;
 }
 
 export interface BlockDetailsType {
@@ -114,4 +102,37 @@ export interface EventsDataType {
   amount?: string;
   result?: number;
   reduction?: number;
+}
+
+export interface ValidatorType {
+address: string;
+  totalStake: string;
+  selfStake: string;
+  validatorWeight: string;
+  generatedBlocks: number;
+  rank: number;
+  blsKey: string;
+  proofOfPossession: string;
+  generatorKey: string;
+  lastGeneratedHeight: number;
+  isBanned: boolean;
+  status: string;
+  reportMisbehaviorHeights: string[];
+  punishmentPeriods: string;
+  consecutiveMissedBlocks: number;
+  commission: number;
+  lastCommissionIncreaseHeight: number;
+  sharingCoefficients: SharingCoefficientType[];
+  account: AccountType;
+}
+
+export interface SharingCoefficientType {
+  tokenID: string;
+  coefficient: string;
+}
+
+export interface AccountType {
+  address: string;
+  publicKey: string;
+  name: string;
 }

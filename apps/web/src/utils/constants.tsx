@@ -13,11 +13,13 @@ export const mobileMenuItems = [
     label: 'Dashboard',
     icon: 'BarChartSquare',
     href: '/',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Transactions',
     icon: 'SwitchHorizontal',
     href: '/transactions',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Users',
@@ -26,11 +28,14 @@ export const mobileMenuItems = [
   {
     label: 'Validators',
     icon: 'Flag',
+    href: '/validators',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Blocks',
     icon: 'Cube',
     href: '/blocks',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Tokens',
@@ -62,6 +67,8 @@ export const subMenu = [
   {
     label: 'Validators',
     icon: 'Flag',
+    href: '/validators',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Blocks',
