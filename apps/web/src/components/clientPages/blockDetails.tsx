@@ -149,8 +149,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Events',
       },
-      //todo get events from data when available
-      value: 0,
+      value: block?.numberOfEvents,
     },
     {
       label: {

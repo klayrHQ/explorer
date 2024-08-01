@@ -66,6 +66,7 @@ export interface BlockDetailsType {
   signature: string;
   aggregatedCommit: {};
   numberOfTransactions: number;
+  numberOfEvents: number;
   numberOfAssets: number;
   reward: string;
   isFinal: boolean;
@@ -105,7 +106,7 @@ export interface EventsDataType {
 }
 
 export interface ValidatorType {
-address: string;
+  address: string;
   totalStake: string;
   selfStake: string;
   validatorWeight: string;
