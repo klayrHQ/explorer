@@ -4,7 +4,7 @@ export const CrossClose = ({ className }: { className?: string }) => {
       className={className}
       fill="none"
       height="1em"
-      stroke-width="2"
+      strokeWidth="2"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
     >

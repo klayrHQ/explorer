@@ -77,6 +77,13 @@ const getKeyOnlyMap = (obj) => {
   ];
 };
 
+/*// @ts-ignore
+const getOpacityMap = (obj, prefix) => {
+  return Object.keys(percentages)
+    .map((opacity) => getKeyMap(obj, prefix).map((className) => `${className}/${opacity}`))
+    .flat();
+};*/
+
 const numberList = {
   px: 0,
   0: 0,
@@ -121,7 +128,9 @@ const numberList = {
 const config: Omit<Config, 'content'> = {
   safelist: [
     ...getKeyMap(colors, 'text'),
+    /*...getOpacityMap(colors, 'text'),*/
     ...getKeyMap(colors, 'bg'),
+    /*...getOpacityMap(colors, 'bg'),*/
     ...getKeyMap(colors, 'border'),
     ...getKeyMap(colors, 'border-t'),
     ...getKeyMap(colors, 'border-r'),
