@@ -93,12 +93,12 @@ const fontSize = {
   body: ['16px', { lineHeight: '22px' }],
   'display-1': ['72px', { lineHeight: '86px' }],
   'display-2': ['60px', { lineHeight: '76px' }],
-  'heading-1': ['48px', { lineHeight: '60px' }],
-  'heading-2': ['39px', { lineHeight: '50px' }],
-  'heading-3': ['33px', { lineHeight: '42px' }],
-  'heading-4': ['28px', { lineHeight: '36px' }],
-  'heading-5': ['22px', { lineHeight: '28px' }],
-  'heading-6': ['18px', { lineHeight: '25px' }],
+  'heading-1': ['var(--heading-1-size)', { lineHeight: 'var(--heading-1-lineHeight)' }],
+  'heading-2': ['var(--heading-2-size)', { lineHeight: 'var(--heading-2-lineHeight)' }],
+  'heading-3': ['var(--heading-3-size)', { lineHeight: 'var(--heading-3-lineHeight)' }],
+  'heading-4': ['var(--heading-4-size)', { lineHeight: 'var(--heading-4-lineHeight)' }],
+  'heading-5': ['var(--heading-5-size)', { lineHeight: 'var(--heading-5-lineHeight)' }],
+  'heading-6': ['var(--heading-6-size)', { lineHeight: 'var(--heading-6-lineHeight)' }],
   subheading: ['20px', { lineHeight: '26px' }],
   'paragraph-xl': ['21px', { lineHeight: '30px' }],
   'paragraph-lg': ['18px', { lineHeight: '26px' }],
@@ -145,6 +145,7 @@ const spacing = {
   sidebarMinSpacing: '22px',
 };
 
+//Note: some of these values are used in theme.css as well. If you change these values, make sure to update theme.css as well.
 const screens = {
   mobile: { max: '439px' },
   tablet: '440px',
