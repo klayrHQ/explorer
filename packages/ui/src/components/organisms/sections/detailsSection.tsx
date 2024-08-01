@@ -125,7 +125,7 @@ export const DetailsSection = ({ title, data, json }: DetailsSectionsProps) => {
                 </Tooltip>
               )}
             </FlexGrid>
-            <div className={'w-full'}>
+            <div className={'w-full inline-flex'}>
               <Typography className={'truncate max-w-full inline-block'} variant={'paragraph-lg'}>
                 {value}
               </Typography>

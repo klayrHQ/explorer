@@ -9,7 +9,7 @@ interface SectionHeaderProps {
   title: string;
   titleSize?: 'lg' | 'sm';
   subTitle?: string;
-  count?: number;
+  count?: number | string;
   className?: string;
   href?: string;
   linkComponent?: LinkComponent;
@@ -65,7 +65,7 @@ export const SectionHeader = ({
           >
             {title}
           </Typography>
-          {count && (
+          {count !== undefined && count !== null && (
             <div
               className={
                 'bg-secondary rounded-sm p-2 h-9 min-w-9 flex items-center justify-center '

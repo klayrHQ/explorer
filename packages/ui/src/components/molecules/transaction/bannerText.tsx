@@ -79,7 +79,7 @@ export const BannerText = ({
       </Typography>
 
       {/* AMOUNT */}
-      <Currency amount={amount ?? 0} decimals={3} fontWeight="semibold" symbol={symbol} />
+      <Currency amount={amount ?? 0} decimals={2} fontWeight="semibold" symbol={symbol} />
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'in type'}

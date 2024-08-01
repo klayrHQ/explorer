@@ -13,11 +13,13 @@ export const mobileMenuItems = [
     label: 'Dashboard',
     icon: 'BarChartSquare',
     href: '/',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Transactions',
     icon: 'SwitchHorizontal',
     href: '/transactions',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Users',
@@ -26,11 +28,14 @@ export const mobileMenuItems = [
   {
     label: 'Validators',
     icon: 'Flag',
+    href: '/validators',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Blocks',
     icon: 'Cube',
     href: '/blocks',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Tokens',
@@ -62,6 +67,8 @@ export const subMenu = [
   {
     label: 'Validators',
     icon: 'Flag',
+    href: '/validators',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Blocks',
@@ -84,6 +91,7 @@ export const menuItems = [
     label: 'Dashboard',
     icon: 'BarChartSquare',
     href: '/',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Blockchain',
@@ -323,9 +331,9 @@ export const transactionTableHead: TableCellType[] = [
 
 export const eventsTableHead = [
   {
-    children: <Typography variant={'paragraph-md'}>{'Module'}</Typography>,
+    children: <Typography variant={'paragraph-sm'}>{'Module'}</Typography>,
   },
   {
-    children: <Typography variant={'paragraph-md'}>{'Name'}</Typography>,
+    children: <Typography variant={'paragraph-sm'}>{'Name'}</Typography>,
   },
 ];

@@ -9,7 +9,14 @@ import {
   TableContainer,
 } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
-import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '@repo/ui/atoms';
+import {
+  Currency,
+  DateComponent,
+  FlexGrid,
+  NotFound,
+  TabButtons,
+  UserAccountCard,
+} from '@repo/ui/atoms';
 import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx';
 import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
 import { DataType } from '@repo/ui/types';
@@ -197,15 +204,22 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={transactions?.length}
+            count={transactions?.length || '0'}
             title={'Block transactions'}
             titleSizeNotLink={'h5'}
           />
-          <TableContainer
-            headCols={transactionTableHead}
-            keyPrefix={'transactions'}
-            rows={transactionRows}
-          />
+          {transactions?.length && transactions.length > 0 ? (
+            <TableContainer
+              headCols={transactionTableHead}
+              keyPrefix={'transactions'}
+              rows={transactionRows}
+            />
+          ) : (
+            <NotFound
+              headerText={'No transactions found'}
+              subheaderText={'We cannot find any transactions in this block'}
+            />
+          )}
         </FlexGrid>
       ),
     },

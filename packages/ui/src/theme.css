@@ -1,4 +1,29 @@
 :root {
+  /*  Note: These values serve as a reminder of what they are in the tailwind-classes.ts file.
+      If you change any media query here, you should also change it in the tailwind-classes.ts file.
+
+    break points
+      mobile: 439px;
+      tablet: 440px;
+      desktop: 1024px;
+      desktopLg: 1200px;
+      desktopXl: 1600px;
+  */
+
+  /* Typography */
+  --heading-1-size: 34px;
+  --heading-1-lineHeight: 44px;
+  --heading-2-size: 33px;
+  --heading-2-lineHeight: 42px;
+  --heading-3-size: 28px;
+  --heading-3-lineHeight: 36px;
+  --heading-4-size: 23px;
+  --heading-4-lineHeight: 30px;
+  --heading-5-size: 18px;
+  --heading-5-lineHeight: 25px;
+  --heading-6-size: 18px;
+  --heading-6-lineHeight: 25px;
+
   /* Base Colors */
   --color-darkBlue: #0C111D;
   --color-volt: #D4FF00;
@@ -115,4 +140,23 @@
   --color-borderHigh: var(--color-gray-6);
 
   --color-body: var(--color-gray-8);
+}
+
+/* Note: See Note at top of page about media query values */
+/* Desktop */
+@media (min-width: 1024px) {
+  :root {
+    --heading-1-size: 48px;
+    --heading-1-lineHeight: 60px;
+    --heading-2-size: 39px;
+    --heading-2-lineHeight: 50px;
+    --heading-3-size: 33px;
+    --heading-3-lineHeight: 42px;
+    --heading-4-size: 28px;
+    --heading-4-lineHeight: 36px;
+    --heading-5-size: 22px;
+    --heading-5-lineHeight: 28px;
+    --heading-6-size: 18px;
+    --heading-6-lineHeight: 25px;
+  }
 }
