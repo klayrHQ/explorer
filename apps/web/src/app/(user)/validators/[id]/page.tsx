@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
+import { ValidatorDetails } from '../../../../components/clientPages/validatorDetails';
 
-export default function Page() {
+export default function Page({ params }: { params: { id: string } }) {
   return (
     <Suspense>
-      <div />
+      <ValidatorDetails params={{ id: params.id }} />
     </Suspense>
   );
 }
