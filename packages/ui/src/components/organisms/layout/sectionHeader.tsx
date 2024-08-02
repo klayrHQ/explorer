@@ -30,7 +30,7 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
   return (
     <FlexGrid
-      className={cls([className, 'gap-5 desktop:gap-6', fullWidth && 'w-full'])}
+      className={cls([className, 'gap-5 desktop:gap-6 items-center', fullWidth && 'w-full'])}
       direction={'col'}
     >
       {href ? (
@@ -68,7 +68,7 @@ export const SectionHeader = ({
           {count !== undefined && count !== null && (
             <div
               className={
-                'bg-secondary rounded-sm p-2 h-9 min-w-9 flex items-center justify-center '
+                'bg-secondary rounded-sm p-2 h-9 my-0.5 min-w-9 flex items-center justify-center '
               }
             >
               <Typography color="onSecondary" variant="paragraph-sm">
