@@ -35,8 +35,8 @@ export const DetailsSection = ({ title, data, json }: DetailsSectionsProps) => {
   return (
     <FlexGrid className={'w-full'} component={'section'} direction={'col'} gap={'4.5xl'}>
       <FlexGrid
-        className={'w-full'}
         alignItems="center"
+        className={'w-full'}
         justify={'between'}
         mobileDirection={'row'}
       >
