@@ -4,6 +4,7 @@ import { CopyIcon } from '../../atoms/input/copyIcon';
 import { ImageNotification } from '../../atoms';
 import { BadgeIcon } from '../../atoms';
 import { ValidatorBannerButtons } from './validatorBannerButtons';
+import { UserAccountCard } from '../../atoms/account/userAccountCard';
 
 export interface ValidatorBannerHeaderProps {
   senderAddress: string;
@@ -26,47 +27,16 @@ export const ValidatorBannerHeader = ({
     <div className="flex justify-between items-center">
       <div className="flex gap-2 items-center">
         <ImageNotification imageUrl={imageUrl} name={name} notificationValue={notificationValue} />
-        {senderName ? (
-          <div className="flex flex-col ">
-            <div className="  w-full max-w-24 desktop:max-w-96">
-              <h3 className="text-heading-4 desktop:text-heading-3 font-bold hidden desktop:inline-flex">
-                {senderName}
-              </h3>
-              <h3 className="text-heading-4 desktop:text-heading-3 font-bold desktop:hidden truncate ">
-                {senderName}
-              </h3>
-            </div>
-
-            <div className="flex gap-2 items-center">
-              <Typography
-                className="hidden desktop:flex"
-                color="onBackgroundMedium"
-                fontWeight="normal"
-                variant="caption"
-              >
-                {trimSix(senderAddress)}
-              </Typography>
-              <Typography
-                className="desktop:hidden"
-                color="onBackgroundMedium"
-                fontWeight="normal"
-                variant="caption"
-              >
-                {trimFour(senderAddress)}
-              </Typography>
-              <CopyIcon content={senderAddress} size="xxs" />
-            </div>
-          </div>
-        ) : (
-          <div className="flex gap-2 items-center">
-            <h3 className="text-heading-4 desktop:text-heading-3 font-bold">
-              {' '}
-              {trimSix(senderAddress)}
-            </h3>
-            <CopyIcon content={senderAddress} size="xs" />
-          </div>
-        )}
-
+        <UserAccountCard
+          address={senderAddress}
+          addressColor="onBackground"
+          addressVariant="paragraph-md"
+          name={senderName}
+          nameColor="onBackground"
+          nameVariant="paragraph-md"
+          size={40}
+          width="auto"
+        />
         <div className="hidden desktop:flex">
           {online ? (
             <Badge
