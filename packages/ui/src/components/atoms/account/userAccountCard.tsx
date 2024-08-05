@@ -2,6 +2,7 @@ import { FlexGrid, Typography } from '@repo/ui/atoms';
 import { shortString } from '@repo/ui/utils';
 import { Avatar } from './avatar/avatar.tsx';
 import { TypographyVariant, FontWeight } from '../../../types/types.ts';
+import { CopyIcon } from "../input/copyIcon.tsx";
 
 interface UserAccountCardProps {
   address: string;
@@ -13,7 +14,9 @@ interface UserAccountCardProps {
   addressVariant?: TypographyVariant;
   width?: string;
   fontWeight?: FontWeight;
+  nameFontWeight?: FontWeight;
   nameOnly?: boolean;
+  copyIcon?: boolean;
 }
 
 export const UserAccountCard = ({
@@ -26,7 +29,9 @@ export const UserAccountCard = ({
   addressVariant = 'caption',
   width = 'full',
   fontWeight = 'normal',
+  nameFontWeight = 'semibold',
   nameOnly = false,
+  copyIcon = false,
 }: UserAccountCardProps) => {
   return (
     <FlexGrid
@@ -38,7 +43,7 @@ export const UserAccountCard = ({
       <Avatar address={address} circle size={size} />
       <FlexGrid direction={'col'} gap={'0'}>
         {name && nameOnly && (
-          <Typography color={nameColor} fontWeight={fontWeight} variant={nameVariant}>
+          <Typography color={nameColor} fontWeight={nameFontWeight} variant={nameVariant}>
             {name}
           </Typography>
         )}
@@ -47,9 +52,12 @@ export const UserAccountCard = ({
             <Typography color={nameColor} fontWeight={'semibold'} variant={nameVariant}>
               {name}
             </Typography>
-            <Typography color={addressColor} fontWeight={fontWeight} variant={addressVariant}>
-              {shortString(address, 12, 'center')}
-            </Typography>
+            <div className="flex items-center gap-2">
+              <Typography color={addressColor} fontWeight={fontWeight} variant={addressVariant}>
+                {shortString(address, 12, 'center')}
+              </Typography>
+              {copyIcon && <CopyIcon content={address} size={'xxs'} />}
+            </div>
           </>
         )}
         {!name && (

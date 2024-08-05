@@ -2,18 +2,11 @@ import { ImageContainer } from './imageContainer';
 import { NotificationIcon } from '../notifications/notificationIcon';
 
 export interface ImageNotificationProps {
-  imageUrl: string;
-  name: string;
   notificationValue: number | string;
   className?: string;
 }
 
-export const ImageNotification = ({
-  imageUrl,
-  name,
-  notificationValue,
-  className,
-}: ImageNotificationProps) => {
+export const ImageNotification = ({ notificationValue, className }: ImageNotificationProps) => {
   return (
     <div className={` relative inline-flex items-center gap-1 ${className}`}>
       <NotificationIcon

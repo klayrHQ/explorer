@@ -1,11 +1,10 @@
 import { Typography } from '../../atoms';
-import { CurrencyBadge } from '../../atoms/badges/currencyBadge';
 import { Currency } from '../../atoms/base/currency';
-import { Badge } from '../../atoms';
+import { BadgeNoIcon } from '../../atoms';
 
 export interface ValidatorBannerTextProps {
   senderName?: string | null;
-  stakes?: number;
+  stakes?: number | string;
   value?: string | number;
   valueSymbol?: string;
   selfStake?: string | number;
@@ -27,48 +26,54 @@ export const ValidatorBannerText = ({
   };
 
   return (
-    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5">
+    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
+      <Typography className="capitalize" color="onBackgroundMedium" variant="paragraph-md">
+        {senderName}
+      </Typography>
       <Typography color="onBackgroundMedium" variant="paragraph-md">
-        {senderName} {'has a total of'}
+        {'has a total of'}
       </Typography>
 
       <Typography fontWeight="semibold" variant="paragraph-md">
-        {stakes} {getStakeWord(stakes)}
+        {Number(stakes)} {getStakeWord(Number(stakes))}
       </Typography>
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'with a value of'}
       </Typography>
 
-      <Currency amount={value ?? 0} symbol={valueSymbol} />
+      <Currency amount={value ?? 0} decimals={2} fontWeight="semibold" symbol={valueSymbol} />
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {' and self stake of'}
       </Typography>
 
-      <Currency amount={selfStake ?? 0} symbol={selfStakeSymbol} />
+      <Currency
+        amount={selfStake ?? 0}
+        decimals={0}
+        fontWeight="semibold"
+        symbol={selfStakeSymbol}
+      />
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'and capacity of'}
       </Typography>
 
       {capacity && capacity > 100 ? (
-        <Badge
+        <BadgeNoIcon
           backgroundColor="greenOpacity"
           borderColor="success"
-          colorVariant="success"
           label={`${capacity}%`}
           padding="1.5"
-          variant="caption"
+          typographyVariant="caption"
         />
       ) : (
-        <Badge
+        <BadgeNoIcon
           backgroundColor="redOpacity"
           borderColor="error"
-          colorVariant="error"
           label={`${capacity}%`}
           padding="1.5"
-          variant="caption"
+          typographyVariant="caption"
         />
       )}
     </div>
