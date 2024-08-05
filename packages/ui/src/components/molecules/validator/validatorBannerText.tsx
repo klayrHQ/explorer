@@ -26,7 +26,7 @@ export const ValidatorBannerText = ({
   };
 
   return (
-    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
+    <div className="transitionBannerContainerWidthMobile desktop:max-w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
       <Typography className="capitalize" color="onBackgroundMedium" variant="paragraph-md">
         {senderName}
       </Typography>

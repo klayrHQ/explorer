@@ -9,9 +9,9 @@ export interface ValidatorBannerCardProps {
 export const ValidatorBannerCard = ({ blockTime }: ValidatorBannerCardProps) => {
   return (
     <div className="hidden desktop:flex gap-4">
-      <div className="hidden desktop:flex">
+      {/* <div className="hidden desktop:flex">
         <ValidatorBannerButtons />
-      </div>
+      </div> */}
 
       {/* BLOCK */}
       <div className="border border-onBackground rounded-xl z-20  w-transitionBannerContainerWidthMobile hidden desktop:block desktop:w-auto">

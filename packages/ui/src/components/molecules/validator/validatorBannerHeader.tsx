@@ -67,7 +67,7 @@ export const ValidatorBannerHeader = ({
               </div>
             </div>
           )}
-          <ValidatorBannerButtons />
+          {/* <ValidatorBannerButtons /> */}
         </div>
       </div>
     </div>
