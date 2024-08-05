@@ -24,6 +24,7 @@ export * from './navigation/link';
 export * from './badges/badge';
 export * from './badges/badgeIcon';
 export * from './badges/badgeGroup';
+export * from './badges/badgeNoIcon';
 export * from './data/keyValueComponent';
 export * from './data/dateComponent.tsx';
 export * from './data/chainToChainComponent';

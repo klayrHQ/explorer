@@ -13,10 +13,12 @@ import {
 } from '../../molecules/validator/validatorBannerCard';
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
+import Link from 'next/link';
 
 interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBannerHeaderProps {
   image: string;
   senderName?: string;
+  blockTime?: number;
 }
 
 export const ValidatorBanner = ({
@@ -29,30 +31,28 @@ export const ValidatorBanner = ({
   selfStake,
   selfStakeSymbol,
   capacity,
-  online,
+  status,
   notificationValue,
-  imageUrl,
-  name,
+  blockTime,
 
   ...props
 }: ValidatorBannerProps) => {
   return (
     <BannerFrame image={image}>
-      <FlexGrid direction="col" justify="between">
-        <FlexGrid alignItems="center" gap="4" justify="start">
-          <Icon
-            className="hover:-translate-x-0.5 cursor-pointer transition-transform"
-            color="white"
-            icon="ArrowLeft"
-          />
-
+      <FlexGrid direction="col" gap="0" justify="between">
+        <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
+          <Link href="/validators">
+            <Icon
+              className="hover:-translate-x-0.5 cursor-pointer transition-transform"
+              color="white"
+              icon="ArrowLeft"
+            />
+          </Link>
           <ValidatorBannerHeader
-            imageUrl={imageUrl}
-            name={name}
             notificationValue={notificationValue}
-            online={online}
             senderAddress={senderAddress}
             senderName={senderName}
+            status={status}
           />
         </FlexGrid>
         <ValidatorBannerText
@@ -66,7 +66,7 @@ export const ValidatorBanner = ({
           {...props}
         />
       </FlexGrid>
-      <ValidatorBannerCard blockTime={100} />
+      <ValidatorBannerCard blockTime={blockTime || 0} />
     </BannerFrame>
   );
 };
