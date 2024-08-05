@@ -34,7 +34,12 @@ export const DetailsSection = ({ title, data, json }: DetailsSectionsProps) => {
 
   return (
     <FlexGrid className={'w-full'} component={'section'} direction={'col'} gap={'4.5xl'}>
-      <FlexGrid className={'w-full'} justify={'between'} mobileDirection={'row'}>
+      <FlexGrid
+        alignItems="center"
+        className={'w-full'}
+        justify={'between'}
+        mobileDirection={'row'}
+      >
         <SectionHeader title={title} titleSize={'sm'} titleSizeNotLink={'h5'} />
         {json && (
           <Popover
