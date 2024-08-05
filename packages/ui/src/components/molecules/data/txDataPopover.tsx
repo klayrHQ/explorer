@@ -12,7 +12,7 @@ export const TxDataPopover = ({ txData }: TxDataPopoverProps) => {
   const gap = '';
 
   return (
-    <FlexGrid className={'px-4 min-w-44'} direction={'col'} gap={''}>
+    <FlexGrid className={'px-4 min-w-44'} direction={'col'}>
       <FlexGrid
         alignItems={'center'}
         className={'w-full min-h-8 max-h-8 py-2'}
