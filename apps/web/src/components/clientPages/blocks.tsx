@@ -1,7 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { BlockDetailsType, GatewayRes } from '../../utils/types.ts';
-import gatewayClient from '../../network/gatewayClient.ts';
 import {
   FlexGrid,
   Icon,
@@ -18,16 +16,18 @@ import { dayjs, fromNowFormatter, handleCopy, shortString } from '@repo/ui/utils
 import { getTableSkeletons } from '../../utils/constants.tsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
+import { useBlockStore } from '../../store/blockStore.ts';
 
 export const Blocks = () => {
+  const blocks = useBlockStore((state) => state.blocks);
+  const totalBlocks = useBlockStore((state) => state.totalBlocks);
+  const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const [blocks, setBlocks] = useState<BlockDetailsType[]>();
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
-  const [totalBlocks, setTotalBlocks] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
   const defaultLimit = '10';
 
@@ -37,34 +37,11 @@ export const Blocks = () => {
   };
 
   useEffect(() => {
-    const getBlocks = async () => {
-      try {
-        setLoading(true);
-        const limit = Number(searchParams.get('limit')) || defaultLimit;
-        const page = Number(searchParams.get('page')) || 1;
-        const offset = (page - 1) * Number(limit);
-
-        const { data } = await gatewayClient.get<GatewayRes<BlockDetailsType[]>>('blocks', {
-          params: {
-            limit: searchParams.get('limit') || defaultLimit,
-            offset: offset,
-            includeAssets: true,
-          },
-        });
-
-        if (data) {
-          const blocks: BlockDetailsType[] = data.data;
-          setBlocks(blocks);
-          setTotalBlocks(data.meta.total);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getBlocks();
+    setLoading(true);
+    const limit = searchParams.get('limit') || defaultLimit;
+    const page = Number(searchParams.get('page')) || 1;
+    const offset = (page - 1) * Number(limit);
+    callGetBlocks({ limit, offset }).finally(() => setLoading(false));
   }, [searchParams]);
 
   const tableHead: TableCellType[] = [
