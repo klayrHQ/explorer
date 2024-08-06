@@ -277,6 +277,27 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
                 </div>
               ),
             },
+            {
+              children: (
+                <div className="flex justify-end">
+                  <Currency amount={877777899} decimals={0} symbol={'KLY'} />
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex justify-end">
+                  <Currency amount={8767777899} decimals={0} symbol={'KLY'} />
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex justify-end">
+                  <Currency amount={9097777899} decimals={0} symbol={'KLY'} />
+                </div>
+              ),
+            },
           ],
         };
       })

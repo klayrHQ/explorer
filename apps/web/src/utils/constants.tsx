@@ -369,4 +369,16 @@ export const validatorsTableHead: TableCellType[] = [
     children: <div className="flex justify-end">{'Commission'}</div>,
     className: 'items-end',
   },
+  {
+    children: <div className="flex justify-end">{'Total Rewards'}</div>,
+    className: 'items-end',
+  },
+  {
+    children: <div className="flex justify-end">{'Block Rewards'}</div>,
+    className: 'items-end',
+  },
+  {
+    children: <div className="flex justify-end">{'Staking Rewards'}</div>,
+    className: 'items-end',
+  },
 ];
