@@ -16,6 +16,7 @@ import {
   Typography,
   UserAccountCard,
   NotificationIcon,
+  StatusBadge,
 } from '@repo/ui/atoms';
 import Link from 'next/link';
 import React from 'react';
@@ -226,21 +227,7 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
             },
             {
               //depends on what color?
-              children: (
-                <Badge
-                  backgroundColor="greenOpacity"
-                  borderColor="success"
-                  colorVariant="success"
-                  label={
-                    validator.status
-                      ? validator.status.charAt(0).toUpperCase() +
-                        validator.status.slice(1).toLowerCase()
-                      : ''
-                  }
-                  padding="1.5"
-                  variant="caption"
-                />
-              ),
+              children: <StatusBadge status={'banned'} />,
             },
             {
               children: (
