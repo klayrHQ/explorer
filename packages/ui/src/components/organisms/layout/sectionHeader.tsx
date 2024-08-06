@@ -30,7 +30,7 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
   return (
     <FlexGrid
-      className={cls([className, 'gap-5 desktop:gap-6 items-center', fullWidth && 'w-full'])}
+      className={cls([className, 'gap-5 desktop:gap-6 ', fullWidth && 'w-full'])}
       direction={'col'}
     >
       {href ? (

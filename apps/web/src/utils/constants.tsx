@@ -337,3 +337,36 @@ export const eventsTableHead = [
     children: <Typography variant={'paragraph-sm'}>{'Name'}</Typography>,
   },
 ];
+
+export const validatorsTableHead: TableCellType[] = [
+  {
+    children: 'Validator',
+  },
+  {
+    children: 'Status',
+  },
+  {
+    children: <div className="flex justify-end">{'Total blocks'}</div>,
+    className: 'items-end',
+  },
+  {
+    children: <div className="flex justify-end">{'Uptime'}</div>,
+    className: 'items-end',
+  },
+  {
+    children: <div className="flex justify-end">{'Validator weight'}</div>,
+    className: 'items-end',
+  },
+  {
+    children: <div className="flex justify-end">{'Stake capacity'}</div>,
+    className: 'items-end',
+  },
+  {
+    children: <div className="flex justify-end">{'Total stake'}</div>,
+    className: 'items-end',
+  },
+  {
+    children: <div className="flex justify-end">{'Commission'}</div>,
+    className: 'items-end',
+  },
+];

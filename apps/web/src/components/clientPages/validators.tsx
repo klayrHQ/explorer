@@ -1,9 +1,11 @@
 'use client';
-import { SectionHeader } from '@repo/ui/organisms';
-import {Button, DonutChart, FlexGrid} from '@repo/ui/atoms';
-import {GatewayRes, ValidatorType} from "../../utils/types.ts";
-import {useEffect, useState} from "react";
-import gatewayClient from "../../network/gatewayClient.ts";
+import { SectionHeader, TableContainer } from '@repo/ui/organisms';
+import { Button, DonutChart, FlexGrid } from '@repo/ui/atoms';
+import { GatewayRes, ValidatorType } from '../../utils/types.ts';
+import { useEffect, useState } from 'react';
+import gatewayClient from '../../network/gatewayClient.ts';
+import { validatorsTableHead } from '../../utils/constants.tsx';
+import { createValidatorsRows } from '../../utils/helper.tsx';
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);
@@ -38,6 +40,8 @@ export const Validators = () => {
     getTransactions();
   }, [rowsPerPage]);
 
+  const rows = createValidatorsRows(validators, loading);
+
   //todo Get from backend when available
   const mockChartData = [
     { id: 1, value: 50, label: 'Active' },
@@ -60,7 +64,17 @@ export const Validators = () => {
           <DonutChart data={mockChartData} />
         </div>
       </FlexGrid>
-      <Button align={'center'} label={'See more'} onClick={() => setRowsPerPage(rowsPerPage + 10)} />
+      <TableContainer
+        headCols={validatorsTableHead}
+        keyPrefix={'validators'}
+        pagination
+        rows={rows}
+      />
+      <Button
+        align={'center'}
+        label={'See more'}
+        onClick={() => setRowsPerPage(rowsPerPage + 10)}
+      />
     </FlexGrid>
   );
 };

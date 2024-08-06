@@ -1,4 +1,4 @@
-import { EventsType, TransactionType } from './types.ts';
+import { EventsType, TransactionType, ValidatorType } from './types.ts';
 import {
   dayjs,
   fromNowFormatter,
@@ -15,6 +15,7 @@ import {
   Tooltip,
   Typography,
   UserAccountCard,
+  NotificationIcon,
 } from '@repo/ui/atoms';
 import Link from 'next/link';
 import React from 'react';
@@ -24,8 +25,9 @@ import {
   eventsTableHead,
   getTableSkeletons,
   transactionTableHead,
+  validatorsTableHead,
 } from './constants.tsx';
-import {DataType} from "@repo/ui/types";
+import { DataType } from '@repo/ui/types';
 
 export const createTransactionRows = (
   transactions: TransactionType[] | undefined,
@@ -165,7 +167,14 @@ export const createEventsRows = (events: EventsType[] | undefined, loading: bool
   return !loading
     ? events?.map((event) => {
         return {
-          rowDetails: <JsonViewer className={'!border-0'} copy data={{data: event.data as unknown as DataType}} startOpen />,
+          rowDetails: (
+            <JsonViewer
+              className={'!border-0'}
+              copy
+              data={{ data: event.data as unknown as DataType }}
+              startOpen
+            />
+          ),
           cells: [
             {
               children: (
@@ -186,4 +195,103 @@ export const createEventsRows = (events: EventsType[] | undefined, loading: bool
         };
       })
     : getTableSkeletons(eventsTableHead.length);
+};
+
+export const createValidatorsRows = (validators: ValidatorType[] | undefined, loading: boolean) => {
+  return !loading
+    ? validators?.map((validator) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Link href={`/validators/${validator?.account.address}`}>
+                  <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
+                    <NotificationIcon
+                      className="absolute -translate-x-3 -translate-y-3"
+                      notificationValue={validator?.rank < 999 ? validator?.rank : ''}
+                      size="lg"
+                    />
+                    <UserAccountCard
+                      address={validator?.account.address}
+                      name={validator?.account.name}
+                      nameColor="onBackgroundMedium"
+                      nameVariant="paragraph-sm"
+                      nameFontWeight="semibold"
+                      addressColor="onBackgroundLow"
+                      addressVariant="caption"
+                    />
+                  </div>
+                </Link>
+              ),
+            },
+            {
+              //depends on what color?
+              children: (
+                <Badge
+                  backgroundColor="greenOpacity"
+                  borderColor="success"
+                  colorVariant="success"
+                  label={
+                    validator.status
+                      ? validator.status.charAt(0).toUpperCase() +
+                        validator.status.slice(1).toLowerCase()
+                      : ''
+                  }
+                  padding="1.5"
+                  variant="caption"
+                />
+              ),
+            },
+            {
+              children: (
+                <div className="flex justify-end">
+                  <Typography color={'onBackgroundLow'}>{validator?.generatedBlocks}</Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex justify-end">
+                  <Typography color="onBackgroundLow">{'90'}%</Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex flex-col items-end">
+                  <Currency amount={validator?.validatorWeight} decimals={0} symbol={'KLY'} />
+                  <Typography color={'onBackgroundLow'} variant={'caption'}>
+                    {'90.56%'}
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                //Not sure about data
+                <div className="flex justify-end">
+                  <Currency amount={validator?.selfStake} decimals={0} symbol={'KLY'} />
+                </div>
+              ),
+            },
+            {
+              children: (
+                //how to get the percentage?
+                <div className="flex justify-end">
+                  <Currency amount={validator?.totalStake} decimals={0} symbol={'KLY'} />
+                </div>
+              ),
+            },
+            {
+              children: (
+                //how to get the percentage?
+                <div className="flex justify-end">
+                  <Typography color={'onBackgroundLow'}>{validator?.commission}%</Typography>
+                </div>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(validatorsTableHead.length);
 };
