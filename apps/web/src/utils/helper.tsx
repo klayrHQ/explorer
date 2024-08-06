@@ -227,7 +227,7 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
             },
             {
               //depends on what color?
-              children: <StatusBadge status={'banned'} />,
+              children: <StatusBadge status={validator.status} />,
             },
             {
               children: (
