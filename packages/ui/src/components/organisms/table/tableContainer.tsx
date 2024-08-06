@@ -26,7 +26,7 @@ export const TableContainer = ({
     <FlexGrid
       className={cls([
         className,
-        'w-full border-collapse border-solid border-borderLow border-1 rounded-xl overflow-hidden',
+        'w-full border-collapse border-solid border-borderLow border-1 rounded-xl overflow-x-scroll',
       ])}
       direction={'col'}
       gap={'0'}
