@@ -1,66 +1,36 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { EventsType, GatewayRes, TransactionType } from '../../utils/types';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
-import gatewayClient from '../../network/gatewayClient';
 import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '@repo/ui/atoms';
 import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { eventsTableHead } from '../../utils/constants.tsx';
 import Link from 'next/link';
 import { createEventsRows } from '../../utils/helper.tsx';
 import { DataType } from '@repo/ui/types';
+import { useTransactionStore } from '../../store/transactionStore.ts';
+import { useEventsStore } from '../../store/eventStore.ts';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
+  const transaction = useTransactionStore((state) => state.transaction);
+  const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
+
+  const events = useEventsStore((state) => state.events);
+  const callGetEvents = useEventsStore((state) => state.callGetEvents);
+
   const { id } = params;
-  const [transaction, setTransaction] = useState<TransactionType>();
-  const [events, setEvents] = useState<EventsType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const getTransaction = async () => {
-      try {
-        setLoading(true);
-        const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
-          params: {
-            transactionID: id,
-          },
-        });
-
-        if (data?.data) {
-          setTransaction(data.data[0]);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getTransaction();
+    setLoading(true);
+    callGetTransactions({ transactionID: id }).finally(() => setLoading(false));
   }, [id]);
 
   useEffect(() => {
-    const getEvents = async () => {
-      if (transaction) {
-        try {
-          setLoading(true);
-          const { data } = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
-            params: {
-              transactionID: transaction.id,
-            },
-          });
-
-          if (data?.data) {
-            setEvents(data.data);
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-    getEvents();
+    if (transaction) {
+      setLoading(true);
+      callGetEvents({ transactionID: transaction.id }).finally(() => setLoading(false));
+    }
   }, [transaction]);
 
   const details = [

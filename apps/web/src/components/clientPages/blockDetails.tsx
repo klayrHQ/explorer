@@ -1,7 +1,5 @@
 'use client';
-import gatewayClient from '../../network/gatewayClient';
 import React, { useEffect, useState } from 'react';
-import { GatewayRes, BlockDetailsType, TransactionType, EventsType } from '../../utils/types';
 import {
   BlockDetailsBanner,
   DetailsSection,
@@ -21,84 +19,40 @@ import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx
 import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
 import { DataType } from '@repo/ui/types';
 import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
+import { useBlockStore } from '../../store/blockStore.ts';
+import { useTransactionStore } from '../../store/transactionStore.ts';
+import { useEventsStore } from '../../store/eventStore.ts';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
+  const block = useBlockStore((state) => state.block);
+  const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
+
+  const transactions = useTransactionStore((state) => state.transactions);
+  const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
+
+  const events = useEventsStore((state) => state.events);
+  const callGetEvents = useEventsStore((state) => state.callGetEvents);
+
   const { id } = params;
-  const [block, setBlock] = useState<BlockDetailsType>();
-  const [transactions, setTransactions] = useState<TransactionType[]>();
-  const [events, setEvents] = useState<EventsType[]>();
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const getBlock = async () => {
-      try {
-        setLoading(true);
-        const { data } = await gatewayClient.get<GatewayRes<BlockDetailsType[]>>('blocks', {
-          params: {
-            blockID: id,
-            includeAssets: true,
-          },
-        });
-
-        if (data?.data) {
-          setBlock(data.data[0]);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getBlock();
+    setLoading(true);
+    callGetBlocks({ blockID: id }).finally(() => setLoading(false));
   }, [id]);
 
   useEffect(() => {
-    const getTransactions = async () => {
-      try {
-        setLoading(true);
-        const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
-          params: {
-            blockID: id,
-          },
-        });
-
-        if (data?.data) {
-          setTransactions(data.data);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (block?.numberOfTransactions && block?.numberOfTransactions >= 0) getTransactions();
+    if (block?.numberOfTransactions && block?.numberOfTransactions >= 0) {
+      setLoading(true);
+      callGetTransactions({ blockID: id }).finally(() => setLoading(false));
+    }
   }, [id, block]);
 
   useEffect(() => {
-    const getEvents = async () => {
-      try {
-        setLoading(true);
-        const { data } = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
-          params: {
-            height: `${block?.height}:${block?.height}`,
-          },
-        });
-
-        if (data?.data) {
-          setEvents(data.data);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (block) {
-      getEvents();
+      setLoading(true);
+      callGetEvents({ height: `${block.height}:${block.height}` }).finally(() => setLoading(false));
     }
   }, [block]);
 
