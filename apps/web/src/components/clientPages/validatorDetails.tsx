@@ -2,35 +2,22 @@
 import { ValidatorBanner } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
-import { EventsType, GatewayRes, ValidatorType } from '../../utils/types';
-import gatewayClient from '../../network/gatewayClient';
+import { useValidatorStore } from '../../store/validatorStore';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
-  const [validator, setValidator] = useState<ValidatorType>();
+
+  const validator = useValidatorStore((state) => state.validator);
+  const callGetValidators = useValidatorStore((state) => state.callGetValidators);
+
+  // TODO: loading not used?
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const getValidators = async () => {
-      try {
-        setLoading(true);
-        const { data } = await gatewayClient.get<GatewayRes<ValidatorType[]>>('pos/validators', {
-          params: {
-            address: id,
-          },
-        });
-
-        if (data?.data) {
-          setValidator(data.data[0]);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getValidators();
+    setLoading(true);
+    callGetValidators({ address: id }).finally(() => setLoading(false));
   }, [id]);
+
   return (
     <div>
       <ValidatorBanner

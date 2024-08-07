@@ -1,43 +1,22 @@
 'use client';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { Button, DonutChart, FlexGrid } from '@repo/ui/atoms';
-import { GatewayRes, ValidatorType } from '../../utils/types.ts';
 import { useEffect, useState } from 'react';
-import gatewayClient from '../../network/gatewayClient.ts';
 import { validatorsTableHead } from '../../utils/constants.tsx';
 import { createValidatorsRows } from '../../utils/helper.tsx';
+import { useValidatorStore } from '../../store/validatorStore.ts';
 
 export const Validators = () => {
-  const [validators, setValidators] = useState<ValidatorType[]>([]);
+  const validators = useValidatorStore((state) => state.validators);
+  const totalValidators = useValidatorStore((state) => state.totalValidators);
+  const callGetValidators = useValidatorStore((state) => state.callGetValidators);
+
   const [loading, setLoading] = useState<boolean>(true);
-  const [totalValidators, setTotalValidators] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
   useEffect(() => {
-    const getTransactions = async () => {
-      try {
-        setLoading(true);
-
-        const { data } = await gatewayClient.get<GatewayRes<ValidatorType[]>>('pos/validators', {
-          params: {
-            limit: rowsPerPage,
-          },
-        });
-
-        if (data) {
-          const validators: ValidatorType[] = data.data;
-          setValidators(validators);
-          setTotalValidators(data.meta.total);
-          //console.log(validators);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getTransactions();
+    setLoading(true);
+    callGetValidators({ limit: rowsPerPage.toString() }).finally(() => setLoading(false));
   }, [rowsPerPage]);
 
   const rows = createValidatorsRows(validators, loading);
