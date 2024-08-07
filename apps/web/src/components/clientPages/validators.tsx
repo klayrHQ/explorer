@@ -1,6 +1,7 @@
 'use client';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { Button, DonutChart, FlexGrid } from '@repo/ui/atoms';
+import { NextValidators } from '@repo/ui/molecules';
 import { GatewayRes, ValidatorType } from '../../utils/types.ts';
 import { useEffect, useState } from 'react';
 import gatewayClient from '../../network/gatewayClient.ts';
@@ -63,6 +64,7 @@ export const Validators = () => {
         <div>
           <DonutChart data={mockChartData} />
         </div>
+        <NextValidators validators={validators} />
       </FlexGrid>
       <TableContainer
         headCols={validatorsTableHead}
