@@ -40,10 +40,12 @@ export const Validators = () => {
           subTitle={'Overview of all validators on the blockchain'}
           title={'Validators'}
         />
-        <div>
+        <div className="hidden desktop:flex">
           <DonutChart data={mockChartData} />
         </div>
-        <NextValidators validators={validators} />
+        <div className="hidden desktop:flex">
+          <NextValidators validators={validators} />
+        </div>
       </FlexGrid>
       <TableContainer
         headCols={validatorsTableHead}
