@@ -232,7 +232,9 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
             {
               children: (
                 <div className="flex justify-end">
-                  <Typography color={'onBackgroundLow'}>{validator?.generatedBlocks}</Typography>
+                  <Typography color={'onBackgroundLow'}>
+                    {validator?.generatedBlocks.toLocaleString()}
+                  </Typography>
                 </div>
               ),
             },
@@ -294,7 +296,7 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
             {
               children: (
                 <div className="flex justify-end">
-                  <Currency amount={9097777899} decimals={0} symbol={'KLY'} />
+                  <Currency amount={90977778997} decimals={0} symbol={'KLY'} />
                 </div>
               ),
             },
