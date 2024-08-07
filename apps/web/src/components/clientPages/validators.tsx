@@ -1,6 +1,7 @@
 'use client';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { Button, DonutChart, FlexGrid } from '@repo/ui/atoms';
+import { NextValidators } from '@repo/ui/molecules';
 import { useEffect, useState } from 'react';
 import { validatorsTableHead } from '../../utils/constants.tsx';
 import { createValidatorsRows } from '../../utils/helper.tsx';
@@ -39,8 +40,11 @@ export const Validators = () => {
           subTitle={'Overview of all validators on the blockchain'}
           title={'Validators'}
         />
-        <div>
+        <div className="hidden desktop:flex">
           <DonutChart data={mockChartData} />
+        </div>
+        <div className="hidden desktop:flex">
+          <NextValidators validators={validators} />
         </div>
       </FlexGrid>
       <TableContainer
