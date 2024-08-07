@@ -86,6 +86,10 @@
   --color-greenOpacity: rgba(34, 197, 94, 0.4);
   --color-redOpacity: rgba(255, 135, 141, 0.40);
   --color-warningOpacity: rgba(202, 138, 4, 0.3);
+  --color-blueOpacity: rgba(13, 117, 253, 0.1);
+  --color-grayOpacity: rgba(206, 207, 210, 0.1);
+  --color-yellowOpacity: rgba(212, 255, 0, 0.1);
+  --color-pinkOpacity: rgba(255, 135, 141, 0.1);
 
   /* States */
   --color-error: var(--color-lobster);
