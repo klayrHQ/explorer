@@ -4,6 +4,7 @@ import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
 import { useValidatorStore } from '../../store/validatorStore';
 import { TabButtons, FlexGrid } from '@repo/ui/atoms';
+import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -30,25 +31,57 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       value: 2,
       label: 'Transactions',
       icon: 'SwitchHorizontal',
-      content: <div></div>,
+      content: (
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          <SectionHeader
+            count={''}
+            title={`${validator?.account.name} transactions`}
+            titleSizeNotLink={'h5'}
+          />
+        </FlexGrid>
+      ),
     },
     {
       value: 3,
       label: 'Stakes',
       icon: 'LayersThree',
-      content: <div></div>,
+      content: (
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          <SectionHeader
+            count={''}
+            title={`${validator?.account.name}'s stakes`}
+            titleSizeNotLink={'h5'}
+          />
+        </FlexGrid>
+      ),
     },
     {
       value: 4,
       label: 'Blocks',
       icon: 'Cube',
-      content: <div>Blocks</div>,
+      content: (
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          <SectionHeader
+            count={''}
+            title={`${validator?.account.name}'s blocks`}
+            titleSizeNotLink={'h5'}
+          />
+        </FlexGrid>
+      ),
     },
     {
       value: 5,
       label: 'Events',
       icon: 'List',
-      content: <div></div>,
+      content: (
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          <SectionHeader
+            count={''}
+            title={`${validator?.account.name}'s events`}
+            titleSizeNotLink={'h5'}
+          />
+        </FlexGrid>
+      ),
     },
   ];
 
@@ -68,7 +101,12 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         status={validator?.status || ''}
         blockTime={2} // TODO: Implement
       />
-      <TabButtons tabs={tabs} />
+      <div className="desktop:hidden">
+        <TabButtons tabs={tabs} width="full" padding="6" showLabel={false} />
+      </div>
+      <div className="hidden desktop:flex">
+        <TabButtons tabs={tabs} />
+      </div>
     </FlexGrid>
   );
 };

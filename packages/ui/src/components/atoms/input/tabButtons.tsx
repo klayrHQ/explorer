@@ -19,9 +19,10 @@ interface TabButtonsProps {
   tabs: TabData[];
   width?: string;
   showLabel?: boolean;
+  padding?: string;
 }
 
-export const TabButtons = ({ tabs, width, showLabel = true }: TabButtonsProps) => {
+export const TabButtons = ({ tabs, width, showLabel = true, padding = '3' }: TabButtonsProps) => {
   return (
     <Tabs
       className={cls(['flex flex-col gap-1.5xl', width ? `w-${width}` : ' w-full'])}
@@ -33,7 +34,7 @@ export const TabButtons = ({ tabs, width, showLabel = true }: TabButtonsProps) =
             key={tab.value}
             slotProps={{
               root: ({ selected, disabled }) => ({
-                className: `p-3 rounded-sm ${
+                className: `p-3 px-${padding} rounded-sm ${
                   selected ? 'bg-backgroundSecondary text-onBackground' : 'text-onBackgroundMedium'
                 } ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'} `,
               }),
