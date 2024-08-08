@@ -6,6 +6,9 @@ import { useValidatorStore } from '../../store/validatorStore';
 import { TabButtons, FlexGrid, Currency, Typography } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
+import { useTransactionStore } from '../../store/transactionStore.ts';
+import { transactionTableHead } from '../../utils/constants.tsx';
+import { createTransactionRows } from '../../utils/helper.tsx';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -13,13 +16,34 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const validator = useValidatorStore((state) => state.validator);
   const callGetValidators = useValidatorStore((state) => state.callGetValidators);
 
+  const transactions = useTransactionStore((state) => state.transactions);
+  const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
+
   // TODO: loading not used?
   const [loading, setLoading] = useState<boolean>(true);
+  const [moduleTransactions, setModuleTransactions] = useState<any>([]);
 
   useEffect(() => {
     setLoading(true);
     callGetValidators({ address: id }).finally(() => setLoading(false));
   }, [id]);
+
+  useEffect(() => {
+    if (validator && validator.account && validator.account.address) {
+      setLoading(true);
+      callGetTransactions({ address: validator.account.address }).finally(() => setLoading(false));
+
+      // Fetch transactions with moduleCommand 'pos:stake'
+      setLoading(true);
+      callGetTransactions({ address: validator.account.address, moduleCommand: 'pos:stake' })
+        .then((res) => setModuleTransactions(res))
+        .finally(() => setLoading(false));
+    }
+  }, [validator]);
+
+  console.log(transactions);
+
+  console.log('Module:', { moduleTransactions });
 
   const details = [
     {
@@ -239,6 +263,26 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     },
   ];
 
+  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
+
+  const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
+
+  const stakeTabs = [
+    {
+      value: 31,
+      label: 'LayersThree',
+      icon: 'LayersThree',
+      content: <div></div>,
+    },
+    {
+      value: 32,
+
+      label: 'Outgoing',
+      icon: 'LayersThree',
+      content: <div></div>,
+    },
+  ];
+
   const tabs = [
     {
       value: 1,
@@ -248,7 +292,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         <DetailsSection
           data={details}
           json={validator as unknown as DataType}
-          title={'Transaction Details'}
+          title={'Validator Details'}
         />
       ),
     },
@@ -259,10 +303,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={''}
+            count={transactions?.length}
             title={`${validator?.account.name} transactions`}
             titleSizeNotLink={'h5'}
           />
+          <TableContainer headCols={transactionTableHead} keyPrefix={'validator-tx'} rows={rows} />
         </FlexGrid>
       ),
     },
@@ -277,6 +322,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             title={`${validator?.account.name}'s stakes`}
             titleSizeNotLink={'h5'}
           />
+          <TabButtons tabs={stakeTabs} />
         </FlexGrid>
       ),
     },
@@ -326,11 +372,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         status={validator?.status || ''}
         blockTime={2} // TODO: Implement
       />
-      <div className="desktop:hidden">
+      <div className="desktop:hidden w-full">
         <TabButtons tabs={tabs} width="full" padding="6" showLabel={false} />
       </div>
-      <div className="hidden desktop:flex">
-        <TabButtons tabs={tabs} />
+      <div className="hidden desktop:flex w-full">
+        <TabButtons tabs={tabs} width="full" />
       </div>
     </FlexGrid>
   );

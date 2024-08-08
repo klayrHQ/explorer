@@ -7,6 +7,8 @@ export interface TransactionQueryParams {
   transactionID?: string;
   limit?: string;
   offset?: number;
+  address?: string;
+  moduleCommand?: string;
 }
 
 interface TransactionStore {
@@ -16,7 +18,7 @@ interface TransactionStore {
   setTransaction: (transaction: TransactionType) => void;
   setTransactions: (transaction: TransactionType[]) => void;
   setTotalTxs: (totalTxs: number) => void;
-  callGetTransactions: (params: TransactionQueryParams) => Promise<void>;
+  callGetTransactions: (params: TransactionQueryParams) => Promise<void>;  
 }
 
 export const useTransactionStore = create<TransactionStore>((set, get) => ({
@@ -29,7 +31,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
 
   callGetTransactions: async (params: TransactionQueryParams) => {
     const { setTransaction, setTransactions, setTotalTxs } = get();
-    const { blockID, transactionID, limit, offset } = params;
+    const { blockID, transactionID, limit, offset, address, moduleCommand } = params;
 
     gatewayClient
       .get<GatewayRes<TransactionType[]>>('transactions', {
@@ -38,6 +40,8 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
           transactionID,
           limit,
           offset,
+          address,
+          moduleCommand,
         },
       })
       .then(({ data }) => {
