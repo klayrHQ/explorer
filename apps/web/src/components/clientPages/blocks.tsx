@@ -17,11 +17,13 @@ import { getTableSkeletons } from '../../utils/constants.tsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
 import { useBlockStore } from '../../store/blockStore.ts';
+import { useSocketStore } from '../../store/socketStore.ts';
 
 export const Blocks = () => {
   const blocks = useBlockStore((state) => state.blocks);
   const totalBlocks = useBlockStore((state) => state.totalBlocks);
   const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
+  const newBlockEvent = useSocketStore((state) => state.height);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -42,7 +44,7 @@ export const Blocks = () => {
     const page = Number(searchParams.get('page')) || 1;
     const offset = (page - 1) * Number(limit);
     callGetBlocks({ limit, offset }).finally(() => setLoading(false));
-  }, [searchParams]);
+  }, [searchParams, newBlockEvent]);
 
   const tableHead: TableCellType[] = [
     {
