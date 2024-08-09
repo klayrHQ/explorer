@@ -7,7 +7,11 @@ import { TabButtons, FlexGrid, Currency, Typography } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
 import { useTransactionStore } from '../../store/transactionStore.ts';
-import { transactionTableHead } from '../../utils/constants.tsx';
+import {
+  transactionTableHead,
+  validatorStakeIncomingTableHead,
+  validatorStakeOutgoingTableHead,
+} from '../../utils/constants.tsx';
 import { createTransactionRows } from '../../utils/helper.tsx';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
@@ -21,7 +25,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
 
   // TODO: loading not used?
   const [loading, setLoading] = useState<boolean>(true);
-  const [moduleTransactions, setModuleTransactions] = useState<any>([]);
 
   useEffect(() => {
     setLoading(true);
@@ -31,19 +34,20 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     if (validator && validator.account && validator.account.address) {
       setLoading(true);
-      callGetTransactions({ address: validator.account.address }).finally(() => setLoading(false));
-
-      // Fetch transactions with moduleCommand 'pos:stake'
-      setLoading(true);
-      callGetTransactions({ address: validator.account.address, moduleCommand: 'pos:stake' })
-        .then((res) => setModuleTransactions(res))
-        .finally(() => setLoading(false));
+      callGetTransactions({
+        address: validator.account.address,
+      }).finally(() => setLoading(false));
     }
   }, [validator]);
 
-  console.log(transactions);
-
-  console.log('Module:', { moduleTransactions });
+  // useEffect(() => {
+  //   if (validator && validator.account && validator.account.address) {
+  //     setLoading(true);
+  //     callGetTransactionsByAddressAndModuleCommand(validator.account.address, 'pos:stake').finally(
+  //       () => setLoading(false),
+  //     );
+  //   }
+  // }, [validator]);
 
   const details = [
     {
@@ -269,12 +273,12 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
 
   const stakeTabs = [
     {
-      value: 31,
+      value: 1,
       label: 'Incoming',
-      content: <div></div>,
+      content: <></>,
     },
     {
-      value: 32,
+      value: 2,
 
       label: 'Outgoing',
       content: <div></div>,
@@ -315,22 +319,14 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       icon: 'LayersThree',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <div className="flex justify-between items-center">
-            <FlexGrid alignItems="center" gap="3" justify="center" mobileDirection="row">
-              <Typography color="gray-1" component={'h3'} fontWeight="bold" variant={'h3'}>
-                {validator?.account.name}'s stakes
-              </Typography>
-              <div
-                className={
-                  'bg-secondary rounded-sm p-2 h-9 my-0.5 min-w-9 flex items-center justify-center '
-                }
-              >
-                <Typography color="onSecondary" variant="paragraph-sm">
-                  {moduleTransactions?.length}
-                </Typography>
-              </div>
-            </FlexGrid>
-            <TabButtons tabs={stakeTabs} />
+          <div className="flex w-full justify-between">
+            <SectionHeader
+              count={transactions?.length}
+              title={`${validator?.account.name}'s stakes`}
+              titleSizeNotLink={'h5'}
+              fullWidth
+            />
+            <TabButtons className="justify-end" width="full" tabs={stakeTabs} />
           </div>
         </FlexGrid>
       ),

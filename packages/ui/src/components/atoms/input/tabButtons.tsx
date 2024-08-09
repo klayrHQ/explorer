@@ -20,15 +20,22 @@ interface TabButtonsProps {
   width?: string;
   showLabel?: boolean;
   padding?: string;
+  className?: string;
 }
 
-export const TabButtons = ({ tabs, width, showLabel = true, padding = '3' }: TabButtonsProps) => {
+export const TabButtons = ({
+  tabs,
+  width,
+  className,
+  showLabel = true,
+  padding = '3',
+}: TabButtonsProps) => {
   return (
     <Tabs
-      className={cls(['flex flex-col gap-1.5xl', width ? `w-${width}` : ' w-full'])}
+      className={cls([`flex flex-col gap-1.5xl`, width ? `w-${width}` : ' w-full'])}
       defaultValue={1}
     >
-      <TabsList className="flex gap-2 bg-background active:text-lobster">
+      <TabsList className={`flex gap-2 bg-background active:text-lobster ${className}`}>
         {tabs.map((tab) => (
           <Tab
             key={tab.value}

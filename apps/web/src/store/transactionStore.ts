@@ -19,6 +19,7 @@ interface TransactionStore {
   setTransactions: (transaction: TransactionType[]) => void;
   setTotalTxs: (totalTxs: number) => void;
   callGetTransactions: (params: TransactionQueryParams) => Promise<void>;  
+  callGetTransactionsByAddressAndModuleCommand: (address: string, moduleCommand: string) => Promise<void>;
 }
 
 export const useTransactionStore = create<TransactionStore>((set, get) => ({
@@ -43,6 +44,28 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
           address,
           moduleCommand,
         },
+      })
+      .then(({ data }) => {
+        if (data?.data) {
+          setTotalTxs(data.meta.total);
+          if (data.data.length === 1) {
+            setTransaction(data.data[0]);
+          } else {
+            setTransactions(data.data);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  },
+
+  callGetTransactionsByAddressAndModuleCommand: async (address: string, moduleCommand: string) => {
+    const { setTransaction, setTransactions, setTotalTxs } = get();
+  
+    gatewayClient
+      .get<GatewayRes<TransactionType[]>>('transactions', {
+        params: { address, moduleCommand },
       })
       .then(({ data }) => {
         if (data?.data) {

@@ -382,3 +382,29 @@ export const validatorsTableHead: TableCellType[] = [
     className: 'items-end text-end whitespace-nowrap',
   },
 ];
+
+export const validatorsTableSkeleton = getTableSkeletons(validatorsTableHead.length);
+
+export const validatorStakeIncomingTableHead: TableCellType[] = [
+  {
+    children: 'Account',
+  },
+  {
+    children: 'Amount',
+  },
+];
+
+export const validatorStakeOutgoingTableHead: TableCellType[] = [
+  {
+    children: 'Validator',
+  },
+  {
+    children: 'Validator weight',
+  },
+  {
+    children: 'Commission',
+  },
+  {
+    children: 'Stake',
+  },
+];
