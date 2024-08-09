@@ -1,7 +1,6 @@
 import { create } from 'zustand';
-import { ValidatorType, GatewayRes } from '../utils/types';
+import { ValidatorType, GatewayRes, NextValidatorType } from '../utils/types';
 import gatewayClient from '../network/gatewayClient';
-import { NextValidatorType } from '../../../../packages/ui/src/components/molecules/validator/nextValidators';
 
 const numberOfNextValidators = 3;
 
