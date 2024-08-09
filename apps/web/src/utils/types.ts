@@ -128,14 +128,6 @@ export interface ValidatorType {
   nextAllocatedTime?: number;
 }
 
-export interface NextValidatorType {
-  address: string;
-  name: string;
-  publicKey: string;
-  nextAllocatedTime: number;
-  status: string;
-}
-
 export interface SharingCoefficientType {
   tokenID: string;
   coefficient: string;
