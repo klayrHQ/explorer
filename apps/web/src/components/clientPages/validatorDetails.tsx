@@ -11,6 +11,7 @@ import {
   transactionTableHead,
   validatorStakeIncomingTableHead,
   validatorStakeOutgoingTableHead,
+  validatorBlocksTableHead,
 } from '../../utils/constants.tsx';
 import { createTransactionRows } from '../../utils/helper.tsx';
 
@@ -341,6 +342,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             count={''}
             title={`${validator?.account.name}'s blocks`}
             titleSizeNotLink={'h5'}
+          />
+          <TableContainer
+            headCols={validatorBlocksTableHead}
+            keyPrefix={'validator-blocks'}
+            rows={[]}
           />
         </FlexGrid>
       ),

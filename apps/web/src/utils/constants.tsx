@@ -383,8 +383,6 @@ export const validatorsTableHead: TableCellType[] = [
   },
 ];
 
-export const validatorsTableSkeleton = getTableSkeletons(validatorsTableHead.length);
-
 export const validatorStakeIncomingTableHead: TableCellType[] = [
   {
     children: 'Account',
@@ -406,5 +404,23 @@ export const validatorStakeOutgoingTableHead: TableCellType[] = [
   },
   {
     children: 'Stake',
+  },
+];
+
+export const validatorBlocksTableHead: TableCellType[] = [
+  {
+    children: 'Block ID',
+  },
+  {
+    children: 'Height',
+  },
+  {
+    children: 'Date',
+  },
+  {
+    children: 'Transactions',
+  },
+  {
+    children: 'Reward',
   },
 ];

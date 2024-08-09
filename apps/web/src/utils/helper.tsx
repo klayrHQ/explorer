@@ -27,6 +27,7 @@ import {
   getTableSkeletons,
   transactionTableHead,
   validatorsTableHead,
+  validatorBlocksTableHead,
 } from './constants.tsx';
 import { DataType } from '@repo/ui/types';
 
@@ -304,4 +305,48 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
         };
       })
     : getTableSkeletons(validatorsTableHead.length);
+};
+
+export const createValidatorEventsRows = (events: EventsType[] | undefined, loading: boolean) => {
+  return !loading
+    ? events?.map((event) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Typography color="onBackground" variant="paragraph-sm">
+                  {'24730376'}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'{.toLocaleString()}'}
+                </Typography>
+              ), // {.toLocaleString()}
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'Data'}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'0'}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+               <Currency amount={340000000} decimals={2} symbol={'KLY'} />
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(validatorBlocksTableHead.length);
 };
