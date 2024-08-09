@@ -18,7 +18,7 @@ export const Validators = () => {
   const newBlockEvent = useSocketStore((state) => state.height);
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(20);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(51);
 
   useEffect(() => {
     setLoading(true);
