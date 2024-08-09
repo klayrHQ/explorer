@@ -125,6 +125,15 @@ export interface ValidatorType {
   lastCommissionIncreaseHeight: number;
   sharingCoefficients: SharingCoefficientType[];
   account: AccountType;
+  nextAllocatedTime?: number;
+}
+
+export interface NextValidatorType {
+  address: string;
+  name: string;
+  publicKey: string;
+  nextAllocatedTime: number;
+  status: string;
 }
 
 export interface SharingCoefficientType {

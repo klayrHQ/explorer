@@ -10,7 +10,7 @@ export const useSocketStore = create<HeightStore>((set) => {
 
   // TODO: implement actual websocket connection or something will see
   setInterval(() => {
-    const newHeight = 1_000;
+    const newHeight = Math.floor(Math.random() * 1_000_000);
     setHeight(newHeight);
   }, 7000);
 
