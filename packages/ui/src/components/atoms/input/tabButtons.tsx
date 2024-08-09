@@ -11,7 +11,7 @@ import { cls } from '../../../utils/functions.ts';
 interface TabData {
   value: number;
   label: string;
-  icon: IconComponent;
+  icon?: IconComponent;
   content: ReactNode;
 }
 
@@ -42,7 +42,8 @@ export const TabButtons = ({ tabs, width, showLabel = true, padding = '3' }: Tab
             value={tab.value}
           >
             <div className="flex gap-2">
-              <Icon color="" icon={tab.icon} />
+              {tab.icon && <Icon color="" icon={tab.icon} />}
+
               {showLabel && (
                 <Typography color="" fontWeight="semibold" variant="paragraph-lg">
                   {tab.label}

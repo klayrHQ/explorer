@@ -270,15 +270,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const stakeTabs = [
     {
       value: 31,
-      label: 'LayersThree',
-      icon: 'LayersThree',
+      label: 'Incoming',
       content: <div></div>,
     },
     {
       value: 32,
 
       label: 'Outgoing',
-      icon: 'LayersThree',
       content: <div></div>,
     },
   ];
@@ -317,12 +315,23 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       icon: 'LayersThree',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader
-            count={''}
-            title={`${validator?.account.name}'s stakes`}
-            titleSizeNotLink={'h5'}
-          />
-          <TabButtons tabs={stakeTabs} />
+          <div className="flex justify-between items-center">
+            <FlexGrid alignItems="center" gap="3" justify="center" mobileDirection="row">
+              <Typography color="gray-1" component={'h3'} fontWeight="bold" variant={'h3'}>
+                {validator?.account.name}'s stakes
+              </Typography>
+              <div
+                className={
+                  'bg-secondary rounded-sm p-2 h-9 my-0.5 min-w-9 flex items-center justify-center '
+                }
+              >
+                <Typography color="onSecondary" variant="paragraph-sm">
+                  {moduleTransactions?.length}
+                </Typography>
+              </div>
+            </FlexGrid>
+            <TabButtons tabs={stakeTabs} />
+          </div>
         </FlexGrid>
       ),
     },
