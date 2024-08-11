@@ -70,26 +70,26 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         label: 'Nonce',
       },
       value: ' - ',
-      mobileWidth: 'half',
     },
     {
       label: {
         label: 'Token',
       },
       value: 'KLY',
+      mobileWidth: 'half',
     },
-    /*{
+    {
       label: {
         label: 'Active Chain',
       },
-      value: (
-        <ChainToChainComponent
-          from={{ logo: '/', name: 'Klayr-mainchain' }}
-          to={{ logo: '/', name: 'Tokenfactory' }}
-          imageComponent={DefaultImageComponent}
-        />
-      ),
-    },*/
+      value: 'Klayr-mainchain',
+      // <ChainToChainComponent
+      //   from={{ logo: '/', name: 'Klayr-mainchain' }}
+      //   to={{ logo: '/', name: 'Tokenfactory' }}
+      //   imageComponent={DefaultImageComponent}
+      // />
+      mobileWidth: 'half',
+    },
     {
       label: {
         label: 'Available tokens',
@@ -128,21 +128,18 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           symbol={'KLY'}
         />
       ),
-      mobileWidth: 'half',
     },
     {
       label: {
         label: 'Stake capacity',
       },
       value: <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />,
-      mobileWidth: 'half',
     },
     {
       label: {
         label: 'Total received stake',
       },
       value: <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />,
-      mobileWidth: 'half',
     },
     {
       label: {
@@ -155,7 +152,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           symbol={'KLY'}
         />
       ),
-      mobileWidth: 'half',
     },
     {
       label: {
@@ -173,7 +169,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
         </div>
       ),
-      mobileWidth: 'half',
     },
     {
       label: {
@@ -192,7 +187,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
         </div>
       ),
-      mobileWidth: 'half',
     },
     {
       label: {
@@ -205,7 +199,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
         </div>
       ),
-      mobileWidth: 'half',
     },
     {
       label: {
@@ -277,13 +270,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     {
       value: 1,
       label: 'Incoming',
-      content: <div></div>,
+      content: <div className="w-64 h-64 bg-lobster"></div>,
     },
     {
       value: 2,
 
       label: 'Outgoing',
-      content: <div></div>,
+      content: <div className="w-80 h-96 bg-volt"></div>,
     },
   ];
 
@@ -320,16 +313,18 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       label: 'Stakes',
       icon: 'LayersThree',
       content: (
-        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <div className="flex w-full justify-between">
-            <SectionHeader
-              count={transactions?.length}
-              title={`${validator?.account.name}'s stakes`}
-              titleSizeNotLink={'h5'}
-              fullWidth
-            />
-            <TabButtons className="justify-end" width="full" tabs={stakeTabs} />
-          </div>
+        <FlexGrid className={'w-full desktop:gap-4.5xl relative'} direction={'col'} gap={'1.5xl'}>
+          <SectionHeader
+            count={transactions?.length}
+            title={`${validator?.account.name}'s stakes`}
+            titleSizeNotLink={'h5'}
+            fullWidth
+          />
+          <TabButtons
+            className="justify-start static desktop:absolute desktop:right-0 desktop:top-0"
+            width="full"
+            tabs={stakeTabs}
+          />
         </FlexGrid>
       ),
     },
