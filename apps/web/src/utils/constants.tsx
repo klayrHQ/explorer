@@ -424,3 +424,21 @@ export const validatorBlocksTableHead: TableCellType[] = [
     children: 'Reward',
   },
 ];
+
+export const validatorEventsTableHead: TableCellType[] = [
+  {
+    children: 'Date',
+  },
+  {
+    children: 'Height',
+  },
+  {
+    children: 'Module',
+  },
+  {
+    children: 'Event',
+  },
+  {
+    children: 'Amount',
+  },
+];

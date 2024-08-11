@@ -12,6 +12,7 @@ import {
   validatorStakeIncomingTableHead,
   validatorStakeOutgoingTableHead,
   validatorBlocksTableHead,
+  validatorEventsTableHead,
 } from '../../utils/constants.tsx';
 import { createTransactionRows } from '../../utils/helper.tsx';
 
@@ -276,7 +277,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     {
       value: 1,
       label: 'Incoming',
-      content: <></>,
+      content: <div></div>,
     },
     {
       value: 2,
@@ -361,6 +362,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             count={''}
             title={`${validator?.account.name}'s events`}
             titleSizeNotLink={'h5'}
+          />
+          <TableContainer
+            headCols={validatorEventsTableHead}
+            keyPrefix={'validator-blocks'}
+            rows={[]}
           />
         </FlexGrid>
       ),

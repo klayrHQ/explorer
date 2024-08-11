@@ -307,9 +307,9 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
     : getTableSkeletons(validatorsTableHead.length);
 };
 
-export const createValidatorEventsRows = (events: EventsType[] | undefined, loading: boolean) => {
+export const createValidatorBlockRows = (blocks: any[] | undefined, loading: boolean) => {
   return !loading
-    ? events?.map((event) => {
+    ? blocks?.map((block) => {
         return {
           cells: [
             {
@@ -341,9 +341,49 @@ export const createValidatorEventsRows = (events: EventsType[] | undefined, load
               ),
             },
             {
+              children: <Currency amount={340000000} decimals={2} symbol={'KLY'} />,
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(validatorBlocksTableHead.length);
+};
+
+export const createEventsRow = (events: EventsType[] | undefined, loading: boolean) => {
+  return !loading
+    ? events?.map((event) => {
+        return {
+          cells: [
+            {
               children: (
-               <Currency amount={340000000} decimals={2} symbol={'KLY'} />
+                <Typography color="onBackground" variant="paragraph-sm">
+                  {'DATE'}
+                </Typography>
               ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'{.toLocaleString()}'}
+                </Typography>
+              ), // {.toLocaleString()}
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'Token'}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'Lock'}
+                </Typography>
+              ),
+            },
+            {
+              children: <Currency amount={340000000} decimals={5} symbol={'KLY'} />,
             },
           ],
         };
