@@ -349,7 +349,7 @@ export const createValidatorBlockRows = (blocks: any[] | undefined, loading: boo
     : getTableSkeletons(validatorBlocksTableHead.length);
 };
 
-export const createEventsRow = (events: EventsType[] | undefined, loading: boolean) => {
+export const createValidatorEventsRow = (events: EventsType[] | undefined, loading: boolean) => {
   return !loading
     ? events?.map((event) => {
         return {
@@ -357,33 +357,33 @@ export const createEventsRow = (events: EventsType[] | undefined, loading: boole
             {
               children: (
                 <Typography color="onBackground" variant="paragraph-sm">
-                  {'DATE'}
+                  {fromNowFormatter(event.block.timestamp * 1000, 'DD MMM YYYY')}
                 </Typography>
               ),
             },
             {
               children: (
                 <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {'{.toLocaleString()}'}
-                </Typography>
-              ), // {.toLocaleString()}
-            },
-            {
-              children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {'Token'}
+                  {event.block.height.toLocaleString()}
                 </Typography>
               ),
             },
             {
               children: (
                 <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {'Lock'}
+                  {event.module}
                 </Typography>
               ),
             },
             {
-              children: <Currency amount={340000000} decimals={5} symbol={'KLY'} />,
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {event.name}
+                </Typography>
+              ),
+            },
+            {
+              children: <Currency amount={event.data.amount || 0} decimals={5} symbol={'KLY'} />,
             },
           ],
         };

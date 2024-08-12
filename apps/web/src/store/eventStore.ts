@@ -5,6 +5,7 @@ import gatewayClient from '../network/gatewayClient';
 export interface EventsQueryParams {
   height?: string;
   transactionID?: string;
+  senderAddress?: string;
 }
 
 interface EventsStore {
@@ -19,13 +20,14 @@ export const useEventsStore = create<EventsStore>((set, get) => ({
 
   callGetEvents: async (params: EventsQueryParams) => {
     const { setEvents } = get();
-    const { height, transactionID } = params;
+    const { height, transactionID, senderAddress } = params;
 
     gatewayClient
       .get<GatewayRes<EventsType[]>>('events', {
         params: {
           height,
-          transactionID
+          transactionID,
+          senderAddress,
         },
       })
       .then(({ data }) => {

@@ -3,6 +3,7 @@ import { ValidatorBanner } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
 import { useValidatorStore } from '../../store/validatorStore';
+import { useEventsStore } from '../../store/eventStore';
 import { TabButtons, FlexGrid, Currency, Typography } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
@@ -14,7 +15,7 @@ import {
   validatorBlocksTableHead,
   validatorEventsTableHead,
 } from '../../utils/constants.tsx';
-import { createTransactionRows } from '../../utils/helper.tsx';
+import { createTransactionRows, createValidatorEventsRow } from '../../utils/helper.tsx';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -24,6 +25,9 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
 
   const transactions = useTransactionStore((state) => state.transactions);
   const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
+
+  const events = useEventsStore((state) => state.events);
+  const callGetEvents = useEventsStore((state) => state.callGetEvents);
 
   // TODO: loading not used?
   const [loading, setLoading] = useState<boolean>(true);
@@ -41,6 +45,15 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       }).finally(() => setLoading(false));
     }
   }, [validator]);
+
+  useEffect(() => {
+    if (validator && validator.account && validator.account.address) {
+      setLoading(true);
+      callGetEvents({ senderAddress: validator.account.address }).finally(() => setLoading(false));
+    }
+  }, [validator]);
+
+  console.log(events);
 
   // useEffect(() => {
   //   if (validator && validator.account && validator.account.address) {
@@ -144,6 +157,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
+  const eventsRows = createValidatorEventsRow(events, loading);
 
   const stakeTabs = [
     {
@@ -241,7 +255,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           <TableContainer
             headCols={validatorEventsTableHead}
             keyPrefix={'validator-blocks'}
-            rows={[]}
+            rows={eventsRows}
           />
         </FlexGrid>
       ),
