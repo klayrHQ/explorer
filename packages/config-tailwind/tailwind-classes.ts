@@ -332,6 +332,7 @@ const width = {
   transitionBannerContainerWidth: '700px',
   transitionBannerContainerWidthMobile: '334px',
   detailsLabelWidth: 'max(15%, 160px)',
+  detailsLabelWidthLarge: 'max(20%, 225px)',
   pagNumWidth: '34px',
 };
 

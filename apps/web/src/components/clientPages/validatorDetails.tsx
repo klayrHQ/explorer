@@ -51,215 +51,94 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   //   }
   // }, [validator]);
 
+  const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
+    return { label: { label }, value, mobileWidth };
+  };
+
   const details = [
-    {
-      label: {
-        label: 'Validator ID',
-      },
-      value: validator?.account.address,
-    },
-    {
-      label: {
-        label: 'Public Key',
-      },
-      value: validator?.account.publicKey,
-      mobileWidth: 'half',
-    },
-    {
-      label: {
-        label: 'Nonce',
-      },
-      value: ' - ',
-    },
-    {
-      label: {
-        label: 'Token',
-      },
-      value: 'KLY',
-      mobileWidth: 'half',
-    },
-    {
-      label: {
-        label: 'Active Chain',
-      },
-      value: 'Klayr-mainchain',
-      // <ChainToChainComponent
-      //   from={{ logo: '/', name: 'Klayr-mainchain' }}
-      //   to={{ logo: '/', name: 'Tokenfactory' }}
-      //   imageComponent={DefaultImageComponent}
-      // />
-      mobileWidth: 'half',
-    },
-    {
-      label: {
-        label: 'Available tokens',
-      },
-      value: (
+    createDetails('Validator ID', validator?.account.address),
+    createDetails('Public Key', validator?.account.publicKey, 'half'),
+    createDetails('Nonce', ' - '),
+    createDetails('Token', 'KLY', 'half'),
+    createDetails('Active Chain', 'Klayr-mainchain', 'half'),
+    createDetails(
+      'Available tokens',
+      <Currency
+        amount={validator?.totalStake || 0}
+        className={'truncate max-w-full'}
+        decimals={2}
+        symbol={'KLY'}
+      />,
+    ),
+    createDetails(
+      'Locked tokens',
+      <Currency amount={''} className={'truncate max-w-full'} decimals={2} symbol={'KLY'} />,
+    ),
+    createDetails('Claimable rewards', ' - '),
+    createDetails(
+      'Validator weight',
+      <Currency
+        amount={validator?.validatorWeight || 0}
+        className={'truncate max-w-full'}
+        symbol={'KLY'}
+      />,
+    ),
+    createDetails(
+      'Stake capacity',
+      <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />,
+    ),
+    createDetails(
+      'Total received stake',
+      <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />,
+    ),
+    createDetails(
+      'Self stake',
+      <Currency
+        amount={validator?.selfStake || 0}
+        className={'truncate max-w-full'}
+        symbol={'KLY'}
+      />,
+    ),
+    createDetails(
+      'Commission',
+      <div className="flex items-center gap-1">
         <Currency
-          amount={validator?.totalStake || 0}
-          className={'truncate max-w-full'}
-          decimals={2}
-          symbol={'KLY'}
-        />
-      ),
-      mobileWidth: 'half',
-    },
-    {
-      label: {
-        label: 'Locked tokens',
-      },
-      value: <Currency amount={''} className={'truncate max-w-full'} decimals={2} symbol={'KLY'} />,
-      mobileWidth: 'half',
-    },
-    {
-      label: {
-        label: 'Claimable rewards',
-      },
-      value: ' - ',
-    },
-    {
-      label: {
-        label: 'Validator weight',
-      },
-      value: (
-        <Currency
-          amount={validator?.validatorWeight || 0}
+          amount={validator?.commission || 0}
           className={'truncate max-w-full'}
           symbol={'KLY'}
+          decimals={5}
         />
-      ),
-    },
-    {
-      label: {
-        label: 'Stake capacity',
-      },
-      value: <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />,
-    },
-    {
-      label: {
-        label: 'Total received stake',
-      },
-      value: <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />,
-    },
-    {
-      label: {
-        label: 'Self stake',
-      },
-      value: (
-        <Currency
-          amount={validator?.selfStake || 0}
-          className={'truncate max-w-full'}
-          symbol={'KLY'}
-        />
-      ),
-    },
-    {
-      label: {
-        label: 'Commission',
-      },
-      value: (
-        <div className="flex items-center gap-1">
-          <Currency
-            amount={validator?.commission || 0}
-            className={'truncate max-w-full'}
-            symbol={'KLY'}
-            decimals={5}
-          />
-          {'|'}
-          <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
-        </div>
-      ),
-    },
-    {
-      label: {
-        label: 'Last commission increase',
-      },
-      value: validator?.lastCommissionIncreaseHeight,
-    },
-    {
-      label: {
-        label: 'Total rewards',
-      },
-      value: (
-        <div className="flex items-center gap-1">
-          <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />
-          {'|'}
-          <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
-        </div>
-      ),
-    },
-    {
-      label: {
-        label: ' Total self stake rewards',
-      },
-      value: (
-        <div className="flex items-center gap-1">
-          <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />
-          {'|'}
-          <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
-        </div>
-      ),
-    },
-    {
-      label: {
-        label: 'Dynamic block rewards',
-      },
-      value: ' - ',
-    },
-    {
-      label: {
-        label: 'Last generated heights',
-      },
-      value: validator?.lastGeneratedHeight,
-    },
-    {
-      label: {
-        label: 'Max height generated',
-      },
-      value: ' - ',
-    },
-    {
-      label: {
-        label: 'Max height prevoted',
-      },
-      value: ' - ',
-    },
-    {
-      label: {
-        label: 'Generated blocks',
-      },
-      value: validator?.generatedBlocks,
-    },
-    {
-      label: {
-        label: 'Missed blocks',
-      },
-      value: ' - ',
-    },
-    {
-      label: {
-        label: 'Consecutive missed blocks',
-      },
-      value: validator?.consecutiveMissedBlocks,
-    },
-    {
-      label: {
-        label: 'Ratio blocks forged/missed',
-      },
-      value: ' -  / - ',
-    },
-    {
-      label: {
-        label: 'Punishments',
-      },
-      value: ' - ',
-    },
-    {
-      label: {
-        label: 'Blockchain version',
-      },
-      value: ' - ',
-    },
+        {'|'}
+        <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
+      </div>,
+    ),
+    createDetails('Last commission increase', validator?.lastCommissionIncreaseHeight),
+    createDetails(
+      'Total rewards',
+      <div className="flex items-center gap-1">
+        <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />
+        {'|'}
+        <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
+      </div>,
+    ),
+    createDetails(
+      'Total self stake rewards',
+      <div className="flex items-center gap-1">
+        <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />
+        {'|'}
+        <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
+      </div>,
+    ),
+    createDetails('Dynamic block rewards', ' - '),
+    createDetails('Last generated heights', validator?.lastGeneratedHeight),
+    createDetails('Max height generated', ' - '),
+    createDetails('Max height prevoted', ' - '),
+    createDetails('Generated blocks', validator?.generatedBlocks),
+    createDetails('Missed blocks', ' - '),
+    createDetails('Consecutive missed blocks', validator?.consecutiveMissedBlocks),
+    createDetails('Ratio blocks forged/missed', ' -  / - '),
+    createDetails('Punishments', ' - '),
+    createDetails('Blockchain version', ' - '),
   ];
 
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
@@ -287,6 +166,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       icon: 'InfoSquare',
       content: (
         <DetailsSection
+          headerWidth="detailsLabelWidthLarge"
           data={details}
           json={validator as unknown as DataType}
           title={'Validator Details'}
