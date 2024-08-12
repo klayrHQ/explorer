@@ -22,37 +22,51 @@ import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
 import { useBlockStore } from '../../store/blockStore.ts';
 import { useTransactionStore } from '../../store/transactionStore.ts';
 import { useEventsStore } from '../../store/eventStore.ts';
+import { BlockDetailsType, EventsType, TransactionType } from '../../utils/types.ts';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
-  const block = useBlockStore((state) => state.block);
   const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
-
-  const transactions = useTransactionStore((state) => state.transactions);
   const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
-
-  const events = useEventsStore((state) => state.events);
   const callGetEvents = useEventsStore((state) => state.callGetEvents);
 
   const { id } = params;
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
+  const [block, setBlocks] = useState<BlockDetailsType | undefined>(undefined);
+  const [transactions, setTransactions] = useState<TransactionType[] | undefined>(undefined);
+  const [events, setEvents] = useState<EventsType[] | undefined>(undefined);
 
   useEffect(() => {
     setLoading(true);
-    callGetBlocks({ blockID: id }).finally(() => setLoading(false));
+    callGetBlocks({
+      blockID: id,
+    })
+      .then((data) => setBlocks(data.data[0]))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }, [id]);
 
   useEffect(() => {
     if (block?.numberOfTransactions && block?.numberOfTransactions >= 0) {
       setLoading(true);
-      callGetTransactions({ blockID: id }).finally(() => setLoading(false));
+      callGetTransactions({
+        blockID: id,
+      })
+        .then((data) => setTransactions(data.data))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
     }
   }, [id, block]);
 
   useEffect(() => {
     if (block) {
       setLoading(true);
-      callGetEvents({ height: `${block.height}:${block.height}` }).finally(() => setLoading(false));
+      callGetEvents({
+        height: `${block.height}:${block.height}`,
+      })
+        .then((data) => setEvents(data.data))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
     }
   }, [block]);
 

@@ -13,6 +13,8 @@ export const Transactions = () => {
   const pathname = usePathname();
 
   const transactions = useTransactionStore((state) => state.transactions);
+  const setTransactions = useTransactionStore((state) => state.setTransactions);
+  const setTotalTxs = useTransactionStore((state) => state.setTotalTxs);
   const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
   const totalTxs = useTransactionStore((state) => state.totalTxs);
 
@@ -31,7 +33,16 @@ export const Transactions = () => {
     const limit = searchParams.get('limit') || defaultLimit;
     const page = Number(searchParams.get('page')) || 1;
     const offset = (page - 1) * Number(limit);
-    callGetTransactions({ limit, offset }).finally(() => setLoading(false));
+    callGetTransactions({
+      limit,
+      offset,
+    })
+      .then((data) => {
+        setTotalTxs(data.meta.total);
+        setTransactions(data.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }, [searchParams]);
 
   const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);

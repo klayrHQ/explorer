@@ -24,6 +24,8 @@ export const Blocks = () => {
   const totalBlocks = useBlockStore((state) => state.totalBlocks);
   const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
   const newBlockEvent = useSocketStore((state) => state.height);
+  const setBlocks = useBlockStore((state) => state.setBlocks);
+  const setTotalBlocks = useBlockStore((state) => state.setTotalBlocks);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -43,7 +45,16 @@ export const Blocks = () => {
     const limit = searchParams.get('limit') || defaultLimit;
     const page = Number(searchParams.get('page')) || 1;
     const offset = (page - 1) * Number(limit);
-    callGetBlocks({ limit, offset }).finally(() => setLoading(false));
+    callGetBlocks({
+      limit,
+      offset,
+    })
+      .then((data) => {
+        setTotalBlocks(data.meta.total);
+        setBlocks(data.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }, [searchParams, newBlockEvent]);
 
   const tableHead: TableCellType[] = [

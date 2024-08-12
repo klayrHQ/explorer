@@ -10,48 +10,42 @@ export interface TransactionQueryParams {
 }
 
 interface TransactionStore {
-  transaction: TransactionType | undefined;
   transactions: TransactionType[];
   totalTxs: number;
-  setTransaction: (transaction: TransactionType) => void;
   setTransactions: (transaction: TransactionType[]) => void;
   setTotalTxs: (totalTxs: number) => void;
-  callGetTransactions: (params: TransactionQueryParams) => Promise<void>;
+  callGetTransactions: (params: TransactionQueryParams) => Promise<GatewayRes<TransactionType[]>>;
 }
 
 export const useTransactionStore = create<TransactionStore>((set, get) => ({
-  transaction: undefined,
   transactions: [],
   totalTxs: 0,
-  setTransaction: (transaction: TransactionType) => set(() => ({ transaction })),
   setTransactions: (transactions: TransactionType[]) => set(() => ({ transactions })),
   setTotalTxs: (totalTxs: number) => set(() => ({ totalTxs })),
 
-  callGetTransactions: async (params: TransactionQueryParams) => {
-    const { setTransaction, setTransactions, setTotalTxs } = get();
+  callGetTransactions: async (
+    params: TransactionQueryParams,
+  ): Promise<GatewayRes<TransactionType[]>> => {
     const { blockID, transactionID, limit, offset } = params;
 
-    gatewayClient
-      .get<GatewayRes<TransactionType[]>>('transactions', {
+    try {
+      const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
         params: {
           blockID,
           transactionID,
           limit,
           offset,
         },
-      })
-      .then(({ data }) => {
-        if (data?.data) {
-          setTotalTxs(data.meta.total);
-          if (data.data.length === 1) {
-            setTransaction(data.data[0]);
-          } else {
-            setTransactions(data.data);
-          }
-        }
-      })
-      .catch((error) => {
-        console.error(error);
       });
+
+      if (data) {
+        return data;
+      } else {
+        throw new Error('No data received');
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   },
 }));
