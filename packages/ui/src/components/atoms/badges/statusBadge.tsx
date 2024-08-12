@@ -56,9 +56,10 @@ const statusColors: { [key: string]: StatusColorProps } = {
 
 type ValidatorStatusBadgeProps = {
   status: string;
+  nextAllocatedTime?: string;
 };
 
-export const StatusBadge = ({ status }: ValidatorStatusBadgeProps) => {
+export const StatusBadge = ({ status, nextAllocatedTime }: ValidatorStatusBadgeProps) => {
   const { borderColor, colorVariant, backgroundColor } = statusColors[status] || {};
 
   return (
@@ -66,7 +67,7 @@ export const StatusBadge = ({ status }: ValidatorStatusBadgeProps) => {
       backgroundColor={backgroundColor}
       borderColor={borderColor}
       colorVariant={colorVariant}
-      label={status}
+      label={nextAllocatedTime ?? status}
     />
   );
 };

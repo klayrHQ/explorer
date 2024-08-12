@@ -1,29 +1,16 @@
 import { FlexGrid, Typography } from '../../atoms';
 import { UserAccountCard } from '../../atoms/account/userAccountCard';
 
-export interface ValidatorType {
-  account: any;
+interface NextValidatorType {
   address: string;
-  totalStake: string;
-  selfStake: string;
-  validatorWeight: string;
-  generatedBlocks: number;
-  rank: number;
-  blsKey: string;
-  proofOfPossession: string;
-  generatorKey: string;
-  lastGeneratedHeight: number;
-  isBanned: boolean;
+  name: string;
+  publicKey: string;
+  nextAllocatedTime: number;
   status: string;
-  reportMisbehaviorHeights: string[];
-  punishmentPeriods: string;
-  consecutiveMissedBlocks: number;
-  commission: number;
-  lastCommissionIncreaseHeight: number;
 }
 
 type NextValidatorsProps = {
-  validators: ValidatorType[];
+  validators: NextValidatorType[];
 };
 
 export const NextValidators = ({ validators }: NextValidatorsProps) => {
@@ -37,13 +24,13 @@ export const NextValidators = ({ validators }: NextValidatorsProps) => {
         {' Next Validators'}
       </Typography>
       <div className="flex gap-4">
-        {validators.slice(0, 3).map((validator, index) => (
+        {validators.map((validator, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <UserAccountCard
-            address={validator.account.address}
+            address={validator.address}
             // eslint-disable-next-line react/no-array-index-key
             key={index}
-            name={validator.account.name}
+            name={validator.name}
             nameColor="onBackgroundMedium"
             nameFontWeight="semibold"
             nameOnly

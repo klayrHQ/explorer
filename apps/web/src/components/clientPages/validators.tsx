@@ -6,19 +6,25 @@ import { useEffect, useState } from 'react';
 import { validatorsTableHead } from '../../utils/constants.tsx';
 import { createValidatorsRows } from '../../utils/helper.tsx';
 import { useValidatorStore } from '../../store/validatorStore.ts';
+import { useSocketStore } from '../../store/socketStore.ts';
 
 export const Validators = () => {
   const validators = useValidatorStore((state) => state.validators);
+  const nextValidators = useValidatorStore((state) => state.nextValidators);
   const totalValidators = useValidatorStore((state) => state.totalValidators);
   const callGetValidators = useValidatorStore((state) => state.callGetValidators);
+  const callGetNextValidators = useValidatorStore((state) => state.callGetNextValidators);
+
+  const newBlockEvent = useSocketStore((state) => state.height);
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(51);
 
   useEffect(() => {
     setLoading(true);
+    callGetNextValidators();
     callGetValidators({ limit: rowsPerPage.toString() }).finally(() => setLoading(false));
-  }, [rowsPerPage]);
+  }, [rowsPerPage, newBlockEvent]);
 
   const rows = createValidatorsRows(validators, loading);
 
@@ -44,7 +50,7 @@ export const Validators = () => {
           <DonutChart data={mockChartData} />
         </div>
         <div className="hidden desktop:flex">
-          <NextValidators validators={validators} />
+          <NextValidators validators={nextValidators} />
         </div>
       </FlexGrid>
       <TableContainer
