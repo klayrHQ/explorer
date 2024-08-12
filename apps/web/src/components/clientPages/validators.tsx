@@ -14,6 +14,8 @@ export const Validators = () => {
   const totalValidators = useValidatorStore((state) => state.totalValidators);
   const callGetValidators = useValidatorStore((state) => state.callGetValidators);
   const callGetNextValidators = useValidatorStore((state) => state.callGetNextValidators);
+  const setValidators = useValidatorStore((state) => state.setValidators);
+  const setTotalValidators = useValidatorStore((state) => state.setTotalValidators);
 
   const newBlockEvent = useSocketStore((state) => state.height);
 
@@ -23,7 +25,15 @@ export const Validators = () => {
   useEffect(() => {
     setLoading(true);
     callGetNextValidators();
-    callGetValidators({ limit: rowsPerPage.toString() }).finally(() => setLoading(false));
+    callGetValidators({
+      limit: rowsPerPage.toString(),
+    })
+      .then((data) => {
+        setTotalValidators(data.meta.total);
+        setValidators(data.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }, [rowsPerPage, newBlockEvent]);
 
   const rows = createValidatorsRows(validators, loading);

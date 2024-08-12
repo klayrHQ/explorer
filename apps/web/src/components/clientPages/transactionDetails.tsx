@@ -10,26 +10,36 @@ import { createEventsRows } from '../../utils/helper.tsx';
 import { DataType } from '@repo/ui/types';
 import { useTransactionStore } from '../../store/transactionStore.ts';
 import { useEventsStore } from '../../store/eventStore.ts';
+import { EventsType, TransactionType } from '../../utils/types.ts';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
-  const transaction = useTransactionStore((state) => state.transaction);
   const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
-
-  const events = useEventsStore((state) => state.events);
   const callGetEvents = useEventsStore((state) => state.callGetEvents);
 
   const { id } = params;
   const [loading, setLoading] = useState<boolean>(true);
+  const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);
+  const [events, setEvents] = useState<EventsType[] | undefined>(undefined);
 
   useEffect(() => {
     setLoading(true);
-    callGetTransactions({ transactionID: id }).finally(() => setLoading(false));
+    callGetTransactions({
+      transactionID: id,
+    })
+      .then((data) => setTransaction(data.data[0]))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }, [id]);
 
   useEffect(() => {
     if (transaction) {
       setLoading(true);
-      callGetEvents({ transactionID: transaction.id }).finally(() => setLoading(false));
+      callGetEvents({
+        transactionID: transaction.id,
+      })
+        .then((data) => setEvents(data.data))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
     }
   }, [transaction]);
 

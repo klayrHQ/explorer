@@ -4,19 +4,25 @@ import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
 import { useValidatorStore } from '../../store/validatorStore';
 import { TabButtons, FlexGrid } from '@repo/ui/atoms';
+import { ValidatorType } from '../../utils/types';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
-  const validator = useValidatorStore((state) => state.validator);
   const callGetValidators = useValidatorStore((state) => state.callGetValidators);
 
   // TODO: loading not used?
   const [loading, setLoading] = useState<boolean>(true);
+  const [validator, setValidators] = useState<ValidatorType | undefined>(undefined);
 
   useEffect(() => {
     setLoading(true);
-    callGetValidators({ address: id }).finally(() => setLoading(false));
+    callGetValidators({
+      address: id,
+    })
+      .then((data) => setValidators(data.data[0]))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }, [id]);
 
   const tabs = [

@@ -10,31 +10,32 @@ export interface EventsQueryParams {
 interface EventsStore {
   events: EventsType[];
   setEvents: (events: EventsType[]) => void;
-  callGetEvents: (params: EventsQueryParams) => Promise<void>;
+  callGetEvents: (params: EventsQueryParams) => Promise<GatewayRes<EventsType[]>>;
 }
 
 export const useEventsStore = create<EventsStore>((set, get) => ({
   events: [],
   setEvents: (events: EventsType[]) => set(() => ({ events })),
 
-  callGetEvents: async (params: EventsQueryParams) => {
-    const { setEvents } = get();
+  callGetEvents: async (params: EventsQueryParams): Promise<GatewayRes<EventsType[]>> => {
     const { height, transactionID } = params;
 
-    gatewayClient
-      .get<GatewayRes<EventsType[]>>('events', {
+    try {
+      const { data } = await gatewayClient.get<GatewayRes<EventsType[]>>('events', {
         params: {
           height,
-          transactionID
+          transactionID,
         },
-      })
-      .then(({ data }) => {
-        if (data?.data) {
-          setEvents(data.data);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
       });
+
+      if (data) {
+        return data;
+      } else {
+        throw new Error('No data received');
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   },
 }));
