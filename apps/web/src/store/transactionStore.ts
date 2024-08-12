@@ -9,6 +9,8 @@ export interface TransactionQueryParams {
   offset?: number;
   address?: string;
   moduleCommand?: string;
+  senderAddress?: string;
+  recipientAddress?: string;
 }
 
 interface TransactionStore {
@@ -28,7 +30,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
   callGetTransactions: async (
     params: TransactionQueryParams,
   ): Promise<GatewayRes<TransactionType[]>> => {
-    const { blockID, transactionID, limit, offset, address, moduleCommand } = params;
+    const { blockID, transactionID, limit, offset, address, moduleCommand, senderAddress, recipientAddress,  } = params;
 
     try {
       const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
@@ -39,6 +41,8 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
           offset,
           address,
           moduleCommand,
+          senderAddress,
+          recipientAddress,
         },
       });
 

@@ -19,7 +19,7 @@ export interface TransactionType {
   size: number;
   block: BlockType;
   sender: AccountType;
-  params: ParamsType;
+  params: any;
   signatures: string[];
   executionStatus: string;
   index: number;
