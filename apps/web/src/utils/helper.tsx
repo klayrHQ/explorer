@@ -228,7 +228,16 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
             },
             {
               //depends on what color?
-              children: <StatusBadge status={validator.status} />,
+              children: (
+                <StatusBadge
+                  status={validator.status}
+                  nextAllocatedTime={
+                    validator.nextAllocatedTime
+                      ? fromNowFormatter(validator.nextAllocatedTime * 1000, 'DD MMM YYYY')
+                      : undefined
+                  }
+                />
+              ),
             },
             {
               children: (
