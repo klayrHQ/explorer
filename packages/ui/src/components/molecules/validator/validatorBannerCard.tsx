@@ -14,7 +14,7 @@ export const ValidatorBannerCard = ({ blockTime }: ValidatorBannerCardProps) => 
       </div> */}
 
       {/* BLOCK */}
-      <div className="border border-onBackground rounded-xl z-20  w-transitionBannerContainerWidthMobile hidden desktop:block desktop:w-auto">
+      <div className="border border-onBackground rounded-xl  w-transitionBannerContainerWidthMobile hidden desktop:block desktop:w-auto">
         <div className="p-6 flex flex-1 items-start flex-col gap-6 ">
           <Typography color="onBackground" fontWeight="semibold" variant="paragraph-md">
             {'Next block in'}
