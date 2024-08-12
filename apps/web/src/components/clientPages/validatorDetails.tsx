@@ -248,7 +248,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={''}
+            count={events?.length}
             title={`${validator?.account.name}'s events`}
             titleSizeNotLink={'h5'}
           />
