@@ -49,6 +49,7 @@ export interface ParamsType {
 export interface MetaType {
   recipient?: AccountType;
   count?: number;
+  total?: number;
 }
 
 export interface BlockDetailsType {

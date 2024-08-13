@@ -2,6 +2,7 @@
 import { ValidatorBanner } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useValidatorStore } from '../../store/validatorStore';
 import { useEventsStore } from '../../store/eventStore';
 import { useBlockStore } from '../../store/blockStore.ts';
@@ -30,6 +31,7 @@ import {
   MetaType,
   BlockDetailsType,
 } from '../../utils/types';
+import { useSocketStore } from '../../store/socketStore.ts';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -108,6 +110,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         incomingStakesPromise,
         outgoingStakesPromise,
         eventsPromise,
+        blocksPromise,
       ]).finally(() => setLoading(false));
     }
   }, [validator]);
@@ -217,7 +220,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <div>
           <SectionHeader
-            count={incomingStakesMeta?.count}
+            count={incomingStakesMeta?.total}
             title={`${validator?.account.name}'s stakes`}
             titleSizeNotLink={'h5'}
             className="absolute top-0 left-0"
@@ -236,7 +239,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <>
           <SectionHeader
-            count={outgoingStakesMeta?.count}
+            count={outgoingStakesMeta?.total}
             title={`${validator?.account.name}'s stakes`}
             titleSizeNotLink={'h5'}
             className="absolute top-0 left-0"
@@ -272,7 +275,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={transactionsMeta?.count}
+            count={transactionsMeta?.total}
             title={`${validator?.account.name} transactions`}
             titleSizeNotLink={'h5'}
           />
@@ -286,12 +289,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       icon: 'LayersThree',
       content: (
         <FlexGrid className={'w-full desktop:gap-4.5xl relative'} direction={'col'} gap={'1.5xl'}>
-          {/* <SectionHeader
-            count={incomingStake?.length}
-            title={`${validator?.account.name}'s stakes`}
-            titleSizeNotLink={'h5'}
-            fullWidth
-          /> */}
           <TabButtons className="justify-start desktop:justify-end" width="full" tabs={stakeTabs} />
         </FlexGrid>
       ),
@@ -303,7 +300,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={''}
+            count={blocksMeta?.total}
             title={`${validator?.account.name}'s blocks`}
             titleSizeNotLink={'h5'}
           />
@@ -322,7 +319,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={eventsMeta?.count}
+            count={eventsMeta?.total}
             title={`${validator?.account.name}'s events`}
             titleSizeNotLink={'h5'}
           />
