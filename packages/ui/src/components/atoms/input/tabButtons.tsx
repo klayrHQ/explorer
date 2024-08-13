@@ -11,7 +11,7 @@ import { cls } from '../../../utils/functions.ts';
 interface TabData {
   value: number;
   label: string;
-  icon: IconComponent;
+  icon?: IconComponent;
   content: ReactNode;
 }
 
@@ -19,21 +19,29 @@ interface TabButtonsProps {
   tabs: TabData[];
   width?: string;
   showLabel?: boolean;
+  padding?: string;
+  className?: string;
 }
 
-export const TabButtons = ({ tabs, width, showLabel = true }: TabButtonsProps) => {
+export const TabButtons = ({
+  tabs,
+  width,
+  className,
+  showLabel = true,
+  padding = '3',
+}: TabButtonsProps) => {
   return (
     <Tabs
-      className={cls(['flex flex-col gap-1.5xl', width ? `w-${width}` : ' w-full'])}
+      className={cls([`flex flex-col gap-1.5xl`, width ? `w-${width}` : ' w-full'])}
       defaultValue={1}
     >
-      <TabsList className="flex gap-2 bg-background active:text-lobster">
+      <TabsList className={`flex gap-2 bg-background active:text-lobster ${className}`}>
         {tabs.map((tab) => (
           <Tab
             key={tab.value}
             slotProps={{
               root: ({ selected, disabled }) => ({
-                className: `p-3 rounded-sm ${
+                className: `p-3 px-${padding} rounded-sm ${
                   selected ? 'bg-backgroundSecondary text-onBackground' : 'text-onBackgroundMedium'
                 } ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'} `,
               }),
@@ -41,7 +49,8 @@ export const TabButtons = ({ tabs, width, showLabel = true }: TabButtonsProps) =
             value={tab.value}
           >
             <div className="flex gap-2">
-              <Icon color="" icon={tab.icon} />
+              {tab.icon && <Icon color="" icon={tab.icon} />}
+
               {showLabel && (
                 <Typography color="" fontWeight="semibold" variant="paragraph-lg">
                   {tab.label}

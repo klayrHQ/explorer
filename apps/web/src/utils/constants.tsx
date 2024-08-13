@@ -382,3 +382,63 @@ export const validatorsTableHead: TableCellType[] = [
     className: 'items-end text-end whitespace-nowrap',
   },
 ];
+
+export const validatorStakeIncomingTableHead: TableCellType[] = [
+  {
+    children: 'Account',
+  },
+  {
+    children: 'Amount',
+  },
+];
+
+export const validatorStakeOutgoingTableHead: TableCellType[] = [
+  {
+    children: 'Validator',
+  },
+  {
+    children: 'Validator weight',
+  },
+  {
+    children: 'Commission',
+  },
+  {
+    children: 'Stake',
+  },
+];
+
+export const validatorBlocksTableHead: TableCellType[] = [
+  {
+    children: 'Block ID',
+  },
+  {
+    children: 'Height',
+  },
+  {
+    children: 'Date',
+  },
+  {
+    children: 'Transactions',
+  },
+  {
+    children: 'Reward',
+  },
+];
+
+export const validatorEventsTableHead: TableCellType[] = [
+  {
+    children: 'Date',
+  },
+  {
+    children: 'Height',
+  },
+  {
+    children: 'Module',
+  },
+  {
+    children: 'Event',
+  },
+  {
+    children: 'Amount',
+  },
+];

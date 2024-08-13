@@ -16,6 +16,7 @@ import { cls, copyToClipboard } from '../../../utils/functions.ts';
 import { DataType } from '../../../types/types.ts';
 
 interface DetailsSectionsProps {
+  headerWidth?: string;
   title: string;
   data: {
     label: {
@@ -28,7 +29,12 @@ interface DetailsSectionsProps {
   json?: DataType;
 }
 
-export const DetailsSection = ({ title, data, json }: DetailsSectionsProps) => {
+export const DetailsSection = ({
+  title,
+  data,
+  json,
+  headerWidth = 'detailsLabelWidth',
+}: DetailsSectionsProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [jsonOpen, setJsonOpen] = useState(false);
 
@@ -107,7 +113,7 @@ export const DetailsSection = ({ title, data, json }: DetailsSectionsProps) => {
           >
             <FlexGrid
               alignItems={'center'}
-              className={'shrink-0 w-full desktop:w-detailsLabelWidth'}
+              className={`shrink-0 w-full desktop:w-${headerWidth}`}
               direction={'row'}
               mobileDirection={'row'}
             >

@@ -27,8 +27,12 @@ import {
   getTableSkeletons,
   transactionTableHead,
   validatorsTableHead,
+  validatorBlocksTableHead,
+  validatorStakeIncomingTableHead,
+  validatorStakeOutgoingTableHead,
 } from './constants.tsx';
 import { DataType } from '@repo/ui/types';
+import { formatCommission } from './dataHelpers.tsx';
 
 export const createTransactionRows = (
   transactions: TransactionType[] | undefined,
@@ -284,7 +288,9 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
               children: (
                 //how to get the percentage?
                 <div className="flex justify-end">
-                  <Typography color={'onBackgroundLow'}>{validator?.commission}%</Typography>
+                  <Typography color={'onBackgroundLow'}>
+                    {formatCommission(validator?.commission)}%
+                  </Typography>
                 </div>
               ),
             },
@@ -313,4 +319,154 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
         };
       })
     : getTableSkeletons(validatorsTableHead.length);
+};
+
+export const createValidatorIncomingStakeRows = (
+  incomingStakes: TransactionType[] | undefined,
+  loading: boolean,
+) => {
+  return !loading
+    ? incomingStakes?.map((incomingStake) => {
+        return {
+          cells: [
+            {
+              children: (
+                <UserAccountCard
+                  address={incomingStake?.sender?.address}
+                  name={incomingStake?.sender?.name}
+                />
+              ),
+            },
+            {
+              children: (
+                <Currency amount={incomingStake?.params?.stakes[0].amount} symbol={'KLY'} />
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(validatorStakeIncomingTableHead.length);
+};
+
+export const createValidatorOutgoingStakeRows = (
+  outgoingStakes: TransactionType[] | undefined,
+  validator: ValidatorType | undefined,
+  loading: boolean,
+) => {
+  return !loading
+    ? outgoingStakes?.map((outgoingStake) => {
+        return {
+          cells: [
+            {
+              children: (
+                <UserAccountCard
+                  address={outgoingStake?.recipient?.address}
+                  name={outgoingStake?.recipient?.name}
+                />
+              ),
+            },
+            {
+              children: <Currency amount={validator?.validatorWeight || 0} symbol={'KLY'} />,
+            },
+
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {formatCommission(validator?.commission)} %
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Currency amount={outgoingStake?.params?.stakes[0].amount} symbol={'KLY'} />
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(validatorStakeOutgoingTableHead.length);
+};
+
+export const createValidatorBlockRows = (blocks: any[] | undefined, loading: boolean) => {
+  return !loading
+    ? blocks?.map((block) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Typography color="onBackground" variant="paragraph-sm">
+                  {'sad'}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'{.toLocaleString()}'}
+                </Typography>
+              ), // {.toLocaleString()}
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'Data'}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'0'}
+                </Typography>
+              ),
+            },
+            {
+              children: <Currency amount={340000000} decimals={2} symbol={'KLY'} />,
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(validatorBlocksTableHead.length);
+};
+
+export const createValidatorEventsRow = (events: EventsType[] | undefined, loading: boolean) => {
+  return !loading
+    ? events?.map((event) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Typography color="onBackground" variant="paragraph-sm">
+                  {fromNowFormatter(event.block.timestamp * 1000, 'DD MMM YYYY')}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {event.block.height.toLocaleString()}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {event.module}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {event.name}
+                </Typography>
+              ),
+            },
+            {
+              children: <Currency amount={event.data.amount || 0} decimals={5} symbol={'KLY'} />,
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(validatorBlocksTableHead.length);
 };
