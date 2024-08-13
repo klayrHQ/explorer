@@ -32,9 +32,11 @@ export interface TransactionType {
 
 export interface BlockType {
   id: string;
-  height: number;
-  timestamp: number;
-  isFinal: boolean;
+  height?: number;
+  timestamp?: number;
+  isFinal?: boolean;
+  numberOfTransactions?: number;
+  reward?: string;
 }
 
 export interface ParamsType {

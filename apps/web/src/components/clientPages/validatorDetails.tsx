@@ -21,8 +21,15 @@ import {
   createValidatorEventsRow,
   createValidatorIncomingStakeRows,
   createValidatorOutgoingStakeRows,
+  createValidatorBlockRows,
 } from '../../utils/helper.tsx';
-import { EventsType, TransactionType, ValidatorType, MetaType } from '../../utils/types';
+import {
+  EventsType,
+  TransactionType,
+  ValidatorType,
+  MetaType,
+  BlockDetailsType,
+} from '../../utils/types';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -38,12 +45,12 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [incomingStakes, setIncomingStakes] = useState<TransactionType[] | undefined>(undefined);
   const [outgoingStakes, setOutgoingStakes] = useState<TransactionType[] | undefined>(undefined);
   const [events, setEvents] = useState<EventsType[] | undefined>(undefined);
-  // const [blocks, setBlocks] = useState<any[] | undefined>(undefined);
+  const [blocks, setBlocks] = useState<BlockDetailsType[] | undefined>(undefined);
   const [transactionsMeta, setTransactionsMeta] = useState<MetaType | undefined>(undefined);
   const [incomingStakesMeta, setIncomingStakesMeta] = useState<MetaType | undefined>(undefined);
   const [outgoingStakesMeta, setOutgoingStakesMeta] = useState<MetaType | undefined>(undefined);
   const [eventsMeta, setEventsMeta] = useState<MetaType | undefined>(undefined);
-  // const [blocksMeta, setBlocksMeta] = useState<any | undefined>(undefined);
+  const [blocksMeta, setBlocksMeta] = useState<MetaType | undefined>(undefined);
 
   useEffect(() => {
     setLoading(true);
@@ -89,9 +96,12 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         setEventsMeta(data.meta);
       });
 
-      // const blocksPromise = callGetBlocks({
-      //   generatorAddress: validator.account.address,
-      // }).then((data) => {setBlocks(data.data) ; setBlocksMeta(data.meta)});
+      const blocksPromise = callGetBlocks({
+        generatorAddress: validator.account.address,
+      }).then((data) => {
+        setBlocks(data.data);
+        setBlocksMeta(data.meta);
+      });
 
       Promise.all([
         transactionsPromise,
@@ -198,6 +208,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const eventsRows = createValidatorEventsRow(events, loading);
   const incomingStake = createValidatorIncomingStakeRows(incomingStakes, loading);
   const outgoingStake = createValidatorOutgoingStakeRows(outgoingStakes, validator, loading);
+  const validatorBlocksRows = createValidatorBlockRows(blocks, loading);
 
   const stakeTabs = [
     {
@@ -299,7 +310,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           <TableContainer
             headCols={validatorBlocksTableHead}
             keyPrefix={'validator-blocks'}
-            rows={[]}
+            rows={validatorBlocksRows}
           />
         </FlexGrid>
       ),
