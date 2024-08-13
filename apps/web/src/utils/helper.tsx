@@ -17,6 +17,8 @@ import {
   UserAccountCard,
   NotificationIcon,
   StatusBadge,
+  StatusIcon,
+  KeyValueComponent,
 } from '@repo/ui/atoms';
 import Link from 'next/link';
 import React from 'react';
@@ -56,11 +58,17 @@ export const createTransactionRows = (
             cells: [
               {
                 children: (
-                  <Typography className={'hover:underline'} link>
-                    <Link href={`/transactions/${transaction.id}`}>
-                      {shortString(transaction?.id, 12, 'center')}
-                    </Link>
-                  </Typography>
+                  <KeyValueComponent
+                    contentValue={
+                      <Link href={`/transactions/${transaction.id}`}>
+                        <Typography className={'hover:underline'} link>
+                          {' '}
+                          {shortString(transaction?.id, 12, 'center')}
+                        </Typography>
+                      </Link>
+                    }
+                    keyValue={<StatusIcon status={transaction.executionStatus} />}
+                  />
                 ),
               },
               {
