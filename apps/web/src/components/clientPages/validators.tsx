@@ -23,7 +23,7 @@ export const Validators = () => {
   const [rowsPerPage, setRowsPerPage] = useState<number>(51);
 
   useEffect(() => {
-    setLoading(true);
+    if (validators.length === 0) setLoading(true);
     callGetNextValidators();
     callGetValidators({
       limit: rowsPerPage.toString(),
