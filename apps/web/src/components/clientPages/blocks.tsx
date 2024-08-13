@@ -41,7 +41,7 @@ export const Blocks = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
+    if (blocks.length === 0) setLoading(true);
     const limit = searchParams.get('limit') || defaultLimit;
     const page = Number(searchParams.get('page')) || 1;
     const offset = (page - 1) * Number(limit);
