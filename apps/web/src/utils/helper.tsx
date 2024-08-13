@@ -349,6 +349,7 @@ export const createValidatorIncomingStakeRows = (
                   name={incomingStake?.sender?.name}
                 />
               ),
+              className: 'desktop:w-1/5',
             },
             {
               children: (
@@ -448,6 +449,14 @@ export const createValidatorEventsRow = (events: EventsType[] | undefined, loadi
   return !loading
     ? events?.map((event) => {
         return {
+          rowDetails: (
+            <JsonViewer
+              className={'!border-0'}
+              copy
+              data={{ data: event.data as unknown as DataType }}
+              startOpen
+            />
+          ),
           cells: [
             {
               children: (
@@ -455,6 +464,7 @@ export const createValidatorEventsRow = (events: EventsType[] | undefined, loadi
                   {fromNowFormatter((event.block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
                 </Typography>
               ),
+              className: 'desktop:w-1/5',
             },
             {
               children: (
@@ -476,6 +486,7 @@ export const createValidatorEventsRow = (events: EventsType[] | undefined, loadi
                   {event.name}
                 </Typography>
               ),
+              className: 'desktop:w-1/5',
             },
             {
               children: <Currency amount={event.data.amount || 0} decimals={5} symbol={'KLY'} />,
