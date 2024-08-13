@@ -32,9 +32,11 @@ export interface TransactionType {
 
 export interface BlockType {
   id: string;
-  height: number;
-  timestamp: number;
-  isFinal: boolean;
+  height?: number;
+  timestamp?: number;
+  isFinal?: boolean;
+  numberOfTransactions?: number;
+  reward?: string;
 }
 
 export interface ParamsType {
@@ -45,7 +47,9 @@ export interface ParamsType {
 }
 
 export interface MetaType {
-  recipient: AccountType;
+  recipient?: AccountType;
+  count?: number;
+  total?: number;
 }
 
 export interface BlockDetailsType {

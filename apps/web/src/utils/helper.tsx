@@ -1,4 +1,4 @@
-import { EventsType, TransactionType, ValidatorType } from './types.ts';
+import { BlockType, EventsType, TransactionType, ValidatorType } from './types.ts';
 import {
   dayjs,
   fromNowFormatter,
@@ -69,12 +69,15 @@ export const createTransactionRows = (
                     className={'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer'}
                     color={'onBackgroundLow'}
                   >
-                    {transaction?.block?.height.toLocaleString()}
+                    {transaction?.block?.height?.toLocaleString() ?? ''}
                     <Tooltip placement={'bottom'} text={copyTooltipText}>
                       <span
                         className={'w-4 block'}
                         onClick={() =>
-                          handleCopy(transaction?.block?.height.toString(), setCopyTooltipText)
+                          handleCopy(
+                            transaction?.block?.height?.toString() ?? '',
+                            setCopyTooltipText,
+                          )
                         }
                       >
                         <Icon
@@ -94,10 +97,12 @@ export const createTransactionRows = (
                 children: (
                   <Tooltip
                     placement={'top'}
-                    text={dayjs(transaction.block.timestamp * 1000).format('DD MMM YYYY HH:mm')}
+                    text={dayjs((transaction.block.timestamp ?? 0) * 1000).format(
+                      'DD MMM YYYY HH:mm',
+                    )}
                   >
                     <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
-                      {fromNowFormatter(transaction.block.timestamp * 1000, 'DD MMM YYYY')}
+                      {fromNowFormatter((transaction.block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
                     </Typography>
                   </Tooltip>
                 ),
@@ -387,41 +392,43 @@ export const createValidatorOutgoingStakeRows = (
     : getTableSkeletons(validatorStakeOutgoingTableHead.length);
 };
 
-export const createValidatorBlockRows = (blocks: any[] | undefined, loading: boolean) => {
+export const createValidatorBlockRows = (blocks: BlockType[] | undefined, loading: boolean) => {
   return !loading
     ? blocks?.map((block) => {
         return {
           cells: [
             {
               children: (
-                <Typography color="onBackground" variant="paragraph-sm">
-                  {'sad'}
+                <Link href={`/blocks/${block.id}`}>
+                  <Typography color="onBackground" variant="paragraph-sm">
+                    {block.id}
+                  </Typography>
+                </Link>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {block.height?.toLocaleString() ?? '0'}
                 </Typography>
               ),
             },
             {
               children: (
                 <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {'{.toLocaleString()}'}
-                </Typography>
-              ), // {.toLocaleString()}
-            },
-            {
-              children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {'Data'}
+                  {fromNowFormatter((block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
                 </Typography>
               ),
             },
             {
               children: (
                 <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {'0'}
+                  {block.numberOfTransactions}
                 </Typography>
               ),
             },
             {
-              children: <Currency amount={340000000} decimals={2} symbol={'KLY'} />,
+              children: <Currency amount={block.reward || 0} decimals={2} symbol={'KLY'} />,
             },
           ],
         };
@@ -437,14 +444,14 @@ export const createValidatorEventsRow = (events: EventsType[] | undefined, loadi
             {
               children: (
                 <Typography color="onBackground" variant="paragraph-sm">
-                  {fromNowFormatter(event.block.timestamp * 1000, 'DD MMM YYYY')}
+                  {fromNowFormatter((event.block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
                 </Typography>
               ),
             },
             {
               children: (
                 <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {event.block.height.toLocaleString()}
+                  {event.block.height?.toLocaleString() ?? '0'}
                 </Typography>
               ),
             },

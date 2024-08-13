@@ -2,6 +2,7 @@
 import { ValidatorBanner } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useValidatorStore } from '../../store/validatorStore';
 import { useEventsStore } from '../../store/eventStore';
 import { useBlockStore } from '../../store/blockStore.ts';
@@ -21,8 +22,16 @@ import {
   createValidatorEventsRow,
   createValidatorIncomingStakeRows,
   createValidatorOutgoingStakeRows,
+  createValidatorBlockRows,
 } from '../../utils/helper.tsx';
-import { EventsType, TransactionType, ValidatorType } from '../../utils/types';
+import {
+  EventsType,
+  TransactionType,
+  ValidatorType,
+  MetaType,
+  BlockDetailsType,
+} from '../../utils/types';
+import { useSocketStore } from '../../store/socketStore.ts';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -38,7 +47,12 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [incomingStakes, setIncomingStakes] = useState<TransactionType[] | undefined>(undefined);
   const [outgoingStakes, setOutgoingStakes] = useState<TransactionType[] | undefined>(undefined);
   const [events, setEvents] = useState<EventsType[] | undefined>(undefined);
-  // const [blocks, setBlocks] = useState<any[] | undefined>(undefined);
+  const [blocks, setBlocks] = useState<BlockDetailsType[] | undefined>(undefined);
+  const [transactionsMeta, setTransactionsMeta] = useState<MetaType | undefined>(undefined);
+  const [incomingStakesMeta, setIncomingStakesMeta] = useState<MetaType | undefined>(undefined);
+  const [outgoingStakesMeta, setOutgoingStakesMeta] = useState<MetaType | undefined>(undefined);
+  const [eventsMeta, setEventsMeta] = useState<MetaType | undefined>(undefined);
+  const [blocksMeta, setBlocksMeta] = useState<MetaType | undefined>(undefined);
 
   useEffect(() => {
     setLoading(true);
@@ -56,31 +70,47 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
 
       const transactionsPromise = callGetTransactions({
         address: validator.account.address,
-      }).then((data) => setTransactions(data.data));
+      }).then((data) => {
+        setTransactions(data.data);
+        setTransactionsMeta(data.meta);
+      });
 
       const incomingStakesPromise = callGetTransactions({
         recipientAddress: validator.account.address,
         moduleCommand: 'pos:stake',
-      }).then((data) => setIncomingStakes(data.data));
+      }).then((data) => {
+        setIncomingStakes(data.data);
+        setIncomingStakesMeta(data.meta);
+      });
 
       const outgoingStakesPromise = callGetTransactions({
         senderAddress: validator.account.address,
         moduleCommand: 'pos:stake',
-      }).then((data) => setOutgoingStakes(data.data));
+      }).then((data) => {
+        setOutgoingStakes(data.data);
+        setOutgoingStakesMeta(data.meta);
+      });
 
       const eventsPromise = callGetEvents({
         senderAddress: validator.account.address,
-      }).then((data) => setEvents(data.data));
+      }).then((data) => {
+        setEvents(data.data);
+        setEventsMeta(data.meta);
+      });
 
-      // const blocksPromise = callGetBlocks({
-      //   generatorAddress: validator.account.address,
-      // }).then((data) => setBlocks(data.data));
+      const blocksPromise = callGetBlocks({
+        generatorAddress: validator.account.address,
+      }).then((data) => {
+        setBlocks(data.data);
+        setBlocksMeta(data.meta);
+      });
 
       Promise.all([
         transactionsPromise,
         incomingStakesPromise,
         outgoingStakesPromise,
         eventsPromise,
+        blocksPromise,
       ]).finally(() => setLoading(false));
     }
   }, [validator]);
@@ -181,6 +211,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const eventsRows = createValidatorEventsRow(events, loading);
   const incomingStake = createValidatorIncomingStakeRows(incomingStakes, loading);
   const outgoingStake = createValidatorOutgoingStakeRows(outgoingStakes, validator, loading);
+  const validatorBlocksRows = createValidatorBlockRows(blocks, loading);
 
   const stakeTabs = [
     {
@@ -188,6 +219,12 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       label: 'Incoming',
       content: (
         <div>
+          <SectionHeader
+            count={incomingStakesMeta?.total}
+            title={`${validator?.account.name}'s stakes`}
+            titleSizeNotLink={'h5'}
+            className="absolute top-0 left-0"
+          />
           <TableContainer
             headCols={validatorStakeIncomingTableHead}
             keyPrefix={'validator-blocks'}
@@ -198,14 +235,21 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     },
     {
       value: 2,
-
       label: 'Outgoing',
       content: (
-        <TableContainer
-          headCols={validatorStakeOutgoingTableHead}
-          keyPrefix={'validator-blocks'}
-          rows={outgoingStake}
-        />
+        <>
+          <SectionHeader
+            count={outgoingStakesMeta?.total}
+            title={`${validator?.account.name}'s stakes`}
+            titleSizeNotLink={'h5'}
+            className="absolute top-0 left-0"
+          />
+          <TableContainer
+            headCols={validatorStakeOutgoingTableHead}
+            keyPrefix={'validator-blocks'}
+            rows={outgoingStake}
+          />
+        </>
       ),
     },
   ];
@@ -231,7 +275,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={transactions?.length}
+            count={transactionsMeta?.total}
             title={`${validator?.account.name} transactions`}
             titleSizeNotLink={'h5'}
           />
@@ -245,17 +289,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       icon: 'LayersThree',
       content: (
         <FlexGrid className={'w-full desktop:gap-4.5xl relative'} direction={'col'} gap={'1.5xl'}>
-          <SectionHeader
-            count={incomingStake?.length}
-            title={`${validator?.account.name}'s stakes`}
-            titleSizeNotLink={'h5'}
-            fullWidth
-          />
-          <TabButtons
-            className="justify-start static desktop:absolute desktop:right-0 desktop:top-0"
-            width="full"
-            tabs={stakeTabs}
-          />
+          <TabButtons className="justify-start desktop:justify-end" width="full" tabs={stakeTabs} />
         </FlexGrid>
       ),
     },
@@ -266,14 +300,14 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={''}
+            count={blocksMeta?.total}
             title={`${validator?.account.name}'s blocks`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
             headCols={validatorBlocksTableHead}
             keyPrefix={'validator-blocks'}
-            rows={[]}
+            rows={validatorBlocksRows}
           />
         </FlexGrid>
       ),
@@ -285,7 +319,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={events?.length}
+            count={eventsMeta?.total}
             title={`${validator?.account.name}'s events`}
             titleSizeNotLink={'h5'}
           />
