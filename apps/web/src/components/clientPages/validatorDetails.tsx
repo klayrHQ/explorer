@@ -22,7 +22,7 @@ import {
   createValidatorIncomingStakeRows,
   createValidatorOutgoingStakeRows,
 } from '../../utils/helper.tsx';
-import { ValidatorType } from '../../utils/types';
+import { EventsType, TransactionType, ValidatorType } from '../../utils/types';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -34,12 +34,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [validator, setValidators] = useState<ValidatorType | undefined>(undefined);
-  const [transactions, setTransactions] = useState<any[] | undefined>(undefined);
-  const [stakeTransactions, setStakeTransactions] = useState<any | undefined>(undefined);
-  const [incomingStakes, setIncomingStakes] = useState<any | undefined>(undefined);
-  const [outgoingStakes, setOutgoingStakes] = useState<any | undefined>(undefined);
-  const [events, setEvents] = useState<any[] | undefined>(undefined);
-  const [blocks, setBlocks] = useState<any[] | undefined>(undefined);
+  const [transactions, setTransactions] = useState<TransactionType[] | undefined>(undefined);
+  const [incomingStakes, setIncomingStakes] = useState<TransactionType[] | undefined>(undefined);
+  const [outgoingStakes, setOutgoingStakes] = useState<TransactionType[] | undefined>(undefined);
+  const [events, setEvents] = useState<EventsType[] | undefined>(undefined);
+  // const [blocks, setBlocks] = useState<any[] | undefined>(undefined);
 
   useEffect(() => {
     setLoading(true);
