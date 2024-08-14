@@ -19,7 +19,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [loading, setLoading] = useState<boolean>(true);
   const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);
-  const [events, setEvents] = useState<EventsType[] | undefined>(undefined);
+  const [events, setEvents] = useState<EventsType[]>([]);
 
   useEffect(() => {
     setLoading(true);

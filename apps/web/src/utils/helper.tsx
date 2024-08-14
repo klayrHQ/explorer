@@ -37,13 +37,13 @@ import { DataType } from '@repo/ui/types';
 import { formatCommission } from './dataHelpers.tsx';
 
 export const createTransactionRows = (
-  transactions: TransactionType[] | undefined,
+  transactions: TransactionType[],
   loading: boolean,
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
 ) => {
   return !loading
-    ? transactions
+    ? transactions?.length > 0
       ? transactions?.map((transaction) => {
           return {
             rowDetails: (
@@ -181,7 +181,7 @@ export const createTransactionRows = (
     : getTableSkeletons(transactionTableHead.length);
 };
 
-export const createEventsRows = (events: EventsType[] | undefined, loading: boolean) => {
+export const createEventsRows = (events: EventsType[], loading: boolean) => {
   return !loading
     ? events?.map((event) => {
         return {
@@ -215,7 +215,7 @@ export const createEventsRows = (events: EventsType[] | undefined, loading: bool
     : getTableSkeletons(eventsTableHead.length);
 };
 
-export const createValidatorsRows = (validators: ValidatorType[] | undefined, loading: boolean) => {
+export const createValidatorsRows = (validators: ValidatorType[], loading: boolean) => {
   return !loading
     ? validators?.map((validator) => {
         return {
@@ -335,7 +335,7 @@ export const createValidatorsRows = (validators: ValidatorType[] | undefined, lo
 };
 
 export const createValidatorIncomingStakeRows = (
-  incomingStakes: TransactionType[] | undefined,
+  incomingStakes: TransactionType[],
   loading: boolean,
 ) => {
   return !loading
@@ -363,8 +363,8 @@ export const createValidatorIncomingStakeRows = (
 };
 
 export const createValidatorOutgoingStakeRows = (
-  outgoingStakes: TransactionType[] | undefined,
-  validator: ValidatorType | undefined,
+  outgoingStakes: TransactionType[],
+  validator: ValidatorType,
   loading: boolean,
 ) => {
   return !loading
@@ -401,7 +401,7 @@ export const createValidatorOutgoingStakeRows = (
     : getTableSkeletons(validatorStakeOutgoingTableHead.length);
 };
 
-export const createValidatorBlockRows = (blocks: BlockType[] | undefined, loading: boolean) => {
+export const createValidatorBlockRows = (blocks: BlockType[], loading: boolean) => {
   return !loading
     ? blocks?.map((block) => {
         return {
@@ -445,7 +445,7 @@ export const createValidatorBlockRows = (blocks: BlockType[] | undefined, loadin
     : getTableSkeletons(validatorBlocksTableHead.length);
 };
 
-export const createValidatorEventsRow = (events: EventsType[] | undefined, loading: boolean) => {
+export const createValidatorEventsRow = (events: EventsType[], loading: boolean) => {
   return !loading
     ? events?.map((event) => {
         return {
