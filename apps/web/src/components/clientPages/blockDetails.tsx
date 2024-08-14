@@ -32,9 +32,9 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
-  const [block, setBlocks] = useState<BlockDetailsType | undefined>(undefined);
-  const [transactions, setTransactions] = useState<TransactionType[] | undefined>(undefined);
-  const [events, setEvents] = useState<EventsType[] | undefined>(undefined);
+  const [block, setBlocks] = useState<BlockDetailsType>({});
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [events, setEvents] = useState<EventsType[]>([]);
 
   useEffect(() => {
     setLoading(true);

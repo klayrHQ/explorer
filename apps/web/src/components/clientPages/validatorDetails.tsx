@@ -42,17 +42,17 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [validator, setValidators] = useState<ValidatorType | undefined>(undefined);
-  const [transactions, setTransactions] = useState<TransactionType[] | undefined>(undefined);
-  const [incomingStakes, setIncomingStakes] = useState<TransactionType[] | undefined>(undefined);
-  const [outgoingStakes, setOutgoingStakes] = useState<TransactionType[] | undefined>(undefined);
-  const [events, setEvents] = useState<EventsType[] | undefined>(undefined);
-  const [blocks, setBlocks] = useState<BlockDetailsType[] | undefined>(undefined);
-  const [transactionsMeta, setTransactionsMeta] = useState<MetaType | undefined>(undefined);
-  const [incomingStakesMeta, setIncomingStakesMeta] = useState<MetaType | undefined>(undefined);
-  const [outgoingStakesMeta, setOutgoingStakesMeta] = useState<MetaType | undefined>(undefined);
-  const [eventsMeta, setEventsMeta] = useState<MetaType | undefined>(undefined);
-  const [blocksMeta, setBlocksMeta] = useState<MetaType | undefined>(undefined);
+  const [validator, setValidators] = useState<ValidatorType>({});
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [incomingStakes, setIncomingStakes] = useState<TransactionType[]>([]);
+  const [outgoingStakes, setOutgoingStakes] = useState<TransactionType[]>([]);
+  const [events, setEvents] = useState<EventsType[]>([]);
+  const [blocks, setBlocks] = useState<BlockDetailsType[]>([]);
+  const [transactionsMeta, setTransactionsMeta] = useState<MetaType>({});
+  const [incomingStakesMeta, setIncomingStakesMeta] = useState<MetaType>({});
+  const [outgoingStakesMeta, setOutgoingStakesMeta] = useState<MetaType>({});
+  const [eventsMeta, setEventsMeta] = useState<MetaType>({});
+  const [blocksMeta, setBlocksMeta] = useState<MetaType>({});
 
   useEffect(() => {
     setLoading(true);
