@@ -42,7 +42,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [validator, setValidators] = useState<ValidatorType>({});
+  const [validator, setValidators] = useState<ValidatorType | undefined>(undefined);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [incomingStakes, setIncomingStakes] = useState<TransactionType[]>([]);
   const [outgoingStakes, setOutgoingStakes] = useState<TransactionType[]>([]);
