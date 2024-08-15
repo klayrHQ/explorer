@@ -8,6 +8,7 @@ import Link from 'next/link';
 import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
 import { useSearchStore } from '../../../../../../apps/web/src/store/searchStore.ts';
+import { usePathname } from 'next/navigation'; // Import usePathname
 
 interface SearchProps {
   className?: string;
@@ -24,9 +25,11 @@ export const Search = ({ className }: SearchProps) => {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputWidth, setInputWidth] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<string>(''); // State to manage input value
 
   const callSearch = useSearchStore((state) => state.callSearch);
   const searchResult = useSearchStore((state) => state.searchResults);
+  const pathname = usePathname(); // Initialize usePathname
 
   const handleFocus = (open: boolean) => {
     setAnchorEl(inputRef.current);
@@ -51,6 +54,11 @@ export const Search = ({ className }: SearchProps) => {
     }
   }, [handleFocus]);
 
+  useEffect(() => {
+    setOpen(false); // Close popper on pathname change
+    setInputValue(''); // Reset input value on pathname change
+  }, [pathname]);
+
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <div className={cls(['w-full', className])}>
@@ -61,8 +69,12 @@ export const Search = ({ className }: SearchProps) => {
 
           <input
             ref={inputRef}
+            value={inputValue} // Bind input value to state
             className="bg-backgroundDark placeholder-lobster min-h-11 pl-12 py-4 rounded-lg focus:outline-0 border focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:border-b-0 focus:rounded-b-none w-full min-w-full desktop:min-w-auto desktop:max-w-searchBarWidth"
-            onChange={(e) => debouncedHandleSearch(e.target.value)}
+            onChange={(e) => {
+              setInputValue(e.target.value); // Update state on change
+              debouncedHandleSearch(e.target.value);
+            }}
             onFocus={() => handleFocus(true)}
             placeholder="Search block, transaction, validators..."
             type="text"
