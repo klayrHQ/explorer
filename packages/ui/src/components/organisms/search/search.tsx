@@ -1,10 +1,12 @@
 'use client';
 import { FlexGrid, Typography, Avatar, Icon } from '../../atoms';
 import { Popper } from '@mui/base';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { cls } from '../../../utils/functions.ts';
 import { SearchLg } from '../../../assets/icons/general/search-lg';
 import Link from 'next/link';
+import debounce from 'lodash/debounce';
+
 interface SearchProps {
   className?: string;
 }
@@ -68,12 +70,14 @@ export const Search = ({ className }: SearchProps) => {
     }
   };
 
+  const debouncedHandleSearch = useCallback(debounce(handleSearch, 500), []);
+
   console.log(result);
 
   return (
     <div
       className={cls([
-        'w-searchBarMobileWidth desktop:max-w-searchBarWidth desktop:w-searchBarWidth',
+        'w-searchBarMobileWidth min-w-searchBarMobileWidth max-w-searchBarMobileWidth desktop:max-w-searchBarWidth desktop:w-searchBarWidth',
         className,
       ])}
     >
@@ -83,9 +87,9 @@ export const Search = ({ className }: SearchProps) => {
         </div>
 
         <input
-          className="bg-backgroundDark placeholder-lobster min-h-11 w-full pl-12 py-3 rounded-lg focus:outline-0 border-1 focus:border-blue focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:border-b-0 focus:rounded-b-none "
+          className="bg-backgroundDark placeholder-lobster min-h-11 w-full pl-12 py-3 rounded-lg focus:outline-0 border  focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:border-b-0 focus:rounded-b-none "
           onBlur={(event) => handleFocus(event, false)}
-          onChange={(e) => handleSearch(e.target.value)}
+          onChange={(e) => debouncedHandleSearch(e.target.value)}
           onFocus={(event) => handleFocus(event, true)}
           placeholder="Search block, transaction, validators..."
           type="text"
@@ -107,7 +111,7 @@ export const Search = ({ className }: SearchProps) => {
         }}
       >
         <FlexGrid
-          className={`rounded-t-none rounded-md bg-backgroundDark border-solid border-gray-7 border w-searchBarMobileWidth max-w-searchBarMobileWidth desktop:min-w-searchBarWidth desktop:w-searchBarWidth p-4 overflow-y-auto truncate`}
+          className={`rounded-t-none rounded-md bg-backgroundDark border-solid border-gray-7 border w-searchBarMobileWidth max-w-searchBarMobileWidth min-w-searchBarMobileWidth desktop:min-w-searchBarWidth desktop:w-searchBarWidth p-4 overflow-y-auto truncate`}
           direction={'col'}
           gap="4"
         >
