@@ -18,6 +18,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
 import { useBlockStore } from '../../store/blockStore.ts';
 import { useSocketStore } from '../../store/socketStore.ts';
+import { useSearchStore } from '../../store/searchStore.ts';
 
 export const Blocks = () => {
   const blocks = useBlockStore((state) => state.blocks);
@@ -40,7 +41,13 @@ export const Blocks = () => {
     router.push(pathname + '?' + `page=${number}`);
   };
 
+  const callSearch = useSearchStore((state) => state.callSearch);
+  const searchResults = useSearchStore((state) => state.searchResults);
+
   useEffect(() => {
+    callSearch({ search: 'pr' });
+
+    console.log({ searchResults });
     if (blocks.length === 0) setLoading(true);
     const limit = searchParams.get('limit') || defaultLimit;
     const page = Number(searchParams.get('page')) || 1;

@@ -150,3 +150,26 @@ export interface AccountType {
   publicKey: string;
   name: string;
 }
+
+export interface SearchResultsType {
+  validators: SearchValidator[];
+  blocks: SearchBlock[];
+  transactions: SearchTransaction[];
+}
+
+interface SearchValidator {
+  name: string;
+  address: string;
+  publicKey: string;
+  rank: number;
+}
+
+interface SearchBlock {
+  height: number;
+  id: string;
+}
+
+interface SearchTransaction {
+  id: string;
+  sender: string;
+}
