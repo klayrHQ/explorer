@@ -18,7 +18,7 @@ export const Search = ({ className }: SearchProps) => {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputWidth, setInputWidth] = useState<number>(0);
-  const [inputValue, setInputValue] = useState<string>(''); // State to manage input value
+  const [inputValue, setInputValue] = useState<string>('');
 
   const callSearch = useSearchStore((state) => state.callSearch);
   const searchResult = useSearchStore((state) => state.searchResults);
