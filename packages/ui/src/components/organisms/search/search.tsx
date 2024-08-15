@@ -1,5 +1,5 @@
 'use client';
-import { FlexGrid, Typography, Avatar, Icon } from '../../atoms';
+import { FlexGrid, Typography, Avatar, Icon, NotFound } from '../../atoms';
 import { Popper } from '@mui/base';
 import React, { useState, useCallback } from 'react';
 import { cls } from '../../../utils/functions.ts';
@@ -216,7 +216,13 @@ export const Search = ({ className }: SearchProps) => {
             ))}
           {result.validators?.length === 0 &&
             result.blocks?.length === 0 &&
-            result.transactions?.length === 0 && <Typography>{'No results found'}</Typography>}
+            result.transactions?.length === 0 && (
+              <NotFound
+                headerText="No results"
+                subheaderText="We didn’t find anything based on your search"
+                className="my-9"
+              />
+            )}
         </FlexGrid>
       </Popper>
     </div>
