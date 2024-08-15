@@ -61,13 +61,13 @@ dayjs.updateLocale('en', {
       return util.format('%s ago', result);
     },
     s: (number: number) => {
-      if (number < 5) {
+      if (number < 1) {
         return 'now';
       }
-      return `${Math.ceil(number / 5) * 5}s`;
+      return `${number}s`;
     },
     m: (number: number) => {
-      const seconds = Math.ceil((number % 60) / 5) * 5;
+      const seconds = number % 60;
       if (seconds === 0 || seconds === 60) {
         return `${Math.floor(number / 60)}m`;
       }
@@ -96,6 +96,7 @@ export const fromNowFormatter = (value: any, format?: string) => {
   if (dayjs().diff(date, 'hour') >= 1) {
     return date.format(format ?? "DD MMM 'YY HH:mm");
   }
+  console.log(date.fromNow());
   return date.fromNow();
 };
 
