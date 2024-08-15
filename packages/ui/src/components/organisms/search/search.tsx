@@ -6,6 +6,7 @@ import { cls } from '../../../utils/functions.ts';
 import { SearchLg } from '../../../assets/icons/general/search-lg';
 import Link from 'next/link';
 import debounce from 'lodash/debounce';
+import { truncate } from 'lodash';
 
 interface SearchProps {
   className?: string;
@@ -67,6 +68,8 @@ export const Search = ({ className }: SearchProps) => {
   const handleSearch = (query: string) => {
     if (query.length > 0) {
       setResult(searchResult);
+    } else {
+      setResult({ validators: [], blocks: [], transactions: [] });
     }
   };
 
@@ -111,7 +114,7 @@ export const Search = ({ className }: SearchProps) => {
         }}
       >
         <FlexGrid
-          className={`rounded-t-none rounded-md bg-backgroundDark border-solid border-gray-7 border w-searchBarMobileWidth max-w-searchBarMobileWidth min-w-searchBarMobileWidth desktop:min-w-searchBarWidth desktop:w-searchBarWidth p-4 overflow-y-auto truncate`}
+          className={`rounded-t-none rounded-md bg-backgroundDark border-solid border-gray-7 border w-searchBarMobileWidth max-w-searchBarMobileWidth min-w-searchBarMobileWidth desktop:min-w-searchBarWidth desktop:w-searchBarWidth p-4 overflow-y-auto overflow-x-hidden `}
           direction={'col'}
           gap="4"
         >
@@ -147,8 +150,23 @@ export const Search = ({ className }: SearchProps) => {
                       {' '}
                       {'Block'}
                     </Typography>
-                    <Typography color="onBackground" fontWeight="semibold" variant="paragraph-md">
-                      {block.id}
+
+                    <Typography
+                      color="onBackground"
+                      fontWeight="semibold"
+                      variant="paragraph-md"
+                      className="hidden desktop:inline-flex"
+                    >
+                      {truncate(block.id, { length: 55, omission: '...' })}
+                    </Typography>
+
+                    <Typography
+                      className="inline-flex desktop:hidden"
+                      color="onBackground"
+                      fontWeight="semibold"
+                      variant="paragraph-md"
+                    >
+                      {truncate(block.id, { length: 32, omission: '...' })}
                     </Typography>
                   </FlexGrid>
                 </FlexGrid>
@@ -173,13 +191,24 @@ export const Search = ({ className }: SearchProps) => {
                     <Typography color="onBackgroundLow" variant="caption">
                       {'transaction'}
                     </Typography>
+
                     <Typography
                       color="onBackground"
                       component="p"
                       fontWeight="semibold"
                       variant="paragraph-md"
+                      className="hidden desktop:inline-flex"
                     >
-                      {transaction.id}
+                      {truncate(transaction.id, { length: 55, omission: '...' })}
+                    </Typography>
+
+                    <Typography
+                      className="inline-flex desktop:hidden"
+                      color="onBackground"
+                      fontWeight="semibold"
+                      variant="paragraph-md"
+                    >
+                      {truncate(transaction.id, { length: 32, omission: '...' })}
                     </Typography>
                   </FlexGrid>
                 </FlexGrid>
