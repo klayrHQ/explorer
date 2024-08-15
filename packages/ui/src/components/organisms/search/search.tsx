@@ -8,18 +8,11 @@ import Link from 'next/link';
 import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
 import { useSearchStore } from '../../../../../../apps/web/src/store/searchStore.ts';
-import { usePathname } from 'next/navigation'; // Import usePathname
+import { usePathname } from 'next/navigation';
 
 interface SearchProps {
   className?: string;
 }
-
-interface Result {
-  validators?: any[];
-  blocks?: any[];
-  transactions?: any[];
-}
-
 export const Search = ({ className }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
@@ -29,7 +22,7 @@ export const Search = ({ className }: SearchProps) => {
 
   const callSearch = useSearchStore((state) => state.callSearch);
   const searchResult = useSearchStore((state) => state.searchResults);
-  const pathname = usePathname(); // Initialize usePathname
+  const pathname = usePathname();
 
   const handleFocus = (open: boolean) => {
     setAnchorEl(inputRef.current);
@@ -55,8 +48,8 @@ export const Search = ({ className }: SearchProps) => {
   }, [handleFocus]);
 
   useEffect(() => {
-    setOpen(false); // Close popper on pathname change
-    setInputValue(''); // Reset input value on pathname change
+    setOpen(false);
+    setInputValue('');
   }, [pathname]);
 
   return (
@@ -69,10 +62,10 @@ export const Search = ({ className }: SearchProps) => {
 
           <input
             ref={inputRef}
-            value={inputValue} // Bind input value to state
-            className="bg-backgroundDark placeholder-lobster min-h-11 pl-12 py-4 rounded-lg focus:outline-0 border focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:border-b-0 focus:rounded-b-none w-full min-w-full desktop:min-w-auto desktop:max-w-searchBarWidth"
+            value={inputValue}
+            className="bg-backgroundDark placeholder-lobster min-h-11 pl-12 py-4 rounded-lg focus:outline-0 border focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:border-b-0 focus:rounded-b-none min-w-full desktop:min-w-auto desktop:max-w-searchBarWidth"
             onChange={(e) => {
-              setInputValue(e.target.value); // Update state on change
+              setInputValue(e.target.value);
               debouncedHandleSearch(e.target.value);
             }}
             onFocus={() => handleFocus(true)}
