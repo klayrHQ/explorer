@@ -1,12 +1,13 @@
 'use client';
 import { FlexGrid, Typography, Avatar, Icon, NotFound } from '../../atoms';
 import { Popper } from '@mui/base';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, use } from 'react';
 import { cls } from '../../../utils/functions.ts';
 import { SearchLg } from '../../../assets/icons/general/search-lg';
 import Link from 'next/link';
 import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
+import { useSearchStore } from '../../../../../../apps/web/src/store/searchStore.ts';
 
 interface SearchProps {
   className?: string;
@@ -18,64 +19,29 @@ interface Result {
   transactions?: any[];
 }
 
-const searchResult = {
-  validators: [
-    {
-      name: 'mock-validator-name-1',
-      address: 'klygtrrftvoxhtknhamjab5wenfauk32z9pzk79uj',
-      publicKey: 'mock-validator-publicKey-1',
-      rank: 1,
-    },
-    {
-      name: 'mock-validator-name-2',
-      address: 'klymhp7n4avdedmgprv22r9x2fbfgcc24peod9pcg',
-      publicKey: 'mock-validator-publicKey-2',
-      rank: 2,
-    },
-  ],
-  blocks: [
-    {
-      height: 1,
-      id: 'bb4a0db453af1c4eff53ae4d3e05fb5cd2c4d7a147be024c4f185e29006d336e',
-    },
-    {
-      height: 2,
-      id: 'bb4a0db453af1c4eff53ae4d3e05fb5cd2c4d7a147be024c4f185e29006d336e',
-    },
-  ],
-  transactions: [
-    {
-      id: '585f8ca0bf23bcab60d863895ce6e69c798451795bbffe81c185a5db7c3fac32',
-      sender: 'mock-transaction-sender-1',
-    },
-    {
-      id: '585f8ca0bf23bcab60d863895ce6e69c798451795bbffe81c185a5db7c3fac32',
-      sender: 'mock-transaction-sender-2',
-    },
-  ],
-};
-
 export const Search = ({ className }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-  const [result, setResult] = useState<any>({} as Result);
+
+  const callSearch = useSearchStore((state) => state.callSearch);
+  const searchResult = useSearchStore((state) => state.searchResults);
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement, Element>, open: boolean) => {
     setAnchorEl(event.target as Element);
     setOpen(open);
   };
 
-  const handleSearch = (query: string) => {
+  const handleSearch = async (query: string) => {
     if (query.length > 0) {
-      setResult(searchResult);
-    } else {
-      setResult({ validators: [], blocks: [], transactions: [] });
+      try {
+        await callSearch({ search: query });
+      } catch (error) {
+        console.error('Search failed', error);
+      }
     }
   };
 
   const debouncedHandleSearch = useCallback(debounce(handleSearch, 500), []);
-
-  console.log(result);
 
   return (
     <div
@@ -118,9 +84,9 @@ export const Search = ({ className }: SearchProps) => {
           direction={'col'}
           gap="4"
         >
-          {result?.validators &&
-            result.validators.length > 0 &&
-            result.validators.map((validator: any, index: number) => (
+          {searchResult?.validators &&
+            searchResult.validators.length > 0 &&
+            searchResult.validators.map((validator: any, index: number) => (
               // eslint-disable-next-line react/no-array-index-key
               <Link href={`/validator/${validator.address}`} key={index}>
                 <FlexGrid alignItems="center" direction={'row'} gap={'2'} mobileDirection="row">
@@ -136,9 +102,9 @@ export const Search = ({ className }: SearchProps) => {
                 </FlexGrid>
               </Link>
             ))}
-          {result?.blocks &&
-            result.blocks.length > 0 &&
-            result.blocks.map((block: any, index: number) => (
+          {searchResult?.blocks &&
+            searchResult.blocks.length > 0 &&
+            searchResult.blocks.map((block: any, index: number) => (
               // eslint-disable-next-line react/no-array-index-key
               <Link href={`/block/${block.id}`} key={index}>
                 <FlexGrid alignItems="center" direction={'row'} gap={'2'} mobileDirection="row">
@@ -172,9 +138,9 @@ export const Search = ({ className }: SearchProps) => {
                 </FlexGrid>
               </Link>
             ))}
-          {result?.transactions &&
-            result.transactions.length > 0 &&
-            result.transactions.map((transaction: any, index: number) => (
+          {searchResult?.transactions &&
+            searchResult.transactions.length > 0 &&
+            searchResult.transactions.map((transaction: any, index: number) => (
               // eslint-disable-next-line react/no-array-index-key
               <Link href={`/transaction/${transaction.id}`} key={index}>
                 <FlexGrid
@@ -214,9 +180,9 @@ export const Search = ({ className }: SearchProps) => {
                 </FlexGrid>
               </Link>
             ))}
-          {result.validators?.length === 0 &&
-            result.blocks?.length === 0 &&
-            result.transactions?.length === 0 && (
+          {searchResult.validators?.length === 0 &&
+            searchResult.blocks?.length === 0 &&
+            searchResult.transactions?.length === 0 && (
               <NotFound
                 headerText="No results"
                 subheaderText="We didn’t find anything based on your search"

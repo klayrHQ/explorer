@@ -61,6 +61,7 @@ export const Topbar = ({
       justify={'between'}
       mobileDirection={'row'}
     >
+      <Search className="hidden desktop:flex" />
       <FlexGrid className={'desktop:hidden'} gap={'3xl'}>
         <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
         {/*<IconButton align={"none"} className={"shrink-0"} icon={"SearchLg"} variant={"bordered"} />*/}
@@ -84,7 +85,7 @@ export const Topbar = ({
           />
           <Modal hideBackdrop open={openMobileMenu} style={{ pointerEvents: 'none' }}>
             <Slide direction={'left'} in={openMobileMenu} mountOnEnter unmountOnExit>
-              <div style={{pointerEvents: 'all'}}>
+              <div style={{ pointerEvents: 'all' }}>
                 <MobileMenu
                   chainNetworkData={chainNetworkData}
                   className={'absolute top-topbarMobileHeight left-0'}
