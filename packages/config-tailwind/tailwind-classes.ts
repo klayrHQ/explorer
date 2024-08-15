@@ -298,6 +298,7 @@ const height = {
   trHeight: '72px',
   thHeight: '44px',
   pagNumHeight: '34px',
+
 };
 
 const width = {
@@ -319,6 +320,7 @@ const width = {
   performanceCardWidth: '208px',
   performanceCardMobileWidth: '183px',
   searchBarWidth: '600px',
+  searchBarMobileWidth: '382px',
   chainLogoWidth: '16px',
   avatarWidth: '24px',
   avatarMdWidth: '30px',
