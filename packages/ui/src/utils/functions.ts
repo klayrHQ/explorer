@@ -96,7 +96,6 @@ export const fromNowFormatter = (value: any, format?: string) => {
   if (dayjs().diff(date, 'hour') >= 1) {
     return date.format(format ?? "DD MMM 'YY HH:mm");
   }
-  console.log(date.fromNow());
   return date.fromNow();
 };
 
