@@ -364,7 +364,7 @@ export const createValidatorIncomingStakeRows = (
 
 export const createValidatorOutgoingStakeRows = (
   outgoingStakes: TransactionType[],
-  validator: ValidatorType,
+  validator: ValidatorType | undefined,
   loading: boolean,
 ) => {
   return !loading
