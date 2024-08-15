@@ -1,7 +1,7 @@
 'use client';
 import { FlexGrid, Typography, Avatar, Icon, NotFound } from '../../atoms';
 import { Popper } from '@mui/base';
-import React, { useState, useCallback, use } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { cls } from '../../../utils/functions.ts';
 import { SearchLg } from '../../../assets/icons/general/search-lg';
 import Link from 'next/link';
@@ -22,12 +22,14 @@ interface Result {
 export const Search = ({ className }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputWidth, setInputWidth] = useState<number>(0);
 
   const callSearch = useSearchStore((state) => state.callSearch);
   const searchResult = useSearchStore((state) => state.searchResults);
 
-  const handleFocus = (event: React.FocusEvent<HTMLInputElement, Element>, open: boolean) => {
-    setAnchorEl(event.target as Element);
+  const handleFocus = (open: boolean) => {
+    setAnchorEl(inputRef.current);
     setOpen(open);
   };
 
@@ -43,23 +45,25 @@ export const Search = ({ className }: SearchProps) => {
 
   const debouncedHandleSearch = useCallback(debounce(handleSearch, 500), []);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      setInputWidth(inputRef.current.offsetWidth);
+    }
+  }, [inputRef.current]);
+
   return (
-    <div
-      className={cls([
-        'w-searchBarMobileWidth min-w-searchBarMobileWidth max-w-searchBarMobileWidth desktop:max-w-searchBarWidth desktop:w-searchBarWidth',
-        className,
-      ])}
-    >
-      <div className="relative w-full min-w-96 cursor-pointer">
+    <div className={cls(['w-full', className])}>
+      <div className="relative cursor-pointer">
         <div className="absolute h-full flex items-center justify-start text-onBackgroundLow">
           <SearchLg className="ml-3.5 w-6 h-6" />
         </div>
 
         <input
-          className="bg-backgroundDark placeholder-lobster min-h-11 w-full pl-12 py-3 rounded-lg focus:outline-0 border  focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:border-b-0 focus:rounded-b-none "
-          onBlur={(event) => handleFocus(event, false)}
+          ref={inputRef}
+          className="bg-backgroundDark placeholder-lobster min-h-11 pl-12 py-4 rounded-lg focus:outline-0 border focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:border-b-0 focus:rounded-b-none w-full min-w-full desktop:min-w-auto desktop:max-w-searchBarWidth"
+          onBlur={() => handleFocus(false)}
           onChange={(e) => debouncedHandleSearch(e.target.value)}
-          onFocus={(event) => handleFocus(event, true)}
+          onFocus={() => handleFocus(true)}
           placeholder="Search block, transaction, validators..."
           type="text"
         />
@@ -68,6 +72,8 @@ export const Search = ({ className }: SearchProps) => {
         anchorEl={anchorEl}
         open={open}
         placement={'bottom'}
+        className="w-auto truncate z-50"
+        style={{ width: inputWidth }}
         popperOptions={{
           modifiers: [
             {
@@ -80,7 +86,7 @@ export const Search = ({ className }: SearchProps) => {
         }}
       >
         <FlexGrid
-          className={`rounded-t-none rounded-md bg-backgroundDark border-solid border-gray-7 border w-searchBarMobileWidth max-w-searchBarMobileWidth min-w-searchBarMobileWidth desktop:min-w-searchBarWidth desktop:w-searchBarWidth p-4 overflow-y-auto overflow-x-hidden `}
+          className={`rounded-t-none rounded-md bg-backgroundDark border-solid border-gray-7 border p-4 overflow-y-auto overflow-x-hidden`}
           direction={'col'}
           gap="4"
         >
@@ -88,7 +94,7 @@ export const Search = ({ className }: SearchProps) => {
             searchResult.validators.length > 0 &&
             searchResult.validators.map((validator: any, index: number) => (
               // eslint-disable-next-line react/no-array-index-key
-              <Link href={`/validator/${validator.address}`} key={index}>
+              <Link href={`/validators/${validator.address}`} key={index}>
                 <FlexGrid alignItems="center" direction={'row'} gap={'2'} mobileDirection="row">
                   <Avatar address={validator.address} circle size={30} />
                   <FlexGrid direction={'col'} gap={'1'}>
@@ -113,10 +119,8 @@ export const Search = ({ className }: SearchProps) => {
                   </div>
                   <FlexGrid direction={'col'} gap={'1'}>
                     <Typography color="onBackgroundLow" variant="caption">
-                      {' '}
                       {'Block'}
                     </Typography>
-
                     <Typography
                       color="onBackground"
                       fontWeight="semibold"
@@ -125,7 +129,6 @@ export const Search = ({ className }: SearchProps) => {
                     >
                       {truncate(block.id, { length: 55, omission: '...' })}
                     </Typography>
-
                     <Typography
                       className="inline-flex desktop:hidden"
                       color="onBackground"
@@ -157,7 +160,6 @@ export const Search = ({ className }: SearchProps) => {
                     <Typography color="onBackgroundLow" variant="caption">
                       {'transaction'}
                     </Typography>
-
                     <Typography
                       color="onBackground"
                       component="p"
@@ -167,7 +169,6 @@ export const Search = ({ className }: SearchProps) => {
                     >
                       {truncate(transaction.id, { length: 55, omission: '...' })}
                     </Typography>
-
                     <Typography
                       className="inline-flex desktop:hidden"
                       color="onBackground"

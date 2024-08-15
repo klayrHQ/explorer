@@ -61,7 +61,7 @@ export const Topbar = ({
       justify={'between'}
       mobileDirection={'row'}
     >
-      <Search className="hidden desktop:flex" />
+      <Search />
       <FlexGrid className={'desktop:hidden'} gap={'3xl'}>
         <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
         {/*<IconButton align={"none"} className={"shrink-0"} icon={"SearchLg"} variant={"bordered"} />*/}
