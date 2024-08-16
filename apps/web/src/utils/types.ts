@@ -152,9 +152,9 @@ export interface AccountType {
 }
 
 export interface SearchResultsType {
-  validators: SearchValidator[];
-  blocks: SearchBlock[];
-  transactions: SearchTransaction[];
+  validators?: SearchValidator[];
+  blocks?: SearchBlock[];
+  transactions?: SearchTransaction[];
 }
 
 interface SearchValidator {
