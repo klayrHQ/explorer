@@ -4,6 +4,7 @@ import { ClickAwayListener, Popper } from '@mui/base';
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { cls } from '../../../utils/functions.ts';
 import { SearchLg } from '../../../assets/icons/general/search-lg';
+import { CrossClose } from '../../../assets/icons/general/x-close.tsx';
 import Link from 'next/link';
 import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
@@ -55,6 +56,11 @@ export const Search = ({ className }: SearchProps) => {
     setInputValue('');
   }, [pathname]);
 
+  const handleClear = () => {
+    setInputValue('');
+    setSearchResults({});
+  };
+
   console.log('searchResult', searchResult);
 
   return (
@@ -64,6 +70,13 @@ export const Search = ({ className }: SearchProps) => {
           <div className="absolute h-full flex items-center justify-start text-onBackgroundLow">
             <SearchLg className="ml-3.5 w-6 h-6" />
           </div>
+          {inputValue && (
+            <div className=" absolute right-0 h-full flex items-center justify-start text-onBackgroundLow">
+              <div onClick={handleClear}>
+                <CrossClose className="mr-3.5 w-6 h-6 hover:text-onBackgroundHigh" />
+              </div>
+            </div>
+          )}
 
           <input
             ref={inputRef}
