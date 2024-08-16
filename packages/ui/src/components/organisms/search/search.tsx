@@ -95,7 +95,7 @@ export const Search = ({ className }: SearchProps) => {
             ],
           }}
         >
-          {inputValue.length > 0 && (
+          {searchResult.validators && searchResult.blocks && searchResult.transactions && (
             <FlexGrid
               className={`rounded-t-none rounded-md bg-backgroundDark border-solid border-gray-7 border p-4 max-h-96 overflow-y-auto overflow-x-hidden`}
               direction={'col'}
