@@ -21,6 +21,7 @@ export const Search = ({ className }: SearchProps) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const callSearch = useSearchStore((state) => state.callSearch);
+  const setSearchResults = useSearchStore((state) => state.setSearchResults);
   const searchResult = useSearchStore((state) => state.searchResults);
   const pathname = usePathname();
 
@@ -36,6 +37,8 @@ export const Search = ({ className }: SearchProps) => {
       } catch (error) {
         console.error('Search failed', error);
       }
+    } else if (query.length === 0) {
+      setSearchResults({});
     }
   };
 
@@ -51,6 +54,8 @@ export const Search = ({ className }: SearchProps) => {
     setOpen(false);
     setInputValue('');
   }, [pathname]);
+
+  console.log('searchResult', searchResult);
 
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
