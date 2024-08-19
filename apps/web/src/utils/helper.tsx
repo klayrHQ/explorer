@@ -19,6 +19,7 @@ import {
   StatusBadge,
   StatusIcon,
   KeyValueComponent,
+  FlexGrid,
 } from '@repo/ui/atoms';
 import Link from 'next/link';
 import React from 'react';
@@ -495,4 +496,74 @@ export const createValidatorEventsRow = (events: EventsType[], loading: boolean)
         };
       })
     : getTableSkeletons(validatorBlocksTableHead.length);
+};
+
+export const createStakesRows = (stakes: TransactionType[], loading: boolean) => {
+  return !loading
+    ? stakes?.map((stake) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Link href={`/transactions/${stake.id}`}>
+                  <Typography className={'hover:underline'} link>
+                    {shortString(stake?.id, 12, 'center')}
+                  </Typography>
+                </Link>
+              ),
+            },
+            {
+              children: (
+                <Tooltip
+                  placement={'top'}
+                  text={dayjs((stake?.block.timestamp ?? 0) * 1000).format('DD MMM YYYY HH:mm')}
+                >
+                  <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
+                    {fromNowFormatter((stake.block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
+                  </Typography>
+                </Tooltip>
+              ),
+            },
+            {
+              children: (
+                <UserAccountCard address={stake?.sender?.address} name={stake?.sender?.name} />
+              ),
+            },
+            {
+              children: (
+                <div className="relative">
+                  {stake?.params?.stakes?.map((param: any) => (
+                    <div className="-mb-4">
+                      <UserAccountCard address={param?.validatorAddress} />
+                    </div>
+                  ))}
+                </div>
+              ),
+            },
+            {
+              children: (
+                <>
+                  <FlexGrid direction="col" gap="3">
+                    {stake?.params?.stakes?.map((param: any) => {
+                      const amount = param?.amount;
+                      const color = amount > 0 ? 'success' : 'error';
+                      return (
+                        <Currency
+                          amount={amount}
+                          decimals={2}
+                          symbol={'KLY'}
+                          color={color}
+                          variant="paragraph-sm"
+                          fontWeight="normal"
+                        />
+                      );
+                    })}
+                  </FlexGrid>
+                </>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(validatorStakeIncomingTableHead.length);
 };

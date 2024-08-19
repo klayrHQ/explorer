@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { DefaultLinkComponent } from 'storybook/stories/utils/constants.tsx';
 import { ColorType, TableCellType } from '@repo/ui/types';
 import React from 'react';
+import { link } from 'fs';
 
 export const DefaultImageComponent = <Image alt={''} height={'1'} src={''} width={'1'} />;
 
@@ -48,6 +49,8 @@ export const mobileMenuItems = [
   {
     label: 'Stakes',
     icon: 'LayersThree',
+    href: '/stakes',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Chains',
@@ -107,6 +110,8 @@ export const menuItems = [
   {
     label: 'Stakes',
     icon: 'LayersThree',
+    href: '/stakes',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Chains',
@@ -440,5 +445,23 @@ export const validatorEventsTableHead: TableCellType[] = [
   },
   {
     children: 'Amount',
+  },
+];
+
+export const stakesTableHead: TableCellType[] = [
+  {
+    children: 'Stake ID',
+  },
+  {
+    children: 'Date',
+  },
+  {
+    children: 'From',
+  },
+  {
+    children: 'Send stakes',
+  },
+  {
+    children: '',
   },
 ];
