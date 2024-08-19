@@ -34,7 +34,7 @@ import {
   validatorStakeOutgoingTableHead,
 } from './constants.tsx';
 import { DataType } from '@repo/ui/types';
-import { formatCommission } from './dataHelpers.tsx';
+import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
 
 export const createTransactionRows = (
   transactions: TransactionType[],
@@ -144,7 +144,7 @@ export const createTransactionRows = (
               {
                 children: (
                   <Currency
-                    amount={transaction?.params?.amount}
+                    amount={getAmountFromTx(transaction)}
                     className={'align-middle'}
                     color={'onBackgroundLow'}
                     decimals={decimals}
