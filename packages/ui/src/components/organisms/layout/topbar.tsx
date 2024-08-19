@@ -34,6 +34,10 @@ interface TopbarProps {
   }[];
   chainNetworkData: ChainNetworkPickerProps;
   mobileMenuItems: Omit<MenuItemProps, 'subMenu'>[];
+  searchResults?: any;
+  setSearchResults?: any;
+  callSearch?: any;
+
   // newFavourite?: boolean
   // optionsMenuItems: MenuItemProps[]
 }
@@ -45,6 +49,9 @@ export const Topbar = ({
   // newFavourite,
   // optionsMenuItems,
   logo,
+  searchResults,
+  setSearchResults,
+  callSearch,
 }: TopbarProps) => {
   // const [openOptionsMenu, setOpenOptionsMenu] = useState(false)
   // const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
@@ -63,7 +70,12 @@ export const Topbar = ({
         justify={'between'}
         mobileDirection={'row'}
       >
-        <Search className="hidden desktop:block" />
+        <Search
+          className="hidden desktop:block"
+          setSearchResults={setSearchResults}
+          searchResult={searchResults}
+          callSearch={callSearch}
+        />
         <FlexGrid className={'desktop:hidden '} gap={'3xl'} mobileDirection="row">
           <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
           {showSearch && <Search className="absolute mt-16 left-0 top-0 w-full h-full z-20" />}

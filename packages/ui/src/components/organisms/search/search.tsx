@@ -13,17 +13,18 @@ import { usePathname } from 'next/navigation';
 
 interface SearchProps {
   className?: string;
+  searchResult?: any;
+  setSearchResults?: any;
+  callSearch?: any;
 }
-export const Search = ({ className }: SearchProps) => {
+
+export const Search = ({ className, searchResult, setSearchResults, callSearch }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputWidth, setInputWidth] = useState<number>(0);
   const [inputValue, setInputValue] = useState<string>('');
 
-  const callSearch = useSearchStore((state) => state.callSearch);
-  const setSearchResults = useSearchStore((state) => state.setSearchResults);
-  const searchResult = useSearchStore((state) => state.searchResults);
   const pathname = usePathname();
 
   const handleFocus = (open: boolean) => {
@@ -108,7 +109,7 @@ export const Search = ({ className }: SearchProps) => {
             ],
           }}
         >
-          {searchResult.validators && searchResult.blocks && searchResult.transactions && (
+          {searchResult?.validators && searchResult.blocks && searchResult.transactions && (
             <FlexGrid
               className={`rounded-t-none rounded-md bg-backgroundDark border-solid border-gray-7 border p-4 max-h-96 overflow-y-auto overflow-x-hidden`}
               direction={'col'}

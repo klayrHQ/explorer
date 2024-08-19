@@ -63,6 +63,8 @@ export const subMenu = [
   {
     label: 'Users',
     icon: 'Users',
+    href: '/',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Validators',
@@ -79,10 +81,14 @@ export const subMenu = [
   {
     label: 'Tokens',
     icon: 'CryptoCurrency',
+    href: '/',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Nodes',
     icon: 'MarkerPin',
+    href: '/',
+    linkComponent: DefaultLinkComponent,
   },
 ];
 
