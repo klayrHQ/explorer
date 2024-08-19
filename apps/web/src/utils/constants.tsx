@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { DefaultLinkComponent } from 'storybook/stories/utils/constants.tsx';
 import { ColorType, TableCellType } from '@repo/ui/types';
 import React from 'react';
-import { link } from 'fs';
 
 export const DefaultImageComponent = <Image alt={''} height={'1'} src={''} width={'1'} />;
 
