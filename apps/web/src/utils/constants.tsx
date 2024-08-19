@@ -48,6 +48,8 @@ export const mobileMenuItems = [
   {
     label: 'Stakes',
     icon: 'LayersThree',
+    href: '/stakes',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Chains',
@@ -113,6 +115,8 @@ export const menuItems = [
   {
     label: 'Stakes',
     icon: 'LayersThree',
+    href: '/stakes',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Chains',
@@ -446,5 +450,20 @@ export const validatorEventsTableHead: TableCellType[] = [
   },
   {
     children: 'Amount',
+  },
+];
+
+export const stakesTableHead: TableCellType[] = [
+  {
+    children: 'Stake ID',
+  },
+  {
+    children: 'Date',
+  },
+  {
+    children: 'From',
+  },
+  {
+    children: 'Send stakes',
   },
 ];
