@@ -461,7 +461,4 @@ export const stakesTableHead: TableCellType[] = [
   {
     children: 'Send stakes',
   },
-  {
-    children: '',
-  },
 ];

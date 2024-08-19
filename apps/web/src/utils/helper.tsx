@@ -531,34 +531,27 @@ export const createStakesRows = (stakes: TransactionType[], loading: boolean) =>
             },
             {
               children: (
-                <div className="relative">
-                  {stake?.params?.stakes?.map((param: any) => (
-                    <div className="-mb-4">
-                      <UserAccountCard address={param?.validatorAddress} />
-                    </div>
-                  ))}
-                </div>
-              ),
-            },
-            {
-              children: (
                 <>
-                  <FlexGrid direction="col" gap="3">
+                  <div className="flex flex-col ">
                     {stake?.params?.stakes?.map((param: any) => {
                       const amount = param?.amount;
                       const color = amount > 0 ? 'success' : 'error';
                       return (
-                        <Currency
-                          amount={amount}
-                          decimals={2}
-                          symbol={'KLY'}
-                          color={color}
-                          variant="paragraph-sm"
-                          fontWeight="normal"
-                        />
+                        <div className="flex items-center justify-between gap-8 w-72">
+                          <UserAccountCard address={param?.validatorAddress} />
+                          <Currency
+                            amount={amount}
+                            decimals={2}
+                            symbol={'KLY'}
+                            color={color}
+                            variant="paragraph-sm"
+                            fontWeight="normal"
+                            className="text-right self-end"
+                          />
+                        </div>
                       );
                     })}
-                  </FlexGrid>
+                  </div>
                 </>
               ),
             },
