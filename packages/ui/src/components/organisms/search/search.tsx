@@ -62,8 +62,6 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
     setSearchResults({});
   };
 
-  console.log('searchResult', searchResult);
-
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <div className={cls(['w-full', className])}>
