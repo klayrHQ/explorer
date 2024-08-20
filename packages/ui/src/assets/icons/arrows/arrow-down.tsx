@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-export const ArrowLeft = ({ className, style }: { className?: string; style: CSSProperties }) => {
+export const ArrowDown = ({ className, style }: { className?: string; style: CSSProperties }) => {
   return (
     <svg
       className={className}

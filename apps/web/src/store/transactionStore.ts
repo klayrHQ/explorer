@@ -11,6 +11,7 @@ export interface TransactionQueryParams {
   moduleCommand?: string;
   senderAddress?: string;
   recipientAddress?: string;
+  sort?: string; // Include the sort parameter
 }
 
 interface TransactionStore {
@@ -30,7 +31,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
   callGetTransactions: async (
     params: TransactionQueryParams,
   ): Promise<GatewayRes<TransactionType[]>> => {
-    const { blockID, transactionID, limit, offset, address, moduleCommand, senderAddress, recipientAddress,  } = params;
+    const { blockID, transactionID, limit, offset, address, moduleCommand, senderAddress, recipientAddress, sort } = params;
 
     try {
       const { data } = await gatewayClient.get<GatewayRes<TransactionType[]>>('transactions', {
@@ -43,6 +44,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
           moduleCommand,
           senderAddress,
           recipientAddress,
+          sort, // Pass the sort parameter to the API request
         },
       });
 
@@ -56,6 +58,4 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
       throw error;
     }
   },
-
-
 }));
