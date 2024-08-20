@@ -55,6 +55,7 @@ export const Blocks = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, newBlockEvent]);
 
   const tableHead: TableCellType[] = [

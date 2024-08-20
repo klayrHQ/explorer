@@ -24,6 +24,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
 
   return (
     <Topbar
+      callSearch={callSearch}
       chainNetworkData={{
         currentChain,
         setCurrentChain,
@@ -40,7 +41,6 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
       mobileMenuItems={mobileMenuItems}
       searchResults={searchResult}
       setSearchResults={setSearchResults}
-      callSearch={callSearch}
     />
   );
 };

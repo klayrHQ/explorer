@@ -310,7 +310,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       icon: 'LayersThree',
       content: (
         <FlexGrid className={'w-full desktop:gap-4.5xl relative'} direction={'col'} gap={'1.5xl'}>
-          <TabButtons className="justify-start desktop:justify-end" width="full" tabs={stakeTabs} />
+          <TabButtons className="justify-start desktop:justify-end" tabs={stakeTabs} width="full" />
         </FlexGrid>
       ),
     },
@@ -357,21 +357,21 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <ValidatorBanner
-        senderAddress={validator?.account.address || ''}
-        notificationValue={validator?.rank || 0}
+        blockTime={2} // TODO: Implement
+        capacity={233} // TODO: Implement
         image={BannerBG.src}
-        senderName={validator?.account.name || ''}
-        stakes={1} // TODO: Implement
-        value={validator?.totalStake}
-        valueSymbol="KLY"
+        notificationValue={validator?.rank || 0}
         selfStake={validator?.selfStake || 0}
         selfStakeSymbol="KLY"
-        capacity={233} // TODO: Implement
+        senderAddress={validator?.account.address || ''}
+        senderName={validator?.account.name || ''}
+        stakes={1} // TODO: Implement
         status={validator?.status || ''}
-        blockTime={2} // TODO: Implement
+        value={validator?.totalStake}
+        valueSymbol="KLY"
       />
       <div className="desktop:hidden w-full">
-        <TabButtons tabs={tabs} width="full" padding="6" showLabel={false} />
+        <TabButtons padding="6" showLabel={false} tabs={tabs} width="full" />
       </div>
       <div className="hidden desktop:flex w-full">
         <TabButtons tabs={tabs} width="full" />

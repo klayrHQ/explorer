@@ -41,6 +41,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transaction]);
 
   const details = [

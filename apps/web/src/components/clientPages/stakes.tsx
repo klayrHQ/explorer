@@ -45,6 +45,7 @@ export const Stakes = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const rows = createStakesRows(stakes, loading);

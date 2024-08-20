@@ -44,6 +44,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       .then((data) => setBlocks(data.data[0]))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
     }
-  }, [block]);
+  }, [block, callGetEvents]);
 
   const details = [
     {
