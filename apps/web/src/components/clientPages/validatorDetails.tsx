@@ -53,6 +53,8 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [outgoingStakesMeta, setOutgoingStakesMeta] = useState<MetaType>({});
   const [eventsMeta, setEventsMeta] = useState<MetaType>({});
   const [blocksMeta, setBlocksMeta] = useState<MetaType>({});
+  const [sortField, setSortField] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
 
   useEffect(() => {
     setLoading(true);
@@ -68,9 +70,18 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     if (validator && validator.account && validator.account.address) {
       setLoading(true);
 
-      const transactionsPromise = callGetTransactions({
-        address: validator.account.address,
-      }).then((data) => {
+      const addSortingParams = (params: any) => {
+        if (sortField && sortOrder) {
+          params.sort = `${sortField}:${sortOrder}`;
+        }
+        return params;
+      };
+
+      const transactionsPromise = callGetTransactions(
+        addSortingParams({
+          address: validator.account.address,
+        }),
+      ).then((data) => {
         setTransactions(data.data);
         setTransactionsMeta(data.meta);
       });
@@ -113,7 +124,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         blocksPromise,
       ]).finally(() => setLoading(false));
     }
-  }, [validator]);
+  }, [validator, sortField, sortOrder]);
+
+  const handleSort = (field: string) => {
+    const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortField(field);
+    setSortOrder(order);
+  };
 
   const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
     return { label: { label }, value, mobileWidth };
@@ -169,8 +186,8 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         <Currency
           amount={validator?.commission || 0}
           className={'truncate max-w-full'}
-          symbol={'KLY'}
           decimals={5}
+          symbol={'KLY'}
         />
         {'|'}
         <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
@@ -220,10 +237,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <div>
           <SectionHeader
+            className="absolute top-0 left-0"
             count={incomingStakesMeta?.total}
             title={`${validator?.account.name}'s stakes`}
             titleSizeNotLink={'h5'}
-            className="absolute top-0 left-0"
           />
           <TableContainer
             headCols={validatorStakeIncomingTableHead}
@@ -239,10 +256,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <>
           <SectionHeader
+            className="absolute top-0 left-0"
             count={outgoingStakesMeta?.total}
             title={`${validator?.account.name}'s stakes`}
             titleSizeNotLink={'h5'}
-            className="absolute top-0 left-0"
           />
           <TableContainer
             headCols={validatorStakeOutgoingTableHead}
@@ -261,8 +278,8 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       icon: 'InfoSquare',
       content: (
         <DetailsSection
-          headerWidth="detailsLabelWidthLarge"
           data={details}
+          headerWidth="detailsLabelWidthLarge"
           json={validator as unknown as DataType}
           title={'Validator Details'}
         />
@@ -279,7 +296,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             title={`${validator?.account.name} transactions`}
             titleSizeNotLink={'h5'}
           />
-          <TableContainer headCols={transactionTableHead} keyPrefix={'validator-tx'} rows={rows} />
+          <TableContainer
+            headCols={transactionTableHead(handleSort, sortField, sortOrder)}
+            keyPrefix={'validator-tx'}
+            rows={rows}
+          />
         </FlexGrid>
       ),
     },
