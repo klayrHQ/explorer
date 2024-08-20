@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-export const ArrowDown = ({ className, style }: { className?: string; style: CSSProperties }) => {
+export const ArrowUp = ({ className, style }: { className?: string; style: CSSProperties }) => {
   return (
     <svg
       className={className}
@@ -12,7 +12,7 @@ export const ArrowDown = ({ className, style }: { className?: string; style: CSS
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M7.99992 3.33398V12.6673M7.99992 12.6673L12.6666 8.00065M7.99992 12.6673L3.33325 8.00065"
+        d="M7.99992 12.667V3.333M7.99992 3.333L3.33325 8.00065M7.99992 3.333L12.6666 8.00065"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"

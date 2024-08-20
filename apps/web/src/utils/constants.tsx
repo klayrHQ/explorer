@@ -313,15 +313,55 @@ export const getTableSkeletons = (cells: number) => {
   });
 };
 
-export const transactionTableHead: TableCellType[] = [
+export const transactionTableHead = (
+  onSortChange: (column: string) => void,
+  sortField: string,
+  sortOrder: string,
+): TableCellType[] => [
   {
     children: 'Transaction ID',
   },
   {
-    children: 'Height',
+    children: (
+      <div className="flex items-center gap-1 cursor-pointer">
+        <Typography variant={'paragraph-sm'}>{'Height'}</Typography>
+        <div onClick={() => onSortChange('height')}>
+          <Icon
+            className={'ml-1'}
+            color="onBackgroundLow"
+            icon={
+              sortField === 'height' ? (sortOrder === 'asc' ? 'ArrowUp' : 'ArrowDown') : 'ArrowDown'
+            }
+            size={'xs'}
+          />
+        </div>
+      </div>
+    ),
   },
   {
-    children: 'Date',
+    children: (
+      <div
+        className="flex items-center gap-1 cursor-pointer"
+        onClick={() => onSortChange('timestamp')}
+      >
+        <Typography variant={'paragraph-sm'}>{'Date'}</Typography>
+        <div>
+          <Icon
+            className={'ml-1'}
+            color="onBackgroundLow"
+            icon={
+              sortField === 'timestamp'
+                ? sortOrder === 'asc'
+                  ? 'ArrowUp'
+                  : 'ArrowDown'
+                : 'ArrowDown'
+            }
+            onClick={() => onSortChange('timestamp')}
+            size={'xs'}
+          />
+        </div>
+      </div>
+    ),
   },
   {
     children: 'Type',

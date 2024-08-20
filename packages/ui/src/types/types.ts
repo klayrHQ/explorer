@@ -76,6 +76,8 @@ export type IconComponent =
   | 'CrossClose'
   | 'ArrowLeft'
   | 'ArrowRight'
+  | 'ArrowDown'
+  | 'ArrowUp'
   | 'Copy'
   | 'DotsVertical'
   | 'Trash'

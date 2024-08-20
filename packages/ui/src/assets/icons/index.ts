@@ -41,6 +41,7 @@ import { List } from './general/list.tsx';
 import { ArrowRight } from './arrows/arrow-right.tsx';
 import {CodeSquare} from "./development/code-square-02.tsx";
 import { ArrowDown } from './arrows/arrow-down.tsx';
+import { ArrowUp } from './arrows/arrow-up.tsx';
 
 export const icons = {
   ChevronDown,
@@ -86,4 +87,5 @@ export const icons = {
   List,
   CodeSquare,
   ArrowDown,
+  ArrowUp,
 };
