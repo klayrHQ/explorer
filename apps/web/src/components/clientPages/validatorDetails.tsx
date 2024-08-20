@@ -31,7 +31,6 @@ import {
   MetaType,
   BlockDetailsType,
 } from '../../utils/types';
-import { useSocketStore } from '../../store/socketStore.ts';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -64,7 +63,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       .then((data) => setValidators(data.data[0]))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [callGetValidators, id]);
 
   useEffect(() => {
     if (validator && validator.account && validator.account.address) {
@@ -124,7 +123,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         blocksPromise,
       ]).finally(() => setLoading(false));
     }
-  }, [validator, sortField, sortOrder]);
+  }, [validator, sortField, sortOrder, callGetTransactions, callGetEvents, callGetBlocks]);
 
   const handleSort = (field: string) => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
