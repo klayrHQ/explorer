@@ -14,6 +14,7 @@ export * from './base/grid';
 export * from './base/statusIcon';
 export * from './base/statusTag';
 export * from './base/currency';
+export * from './base/sortingTitle';
 export * from './images/icon';
 export * from './images/logo';
 export * from './images/imageContainer';
@@ -43,3 +44,4 @@ export * from './account/avatar/avatar';
 export * from './utilities/tooltip';
 export * from './utilities/popover';
 export * from './utilities/notFound/notFound.tsx';
+

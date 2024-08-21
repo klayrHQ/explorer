@@ -21,11 +21,19 @@ export const Transactions = () => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
-  const defaultLimit = '10';
+  const [sortField, setSortField] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
 
+  const defaultLimit = '10';
   const handleSetPageNumber = async (number: number) => {
     setPageNumber(number);
     router.push(pathname + '?' + `page=${number}`);
+  };
+
+  const handleSort = (field: string) => {
+    const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortField(field);
+    setSortOrder(order);
   };
 
   useEffect(() => {
@@ -33,17 +41,22 @@ export const Transactions = () => {
     const limit = searchParams.get('limit') || defaultLimit;
     const page = Number(searchParams.get('page')) || 1;
     const offset = (page - 1) * Number(limit);
-    callGetTransactions({
+    const params: any = {
       limit,
       offset,
-    })
+    };
+    if (sortField && sortOrder) {
+      params.sort = `${sortField}:${sortOrder}`;
+    }
+    callGetTransactions(params)
       .then((data) => {
         setTotalTxs(data.meta.total);
         setTransactions(data.data);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [searchParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, sortField, sortOrder]);
 
   const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
 
@@ -56,7 +69,7 @@ export const Transactions = () => {
       />
       <TableContainer
         currentNumber={pageNumber}
-        headCols={transactionTableHead}
+        headCols={transactionTableHead(handleSort, sortField, sortOrder)}
         keyPrefix={'transactions'}
         pagination
         rows={rows}

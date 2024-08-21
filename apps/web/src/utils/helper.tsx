@@ -232,12 +232,12 @@ export const createValidatorsRows = (validators: ValidatorType[], loading: boole
                     />
                     <UserAccountCard
                       address={validator?.account.address}
-                      name={validator?.account.name}
-                      nameColor="onBackgroundMedium"
-                      nameVariant="paragraph-sm"
-                      nameFontWeight="semibold"
                       addressColor="onBackgroundLow"
                       addressVariant="caption"
+                      name={validator?.account.name}
+                      nameColor="onBackgroundMedium"
+                      nameFontWeight="semibold"
+                      nameVariant="paragraph-sm"
                     />
                   </div>
                 </Link>
@@ -247,12 +247,12 @@ export const createValidatorsRows = (validators: ValidatorType[], loading: boole
               //depends on what color?
               children: (
                 <StatusBadge
-                  status={validator.status}
                   nextAllocatedTime={
                     validator.nextAllocatedTime
                       ? fromNowFormatter(validator.nextAllocatedTime * 1000, 'DD MMM YYYY')
                       : undefined
                   }
+                  status={validator.status}
                 />
               ),
             },
@@ -537,16 +537,17 @@ export const createStakesRows = (stakes: TransactionType[], loading: boolean) =>
                       const amount = param?.amount;
                       const color = amount > 0 ? 'success' : 'error';
                       return (
+                        // eslint-disable-next-line react/jsx-key
                         <div className="flex items-center justify-between gap-8 w-72">
                           <UserAccountCard address={param?.validatorAddress} />
                           <Currency
                             amount={amount}
-                            decimals={2}
-                            symbol={'KLY'}
-                            color={color}
-                            variant="paragraph-sm"
-                            fontWeight="normal"
                             className="text-right self-end"
+                            color={color}
+                            decimals={2}
+                            fontWeight="normal"
+                            symbol={'KLY'}
+                            variant="paragraph-sm"
                           />
                         </div>
                       );

@@ -18,7 +18,7 @@ interface SearchProps {
   callSearch?: any;
 }
 
-export const Search = ({ className, searchResult, setSearchResults, callSearch }: SearchProps) => {
+export const Search = ({ className, searchResult, setSearchResults, callSearch, }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -35,7 +35,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
   const handleSearch = async (query: string) => {
     if (query.length > 0) {
       try {
-        await callSearch({ search: query });
+        await callSearch({ search: query, });
       } catch (error) {
         console.error('Search failed', error);
       }
@@ -62,8 +62,6 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
     setSearchResults({});
   };
 
-  console.log('searchResult', searchResult);
-
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <div className={cls(['w-full', className])}>
@@ -80,8 +78,6 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
           )}
 
           <input
-            ref={inputRef}
-            value={inputValue}
             className="bg-backgroundDark placeholder-lobster min-h-11 pl-12 py-4 rounded-lg focus:outline-0 border focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:rounded-b-none min-w-full desktop:min-w-auto desktop:max-w-searchBarWidth"
             onChange={(e) => {
               setInputValue(e.target.value);
@@ -89,15 +85,16 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
             }}
             onFocus={() => handleFocus(true)}
             placeholder="Search block, transaction, validators..."
+            ref={inputRef}
             type="text"
+            value={inputValue}
           />
         </div>
         <Popper
           anchorEl={anchorEl}
+          className="w-auto truncate z-10"
           open={open}
           placement={'bottom'}
-          className="w-auto truncate z-10"
-          style={{ width: inputWidth }}
           popperOptions={{
             modifiers: [
               {
@@ -108,6 +105,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
               },
             ],
           }}
+          style={{ width: inputWidth, }}
         >
           {searchResult?.validators && searchResult.blocks && searchResult.transactions && (
             <FlexGrid
@@ -151,12 +149,12 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
                           {'Block'}
                         </Typography>
                         <Typography
+                          className="hidden desktop:inline-flex"
                           color="onBackground"
                           fontWeight="semibold"
                           variant="paragraph-md"
-                          className="hidden desktop:inline-flex"
                         >
-                          {truncate(block.id, { length: 55, omission: '...' })}
+                          {truncate(block.id, { length: 55, omission: '...', })}
                         </Typography>
                         <Typography
                           className="inline-flex desktop:hidden"
@@ -164,7 +162,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
                           fontWeight="semibold"
                           variant="paragraph-md"
                         >
-                          {truncate(block.id, { length: 32, omission: '...' })}
+                          {truncate(block.id, { length: 32, omission: '...', })}
                         </Typography>
                       </FlexGrid>
                     </FlexGrid>
@@ -183,20 +181,20 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
                       mobileDirection="row"
                     >
                       <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                        <Icon color="onBackgroundLow" size="xs" icon={'SwitchHorizontal'} />
+                        <Icon color="onBackgroundLow" icon={'SwitchHorizontal'} size="xs" />
                       </div>
                       <FlexGrid direction={'col'} gap={'1'}>
                         <Typography color="onBackgroundLow" variant="caption">
                           {'transaction'}
                         </Typography>
                         <Typography
+                          className="hidden desktop:inline-flex"
                           color="onBackground"
                           component="p"
                           fontWeight="semibold"
                           variant="paragraph-md"
-                          className="hidden desktop:inline-flex"
                         >
-                          {truncate(transaction.id, { length: 55, omission: '...' })}
+                          {truncate(transaction.id, { length: 55, omission: '...', })}
                         </Typography>
                         <Typography
                           className="inline-flex desktop:hidden"
@@ -204,7 +202,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
                           fontWeight="semibold"
                           variant="paragraph-md"
                         >
-                          {truncate(transaction.id, { length: 32, omission: '...' })}
+                          {truncate(transaction.id, { length: 32, omission: '...', })}
                         </Typography>
                       </FlexGrid>
                     </FlexGrid>
@@ -214,9 +212,9 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
                 searchResult.blocks?.length === 0 &&
                 searchResult.transactions?.length === 0 && (
                   <NotFound
+                    className="my-9"
                     headerText="No results"
                     subheaderText="We didn’t find anything based on your search"
-                    className="my-9"
                   />
                 )}
             </FlexGrid>

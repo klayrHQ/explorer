@@ -1,4 +1,4 @@
-import { Icon, SkeletonComponent, Typography } from '@repo/ui/atoms';
+import { Icon, SkeletonComponent, Typography, SortingTitle } from '@repo/ui/atoms';
 import Logo from '../assets/images/logo.svg';
 import LogoText from '../assets/images/logoText.svg';
 import Image from 'next/image';
@@ -312,15 +312,35 @@ export const getTableSkeletons = (cells: number) => {
   });
 };
 
-export const transactionTableHead: TableCellType[] = [
+export const transactionTableHead = (
+  onSortChange: (column: string) => void,
+  sortField: string,
+  sortOrder: string,
+): TableCellType[] => [
   {
     children: 'Transaction ID',
   },
   {
-    children: 'Height',
+    children: (
+      <SortingTitle
+        title="Height"
+        sortField={sortField}
+        sortOrder={sortOrder}
+        onSortChange={onSortChange}
+        sortValue="height"
+      />
+    ),
   },
   {
-    children: 'Date',
+    children: (
+      <SortingTitle
+        title="Date"
+        sortField={sortField}
+        sortOrder={sortOrder}
+        onSortChange={onSortChange}
+        sortValue="timestamp"
+      />
+    ),
   },
   {
     children: 'Type',

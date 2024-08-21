@@ -57,9 +57,6 @@ const mockGetSearchResponse = {
 
 let searchResult = mockGetSearchResponse;
 
-console.log('mockGetSearchResponse', mockGetSearchResponse);
-console.log('searchResult', searchResult);
-
 export const Primary: Story = {
   args: {
     searchResult: searchResult,

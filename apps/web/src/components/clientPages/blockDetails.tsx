@@ -35,6 +35,8 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const [block, setBlocks] = useState<BlockDetailsType | undefined>(undefined);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [events, setEvents] = useState<EventsType[]>([]);
+  const [sortField, setSortField] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
 
   useEffect(() => {
     setLoading(true);
@@ -49,14 +51,25 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     if (block?.numberOfTransactions && block?.numberOfTransactions >= 0) {
       setLoading(true);
-      callGetTransactions({
-        blockID: id,
-      })
+
+      const addSortingParams = (params: any) => {
+        if (sortField) {
+          params.sortField = sortField;
+          params.sortOrder = sortOrder;
+        }
+        return params;
+      };
+
+      callGetTransactions(
+        addSortingParams({
+          blockID: id,
+        }),
+      )
         .then((data) => setTransactions(data.data))
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
     }
-  }, [id, block]);
+  }, [id, block, sortField, sortOrder, callGetTransactions]);
 
   useEffect(() => {
     if (block) {
@@ -68,8 +81,13 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
     }
-  }, [block]);
+  }, [block, callGetEvents]);
 
+  const handleSort = (field: string) => {
+    const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortField(field);
+    setSortOrder(order);
+  };
   const details = [
     {
       label: {
@@ -177,7 +195,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
           />
           {transactions?.length && transactions.length > 0 ? (
             <TableContainer
-              headCols={transactionTableHead}
+              headCols={transactionTableHead(handleSort, sortField, sortOrder)}
               keyPrefix={'transactions'}
               rows={transactionRows}
             />
