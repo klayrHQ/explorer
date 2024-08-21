@@ -1,4 +1,4 @@
-import { Icon, SkeletonComponent, Typography } from '@repo/ui/atoms';
+import { Icon, SkeletonComponent, Typography, SortingTitle } from '@repo/ui/atoms';
 import Logo from '../assets/images/logo.svg';
 import LogoText from '../assets/images/logoText.svg';
 import Image from 'next/image';
@@ -322,44 +322,24 @@ export const transactionTableHead = (
   },
   {
     children: (
-      <div className="flex items-center gap-1 cursor-pointer">
-        <Typography variant={'paragraph-sm'}>{'Height'}</Typography>
-        <div onClick={() => onSortChange('height')}>
-          <Icon
-            className={'ml-1'}
-            color="onBackgroundLow"
-            icon={
-              sortField === 'height' ? (sortOrder === 'asc' ? 'ArrowUp' : 'ArrowDown') : 'ArrowDown'
-            }
-            size={'xs'}
-          />
-        </div>
-      </div>
+      <SortingTitle
+        title="Height"
+        sortField={sortField}
+        sortOrder={sortOrder}
+        onSortChange={onSortChange}
+        sortValue="height"
+      />
     ),
   },
   {
     children: (
-      <div
-        className="flex items-center gap-1 cursor-pointer"
-        onClick={() => onSortChange('timestamp')}
-      >
-        <Typography variant={'paragraph-sm'}>{'Date'}</Typography>
-        <div>
-          <Icon
-            className={'ml-1'}
-            color="onBackgroundLow"
-            icon={
-              sortField === 'timestamp'
-                ? sortOrder === 'asc'
-                  ? 'ArrowUp'
-                  : 'ArrowDown'
-                : 'ArrowDown'
-            }
-            onClick={() => onSortChange('timestamp')}
-            size={'xs'}
-          />
-        </div>
-      </div>
+      <SortingTitle
+        title="Date"
+        sortField={sortField}
+        sortOrder={sortOrder}
+        onSortChange={onSortChange}
+        sortValue="timestamp"
+      />
     ),
   },
   {
