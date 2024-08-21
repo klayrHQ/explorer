@@ -8,6 +8,7 @@ import {
   Tooltip,
   Typography,
   UserAccountCard,
+  SortingTitle,
 } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { TableCellType } from '@repo/ui/types';
@@ -33,6 +34,8 @@ export const Blocks = () => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
+  const [sortField, setSortField] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
   const defaultLimit = '10';
 
   const handleSetPageNumber = async (number: number) => {
@@ -40,33 +43,63 @@ export const Blocks = () => {
     router.push(pathname + '?' + `page=${number}`);
   };
 
+  const handleSort = (field: string) => {
+    const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortField(field);
+    setSortOrder(order);
+    console.log(`Sorting by field: ${field}, order: ${order}`);
+  };
+
   useEffect(() => {
     if (blocks.length === 0) setLoading(true);
     const limit = searchParams.get('limit') || defaultLimit;
     const page = Number(searchParams.get('page')) || 1;
     const offset = (page - 1) * Number(limit);
-    callGetBlocks({
+    const params: any = {
       limit,
       offset,
-    })
+    };
+    if (sortField && sortOrder) {
+      params.sort = `${sortField}:${sortOrder}`;
+    }
+    callGetBlocks(params)
       .then((data) => {
         setTotalBlocks(data.meta.total);
         setBlocks(data.data);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, newBlockEvent]);
+  }, [searchParams, newBlockEvent, sortOrder, sortField]);
 
-  const tableHead: TableCellType[] = [
+  const tableHead = (
+    onSortChange: (column: string) => void,
+    sortField: string,
+    sortOrder: string,
+  ): TableCellType[] => [
     {
       children: 'Block ID',
     },
     {
-      children: 'Height',
+      children: (
+        <SortingTitle
+          title="Height"
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={onSortChange}
+          sortValue="height"
+        />
+      ),
     },
     {
-      children: 'Date',
+      children: (
+        <SortingTitle
+          title="Date"
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={onSortChange}
+          sortValue="timestamp"
+        />
+      ),
     },
     {
       children: 'Generator',
@@ -185,7 +218,7 @@ export const Blocks = () => {
       />
       <TableContainer
         currentNumber={pageNumber}
-        headCols={tableHead}
+        headCols={tableHead(handleSort, sortField, sortOrder)}
         keyPrefix={'blocks'}
         pagination
         rows={rows}
