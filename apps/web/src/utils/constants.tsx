@@ -368,15 +368,45 @@ export const eventsTableHead = [
   },
 ];
 
-export const validatorsTableHead: TableCellType[] = [
+export const validatorsTableHead = (
+  onSortChange: (column: string) => void,
+  sortField: string,
+  sortOrder: string,
+): TableCellType[] => [
   {
-    children: 'Validator',
+    children: (
+      <SortingTitle
+        title="Validator"
+        sortField={sortField}
+        sortOrder={sortOrder}
+        onSortChange={onSortChange}
+        sortValue="rank"
+      />
+    ),
   },
   {
-    children: 'Status',
+    children: (
+      <SortingTitle
+        title="Status"
+        sortField={sortField}
+        sortOrder={sortOrder}
+        onSortChange={onSortChange}
+        sortValue="nextAllocatedTime"
+      />
+    ),
   },
   {
-    children: <div className="flex justify-end">{'Total blocks'}</div>,
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          title="Total blocks"
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={onSortChange}
+          sortValue="generatedBlocks"
+        />
+      </div>
+    ),
     className: 'items-end text-end whitespace-nowrap',
   },
   {
@@ -384,11 +414,32 @@ export const validatorsTableHead: TableCellType[] = [
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: <div className="flex justify-end">{'Validator weight'}</div>,
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          title="Validator weight"
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={onSortChange}
+          sortValue="validatorWeight"
+        />
+      </div>
+    ),
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: <div className="flex justify-end">{'Stake capacity'}</div>,
+    children: (
+      <div className="flex justify-end">
+        {' '}
+        <SortingTitle
+          title="Stake capacity"
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={onSortChange}
+          sortValue="selfStake"
+        />
+      </div>
+    ),
     className: 'items-end text-end whitespace-nowrap',
   },
   {
@@ -396,7 +447,17 @@ export const validatorsTableHead: TableCellType[] = [
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: <div className="flex justify-end">{'Commission'}</div>,
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          title="Commission"
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSortChange={onSortChange}
+          sortValue="commission"
+        />
+      </div>
+    ),
     className: 'items-end text-end whitespace-nowrap',
   },
   {

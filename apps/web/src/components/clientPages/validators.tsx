@@ -22,19 +22,33 @@ export const Validators = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [rowsPerPage, setRowsPerPage] = useState<number>(51);
 
+  const [sortField, setSortField] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
+
+  const handleSort = (field: string) => {
+    const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortField(field);
+    setSortOrder(order);
+  };
+
   useEffect(() => {
+    setLoading(true);
     if (validators.length === 0) setLoading(true);
     callGetNextValidators();
-    callGetValidators({
+    const params: any = {
       limit: rowsPerPage.toString(),
-    })
+    };
+    if (sortField && sortOrder) {
+      params.sort = `${sortField}:${sortOrder}`;
+    }
+    callGetValidators(params)
       .then((data) => {
         setTotalValidators(data.meta.total);
         setValidators(data.data);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [rowsPerPage, newBlockEvent]);
+  }, [rowsPerPage, newBlockEvent, sortField, sortOrder]);
 
   const rows = createValidatorsRows(validators, loading);
 
@@ -64,7 +78,7 @@ export const Validators = () => {
         </div>
       </FlexGrid>
       <TableContainer
-        headCols={validatorsTableHead}
+        headCols={validatorsTableHead(handleSort, sortField, sortOrder)}
         keyPrefix={'validators'}
         pagination
         rows={rows}
