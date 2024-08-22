@@ -74,7 +74,7 @@ export const Transactions = () => {
         pagination
         rows={rows}
         setCurrentNumber={handleSetPageNumber}
-        totalPages={totalTxs / Number(defaultLimit)}
+        totalPages={Math.ceil(totalTxs / Number(defaultLimit))}
       />
     </FlexGrid>
   );

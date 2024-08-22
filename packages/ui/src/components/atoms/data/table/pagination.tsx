@@ -27,6 +27,9 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
   }
 
   const displayPages = () => {
+    if (pages.length <= 5) {
+      return pages;
+    }
     switch (true) {
       case currentNumber === 1 || currentNumber === 2:
         return [...pages.slice(0, 3), '...', ...pages.slice(-3)];

@@ -223,7 +223,7 @@ export const Blocks = () => {
         pagination
         rows={rows}
         setCurrentNumber={handleSetPageNumber}
-        totalPages={totalBlocks / Number(defaultLimit)}
+        totalPages={Math.ceil(totalBlocks / Number(defaultLimit))}
       />
     </FlexGrid>
   );
