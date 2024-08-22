@@ -55,6 +55,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
 
+  const [blockPageNumber, setBlockPageNumber] = useState<number>(1);
+  const defaultLimit = '10';
+
+  const handleBlockPageChange = (newPageNumber: number) => {
+    setBlockPageNumber(newPageNumber);
+  };
+
   useEffect(() => {
     setLoading(true);
     callGetValidators({
@@ -108,7 +115,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         setEventsMeta(data.meta);
       });
 
+      const offset = (blockPageNumber - 1) * Number(defaultLimit);
       const blocksPromise = callGetBlocks({
+        limit: defaultLimit,
+        offset,
         generatorAddress: validator.account.address,
       }).then((data) => {
         setBlocks(data.data);
@@ -123,13 +133,23 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         blocksPromise,
       ]).finally(() => setLoading(false));
     }
-  }, [validator, sortField, sortOrder, callGetTransactions, callGetEvents, callGetBlocks]);
+  }, [
+    validator,
+    sortField,
+    sortOrder,
+    callGetTransactions,
+    callGetEvents,
+    callGetBlocks,
+    blockPageNumber,
+  ]);
 
   const handleSort = (field: string) => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
     setSortField(field);
     setSortOrder(order);
   };
+
+  console.log(blocksMeta?.total);
 
   const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
     return { label: { label }, value, mobileWidth };
@@ -328,6 +348,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={validatorBlocksTableHead}
             keyPrefix={'validator-blocks'}
             rows={validatorBlocksRows}
+            pagination
+            setCurrentNumber={handleBlockPageChange}
+            totalPages={(blocksMeta?.total ?? 0) / Number(defaultLimit)}
+            currentNumber={blockPageNumber}
           />
         </FlexGrid>
       ),
