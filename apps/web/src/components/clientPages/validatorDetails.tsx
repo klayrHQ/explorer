@@ -317,7 +317,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             rows={incomingStake}
             pagination
             setCurrentNumber={handleIncomingStakesPageChange}
-            totalPages={(incomingStakesMeta?.total ?? 0) / Number(defaultLimit)}
+            totalPages={Math.ceil((incomingStakesMeta?.total ?? 0) / Number(defaultLimit))}
             currentNumber={incomingStakesPageNumber}
           />
         </div>
@@ -340,7 +340,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             rows={outgoingStake}
             pagination
             setCurrentNumber={handleOutgoingStakesPageChange}
-            totalPages={(outgoingStakesMeta?.total ?? 0) / Number(defaultLimit)}
+            totalPages={Math.ceil((outgoingStakesMeta?.total ?? 0) / Number(defaultLimit))}
             currentNumber={outgoingStakesPageNumber}
           />
         </>
@@ -379,7 +379,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             rows={rows}
             pagination
             setCurrentNumber={handleTransactionPageChange}
-            totalPages={(transactionsMeta?.total ?? 0) / Number(defaultLimit)}
+            totalPages={Math.ceil((transactionsMeta?.total ?? 0) / Number(defaultLimit))}
             currentNumber={transactionPageNumber}
           />
         </FlexGrid>
@@ -412,7 +412,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             rows={validatorBlocksRows}
             pagination
             setCurrentNumber={handleBlockPageChange}
-            totalPages={(blocksMeta?.total ?? 0) / Number(defaultLimit)}
+            totalPages={Math.ceil((blocksMeta?.total ?? 0) / Number(defaultLimit))}
             currentNumber={blockPageNumber}
           />
         </FlexGrid>
@@ -435,7 +435,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             rows={eventsRows}
             pagination
             setCurrentNumber={handleEventPageChange}
-            totalPages={(eventsMeta?.total ?? 0) / Number(defaultLimit)}
+            totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(defaultLimit))}
             currentNumber={eventPageNumber}
           />
         </FlexGrid>
