@@ -55,11 +55,41 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
 
-  const [blockPageNumber, setBlockPageNumber] = useState<number>(1);
   const defaultLimit = '10';
-
+  const [blockPageNumber, setBlockPageNumber] = useState<number>(1);
   const handleBlockPageChange = (newPageNumber: number) => {
     setBlockPageNumber(newPageNumber);
+  };
+
+  const [eventPageNumber, setEventPageNumber] = useState<number>(1);
+  const handleEventPageChange = (newPageNumber: number) => {
+    setEventPageNumber(newPageNumber);
+  };
+
+  const [transactionPageNumber, setTransactionPageNumber] = useState<number>(1);
+  const handleTransactionPageChange = (newPageNumber: number) => {
+    setTransactionPageNumber(newPageNumber);
+  };
+
+  const [incomingStakesPageNumber, setIncomingStakesPageNumber] = useState<number>(1);
+  const handleIncomingStakesPageChange = (newPageNumber: number) => {
+    setIncomingStakesPageNumber(newPageNumber);
+  };
+
+  const [outgoingStakesPageNumber, setOutgoingStakesPageNumber] = useState<number>(1);
+  const handleOutgoingStakesPageChange = (newPageNumber: number) => {
+    setOutgoingStakesPageNumber(newPageNumber);
+  };
+
+  const fetchPaginatedData = async (
+    callFunction: Function,
+    params: any,
+    pageNumber: any,
+    defaultLimit: any,
+  ) => {
+    const offset = (Number(pageNumber) - 1) * Number(defaultLimit);
+    const updatedParams = { ...params, limit: defaultLimit, offset };
+    return callFunction(updatedParams);
   };
 
   useEffect(() => {
@@ -83,44 +113,60 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         return params;
       };
 
-      const transactionsPromise = callGetTransactions(
+      const transactionsPromise = fetchPaginatedData(
+        callGetTransactions,
         addSortingParams({
           address: validator.account.address,
         }),
+        transactionPageNumber,
+        defaultLimit,
       ).then((data) => {
         setTransactions(data.data);
         setTransactionsMeta(data.meta);
       });
 
-      const incomingStakesPromise = callGetTransactions({
-        recipientAddress: validator.account.address,
-        moduleCommand: 'pos:stake',
-      }).then((data) => {
+      const incomingStakesPromise = fetchPaginatedData(
+        callGetTransactions,
+        {
+          recipientAddress: validator.account.address,
+          moduleCommand: 'pos:stake',
+        },
+        incomingStakesPageNumber,
+        defaultLimit,
+      ).then((data) => {
         setIncomingStakes(data.data);
         setIncomingStakesMeta(data.meta);
       });
 
-      const outgoingStakesPromise = callGetTransactions({
-        senderAddress: validator.account.address,
-        moduleCommand: 'pos:stake',
-      }).then((data) => {
+      const outgoingStakesPromise = fetchPaginatedData(
+        callGetTransactions,
+        {
+          senderAddress: validator.account.address,
+          moduleCommand: 'pos:stake',
+        },
+        outgoingStakesPageNumber,
+        defaultLimit,
+      ).then((data) => {
         setOutgoingStakes(data.data);
         setOutgoingStakesMeta(data.meta);
       });
 
-      const eventsPromise = callGetEvents({
-        senderAddress: validator.account.address,
-      }).then((data) => {
+      const eventsPromise = fetchPaginatedData(
+        callGetEvents,
+        { senderAddress: validator.account.address },
+        eventPageNumber,
+        defaultLimit,
+      ).then((data) => {
         setEvents(data.data);
         setEventsMeta(data.meta);
       });
 
-      const offset = (blockPageNumber - 1) * Number(defaultLimit);
-      const blocksPromise = callGetBlocks({
-        limit: defaultLimit,
-        offset,
-        generatorAddress: validator.account.address,
-      }).then((data) => {
+      const blocksPromise = fetchPaginatedData(
+        callGetBlocks,
+        { generatorAddress: validator.account.address },
+        blockPageNumber,
+        defaultLimit,
+      ).then((data) => {
         setBlocks(data.data);
         setBlocksMeta(data.meta);
       });
@@ -141,6 +187,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     callGetEvents,
     callGetBlocks,
     blockPageNumber,
+    eventPageNumber,
+    transactionPageNumber,
+    incomingStakesPageNumber,
+    outgoingStakesPageNumber,
   ]);
 
   const handleSort = (field: string) => {
@@ -265,6 +315,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={validatorStakeIncomingTableHead}
             keyPrefix={'validator-blocks'}
             rows={incomingStake}
+            pagination
+            setCurrentNumber={handleIncomingStakesPageChange}
+            totalPages={(incomingStakesMeta?.total ?? 0) / Number(defaultLimit)}
+            currentNumber={incomingStakesPageNumber}
           />
         </div>
       ),
@@ -284,6 +338,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={validatorStakeOutgoingTableHead}
             keyPrefix={'validator-blocks'}
             rows={outgoingStake}
+            pagination
+            setCurrentNumber={handleOutgoingStakesPageChange}
+            totalPages={(outgoingStakesMeta?.total ?? 0) / Number(defaultLimit)}
+            currentNumber={outgoingStakesPageNumber}
           />
         </>
       ),
@@ -319,6 +377,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={transactionTableHead(handleSort, sortField, sortOrder)}
             keyPrefix={'validator-tx'}
             rows={rows}
+            pagination
+            setCurrentNumber={handleTransactionPageChange}
+            totalPages={(transactionsMeta?.total ?? 0) / Number(defaultLimit)}
+            currentNumber={transactionPageNumber}
           />
         </FlexGrid>
       ),
@@ -371,6 +433,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={validatorEventsTableHead}
             keyPrefix={'validator-blocks'}
             rows={eventsRows}
+            pagination
+            setCurrentNumber={handleEventPageChange}
+            totalPages={(eventsMeta?.total ?? 0) / Number(defaultLimit)}
+            currentNumber={eventPageNumber}
           />
         </FlexGrid>
       ),
