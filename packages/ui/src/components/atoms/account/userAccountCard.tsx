@@ -2,7 +2,7 @@ import { FlexGrid, Typography } from '@repo/ui/atoms';
 import { shortString } from '@repo/ui/utils';
 import { Avatar } from './avatar/avatar.tsx';
 import { TypographyVariant, FontWeight } from '../../../types/types.ts';
-import { CopyIcon } from "../input/copyIcon.tsx";
+import { CopyIcon } from '../input/copyIcon.tsx';
 
 interface UserAccountCardProps {
   address: string;
@@ -17,6 +17,7 @@ interface UserAccountCardProps {
   nameFontWeight?: FontWeight;
   nameOnly?: boolean;
   copyIcon?: boolean;
+  truncateName?: boolean;
 }
 
 export const UserAccountCard = ({
@@ -32,6 +33,7 @@ export const UserAccountCard = ({
   nameFontWeight = 'semibold',
   nameOnly = false,
   copyIcon = false,
+  truncateName = false,
 }: UserAccountCardProps) => {
   return (
     <FlexGrid
@@ -42,8 +44,18 @@ export const UserAccountCard = ({
     >
       <Avatar address={address} circle size={size} />
       <FlexGrid direction={'col'} gap={'0'}>
-        {name && nameOnly && (
+        {name && nameOnly && !truncateName && (
           <Typography color={nameColor} fontWeight={nameFontWeight} variant={nameVariant}>
+            {name}
+          </Typography>
+        )}
+        {name && nameOnly && truncateName && (
+          <Typography
+            className="max-w-16 truncate"
+            color={nameColor}
+            fontWeight={nameFontWeight}
+            variant={nameVariant}
+          >
             {name}
           </Typography>
         )}
