@@ -8,6 +8,7 @@ export interface BlocksQueryParams {
   offset?: number;
   includeAssets?: boolean;
   generatorAddress?: string;
+  sort?: string;
 }
 
 interface BlockStore {
@@ -25,7 +26,7 @@ export const useBlockStore = create<BlockStore>()((set, get) => ({
   setTotalBlocks: (totalBlocks: number) => set(() => ({ totalBlocks })),
 
   callGetBlocks: async (params: BlocksQueryParams): Promise<GatewayRes<BlockDetailsType[]>> => {
-    const { blockID, limit, generatorAddress, offset = '0', includeAssets = true } = params;
+    const { blockID, limit, generatorAddress, offset = '0', includeAssets = true, sort } = params;
 
     try {
       const { data } = await gatewayClient.get<GatewayRes<BlockDetailsType[]>>('blocks', {
@@ -35,6 +36,7 @@ export const useBlockStore = create<BlockStore>()((set, get) => ({
           offset,
           includeAssets,
           generatorAddress,
+          sort
         },
       });
 

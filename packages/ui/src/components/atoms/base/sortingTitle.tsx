@@ -5,7 +5,7 @@ interface SortingTitleProps {
   onSortChange: (column: string) => void;
   sortField: string;
   sortOrder: string;
-  sortValue: any;
+  sortValue: string;
   title: string;
 }
 
@@ -19,7 +19,7 @@ export const SortingTitle = ({
   return (
     <div className="flex items-center gap-1 cursor-pointer">
       <Typography variant={'paragraph-sm'}>{title}</Typography>
-      <div onClick={() => onSortChange('height')}>
+      <div onClick={() => onSortChange(sortValue)}>
         <Icon
           className={'ml-1'}
           color="onBackgroundLow"

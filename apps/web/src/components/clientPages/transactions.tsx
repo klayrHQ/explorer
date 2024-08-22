@@ -34,6 +34,7 @@ export const Transactions = () => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
     setSortField(field);
     setSortOrder(order);
+    console.log(`Sorting by field: ${field}, order: ${order}`);
   };
 
   useEffect(() => {
@@ -55,7 +56,6 @@ export const Transactions = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, sortField, sortOrder]);
 
   const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
