@@ -1,4 +1,5 @@
 import { BlockAssetType, TransactionType } from './types';
+import { decode } from 'html-entities';
 
 enum TransactionCommands {
   POS_STAKE = 'pos:stake',
@@ -28,4 +29,9 @@ export const formatDate = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' };
   const date = new Date(dateString);
   return date.toLocaleDateString('en-GB', options);
+};
+
+export const cleanText = (htmlString: string) => {
+  const strippedString = htmlString.replace(/<[^>]*>?/gm, ''); // Remove HTML tags
+  return decode(strippedString); // Decode HTML entities
 };

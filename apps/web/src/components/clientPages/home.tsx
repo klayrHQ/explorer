@@ -7,7 +7,7 @@ import {
 } from '../../utils/constants.tsx';
 import { FlexGrid } from '@repo/ui/atoms';
 import { useEffect, useState } from 'react';
-import { formatDate } from '../../utils/dataHelpers.tsx';
+import { formatDate, cleanText } from '../../utils/dataHelpers.tsx';
 
 export const Home = () => {
   const [news, setNews] = useState([]);
@@ -30,10 +30,10 @@ export const Home = () => {
           ],
           author: item.yoast_head_json.author,
           date: formatDate(item.date),
-          title: item.title.rendered,
-          description: item.excerpt.rendered,
+          title: cleanText(item.title.rendered),
+          description: cleanText(item.excerpt.rendered).substring(0, 200),
           src: item.yoast_head_json.og_image[0].url,
-          alt: item.title.rendered,
+          alt: cleanText(item.title.rendered),
           link: item.link,
         }));
         setNews(transformedData);
