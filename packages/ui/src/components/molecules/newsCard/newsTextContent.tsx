@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-literals */
-import { Typography } from "../../atoms";
+import { Typography } from '../../atoms';
 
 interface NewsTextContentProps {
   author: string;
@@ -28,7 +28,7 @@ export const NewsTextContent = ({
         {author} • {date}
       </Typography>
       <Typography
-        className="mb-2 desktop:mb-4 group-hover:text-voltDark transition ease-in-out  duration-200"
+        className="mb-2 min-h-12 desktop:mb-4 group-hover:text-voltDark transition ease-in-out  duration-200"
         color="volt"
         component="h3"
         fontWeight="bold"
