@@ -1,4 +1,4 @@
-import { MenuItem, MenuItemProps } from '../../atoms';
+import { MenuItem, MenuItemProps, FlexGrid } from '../../atoms';
 import { Popper } from '@mui/base';
 
 interface SubMenuProps {
@@ -10,15 +10,18 @@ interface SubMenuProps {
 export const SubMenu = ({ menuItems, open, anchorElement }: SubMenuProps) => {
   return (
     <Popper anchorEl={anchorElement} className={'pl-md'} open={open} placement={'right-start'}>
-      <ul
+      <FlexGrid
         className={
           'bg-gray-8 border-solid border-gray-7 border rounded-md min-w-48 shadow-md shadow-shadow-gray-6 overflow-hidden'
         }
+        component={'ul'}
+        direction={'col'}
+        gap="md"
       >
         {menuItems.map((item, index) => (
-          <MenuItem key={`menu-item-${index + 1}`} square {...item} className="mb-2 last:mb-0" />
+          <MenuItem key={`menu-item-${index + 1}`} square {...item} />
         ))}
-      </ul>
+      </FlexGrid>
     </Popper>
   );
 };
