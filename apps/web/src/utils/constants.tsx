@@ -65,6 +65,7 @@ export const subMenu = [
   {
     label: 'Users',
     icon: 'Users',
+    disabled: true,
   },
   {
     label: 'Validators',
@@ -81,10 +82,12 @@ export const subMenu = [
   {
     label: 'Tokens',
     icon: 'CryptoCurrency',
+    disabled: true,
   },
   {
     label: 'Nodes',
     icon: 'MarkerPin',
+    disabled: true,
   },
 ];
 
@@ -115,10 +118,12 @@ export const menuItems = [
   {
     label: 'Chains',
     icon: 'Data',
+    disabled: true,
   },
   {
     label: 'NFTs',
     icon: 'Image',
+    disabled: true,
   },
 ];
 
