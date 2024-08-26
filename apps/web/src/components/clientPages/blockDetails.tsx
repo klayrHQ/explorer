@@ -185,7 +185,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
     {
       value: 2,
       label: 'Transactions',
-      icon: 'List',
+      icon: 'SwitchHorizontal',
       content: (
         <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4.5xl'}>
           <SectionHeader
