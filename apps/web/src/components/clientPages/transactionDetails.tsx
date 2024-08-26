@@ -252,7 +252,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         amount={transaction?.params?.amount || '0'}
         blockHeight={transaction?.block.height || 0}
         blockId={transaction?.block.id || ''}
-        executionStatus={transaction?.block.isFinal}
+        executionStatus={transaction?.executionStatus}
         id={transaction?.id || ''}
         image={BannerBG.src}
         moduleCommand={`${transaction?.module}:${transaction?.command}` || ''}

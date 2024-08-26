@@ -1,4 +1,4 @@
-import { Typography } from '../../atoms';
+import { StatusBadge, Typography } from '../../atoms';
 import { Badge } from '../../atoms';
 import { ImageName } from '../../atoms/account/avatarAddress';
 import { Currency } from '../../atoms/base/currency';
@@ -16,7 +16,7 @@ interface TransactionBannerProps {
   receiverAddress?: string;
   receiverImageUrl?: string | null;
   moduleCommand?: string;
-  executionStatus?: boolean;
+  executionStatus: string; // Make executionStatus a required string
   timestamp?: number;
   badgeColor?: string;
 }
@@ -106,23 +106,7 @@ export const BannerText = ({
       </Typography>
 
       {/* EXECUTION STATUS */}
-      {executionStatus ? (
-        <Badge
-          backgroundColor="greenOpacity"
-          borderColor="success"
-          className="flex-grow-0"
-          colorVariant="success"
-          label="Successful"
-        />
-      ) : (
-        <Badge
-          backgroundColor="redOpacity"
-          borderColor="error"
-          className="flex-grow-0"
-          colorVariant="error"
-          label="Failed"
-        />
-      )}
+      <StatusBadge status={executionStatus} />
     </div>
   );
 };
