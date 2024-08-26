@@ -18,7 +18,7 @@ interface SearchProps {
   callSearch?: any;
 }
 
-export const Search = ({ className, searchResult, setSearchResults, callSearch, }: SearchProps) => {
+export const Search = ({ className, searchResult, setSearchResults, callSearch }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -35,7 +35,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch, 
   const handleSearch = async (query: string) => {
     if (query.length > 0) {
       try {
-        await callSearch({ search: query, });
+        await callSearch({ search: query });
       } catch (error) {
         console.error('Search failed', error);
       }
@@ -78,7 +78,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch, 
           )}
 
           <input
-            className="bg-backgroundDark placeholder-lobster min-h-11 pl-12 py-4 rounded-lg focus:outline-0 border focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:rounded-b-none min-w-full desktop:min-w-auto desktop:max-w-searchBarWidth"
+            className="bg-backgroundDark placeholder-lobster min-h-11 py-4 px-12 rounded-lg focus:outline-0 border focus:outline-blue focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:rounded-b-none min-w-full desktop:min-w-auto desktop:max-w-searchBarWidth"
             onChange={(e) => {
               setInputValue(e.target.value);
               debouncedHandleSearch(e.target.value);
@@ -105,7 +105,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch, 
               },
             ],
           }}
-          style={{ width: inputWidth, }}
+          style={{ width: inputWidth }}
         >
           {searchResult?.validators && searchResult.blocks && searchResult.transactions && (
             <FlexGrid
@@ -154,7 +154,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch, 
                           fontWeight="semibold"
                           variant="paragraph-md"
                         >
-                          {truncate(block.id, { length: 55, omission: '...', })}
+                          {truncate(block.id, { length: 55, omission: '...' })}
                         </Typography>
                         <Typography
                           className="inline-flex desktop:hidden"
@@ -162,7 +162,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch, 
                           fontWeight="semibold"
                           variant="paragraph-md"
                         >
-                          {truncate(block.id, { length: 32, omission: '...', })}
+                          {truncate(block.id, { length: 32, omission: '...' })}
                         </Typography>
                       </FlexGrid>
                     </FlexGrid>
@@ -194,7 +194,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch, 
                           fontWeight="semibold"
                           variant="paragraph-md"
                         >
-                          {truncate(transaction.id, { length: 55, omission: '...', })}
+                          {truncate(transaction.id, { length: 55, omission: '...' })}
                         </Typography>
                         <Typography
                           className="inline-flex desktop:hidden"
@@ -202,7 +202,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch, 
                           fontWeight="semibold"
                           variant="paragraph-md"
                         >
-                          {truncate(transaction.id, { length: 32, omission: '...', })}
+                          {truncate(transaction.id, { length: 32, omission: '...' })}
                         </Typography>
                       </FlexGrid>
                     </FlexGrid>
