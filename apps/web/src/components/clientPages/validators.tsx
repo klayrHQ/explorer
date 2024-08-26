@@ -7,6 +7,7 @@ import { validatorsTableHead } from '../../utils/constants.tsx';
 import { createValidatorsRows } from '../../utils/helper.tsx';
 import { useValidatorStore } from '../../store/validatorStore.ts';
 import { useSocketStore } from '../../store/socketStore.ts';
+import { useChartDataStore } from '../../store/chartDataStore.ts';
 
 export const Validators = () => {
   const validators = useValidatorStore((state) => state.validators);
@@ -24,6 +25,12 @@ export const Validators = () => {
 
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
+
+  const { chartData, callGetChartData } = useChartDataStore();
+
+  useEffect(() => {
+    callGetChartData();
+  }, [callGetChartData]);
 
   const handleSort = (field: string) => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
@@ -71,7 +78,7 @@ export const Validators = () => {
           title={'Validators'}
         />
         <div className="hidden desktop:flex">
-          <DonutChart data={mockChartData} />
+          <DonutChart data={chartData} />
         </div>
         <div className="hidden desktop:flex">
           <NextValidators validators={nextValidators} />
