@@ -65,8 +65,7 @@ export const subMenu = [
   {
     label: 'Users',
     icon: 'Users',
-    href: '/',
-    linkComponent: DefaultLinkComponent,
+    disabled: true,
   },
   {
     label: 'Validators',
@@ -83,14 +82,12 @@ export const subMenu = [
   {
     label: 'Tokens',
     icon: 'CryptoCurrency',
-    href: '/',
-    linkComponent: DefaultLinkComponent,
+    disabled: true,
   },
   {
     label: 'Nodes',
     icon: 'MarkerPin',
-    href: '/',
-    linkComponent: DefaultLinkComponent,
+    disabled: true,
   },
 ];
 
@@ -121,10 +118,12 @@ export const menuItems = [
   {
     label: 'Chains',
     icon: 'Data',
+    disabled: true,
   },
   {
     label: 'NFTs',
     icon: 'Image',
+    disabled: true,
   },
 ];
 
