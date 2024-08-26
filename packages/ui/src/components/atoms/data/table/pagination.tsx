@@ -77,7 +77,7 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
         <div className="gap-0.5 hidden desktop:flex">
           {displayPages().map((number, index) => (
             <div
-              className={`min-w-9 h-9 max-h-9 p-2 flex items-center justify-center cursor-pointer ${
+              className={`min-w-9 h-9 max-h-9 p-2 flex items-center justify-center cursor-pointer text-paragraph-sm ${
                 number === currentNumber
                   ? 'bg-onBackground rounded-full text-background'
                   : 'text-onBackgroundLow'
