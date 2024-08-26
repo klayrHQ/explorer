@@ -37,15 +37,15 @@ const statusColors: { [key: string]: StatusColorProps } = {
     colorVariant: 'tulip',
     backgroundColor: 'pinkOpacity',
   },
-  succesful: {
+  successful: {
     borderColor: 'success',
     colorVariant: 'success',
     backgroundColor: 'greenOpacity',
   },
   pending: {
-    borderColor: 'azule',
-    colorVariant: 'azule',
-    backgroundColor: 'blueOpacity',
+    borderColor: 'warning',
+    colorVariant: 'warning',
+    backgroundColor: 'warningOpacity',
   },
   unsuccessful: {
     borderColor: 'error',

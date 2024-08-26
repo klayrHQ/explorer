@@ -19,7 +19,7 @@ interface TransactionBannerProps {
   receiverAddress?: string | undefined;
   receiverImageUrl?: string | null;
   moduleCommand: string;
-  executionStatus?: boolean;
+  executionStatus?: string;
   timestamp: number;
   badgeColor?: string;
   blockHeight: number;
@@ -66,7 +66,7 @@ export const TransactionBanner = ({
         <BannerText
           amount={amount}
           badgeColor={badgeColor}
-          executionStatus={executionStatus}
+          executionStatus={executionStatus || ''}
           moduleCommand={moduleCommand}
           receiverAddress={receiverAddress}
           receiverImageUrl={receiverImageUrl}
