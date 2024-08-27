@@ -90,7 +90,7 @@ export const ChainNetworkPicker = ({
         <KeyValueComponent
           contentValue={currentNetwork?.networkName || 'Select network'}
           hover
-          keyValue={<StatusIcon className={'mt-2xs'} connected={currentNetwork?.connected} />}
+          keyValue={<StatusIcon connected={currentNetwork?.connected} />}
         />
       </FlexGrid>
       <Modal

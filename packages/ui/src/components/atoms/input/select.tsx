@@ -1,40 +1,40 @@
-"use client"
-import { useState } from "react";
-import * as React from "react";
-import { cva } from "class-variance-authority";
-import { Typography } from "../base/typography";
-import { Icon } from "../images/icon";
-import { clsx } from "clsx";
-import { ClickAwayListener } from "@mui/base";
-import { Option } from "../../../types/types";
+'use client';
+import { useState } from 'react';
+import * as React from 'react';
+import { cva } from 'class-variance-authority';
+import { Typography } from '../base/typography';
+import { Icon } from '../images/icon';
+import { clsx } from 'clsx';
+import { ClickAwayListener } from '@mui/base';
+import { Option } from '../../../types/types';
 
 const selectStyles = cva(
-  "justify-start border border-backgroundTertiary focus:outline-none outline-none  text-gray-1 text-paragraph-sm focus:border-backgroundTertiary",
+  'justify-start border border-backgroundTertiary focus:outline-none outline-none  text-gray-1 text-paragraph-sm focus:border-backgroundTertiary',
   {
     variants: {
       width: {
-        sm: "min-w-36",
-        md: "min-w-40",
-        lg: "min-w-64",
-        xl: "min-w-selectSMWidth desktop:min-w-selectXLWidth",
+        sm: 'min-w-36',
+        md: 'min-w-40',
+        lg: 'min-w-64',
+        xl: 'min-w-selectSMWidth desktop:min-w-selectXLWidth',
       },
       backgroundColor: {
-        darkBlue: "bg-darkBlue",
-        bgSecondary: "bg-gray-7",
-    },
-    defaultVariants: {
-      width: "md",
-      backgroundColor: "bgSecondary",
+        darkBlue: 'bg-darkBlue',
+        bgSecondary: 'bg-gray-7',
+      },
+      defaultVariants: {
+        width: 'md',
+        backgroundColor: 'bgSecondary',
+      },
     },
   },
-}
 );
 
 export interface CustomSelectProps {
   placeholder?: string;
   defaultValue?: string;
-  width?: "sm" | "md" | "lg" | "xl";
-  backgroundColor?: "darkBlue" | "bgSecondary";
+  width?: 'sm' | 'md' | 'lg' | 'xl';
+  backgroundColor?: 'darkBlue' | 'bgSecondary';
   options: Option[];
   onChange?: (value: string) => void;
 }
@@ -43,14 +43,12 @@ export const CustomSelect = ({
   options,
   defaultValue,
   placeholder,
-  width = "xl",
+  width = 'xl',
   onChange,
-  backgroundColor = "bgSecondary",
+  backgroundColor = 'bgSecondary',
 }: CustomSelectProps) => {
-  const styles = selectStyles({ width, });
-  const [selectedValue, setSelectedValue] = useState<string | undefined>(
-    defaultValue,
-  );
+  const styles = selectStyles({ width });
+  const [selectedValue, setSelectedValue] = useState<string | undefined>(defaultValue);
   const [listboxVisible, setListboxVisible] = useState<boolean>(false);
 
   const handleSelect = (value: string) => {
@@ -61,13 +59,8 @@ export const CustomSelect = ({
     }
   };
 
-  const renderSelectedValue = (
-    value: string | undefined,
-    options: Option[],
-  ) => {
-    const selectedOption = value
-      ? options.find((option) => option.value === value)
-      : null;
+  const renderSelectedValue = (value: string | undefined, options: Option[]) => {
+    const selectedOption = value ? options.find((option) => option.value === value) : null;
     return selectedOption ? (
       <div className="flex items-center">
         {selectedOption.labelIcon && (
@@ -79,22 +72,15 @@ export const CustomSelect = ({
           />
         )}
         {selectedOption.labelImage && (
-          <img
-            alt="icon"
-            className="mr-2 w-4 h-4"
-            src={selectedOption.labelImage}
-          />
+          <img alt="icon" className="mr-2 w-4 h-4" src={selectedOption.labelImage} />
         )}
         {selectedOption.labelCircleColor && (
           <div
-            className={clsx(
-              "mr-2 w-2 h-2 rounded-full",
-              `bg-${selectedOption.labelCircleColor}`,
-            )}
+            className={clsx('mr-2 w-2 h-2 rounded-full', `bg-${selectedOption.labelCircleColor}`)}
           />
         )}
         <Typography fontWeight="semibold" variant="paragraph-sm">
-          {selectedOption.label}{" "}
+          {selectedOption.label}{' '}
         </Typography>
       </div>
     ) : null;
@@ -105,18 +91,18 @@ export const CustomSelect = ({
       <div>
         <button
           className={clsx(
-            "relative flex items-center justify-between bg-darkBlue gap-2 p-3 group focus-visible:border-backgroundTertiary  focus:border-backgroundTertiary transition-all ", 
-             listboxVisible ? "rounded-t-md" : "rounded-md",
+            'relative flex items-center justify-between bg-darkBlue gap-2 py-2 px-3 group focus-visible:border-backgroundTertiary  focus:border-backgroundTertiary transition-all ',
+            listboxVisible ? 'rounded-t-md' : 'rounded-md',
             selectStyles({ width, backgroundColor }),
           )}
           onClick={() => setListboxVisible(!listboxVisible)}
           type="button"
         >
           {renderSelectedValue(selectedValue, options) || (
-            <span className="placeholder">{placeholder ?? " "}</span>
+            <span className="placeholder">{placeholder ?? ' '}</span>
           )}
           <Icon
-            color={listboxVisible ? "gray-1" : "gray-6"}
+            color={listboxVisible ? 'gray-1' : 'gray-6'}
             hoverColor="gray-1"
             icon="ChevronDown"
             size="small"
@@ -129,7 +115,7 @@ export const CustomSelect = ({
         <ClickAwayListener onClickAway={() => setListboxVisible(false)}>
           <ul
             className={clsx(
-              "absolute border border-backgroundTertiary border-t-0 bg-darkBlue z-10 rounded-b-md overflow-hidden ", 
+              'absolute border border-backgroundTertiary border-t-0 bg-darkBlue z-10 rounded-b-md overflow-hidden ',
               selectStyles({ width, backgroundColor }),
             )}
             role="listbox"
@@ -137,9 +123,9 @@ export const CustomSelect = ({
             {options.map((option) => (
               <li
                 className={clsx(
-                  "cursor-pointer list-none p-3 flex items-center justify-start w-full hover:bg-gray-6 transition-all",
+                  'cursor-pointer list-none p-3 flex items-center justify-start w-full hover:bg-gray-6 transition-all',
                   {
-                    "bg-darkblue": selectedValue === option.value,
+                    'bg-darkblue': selectedValue === option.value,
                   },
                 )}
                 key={option.value}
@@ -147,25 +133,14 @@ export const CustomSelect = ({
                 value={option.value}
               >
                 {option.labelIcon && (
-                  <Icon
-                    className="mr-2"
-                    icon={option.labelIcon}
-                    size="inherit"
-                  />
+                  <Icon className="mr-2" icon={option.labelIcon} size="inherit" />
                 )}
                 {option.labelImage && (
-                  <img
-                    alt="icon"
-                    className="mr-2 w-4 h-4"
-                    src={option.labelImage}
-                  />
+                  <img alt="icon" className="mr-2 w-4 h-4" src={option.labelImage} />
                 )}
                 {option.labelCircleColor && (
                   <div
-                    className={clsx(
-                      "mr-2 w-2 h-2 rounded-full",
-                      `bg-${option.labelCircleColor}`,
-                    )}
+                    className={clsx('mr-2 w-2 h-2 rounded-full', `bg-${option.labelCircleColor}`)}
                   />
                 )}
                 <Typography variant="paragraph-sm">{option.label}</Typography>
