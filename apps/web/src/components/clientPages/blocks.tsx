@@ -29,9 +29,6 @@ export const Blocks = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const network = useGatewayClientStore((state) => state.network);
-  const newBlockEvent = useSocketStore((state) => state.height);
-
   const [blocks, setBlocks] = useState<BlockDetailsType[]>([]);
   const [totalBlocks, setTotalBlocks] = useState<number>(0);
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
@@ -39,6 +36,9 @@ export const Blocks = () => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
+
+  const network = useGatewayClientStore((state) => state.network);
+  const newBlockEvent = useSocketStore((state) => state.height);
 
   const handleSetPageNumber = async (number: number) => {
     setPageNumber(number);

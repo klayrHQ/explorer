@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { createTransactionRows } from '../../utils/helper.tsx';
 import { callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { TransactionType } from '../../utils/types.ts';
+import { useGatewayClientStore } from '../../store/clientStore.ts';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
@@ -21,6 +22,8 @@ export const Transactions = () => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
   const defaultLimit = '10';
+
+  const network = useGatewayClientStore((state) => state.network);
 
   const handleSetPageNumber = async (number: number) => {
     setPageNumber(number);
@@ -53,7 +56,7 @@ export const Transactions = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [searchParams, sortField, sortOrder]);
+  }, [searchParams, sortField, sortOrder, network]);
 
   const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
 

@@ -8,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { createStakesRows } from '../../utils/helper';
 import { stakesTableHead } from '../../utils/constants';
 import { callGetTransactions } from '../../utils/api/apiCalls';
+import { useGatewayClientStore } from '../../store/clientStore';
 
 export const Stakes = () => {
   const searchParams = useSearchParams();
@@ -19,6 +20,8 @@ export const Stakes = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
   const defaultLimit = '10';
+
+  const network = useGatewayClientStore((state) => state.network);
 
   const handleSetPageNumber = async (number: number) => {
     setPageNumber(number);
@@ -42,7 +45,7 @@ export const Stakes = () => {
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  }, [searchParams, network]);
 
   const rows = createStakesRows(stakes, loading);
 

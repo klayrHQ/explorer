@@ -12,6 +12,7 @@ import {
   callGetNextValidators,
   callGetValidators,
 } from '../../utils/api/apiCalls.tsx';
+import { useGatewayClientStore } from '../../store/clientStore.ts';
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);
@@ -22,6 +23,7 @@ export const Validators = () => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
 
+  const network = useGatewayClientStore((state) => state.network);
   const newBlockEvent = useSocketStore((state) => state.height);
 
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
@@ -36,7 +38,7 @@ export const Validators = () => {
 
       setChartData(transformedData);
     });
-  }, [callGetChartData]);
+  }, [callGetChartData, network]);
 
   const handleSort = (field: string) => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
@@ -64,7 +66,7 @@ export const Validators = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [rowsPerPage, newBlockEvent, sortField, sortOrder]);
+  }, [rowsPerPage, newBlockEvent, sortField, sortOrder, network]);
 
   const rows = createValidatorsRows(validators, loading);
 
