@@ -157,6 +157,12 @@ export interface SearchResultsType {
   transactions?: SearchTransaction[];
 }
 
+export interface ChartDataType {
+  id: number;
+  label: string;
+  value: number;
+}
+
 interface SearchValidator {
   name: string;
   address: string;

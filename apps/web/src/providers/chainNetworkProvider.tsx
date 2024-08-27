@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react';
-import { chainNetworkData, defaultChain } from '../utils/constants.tsx';
+import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from '../store/clientStore.ts';
 
 type NetworkType = {
@@ -40,7 +40,6 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
   const setBaseURL = useGatewayClientStore((state) => state.setBaseURL);
 
   const setCurrentNetwork = (network: NetworkType) => {
-    console.log('changing to network', network);
     setCurrentNetworkID(network);
     setBaseURL(network.networkId);
   };
@@ -56,8 +55,6 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
             'Content-Type': 'application/json',
           },
         });
-
-        console.log({ response });
 
         if (chains) {
           const chains = await response.json();

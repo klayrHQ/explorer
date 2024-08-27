@@ -6,9 +6,12 @@ import { useEffect, useState } from 'react';
 import { validatorsTableHead } from '../../utils/constants.tsx';
 import { createValidatorsRows } from '../../utils/helper.tsx';
 import { useSocketStore } from '../../store/socketStore.ts';
-import { useChartDataStore } from '../../store/chartDataStore.ts';
-import { NextValidatorType, ValidatorType } from '../../utils/types.ts';
-import { callGetNextValidators, callGetValidators } from '../../utils/api/apiCalls.tsx';
+import { ChartDataType, NextValidatorType, ValidatorType } from '../../utils/types.ts';
+import {
+  callGetChartData,
+  callGetNextValidators,
+  callGetValidators,
+} from '../../utils/api/apiCalls.tsx';
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);
@@ -21,10 +24,18 @@ export const Validators = () => {
 
   const newBlockEvent = useSocketStore((state) => state.height);
 
-  const { chartData, callGetChartData } = useChartDataStore();
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
 
   useEffect(() => {
-    callGetChartData();
+    callGetChartData().then((data) => {
+      const transformedData = Object.entries(data.data).map(([key, value], index) => ({
+        id: index + 1,
+        label: key.charAt(0).toUpperCase() + key.slice(1),
+        value: value as any,
+      }));
+
+      setChartData(transformedData);
+    });
   }, [callGetChartData]);
 
   const handleSort = (field: string) => {
@@ -34,7 +45,6 @@ export const Validators = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     if (validators.length === 0) setLoading(true);
     callGetNextValidators().then((data) => {
       setNextValidators(data.data);
@@ -42,6 +52,7 @@ export const Validators = () => {
 
     const params: any = {
       limit: rowsPerPage.toString(),
+      sort: 'rank:asc',
     };
     if (sortField && sortOrder) {
       params.sort = `${sortField}:${sortOrder}`;

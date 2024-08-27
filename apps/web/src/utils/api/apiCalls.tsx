@@ -1,6 +1,7 @@
 // src/helpers/blockHelpers.ts
 import {
   BlockDetailsType,
+  ChartDataType,
   EventsType,
   GatewayRes,
   NextValidatorType,
@@ -15,14 +16,14 @@ import {
   ValidatorQueryParams,
 } from './types';
 
-export const callGetBlocks = async (
-  params: BlocksQueryParams,
-): Promise<GatewayRes<BlockDetailsType[]>> => {
+async function apiCall<T>(
+  endpoint: string,
+  params: Record<string, any> = {},
+): Promise<GatewayRes<T>> {
+  const { client } = useGatewayClientStore.getState();
+
   try {
-    const { client } = useGatewayClientStore.getState();
-    const { data } = await client.get<GatewayRes<BlockDetailsType[]>>('blocks', {
-      params,
-    });
+    const { data } = await client.get<GatewayRes<T>>(endpoint, { params });
 
     if (data) {
       return data;
@@ -33,121 +34,35 @@ export const callGetBlocks = async (
     console.error(error);
     throw error;
   }
+}
+export const callGetBlocks = async (
+  params: BlocksQueryParams,
+): Promise<GatewayRes<BlockDetailsType[]>> => {
+  return apiCall<BlockDetailsType[]>('blocks', params);
 };
 
 export const callGetEvents = async (
   params: EventsQueryParams,
 ): Promise<GatewayRes<EventsType[]>> => {
-  const { client } = useGatewayClientStore.getState();
-  const { height, transactionID, senderAddress, offset, limit } = params;
-
-  try {
-    const { data } = await client.get<GatewayRes<EventsType[]>>('events', {
-      params: {
-        height,
-        transactionID,
-        senderAddress,
-        offset,
-        limit,
-      },
-    });
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error('No data received');
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  return apiCall<EventsType[]>('events', params);
 };
 
 export const callGetTransactions = async (
   params: TransactionQueryParams,
 ): Promise<GatewayRes<TransactionType[]>> => {
-  const { client } = useGatewayClientStore.getState();
-  const {
-    blockID,
-    transactionID,
-    limit,
-    offset,
-    address,
-    moduleCommand,
-    senderAddress,
-    recipientAddress,
-    sort,
-  } = params;
-
-  try {
-    const { data } = await client.get<GatewayRes<TransactionType[]>>('transactions', {
-      params: {
-        blockID,
-        transactionID,
-        limit,
-        offset,
-        address,
-        moduleCommand,
-        senderAddress,
-        recipientAddress,
-        sort,
-      },
-    });
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error('No data received');
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  return apiCall<TransactionType[]>('transactions', params);
 };
 
-export const callGetValidators = async (params: ValidatorQueryParams) => {
-  const { client } = useGatewayClientStore.getState();
-  const { address, status, limit, offset, sort = 'rank:asc' } = params;
-
-  try {
-    const { data } = await client.get<GatewayRes<ValidatorType[]>>('pos/validators', {
-      params: {
-        address,
-        status,
-        limit,
-        offset,
-        sort,
-      },
-    });
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error('No data received');
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+export const callGetValidators = async (
+  params: ValidatorQueryParams,
+): Promise<GatewayRes<ValidatorType[]>> => {
+  return apiCall<ValidatorType[]>('pos/validators', params);
 };
 
-export const callGetNextValidators = async () => {
-  const { client } = useGatewayClientStore.getState();
+export const callGetNextValidators = async (): Promise<GatewayRes<NextValidatorType[]>> => {
+  return apiCall<NextValidatorType[]>('generators', { limit: 3 });
+};
 
-  try {
-    const { data } = await client.get<GatewayRes<NextValidatorType[]>>('generators', {
-      params: {
-        limit: 3,
-      },
-    });
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error('No data received');
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+export const callGetChartData = async (): Promise<GatewayRes<ChartDataType[]>> => {
+  return apiCall<ChartDataType[]>('pos/validators/status-count');
 };

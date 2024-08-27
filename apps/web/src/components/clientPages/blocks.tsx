@@ -20,6 +20,7 @@ import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
 import { BlockDetailsType } from '../../utils/types.ts';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
 import { callGetBlocks } from '../../utils/api/apiCalls.tsx';
+import { useSocketStore } from '../../store/socketStore.ts';
 
 export const Blocks = () => {
   const defaultLimit = '10';
@@ -29,6 +30,7 @@ export const Blocks = () => {
   const pathname = usePathname();
 
   const network = useGatewayClientStore((state) => state.network);
+  const newBlockEvent = useSocketStore((state) => state.height);
 
   const [blocks, setBlocks] = useState<BlockDetailsType[]>([]);
   const [totalBlocks, setTotalBlocks] = useState<number>(0);
@@ -70,7 +72,7 @@ export const Blocks = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [searchParams, sortOrder, sortField, network]);
+  }, [searchParams, sortOrder, sortField, network, newBlockEvent]);
 
   const tableHead = (
     onSortChange: (column: string) => void,
