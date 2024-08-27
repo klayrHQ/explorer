@@ -2,14 +2,9 @@
 import { ValidatorBanner } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useValidatorStore } from '../../store/validatorStore';
-import { useEventsStore } from '../../store/eventStore';
-import { useBlockStore } from '../../store/blockStore.ts';
 import { TabButtons, FlexGrid, Currency, Typography } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
-import { useTransactionStore } from '../../store/transactionStore.ts';
 import {
   transactionTableHead,
   validatorStakeIncomingTableHead,
@@ -31,14 +26,15 @@ import {
   MetaType,
   BlockDetailsType,
 } from '../../utils/types';
+import {
+  callGetBlocks,
+  callGetEvents,
+  callGetTransactions,
+  callGetValidators,
+} from '../../utils/api/apiCalls.tsx';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
-
-  const callGetValidators = useValidatorStore((state) => state.callGetValidators);
-  const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
-  const callGetEvents = useEventsStore((state) => state.callGetEvents);
-  const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [validator, setValidators] = useState<ValidatorType | undefined>(undefined);

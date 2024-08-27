@@ -17,26 +17,28 @@ import { dayjs, fromNowFormatter, handleCopy, shortString } from '@repo/ui/utils
 import { getTableSkeletons } from '../../utils/constants.tsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
-import { useBlockStore } from '../../store/blockStore.ts';
+import { BlockDetailsType } from '../../utils/types.ts';
+import { useGatewayClientStore } from '../../store/clientStore.ts';
+import { callGetBlocks } from '../../utils/api/apiCalls.tsx';
 import { useSocketStore } from '../../store/socketStore.ts';
 
 export const Blocks = () => {
-  const blocks = useBlockStore((state) => state.blocks);
-  const totalBlocks = useBlockStore((state) => state.totalBlocks);
-  const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
-  const newBlockEvent = useSocketStore((state) => state.height);
-  const setBlocks = useBlockStore((state) => state.setBlocks);
-  const setTotalBlocks = useBlockStore((state) => state.setTotalBlocks);
+  const defaultLimit = '10';
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
+  const [blocks, setBlocks] = useState<BlockDetailsType[]>([]);
+  const [totalBlocks, setTotalBlocks] = useState<number>(0);
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
-  const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
-  const defaultLimit = '10';
+  const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
+
+  const network = useGatewayClientStore((state) => state.network);
+  const newBlockEvent = useSocketStore((state) => state.height);
 
   const handleSetPageNumber = async (number: number) => {
     setPageNumber(number);
@@ -47,7 +49,6 @@ export const Blocks = () => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
     setSortField(field);
     setSortOrder(order);
-    console.log(`Sorting by field: ${field}, order: ${order}`);
   };
 
   useEffect(() => {
@@ -58,18 +59,20 @@ export const Blocks = () => {
     const params: any = {
       limit,
       offset,
+      includeAssets: true,
     };
     if (sortField && sortOrder) {
       params.sort = `${sortField}:${sortOrder}`;
     }
     callGetBlocks(params)
       .then((data) => {
+        console.log(data.data);
         setTotalBlocks(data.meta.total);
         setBlocks(data.data);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [searchParams, newBlockEvent, sortOrder, sortField]);
+  }, [searchParams, sortOrder, sortField, network, newBlockEvent]);
 
   const tableHead = (
     onSortChange: (column: string) => void,

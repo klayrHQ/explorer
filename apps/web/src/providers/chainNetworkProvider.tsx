@@ -1,7 +1,8 @@
 'use client';
 import React, { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react';
-import { chainNetworkData, defaultChain } from '../utils/constants.tsx';
+import { defaultChain } from '../utils/constants.tsx';
+import { useGatewayClientStore } from '../store/clientStore.ts';
 
 type NetworkType = {
   networkId: string;
@@ -31,11 +32,17 @@ export const ChainNetworkContext = createContext<ChainNetworkContextProps>(
 export const useChainNetwork = () => useContext(ChainNetworkContext);
 export const ChainNetworkProvider = ({ children }: { children: any }) => {
   const [currentChain, setCurrentChain] = useState<ChainType>(defaultChain);
-  const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(defaultChain.networks[0]);
+  const [currentNetwork, setCurrentNetworkID] = useState<NetworkType>(defaultChain.networks[0]);
   const [chains, setChains] = useState<ChainType[]>([]);
   const [networks, setNetworks] = useState<NetworkType[]>([]);
 
   const [loading, setLoading] = useState<boolean>(false);
+  const setBaseURL = useGatewayClientStore((state) => state.setBaseURL);
+
+  const setCurrentNetwork = (network: NetworkType) => {
+    setCurrentNetworkID(network);
+    setBaseURL(network.networkId);
+  };
 
   // get chains from api
   useEffect(() => {
@@ -70,6 +77,7 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
       setNetworks(currentChain.networks);
       // set currentNetwork to first network
       setCurrentNetwork(currentChain.networks[0]);
+      setBaseURL(currentChain.networks[0].networkId);
     }
   }, [currentChain]);
 

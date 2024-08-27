@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { SearchResultsType } from '../utils/types';
-import gatewayClient from '../network/gatewayClient';
+import { useGatewayClientStore } from './clientStore';
 
 export interface SearchQueryParams {
   search: string;
@@ -17,11 +17,12 @@ export const useSearchStore = create<SearchStore>()((set, get) => ({
   setSearchResults: (results: SearchResultsType) => set(() => ({ searchResults: results })),
 
   callSearch: async (params: SearchQueryParams): Promise<SearchResultsType> => {
+    const { client } = useGatewayClientStore.getState();
     const { search } = params;
     const { setSearchResults } = get();
 
     try {
-      const { data } = await gatewayClient.get<SearchResultsType>('search', {
+      const { data } = await client.get<SearchResultsType>('search', {
         params: {
           search,
         },

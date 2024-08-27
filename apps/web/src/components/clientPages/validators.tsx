@@ -5,32 +5,40 @@ import { NextValidators } from '@repo/ui/molecules';
 import { useEffect, useState } from 'react';
 import { validatorsTableHead } from '../../utils/constants.tsx';
 import { createValidatorsRows } from '../../utils/helper.tsx';
-import { useValidatorStore } from '../../store/validatorStore.ts';
 import { useSocketStore } from '../../store/socketStore.ts';
-import { useChartDataStore } from '../../store/chartDataStore.ts';
+import { ChartDataType, NextValidatorType, ValidatorType } from '../../utils/types.ts';
+import {
+  callGetChartData,
+  callGetNextValidators,
+  callGetValidators,
+} from '../../utils/api/apiCalls.tsx';
+import { useGatewayClientStore } from '../../store/clientStore.ts';
 
 export const Validators = () => {
-  const validators = useValidatorStore((state) => state.validators);
-  const nextValidators = useValidatorStore((state) => state.nextValidators);
-  const totalValidators = useValidatorStore((state) => state.totalValidators);
-  const callGetValidators = useValidatorStore((state) => state.callGetValidators);
-  const callGetNextValidators = useValidatorStore((state) => state.callGetNextValidators);
-  const setValidators = useValidatorStore((state) => state.setValidators);
-  const setTotalValidators = useValidatorStore((state) => state.setTotalValidators);
-
-  const newBlockEvent = useSocketStore((state) => state.height);
-
+  const [validators, setValidators] = useState<ValidatorType[]>([]);
+  const [nextValidators, setNextValidators] = useState<NextValidatorType[]>([]);
+  const [totalValidators, setTotalValidators] = useState(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [rowsPerPage, setRowsPerPage] = useState<number>(51);
-
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
 
-  const { chartData, callGetChartData } = useChartDataStore();
+  const network = useGatewayClientStore((state) => state.network);
+  const newBlockEvent = useSocketStore((state) => state.height);
+
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
 
   useEffect(() => {
-    callGetChartData();
-  }, [callGetChartData]);
+    callGetChartData().then((data) => {
+      const transformedData = Object.entries(data.data).map(([key, value], index) => ({
+        id: index + 1,
+        label: key.charAt(0).toUpperCase() + key.slice(1),
+        value: value as any,
+      }));
+
+      setChartData(transformedData);
+    });
+  }, [callGetChartData, network]);
 
   const handleSort = (field: string) => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
@@ -39,11 +47,14 @@ export const Validators = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     if (validators.length === 0) setLoading(true);
-    callGetNextValidators();
+    callGetNextValidators().then((data) => {
+      setNextValidators(data.data);
+    });
+
     const params: any = {
       limit: rowsPerPage.toString(),
+      sort: 'rank:asc',
     };
     if (sortField && sortOrder) {
       params.sort = `${sortField}:${sortOrder}`;
@@ -55,18 +66,9 @@ export const Validators = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [rowsPerPage, newBlockEvent, sortField, sortOrder]);
+  }, [rowsPerPage, newBlockEvent, sortField, sortOrder, network]);
 
   const rows = createValidatorsRows(validators, loading);
-
-  //todo Get from backend when available
-  const mockChartData = [
-    { id: 1, value: 50, label: 'Active' },
-    { id: 2, value: 40, label: 'Standby' },
-    { id: 3, value: 30, label: 'Ineligible' },
-    { id: 4, value: 20, label: 'Banned' },
-    { id: 5, value: 10, label: 'Punished' },
-  ];
 
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>

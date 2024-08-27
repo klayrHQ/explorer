@@ -19,16 +19,10 @@ import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx
 import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
 import { DataType } from '@repo/ui/types';
 import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
-import { useBlockStore } from '../../store/blockStore.ts';
-import { useTransactionStore } from '../../store/transactionStore.ts';
-import { useEventsStore } from '../../store/eventStore.ts';
 import { BlockDetailsType, EventsType, TransactionType } from '../../utils/types.ts';
+import { callGetBlocks, callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
-  const callGetBlocks = useBlockStore((state) => state.callGetBlocks);
-  const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
-  const callGetEvents = useEventsStore((state) => state.callGetEvents);
-
   const { id } = params;
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
