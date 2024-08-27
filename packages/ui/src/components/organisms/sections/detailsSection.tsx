@@ -121,7 +121,7 @@ export const DetailsSection = ({
                 className={'truncate max-w-full'}
                 color={'onBackgroundLow'}
                 fontWeight={'semibold'}
-                variant={'paragraph-lg'}
+                variant={'paragraph-sm'}
               >
                 {label.label}
               </Typography>
@@ -137,7 +137,7 @@ export const DetailsSection = ({
               )}
             </FlexGrid>
             <div className={'w-full inline-flex'}>
-              <Typography className={'truncate max-w-full inline-block'} variant={'paragraph-lg'}>
+              <Typography className={'truncate max-w-full inline-block'} variant={'paragraph-sm'}>
                 {value}
               </Typography>
             </div>

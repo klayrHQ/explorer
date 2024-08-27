@@ -32,6 +32,16 @@ import {
   BlockDetailsType,
 } from '../../utils/types';
 
+interface Params {
+  id?: string;
+  address?: string;
+  recipientAddress?: string;
+  generatorAddress?: string;
+  senderAddress?: string;
+  transactionID?: string;
+  moduleCommand?: string;
+}
+
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
@@ -83,9 +93,9 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
 
   const fetchPaginatedData = async (
     callFunction: Function,
-    params: any,
-    pageNumber: any,
-    defaultLimit: any,
+    params: Params,
+    pageNumber: number,
+    defaultLimit: string,
   ) => {
     const offset = (Number(pageNumber) - 1) * Number(defaultLimit);
     const updatedParams = { ...params, limit: defaultLimit, offset };

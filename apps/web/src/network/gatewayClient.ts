@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const gatewayClient = axios.create({
-  baseURL: 'https://gateway.klayr.dev/api/v1/',
+  baseURL: 'https://gateway-testnet.klayr.dev/api/v1/',
   timeout: 1500,
   headers: {
     'Content-Type': 'application/json',
