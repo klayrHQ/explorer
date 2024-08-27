@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { SearchResultsType } from '../utils/types';
-import gatewayClient from '../network/gatewayClient';
 import { useGatewayClientStore } from './clientStore';
 
 export interface SearchQueryParams {
