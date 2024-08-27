@@ -8,14 +8,10 @@ import { eventsTableHead } from '../../utils/constants.tsx';
 import Link from 'next/link';
 import { createEventsRows } from '../../utils/helper.tsx';
 import { DataType } from '@repo/ui/types';
-import { useTransactionStore } from '../../store/transactionStore.ts';
-import { useEventsStore } from '../../store/eventStore.ts';
 import { EventsType, TransactionType } from '../../utils/types.ts';
+import { callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
-  const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
-  const callGetEvents = useEventsStore((state) => state.callGetEvents);
-
   const { id } = params;
   const [loading, setLoading] = useState<boolean>(true);
   const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);

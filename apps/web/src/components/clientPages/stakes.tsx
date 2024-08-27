@@ -2,24 +2,20 @@
 
 import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
-import { useTransactionStore } from '../../store/transactionStore';
 import { useEffect, useState } from 'react';
 import { TransactionType } from '../../utils/types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { createStakesRows } from '../../utils/helper';
 import { stakesTableHead } from '../../utils/constants';
+import { callGetTransactions } from '../../utils/api/apiCalls';
 
 export const Stakes = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const stakes = useTransactionStore((state) => state.transactions);
-  const setStakes = useTransactionStore((state) => state.setTransactions);
-  const setTotalStakes = useTransactionStore((state) => state.setTotalTxs);
-  const callGetStakes = useTransactionStore((state) => state.callGetTransactions);
-  const totalStakes = useTransactionStore((state) => state.totalTxs);
-
+  const [stakes, setStakes] = useState<TransactionType[]>([]);
+  const [totalStakes, setTotalStakes] = useState(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
   const defaultLimit = '10';
@@ -34,7 +30,7 @@ export const Stakes = () => {
     const limit = searchParams.get('limit') || defaultLimit;
     const page = Number(searchParams.get('page')) || 1;
     const offset = (page - 1) * Number(limit);
-    callGetStakes({
+    callGetTransactions({
       limit,
       offset,
       moduleCommand: 'pos:stake',

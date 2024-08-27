@@ -5,26 +5,23 @@ import { useEffect, useState } from 'react';
 import { transactionTableHead } from '../../utils/constants.tsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { createTransactionRows } from '../../utils/helper.tsx';
-import { useTransactionStore } from '../../store/transactionStore.ts';
+import { callGetTransactions } from '../../utils/api/apiCalls.tsx';
+import { TransactionType } from '../../utils/types.ts';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const transactions = useTransactionStore((state) => state.transactions);
-  const setTransactions = useTransactionStore((state) => state.setTransactions);
-  const setTotalTxs = useTransactionStore((state) => state.setTotalTxs);
-  const callGetTransactions = useTransactionStore((state) => state.callGetTransactions);
-  const totalTxs = useTransactionStore((state) => state.totalTxs);
-
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [totalTxs, setTotalTxs] = useState(0);
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
-
   const defaultLimit = '10';
+
   const handleSetPageNumber = async (number: number) => {
     setPageNumber(number);
     router.push(pathname + '?' + `page=${number}`);
