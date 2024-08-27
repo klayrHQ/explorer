@@ -78,7 +78,14 @@ export const Topbar = ({
         />
         <FlexGrid className={'desktop:hidden '} gap={'3xl'} mobileDirection="row">
           <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
-          {showSearch && <Search className="absolute mt-16 left-0 top-0 w-full h-full z-20" />}
+          {showSearch && (
+            <Search
+              className="absolute mt-16 left-0 top-0 w-full h-full z-20"
+              setSearchResults={setSearchResults}
+              searchResult={searchResults}
+              callSearch={callSearch}
+            />
+          )}
           <IconButton
             align={'none'}
             className={'shrink-0'}
@@ -120,7 +127,7 @@ export const Topbar = ({
             </Modal>
           </div>
         </FlexGrid>
-        <Search className={'hidden desktop:hidden'} />
+
         <FlexGrid
           className={'w-full hidden desktop:flex whitespace-nowrap'}
           gap={'1.5xl'}
