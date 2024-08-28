@@ -129,6 +129,8 @@ const config: Omit<Config, 'content'> = {
   safelist: [
     ...getKeyMap(colors, 'text'),
     /*...getOpacityMap(colors, 'text'),*/
+    ...getKeyMap(colors, 'placeholder:text'),
+
     ...getKeyMap(colors, 'bg'),
     /*...getOpacityMap(colors, 'bg'),*/
     ...getKeyMap(colors, 'border'),
@@ -181,6 +183,8 @@ const config: Omit<Config, 'content'> = {
     ...getKeyMap(percentages, 'max-w'),
     ...getKeyMap(numberList, 'm'),
     ...getKeyMap(spacing, 'm'),
+    ...getKeyMap(numberList, '-m'),
+    ...getKeyMap(spacing, '-m'),
     ...getKeyMap(numberList, 'mr'),
     ...getKeyMap(spacing, 'mr'),
     ...getKeyMap(numberList, 'my'),
