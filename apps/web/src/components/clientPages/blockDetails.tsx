@@ -91,7 +91,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
     },
     {
       label: {
-        label: 'Block Height',
+        label: 'Block height',
       },
       value: block?.height,
     },
