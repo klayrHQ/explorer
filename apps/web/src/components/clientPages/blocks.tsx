@@ -66,7 +66,6 @@ export const Blocks = () => {
     }
     callGetBlocks(params)
       .then((data) => {
-        console.log(data.data);
         setTotalBlocks(data.meta.total);
         setBlocks(data.data);
       })

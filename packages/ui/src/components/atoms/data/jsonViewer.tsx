@@ -2,7 +2,7 @@
 import { CSSProperties, useState } from 'react';
 import { cls, copyToClipboard } from '../../../utils/functions.ts';
 import { Icon } from '../images/icon.tsx';
-import {DataType, DataValueType} from "../../../types/types.ts";
+import { DataType, DataValueType } from '../../../types/types.ts';
 
 interface JsonViewerProps {
   data: DataType;
@@ -12,7 +12,7 @@ interface JsonViewerProps {
   className?: string;
 }
 
-export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: JsonViewerProps) => {
+export const JsonViewer = ({ data, customStyles, copy, startOpen, className }: JsonViewerProps) => {
   const [openObjects, setOpenObjects] = useState<string[]>([]);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
@@ -114,11 +114,17 @@ export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: 
             <span
               className={cls([
                 'inline-block cursor-pointer text-caption mr-xs',
-                startOpen ?
-                  !openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`) ? '-rotate-90' : '' :
-                  openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`) ? '-rotate-90' : '',
+                startOpen
+                  ? !openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`)
+                    ? '-rotate-90'
+                    : ''
+                  : openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`)
+                    ? '-rotate-90'
+                    : '',
               ])}
-              onClick={() => handleOpenItems(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`)}
+              onClick={() =>
+                handleOpenItems(`${parentKey ? `${parentKey}-` : ''}${key}-${subIndex}`)
+              }
             >
               {'\u25BC '}
             </span>
@@ -131,7 +137,6 @@ export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: 
 
   const formattedData = (data: DataType, parentKey?: string | number) => {
     return Object.entries(data).map(([key, value]) => {
-      //console.log(key, value)
       const type = typeof value;
       const isNotObject = type !== 'object';
 
@@ -139,7 +144,9 @@ export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: 
         <div
           className={cls([
             'relative',
-            hoveredItem === `${parentKey ? `${parentKey}-` : ''}${key}` ? 'bg-backgroundSecondary' : ',',
+            hoveredItem === `${parentKey ? `${parentKey}-` : ''}${key}`
+              ? 'bg-backgroundSecondary'
+              : ',',
             copy && 'pr-6',
           ])}
           key={`${parentKey ? `${parentKey}-` : ''}${key}`}
@@ -150,9 +157,13 @@ export const JsonViewer = ({ data, customStyles, copy, startOpen, className, }: 
             <span
               className={cls([
                 'inline-block cursor-pointer text-caption mr-xs',
-                !startOpen ?
-                  !openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}`) ? '-rotate-90' : '' :
-                  openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}`) ? '-rotate-90' : '',
+                !startOpen
+                  ? !openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}`)
+                    ? '-rotate-90'
+                    : ''
+                  : openObjects.includes(`${parentKey ? `${parentKey}-` : ''}${key}`)
+                    ? '-rotate-90'
+                    : '',
               ])}
               onClick={() => handleOpenItems(`${parentKey ? `${parentKey}-` : ''}${key}`)}
             >

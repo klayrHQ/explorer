@@ -205,8 +205,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     setSortOrder(order);
   };
 
-  console.log(blocksMeta?.total);
-
   const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
     return { label: { label }, value, mobileWidth };
   };
