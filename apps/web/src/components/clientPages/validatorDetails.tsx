@@ -210,11 +210,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   };
 
   const details = [
-    createDetails('Validator ID', validator?.account.address),
+    createDetails('Validator address', validator?.account.address),
     createDetails('Public Key', validator?.account.publicKey, 'half'),
     createDetails('Nonce', ' - '),
     createDetails('Token', 'KLY', 'half'),
-    createDetails('Active Chain', 'Klayr-mainchain', 'half'),
+    createDetails('Active chain', 'Klayr-mainchain', 'half'),
     createDetails(
       'Available tokens',
       <Currency
