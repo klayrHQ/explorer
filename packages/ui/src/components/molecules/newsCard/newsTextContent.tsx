@@ -30,7 +30,7 @@ export const NewsTextContent = ({
       <Typography
         className="mb-2 min-h-12 desktop:mb-4 group-hover:text-voltDark transition ease-in-out  duration-200"
         color="volt"
-        component="h3"
+        component="h6"
         fontWeight="bold"
         variant="h6"
       >
