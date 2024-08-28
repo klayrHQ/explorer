@@ -2,7 +2,7 @@
 import { ValidatorBanner } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
-import { TabButtons, FlexGrid, Currency, Typography } from '@repo/ui/atoms';
+import { TabButtons, FlexGrid, Currency, Typography, CopyIcon } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
 import {
@@ -32,7 +32,6 @@ import {
   callGetTransactions,
   callGetValidators,
 } from '../../utils/api/apiCalls.tsx';
-import { CopyIcon } from '../../../../../packages/ui/src/components/atoms/input/copyIcon.tsx';
 
 interface Params {
   id?: string;

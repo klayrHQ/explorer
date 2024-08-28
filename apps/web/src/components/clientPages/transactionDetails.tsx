@@ -2,7 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
-import { Currency, DateComponent, FlexGrid, TabButtons, UserAccountCard } from '@repo/ui/atoms';
+import {
+  Currency,
+  DateComponent,
+  FlexGrid,
+  TabButtons,
+  UserAccountCard,
+  Typography,
+  CopyIcon,
+} from '@repo/ui/atoms';
 import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { eventsTableHead } from '../../utils/constants.tsx';
 import Link from 'next/link';
@@ -45,7 +53,12 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Transaction ID',
       },
-      value: transaction?.id,
+      value: (
+        <div className="flex flex-row gap-1.5 items-baseline ">
+          <Typography variant={'paragraph-sm'}>{transaction?.id}</Typography>
+          <CopyIcon content={transaction?.id || ''} size={'xxs'} />
+        </div>
+      ),
     },
     {
       label: {
@@ -160,7 +173,12 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Block Height',
       },
-      value: <Link href={`/blocks/${transaction?.block?.id}`}>{transaction?.block?.height}</Link>,
+      value: (
+        <div className="flex flex-row gap-1.5 items-baseline ">
+          <Link href={`/blocks/${transaction?.block?.id}`}>{transaction?.block?.height}</Link>
+          <CopyIcon content={String(transaction?.block?.height) || ''} size={'xxs'} />
+        </div>
+      ),
     },
     /*{
       label: {

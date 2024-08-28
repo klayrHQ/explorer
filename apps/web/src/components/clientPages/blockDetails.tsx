@@ -14,6 +14,8 @@ import {
   NotFound,
   TabButtons,
   UserAccountCard,
+  Typography,
+  CopyIcon,
 } from '@repo/ui/atoms';
 import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx';
 import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
@@ -87,16 +89,23 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Block ID',
       },
-      value:     <div className="flex flex-row gap-1.5 items-baseline ">
-      <Typography variant={'paragraph-sm'}>{blo?.account.address}</Typography>
-      <CopyIcon content={validator?.account.address || ''} size={'xxs'} />
-    </div>,,
+      value: (
+        <div className="flex flex-row gap-1.5 items-baseline ">
+          <Typography variant={'paragraph-sm'}>{block?.id}</Typography>
+          <CopyIcon content={block?.id || ''} size={'xxs'} />
+        </div>
+      ),
     },
     {
       label: {
         label: 'Block height',
       },
-      value: block?.height,
+      value: (
+        <div className="flex flex-row gap-1.5 items-baseline ">
+          <Typography variant={'paragraph-sm'}>{block?.height}</Typography>
+          <CopyIcon content={block?.height.toString() || ''} size={'xxs'} />
+        </div>
+      ),
     },
     {
       label: {
