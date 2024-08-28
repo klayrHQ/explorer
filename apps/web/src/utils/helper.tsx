@@ -538,7 +538,7 @@ export const createStakesRows = (stakes: TransactionType[], loading: boolean) =>
                       const color = amount > 0 ? 'success' : 'error';
                       return (
                         // eslint-disable-next-line react/jsx-key
-                        <div className="flex items-center justify-between gap-8 w-72">
+                        <div className="flex items-center justify-between gap-8 w-72 -m-0.5">
                           <UserAccountCard address={param?.validatorAddress} />
                           <Currency
                             amount={amount}
