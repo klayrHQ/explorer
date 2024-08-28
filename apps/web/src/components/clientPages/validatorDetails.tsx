@@ -32,6 +32,7 @@ import {
   callGetTransactions,
   callGetValidators,
 } from '../../utils/api/apiCalls.tsx';
+import { CopyIcon } from '../../../../../packages/ui/src/components/atoms/input/copyIcon.tsx';
 
 interface Params {
   id?: string;
@@ -210,8 +211,21 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   };
 
   const details = [
-    createDetails('Validator address', validator?.account.address),
-    createDetails('Public Key', validator?.account.publicKey, 'half'),
+    createDetails(
+      'Validator ID',
+      <div className="flex flex-row gap-1.5 items-baseline ">
+        <Typography variant={'paragraph-sm'}>{validator?.account.address}</Typography>
+        <CopyIcon content={validator?.account.address || ''} size={'xxs'} />
+      </div>,
+    ),
+    createDetails(
+      'Public Key',
+      <div className="flex flex-row gap-1.5 items-baseline ">
+        <Typography variant={'paragraph-sm'}>{validator?.account.publicKey}</Typography>
+        <CopyIcon content={validator?.account.publicKey || ''} size={'xxs'} />
+      </div>,
+      'half',
+    ),
     createDetails('Nonce', ' - '),
     createDetails('Token', 'KLY', 'half'),
     createDetails('Active chain', 'Klayr-mainchain', 'half'),

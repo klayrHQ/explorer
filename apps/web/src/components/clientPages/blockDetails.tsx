@@ -87,7 +87,10 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Block ID',
       },
-      value: block?.id,
+      value:     <div className="flex flex-row gap-1.5 items-baseline ">
+      <Typography variant={'paragraph-sm'}>{blo?.account.address}</Typography>
+      <CopyIcon content={validator?.account.address || ''} size={'xxs'} />
+    </div>,,
     },
     {
       label: {
