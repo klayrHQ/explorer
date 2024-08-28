@@ -34,7 +34,6 @@ export const Transactions = () => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
     setSortField(field);
     setSortOrder(order);
-    console.log(`Sorting by field: ${field}, order: ${order}`);
   };
 
   useEffect(() => {

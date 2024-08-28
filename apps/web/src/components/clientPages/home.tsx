@@ -44,8 +44,6 @@ export const Home = () => {
     getNews();
   }, []);
 
-  console.log('News:', news);
-
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4xl'}>
       <PerformanceSection
