@@ -37,7 +37,7 @@ export const CopyIcon = ({ content, size }: CopyIconProps) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy');
 
   useEffect(() => {
-    setCopyTooltipText(isCopied ? 'Copied' : 'Copy');
+    setCopyTooltipText(isCopied ? 'Copied!' : 'Copy');
   }, [isCopied]);
 
   let positionStyles: CSSProperties = {
