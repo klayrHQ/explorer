@@ -39,7 +39,7 @@ export const Validators = () => {
 
       setChartData(transformedData);
     });
-  }, [callGetChartData, network]);
+  }, [network]);
 
   const handleSort = (field: string) => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
@@ -67,7 +67,7 @@ export const Validators = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [rowsPerPage, newBlockEvent, sortField, sortOrder, network]);
+  }, [rowsPerPage, newBlockEvent, sortField, sortOrder, network, validators.length]);
 
   const rows = createValidatorsRows(validators, loading);
 

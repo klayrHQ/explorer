@@ -268,7 +268,7 @@ export const createValidatorsRows = (validators: ValidatorType[], loading: boole
             {
               children: (
                 <div className="flex justify-end">
-                  <Typography color="onBackgroundLow">{'90'}%</Typography>
+                  <Typography color="onBackgroundLow">{"{'90'}%"}</Typography>
                 </div>
               ),
             },
@@ -303,7 +303,7 @@ export const createValidatorsRows = (validators: ValidatorType[], loading: boole
                 //how to get the percentage?
                 <div className="flex justify-end">
                   <Typography color={'onBackgroundLow'}>
-                    {formatCommission(validator?.commission)}%
+                    {'{formatCommission(validator?.commission)}%'}
                   </Typography>
                 </div>
               ),
@@ -387,7 +387,7 @@ export const createValidatorOutgoingStakeRows = (
             {
               children: (
                 <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {formatCommission(validator?.commission)} %
+                  {'{formatCommission(validator?.commission)} %'}
                 </Typography>
               ),
             },

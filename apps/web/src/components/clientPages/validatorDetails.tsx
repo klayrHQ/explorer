@@ -106,7 +106,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       .then((data) => setValidators(data.data[0]))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [callGetValidators, id]);
+  }, [id]);
 
   useEffect(() => {
     if (validator && validator.account && validator.account.address) {
@@ -189,9 +189,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     validator,
     sortField,
     sortOrder,
-    callGetTransactions,
-    callGetEvents,
-    callGetBlocks,
     blockPageNumber,
     eventPageNumber,
     transactionPageNumber,
@@ -329,13 +326,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             titleSizeNotLink={'h5'}
           />
           <TableContainer
+            currentNumber={incomingStakesPageNumber}
             headCols={validatorStakeIncomingTableHead}
             keyPrefix={'validator-blocks'}
-            rows={incomingStake}
             pagination
+            rows={incomingStake}
             setCurrentNumber={handleIncomingStakesPageChange}
             totalPages={Math.ceil((incomingStakesMeta?.total ?? 0) / Number(defaultLimit))}
-            currentNumber={incomingStakesPageNumber}
           />
         </div>
       ),
@@ -352,13 +349,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             titleSizeNotLink={'h5'}
           />
           <TableContainer
+            currentNumber={outgoingStakesPageNumber}
             headCols={validatorStakeOutgoingTableHead}
             keyPrefix={'validator-blocks'}
-            rows={outgoingStake}
             pagination
+            rows={outgoingStake}
             setCurrentNumber={handleOutgoingStakesPageChange}
             totalPages={Math.ceil((outgoingStakesMeta?.total ?? 0) / Number(defaultLimit))}
-            currentNumber={outgoingStakesPageNumber}
           />
         </>
       ),
@@ -391,13 +388,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             titleSizeNotLink={'h5'}
           />
           <TableContainer
+            currentNumber={transactionPageNumber}
             headCols={transactionTableHead(handleSort, sortField, sortOrder)}
             keyPrefix={'validator-tx'}
-            rows={rows}
             pagination
+            rows={rows}
             setCurrentNumber={handleTransactionPageChange}
             totalPages={Math.ceil((transactionsMeta?.total ?? 0) / Number(defaultLimit))}
-            currentNumber={transactionPageNumber}
           />
         </FlexGrid>
       ),
@@ -424,13 +421,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             titleSizeNotLink={'h5'}
           />
           <TableContainer
+            currentNumber={blockPageNumber}
             headCols={validatorBlocksTableHead}
             keyPrefix={'validator-blocks'}
-            rows={validatorBlocksRows}
             pagination
+            rows={validatorBlocksRows}
             setCurrentNumber={handleBlockPageChange}
             totalPages={Math.ceil((blocksMeta?.total ?? 0) / Number(defaultLimit))}
-            currentNumber={blockPageNumber}
           />
         </FlexGrid>
       ),
@@ -447,13 +444,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             titleSizeNotLink={'h5'}
           />
           <TableContainer
+            currentNumber={eventPageNumber}
             headCols={validatorEventsTableHead}
             keyPrefix={'validator-blocks'}
-            rows={eventsRows}
             pagination
+            rows={eventsRows}
             setCurrentNumber={handleEventPageChange}
             totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(defaultLimit))}
-            currentNumber={eventPageNumber}
           />
         </FlexGrid>
       ),
