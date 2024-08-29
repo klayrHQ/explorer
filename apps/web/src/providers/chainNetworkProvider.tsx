@@ -68,6 +68,7 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
     };
 
     getChains();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // get networks from current chain and set currentNetwork to first network
@@ -79,6 +80,7 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
       setCurrentNetwork(currentChain.networks[0]);
       setBaseURL(currentChain.networks[0].networkId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChain]);
 
   // save currentChain to local storage
