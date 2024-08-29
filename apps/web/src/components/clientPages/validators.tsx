@@ -13,7 +13,7 @@ import {
   callGetValidators,
 } from '../../utils/api/apiCalls.tsx';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
-import { NextValidatorType } from '@repo/shared-types';
+import { NextValidatorType } from '@repo/ui/types';
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);

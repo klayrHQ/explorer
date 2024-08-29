@@ -10,7 +10,7 @@ import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
 import { useSearchStore } from '../../../../../../apps/web/src/store/searchStore.ts';
 import { usePathname } from 'next/navigation';
-import { SearchResultsType } from '@repo/shared-types';
+import { SearchResultsType } from '@repo/ui/types';
 
 interface SearchProps {
   className?: string;
