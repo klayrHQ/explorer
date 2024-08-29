@@ -1,14 +1,7 @@
 import { FlexGrid, Typography } from '../../atoms';
 import { UserAccountCard } from '../../atoms/account/userAccountCard';
 import Link from 'next/link';
-
-interface NextValidatorType {
-  address: string;
-  name: string;
-  publicKey: string;
-  nextAllocatedTime: number;
-  status: string;
-}
+import { NextValidatorType } from '@repo/shared-types';
 
 type NextValidatorsProps = {
   validators: NextValidatorType[];

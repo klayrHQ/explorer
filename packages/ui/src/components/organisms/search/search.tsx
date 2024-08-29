@@ -10,12 +10,13 @@ import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
 import { useSearchStore } from '../../../../../../apps/web/src/store/searchStore.ts';
 import { usePathname } from 'next/navigation';
+import { SearchResultsType } from '@repo/shared-types';
 
 interface SearchProps {
   className?: string;
-  searchResult?: any;
-  setSearchResults?: any;
-  callSearch?: any;
+  searchResult?: SearchResultsType;
+  setSearchResults?: (results: SearchResultsType) => void;
+  callSearch?: (params: { search: string }) => Promise<void>;
 }
 
 export const Search = ({ className, searchResult, setSearchResults, callSearch }: SearchProps) => {
@@ -35,12 +36,16 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
   const handleSearch = async (query: string) => {
     if (query.length > 0) {
       try {
-        await callSearch({ search: query });
+        if (callSearch) {
+          await callSearch({ search: query });
+        }
       } catch (error) {
         console.error('Search failed', error);
       }
     } else if (query.length === 0) {
-      setSearchResults({});
+      if (setSearchResults) {
+        setSearchResults({});
+      }
     }
   };
 
@@ -54,12 +59,13 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
 
   useEffect(() => {
     setOpen(false);
+    setSearchResults && setSearchResults({});
     setInputValue('');
-  }, [pathname]);
+  }, [pathname, setSearchResults]);
 
   const handleClear = () => {
     setInputValue('');
-    setSearchResults({});
+    setSearchResults && setSearchResults({});
   };
 
   return (

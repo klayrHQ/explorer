@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { SearchResultsType } from '../utils/types';
+import { SearchResultsType } from '@repo/shared-types';
 import { useGatewayClientStore } from './clientStore';
 
 export interface SearchQueryParams {
