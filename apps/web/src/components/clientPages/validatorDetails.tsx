@@ -2,7 +2,7 @@
 import { ValidatorBanner } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
-import { TabButtons, FlexGrid, Currency, Typography } from '@repo/ui/atoms';
+import { TabButtons, FlexGrid, Currency, Typography, CopyIcon } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
 import {
@@ -210,8 +210,21 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   };
 
   const details = [
-    createDetails('Validator address', validator?.account.address),
-    createDetails('Public Key', validator?.account.publicKey, 'half'),
+    createDetails(
+      'Validator ID',
+      <div className="flex flex-row gap-1.5 items-baseline ">
+        <Typography variant={'paragraph-sm'}>{validator?.account.address}</Typography>
+        <CopyIcon content={validator?.account.address || ''} size={'xxs'} />
+      </div>,
+    ),
+    createDetails(
+      'Public Key',
+      <div className="flex flex-row gap-1.5 items-baseline ">
+        <Typography variant={'paragraph-sm'}>{validator?.account.publicKey}</Typography>
+        <CopyIcon content={validator?.account.publicKey || ''} size={'xxs'} />
+      </div>,
+      'half',
+    ),
     createDetails('Nonce', ' - '),
     createDetails('Token', 'KLY', 'half'),
     createDetails('Active chain', 'Klayr-mainchain', 'half'),

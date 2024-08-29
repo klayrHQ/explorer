@@ -44,4 +44,5 @@ export * from './account/avatar/avatar';
 export * from './utilities/tooltip';
 export * from './utilities/popover';
 export * from './utilities/notFound/notFound.tsx';
+export * from './input/copyIcon.tsx';
 

@@ -37,6 +37,15 @@ export const DetailsSection = ({
 }: DetailsSectionsProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [jsonOpen, setJsonOpen] = useState(false);
+  const [buttonText, setButtonText] = useState('Copy');
+
+  const handleCopyClick = () => {
+    copyToClipboard(JSON.stringify(json, null, 2));
+    setButtonText('Copied');
+    setTimeout(() => {
+      setButtonText('Copy');
+    }, 2000);
+  };
 
   return (
     <FlexGrid className={'w-full'} component={'section'} direction={'col'} gap={'4.5xl'}>
@@ -81,11 +90,7 @@ export const DetailsSection = ({
             >
               <FlexGrid direction={'col'} gap={'3xl'}>
                 <JsonViewer copy data={json} startOpen />
-                <Button
-                  align={'right'}
-                  label={'Copy'}
-                  onClick={() => copyToClipboard(JSON.stringify(json, null, 2))}
-                />
+                <Button align={'right'} label={buttonText} onClick={handleCopyClick} />
               </FlexGrid>
             </SlideInModal>
           </Popover>
