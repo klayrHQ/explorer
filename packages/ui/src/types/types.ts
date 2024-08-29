@@ -163,3 +163,37 @@ export type Option = {
 export type DataValueType = string | number | boolean | null | object | undefined;
 
 export type DataType = Record<string, DataValueType>;
+
+
+export interface NextValidatorType {
+  address: string;
+  name: string;
+  publicKey: string;
+  nextAllocatedTime: number;
+  status: string;
+}
+
+
+//SEARCH TYPES
+export interface SearchResultsType {
+  validators?: SearchValidator[];
+  blocks?: SearchBlock[];
+  transactions?: SearchTransaction[];
+}
+
+interface SearchValidator {
+  name: string;
+  address: string;
+  publicKey: string;
+  rank: number;
+}
+
+interface SearchBlock {
+  height: number;
+  id: string;
+}
+
+interface SearchTransaction {
+  id: string;
+  sender: string;
+}

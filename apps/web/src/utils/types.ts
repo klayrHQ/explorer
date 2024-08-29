@@ -132,13 +132,7 @@ export interface ValidatorType {
   nextAllocatedTime?: number;
 }
 
-export interface NextValidatorType {
-  address: string;
-  name: string;
-  publicKey: string;
-  nextAllocatedTime: number;
-  status: string;
-}
+
 
 export interface SharingCoefficientType {
   tokenID: string;
@@ -151,11 +145,6 @@ export interface AccountType {
   name: string;
 }
 
-export interface SearchResultsType {
-  validators?: SearchValidator[];
-  blocks?: SearchBlock[];
-  transactions?: SearchTransaction[];
-}
 
 export interface ChartDataType {
   id: number;
@@ -163,19 +152,3 @@ export interface ChartDataType {
   value: number;
 }
 
-interface SearchValidator {
-  name: string;
-  address: string;
-  publicKey: string;
-  rank: number;
-}
-
-interface SearchBlock {
-  height: number;
-  id: string;
-}
-
-interface SearchTransaction {
-  id: string;
-  sender: string;
-}

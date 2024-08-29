@@ -6,13 +6,14 @@ import { useEffect, useState } from 'react';
 import { validatorsTableHead } from '../../utils/constants.tsx';
 import { createValidatorsRows } from '../../utils/helper.tsx';
 import { useSocketStore } from '../../store/socketStore.ts';
-import { ChartDataType, NextValidatorType, ValidatorType } from '../../utils/types.ts';
+import { ChartDataType, ValidatorType } from '../../utils/types.ts';
 import {
   callGetChartData,
   callGetNextValidators,
   callGetValidators,
 } from '../../utils/api/apiCalls.tsx';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
+import { NextValidatorType } from '@repo/ui/types';
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);

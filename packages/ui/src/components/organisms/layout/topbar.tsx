@@ -71,28 +71,28 @@ export const Topbar = ({
         mobileDirection={'row'}
       >
         <Search
-          className="hidden desktop:block"
-          setSearchResults={setSearchResults}
-          searchResult={searchResults}
           callSearch={callSearch}
+          className="hidden desktop:block"
+          searchResult={searchResults}
+          setSearchResults={setSearchResults}
         />
         <FlexGrid className={'desktop:hidden '} gap={'3xl'} mobileDirection="row">
           <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
           {showSearch && (
             <Search
-              className="absolute mt-16 left-0 top-0 w-full h-full z-20"
-              setSearchResults={setSearchResults}
-              searchResult={searchResults}
               callSearch={callSearch}
+              className="absolute mt-16 left-0 top-0 w-full h-full z-20"
+              searchResult={searchResults}
+              setSearchResults={setSearchResults}
             />
           )}
           <IconButton
+            active={showSearch}
             align={'none'}
             className={'shrink-0'}
             icon={'SearchLg'}
-            variant={'bordered'}
             onClick={() => setShowSearch(!showSearch)}
-            active={showSearch}
+            variant={'bordered'}
           />
         </FlexGrid>
 

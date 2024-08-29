@@ -4,7 +4,6 @@ import {
   ChartDataType,
   EventsType,
   GatewayRes,
-  NextValidatorType,
   TransactionType,
   ValidatorType,
 } from '../types';
@@ -15,6 +14,7 @@ import {
   TransactionQueryParams,
   ValidatorQueryParams,
 } from './types';
+import { NextValidatorType } from '@repo/ui/types';
 
 async function apiCall<T>(
   endpoint: string,

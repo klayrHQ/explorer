@@ -46,7 +46,6 @@
     "@mui/base": "^5.0.0-beta.40",
     "@mui/material": "^5.16.6",
     "@mui/x-charts": "^7.11.1",
-    "class-variance-authority": "^0.7.0",
-    "@repo/shared-types": "*"  
+    "class-variance-authority": "^0.7.0"
   }
 }
