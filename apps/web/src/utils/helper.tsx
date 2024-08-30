@@ -252,14 +252,14 @@ export const createValidatorsRows = (
                   children: (
                     <div className="flex flex-col items-end">
                       <Currency
-                        amount={validator?.validatorWeight}
-                        className="text-paragraph-sm text-onBackground font-semibold"
+                        amount={'198419841984'}
+                        className="text-paragraph-sm text-lobster font-semibold" //text-onBackground
                         decimals={2}
                         symbol={'KLY'}
                       />
                       <Currency
-                        amount={validator?.validatorWeight}
-                        className="text-onBackgroundLow text-caption font-normal"
+                        amount={'777777777'}
+                        className="text-lobster text-caption font-normal" //text-onBackgroundLow
                         decimals={2}
                         symbol={'KLY'}
                       />
@@ -268,7 +268,6 @@ export const createValidatorsRows = (
                 }
               : null,
             {
-              //depends on what color?
               children: (
                 <StatusBadge
                   nextAllocatedTime={
@@ -292,7 +291,8 @@ export const createValidatorsRows = (
             {
               children: (
                 <div className="flex justify-end">
-                  <Typography color="onBackgroundLow">{'90'}%</Typography>
+                  {/* onBackgroundLow */}
+                  <Typography color="lobster">{'90'}%</Typography>
                 </div>
               ),
             },
@@ -305,7 +305,8 @@ export const createValidatorsRows = (
                     decimals={0}
                     symbol={'KLY'}
                   />
-                  <Typography color={'onBackgroundLow'} variant={'caption'}>
+                  {/* onBackgroundLow */}
+                  <Typography color={'lobster'} variant={'caption'}>
                     {'90.56%'}
                   </Typography>
                 </div>
@@ -349,21 +350,21 @@ export const createValidatorsRows = (
             },
             {
               children: (
-                <div className="flex justify-end">
+                <div className="flex justify-end text-lobster">
                   <Currency amount={877777899} decimals={0} symbol={'KLY'} />
                 </div>
               ),
             },
             {
               children: (
-                <div className="flex justify-end">
+                <div className="flex justify-end text-lobster">
                   <Currency amount={8767777899} decimals={0} symbol={'KLY'} />
                 </div>
               ),
             },
             {
               children: (
-                <div className="flex justify-end">
+                <div className="flex justify-end text-lobster">
                   <Currency amount={90977778997} decimals={0} symbol={'KLY'} />
                 </div>
               ),
