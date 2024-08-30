@@ -4,7 +4,6 @@ import { FlexGrid, TabButtons } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useEffect, useState } from 'react';
 import { TransactionType, ValidatorType } from '../../utils/types';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { createStakesOverviewRows, createValidatorsRows } from '../../utils/helper';
 import { stakesOverviewTableHead, stakesCalculatorTableHead } from '../../utils/constants';
 import { callGetTransactions, callGetValidators } from '../../utils/api/apiCalls';
@@ -13,8 +12,6 @@ import { TableCellType } from '@repo/ui/types';
 import { fetchPaginatedData } from '../../utils/dataHelpers';
 
 export const Stakes = () => {
-  const searchParams = useSearchParams();
-
   const [stakes, setStakes] = useState<TransactionType[]>([]);
   const [validators, setValidators] = useState<ValidatorType[]>([]);
   const [totalValidators, setTotalValidators] = useState(0);
@@ -42,14 +39,6 @@ export const Stakes = () => {
     setSortField(field);
     setSortOrder(order);
   };
-
-  const params: any = {
-    limit: rowsPerPage.toString(),
-    sort: 'rank:asc',
-  };
-  if (sortField && sortOrder) {
-    params.sort = `${sortField}:${sortOrder}`;
-  }
 
   useEffect(() => {
     setLoading(true);
@@ -83,6 +72,7 @@ export const Stakes = () => {
   const rowCalculator = createValidatorsRows(validators, loading, true).map((row) => ({
     cells: row.cells.filter((cell) => cell !== null) as TableCellType[],
   }));
+
   const tabs = [
     {
       value: 1,
