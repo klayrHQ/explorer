@@ -569,6 +569,7 @@ export const stakesCalculatorTableHead = (
   },
   {
     children: 'Stacking rewards',
+    className: 'items-end text-end whitespace-nowrap',
   },
   {
     children: (
