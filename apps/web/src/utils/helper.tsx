@@ -216,7 +216,11 @@ export const createEventsRows = (events: EventsType[], loading: boolean) => {
     : getTableSkeletons(eventsTableHead.length);
 };
 
-export const createValidatorsRows = (validators: ValidatorType[], loading: boolean) => {
+export const createValidatorsRows = (
+  validators: ValidatorType[],
+  loading: boolean,
+  stackingRewards = false,
+) => {
   return !loading
     ? validators?.map((validator) => {
         return {
@@ -243,6 +247,26 @@ export const createValidatorsRows = (validators: ValidatorType[], loading: boole
                 </Link>
               ),
             },
+            stackingRewards
+              ? {
+                  children: (
+                    <div className="flex flex-col items-end">
+                      <Currency
+                        amount={validator?.validatorWeight}
+                        className="text-paragraph-sm text-onBackground font-semibold"
+                        decimals={2}
+                        symbol={'KLY'}
+                      />
+                      <Currency
+                        amount={validator?.validatorWeight}
+                        className="text-onBackgroundLow text-caption font-normal"
+                        decimals={2}
+                        symbol={'KLY'}
+                      />
+                    </div>
+                  ),
+                }
+              : null,
             {
               //depends on what color?
               children: (
@@ -275,7 +299,12 @@ export const createValidatorsRows = (validators: ValidatorType[], loading: boole
             {
               children: (
                 <div className="flex flex-col items-end">
-                  <Currency amount={validator?.validatorWeight} decimals={0} symbol={'KLY'} />
+                  <Currency
+                    amount={validator?.validatorWeight}
+                    className="font-semibold"
+                    decimals={0}
+                    symbol={'KLY'}
+                  />
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {'90.56%'}
                   </Typography>
@@ -286,7 +315,12 @@ export const createValidatorsRows = (validators: ValidatorType[], loading: boole
               children: (
                 //Not sure about data
                 <div className="flex justify-end">
-                  <Currency amount={validator?.selfStake} decimals={0} symbol={'KLY'} />
+                  <Currency
+                    amount={validator?.selfStake}
+                    className="font-semibold"
+                    decimals={0}
+                    symbol={'KLY'}
+                  />
                 </div>
               ),
             },
@@ -294,7 +328,12 @@ export const createValidatorsRows = (validators: ValidatorType[], loading: boole
               children: (
                 //how to get the percentage?
                 <div className="flex justify-end">
-                  <Currency amount={validator?.totalStake} decimals={0} symbol={'KLY'} />
+                  <Currency
+                    amount={validator?.totalStake}
+                    className="font-semibold"
+                    decimals={0}
+                    symbol={'KLY'}
+                  />
                 </div>
               ),
             },
@@ -329,7 +368,7 @@ export const createValidatorsRows = (validators: ValidatorType[], loading: boole
                 </div>
               ),
             },
-          ],
+          ].filter(Boolean),
         };
       })
     : getTableSkeletons(validatorsTableHead.length);
@@ -498,7 +537,7 @@ export const createValidatorEventsRow = (events: EventsType[], loading: boolean)
     : getTableSkeletons(validatorBlocksTableHead.length);
 };
 
-export const createStakesRows = (stakes: TransactionType[], loading: boolean) => {
+export const createStakesOverviewRows = (stakes: TransactionType[], loading: boolean) => {
   return !loading
     ? stakes?.map((stake) => {
         return {

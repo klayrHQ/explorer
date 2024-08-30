@@ -325,22 +325,22 @@ export const transactionTableHead = (
   {
     children: (
       <SortingTitle
-        title="Height"
+        onSortChange={onSortChange}
         sortField={sortField}
         sortOrder={sortOrder}
-        onSortChange={onSortChange}
         sortValue="height"
+        title="Height"
       />
     ),
   },
   {
     children: (
       <SortingTitle
-        title="Date"
+        onSortChange={onSortChange}
         sortField={sortField}
         sortOrder={sortOrder}
-        onSortChange={onSortChange}
         sortValue="timestamp"
+        title="Date"
       />
     ),
   },
@@ -378,22 +378,22 @@ export const validatorsTableHead = (
   {
     children: (
       <SortingTitle
-        title="Validator"
+        onSortChange={onSortChange}
         sortField={sortField}
         sortOrder={sortOrder}
-        onSortChange={onSortChange}
         sortValue="rank"
+        title="Validator"
       />
     ),
   },
   {
     children: (
       <SortingTitle
-        title="Status"
+        onSortChange={onSortChange}
         sortField={sortField}
         sortOrder={sortOrder}
-        onSortChange={onSortChange}
         sortValue="nextAllocatedTime"
+        title="Status"
       />
     ),
   },
@@ -401,11 +401,11 @@ export const validatorsTableHead = (
     children: (
       <div className="flex justify-end">
         <SortingTitle
-          title="Total blocks"
+          onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
-          onSortChange={onSortChange}
           sortValue="generatedBlocks"
+          title="Total blocks"
         />
       </div>
     ),
@@ -419,11 +419,11 @@ export const validatorsTableHead = (
     children: (
       <div className="flex justify-end">
         <SortingTitle
-          title="Validator weight"
+          onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
-          onSortChange={onSortChange}
           sortValue="validatorWeight"
+          title="Validator weight"
         />
       </div>
     ),
@@ -434,11 +434,11 @@ export const validatorsTableHead = (
       <div className="flex justify-end">
         {' '}
         <SortingTitle
-          title="Stake capacity"
+          onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
-          onSortChange={onSortChange}
           sortValue="selfStake"
+          title="Stake capacity"
         />
       </div>
     ),
@@ -452,11 +452,11 @@ export const validatorsTableHead = (
     children: (
       <div className="flex justify-end">
         <SortingTitle
-          title="Commission"
+          onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
-          onSortChange={onSortChange}
           sortValue="commission"
+          title="Commission"
         />
       </div>
     ),
@@ -536,7 +536,7 @@ export const validatorEventsTableHead: TableCellType[] = [
   },
 ];
 
-export const stakesTableHead: TableCellType[] = [
+export const stakesOverviewTableHead: TableCellType[] = [
   {
     children: 'Stake ID',
   },
@@ -548,5 +548,114 @@ export const stakesTableHead: TableCellType[] = [
   },
   {
     children: 'Send stakes',
+  },
+];
+
+export const stakesCalculatorTableHead = (
+  onSortChange: (column: string) => void,
+  sortField: string,
+  sortOrder: string,
+): TableCellType[] => [
+  {
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="rank"
+        title="Validator"
+      />
+    ),
+  },
+  {
+    children: 'Stacking rewards',
+  },
+  {
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="nextAllocatedTime"
+        title="Status"
+      />
+    ),
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="generatedBlocks"
+          title="Total blocks"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex justify-end">{'Uptime'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="validatorWeight"
+          title="Validator weight"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        {' '}
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="selfStake"
+          title="Stake capacity"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex justify-end">{'Total stake'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="commission"
+          title="Commission"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex items-end justify-end">{'Total Rewards'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex items-end justify-end flex-nowrap">{'Block Rewards'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex items-end justify-end">{'Staking Rewards'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
   },
 ];
