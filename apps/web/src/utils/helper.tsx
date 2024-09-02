@@ -356,7 +356,7 @@ export const createValidatorsRows = (
             {
               children: (
                 <div className="flex justify-end text-onBackgroundLow">
-                  <Currency amount={validator.blockReward} decimals={0} symbol={'KLY'} />
+                  <Currency amount={validator.blockReward} decimals={5} symbol={'KLY'} />
                 </div>
               ),
             },
