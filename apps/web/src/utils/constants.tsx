@@ -412,10 +412,6 @@ export const validatorsTableHead = (
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: <div className="flex justify-end">{'Uptime'}</div>,
-    className: 'items-end text-end whitespace-nowrap',
-  },
-  {
     children: (
       <div className="flex justify-end">
         <SortingTitle
@@ -594,10 +590,6 @@ export const stakesCalculatorTableHead = (
         />
       </div>
     ),
-    className: 'items-end text-end whitespace-nowrap',
-  },
-  {
-    children: <div className="flex justify-end">{'Uptime'}</div>,
     className: 'items-end text-end whitespace-nowrap',
   },
   {

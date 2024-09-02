@@ -290,14 +290,6 @@ export const createValidatorsRows = (
             },
             {
               children: (
-                <div className="flex justify-end">
-                  {/* onBackgroundLow */}
-                  <Typography color="lobster">{'90'}%</Typography>
-                </div>
-              ),
-            },
-            {
-              children: (
                 <div className="flex flex-col items-end">
                   <Currency
                     amount={validator?.validatorWeight}
