@@ -93,10 +93,10 @@ export const CustomSelect = ({
       <div>
         <button
           className={clsx(
-            'relative flex items-center justify-between bg-darkBlue gap-2 py-2 px-3 group focus-visible:border-backgroundTertiary focus:border-backgroundTertiary transition-all ',
+            'relative flex items-center justify-between bg-darkBlue gap-2 py-2 px-3 group focus-visible:border-backgroundTertiary  focus:border-backgroundTertiary transition-all ',
             listboxVisible ? 'rounded-t-md' : 'rounded-md',
-            selectStyles({ width, backgroundColor }),
             classNameButton,
+            selectStyles({ width, backgroundColor }),
           )}
           onClick={() => setListboxVisible(!listboxVisible)}
           type="button"
