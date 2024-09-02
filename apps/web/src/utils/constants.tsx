@@ -536,7 +536,7 @@ export const validatorEventsTableHead: TableCellType[] = [
   },
 ];
 
-export const stakesTableHead: TableCellType[] = [
+export const stakesOverviewTableHead: TableCellType[] = [
   {
     children: 'Stake ID',
   },
@@ -548,5 +548,115 @@ export const stakesTableHead: TableCellType[] = [
   },
   {
     children: 'Send stakes',
+  },
+];
+
+export const stakesCalculatorTableHead = (
+  onSortChange: (column: string) => void,
+  sortField: string,
+  sortOrder: string,
+): TableCellType[] => [
+  {
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="rank"
+        title="Validator"
+      />
+    ),
+  },
+  {
+    children: 'Stacking rewards',
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="nextAllocatedTime"
+        title="Status"
+      />
+    ),
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="generatedBlocks"
+          title="Total blocks"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex justify-end">{'Uptime'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="validatorWeight"
+          title="Validator weight"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        {' '}
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="selfStake"
+          title="Stake capacity"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex justify-end">{'Total stake'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="commission"
+          title="Commission"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex items-end justify-end">{'Total Rewards'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex items-end justify-end flex-nowrap">{'Block Rewards'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: <div className="flex items-end justify-end">{'Staking Rewards'}</div>,
+    className: 'items-end text-end whitespace-nowrap',
   },
 ];

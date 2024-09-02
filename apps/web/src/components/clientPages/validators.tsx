@@ -13,7 +13,7 @@ import {
   callGetValidators,
 } from '../../utils/api/apiCalls.tsx';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
-import { NextValidatorType } from '@repo/ui/types';
+import { NextValidatorType, TableCellType } from '@repo/ui/types';
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);
@@ -69,7 +69,9 @@ export const Validators = () => {
       .finally(() => setLoading(false));
   }, [rowsPerPage, newBlockEvent, sortField, sortOrder, network, validators.length]);
 
-  const rows = createValidatorsRows(validators, loading);
+  const rows = createValidatorsRows(validators, loading).map((row) => ({
+    cells: row.cells.filter((cell) => cell !== null) as TableCellType[],
+  }));
 
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
