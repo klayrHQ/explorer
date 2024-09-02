@@ -21,7 +21,13 @@ export const Calculator = ({ options }: CalculatorProps) => {
         />
       </div>
       <div className="">
-        <CustomSelect classNameButton="h-14" defaultValue="month" options={options} width="sm" />
+        <CustomSelect
+          classNameButton="h-14"
+          defaultValue="month"
+          fontSize="md"
+          options={options}
+          width="sm"
+        />
       </div>
     </div>
   );

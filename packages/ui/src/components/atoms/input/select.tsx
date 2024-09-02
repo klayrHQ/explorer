@@ -9,7 +9,7 @@ import { ClickAwayListener } from '@mui/base';
 import { Option } from '../../../types/types';
 
 const selectStyles = cva(
-  'justify-start border border-backgroundTertiary focus:outline-none outline-none  text-gray-1 text-paragraph-sm focus:border-backgroundTertiary',
+  'justify-start border border-backgroundTertiary focus:outline-none outline-none text-gray-1 focus:border-backgroundTertiary',
   {
     variants: {
       width: {
@@ -18,6 +18,10 @@ const selectStyles = cva(
         lg: 'min-w-64',
         xl: 'min-w-selectSMWidth desktop:min-w-selectXLWidth',
       },
+      fontSize: {
+        sm: 'text-paragraph-sm',
+        md: 'text-paragraph-md',
+      },
       backgroundColor: {
         darkBlue: 'bg-darkBlue',
         bgSecondary: 'bg-gray-7',
@@ -25,6 +29,7 @@ const selectStyles = cva(
       defaultVariants: {
         width: 'md',
         backgroundColor: 'bgSecondary',
+        fontSize: 'sm',
       },
     },
   },
@@ -38,6 +43,7 @@ export interface CustomSelectProps {
   options: Option[];
   onChange?: (value: string) => void;
   classNameButton?: string;
+  fontSize?: 'sm' | 'md';
 }
 
 export const CustomSelect = ({
@@ -48,6 +54,7 @@ export const CustomSelect = ({
   onChange,
   backgroundColor = 'bgSecondary',
   classNameButton,
+  fontSize,
 }: CustomSelectProps) => {
   const styles = selectStyles({ width });
   const [selectedValue, setSelectedValue] = useState<string | undefined>(defaultValue);
@@ -96,7 +103,7 @@ export const CustomSelect = ({
             'relative flex items-center justify-between bg-darkBlue gap-2 py-2 px-3 group focus-visible:border-backgroundTertiary  focus:border-backgroundTertiary transition-all ',
             listboxVisible ? 'rounded-t-md' : 'rounded-md',
             classNameButton,
-            selectStyles({ width, backgroundColor }),
+            selectStyles({ width, backgroundColor, fontSize }),
           )}
           onClick={() => setListboxVisible(!listboxVisible)}
           type="button"
