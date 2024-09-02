@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { TabButtons, FlexGrid, Currency, Typography, CopyIcon } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
+import { fetchPaginatedData } from '../../utils/dataHelpers.tsx';
 import {
   transactionTableHead,
   validatorStakeIncomingTableHead,
@@ -32,16 +33,6 @@ import {
   callGetTransactions,
   callGetValidators,
 } from '../../utils/api/apiCalls.tsx';
-
-interface Params {
-  id?: string;
-  address?: string;
-  recipientAddress?: string;
-  generatorAddress?: string;
-  senderAddress?: string;
-  transactionID?: string;
-  moduleCommand?: string;
-}
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -85,17 +76,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [outgoingStakesPageNumber, setOutgoingStakesPageNumber] = useState<number>(1);
   const handleOutgoingStakesPageChange = (newPageNumber: number) => {
     setOutgoingStakesPageNumber(newPageNumber);
-  };
-
-  const fetchPaginatedData = async (
-    callFunction: Function,
-    params: Params,
-    pageNumber: number,
-    defaultLimit: string,
-  ) => {
-    const offset = (Number(pageNumber) - 1) * Number(defaultLimit);
-    const updatedParams = { ...params, limit: defaultLimit, offset };
-    return callFunction(updatedParams);
   };
 
   useEffect(() => {

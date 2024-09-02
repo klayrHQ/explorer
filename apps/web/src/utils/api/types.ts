@@ -1,3 +1,5 @@
+import { Search } from "@repo/ui/organisms";
+
 export interface BlocksQueryParams {
   blockID?: string;
   limit?: string;
@@ -34,3 +36,4 @@ export interface ValidatorQueryParams {
   offset?: number;
   sort?: string;
 }
+

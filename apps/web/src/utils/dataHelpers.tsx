@@ -1,5 +1,11 @@
 import { BlockAssetType, TransactionType } from './types';
 import { decode } from 'html-entities';
+import {
+  BlocksQueryParams,
+  EventsQueryParams,
+  TransactionQueryParams,
+  ValidatorQueryParams,
+} from './api/types';
 
 enum TransactionCommands {
   POS_STAKE = 'pos:stake',
@@ -34,4 +40,15 @@ export const formatDate = (dateString: string) => {
 export const cleanText = (htmlString: string) => {
   const strippedString = htmlString.replace(/<[^>]*>?/gm, ''); // Remove HTML tags
   return decode(strippedString); // Decode HTML entities
+};
+
+export const fetchPaginatedData = async (
+  callFunction: Function,
+  params: BlocksQueryParams | EventsQueryParams | TransactionQueryParams | ValidatorQueryParams,
+  pageNumber: number,
+  defaultLimit: string,
+) => {
+  const offset = (Number(pageNumber) - 1) * Number(defaultLimit);
+  const updatedParams = { ...params, limit: defaultLimit, offset };
+  return callFunction(updatedParams);
 };

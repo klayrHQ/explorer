@@ -147,7 +147,7 @@ export type NetworkType = {
 
 export type TableCellType = {
   className?: string;
-  children: ReactNode;
+  children: ReactNode | null;
 } & Omit<HTMLAttributes<HTMLTableCellElement>, 'children' | 'content'>;
 
 export type LinkComponent = PropsWithChildren<ReactElement>;
