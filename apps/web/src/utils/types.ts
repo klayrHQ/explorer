@@ -130,6 +130,8 @@ export interface ValidatorType {
   sharingCoefficients: SharingCoefficientType[];
   account: AccountType;
   nextAllocatedTime?: number;
+  totalRewards: string;
+  blockReward: string;
 }
 
 

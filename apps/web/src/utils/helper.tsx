@@ -305,9 +305,15 @@ export const createValidatorsRows = (
                     decimals={0}
                     symbol={'KLY'}
                   />
-                  {/* onBackgroundLow */}
-                  <Typography color={'lobster'} variant={'caption'}>
-                    {'90.56%'}
+                  <Typography color={'onBackgroundLow'} variant={'caption'}>
+                    {Number(
+                      (
+                        (Number(validator?.validatorWeight || 0) /
+                          Number(validator?.selfStake || 1)) *
+                        10
+                      ).toFixed(2),
+                    )}
+                    %
                   </Typography>
                 </div>
               ),
@@ -350,15 +356,15 @@ export const createValidatorsRows = (
             },
             {
               children: (
-                <div className="flex justify-end text-lobster">
-                  <Currency amount={877777899} decimals={0} symbol={'KLY'} />
+                <div className="flex justify-end text-onBackgroundLow">
+                  <Currency amount={validator.totalRewards} decimals={0} symbol={'KLY'} />
                 </div>
               ),
             },
             {
               children: (
-                <div className="flex justify-end text-lobster">
-                  <Currency amount={8767777899} decimals={0} symbol={'KLY'} />
+                <div className="flex justify-end text-onBackgroundLow">
+                  <Currency amount={validator.blockReward} decimals={0} symbol={'KLY'} />
                 </div>
               ),
             },
