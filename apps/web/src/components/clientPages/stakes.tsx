@@ -77,7 +77,7 @@ export const Stakes = () => {
     {
       value: 1,
       label: 'Overview',
-      icon: 'InfoSquare',
+      icon: 'Overview',
       content: (
         <TableContainer
           currentNumber={overviewPageNumber}
@@ -93,7 +93,7 @@ export const Stakes = () => {
     {
       value: 2,
       label: 'Calculator',
-      icon: 'List',
+      icon: 'Calculator',
       content: (
         <TableContainer
           currentNumber={calculatorPageNumber}
