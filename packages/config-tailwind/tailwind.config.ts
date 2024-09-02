@@ -276,6 +276,12 @@ const config: Omit<Config, 'content'> = {
     ...getKeyMap(rotate, 'rotate'),
     ...getKeyMap(rotate, '-rotate'),
     ...getKeyMap(wordBreak, 'break'),
+    ...getKeyMap(numberList, 'divide-x'),
+    ...getKeyMap(numberList, 'divide-y'),
+    ...getKeyMap(colors, 'divide'),
+
+
+
     'border-collapse',
     'border-spacing-0',
     'flex-wrap',

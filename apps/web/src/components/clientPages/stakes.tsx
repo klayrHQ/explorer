@@ -8,6 +8,7 @@ import { createStakesOverviewRows, createValidatorsRows } from '../../utils/help
 import { stakesOverviewTableHead, stakesCalculatorTableHead } from '../../utils/constants';
 import { callGetTransactions, callGetValidators } from '../../utils/api/apiCalls';
 import { useGatewayClientStore } from '../../store/clientStore';
+import { StakeFilters } from '../filterComponents/stakeFilters';
 import { TableCellType } from '@repo/ui/types';
 import { fetchPaginatedData } from '../../utils/dataHelpers';
 
@@ -97,6 +98,7 @@ export const Stakes = () => {
       content: (
         <TableContainer
           currentNumber={calculatorPageNumber}
+          filtersComponent={<StakeFilters />}
           headCols={stakesCalculatorTableHead(handleSort, sortField, sortOrder)}
           keyPrefix={'stakes'}
           pagination

@@ -2,10 +2,11 @@ import { cls } from '../../../utils/functions.ts';
 import { FlexGrid } from '../../atoms';
 import { Table, TableProps } from '../../molecules';
 import { Pagination } from '../../atoms';
+import React from 'react';
 
 interface TableContainerProps extends TableProps {
   pagination?: boolean;
-  filters?: boolean;
+  filtersComponent?: React.ReactNode;
   tableClassName?: string;
   currentNumber?: number;
   setCurrentNumber?: (number: number) => void;
@@ -15,7 +16,7 @@ interface TableContainerProps extends TableProps {
 export const TableContainer = ({
   className,
   pagination,
-  filters,
+  filtersComponent,
   tableClassName,
   currentNumber,
   setCurrentNumber,
@@ -31,7 +32,11 @@ export const TableContainer = ({
       direction={'col'}
       gap={'0'}
     >
-      {filters && <FlexGrid className={'p-3xl border-b-1 border-borderLow'}>{'Filters'}</FlexGrid>}
+      {filtersComponent && (
+        <FlexGrid className={'p-3xl border-b-1 border-borderLow w-full'}>
+          {filtersComponent}
+        </FlexGrid>
+      )}
       <Table className={tableClassName} {...props} />
       {pagination && (
         <FlexGrid className={'px-3xl py-lg border-t-1 border-borderLow w-full'}>

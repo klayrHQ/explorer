@@ -337,6 +337,7 @@ const width = {
   detailsLabelWidth: 'max(15%, 160px)',
   detailsLabelWidthLarge: 'max(20%, 225px)',
   pagNumWidth: '34px',
+  calculatorWidth: '536px',
 };
 
 const lineClamp = {
