@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import { TransactionType } from '../../utils/types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { createStakesRows } from '../../utils/helper';
-import { stakesTableHead, calculatorOptions } from '../../utils/constants';
+import { stakesTableHead } from '../../utils/constants';
 import { callGetTransactions } from '../../utils/api/apiCalls';
 import { useGatewayClientStore } from '../../store/clientStore';
-import { Calculator } from '@repo/ui/molecules';
+import { StakeFilters } from '../filterComponents/stakeFilters';
 
 export const Stakes = () => {
   const searchParams = useSearchParams();
@@ -57,9 +57,9 @@ export const Stakes = () => {
         subTitle={'Overview of all stakes on the blockchain'}
         title={'Stakes'}
       />
-      <Calculator options={calculatorOptions} />
       <TableContainer
         currentNumber={pageNumber}
+        filtersComponent={<StakeFilters />}
         headCols={stakesTableHead}
         keyPrefix={'stakes'}
         pagination

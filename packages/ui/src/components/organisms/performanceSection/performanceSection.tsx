@@ -49,6 +49,7 @@ export const PerformanceSection = ({
           </Typography>
           <CustomSelect
             backgroundColor="darkBlue"
+            classNameList="border-backgroundTertiary border-t-0"
             defaultValue="lastMonth"
             options={options}
             width="sm"

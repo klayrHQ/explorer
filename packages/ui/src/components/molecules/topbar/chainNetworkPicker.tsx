@@ -105,6 +105,7 @@ export const ChainNetworkPicker = ({
               {'On chain'}
             </Typography>
             <CustomSelect
+              classNameList="border-backgroundTertiary border-t-0"
               defaultValue={currentChain?.chainId}
               onChange={(value) => handleChainChange(value)}
               options={chainOptions}
@@ -115,6 +116,7 @@ export const ChainNetworkPicker = ({
               {'On network'}
             </Typography>
             <CustomSelect
+              classNameList="border-backgroundTertiary border-t-0"
               defaultValue={currentNetwork?.networkId}
               onChange={(value) => handleNetworkChange(value)}
               options={networkOptions}
