@@ -6,6 +6,7 @@ import {
   KeyValueComponent,
   Logo,
   MenuItemProps,
+  Popover,
   // MenuItemProps,
   // NotificationIcon,
 } from '../../atoms';
@@ -54,92 +55,109 @@ export const Topbar = ({
   callSearch,
 }: TopbarProps) => {
   // const [openOptionsMenu, setOpenOptionsMenu] = useState(false)
-  // const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
+  const [mobileSearchAnchor, setMobileSearchAnchor] = useState<HTMLElement | null>(null);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
   return (
-    <ClickAwayListener onClickAway={() => setShowSearch(!showSearch)}>
-      <FlexGrid
-        alignItems={'center'}
-        className={cls([
-          'w-full h-topbarMobileHeight desktop:h-topbarHeight bg-gray-8 p-3xl desktop:pl-0 dekstop:py-0 pr-3xl',
-          'gap-4 desktop:gap-8 relative',
-        ])}
-        component={'header'}
-        justify={'between'}
-        mobileDirection={'row'}
-      >
-        <Search
-          callSearch={callSearch}
-          className="hidden desktop:block"
-          searchResult={searchResults}
-          setSearchResults={setSearchResults}
-        />
-        <FlexGrid className={'desktop:hidden '} gap={'3xl'} mobileDirection="row">
-          <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
-          {showSearch && (
-            <Search
-              callSearch={callSearch}
-              className="absolute mt-16 left-0 top-0 w-full h-full z-20"
-              searchResult={searchResults}
-              setSearchResults={setSearchResults}
-            />
-          )}
-          <IconButton
-            active={showSearch}
-            align={'none'}
-            className={'shrink-0'}
-            icon={'SearchLg'}
-            onClick={() => setShowSearch(!showSearch)}
-            variant={'bordered'}
-          />
-        </FlexGrid>
-
-        <FlexGrid
-          alignItems={'center'}
-          className={'desktop:hidden whitespace-nowrap'}
-          gap={'md'}
-          mobileDirection={'row'}
-        >
-          {kpis.map((item, index) => (
-            <KeyValueComponent key={`key-value-${index + 1}`} {...item} />
-          ))}
-          <div className={'relative'}>
+    <FlexGrid
+      alignItems={'center'}
+      className={cls([
+        'w-full h-topbarMobileHeight desktop:h-topbarHeight bg-gray-8 p-3xl desktop:pl-0 dekstop:py-0 pr-3xl',
+        'gap-4 desktop:gap-8 relative',
+      ])}
+      component={'header'}
+      justify={'between'}
+      mobileDirection={'row'}
+      ref={setMobileSearchAnchor}
+    >
+      <Search
+        callSearch={callSearch}
+        className="hidden desktop:block"
+        searchResult={searchResults}
+        setSearchResults={setSearchResults}
+      />
+      <FlexGrid className={'desktop:hidden '} gap={'3xl'} mobileDirection="row">
+        <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
+        <Popover
+          isOpen={showSearch}
+          setIsOpen={setShowSearch}
+          customAnchor={mobileSearchAnchor}
+          button={
             <IconButton
-              active={openMobileMenu}
+              active={showSearch}
               align={'none'}
-              icon={'Menu'}
-              onClick={() => setOpenMobileMenu(!openMobileMenu)}
+              className={'shrink-0'}
+              icon={'SearchLg'}
+              onClick={() => setShowSearch(!showSearch)}
               variant={'bordered'}
             />
-            <Modal hideBackdrop open={openMobileMenu} style={{ pointerEvents: 'none' }}>
-              <Slide direction={'left'} in={openMobileMenu} mountOnEnter unmountOnExit>
-                <div style={{ pointerEvents: 'all' }}>
-                  <MobileMenu
-                    chainNetworkData={chainNetworkData}
-                    className={'absolute top-topbarMobileHeight left-0'}
-                    menuItems={mobileMenuItems}
-                    onClose={() => setOpenMobileMenu(false)}
-                  />
-                </div>
-              </Slide>
-            </Modal>
-          </div>
-        </FlexGrid>
-
-        <FlexGrid
-          className={'w-full hidden desktop:flex whitespace-nowrap'}
-          gap={'1.5xl'}
-          justify={'end'}
+          }
+          placement={'bottom-start'}
+          popperOptions={{
+            modifiers: [
+              {
+                name: 'offset',
+                options: {
+                  offset: [0, -60],
+                },
+              },
+            ],
+          }}
         >
-          {kpis.map((item, index) => (
-            <KeyValueComponent key={`key-value-${index + 1}`} {...item} />
-          ))}
-          <ChainNetworkPicker {...chainNetworkData} />
-          {/*<FlexGrid gap={"md"}>*/}
-          {/* todo uncomment when adding favourites */}
-          {/*<div className={"relative"}>
+          <Search
+            callSearch={callSearch}
+            className="absolute mt-16 left-0 top-0 w-screen h-full z-20"
+            searchResult={searchResults}
+            setSearchResults={setSearchResults}
+          />
+        </Popover>
+      </FlexGrid>
+
+      <FlexGrid
+        alignItems={'center'}
+        className={'desktop:hidden whitespace-nowrap'}
+        gap={'md'}
+        mobileDirection={'row'}
+      >
+        {kpis.map((item, index) => (
+          <KeyValueComponent key={`key-value-${index + 1}`} {...item} />
+        ))}
+        <div className={'relative'}>
+          <IconButton
+            active={openMobileMenu}
+            align={'none'}
+            icon={'Menu'}
+            onClick={() => setOpenMobileMenu(!openMobileMenu)}
+            variant={'bordered'}
+          />
+          <Modal hideBackdrop open={openMobileMenu} style={{ pointerEvents: 'none' }}>
+            <Slide direction={'left'} in={openMobileMenu} mountOnEnter unmountOnExit>
+              <div style={{ pointerEvents: 'all' }}>
+                <MobileMenu
+                  chainNetworkData={chainNetworkData}
+                  className={'absolute top-topbarMobileHeight left-0'}
+                  menuItems={mobileMenuItems}
+                  onClose={() => setOpenMobileMenu(false)}
+                />
+              </div>
+            </Slide>
+          </Modal>
+        </div>
+      </FlexGrid>
+
+      <FlexGrid
+        className={'w-full hidden desktop:flex whitespace-nowrap'}
+        gap={'1.5xl'}
+        justify={'end'}
+      >
+        {kpis.map((item, index) => (
+          <KeyValueComponent key={`key-value-${index + 1}`} {...item} />
+        ))}
+        <ChainNetworkPicker {...chainNetworkData} />
+        {/*<FlexGrid gap={"md"}>*/}
+        {/* todo uncomment when adding favourites */}
+        {/*<div className={"relative"}>
             <IconButton
               align={"none"}
               icon={"Heart"}
@@ -148,8 +166,8 @@ export const Topbar = ({
             />
             {newFavourite && <NotificationIcon className={"absolute top-0 right-0 pointer-events-none"} />}
           </div>*/}
-          {/* todo uncomment when adding lightmode or currency settings */}
-          {/*<ClickAwayListener onClickAway={() => setOpenOptionsMenu(false)}>
+        {/* todo uncomment when adding lightmode or currency settings */}
+        {/*<ClickAwayListener onClickAway={() => setOpenOptionsMenu(false)}>
             <div ref={setAnchorElement}>
               <IconButton
                 align={"none"}
@@ -164,9 +182,8 @@ export const Topbar = ({
               />
             </div>
           </ClickAwayListener>*/}
-          {/*</FlexGrid>*/}
-        </FlexGrid>
+        {/*</FlexGrid>*/}
       </FlexGrid>
-    </ClickAwayListener>
+    </FlexGrid>
   );
 };
