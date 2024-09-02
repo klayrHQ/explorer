@@ -13,4 +13,5 @@ export * from "./transaction/bannerCard";
 export * from "./transaction/bannerText";
 export * from "./validator/validatorBannerText";
 export * from "./validator/nextValidators";
+export * from "./stakes/calculator";
 

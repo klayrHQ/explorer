@@ -192,6 +192,13 @@ export const performanceStatsSelectOptions = [
   { value: 'lastYear', label: 'Last year' },
 ];
 
+export const calculatorOptions = [
+  { value: 'block', label: 'Block' },
+  { value: 'day', label: 'Day' },
+  { value: 'month', label: 'Month' },
+  { value: 'year', label: 'Year' },
+];
+
 export const performanceStats = [
   {
     title: 'Total Revenue',
