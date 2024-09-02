@@ -343,7 +343,7 @@ export const createValidatorsRows = (
                 //how to get the percentage?
                 <div className="flex justify-end">
                   <Typography color={'onBackgroundLow'}>
-                    {'{formatCommission(validator?.commission)}%'}
+                    {formatCommission(validator?.commission)}%
                   </Typography>
                 </div>
               ),
