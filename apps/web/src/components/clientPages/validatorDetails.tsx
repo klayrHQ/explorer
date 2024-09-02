@@ -86,7 +86,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       .then((data) => setValidators(data.data[0]))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [callGetValidators, id]);
+  }, [id]);
 
   useEffect(() => {
     if (validator && validator.account && validator.account.address) {
@@ -169,9 +169,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     validator,
     sortField,
     sortOrder,
-    callGetTransactions,
-    callGetEvents,
-    callGetBlocks,
     blockPageNumber,
     eventPageNumber,
     transactionPageNumber,

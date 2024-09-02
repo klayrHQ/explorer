@@ -71,7 +71,7 @@ export const Blocks = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [searchParams, sortOrder, sortField, network, newBlockEvent]);
+  }, [searchParams, sortOrder, sortField, network, newBlockEvent, blocks.length]);
 
   const tableHead = (
     onSortChange: (column: string) => void,
@@ -84,22 +84,22 @@ export const Blocks = () => {
     {
       children: (
         <SortingTitle
-          title="Height"
+          onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
-          onSortChange={onSortChange}
           sortValue="height"
+          title="Height"
         />
       ),
     },
     {
       children: (
         <SortingTitle
-          title="Date"
+          onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
-          onSortChange={onSortChange}
           sortValue="timestamp"
+          title="Date"
         />
       ),
     },

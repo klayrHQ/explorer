@@ -65,7 +65,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
     }
-  }, [id, block, sortField, sortOrder, callGetTransactions]);
+  }, [id, block, sortField, sortOrder]);
 
   useEffect(() => {
     if (block) {
@@ -77,7 +77,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
     }
-  }, [block, callGetEvents]);
+  }, [block]);
 
   const handleSort = (field: string) => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
