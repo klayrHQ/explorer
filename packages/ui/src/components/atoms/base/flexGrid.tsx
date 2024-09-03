@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import React, { CSSProperties, ReactNode } from 'react';
+import React, { CSSProperties, forwardRef, ReactNode, Ref } from 'react';
 import { cls } from '../../../utils/functions.ts';
 
 interface FlexGridProps extends React.HTMLAttributes<any> {
@@ -67,41 +67,47 @@ const flexGridStyles = cva(['flex'], {
   },
 });
 
-export const FlexGrid = ({
-  component = 'div',
-  direction,
-  mobileDirection,
-  wrap,
-  justify,
-  alignItems,
-  gap = '2',
-  onClick,
-  className,
-  children,
-  style,
-  ...props
-}: FlexGridProps) => {
-  const Component = component;
+export const FlexGrid = forwardRef(
+  (
+    {
+      component = 'div',
+      direction,
+      mobileDirection,
+      wrap,
+      justify,
+      alignItems,
+      gap = '2',
+      onClick,
+      className,
+      children,
+      style,
+      ...props
+    }: FlexGridProps,
+    ref: Ref<any>,
+  ) => {
+    const Component = component;
 
-  return (
-    <Component
-      {...props}
-      className={flexGridStyles({
-        wrap,
-        justify,
-        alignItems,
-        className: cls([
-          gap ? `gap-${gap}` : '',
-          className,
-          !mobileDirection
-            ? `flex-col desktop:flex-${direction ?? 'row'}`
-            : `flex-${mobileDirection} desktop:flex-${direction ?? 'row'}`,
-        ]),
-      })}
-      onClick={onClick}
-      style={style}
-    >
-      {children}
-    </Component>
-  );
-};
+    return (
+      <Component
+        {...props}
+        className={flexGridStyles({
+          wrap,
+          justify,
+          alignItems,
+          className: cls([
+            gap ? `gap-${gap}` : '',
+            className,
+            !mobileDirection
+              ? `flex-col desktop:flex-${direction ?? 'row'}`
+              : `flex-${mobileDirection} desktop:flex-${direction ?? 'row'}`,
+          ]),
+        })}
+        onClick={onClick}
+        style={style}
+        ref={ref}
+      >
+        {children}
+      </Component>
+    );
+  },
+);
