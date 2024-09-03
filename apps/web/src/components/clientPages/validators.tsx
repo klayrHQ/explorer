@@ -4,7 +4,7 @@ import { Button, DonutChart, FlexGrid } from '@repo/ui/atoms';
 import { NextValidators } from '@repo/ui/molecules';
 import { useEffect, useState } from 'react';
 import { validatorsTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import { createValidatorsRows } from '../../utils/helper.tsx';
+import { createValidatorsRows } from '../../utils/helpers/helper.tsx';
 import { useSocketStore } from '../../store/socketStore.ts';
 import { ChartDataType, ValidatorType } from '../../utils/types.ts';
 import {

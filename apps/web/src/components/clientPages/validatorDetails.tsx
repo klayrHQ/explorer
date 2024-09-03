@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { TabButtons, FlexGrid, Currency, Typography, CopyIcon } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
-import { fetchPaginatedData } from '../../utils/dataHelpers.tsx';
+import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import {
   transactionTableHead,
   validatorStakeIncomingTableHead,
@@ -19,7 +19,7 @@ import {
   createValidatorIncomingStakeRows,
   createValidatorOutgoingStakeRows,
   createValidatorBlockRows,
-} from '../../utils/helper.tsx';
+} from '../../utils/helpers/helper.tsx';
 import {
   EventsType,
   TransactionType,

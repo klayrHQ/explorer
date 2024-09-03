@@ -1,11 +1,11 @@
-import { BlockAssetType, TransactionType } from './types';
+import { BlockAssetType, TransactionType } from '../types';
 import { decode } from 'html-entities';
 import {
   BlocksQueryParams,
   EventsQueryParams,
   TransactionQueryParams,
   ValidatorQueryParams,
-} from './api/types';
+} from '../api/types';
 import { SkeletonComponent } from '@repo/ui/atoms';
 
 enum TransactionCommands {

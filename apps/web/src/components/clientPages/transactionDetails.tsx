@@ -12,9 +12,9 @@ import {
   CopyIcon,
 } from '@repo/ui/atoms';
 import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
-import { eventsTableHead } from '../../utils/constants.tsx';
+import { eventsTableHead } from '../../utils/helpers/tableHeaders.tsx';
 import Link from 'next/link';
-import { createEventsRows } from '../../utils/helper.tsx';
+import { createEventsRows } from '../../utils/helpers/helper.tsx';
 import { DataType } from '@repo/ui/types';
 import { EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';

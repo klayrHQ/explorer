@@ -4,7 +4,7 @@ import { FlexGrid, TabButtons } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useEffect, useState } from 'react';
 import { TransactionType, ValidatorType } from '../../utils/types';
-import { createStakesOverviewRows, createValidatorsRows } from '../../utils/helper';
+import { createStakesOverviewRows, createValidatorsRows } from '../../utils/helpers/helper';
 import {
   stakesOverviewTableHead,
   stakesCalculatorTableHead,
@@ -13,7 +13,7 @@ import { callGetTransactions, callGetValidators } from '../../utils/api/apiCalls
 import { useGatewayClientStore } from '../../store/clientStore';
 import { StakeFilters } from '../filterComponents/stakeFilters';
 import { TableCellType } from '@repo/ui/types';
-import { fetchPaginatedData } from '../../utils/dataHelpers';
+import { fetchPaginatedData } from '../../utils/helpers/dataHelpers';
 
 export const Stakes = () => {
   const [stakes, setStakes] = useState<TransactionType[]>([]);
