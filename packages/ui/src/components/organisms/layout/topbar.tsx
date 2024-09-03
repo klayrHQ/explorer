@@ -19,7 +19,6 @@ import {
   // OptionsMenu,
 } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
-import { ClickAwayListener, Popper } from '@mui/base';
 import { Modal, Slide } from '@mui/material';
 
 //import {ClickAwayListener} from "@mui/base";
@@ -99,7 +98,7 @@ export const Topbar = ({
               {
                 name: 'offset',
                 options: {
-                  offset: [0, -60],
+                  offset: [0, 4],
                 },
               },
             ],
@@ -107,7 +106,7 @@ export const Topbar = ({
         >
           <Search
             callSearch={callSearch}
-            className="absolute mt-16 left-0 top-0 w-screen h-full z-20"
+            className="absolute left-0 top-0 w-screen h-full z-20"
             searchResult={searchResults}
             setSearchResults={setSearchResults}
           />
