@@ -102,7 +102,7 @@ export const CustomSelect = ({
   };
 
   return (
-    <div>
+    <div className={'relative'}>
       <div>
         <button
           className={clsx(
