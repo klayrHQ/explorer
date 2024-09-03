@@ -76,7 +76,7 @@ export const Topbar = ({
         searchResult={searchResults}
         setSearchResults={setSearchResults}
       />
-      <FlexGrid className={'desktop:hidden '} gap={'3xl'} mobileDirection="row">
+      <FlexGrid alignItems={"center"} className={'desktop:hidden '} gap={'3xl'} mobileDirection="row">
         <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
         <Popover
           isOpen={showSearch}
