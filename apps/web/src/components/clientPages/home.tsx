@@ -1,13 +1,9 @@
 'use client';
 import { NewsCardGrid, PerformanceSection } from '@repo/ui/organisms';
-import {
-  newsItems,
-  performanceStats,
-  performanceStatsSelectOptions,
-} from '../../utils/constants.tsx';
+import { performanceStats, performanceStatsSelectOptions } from '../../utils/constants.tsx';
 import { FlexGrid } from '@repo/ui/atoms';
 import { useEffect, useState } from 'react';
-import { formatDate, cleanText } from '../../utils/dataHelpers.tsx';
+import { formatDate, cleanText } from '../../utils/helpers/dataHelpers.tsx';
 
 export const Home = () => {
   const [news, setNews] = useState([]);

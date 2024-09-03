@@ -2,9 +2,9 @@
 import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useEffect, useState } from 'react';
-import { transactionTableHead } from '../../utils/constants.tsx';
+import { transactionTableHead } from '../../utils/helpers/tableHeaders';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { createTransactionRows } from '../../utils/helper.tsx';
+import { createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { TransactionType } from '../../utils/types.ts';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
