@@ -5,7 +5,10 @@ import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useEffect, useState } from 'react';
 import { TransactionType, ValidatorType } from '../../utils/types';
 import { createStakesOverviewRows, createValidatorsRows } from '../../utils/helper';
-import { stakesOverviewTableHead, stakesCalculatorTableHead } from '../../utils/constants';
+import {
+  stakesOverviewTableHead,
+  stakesCalculatorTableHead,
+} from '../../utils/helpers/tableHeaders';
 import { callGetTransactions, callGetValidators } from '../../utils/api/apiCalls';
 import { useGatewayClientStore } from '../../store/clientStore';
 import { StakeFilters } from '../filterComponents/stakeFilters';

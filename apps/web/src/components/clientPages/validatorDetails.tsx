@@ -12,7 +12,7 @@ import {
   validatorStakeOutgoingTableHead,
   validatorBlocksTableHead,
   validatorEventsTableHead,
-} from '../../utils/constants.tsx';
+} from '../../utils/helpers/tableHeaders.tsx';
 import {
   createTransactionRows,
   createValidatorEventsRow,

@@ -6,6 +6,7 @@ import {
   TransactionQueryParams,
   ValidatorQueryParams,
 } from './api/types';
+import { SkeletonComponent } from '@repo/ui/atoms';
 
 enum TransactionCommands {
   POS_STAKE = 'pos:stake',
@@ -51,4 +52,16 @@ export const fetchPaginatedData = async (
   const offset = (Number(pageNumber) - 1) * Number(defaultLimit);
   const updatedParams = { ...params, limit: defaultLimit, offset };
   return callFunction(updatedParams);
+};
+
+export const getTableSkeletons = (cells: number) => {
+  return Array.from({ length: 10 }, (_) => {
+    return {
+      cells: Array.from({ length: cells }, (_) => {
+        return {
+          children: <SkeletonComponent height="6" width="full" />,
+        };
+      }),
+    };
+  });
 };

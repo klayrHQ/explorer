@@ -14,13 +14,14 @@ import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { TableCellType } from '@repo/ui/types';
 import Link from 'next/link';
 import { dayjs, fromNowFormatter, handleCopy, shortString } from '@repo/ui/utils';
-import { getTableSkeletons } from '../../utils/constants.tsx';
+import { getTableSkeletons } from '../../utils/dataHelpers.tsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
 import { BlockDetailsType } from '../../utils/types.ts';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
 import { callGetBlocks } from '../../utils/api/apiCalls.tsx';
 import { useSocketStore } from '../../store/socketStore.ts';
+import { blockTableHead } from '../../utils/helpers/tableHeaders.tsx';
 
 export const Blocks = () => {
   const defaultLimit = '10';
@@ -72,53 +73,6 @@ export const Blocks = () => {
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   }, [searchParams, sortOrder, sortField, network, newBlockEvent, blocks.length]);
-
-  const tableHead = (
-    onSortChange: (column: string) => void,
-    sortField: string,
-    sortOrder: string,
-  ): TableCellType[] => [
-    {
-      children: 'Block ID',
-    },
-    {
-      children: (
-        <SortingTitle
-          onSortChange={onSortChange}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          sortValue="height"
-          title="Height"
-        />
-      ),
-    },
-    {
-      children: (
-        <SortingTitle
-          onSortChange={onSortChange}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          sortValue="timestamp"
-          title="Date"
-        />
-      ),
-    },
-    {
-      children: 'Generator',
-    },
-    {
-      children: 'Seed reveal',
-    },
-    {
-      children: 'Transactions',
-    },
-    {
-      children: 'Events',
-    },
-    {
-      children: 'Assets',
-    },
-  ];
 
   const rows = !loading
     ? blocks?.map((block) => {
@@ -209,7 +163,7 @@ export const Blocks = () => {
           ],
         };
       })
-    : getTableSkeletons(tableHead.length);
+    : getTableSkeletons(blockTableHead.length);
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
@@ -220,7 +174,7 @@ export const Blocks = () => {
       />
       <TableContainer
         currentNumber={pageNumber}
-        headCols={tableHead(handleSort, sortField, sortOrder)}
+        headCols={blockTableHead(handleSort, sortField, sortOrder)}
         keyPrefix={'blocks'}
         pagination
         rows={rows}
