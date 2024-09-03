@@ -40,7 +40,7 @@ export const BannerText = ({
   const fromNowPrefix = dayjs().diff(date, 'hour') >= 1 ? 'on' : 'over';
 
   return (
-    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5">
+    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth max-w-full flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
       <UserAccountCard
         address={senderAddress}
@@ -88,7 +88,7 @@ export const BannerText = ({
       {/* MODULE COMMAND */}
       <Badge
         borderColor="gray-1"
-        className="flex-grow-0 capitalize"
+        className="flex-grow-0 capitalize max-w-full truncate"
         colorVariant={badgeColor || 'green'}
         label={replaceColonWithSpace(moduleCommand ?? '')}
       />
