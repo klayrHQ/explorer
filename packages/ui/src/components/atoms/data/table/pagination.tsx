@@ -6,6 +6,7 @@ import { IconButton } from '../../input/iconButton';
 import { Typography } from '../../base/typography';
 import { Input } from '../../input/input';
 import { useState, useEffect } from 'react';
+import { PageLimit } from './pageLimit';
 
 interface NumberListProps {
   totalPages: number;
@@ -71,8 +72,9 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
   };
 
   return (
-    <div className="flex justify-between w-full ">
-      <div className="w-full flex flex-col gap-3 items-end desktop:flex-row desktop:items-center desktop:gap-6">
+    <div className="flex justify-between w-full relative ">
+      <PageLimit pageLimit={10} setPageLimit={() => {}} />
+      <div className="w-full flex flex-col gap-3 items-end justify-center desktop:flex-row desktop:items-center desktop:gap-6">
         {/* DESKTOP PAGINATION */}
         <div className="gap-0.5 hidden desktop:flex">
           {displayPages().map((number, index) => (
