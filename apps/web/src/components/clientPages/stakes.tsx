@@ -3,7 +3,7 @@
 import { FlexGrid, TabButtons } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useEffect, useState } from 'react';
-import { TransactionType, ValidatorType } from '../../utils/types';
+import { StakesCalculatorPeriodType, TransactionType, ValidatorType } from '../../utils/types';
 import { createStakesOverviewRows, createValidatorsRows } from '../../utils/helpers/helper';
 import {
   stakesOverviewTableHead,
@@ -25,6 +25,9 @@ export const Stakes = () => {
   const [rowsPerPage, setRowsPerPage] = useState<number>(21);
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
+  const [stakeCalculatorAmount, setStakeCalculatorAmount] = useState<number>(1000);
+  const [stakeCalculatorPeriod, setStakeCalculatorPeriod] =
+    useState<StakesCalculatorPeriodType>('day');
 
   const network = useGatewayClientStore((state) => state.network);
 
@@ -101,7 +104,15 @@ export const Stakes = () => {
       content: (
         <TableContainer
           currentNumber={calculatorPageNumber}
-          filtersComponent={<StakeFilters />}
+          filtersComponent={
+            <StakeFilters
+              calculatorProps={{
+                amount: stakeCalculatorAmount,
+                setAmount: setStakeCalculatorAmount,
+                setPeriod: setStakeCalculatorPeriod,
+              }}
+            />
+          }
           headCols={stakesCalculatorTableHead(handleSort, sortField, sortOrder)}
           keyPrefix={'stakes'}
           pagination

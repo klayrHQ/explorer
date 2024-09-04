@@ -153,3 +153,5 @@ export interface ChartDataType {
   label: string;
   value: number;
 }
+
+export type StakesCalculatorPeriodType = 'block' | 'day' | 'month' | 'year' | string;
