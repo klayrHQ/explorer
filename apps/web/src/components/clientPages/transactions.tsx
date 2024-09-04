@@ -1,9 +1,9 @@
 'use client';
 import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
-import { transactionTableHead } from '../../utils/constants.tsx';
 import { useSearchParams } from 'next/navigation';
-import { createTransactionRows } from '../../utils/helper.tsx';
+import { transactionTableHead } from '../../utils/helpers/tableHeaders';
+import { createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
 

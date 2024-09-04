@@ -147,7 +147,7 @@ const spacing = {
   '4xl': '32px',
   '4.5xl': '36px',
   '5xl': '48px',
-  sidebarMinSpacing: '22px',
+  sidebarMinSpacing: '20px',
 };
 
 //Note: some of these values are used in theme.css as well. If you change these values, make sure to update theme.css as well.

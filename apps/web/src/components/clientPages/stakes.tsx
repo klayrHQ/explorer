@@ -2,13 +2,16 @@
 
 import { FlexGrid, TabButtons } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
-import { createStakesOverviewRows, createValidatorsRows } from '../../utils/helper';
-import { stakesOverviewTableHead, stakesCalculatorTableHead } from '../../utils/constants';
+import { createStakesOverviewRows, createValidatorsRows } from '../../utils/helpers/helper';
+import {
+  stakesOverviewTableHead,
+  stakesCalculatorTableHead,
+} from '../../utils/helpers/tableHeaders';
 import { callGetTransactions, callGetValidators } from '../../utils/api/apiCalls';
 import { StakeFilters } from '../filterComponents/stakeFilters';
 import { TableCellType } from '@repo/ui/types';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting';
-
+  
 export const Stakes = () => {
   const {
     data: stakes,

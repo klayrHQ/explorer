@@ -23,14 +23,6 @@ export const PerformanceSection = ({
     <FlexGrid className={'w-full'} component="article" direction="col" gap="6">
       <div className="w-full flex items-center justify-between ">
         <SectionHeader
-          className={'hidden desktop:flex'}
-          href={href}
-          linkComponent={linkComponent}
-          title={'Performance'}
-          titleSize={'sm'}
-        />
-        <SectionHeader
-          className={'flex desktop:hidden'}
           href={href}
           linkComponent={linkComponent}
           title={'Performance'}

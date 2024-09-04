@@ -17,10 +17,10 @@ import {
   Typography,
   CopyIcon,
 } from '@repo/ui/atoms';
-import { eventsTableHead, transactionTableHead } from '../../utils/constants.tsx';
-import { createEventsRows, createTransactionRows } from '../../utils/helper.tsx';
+import { eventsTableHead, transactionTableHead } from '../../utils/helpers/tableHeaders.tsx';
+import { createEventsRows, createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { DataType } from '@repo/ui/types';
-import { getSeedRevealFromAssets } from '../../utils/dataHelpers.tsx';
+import { getSeedRevealFromAssets } from '../../utils/helpers/dataHelpers.tsx';
 import { BlockDetailsType, EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetBlocks, callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
 

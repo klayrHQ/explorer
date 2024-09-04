@@ -1,4 +1,4 @@
-import { BlockType, EventsType, TransactionType, ValidatorType } from './types.ts';
+import { BlockType, EventsType, TransactionType, ValidatorType } from '../types.ts';
 import {
   dayjs,
   fromNowFormatter,
@@ -23,17 +23,16 @@ import {
 } from '@repo/ui/atoms';
 import Link from 'next/link';
 import React from 'react';
+import { commandColors, decimals } from '../constants.tsx';
+import { getTableSkeletons } from './dataHelpers.tsx';
 import {
-  commandColors,
-  decimals,
   eventsTableHead,
-  getTableSkeletons,
-  transactionTableHead,
   validatorsTableHead,
   validatorBlocksTableHead,
   validatorStakeIncomingTableHead,
   validatorStakeOutgoingTableHead,
-} from './constants.tsx';
+  transactionTableHead,
+} from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
 

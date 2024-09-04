@@ -47,7 +47,7 @@ export const TransactionBanner = ({
 }: TransactionBannerProps) => {
   return (
     <BannerFrame image={image}>
-      <div className="items-start justify-start flex flex-col">
+      <div className="items-start justify-start w-full flex flex-col">
         <FlexGrid alignItems="center" direction="row" gap="4" justify="start" mobileDirection="row">
           <Link href="/transactions">
             {' '}
