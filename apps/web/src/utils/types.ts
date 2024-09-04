@@ -153,3 +153,32 @@ export interface ChartDataType {
   label: string;
   value: number;
 }
+
+export interface NodeInfoType {
+  version: string;
+  networkVersion: string;
+  chainID: string;
+  lastBlockID: string;
+  height: number;
+  finalizedHeight: number;
+  syncing: boolean;
+  unconfirmedTransactions: number;
+  genesisHeight: number;
+  genesis: GenesisType;
+  network: {
+    version: string;
+    port: number;
+    seedPeers: string[];
+  }
+}
+
+export interface GenesisType {
+  block: {
+    fromFile: string;
+  };
+  blockTime: number;
+  bftBatchSize: number;
+  maxTransactionsSize: number;
+  minimumCertifyHeight: number;
+  chainID: string
+}
