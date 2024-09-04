@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from '../store/clientStore.ts';
+import { NodeInfoType } from '../utils/types.ts';
+import { callGetNodeInfo } from '../utils/api/apiCalls.tsx';
 
 type NetworkType = {
   networkId: string;
@@ -23,6 +25,7 @@ export interface ChainNetworkContextProps {
   setCurrentNetwork: (network: NetworkType) => void;
   chains?: ChainType[];
   networks?: NetworkType[];
+  nodeInfo?: NodeInfoType;
 }
 
 export const ChainNetworkContext = createContext<ChainNetworkContextProps>(
@@ -35,6 +38,7 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
   const [currentNetwork, setCurrentNetworkID] = useState<NetworkType>(defaultChain.networks[0]);
   const [chains, setChains] = useState<ChainType[]>([]);
   const [networks, setNetworks] = useState<NetworkType[]>([]);
+  const [nodeInfo, setNodeInfo] = useState<NodeInfoType>();
 
   const [loading, setLoading] = useState<boolean>(false);
   const setBaseURL = useGatewayClientStore((state) => state.setBaseURL);
@@ -83,13 +87,12 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChain]);
 
-  // save currentChain to local storage
-
-  // setCurrentChain from local storage if available
-
-  // save currentNetwork to local storage
-
-  // set currentNetwork from local storage if available
+  useEffect(() => {
+    callGetNodeInfo().then((data) => {
+      setNodeInfo(data as unknown as NodeInfoType);
+      console.log(data);
+    });
+  }, []);
 
   return (
     <ChainNetworkContext.Provider
@@ -100,6 +103,7 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
         setCurrentNetwork,
         chains,
         networks,
+        nodeInfo,
       }}
     >
       {children}

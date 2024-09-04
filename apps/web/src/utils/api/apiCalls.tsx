@@ -3,7 +3,7 @@ import {
   BlockDetailsType,
   ChartDataType,
   EventsType,
-  GatewayRes,
+  GatewayRes, NodeInfoType,
   TransactionType,
   ValidatorType,
 } from '../types';
@@ -66,3 +66,7 @@ export const callGetNextValidators = async (): Promise<GatewayRes<NextValidatorT
 export const callGetChartData = async (): Promise<GatewayRes<ChartDataType[]>> => {
   return apiCall<ChartDataType[]>('pos/validators/status-count');
 };
+
+export const callGetNodeInfo = async (): Promise<GatewayRes<NodeInfoType>> => {
+  return apiCall<NodeInfoType>('node/info');
+}

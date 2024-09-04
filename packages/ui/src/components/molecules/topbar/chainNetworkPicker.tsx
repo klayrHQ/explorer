@@ -71,6 +71,19 @@ export const ChainNetworkPicker = ({
     setIsModalOpen(true);
   };
 
+  let currentNetworkStatusClass;
+
+  switch (currentNetwork.syncing) {
+    case false:
+      currentNetworkStatusClass = 'successful';
+      break;
+    case true:
+      currentNetworkStatusClass = 'pending';
+      break;
+    default:
+      currentNetworkStatusClass = 'failed';
+  }
+
   return (
     <FlexGrid>
       <FlexGrid gap="1.5xl" mobileDirection={'row'} onClick={handleOpen}>
@@ -90,7 +103,7 @@ export const ChainNetworkPicker = ({
         <KeyValueComponent
           contentValue={currentNetwork?.networkName || 'Select network'}
           hover
-          keyValue={<StatusIcon connected={currentNetwork?.connected} />}
+          keyValue={<StatusIcon status={currentNetworkStatusClass} />}
         />
       </FlexGrid>
       <Modal

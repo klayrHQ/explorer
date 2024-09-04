@@ -142,7 +142,7 @@ export type ChainType = {
 export type NetworkType = {
   networkId: string;
   networkName: string;
-  connected?: boolean;
+  syncing?: boolean | null;
 };
 
 export type TableCellType = {
