@@ -12,9 +12,17 @@ interface NumberListProps {
   totalPages: number;
   currentNumber: number;
   setCurrentNumber: (number: number) => void;
+  defaultValue: string;
+  onPerPageChange: (value: string) => void;
 }
 
-export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: NumberListProps) => {
+export const Pagination = ({
+  totalPages,
+  currentNumber,
+  setCurrentNumber,
+  defaultValue = '10',
+  onPerPageChange,
+}: NumberListProps) => {
   const [pageNumber, setPageNumber] = useState('');
 
   const generatePageArray = (totalPages: number) => {
@@ -71,9 +79,13 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
     }
   };
 
+  const handlePerPageChange = (value: string) => {
+    onPerPageChange(value);
+  };
+
   return (
     <div className="flex justify-between w-full relative ">
-      <PageLimit pageLimit={10} setPageLimit={() => {}} />
+      <PageLimit defaultValue={defaultValue} onPerPageChange={handlePerPageChange} />
       <div className="w-full flex flex-col gap-3 items-end justify-center desktop:flex-row desktop:items-center desktop:gap-6">
         {/* DESKTOP PAGINATION */}
         <div className="gap-0.5 hidden desktop:flex">

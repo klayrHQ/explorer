@@ -21,13 +21,21 @@ export const Transactions = () => {
   const [pageNumber, setPageNumber] = useState<number>(Number(searchParams.get('page')) || 1);
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
-  const defaultLimit = '10';
-
+  const [limit, setLimit] = useState<string>(searchParams.get('limit') || '10');
   const network = useGatewayClientStore((state) => state.network);
+
+  const updateURL = (pageNumber: number, limit: string) => {
+    router.push(pathname + '?' + `page=${pageNumber}` + `&limit=${limit}`);
+  };
 
   const handleSetPageNumber = async (number: number) => {
     setPageNumber(number);
-    router.push(pathname + '?' + `page=${number}`);
+    updateURL(number, limit);
+  };
+
+  const handlePageLimit = (value: string) => {
+    setLimit(value);
+    updateURL(pageNumber, value);
   };
 
   const handleSort = (field: string) => {
@@ -38,7 +46,6 @@ export const Transactions = () => {
 
   useEffect(() => {
     setLoading(true);
-    const limit = searchParams.get('limit') || defaultLimit;
     const page = Number(searchParams.get('page')) || 1;
     const offset = (page - 1) * Number(limit);
     const params: any = {
@@ -55,7 +62,7 @@ export const Transactions = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [searchParams, sortField, sortOrder, network]);
+  }, [searchParams, sortField, sortOrder, network, limit]);
 
   const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
 
@@ -68,12 +75,14 @@ export const Transactions = () => {
       />
       <TableContainer
         currentNumber={pageNumber}
+        defaultValue={limit}
         headCols={transactionTableHead(handleSort, sortField, sortOrder)}
         keyPrefix={'transactions'}
+        onPerPageChange={handlePageLimit}
         pagination
         rows={rows}
         setCurrentNumber={handleSetPageNumber}
-        totalPages={Math.ceil(totalTxs / Number(defaultLimit))}
+        totalPages={Math.ceil(totalTxs / Number(limit))}
       />
     </FlexGrid>
   );
