@@ -11,6 +11,9 @@ interface TableContainerProps extends TableProps {
   currentNumber?: number;
   setCurrentNumber?: (number: number) => void;
   totalPages?: number;
+  options?: { label: string; value: string }[];
+  defaultValue?: string;
+  onPerPageChange?: (value: string) => void;
 }
 
 export const TableContainer = ({
@@ -21,6 +24,9 @@ export const TableContainer = ({
   currentNumber,
   setCurrentNumber,
   totalPages,
+  options,
+  defaultValue,
+  onPerPageChange,
   ...props
 }: TableContainerProps) => {
   return (
@@ -42,6 +48,8 @@ export const TableContainer = ({
         <FlexGrid className={'px-3xl py-lg border-t-1 border-borderLow w-full'}>
           <Pagination
             currentNumber={currentNumber || 0}
+            defaultValue={defaultValue || ''}
+            onPerPageChange={onPerPageChange || (() => {})}
             setCurrentNumber={setCurrentNumber || (() => {})}
             totalPages={totalPages || 0}
           />

@@ -6,14 +6,23 @@ import { IconButton } from '../../input/iconButton';
 import { Typography } from '../../base/typography';
 import { Input } from '../../input/input';
 import { useState, useEffect } from 'react';
+import { PageLimit } from './pageLimit';
 
 interface NumberListProps {
   totalPages: number;
   currentNumber: number;
   setCurrentNumber: (number: number) => void;
+  defaultValue: string;
+  onPerPageChange: (value: string) => void;
 }
 
-export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: NumberListProps) => {
+export const Pagination = ({
+  totalPages,
+  currentNumber,
+  setCurrentNumber,
+  defaultValue = '10',
+  onPerPageChange,
+}: NumberListProps) => {
   const [pageNumber, setPageNumber] = useState('');
 
   const generatePageArray = (totalPages: number) => {
@@ -70,9 +79,14 @@ export const Pagination = ({ totalPages, currentNumber, setCurrentNumber }: Numb
     }
   };
 
+  const handlePerPageChange = (value: string) => {
+    onPerPageChange(value);
+  };
+
   return (
-    <div className="flex justify-between w-full ">
-      <div className="w-full flex flex-col gap-3 items-end desktop:flex-row desktop:items-center desktop:gap-6">
+    <div className="flex justify-between w-full relative ">
+      <PageLimit defaultValue={defaultValue} onPerPageChange={handlePerPageChange} />
+      <div className="w-full flex flex-col gap-3 items-end justify-center desktop:flex-row desktop:items-center desktop:gap-6">
         {/* DESKTOP PAGINATION */}
         <div className="gap-0.5 hidden desktop:flex">
           {displayPages().map((number, index) => (
