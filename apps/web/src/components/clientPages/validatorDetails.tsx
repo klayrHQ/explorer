@@ -33,6 +33,7 @@ import {
   callGetTransactions,
   callGetValidators,
 } from '../../utils/api/apiCalls.tsx';
+import { formatCommission } from '../../utils/helpers/dataHelpers.tsx';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -186,6 +187,13 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     return { label: { label }, value, mobileWidth };
   };
 
+  const stakeCapacity = (
+    (Number(validator?.validatorWeight) / Number(validator?.selfStake)) *
+    10
+  ).toFixed(2);
+  console.log(stakeCapacity);
+  const totalReceivedStake = Number(validator?.totalStake) + Number(validator?.selfStake);
+
   const details = [
     createDetails(
       'Validator ID',
@@ -202,7 +210,10 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       </div>,
       'half',
     ),
-    createDetails('Nonce', ' - '),
+    createDetails(
+      'Nonce',
+      <Typography variant={'paragraph-sm'}>{validator?.account.nonce}</Typography>,
+    ),
     createDetails('Token', 'KLY', 'half'),
     createDetails('Active chain', 'Klayr-mainchain', 'half'),
     createDetails(
@@ -229,11 +240,18 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     ),
     createDetails(
       'Stake capacity',
-      <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />,
+      <div className="flex flex-row gap-1 items-baseline ">
+        <Typography variant={'paragraph-sm'}>{stakeCapacity}</Typography>
+        <Typography variant={'paragraph-sm'}>{'%'}</Typography>
+      </div>,
     ),
     createDetails(
       'Total received stake',
-      <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />,
+      <Currency
+        amount={totalReceivedStake || 0}
+        className={'truncate max-w-full'}
+        symbol={'KLY'}
+      />,
     ),
     createDetails(
       'Self stake',
@@ -245,35 +263,45 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     ),
     createDetails(
       'Commission',
-      <div className="flex items-center gap-1">
-        <Currency
-          amount={validator?.commission || 0}
-          className={'truncate max-w-full'}
-          decimals={5}
-          symbol={'KLY'}
-        />
-        {'|'}
-        <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
-      </div>,
+
+      <Typography variant={'paragraph-sm'}>{formatCommission(validator?.commission)}%</Typography>,
     ),
     createDetails('Last commission increase', validator?.lastCommissionIncreaseHeight),
     createDetails(
       'Total rewards',
       <div className="flex items-center gap-1">
-        <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />
-        {'|'}
-        <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
+        <Currency
+          amount={validator?.totalRewards || 0}
+          className={'truncate max-w-full'}
+          decimals={2}
+          symbol={'KLY'}
+        />
       </div>,
     ),
     createDetails(
       'Total self stake rewards',
       <div className="flex items-center gap-1">
-        <Currency amount={''} className={'truncate max-w-full'} symbol={'KLY'} />
-        {'|'}
-        <Typography variant={'paragraph-sm'}>{'- %'}</Typography>
+        <Currency
+          amount={validator?.totalSelfStakeRewards || 0}
+          className={'truncate max-w-full'}
+          decimals={2}
+          symbol={'KLY'}
+        />
       </div>,
     ),
-    createDetails('Dynamic block rewards', ' - '),
+    createDetails(
+      'Total shared rewards',
+      <Currency
+        amount={validator?.totalSharedRewards || 0}
+        className={'truncate max-w-full'}
+        decimals={2}
+        symbol={'KLY'}
+      />,
+    ),
+    createDetails(
+      'Dynamic block rewards',
+      <Currency amount={validator?.blockReward || 0} decimals={4} symbol={'KLY'} />,
+    ),
     createDetails('Last generated heights', validator?.lastGeneratedHeight),
     createDetails('Max height generated', ' - '),
     createDetails('Max height prevoted', ' - '),
@@ -282,7 +310,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     createDetails('Consecutive missed blocks', validator?.consecutiveMissedBlocks),
     createDetails('Ratio blocks forged/missed', ' -  / - '),
     createDetails('Punishments', ' - '),
-    createDetails('Blockchain version', ' - '),
   ];
 
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');

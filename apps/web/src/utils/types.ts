@@ -132,6 +132,8 @@ export interface ValidatorType {
   nextAllocatedTime?: number;
   totalRewards: string;
   blockReward: string;
+  totalSelfStakeRewards: string;
+  totalSharedRewards: string;
 }
 
 
@@ -145,6 +147,7 @@ export interface AccountType {
   address: string;
   publicKey: string;
   name: string;
+  nonce: string;
 }
 
 
