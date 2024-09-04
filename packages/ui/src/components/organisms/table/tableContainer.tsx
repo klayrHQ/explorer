@@ -50,7 +50,6 @@ export const TableContainer = ({
             currentNumber={currentNumber || 0}
             defaultValue={defaultValue || ''}
             onPerPageChange={onPerPageChange || (() => {})}
-            options={options || []}
             setCurrentNumber={setCurrentNumber || (() => {})}
             totalPages={totalPages || 0}
           />
