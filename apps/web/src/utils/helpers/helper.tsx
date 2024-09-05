@@ -24,7 +24,7 @@ import {
 import Link from 'next/link';
 import React from 'react';
 import { commandColors, decimals } from '../constants.tsx';
-import { getTableSkeletons } from './dataHelpers.tsx';
+import { getSeedRevealFromAssets, getTableSkeletons } from './dataHelpers.tsx';
 import {
   eventsTableHead,
   validatorsTableHead,
@@ -32,6 +32,7 @@ import {
   validatorStakeIncomingTableHead,
   validatorStakeOutgoingTableHead,
   transactionTableHead,
+  blockTableHead,
 } from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
@@ -597,4 +598,105 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
         };
       })
     : getTableSkeletons(validatorStakeIncomingTableHead.length);
+};
+
+export const createBlockRows = (
+  blocks: BlockType[],
+  loading: boolean,
+  copyTooltipText: string,
+  setCopyTooltipText: (text: string) => void,
+) => {
+  return !loading
+    ? blocks?.map((block) => {
+        console.log('blocks', block.assets);
+        return {
+          cells: [
+            {
+              children: (
+                <KeyValueComponent
+                  contentValue={
+                    <Link href={`/blocks/${block.id}`}>
+                      <Typography link>{shortString(block.id, 12, 'center')}</Typography>
+                    </Link>
+                  }
+                  keyValue={<StatusIcon connected={block.isFinal} />}
+                />
+              ),
+            },
+            {
+              children: (
+                <Typography
+                  className={'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer'}
+                  color={'onBackgroundLow'}
+                >
+                  {block?.height?.toLocaleString() ?? ''}
+                  <Tooltip placement={'bottom'} text={copyTooltipText}>
+                    <span
+                      className={'w-4 block'}
+                      onClick={() =>
+                        handleCopy(block?.height?.toString() ?? '', setCopyTooltipText)
+                      }
+                    >
+                      <Icon
+                        className={'desktop:group-hover/child:inline desktop:hidden cursor-pointer'}
+                        icon={'Copy'}
+                        size={'2xs'}
+                      />
+                    </span>
+                  </Tooltip>
+                </Typography>
+              ),
+              className: 'group/child min-w-[120px]',
+            },
+            {
+              children: (
+                <div className="flex items-center">
+                  <Tooltip
+                    placement={'top'}
+                    text={dayjs((block.timestamp ?? 0) * 1000).format('DD MMM YYYY HH:mm')}
+                  >
+                    <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
+                      {fromNowFormatter((block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
+                    </Typography>
+                  </Tooltip>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <UserAccountCard address={block.generator.address} name={block.generator.name} />
+              ),
+            },
+            {
+              children: (
+                <Typography color={'onBackgroundLow'}>
+                  {shortString(getSeedRevealFromAssets(block.assets), 12, 'center')}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color={'onBackgroundLow'}>
+                  {(block.numberOfTransactions || 0).toLocaleString()}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color={'onBackgroundLow'}>
+                  {(block.numberOfEvents || 0).toLocaleString()}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color={'onBackgroundLow'}>
+                  {(block.numberOfAssets || 0).toLocaleString()}
+                </Typography>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(blockTableHead.length);
 };
