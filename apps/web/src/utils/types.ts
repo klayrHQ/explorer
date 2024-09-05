@@ -31,6 +31,10 @@ export interface TransactionType {
 }
 
 export interface BlockType {
+  assets: BlockAssetType[];
+  numberOfAssets: number;
+  numberOfEvents: number;
+  generator: any;
   id: string;
   height?: number;
   timestamp?: number;
