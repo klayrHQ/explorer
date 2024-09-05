@@ -25,9 +25,10 @@ export const Stakes = () => {
   const [rowsPerPage, setRowsPerPage] = useState<number>(21);
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
-  const [stakeCalculatorAmount, setStakeCalculatorAmount] = useState<number>(1000);
-  const [stakeCalculatorPeriod, setStakeCalculatorPeriod] =
-    useState<StakesCalculatorPeriodType>('day');
+  const [stakingCalculatorAmount, setStakingCalculatorAmount] = useState<number>(1000);
+  const [stakingCalculatorPeriod, setStakingCalculatorPeriod] =
+    useState<StakesCalculatorPeriodType>('month');
+  const [totalActiveStake, setTotalActiveStake] = useState<bigint>(BigInt(0));
 
   const network = useGatewayClientStore((state) => state.network);
 
@@ -75,8 +76,20 @@ export const Stakes = () => {
     Promise.all([calculatorPromise, overviewPromise]).finally(() => setLoading(false));
   }, [sortField, sortOrder, calculatorPageNumber, overviewPageNumber, rowsPerPage, network]);
 
+  useEffect(() => {
+    callGetValidators({}).then((data) => {
+      setTotalActiveStake(
+        data.data.filter((v: ValidatorType) => v.rank <= 51).reduce((acc, val) => acc + BigInt(val.totalStake), BigInt(0)),
+      );
+    });
+  }, []);
+
   const rowsOverview = createStakesOverviewRows(stakes, loading);
-  const rowCalculator = createValidatorsRows(validators, loading, true).map((row) => ({
+  const rowCalculator = createValidatorsRows(validators, loading, true, {
+    stakingCalculatorAmount,
+    stakingCalculatorPeriod,
+    totalActiveStake,
+  }).map((row) => ({
     cells: row.cells.filter((cell) => cell !== null) as TableCellType[],
   }));
 
@@ -107,9 +120,9 @@ export const Stakes = () => {
           filtersComponent={
             <StakeFilters
               calculatorProps={{
-                amount: stakeCalculatorAmount,
-                setAmount: setStakeCalculatorAmount,
-                setPeriod: setStakeCalculatorPeriod,
+                amount: stakingCalculatorAmount,
+                setAmount: setStakingCalculatorAmount,
+                setPeriod: setStakingCalculatorPeriod,
               }}
             />
           }

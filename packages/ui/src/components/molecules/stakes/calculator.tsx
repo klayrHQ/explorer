@@ -23,7 +23,7 @@ export const Calculator = ({ amount, setAmount, options, setPeriod }: Calculator
           type="text"
           inputMode={'numeric'}
           value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
+          onChange={(e) => !isNaN(Number(e.target.value)) && setAmount(parseInt(e.target.value))}
         />
       </div>
       <div className="">
