@@ -31,9 +31,10 @@ export interface TransactionType {
 }
 
 export interface BlockType {
-  numberOfAssets: any;
-  numberOfEvents: any;
+
   assets: BlockAssetType[];
+  numberOfAssets: number;
+  numberOfEvents: number;
   generator: any;
   id: string;
   height?: number;
@@ -135,6 +136,8 @@ export interface ValidatorType {
   nextAllocatedTime?: number;
   totalRewards: string;
   blockReward: string;
+  totalSelfStakeRewards: string;
+  totalSharedRewards: string;
 }
 
 
@@ -148,6 +151,7 @@ export interface AccountType {
   address: string;
   publicKey: string;
   name: string;
+  nonce: string;
 }
 
 

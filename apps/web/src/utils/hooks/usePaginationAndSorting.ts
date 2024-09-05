@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
 import { usePathname, useRouter, } from 'next/navigation';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
+import { useSocketStore } from '../../store/socketStore.ts';
+
 
 
 interface UsePaginationAndSortingProps {
@@ -10,6 +12,8 @@ interface UsePaginationAndSortingProps {
   initialSortField?: string;
   initialSortOrder?: string;
     changeURL?: boolean;
+    searchParams?: Record<string, any>;
+
 }
 
 export const usePaginationAndSorting = ({
@@ -18,6 +22,7 @@ export const usePaginationAndSorting = ({
   initialSortField = '',
   initialSortOrder = '',
   changeURL,
+  searchParams = {},
 }: UsePaginationAndSortingProps) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -38,6 +43,8 @@ export const usePaginationAndSorting = ({
   );
 
   const network = useGatewayClientStore((state) => state.network);
+  const newBlockEvent = useSocketStore((state) => state.height);
+
 
 
   const fetchData = useCallback(
@@ -47,6 +54,7 @@ export const usePaginationAndSorting = ({
       const params: any = {
         limit,
         offset,
+        ...searchParams, 
       };
       if (sortField && sortOrder) {
         params.sort = `${sortField}:${sortOrder}`;
@@ -61,7 +69,7 @@ export const usePaginationAndSorting = ({
         setLoading(false);
       }
     }, 300),
-    [pageNumber, limit, sortField, sortOrder, fetchFunction, network]
+    [pageNumber, limit, sortField, sortOrder, fetchFunction, network, newBlockEvent,]
   );
 
   useEffect(() => {
