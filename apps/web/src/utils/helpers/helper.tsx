@@ -571,25 +571,59 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
               children: (
                 <>
                   <div className="flex flex-col ">
-                    {stake?.params?.stakes?.map((param: any) => {
-                      const amount = param?.amount;
-                      const color = amount > 0 ? 'success' : 'error';
-                      return (
-                        // eslint-disable-next-line react/jsx-key
-                        <div className="flex items-center justify-between gap-8 w-72 -m-0.5">
-                          <UserAccountCard address={param?.validatorAddress} />
-                          <Currency
-                            amount={amount}
-                            className="text-right self-end"
-                            color={color}
-                            decimals={2}
-                            fontWeight="normal"
-                            symbol={'KLY'}
-                            variant="paragraph-sm"
-                          />
-                        </div>
-                      );
-                    })}
+                    {stake?.params?.stakes?.length > 1
+                      ? stake?.params?.stakes?.map((param: any, index: number) => {
+                          const amount = param?.amount;
+                          const color = amount > 0 ? 'success' : 'error';
+                          return (
+                            // eslint-disable-next-line react/jsx-key
+                            <div
+                              className="flex items-center justify-between gap-8 w-72 -m-0.5"
+                              key={param?.validatorAddress}
+                            >
+                              <UserAccountCard
+                                address={param?.validatorAddress}
+                                name={param?.name}
+                                nameOnly
+                                nameVariant="paragraph-sm"
+                              />
+                              <Currency
+                                amount={amount}
+                                className="text-right self-end"
+                                color={color}
+                                decimals={2}
+                                fontWeight="normal"
+                                symbol={'KLY'}
+                                variant="paragraph-sm"
+                              />
+                            </div>
+                          );
+                        })
+                      : stake?.params?.stakes?.map((param: any, index: number) => {
+                          const amount = param?.amount;
+                          const color = amount > 0 ? 'success' : 'error';
+                          return (
+                            // eslint-disable-next-line react/jsx-key
+                            <div
+                              className="flex items-center justify-between gap-8 w-72 -m-0.5"
+                              key={param?.validatorAddress}
+                            >
+                              <UserAccountCard
+                                address={param?.validatorAddress}
+                                name={param?.name}
+                              />
+                              <Currency
+                                amount={amount}
+                                className="text-right self-end"
+                                color={color}
+                                decimals={2}
+                                fontWeight="normal"
+                                symbol={'KLY'}
+                                variant="paragraph-sm"
+                              />
+                            </div>
+                          );
+                        })}
                   </div>
                 </>
               ),
