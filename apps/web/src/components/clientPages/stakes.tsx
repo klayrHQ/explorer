@@ -11,7 +11,7 @@ import { callGetTransactions, callGetValidators } from '../../utils/api/apiCalls
 import { StakeFilters } from '../filterComponents/stakeFilters';
 import { TableCellType } from '@repo/ui/types';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting';
-  
+
 export const Stakes = () => {
   const {
     data: stakes,
@@ -26,6 +26,9 @@ export const Stakes = () => {
     defaultLimit: '10',
     initialSortField: '',
     initialSortOrder: '',
+    searchParams: {
+      moduleCommand: 'pos:stake',
+    },
   });
 
   const {
