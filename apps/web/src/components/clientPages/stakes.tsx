@@ -79,7 +79,9 @@ export const Stakes = () => {
   useEffect(() => {
     callGetValidators({}).then((data) => {
       setTotalActiveStake(
-        data.data.filter((v: ValidatorType) => v.rank <= 51).reduce((acc, val) => acc + BigInt(val.totalStake), BigInt(0)),
+        data.data
+          .filter((v: ValidatorType) => v.rank <= 51)
+          .reduce((acc, val) => acc + BigInt(val.validatorWeight), BigInt(0)),
       );
     });
   }, []);
