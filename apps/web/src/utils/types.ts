@@ -31,6 +31,11 @@ export interface TransactionType {
 }
 
 export interface BlockType {
+
+  assets: BlockAssetType[];
+  numberOfAssets: number;
+  numberOfEvents: number;
+  generator: any;
   id: string;
   height?: number;
   timestamp?: number;
@@ -132,6 +137,8 @@ export interface ValidatorType {
   nextAllocatedTime?: number;
   totalRewards: string;
   blockReward: string;
+  totalSelfStakeRewards: string;
+  totalSharedRewards: string;
 }
 
 
@@ -145,6 +152,7 @@ export interface AccountType {
   address: string;
   publicKey: string;
   name: string;
+  nonce: string;
 }
 
 
@@ -152,6 +160,35 @@ export interface ChartDataType {
   id: number;
   label: string;
   value: number;
+}
+
+export interface NodeInfoType {
+  version: string;
+  networkVersion: string;
+  chainID: string;
+  lastBlockID: string;
+  height: number;
+  finalizedHeight: number;
+  syncing: boolean;
+  unconfirmedTransactions: number;
+  genesisHeight: number;
+  genesis: GenesisType;
+  network: {
+    version: string;
+    port: number;
+    seedPeers: string[];
+  }
+}
+
+export interface GenesisType {
+  block: {
+    fromFile: string;
+  };
+  blockTime: number;
+  bftBatchSize: number;
+  maxTransactionsSize: number;
+  minimumCertifyHeight: number;
+  chainID: string
 }
 
 export type StakesCalculatorPeriodType = 'block' | 'day' | 'month' | 'year' | string;

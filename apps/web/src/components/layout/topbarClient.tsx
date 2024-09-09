@@ -15,7 +15,7 @@ interface TopbarClientProps {
 }
 
 export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
-  const { currentChain, setCurrentChain, currentNetwork, setCurrentNetwork, chains, networks } =
+  const { currentChain, setCurrentChain, currentNetwork, setCurrentNetwork, chains, networks, nodeInfo } =
     useChainNetwork();
 
   const callSearch = useSearchStore((state) => state.callSearch);
@@ -29,7 +29,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
         currentChain,
         setCurrentChain,
         currentNetwork: {
-          connected: true,
+          syncing: nodeInfo?.syncing,
           ...currentNetwork,
         },
         setCurrentNetwork,

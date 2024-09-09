@@ -7,20 +7,20 @@ interface StatusIconProps {
 }
 
 export const StatusIcon = ({ connected, status, className }: StatusIconProps) => {
-  let statusClass = '';
+  let statusClass;
 
   switch (status) {
     case 'pending':
       statusClass = 'bg-warning';
       break;
     case 'successful':
-      statusClass = 'bg-green';
+      statusClass = 'bg-success';
       break;
     case 'failed':
       statusClass = 'bg-error';
       break;
     default:
-      statusClass = connected ? 'bg-green' : 'bg-warning';
+      statusClass = connected ? 'bg-success' : 'bg-warning';
   }
 
   return <div className={cls(['rounded-full w-2 h-2', statusClass, className])} />;

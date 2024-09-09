@@ -40,29 +40,20 @@ const selectStyles = cva(
 export interface CustomSelectProps {
   placeholder?: string;
   defaultValue?: string;
-  width?: 'sm' | 'md' | 'lg' | 'xl' | 'xs';
-  backgroundColor?: 'darkBlue' | 'bgSecondary';
   options: Option[];
   onChange?: (value: string) => void;
-  classNameButton?: string;
-  classNameList?: string;
   fontSize?: string;
-  listBorder?: 'defaultBorder' | 'darkBorder';
+  width?: string;
 }
 
-export const CustomSelect = ({
+export const SelectUp = ({
   options,
   defaultValue,
   placeholder,
-  width = 'xl',
   onChange,
-  backgroundColor = 'bgSecondary',
-  classNameButton,
-  classNameList,
-  listBorder,
   fontSize = 'paragraph-sm',
+  width = 'min-w-20',
 }: CustomSelectProps) => {
-  const styles = selectStyles({ width });
   const [selectedValue, setSelectedValue] = useState<string | undefined>(defaultValue);
   const [listboxVisible, setListboxVisible] = useState<boolean>(false);
 
@@ -78,42 +69,25 @@ export const CustomSelect = ({
     const selectedOption = value ? options.find((option) => option.value === value) : null;
     return selectedOption ? (
       <div className="flex items-center">
-        {selectedOption.labelIcon && (
-          <Icon
-            className="mr-2 "
-            hoverColor="darkBlue"
-            icon={selectedOption.labelIcon}
-            size="inherit"
-          />
-        )}
-        {selectedOption.labelImage && (
-          <img alt="icon" className="mr-2 w-4 h-4" src={selectedOption.labelImage} />
-        )}
-        {selectedOption.labelCircleColor && (
-          <div
-            className={clsx('mr-2 w-2 h-2 rounded-full', `bg-${selectedOption.labelCircleColor}`)}
-          />
-        )}
         <Typography fontWeight="semibold" variant={fontSize as TypographyVariant}>
-          {selectedOption.label}{' '}
+          {selectedOption.label}
         </Typography>
       </div>
     ) : null;
   };
 
   return (
-    <div className={'relative'}>
+    <div>
       <div>
         <button
           className={clsx(
-            'relative flex items-center justify-between bg-darkBlue gap-2 py-2 px-3 group focus-visible:border-backgroundTertiary  focus:border-backgroundTertiary transition-all ',
-            listboxVisible ? 'rounded-t-md' : 'rounded-md',
-            classNameButton,
-            selectStyles({ width, backgroundColor }),
+            ` relative flex items-center justify-between bg-darkBlue gap-2 py-3 px-1.5 group focus-visible:border-backgroundTertiary  focus:border-backgroundTertiary transition-all ${width} border-1 border-backgroundTertiary `,
+            listboxVisible ? 'rounded-b-md' : 'rounded-md',
           )}
           onClick={() => setListboxVisible(!listboxVisible)}
           type="button"
         >
+          <span className="text-lobster">{placeholder ?? ' '}</span>
           {renderSelectedValue(selectedValue, options) || (
             <span className="text-lobster">{placeholder ?? ' '}</span>
           )}
@@ -130,17 +104,13 @@ export const CustomSelect = ({
       {listboxVisible && (
         <ClickAwayListener onClickAway={() => setListboxVisible(false)}>
           <ul
-            className={clsx(
-              'absolute border bg-darkBlue z-10 rounded-b-md overflow-hidden ',
-              classNameList,
-              selectStyles({ width, backgroundColor }),
-            )}
+            className={`absolute border-1 border-backgroundTertiary ${width} bottom-full bg-darkBlue z-10 rounded-t-md overflow-hidden`}
             role="listbox"
           >
             {options.map((option) => (
               <li
                 className={clsx(
-                  'cursor-pointer list-none p-3 flex items-center justify-start w-full hover:bg-gray-6 transition-all',
+                  'cursor-pointer list-none  py-3 flex items-center justify-start w-full hover:bg-gray-6 transition-all',
                   {
                     'bg-darkblue': selectedValue === option.value,
                   },
@@ -149,18 +119,9 @@ export const CustomSelect = ({
                 onClick={() => handleSelect(option.value)}
                 value={option.value}
               >
-                {option.labelIcon && (
-                  <Icon className="mr-2" icon={option.labelIcon} size="inherit" />
-                )}
-                {option.labelImage && (
-                  <img alt="icon" className="mr-2 w-4 h-4" src={option.labelImage} />
-                )}
-                {option.labelCircleColor && (
-                  <div
-                    className={clsx('mr-2 w-2 h-2 rounded-full', `bg-${option.labelCircleColor}`)}
-                  />
-                )}
-                <Typography variant={fontSize as TypographyVariant}>{option.label}</Typography>
+                <Typography className="pl-5" variant={fontSize as TypographyVariant}>
+                  {option.label}
+                </Typography>
               </li>
             ))}
           </ul>
