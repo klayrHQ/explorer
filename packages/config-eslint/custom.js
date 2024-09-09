@@ -1,6 +1,6 @@
 module.exports = {
-  env: {
-    es2020: true,
+  globals: {
+    BigInt: true,
   },
   ignorePatterns: ['**/*.stories.tsx'],
   extends: ['eslint:recommended', 'next', 'turbo', 'prettier'],
