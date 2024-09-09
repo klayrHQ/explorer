@@ -1,11 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChainType, NetworkType } from '../../../types/types.ts';
 import { FlexGrid, KeyValueComponent, Typography } from '../../atoms';
 import { ImageContainer } from '../../atoms';
 import { StatusIcon } from '../../atoms';
 import { ReactElement } from 'react';
 import { Modal, CustomSelect } from '../../atoms';
+import { NetworkSelect } from './networkSelect.tsx';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType;
@@ -56,6 +57,7 @@ export const ChainNetworkPicker = ({
     const network = networks.find((network) => network.networkId === networkId);
     if (network) {
       setSelectedNetwork(network);
+      setCurrentNetwork(network);
     }
   };
 
@@ -100,11 +102,6 @@ export const ChainNetworkPicker = ({
           }
           onClick={() => setIsModalOpen(true)}
         />
-        <KeyValueComponent
-          contentValue={currentNetwork?.networkName || 'Select network'}
-          hover
-          keyValue={<StatusIcon status={currentNetworkStatusClass} />}
-        />
       </FlexGrid>
       <Modal
         onClose={handleClose}
@@ -137,6 +134,15 @@ export const ChainNetworkPicker = ({
           </FlexGrid>
         </FlexGrid>
       </Modal>
+      <NetworkSelect
+        currentNetworkStatusClass={currentNetworkStatusClass}
+        defaultValue={currentNetwork?.networkId}
+        onChange={(value) => {
+          handleNetworkChange(value);
+        }}
+        options={networkOptions}
+        placeholder={currentNetwork?.networkName}
+      />
     </FlexGrid>
   );
 };
