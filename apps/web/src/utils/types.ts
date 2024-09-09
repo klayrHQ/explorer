@@ -31,6 +31,7 @@ export interface TransactionType {
 }
 
 export interface BlockType {
+
   assets: BlockAssetType[];
   numberOfAssets: number;
   numberOfEvents: number;
@@ -55,7 +56,6 @@ export interface MetaType {
   count?: number;
   total?: number;
 }
-
 export interface BlockDetailsType {
   height: number;
   id: string;
