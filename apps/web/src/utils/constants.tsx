@@ -259,3 +259,13 @@ export const commandColors: Record<string, ColorType> = {
   unlock: 'gray-1',
   changeCommission: 'green',
 };
+
+export const newsTagColors: Record<string, string> = {
+  blockchain: 'tulipDark',
+  grants: 'sandDark',
+  development: 'lobsterDark',
+  community: 'azuleDark',
+  'klayr-labs': 'voltDark',
+  tokenomics: 'greenDark',
+  // Add more tag-to-color mappings as needed
+};
