@@ -72,8 +72,13 @@ export const NetworkSelect = ({
   const renderSelectedValue = (value: string | undefined, options: Option[]) => {
     const selectedOption = value ? options.find((option) => option.value === value) : null;
     return selectedOption ? (
-      <div className="flex items-center">
-        <Typography color="gray-5" fontWeight="normal" variant={fontSize as TypographyVariant}>
+      <div className="flex items-center ">
+        <Typography
+          className="hover:text-gray-3 "
+          color="gray-5"
+          fontWeight="normal"
+          variant={'paragraph-sm'}
+        >
           {selectedOption.label}
         </Typography>
       </div>
@@ -110,6 +115,7 @@ export const NetworkSelect = ({
                 value={option.value}
               >
                 <KeyValueComponent
+                  color="gray-3"
                   contentValue={option.label}
                   keyValue={<StatusIcon status={currentNetworkStatusClass} />}
                   onClick={() => handleSelect(option.value)}
