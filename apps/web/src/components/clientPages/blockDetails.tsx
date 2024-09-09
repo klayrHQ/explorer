@@ -20,9 +20,10 @@ import {
 import { eventsTableHead, transactionTableHead } from '../../utils/helpers/tableHeaders.tsx';
 import { createEventsRows, createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { DataType } from '@repo/ui/types';
-import { getSeedRevealFromAssets } from '../../utils/helpers/dataHelpers.tsx';
+import { getSeedRevealFromAssets, fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { BlockDetailsType, EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetBlocks, callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
+import { usePagination } from '../../utils/hooks/usePagination.ts';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -30,9 +31,14 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [block, setBlocks] = useState<BlockDetailsType | undefined>(undefined);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [transactionsMeta, setTransactionsMeta] = useState<any>({});
   const [events, setEvents] = useState<EventsType[]>([]);
+  const [eventsMeta, setEventsMeta] = useState<any>({});
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
+
+  const transactionsPagination = usePagination();
+  const eventsPagination = usePagination();
 
   useEffect(() => {
     setLoading(true);
@@ -56,28 +62,45 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         return params;
       };
 
-      callGetTransactions(
+      const transactionsPromise = fetchPaginatedData(
+        callGetTransactions,
         addSortingParams({
           blockID: id,
         }),
-      )
-        .then((data) => setTransactions(data.data))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
+        transactionsPagination.pageNumber,
+        transactionsPagination.limit,
+      ).then((data) => {
+        setTransactions(data.data);
+        setTransactionsMeta(data.meta);
+      });
+
+      Promise.all([transactionsPromise]).finally(() => setLoading(false));
     }
-  }, [id, block, sortField, sortOrder]);
+  }, [
+    id,
+    block,
+    sortField,
+    sortOrder,
+    transactionsPagination.pageNumber,
+    transactionsPagination.limit,
+  ]);
 
   useEffect(() => {
     if (block) {
       setLoading(true);
-      callGetEvents({
-        height: `${block.height}:${block.height}`,
-      })
-        .then((data) => setEvents(data.data))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
+      const eventsPromise = fetchPaginatedData(
+        callGetEvents,
+        { height: `${block.height}:${block.height}` },
+        eventsPagination.pageNumber,
+        eventsPagination.limit,
+      ).then((data) => {
+        setEvents(data.data);
+        setEventsMeta(data.meta);
+      });
+
+      Promise.all([eventsPromise]).finally(() => setLoading(false));
     }
-  }, [block]);
+  }, [block, eventsPagination.pageNumber, eventsPagination.limit]);
 
   const handleSort = (field: string) => {
     const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
@@ -201,9 +224,17 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
           />
           {transactions?.length && transactions.length > 0 ? (
             <TableContainer
+              currentNumber={transactionsPagination.pageNumber}
+              defaultValue={transactionsPagination.limit}
               headCols={transactionTableHead(handleSort, sortField, sortOrder)}
               keyPrefix={'transactions'}
+              onPerPageChange={transactionsPagination.handleLimitChange}
+              pagination
               rows={transactionRows}
+              setCurrentNumber={transactionsPagination.handlePageChange}
+              totalPages={Math.ceil(
+                (transactionsMeta?.total ?? 0) / Number(transactionsPagination.limit),
+              )}
             />
           ) : (
             <NotFound
@@ -222,7 +253,17 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader count={events?.length} title={'Block events'} titleSizeNotLink={'h5'} />
-          <TableContainer headCols={eventsTableHead} keyPrefix={'tx-events'} rows={eventsRows} />
+          <TableContainer
+            currentNumber={eventsPagination.pageNumber}
+            defaultValue={eventsPagination.limit}
+            headCols={eventsTableHead}
+            keyPrefix={'tx-events'}
+            onPerPageChange={eventsPagination.handleLimitChange}
+            pagination
+            rows={eventsRows}
+            setCurrentNumber={eventsPagination.handlePageChange}
+            totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(eventsPagination.limit))}
+          />
         </FlexGrid>
       ),
     },
