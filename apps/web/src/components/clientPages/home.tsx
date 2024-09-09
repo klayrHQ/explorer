@@ -1,7 +1,7 @@
 'use client';
 import { NewsCardGrid, PerformanceSection } from '@repo/ui/organisms';
 import {
-  performanceStats,
+  performanceStats as mockPerformanceStats,
   performanceStatsSelectOptions,
   newsTagColors,
 } from '../../utils/constants.tsx';
@@ -9,9 +9,12 @@ import { FlexGrid } from '@repo/ui/atoms';
 import { useEffect, useState } from 'react';
 import { formatDate, cleanText } from '../../utils/helpers/dataHelpers.tsx';
 import { NewsCardPropsArray, NewsCardProps } from '@repo/ui/types';
+import { callGetTokenSummary } from '../../utils/api/apiCalls.tsx';
+import { TokenSummaryType } from '../../utils/types.ts';
 
 export const Home = () => {
   const [news, setNews] = useState<NewsCardPropsArray>([]);
+  const [tokenSummary, setTokenSummary] = useState<TokenSummaryType>();
 
   useEffect(() => {
     const getNews = async () => {
@@ -55,12 +58,19 @@ export const Home = () => {
     getNews();
   }, []);
 
+  useEffect(() => {
+    callGetTokenSummary().then((data) => {
+      setTokenSummary(data.data);
+      console.log(data.data);
+    });
+  }, []);
+
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4xl'}>
       <PerformanceSection
         href={'#'}
         options={performanceStatsSelectOptions}
-        stats={performanceStats}
+        stats={mockPerformanceStats}
       />
       <NewsCardGrid href={'https://klayr.xyz/blog'} newsCards={news} />
     </FlexGrid>

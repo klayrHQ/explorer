@@ -31,7 +31,6 @@ export interface TransactionType {
 }
 
 export interface BlockType {
-
   assets: BlockAssetType[];
   numberOfAssets: number;
   numberOfEvents: number;
@@ -140,8 +139,6 @@ export interface ValidatorType {
   totalSharedRewards: string;
 }
 
-
-
 export interface SharingCoefficientType {
   tokenID: string;
   coefficient: string;
@@ -153,7 +150,6 @@ export interface AccountType {
   name: string;
   nonce: string;
 }
-
 
 export interface ChartDataType {
   id: number;
@@ -176,7 +172,7 @@ export interface NodeInfoType {
     version: string;
     port: number;
     seedPeers: string[];
-  }
+  };
 }
 
 export interface GenesisType {
@@ -187,5 +183,20 @@ export interface GenesisType {
   bftBatchSize: number;
   maxTransactionsSize: number;
   minimumCertifyHeight: number;
-  chainID: string
+  chainID: string;
+}
+
+export interface TokenSummaryType {
+  escrowedAmounts: {
+    escrowChainID: string;
+    tokenID: string;
+    amount: string;
+  }[];
+  totalSupply: {
+    tokenID: string;
+    totalSupply: string;
+  }[];
+  supportedTokens: string[];
+  totalAccounts: number;
+  totalTransactions: number;
 }
