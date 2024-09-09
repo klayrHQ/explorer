@@ -55,6 +55,7 @@ export interface MetaType {
   count?: number;
   total?: number;
 }
+
 export interface BlockDetailsType {
   height: number;
   id: string;
@@ -200,6 +201,8 @@ export interface TokenSummaryType {
   totalAccounts: number;
   totalTransactions: number;
 }
+
+export type StakesCalculatorPeriodType = 'block' | 'day' | 'month' | 'year' | string;
 
 export interface PerfomanceStatsType {
   marketCap: number;

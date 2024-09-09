@@ -8,6 +8,10 @@ import {
 } from '../api/types';
 import { SkeletonComponent } from '@repo/ui/atoms';
 
+const FIXED_POINT = 10 ** 8
+const KLAYR_MAX_DECIMAL_POINTS = 8
+const MAX_UINT64 = BigInt("18446744073709551615") // BigInt((2 ** 64) - 1) - 1
+
 enum TransactionCommands {
   POS_STAKE = 'pos:stake',
   POS_CLAIM_REWARDS = 'pos:claimRewards',
@@ -64,4 +68,38 @@ export const getTableSkeletons = (cells: number) => {
       }),
     };
   });
+};
+
+export const parseBeddows = (beddows: number, decimals: number = 2) => {
+  if (beddows) {
+    const amountFromBeddows = beddows / 100000000;
+    return amountFromBeddows.toLocaleString(undefined, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
+  }
+
+  return 0;
+};
+
+const getDecimalPlaces = (amount: string): number => (amount.split('.')[1] || '').length;
+
+export const convertKLYToBeddows = (lskAmount?: string): string => {
+  if (typeof lskAmount !== 'string') {
+    throw new Error('Cannot convert non-string amount');
+  }
+  if (getDecimalPlaces(lskAmount) > KLAYR_MAX_DECIMAL_POINTS) {
+    throw new Error('KLY amount has too many decimal points');
+  }
+  const splitAmount = lskAmount.split('.');
+  const liskAmountInt = BigInt(splitAmount[0]);
+  const liskAmountFloatBigInt = BigInt(
+    (splitAmount[1] ?? '0').padEnd(KLAYR_MAX_DECIMAL_POINTS, '0'),
+  );
+  const beddowsAmountBigInt = liskAmountInt * BigInt(FIXED_POINT) + liskAmountFloatBigInt;
+  if (beddowsAmountBigInt > MAX_UINT64) {
+    throw new Error('KLY amount out of range');
+  }
+
+  return beddowsAmountBigInt.toString();
 };
