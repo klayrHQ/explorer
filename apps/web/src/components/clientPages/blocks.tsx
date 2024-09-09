@@ -31,6 +31,7 @@ export const Blocks = () => {
       includeAssets: true,
     },
     changeURL: true,
+    useNewBlockEvent: true,
   });
 
   const rowBlocks = createBlockRows(blocks, loading, copyTooltipText, setCopyTooltipText);

@@ -11,9 +11,9 @@ interface UsePaginationAndSortingProps {
   fetchFunction: (params: any) => Promise<any>;
   initialSortField?: string;
   initialSortOrder?: string;
-    changeURL?: boolean;
-    searchParams?: Record<string, any>;
-
+  changeURL?: boolean;
+  searchParams?: Record<string, any>;
+  useNewBlockEvent?: boolean; 
 }
 
 export const usePaginationAndSorting = ({
@@ -23,6 +23,7 @@ export const usePaginationAndSorting = ({
   initialSortOrder = '',
   changeURL,
   searchParams = {},
+  useNewBlockEvent = false, 
 }: UsePaginationAndSortingProps) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -69,7 +70,7 @@ export const usePaginationAndSorting = ({
         setLoading(false);
       }
     }, 300),
-    [pageNumber, limit, sortField, sortOrder, fetchFunction, network, newBlockEvent,]
+    [pageNumber, limit, sortField, sortOrder, fetchFunction, network, ...(useNewBlockEvent ? [newBlockEvent] : [])]
   );
 
   useEffect(() => {
