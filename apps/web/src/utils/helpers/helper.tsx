@@ -1,4 +1,10 @@
-import { BlockType, EventsType, TransactionType, ValidatorType } from '../types.ts';
+import {
+  BlockType,
+  EventsType,
+  StakesCalculatorPeriodType,
+  TransactionType,
+  ValidatorType,
+} from '../types.ts';
 import {
   dayjs,
   fromNowFormatter,
@@ -24,7 +30,7 @@ import {
 import Link from 'next/link';
 import React from 'react';
 import { commandColors, decimals } from '../constants.tsx';
-import { getSeedRevealFromAssets, getTableSkeletons } from './dataHelpers.tsx';
+import { convertKLYToBeddows, getSeedRevealFromAssets, getTableSkeletons } from './dataHelpers.tsx';
 import {
   eventsTableHead,
   validatorsTableHead,
@@ -219,10 +225,90 @@ export const createEventsRows = (events: EventsType[], loading: boolean) => {
 export const createValidatorsRows = (
   validators: ValidatorType[],
   loading: boolean,
-  stackingRewards = false,
+  stakingRewards = false,
+  stakingCalculatorProps: {
+    stakingCalculatorAmount: number;
+    stakingCalculatorPeriod: StakesCalculatorPeriodType;
+    totalActiveStake: bigint;
+  } = {
+    stakingCalculatorAmount: 1000,
+    stakingCalculatorPeriod: 'day',
+    totalActiveStake: BigInt(0),
+  },
 ) => {
+  const { stakingCalculatorAmount, stakingCalculatorPeriod, totalActiveStake } =
+    stakingCalculatorProps;
+
+  const calculateReward = (validator: ValidatorType) => {
+    if (!totalActiveStake) {
+      return {
+        resultPerBlock: '0',
+        inputStake: 0,
+        capacity: 0,
+        newBlockReward: '0',
+      };
+    }
+
+    const newStake = BigInt(stakingCalculatorAmount) * BigInt(1_0000_0000);
+    const newStakeFloat = parseFloat(newStake.toString(10));
+    const newTotalStake = totalActiveStake + BigInt(newStake);
+    const newTotalStakeFloat = parseFloat(newTotalStake.toString(10));
+    const newValidatorWeight =
+      parseFloat(validator.validatorWeight) + newStakeFloat > parseFloat(validator.selfStake) * 10
+        ? parseFloat(validator.selfStake) * 10
+        : parseFloat(validator.validatorWeight) + newStakeFloat;
+    const Commission = validator.commission / 100;
+    const newVoteShare =
+      parseFloat(newStake.toString(10)) / (parseFloat(validator.totalStake) + newStakeFloat);
+    const share = (100 - Commission) / 100;
+    const rewardPerBlock = (newValidatorWeight / newTotalStakeFloat) * 90.9 + 0.1;
+    const newBlockReward = newVoteShare * rewardPerBlock * share;
+    const RewardPerBlock = parseInt(validator.blockReward, 10);
+    const stakingCalculatorBeddows = stakingCalculatorAmount * 100000000;
+    const Stake = parseFloat(validator.totalStake) + stakingCalculatorBeddows;
+    const capacity =
+      (parseFloat(validator.totalStake) / (parseFloat(validator.selfStake) * 10)) * 100;
+
+    const stakersRewardPerBlock = (RewardPerBlock: any, Commission: any, Stake: any) =>
+      RewardPerBlock * (1 - Commission / 100) * (stakingCalculatorBeddows / Stake);
+    const resultPerBlock =
+      validator.status === 'active'
+        ? parseInt(stakersRewardPerBlock(RewardPerBlock, Commission, Stake).toString()).toString()
+        : '0';
+    return {
+      resultPerBlock,
+      inputStake: stakingCalculatorBeddows,
+      capacity,
+      newBlockReward:
+        validator.status === 'active'
+          ? newBlockReward > 90.9 * 0.1 + 0.1
+            ? convertKLYToBeddows((90.9 * 0.1 + 0.1).toFixed(8))
+            : convertKLYToBeddows(newBlockReward.toFixed(8))
+          : '0',
+    };
+  };
+
   return !loading
     ? validators?.map((validator) => {
+        const {
+          resultPerBlock,
+          capacity,
+          inputStake,
+          newBlockReward,
+        } = calculateReward(validator);
+        const resultPerPeriod =
+          stakingCalculatorPeriod === 'block'
+            ? newBlockReward
+            : stakingCalculatorPeriod === 'day'
+              ? (parseInt(newBlockReward) * 84).toString(10)
+              : stakingCalculatorPeriod === 'month'
+                ? (parseInt(newBlockReward) * 2516).toString(10)
+                : stakingCalculatorPeriod === 'year'
+                  ? (parseInt(newBlockReward) * 2516 * 12).toString(10)
+                  : (parseInt(newBlockReward) * 2516 * 12).toString(10);
+
+        const APR = ((parseInt(newBlockReward) * 2516 * 12) / inputStake) * 100;
+
         return {
           cells: [
             {
@@ -247,22 +333,21 @@ export const createValidatorsRows = (
                 </Link>
               ),
             },
-            stackingRewards
+            stakingRewards
               ? {
                   children: (
                     <div className="flex flex-col items-end">
-                      <Currency
-                        amount={'198419841984'}
-                        className="text-paragraph-sm text-lobster font-semibold" //text-onBackground
-                        decimals={2}
-                        symbol={'KLY'}
-                      />
-                      <Currency
-                        amount={'777777777'}
-                        className="text-lobster text-caption font-normal" //text-onBackgroundLow
-                        decimals={2}
-                        symbol={'KLY'}
-                      />
+                      <Tooltip placement={'top'} text={`Staking Rewards per ${stakingCalculatorAmount} KLY per ${stakingCalculatorPeriod}`}>
+                        <Currency
+                          amount={resultPerPeriod}
+                          className="text-paragraph-sm text-lobster font-semibold" //text-onBackground
+                          decimals={2}
+                          symbol={'KLY'}
+                        />
+                      </Tooltip>
+                      <Tooltip placement={'bottom'} text={`APR is the yearly rate of return on staking ${stakingCalculatorAmount} KLY`}>
+                        <Typography color={'lobster'} variant={'caption'}>{`${APR.toFixed(2)}%`}</Typography>
+                      </Tooltip>
                     </div>
                   ),
                 }

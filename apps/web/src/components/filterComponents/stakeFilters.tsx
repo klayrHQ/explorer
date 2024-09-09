@@ -1,8 +1,15 @@
-import { Calculator } from "@repo/ui/molecules"
-import { calculatorOptions } from "../../utils/constants"
+import {Calculator, CalculatorProps} from '@repo/ui/molecules';
+import { calculatorOptions } from '../../utils/constants';
+import {FlexGrid} from "@repo/ui/atoms";
 
-export const StakeFilters = () => {
-    return (
-            <Calculator options={calculatorOptions} />
-    )
+interface StakeFiltersProps {
+  calculatorProps: Omit<CalculatorProps, 'options'>;
 }
+
+export const StakeFilters = ({ calculatorProps }: StakeFiltersProps) => {
+  return (
+    <FlexGrid justify={'between'}>
+      <Calculator {...calculatorProps} options={calculatorOptions} />
+    </FlexGrid>
+  );
+};

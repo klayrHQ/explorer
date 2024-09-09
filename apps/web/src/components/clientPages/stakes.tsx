@@ -2,6 +2,8 @@
 
 import { FlexGrid, TabButtons } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
+import { useEffect, useState } from 'react';
+import { StakesCalculatorPeriodType, TransactionType, ValidatorType } from '../../utils/types';
 import { createStakesOverviewRows, createValidatorsRows } from '../../utils/helpers/helper';
 import {
   stakesOverviewTableHead,
@@ -31,6 +33,11 @@ export const Stakes = () => {
     },
   });
 
+  const [stakingCalculatorAmount, setStakingCalculatorAmount] = useState<number>(1000);
+  const [stakingCalculatorPeriod, setStakingCalculatorPeriod] =
+      useState<StakesCalculatorPeriodType>('month');
+  const [totalActiveStake, setTotalActiveStake] = useState<bigint>(BigInt(0));
+
   const {
     data: validators,
     totalItems: totalValidators,
@@ -49,8 +56,22 @@ export const Stakes = () => {
     initialSortOrder: 'asc',
   });
 
+  useEffect(() => {
+    callGetValidators({}).then((data) => {
+      setTotalActiveStake(
+          data.data
+              .filter((v: ValidatorType) => v.rank <= 51)
+              .reduce((acc, val) => acc + BigInt(val.validatorWeight), BigInt(0)),
+      );
+    });
+  }, []);
+
   const rowsOverview = createStakesOverviewRows(stakes, loadingStakes);
-  const rowCalculator = createValidatorsRows(validators, loadingValidators, true).map((row) => ({
+  const rowCalculator = createValidatorsRows(validators, loadingValidators, true, {
+    stakingCalculatorAmount,
+    stakingCalculatorPeriod,
+    totalActiveStake,
+  }).map((row) => ({
     cells: row.cells.filter((cell) => cell !== null) as TableCellType[],
   }));
 
@@ -81,7 +102,15 @@ export const Stakes = () => {
         <TableContainer
           currentNumber={calculatorPageNumber}
           defaultValue={calculatorLimit}
-          filtersComponent={<StakeFilters />}
+          filtersComponent={
+            <StakeFilters
+                calculatorProps={{
+                  amount: stakingCalculatorAmount,
+                  setAmount: setStakingCalculatorAmount,
+                  setPeriod: setStakingCalculatorPeriod,
+                }}
+            />
+          }
           headCols={stakesCalculatorTableHead(
             handleCalculatorSortChange,
             calculatorSortField,

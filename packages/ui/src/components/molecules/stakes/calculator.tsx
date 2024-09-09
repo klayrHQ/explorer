@@ -1,11 +1,14 @@
-import { FlexGrid, Typography } from '../../atoms';
+import { Typography } from '../../atoms';
 import { CustomSelect, CustomSelectProps } from '../../atoms';
 
-interface CalculatorProps {
+export interface CalculatorProps {
+  amount: number;
+  setAmount: (amount: number) => void;
   options: CustomSelectProps['options'];
+  setPeriod: (period: string) => void;
 }
 
-export const Calculator = ({ options }: CalculatorProps) => {
+export const Calculator = ({ amount, setAmount, options, setPeriod }: CalculatorProps) => {
   return (
     <div className="max-w-calculatorWidth w-full flex items-center justify-between border-1 border-background rounded-md bg-backgroundSecondary max-w-calculatorWidth divide-x-2 divide-background">
       <div className="">
@@ -18,6 +21,9 @@ export const Calculator = ({ options }: CalculatorProps) => {
           className="bg-backgroundSecondary w-full h-full px-3 py-4 focus:outline-none placeholder:onBackgroundLow "
           placeholder="1000"
           type="text"
+          inputMode={'numeric'}
+          value={amount}
+          onChange={(e) => !isNaN(Number(e.target.value)) && setAmount(parseInt(e.target.value))}
         />
       </div>
       <div className="">
@@ -28,6 +34,7 @@ export const Calculator = ({ options }: CalculatorProps) => {
           fontSize="md"
           options={options}
           width="xs"
+          onChange={setPeriod}
         />
       </div>
     </div>

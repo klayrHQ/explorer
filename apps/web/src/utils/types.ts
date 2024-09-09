@@ -56,6 +56,7 @@ export interface MetaType {
   count?: number;
   total?: number;
 }
+
 export interface BlockDetailsType {
   height: number;
   id: string;
@@ -189,3 +190,5 @@ export interface GenesisType {
   minimumCertifyHeight: number;
   chainID: string
 }
+
+export type StakesCalculatorPeriodType = 'block' | 'day' | 'month' | 'year' | string;
