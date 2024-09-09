@@ -39,6 +39,7 @@ import {
   validatorStakeOutgoingTableHead,
   transactionTableHead,
   blockTableHead,
+  stakesOverviewTableHead,
 } from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
@@ -725,7 +726,7 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
           ],
         };
       })
-    : getTableSkeletons(validatorStakeIncomingTableHead.length);
+    : getTableSkeletons(stakesOverviewTableHead.length);
 };
 
 export const createBlockRows = (
