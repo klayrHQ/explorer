@@ -76,12 +76,14 @@ export const Topbar = ({
         searchResult={searchResults}
         setSearchResults={setSearchResults}
       />
-      <FlexGrid alignItems={"center"} className={'desktop:hidden '} gap={'3xl'} mobileDirection="row">
+      <FlexGrid
+        alignItems={'center'}
+        className={'desktop:hidden '}
+        gap={'3xl'}
+        mobileDirection="row"
+      >
         <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
         <Popover
-          isOpen={showSearch}
-          setIsOpen={setShowSearch}
-          customAnchor={mobileSearchAnchor}
           button={
             <IconButton
               active={showSearch}
@@ -92,6 +94,8 @@ export const Topbar = ({
               variant={'bordered'}
             />
           }
+          customAnchor={mobileSearchAnchor}
+          isOpen={showSearch}
           placement={'bottom-start'}
           popperOptions={{
             modifiers: [
@@ -103,6 +107,7 @@ export const Topbar = ({
               },
             ],
           }}
+          setIsOpen={setShowSearch}
         >
           <Search
             callSearch={callSearch}
