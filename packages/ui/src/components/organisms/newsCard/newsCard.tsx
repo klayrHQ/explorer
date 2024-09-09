@@ -2,17 +2,7 @@ import { NewsCardImage, BadgeGroup } from '../../atoms';
 import { NewsTextContent } from '../../molecules';
 import { ColorType } from '../../../types/types';
 import Link from 'next/link';
-
-export interface NewsCardProps {
-  badges: { colorVariant?: ColorType; label: string }[];
-  author: string;
-  date: string;
-  title: string;
-  description: string;
-  src: string;
-  alt: string;
-  link: string;
-}
+import { NewsCardProps } from '../../../types/types';
 
 export const NewsCard = ({
   badges,

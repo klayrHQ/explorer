@@ -23,12 +23,15 @@ export const Badge = ({
   padding = '2',
   backgroundColor = 'transparent',
 }: BadgeProps) => {
+  const formattedLabel = label?.replace(/-/g, ' ');
   return (
     <div
       className={`whitespace-nowrap capitalize inline-flex items-center justify-center gap-1.5 p-${padding} rounded-sm bg-${backgroundColor} border border-${borderColor} min-h-6 max-h-6 ${className}`}
     >
       <BadgeIcon colorVariant={colorVariant} />
-      <Typography className={'max-w-full truncate'} variant={typographyVariant}>{label}</Typography>
+      <Typography className={'max-w-full truncate'} variant={typographyVariant}>
+        {formattedLabel}
+      </Typography>
     </div>
   );
 };

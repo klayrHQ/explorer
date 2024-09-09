@@ -197,3 +197,16 @@ interface SearchTransaction {
   id: string;
   sender: string;
 }
+
+export interface NewsCardProps {
+  badges: { colorVariant?: ColorType; label: string }[];
+  author: string;
+  date: string;
+  title: string;
+  description: string;
+  src: string;
+  alt: string;
+  link: string;
+}
+
+export type NewsCardPropsArray = NewsCardProps[];
