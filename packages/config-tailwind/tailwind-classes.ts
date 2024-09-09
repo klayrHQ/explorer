@@ -156,6 +156,7 @@ const screens = {
   tablet: '440px',
   desktop: '1024px',
   desktopLg: '1200px',
+  desktopLxl: '1440px',
   desktopXl: '1600px',
   sidebarBp: { raw: '(max-height: 800px)' },
 };
@@ -299,7 +300,6 @@ const height = {
   trHeight: '72px',
   thHeight: '44px',
   pagNumHeight: '34px',
-
 };
 
 const width = {

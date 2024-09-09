@@ -1,20 +1,24 @@
 'use client';
 import { NewsCardGrid, PerformanceSection } from '@repo/ui/organisms';
 import {
-  performanceStats as mockPerformanceStats,
   performanceStatsSelectOptions,
   newsTagColors,
+  currencies,
 } from '../../utils/constants.tsx';
-import { FlexGrid } from '@repo/ui/atoms';
+import { Currency, FlexGrid, SkeletonComponent } from '@repo/ui/atoms';
 import { useEffect, useState } from 'react';
 import { formatDate, cleanText } from '../../utils/helpers/dataHelpers.tsx';
 import { NewsCardPropsArray, NewsCardProps } from '@repo/ui/types';
 import { callGetTokenSummary } from '../../utils/api/apiCalls.tsx';
-import { TokenSummaryType } from '../../utils/types.ts';
+import { PerfomanceStatsType } from '../../utils/types.ts';
+import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 
 export const Home = () => {
   const [news, setNews] = useState<NewsCardPropsArray>([]);
-  const [tokenSummary, setTokenSummary] = useState<TokenSummaryType>();
+  const [performanceStats, setPerformanceStats] = useState<PerfomanceStatsType>();
+  const [statsVS, setStatsVS] = useState<string>('lastMonth');
+  const [loadingStats, setLoadingStats] = useState<boolean>(true);
+  const { currentNetwork, currentChain } = useChainNetwork();
 
   useEffect(() => {
     const getNews = async () => {
@@ -59,18 +63,107 @@ export const Home = () => {
   }, []);
 
   useEffect(() => {
-    callGetTokenSummary().then((data) => {
-      setTokenSummary(data.data);
-      console.log(data.data);
-    });
-  }, []);
+    setLoadingStats(true);
+    callGetTokenSummary()
+      .then((data) => {
+        const tokenSummary = data.data;
+        const marketCap = tokenSummary.totalSupply.reduce(
+          (acc, token) => acc + parseInt(token.totalSupply),
+          0,
+        );
+        const totalValueLocked = tokenSummary.escrowedAmounts.reduce(
+          (acc, token) => acc + parseInt(token.amount),
+          0,
+        );
+
+        setPerformanceStats({
+          marketCap: marketCap,
+          totalAccounts: tokenSummary.totalAccounts,
+          totalTransactions: tokenSummary.totalTransactions,
+          totalValueLocked: totalValueLocked,
+        });
+        console.log(data.data);
+      })
+      .finally(() => setLoadingStats(false));
+  }, [currentChain, currentNetwork]);
+
+  let statsVSString;
+
+  switch (statsVS) {
+    case 'oneHourAgo':
+      statsVSString = 'vs one hour ago';
+      break;
+    case 'yesterday':
+      statsVSString = 'vs yesterday';
+      break;
+    case 'lastMonth':
+      statsVSString = 'vs last month';
+      break;
+    case 'lastWeek':
+      statsVSString = 'vs last week';
+      break;
+    case 'lastYear':
+      statsVSString = 'vs last year';
+      break;
+    default:
+      statsVSString = 'vs last month';
+      break;
+  }
+
+  const performanceStatsArray = [
+    {
+      title: 'Market Cap',
+      value: loadingStats ? (
+        <SkeletonComponent style={{ height: '28px' }} />
+      ) : (
+        <Currency amount={performanceStats?.marketCap ?? 0} symbol={currencies[0].symbol} />
+      ),
+      percentage: '20%',
+      statsVS: statsVSString,
+      trend: true,
+    },
+    {
+      title: 'Total Accounts',
+      value: loadingStats ? (
+        <SkeletonComponent style={{ height: '28px' }} />
+      ) : (
+        (performanceStats?.totalAccounts ?? 0)
+      ),
+      percentage: '9.3%',
+      statsVS: statsVSString,
+      trend: false,
+    },
+    {
+      title: 'Total Transactions',
+      value: loadingStats ? (
+        <SkeletonComponent style={{ height: '28px' }} />
+      ) : (
+        (performanceStats?.totalTransactions ?? 0)
+      ),
+      percentage: '20%',
+      statsVS: statsVSString,
+      trend: true,
+    },
+    {
+      title: 'Total Value Locked',
+      value: loadingStats ? (
+        <SkeletonComponent style={{ height: '28px' }} />
+      ) : (
+        <Currency amount={performanceStats?.totalValueLocked ?? 0} symbol={currencies[0].symbol} />
+      ),
+      percentage: '9.3%',
+      statsVS: statsVSString,
+      trend: false,
+    },
+  ];
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4xl'}>
       <PerformanceSection
         href={'#'}
         options={performanceStatsSelectOptions}
-        stats={mockPerformanceStats}
+        setStatsVS={setStatsVS}
+        stats={performanceStatsArray}
       />
       <NewsCardGrid href={'https://klayr.xyz/blog'} newsCards={news} />
     </FlexGrid>

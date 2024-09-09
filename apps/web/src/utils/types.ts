@@ -200,3 +200,10 @@ export interface TokenSummaryType {
   totalAccounts: number;
   totalTransactions: number;
 }
+
+export interface PerfomanceStatsType {
+  marketCap: number;
+  totalTransactions: number;
+  totalAccounts: number;
+  totalValueLocked: number;
+}

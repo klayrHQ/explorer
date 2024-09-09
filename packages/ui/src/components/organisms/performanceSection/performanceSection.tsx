@@ -9,6 +9,7 @@ import { LinkComponent } from '../../../types/types.ts';
 interface PerformanceSectionProps {
   stats: PerformanceCardProps[];
   options: CustomSelectProps['options'];
+  setStatsVS?: (value: string) => void;
   href?: string;
   linkComponent?: LinkComponent;
 }
@@ -16,6 +17,7 @@ interface PerformanceSectionProps {
 export const PerformanceSection = ({
   stats,
   options,
+  setStatsVS,
   href,
   linkComponent,
 }: PerformanceSectionProps) => {
@@ -28,7 +30,7 @@ export const PerformanceSection = ({
           title={'Performance'}
           titleSize={'sm'}
         />
-        <FlexGrid alignItems="center" gap="3">
+        {/*<FlexGrid alignItems="center" gap="3">
           <Typography
             className={'hidden desktop:inline'}
             color="gray-5"
@@ -44,9 +46,10 @@ export const PerformanceSection = ({
             classNameList="border-backgroundTertiary border-t-0"
             defaultValue="lastMonth"
             options={options}
+            onChange={setStatsVS}
             width="sm"
           />
-        </FlexGrid>
+        </FlexGrid>*/}
       </div>
 
       <PerformanceCardGrid stats={stats} />

@@ -45,6 +45,7 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `desktop:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `desktopLg:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `desktopLxl:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `desktopXl:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `tablet:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `mobile:${prefix}-${key}`),
@@ -64,6 +65,7 @@ const getKeyOnlyMap = (obj) => {
     ...Object.keys(obj).map((key) => key),
     ...Object.keys(obj).map((key) => `desktop:${key}`),
     ...Object.keys(obj).map((key) => `desktopLg:${key}`),
+    ...Object.keys(obj).map((key) => `desktopLxl:${key}`),
     ...Object.keys(obj).map((key) => `desktopXl:${key}`),
     ...Object.keys(obj).map((key) => `tablet:${key}`),
     ...Object.keys(obj).map((key) => `mobile:${key}`),
@@ -279,8 +281,6 @@ const config: Omit<Config, 'content'> = {
     ...getKeyMap(numberList, 'divide-x'),
     ...getKeyMap(numberList, 'divide-y'),
     ...getKeyMap(colors, 'divide'),
-
-
 
     'border-collapse',
     'border-spacing-0',
