@@ -22,7 +22,7 @@ export const useGatewayClientStore = create<GatewayClientStore>((set) => ({
   network: Networks.TESTNET,
 
   client: axios.create({
-    baseURL: '',
+    baseURL: networkUrls[Networks.TESTNET],
     timeout: 5000,
     headers: {
       'Content-Type': 'application/json',

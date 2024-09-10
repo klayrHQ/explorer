@@ -5,6 +5,20 @@ import { DefaultLinkComponent, DefaultImageComponent } from 'storybook/stories/u
 import { ColorType } from '@repo/ui/types';
 import React from 'react';
 
+export const currencies = [
+  {
+    sign: 'Ҝ',
+    symbol: 'KLY',
+  },
+  {
+    sign: '$',
+    symbol: 'USD',
+  },
+];
+
+// todo get from settings when available
+export const currentCurrency = currencies[0];
+
 export const mobileMenuItems = [
   {
     label: 'Dashboard',
