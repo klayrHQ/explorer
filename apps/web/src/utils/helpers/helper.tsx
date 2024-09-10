@@ -39,6 +39,7 @@ import {
   validatorStakeOutgoingTableHead,
   transactionTableHead,
   blockTableHead,
+  stakesOverviewTableHead,
 } from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
@@ -49,6 +50,8 @@ export const createTransactionRows = (
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
 ) => {
+  const columnCount = transactionTableHead(() => '', '', '').length;
+
   return !loading
     ? transactions?.length > 0
       ? transactions?.map((transaction) => {
@@ -180,15 +183,17 @@ export const createTransactionRows = (
             cells: [
               {
                 children: <Typography>{'No transactions found'}</Typography>,
-                colSpan: transactionTableHead.length,
+                colSpan: columnCount,
               },
             ],
           },
         ]
-    : getTableSkeletons(transactionTableHead.length);
+    : getTableSkeletons(columnCount);
 };
 
 export const createEventsRows = (events: EventsType[], loading: boolean) => {
+  const columnCount = eventsTableHead.length;
+
   return !loading
     ? events?.map((event) => {
         return {
@@ -219,7 +224,7 @@ export const createEventsRows = (events: EventsType[], loading: boolean) => {
           ],
         };
       })
-    : getTableSkeletons(eventsTableHead.length);
+    : getTableSkeletons(columnCount);
 };
 
 export const createValidatorsRows = (
@@ -236,6 +241,7 @@ export const createValidatorsRows = (
     totalActiveStake: BigInt(0),
   },
 ) => {
+  const columnCount = validatorsTableHead(() => '', '', '').length;
   const { stakingCalculatorAmount, stakingCalculatorPeriod, totalActiveStake } =
     stakingCalculatorProps;
 
@@ -290,12 +296,7 @@ export const createValidatorsRows = (
 
   return !loading
     ? validators?.map((validator) => {
-        const {
-          resultPerBlock,
-          capacity,
-          inputStake,
-          newBlockReward,
-        } = calculateReward(validator);
+        const { resultPerBlock, capacity, inputStake, newBlockReward } = calculateReward(validator);
         const resultPerPeriod =
           stakingCalculatorPeriod === 'block'
             ? newBlockReward
@@ -337,7 +338,10 @@ export const createValidatorsRows = (
               ? {
                   children: (
                     <div className="flex flex-col items-end">
-                      <Tooltip placement={'top'} text={`Staking Rewards per ${stakingCalculatorAmount} KLY per ${stakingCalculatorPeriod}`}>
+                      <Tooltip
+                        placement={'top'}
+                        text={`Staking Rewards per ${stakingCalculatorAmount} KLY per ${stakingCalculatorPeriod}`}
+                      >
                         <Currency
                           amount={resultPerPeriod}
                           className="text-paragraph-sm text-lobster font-semibold" //text-onBackground
@@ -345,8 +349,14 @@ export const createValidatorsRows = (
                           symbol={'KLY'}
                         />
                       </Tooltip>
-                      <Tooltip placement={'bottom'} text={`APR is the yearly rate of return on staking ${stakingCalculatorAmount} KLY`}>
-                        <Typography color={'lobster'} variant={'caption'}>{`${APR.toFixed(2)}%`}</Typography>
+                      <Tooltip
+                        placement={'bottom'}
+                        text={`APR is the yearly rate of return on staking ${stakingCalculatorAmount} KLY`}
+                      >
+                        <Typography
+                          color={'lobster'}
+                          variant={'caption'}
+                        >{`${APR.toFixed(2)}%`}</Typography>
                       </Tooltip>
                     </div>
                   ),
@@ -455,7 +465,7 @@ export const createValidatorsRows = (
           ].filter(Boolean),
         };
       })
-    : getTableSkeletons(validatorsTableHead.length);
+    : getTableSkeletons(columnCount);
 };
 
 export const createValidatorIncomingStakeRows = (
@@ -716,7 +726,7 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
           ],
         };
       })
-    : getTableSkeletons(validatorStakeIncomingTableHead.length);
+    : getTableSkeletons(stakesOverviewTableHead.length);
 };
 
 export const createBlockRows = (
@@ -725,6 +735,8 @@ export const createBlockRows = (
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
 ) => {
+  const columnCount = blockTableHead(() => '', '', '').length;
+
   return !loading
     ? blocks?.map((block) => {
         console.log('blocks', block.assets);
@@ -817,5 +829,5 @@ export const createBlockRows = (
           ],
         };
       })
-    : getTableSkeletons(blockTableHead.length);
+    : getTableSkeletons(columnCount);
 };
