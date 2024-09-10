@@ -10,6 +10,7 @@ import {
   ValidatorType,
   StakeType,
   StakesType,
+  StakersType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
 import {
@@ -82,12 +83,12 @@ export const callGetTokenSummary = async (): Promise<GatewayRes<TokenSummaryType
 
 export const callGetStakes = async (
   params: StakersQueryParams,
-): Promise<GatewayRes<StakesType[]>> => {
-  return apiCall<StakesType[]>('pos/stakes', params);
+): Promise<GatewayRes<StakesType>> => {
+  return apiCall<StakesType>('pos/stakes', params);
 };
 
 export const callGetStakers = async (
   params: StakersQueryParams,
-): Promise<GatewayRes<StakesType[]>> => {
-  return apiCall<StakesType[]>('pos/stakers', params);
+): Promise<GatewayRes<StakersType>> => {
+  return apiCall<StakersType>('pos/stakers', params);
 };
