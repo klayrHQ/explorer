@@ -210,3 +210,16 @@ export interface PerfomanceStatsType {
   totalAccounts: number;
   totalValueLocked: number;
 }
+
+export type StakesType = {
+  address: string;
+  amount: string;
+  name?: string; 
+};
+
+export type StakersType = {
+  address: string;
+  amount: string;
+  name?: string; 
+};
+

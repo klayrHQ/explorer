@@ -37,3 +37,14 @@ export interface ValidatorQueryParams {
   sort?: string;
 }
 
+export interface StakesQueryParams {
+  address?: string;
+  publicKey?: string;
+  name?: number;
+}
+
+export interface StakersQueryParams {
+  address?: string;
+  publicKey?: string;
+  name?: number;
+}

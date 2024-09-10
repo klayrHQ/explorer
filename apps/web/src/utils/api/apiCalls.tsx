@@ -8,6 +8,8 @@ import {
   TokenSummaryType,
   TransactionType,
   ValidatorType,
+  StakesType,
+  StakersType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
 import {
@@ -15,6 +17,7 @@ import {
   EventsQueryParams,
   TransactionQueryParams,
   ValidatorQueryParams,
+  StakersQueryParams,
 } from './types';
 import { NextValidatorType } from '@repo/ui/types';
 
@@ -75,4 +78,16 @@ export const callGetNodeInfo = async (): Promise<GatewayRes<NodeInfoType>> => {
 
 export const callGetTokenSummary = async (): Promise<GatewayRes<TokenSummaryType>> => {
   return apiCall<TokenSummaryType>('token/summary ');
+};
+
+export const callGetStakes = async (
+  params: StakersQueryParams,
+): Promise<GatewayRes<StakesType[]>> => {
+  return apiCall<StakesType[]>('pos/stakes', params);
+};
+
+export const callGetStakers = async (
+  params: StakersQueryParams,
+): Promise<GatewayRes<StakersType[]>> => {
+  return apiCall<StakersType[]>('pos/stakers', params);
 };
