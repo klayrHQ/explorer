@@ -211,15 +211,19 @@ export interface PerfomanceStatsType {
   totalValueLocked: number;
 }
 
-export type StakesType = {
+export type StakeType = {
   address: string;
   amount: string;
   name?: string; 
 };
 
+export type StakesType = {
+  stakes: StakeType[];
+  meta: MetaTransaction;
+};
+
 export type StakersType = {
-  address: string;
-  amount: string;
-  name?: string; 
+  stakers: StakeType[];
+  meta: MetaTransaction;
 };
 

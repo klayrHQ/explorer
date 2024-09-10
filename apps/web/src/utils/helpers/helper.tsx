@@ -2,6 +2,8 @@ import {
   BlockType,
   EventsType,
   StakesCalculatorPeriodType,
+  StakesType,
+  StakeType,
   TransactionType,
   ValidatorType,
 } from '../types.ts';
@@ -468,27 +470,19 @@ export const createValidatorsRows = (
     : getTableSkeletons(columnCount);
 };
 
-export const createValidatorIncomingStakeRows = (
-  incomingStakes: TransactionType[],
-  loading: boolean,
-) => {
+export const createValidatorIncomingStakeRows = (incomingStakes: StakeType[], loading: boolean) => {
   return !loading
     ? incomingStakes?.map((incomingStake) => {
         return {
           cells: [
             {
               children: (
-                <UserAccountCard
-                  address={incomingStake?.sender?.address}
-                  name={incomingStake?.sender?.name}
-                />
+                <UserAccountCard address={incomingStake?.address} name={incomingStake?.name} />
               ),
               className: 'desktop:w-1/5',
             },
             {
-              children: (
-                <Currency amount={incomingStake?.params?.stakes[0].amount} symbol={'KLY'} />
-              ),
+              children: <Currency amount={incomingStake?.amount} symbol={'KLY'} />,
             },
           ],
         };
@@ -497,7 +491,7 @@ export const createValidatorIncomingStakeRows = (
 };
 
 export const createValidatorOutgoingStakeRows = (
-  outgoingStakes: TransactionType[],
+  outgoingStakes: StakeType[],
   validator: ValidatorType | undefined,
   loading: boolean,
 ) => {
@@ -507,10 +501,7 @@ export const createValidatorOutgoingStakeRows = (
           cells: [
             {
               children: (
-                <UserAccountCard
-                  address={outgoingStake?.recipient?.address}
-                  name={outgoingStake?.recipient?.name}
-                />
+                <UserAccountCard address={outgoingStake?.address} name={outgoingStake?.name} />
               ),
             },
             {
@@ -520,14 +511,12 @@ export const createValidatorOutgoingStakeRows = (
             {
               children: (
                 <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {'{formatCommission(validator?.commission)} %'}
+                  {formatCommission(validator?.commission)} %
                 </Typography>
               ),
             },
             {
-              children: (
-                <Currency amount={outgoingStake?.params?.stakes[0].amount} symbol={'KLY'} />
-              ),
+              children: <Currency amount={outgoingStake?.amount} symbol={'KLY'} />,
             },
           ],
         };

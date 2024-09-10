@@ -6,6 +6,7 @@ import { TabButtons, FlexGrid, Currency, Typography, CopyIcon } from '@repo/ui/a
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
+import { useSorting } from '../../utils/hooks/useSorting.ts';
 import {
   transactionTableHead,
   validatorStakeIncomingTableHead,
@@ -26,12 +27,17 @@ import {
   ValidatorType,
   MetaType,
   BlockDetailsType,
+  StakeType,
+  StakersType,
+  StakesType,
 } from '../../utils/types';
 import {
   callGetBlocks,
   callGetEvents,
   callGetTransactions,
   callGetValidators,
+  callGetStakes,
+  callGetStakers,
 } from '../../utils/api/apiCalls.tsx';
 
 import { formatCommission, fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
@@ -42,13 +48,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [validator, setValidators] = useState<ValidatorType | undefined>(undefined);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
-  const [incomingStakes, setIncomingStakes] = useState<TransactionType[]>([]);
-  const [outgoingStakes, setOutgoingStakes] = useState<TransactionType[]>([]);
+  const [incomingStakes, setIncomingStakes] = useState<StakeType[]>([]);
+  const [outgoingStakes, setOutgoingStakes] = useState<StakeType[]>([]);
   const [events, setEvents] = useState<EventsType[]>([]);
   const [blocks, setBlocks] = useState<BlockDetailsType[]>([]);
   const [transactionsMeta, setTransactionsMeta] = useState<MetaType>({});
-  const [incomingStakesMeta, setIncomingStakesMeta] = useState<MetaType>({});
-  const [outgoingStakesMeta, setOutgoingStakesMeta] = useState<MetaType>({});
   const [eventsMeta, setEventsMeta] = useState<MetaType>({});
   const [blocksMeta, setBlocksMeta] = useState<MetaType>({});
   const [sortField, setSortField] = useState<string>('');
@@ -57,8 +61,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const blocksPagination = usePagination(1, '10');
   const eventsPagination = usePagination();
   const transactionsPagination = usePagination();
-  const incomingStakesPagination = usePagination();
-  const outgoingStakesPagination = usePagination();
 
   useEffect(() => {
     setLoading(true);
@@ -93,30 +95,18 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         setTransactionsMeta(data.meta);
       });
 
-      const incomingStakesPromise = fetchPaginatedData(
-        callGetTransactions,
-        {
-          recipientAddress: validator.account.address,
-          moduleCommand: 'pos:stake',
-        },
-        incomingStakesPagination.pageNumber,
-        incomingStakesPagination.limit,
-      ).then((data) => {
-        setIncomingStakes(data.data);
-        setIncomingStakesMeta(data.meta);
+      const incomingStakesPromise = callGetStakes({
+        address: validator.account.address,
+      }).then((data) => {
+        setIncomingStakes(data.data.stakes);
+        console.log(incomingStakes, 'incoming stakes');
       });
 
-      const outgoingStakesPromise = fetchPaginatedData(
-        callGetTransactions,
-        {
-          senderAddress: validator.account.address,
-          moduleCommand: 'pos:stake',
-        },
-        outgoingStakesPagination.pageNumber,
-        outgoingStakesPagination.limit,
-      ).then((data) => {
-        setOutgoingStakes(data.data);
-        setOutgoingStakesMeta(data.meta);
+      const outgoingStakesPromise = callGetStakers({
+        address: validator.account.address,
+      }).then((data) => {
+        console.log(data.data);
+        setOutgoingStakes(data.data.stakers);
       });
 
       const eventsPromise = fetchPaginatedData(
@@ -157,10 +147,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     eventsPagination.limit,
     transactionsPagination.pageNumber,
     transactionsPagination.limit,
-    incomingStakesPagination.pageNumber,
-    incomingStakesPagination.limit,
-    outgoingStakesPagination.pageNumber,
-    outgoingStakesPagination.limit,
   ]);
 
   const handleSort = (field: string) => {
@@ -314,22 +300,14 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         <div>
           <SectionHeader
             className="absolute top-0 left-0"
-            count={incomingStakesMeta?.total}
+            count={setIncomingStakes.length}
             title={`${validator?.account.name}'s stakes`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
-            currentNumber={incomingStakesPagination.pageNumber}
-            defaultValue={incomingStakesPagination.limit}
             headCols={validatorStakeIncomingTableHead}
             keyPrefix={'validator-blocks'}
-            onPerPageChange={incomingStakesPagination.handleLimitChange}
-            pagination
             rows={incomingStake}
-            setCurrentNumber={incomingStakesPagination.handlePageChange}
-            totalPages={Math.ceil(
-              (incomingStakesMeta?.total ?? 0) / Number(incomingStakesPagination.limit),
-            )}
           />
         </div>
       ),
@@ -341,22 +319,14 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         <>
           <SectionHeader
             className="absolute top-0 left-0"
-            count={outgoingStakesMeta?.total}
+            count={outgoingStakes.length}
             title={`${validator?.account.name}'s stakes`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
-            currentNumber={outgoingStakesPagination.pageNumber}
-            defaultValue={outgoingStakesPagination.limit}
             headCols={validatorStakeOutgoingTableHead}
             keyPrefix={'validator-blocks'}
-            onPerPageChange={outgoingStakesPagination.handleLimitChange}
-            pagination
             rows={outgoingStake}
-            setCurrentNumber={outgoingStakesPagination.handlePageChange}
-            totalPages={Math.ceil(
-              (outgoingStakesMeta?.total ?? 0) / Number(outgoingStakesPagination.limit),
-            )}
           />
         </>
       ),
