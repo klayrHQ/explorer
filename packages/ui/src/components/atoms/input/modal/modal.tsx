@@ -31,6 +31,7 @@ export const CustomModal = ({ open, onClose, onSave, title, children }: ModalPro
           className="pt-8 pb-4 desktop:pb-6 px-6"
           component="div"
           justify="between"
+          mobileDirection="row"
         >
           {title && (
             <Typography fontWeight="bold" variant="h4">

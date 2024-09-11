@@ -110,7 +110,12 @@ export const ChainNetworkPicker = ({
         title="Select environments"
       >
         <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
-          <FlexGrid alignItems="center" className={'w-full'} justify="between">
+          <FlexGrid
+            alignItems="center"
+            className={'w-full'}
+            justify="between"
+            mobileDirection="row"
+          >
             <Typography color="onBackgroundLow" variant="paragraph-md">
               {'On chain'}
             </Typography>
@@ -121,7 +126,12 @@ export const ChainNetworkPicker = ({
               options={chainOptions}
             />
           </FlexGrid>
-          <FlexGrid alignItems={'center'} className="w-full" justify={'between'}>
+          <FlexGrid
+            alignItems={'center'}
+            className="w-full"
+            justify={'between'}
+            mobileDirection="row"
+          >
             <Typography color="onBackgroundLow" variant="paragraph-md">
               {'On network'}
             </Typography>
