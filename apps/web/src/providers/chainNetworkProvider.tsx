@@ -5,6 +5,7 @@ import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from '../store/clientStore.ts';
 import { NodeInfoType } from '../utils/types.ts';
 import { callGetNodeInfo } from '../utils/api/apiCalls.tsx';
+import useWebSocket from "react-use-websocket";
 
 type NetworkType = {
   networkId: string;
@@ -26,6 +27,9 @@ export interface ChainNetworkContextProps {
   chains?: ChainType[];
   networks?: NetworkType[];
   nodeInfo?: NodeInfoType;
+  marketcap: number;
+  tokenPrice: number;
+  trend: number;
 }
 
 export const ChainNetworkContext = createContext<ChainNetworkContextProps>(
@@ -39,6 +43,9 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
   const [chains, setChains] = useState<ChainType[]>([]);
   const [networks, setNetworks] = useState<NetworkType[]>([]);
   const [nodeInfo, setNodeInfo] = useState<NodeInfoType>();
+  const [marketcap, setMarketcap] = useState<number>(0);
+  const [tokenPrice, setTokenPrice] = useState<number>(0);
+  const [trend, setTrend] = useState<number>(0);
 
   const [loading, setLoading] = useState<boolean>(false);
   const setBaseURL = useGatewayClientStore((state) => state.setBaseURL);
@@ -47,6 +54,27 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
     setCurrentNetworkID(network);
     setBaseURL(network.networkId);
   };
+
+  const {sendJsonMessage} = useWebSocket('wss://push.coinmarketcap.com/ws?device=web&client_source=coin_detail_page', {
+    onOpen: () => {
+      sendJsonMessage({ method: 'RSUBSCRIPTION', params: ['main-site@crypto_price_15s@{}@detail', '32308'] });
+    },
+    onMessage: (e) => {
+      const data = JSON.parse(e.data);
+
+      if (data?.d?.p24h === undefined) {
+        return;
+      }
+
+      if (data.d.id === 32308) {
+        setTrend(data.d.p24h);
+        setMarketcap(parseFloat((data.d.mc / data.d.p).toFixed(0)));
+        setTokenPrice(data.d.p);
+        //console.log(data);
+      }
+    },
+    shouldReconnect: (closeEvent) => true,
+  });
 
   // get chains from api
   useEffect(() => {
@@ -90,7 +118,7 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
   useEffect(() => {
     callGetNodeInfo().then((data) => {
       setNodeInfo(data as unknown as NodeInfoType);
-      console.log(data);
+      //console.log(data);
     });
   }, []);
 
@@ -104,6 +132,9 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
         chains,
         networks,
         nodeInfo,
+        marketcap,
+        tokenPrice,
+        trend,
       }}
     >
       {children}

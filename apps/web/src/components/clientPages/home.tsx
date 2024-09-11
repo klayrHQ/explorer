@@ -82,7 +82,7 @@ export const Home = () => {
           totalTransactions: tokenSummary.totalTransactions,
           totalValueLocked: totalValueLocked,
         });
-        console.log(data.data);
+        //console.log(data.data);
       })
       .finally(() => setLoadingStats(false));
   }, [currentChain, currentNetwork]);
