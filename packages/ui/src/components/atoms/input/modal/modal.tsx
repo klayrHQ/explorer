@@ -1,10 +1,11 @@
-import React, {useState} from "react";
-import { Modal as BaseModal } from "@mui/base";
-import { Button } from "../button";
-import { IconButton } from "../iconButton";
-import { Typography } from "../../base/typography";
-import { Backdrop } from "./modalBackdrop";
-import { FlexGrid } from "../../base/flexGrid";
+import React, { useState } from 'react';
+import { Modal as BaseModal } from '@mui/base';
+import { Button } from '../button';
+import { IconButton } from '../iconButton';
+import { Typography } from '../../base/typography';
+import { Backdrop } from './modalBackdrop';
+import { FlexGrid } from '../../base/flexGrid';
+import { Modal } from '@mui/material';
 
 interface ModalProps {
   open: boolean;
@@ -12,28 +13,26 @@ interface ModalProps {
   onSave: () => void;
   title: string;
   children: React.ReactNode;
-
 }
 
-export const Modal = ({
-  open,
-  onClose,
-  onSave,
-  title,
-  children,
-}: ModalProps) => {
-  
+export const CustomModal = ({ open, onClose, onSave, title, children }: ModalProps) => {
   return (
-    <BaseModal
+    <Modal
       className="fixed inset-0 flex items-center justify-between p-4"
       onClose={onClose}
       open={open}
-      slots={{ backdrop: Backdrop, }}
+      slots={{ backdrop: Backdrop }}
     >
       <div
         className={` bg-backgroundSecondary text-white rounded-lg shadow-lg  outline-none relative w-modalWidthMobile desktop:w-modalWidth`}
       >
-        <FlexGrid alignItems="center" className="pt-8 pb-4 desktop:pb-6 px-6" component='div' justify="between">
+        <FlexGrid
+          alignItems="center"
+          className="pt-8 pb-4 desktop:pb-6 px-6"
+          component="div"
+          justify="between"
+          mobileDirection="row"
+        >
           {title && (
             <Typography fontWeight="bold" variant="h4">
               {title}
@@ -56,14 +55,9 @@ export const Modal = ({
             onClick={onClose}
             variant="transparent"
           />
-          <Button
-            align="none"
-            className="w-full desktop:w-auto"
-            label="Save"
-            onClick={onSave}
-          />
+          <Button align="none" className="w-full desktop:w-auto" label="Save" onClick={onSave} />
         </FlexGrid>
       </div>
-    </BaseModal>
+    </Modal>
   );
 };

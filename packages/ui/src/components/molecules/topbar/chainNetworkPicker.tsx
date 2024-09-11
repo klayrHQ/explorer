@@ -5,7 +5,7 @@ import { FlexGrid, KeyValueComponent, Typography } from '../../atoms';
 import { ImageContainer } from '../../atoms';
 import { StatusIcon } from '../../atoms';
 import { ReactElement } from 'react';
-import { Modal, CustomSelect } from '../../atoms';
+import { CustomModal, CustomSelect } from '../../atoms';
 import { NetworkSelect } from './networkSelect.tsx';
 
 export interface ChainNetworkPickerProps {
@@ -103,14 +103,19 @@ export const ChainNetworkPicker = ({
           onClick={() => setIsModalOpen(true)}
         />
       </FlexGrid>
-      <Modal
+      <CustomModal
         onClose={handleClose}
         onSave={handleSave}
         open={isModalOpen}
         title="Select environments"
       >
         <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
-          <FlexGrid alignItems="center" className={'w-full'} justify="between">
+          <FlexGrid
+            alignItems="center"
+            className={'w-full'}
+            justify="between"
+            mobileDirection="row"
+          >
             <Typography color="onBackgroundLow" variant="paragraph-md">
               {'On chain'}
             </Typography>
@@ -121,7 +126,12 @@ export const ChainNetworkPicker = ({
               options={chainOptions}
             />
           </FlexGrid>
-          <FlexGrid alignItems={'center'} className="w-full" justify={'between'}>
+          <FlexGrid
+            alignItems={'center'}
+            className="w-full"
+            justify={'between'}
+            mobileDirection="row"
+          >
             <Typography color="onBackgroundLow" variant="paragraph-md">
               {'On network'}
             </Typography>
@@ -133,7 +143,7 @@ export const ChainNetworkPicker = ({
             />
           </FlexGrid>
         </FlexGrid>
-      </Modal>
+      </CustomModal>
       <NetworkSelect
         currentNetworkStatusClass={currentNetworkStatusClass}
         defaultValue={currentNetwork?.networkId}
