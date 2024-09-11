@@ -21,8 +21,8 @@ export const Validators = () => {
   const [totalValidators, setTotalValidators] = useState(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [rowsPerPage, setRowsPerPage] = useState<number>(51);
-  const [sortField, setSortField] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<string>('');
+  const [sortField, setSortField] = useState<string>('rank');
+  const [sortOrder, setSortOrder] = useState<string>('asc');
 
   const network = useGatewayClientStore((state) => state.network);
   const newBlockEvent = useSocketStore((state) => state.height);
