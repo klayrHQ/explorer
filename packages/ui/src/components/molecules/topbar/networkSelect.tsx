@@ -99,7 +99,7 @@ export const NetworkSelect = ({
       {listboxVisible && (
         <ClickAwayListener onClickAway={() => setListboxVisible(false)}>
           <ul
-            className={`absolute mt-3 right-0 border-1 border-backgroundTertiary ${width}  bg-darkBlue z-10 rounded-md overflow-hidden`}
+            className={`absolute desktop:mt-3 desktop:right-0 desktop:bottom-auto bottom-full mb-2.5 shadow-md border-1 border-backgroundTertiary ${width}  bg-darkBlue z-10 rounded-md overflow-hidden`}
             role="listbox"
           >
             {options.map((option) => (
