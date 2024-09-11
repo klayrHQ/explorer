@@ -87,7 +87,7 @@ export const ChainNetworkPicker = ({
   }
 
   return (
-    <FlexGrid>
+    <FlexGrid gap="1.5xl" mobileDirection="row">
       <FlexGrid gap="1.5xl" mobileDirection={'row'} onClick={handleOpen}>
         <KeyValueComponent
           contentValue={currentChain?.chainName || 'Select chain'}
