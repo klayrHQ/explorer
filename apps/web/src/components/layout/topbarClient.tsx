@@ -1,9 +1,9 @@
 'use client';
 import { Topbar } from '@repo/ui/organisms';
-import { MenuItemProps } from '@repo/ui/atoms';
-import { kpisObject } from '../../utils/constants.tsx';
+import { Icon, MenuItemProps, Typography } from '@repo/ui/atoms';
 import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
+import React from 'react';
 
 interface TopbarClientProps {
   logo: {
@@ -15,12 +15,48 @@ interface TopbarClientProps {
 }
 
 export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
-  const { currentChain, setCurrentChain, currentNetwork, setCurrentNetwork, chains, networks, nodeInfo } =
-    useChainNetwork();
+  const {
+    currentChain,
+    setCurrentChain,
+    currentNetwork,
+    setCurrentNetwork,
+    chains,
+    networks,
+    nodeInfo,
+    marketcap,
+    trend,
+    tokenPrice,
+  } = useChainNetwork();
 
   const callSearch = useSearchStore((state) => state.callSearch);
   const setSearchResults = useSearchStore((state) => state.setSearchResults);
   const searchResult = useSearchStore((state) => state.searchResults);
+
+  const kpisObject = [
+    {
+      keyValue: 'KLY: ',
+      contentValue: (
+        <Typography
+          className={'inline-flex items-center gap-1'}
+          color={'gray-5'}
+          variant={'paragraph-sm'}
+        >
+          {`$${parseFloat(tokenPrice.toFixed(5)).toLocaleString()}`}
+          <span
+            className={`${trend < 0 ? 'text-error' : 'text-success'} text-paragraph-sm font-semibold inline-flex items-center gap-1`}
+          >
+            <Icon className={'mt-px'} color={'inherit'} icon={trend < 0 ? 'TrendDown' : 'TrendUp'} size={'xs'} />
+            {`${parseFloat(trend.toFixed(2)).toLocaleString()}%`}
+          </span>
+        </Typography>
+      ),
+    },
+    //todo - uncomment when marketcap is available (awaiting verification)
+    /*{
+      keyValue: 'MC: ',
+      contentValue: `$${parseFloat(marketcap.toFixed(2)).toLocaleString()}`,
+    },*/
+  ];
 
   return (
     <Topbar
