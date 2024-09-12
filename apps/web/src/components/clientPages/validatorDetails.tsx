@@ -364,7 +364,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={transactionTableHead(handleSort, sortField, sortOrder)}
             keyPrefix={'validator-tx'}
             onPerPageChange={transactionsPagination.handleLimitChange}
-            pagination
+            pagination={transactionsMeta?.total ? transactionsMeta?.total > parseInt(transactionsPagination.limit) : false}
             rows={rows}
             setCurrentNumber={transactionsPagination.handlePageChange}
             totalPages={Math.ceil(
@@ -401,7 +401,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={validatorBlocksTableHead}
             keyPrefix={'validator-blocks'}
             onPerPageChange={blocksPagination.handleLimitChange}
-            pagination
+            pagination={blocksMeta?.total ? blocksMeta?.total > parseInt(blocksPagination.limit) : false}
             rows={validatorBlocksRows}
             setCurrentNumber={blocksPagination.handlePageChange}
             totalPages={Math.ceil((blocksMeta?.total ?? 0) / Number(blocksPagination.limit))}
@@ -426,7 +426,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={validatorEventsTableHead}
             keyPrefix={'validator-blocks'}
             onPerPageChange={eventsPagination.handleLimitChange}
-            pagination
+            pagination={eventsMeta?.total ? eventsMeta?.total > parseInt(eventsPagination.limit) : false}
             rows={eventsRows}
             setCurrentNumber={eventsPagination.handlePageChange}
             totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(eventsPagination.limit))}
