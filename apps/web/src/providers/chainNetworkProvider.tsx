@@ -121,7 +121,7 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
           ? currentChain.networks[0]
           : currentChain.networks.find((network) => network.networkName === networkSubdomain);
       setCurrentNetwork(network ?? currentChain.networks[0]);
-      setBaseURL(currentNetwork.networkId);
+      setBaseURL(network?.networkId ?? currentChain.networks[0].networkId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChain]);
