@@ -84,7 +84,6 @@ export const Validators = () => {
         />
         <div className="hidden desktop:flex">
           <DonutChart
-            data={chartData}
             colors={[
               'var(--color-success)',
               'var(--color-sandDark)',
@@ -93,6 +92,7 @@ export const Validators = () => {
               'var(--color-tulip)',
               'var(--color-success))',
             ]}
+            data={chartData}
           />
         </div>
         <div className="hidden desktop:flex">
