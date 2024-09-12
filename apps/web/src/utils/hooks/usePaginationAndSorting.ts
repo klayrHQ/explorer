@@ -50,7 +50,7 @@ export const usePaginationAndSorting = ({
 
   const fetchData = useCallback(
     debounce(async () => {
-      setLoading(true);
+      data.length <= 0 && setLoading(true);
       const offset = (pageNumber - 1) * Number(limit);
       const params: any = {
         limit,
