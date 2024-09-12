@@ -18,14 +18,14 @@ const statusColors: { [key: string]: StatusColorProps } = {
     backgroundColor: 'redOpacity',
   },
   standby: {
-    borderColor: 'azule',
-    colorVariant: 'azule',
+    borderColor: 'azuleDark',
+    colorVariant: 'azuleDark',
     backgroundColor: 'blueOpacity',
   },
-  inelegible: {
-    borderColor: 'gray-4',
-    colorVariant: 'gray-4',
-    backgroundColor: 'grayOpacity',
+  ineligible: {
+    borderColor: 'sandDark',
+    colorVariant: 'sandDark',
+    backgroundColor: 'sandDarkOpacity',
   },
   punished: {
     borderColor: 'volt',

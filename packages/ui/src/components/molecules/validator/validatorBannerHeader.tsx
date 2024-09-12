@@ -1,4 +1,4 @@
-import { Badge, Typography } from '../../atoms';
+import { Badge, StatusBadge, Typography } from '../../atoms';
 import { CopyIcon } from '../../atoms/input/copyIcon';
 import { ImageNotification } from '../../atoms';
 import { BadgeIcon } from '../../atoms';
@@ -35,25 +35,7 @@ export const ValidatorBannerHeader = ({
           width="auto"
         />
         <div className="hidden desktop:flex mb-4">
-          {status === 'active' ? (
-            <Badge
-              backgroundColor="greenOpacity"
-              borderColor="success"
-              colorVariant="success"
-              label="Active"
-              padding="1.5"
-              variant="caption"
-            />
-          ) : (
-            <Badge
-              backgroundColor="redOpacity"
-              borderColor="error"
-              colorVariant="error"
-              label={status ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() : ''}
-              padding="1.5"
-              variant="caption"
-            />
-          )}
+          <StatusBadge status={status || ''} />
         </div>
         <div className="flex items-center desktop:hidden mb-4">
           {status === 'active' ? (

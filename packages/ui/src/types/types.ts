@@ -107,6 +107,7 @@ export type ColorType =
   | 'lobsterDark'
   | 'sand'
   | 'sandDark'
+  | 'sandDarkOpacity'
   | 'tulip'
   | 'tulipDark'
   | 'green'
