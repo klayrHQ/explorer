@@ -5,7 +5,7 @@ import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from '../store/clientStore.ts';
 import { NodeInfoType } from '../utils/types.ts';
 import { callGetNodeInfo } from '../utils/api/apiCalls.tsx';
-import useWebSocket from "react-use-websocket";
+import useWebSocket from 'react-use-websocket';
 
 type NetworkType = {
   networkId: string;
@@ -55,26 +55,32 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
     setBaseURL(network.networkId);
   };
 
-  const {sendJsonMessage} = useWebSocket('wss://push.coinmarketcap.com/ws?device=web&client_source=coin_detail_page', {
-    onOpen: () => {
-      sendJsonMessage({ method: 'RSUBSCRIPTION', params: ['main-site@crypto_price_15s@{}@detail', '32308'] });
-    },
-    onMessage: (e) => {
-      const data = JSON.parse(e.data);
+  const { sendJsonMessage } = useWebSocket(
+    'wss://push.coinmarketcap.com/ws?device=web&client_source=coin_detail_page',
+    {
+      onOpen: () => {
+        sendJsonMessage({
+          method: 'RSUBSCRIPTION',
+          params: ['main-site@crypto_price_15s@{}@detail', '32308'],
+        });
+      },
+      onMessage: (e) => {
+        const data = JSON.parse(e.data);
 
-      if (data?.d?.p24h === undefined) {
-        return;
-      }
+        if (data?.d?.p24h === undefined) {
+          return;
+        }
 
-      if (data.d.id === 32308) {
-        setTrend(data.d.p24h);
-        setMarketcap(parseFloat((data.d.mc / data.d.p).toFixed(0)));
-        setTokenPrice(data.d.p);
-        //console.log(data);
-      }
+        if (data.d.id === 32308) {
+          setTrend(data.d.p24h);
+          setMarketcap(parseFloat((data.d.mc / data.d.p).toFixed(0)));
+          setTokenPrice(data.d.p);
+          //console.log(data);
+        }
+      },
+      shouldReconnect: (closeEvent) => true,
     },
-    shouldReconnect: (closeEvent) => true,
-  });
+  );
 
   // get chains from api
   useEffect(() => {
@@ -108,9 +114,14 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
     if (currentChain) {
       // get networks from current chain
       setNetworks(currentChain.networks);
-      // set currentNetwork to first network
-      setCurrentNetwork(currentChain.networks[0]);
-      setBaseURL(currentChain.networks[0].networkId);
+      // set currentNetwork to subdomain or first network
+      const networkSubdomain = window.location.hostname.split('.')[0].split('-')[0];
+      const network =
+        networkSubdomain === 'explorer'
+          ? currentChain.networks[0]
+          : currentChain.networks.find((network) => network.networkName === networkSubdomain);
+      setCurrentNetwork(network ?? currentChain.networks[0]);
+      setBaseURL(currentNetwork.networkId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChain]);

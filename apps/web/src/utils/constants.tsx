@@ -254,12 +254,12 @@ export const defaultChain = {
   logo: 'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g',
   networks: [
     {
-      networkName: 'Testnet',
-      networkId: '01000000',
+      networkName: 'mainnet',
+      networkId: '00000000',
     },
     {
-      networkName: 'Mainnet',
-      networkId: '00000000',
+      networkName: 'testnet',
+      networkId: '01000000',
     },
   ],
 };

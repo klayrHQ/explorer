@@ -74,7 +74,7 @@ export const NetworkSelect = ({
     return selectedOption ? (
       <div className="flex items-center ">
         <Typography
-          className="hover:text-gray-3 "
+          className="hover:text-gray-3 capitalize"
           color="gray-5"
           fontWeight="normal"
           variant={'paragraph-sm'}
@@ -105,7 +105,7 @@ export const NetworkSelect = ({
             {options.map((option) => (
               <li
                 className={clsx(
-                  'cursor-pointer list-none  py-3 px-5 flex items-center justify-start w-full hover:bg-gray-6 transition-all',
+                  'cursor-pointer list-none py-3 px-5 flex items-center justify-start w-full hover:bg-gray-6 transition-all capitalize',
                   {
                     'bg-darkblue': selectedValue === option.value,
                   },
