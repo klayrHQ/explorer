@@ -95,18 +95,18 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         setTransactionsMeta(data.meta);
       });
 
-      const incomingStakesPromise = callGetStakes({
+      const incomingStakesPromise = callGetStakers({
         address: validator.account.address,
       }).then((data) => {
-        setIncomingStakes(data.data.stakes);
+        setIncomingStakes(data.data.stakers);
         console.log(incomingStakes, 'incoming stakes');
       });
 
-      const outgoingStakesPromise = callGetStakers({
+      const outgoingStakesPromise = callGetStakes({
         address: validator.account.address,
       }).then((data) => {
         console.log(data.data);
-        setOutgoingStakes(data.data.stakers);
+        setOutgoingStakes(data.data.stakes);
       });
 
       const eventsPromise = fetchPaginatedData(
