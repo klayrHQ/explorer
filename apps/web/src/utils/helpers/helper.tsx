@@ -137,18 +137,32 @@ export const createTransactionRows = (
               },
               {
                 children: (
-                  <UserAccountCard
-                    address={transaction?.sender?.address}
-                    name={transaction?.sender?.name}
-                  />
+                  <Link
+                    href={
+                      transaction?.sender?.name ? `/validators/${transaction?.sender?.address}` : ``
+                    }
+                  >
+                    <UserAccountCard
+                      address={transaction?.sender?.address}
+                      name={transaction?.sender?.name}
+                    />
+                  </Link>
                 ),
               },
               {
                 children: transaction?.recipient ? (
-                  <UserAccountCard
-                    address={transaction?.recipient?.address}
-                    name={transaction?.recipient?.name}
-                  />
+                  <Link
+                    href={
+                      transaction?.recipient?.name
+                        ? `/validators/${transaction?.recipient?.address}`
+                        : ``
+                    }
+                  >
+                    <UserAccountCard
+                      address={transaction?.recipient?.address}
+                      name={transaction?.recipient?.name}
+                    />
+                  </Link>
                 ) : (
                   '-'
                 ),
@@ -477,7 +491,9 @@ export const createValidatorIncomingStakeRows = (incomingStakes: StakeType[], lo
           cells: [
             {
               children: (
-                <UserAccountCard address={incomingStake?.address} name={incomingStake?.name} />
+                <Link href={incomingStake?.name ? `/validators/${incomingStake?.address}` : ``}>
+                  <UserAccountCard address={incomingStake?.address} name={incomingStake?.name} />
+                </Link>
               ),
               className: 'desktop:w-1/5',
             },
@@ -501,7 +517,9 @@ export const createValidatorOutgoingStakeRows = (
           cells: [
             {
               children: (
-                <UserAccountCard address={outgoingStake?.address} name={outgoingStake?.name} />
+                <Link href={outgoingStake?.name ? `/validators/${outgoingStake?.address}` : ``}>
+                  <UserAccountCard address={outgoingStake?.address} name={outgoingStake?.name} />
+                </Link>
               ),
             },
             {
@@ -648,7 +666,9 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
             },
             {
               children: (
-                <UserAccountCard address={stake?.sender?.address} name={stake?.sender?.name} />
+                <Link href={stake?.sender?.name ? `/validators/${stake?.sender?.address}` : ``}>
+                  <UserAccountCard address={stake?.sender?.address} name={stake?.sender?.name} />
+                </Link>
               ),
             },
             {
@@ -665,12 +685,16 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
                               className="flex items-center justify-between gap-8 w-72 -m-0.5"
                               key={param?.validatorAddress}
                             >
-                              <UserAccountCard
-                                address={param?.validatorAddress}
-                                name={param?.name}
-                                nameOnly
-                                nameVariant="paragraph-sm"
-                              />
+                              <Link
+                                href={param?.name ? `/validators/${param?.validatorAddress}` : ``}
+                              >
+                                <UserAccountCard
+                                  address={param?.validatorAddress}
+                                  name={param?.name}
+                                  nameOnly
+                                  nameVariant="paragraph-sm"
+                                />
+                              </Link>
                               <Currency
                                 amount={amount}
                                 className="text-right self-end"
@@ -692,10 +716,14 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
                               className="flex items-center justify-between gap-8 w-72 -m-0.5"
                               key={param?.validatorAddress}
                             >
-                              <UserAccountCard
-                                address={param?.validatorAddress}
-                                name={param?.name}
-                              />
+                              <Link
+                                href={param?.name ? `/validators/${param?.validatorAddress}` : ``}
+                              >
+                                <UserAccountCard
+                                  address={param?.validatorAddress}
+                                  name={param?.name}
+                                />
+                              </Link>
                               <Currency
                                 amount={amount}
                                 className="text-right self-end"
@@ -784,7 +812,9 @@ export const createBlockRows = (
             },
             {
               children: (
-                <UserAccountCard address={block.generator.address} name={block.generator.name} />
+                <Link href={`/validators/${block.generator.address}`}>
+                  <UserAccountCard address={block.generator.address} name={block.generator.name} />
+                </Link>
               ),
             },
             {

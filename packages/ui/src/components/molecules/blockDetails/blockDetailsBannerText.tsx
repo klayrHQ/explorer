@@ -2,6 +2,7 @@ import { Typography } from '../../atoms';
 import { Badge } from '../../atoms';
 import { Currency } from '../../atoms/base/currency';
 import { UserAccountCard } from '../../atoms';
+import Link from "next/link";
 
 export interface BlockDetailsBannerTextProps {
   reward: string;
@@ -27,18 +28,20 @@ export const BlockDetailsBannerText = ({
       </Typography>
 
       {/* SENDER */}
-      <UserAccountCard
-        address={generatorAddress}
-        addressColor="onBackground"
-        addressVariant={'paragraph-md'}
-        fontWeight="semibold"
-        name={generatorName}
-        nameColor="onBackground"
-        nameOnly
-        nameVariant={'paragraph-md'}
-        size={24}
-        width="auto"
-      />
+      <Link href={`/validators/${generatorAddress}`}>
+        <UserAccountCard
+          address={generatorAddress}
+          addressColor="onBackground"
+          addressVariant={'paragraph-md'}
+          fontWeight="semibold"
+          name={generatorName}
+          nameColor="onBackground"
+          nameOnly
+          nameVariant={'paragraph-md'}
+          size={24}
+          width="auto"
+        />
+      </Link>
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {' containing'}
