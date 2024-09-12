@@ -728,7 +728,6 @@ export const createBlockRows = (
 
   return !loading
     ? blocks?.map((block) => {
-        console.log('blocks', block.assets);
         return {
           cells: [
             {
