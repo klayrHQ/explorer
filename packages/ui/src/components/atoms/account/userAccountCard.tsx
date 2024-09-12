@@ -38,7 +38,7 @@ export const UserAccountCard = ({
   return (
     <FlexGrid
       alignItems={'center'}
-      className={`w-${width} cursor-pointer`}
+      className={`w-${width}`}
       gap={'md'}
       mobileDirection={'row'}
     >

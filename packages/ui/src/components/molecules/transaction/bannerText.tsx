@@ -5,6 +5,7 @@ import { Currency } from '../../atoms/base/currency';
 import { trimSix, trimFour } from '../../../utils/functions';
 import { UserAccountCard } from '../../atoms';
 import { dayjs, fromNowFormatter, replaceColonWithSpace } from '../../../utils/functions';
+import Link from "next/link";
 
 interface TransactionBannerProps {
   amount?: string | number;
@@ -42,18 +43,20 @@ export const BannerText = ({
   return (
     <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth max-w-full flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
-      <UserAccountCard
-        address={senderAddress}
-        addressColor="onBackground"
-        addressVariant={'paragraph-md'}
-        fontWeight="semibold"
-        name={senderName}
-        nameColor="onBackground"
-        nameOnly
-        nameVariant={'paragraph-md'}
-        size={24}
-        width="auto"
-      />
+      <Link href={senderName ? `/validators/${senderAddress}` : ''}>
+        <UserAccountCard
+          address={senderAddress}
+          addressColor="onBackground"
+          addressVariant={'paragraph-md'}
+          fontWeight="semibold"
+          name={senderName}
+          nameColor="onBackground"
+          nameOnly
+          nameVariant={'paragraph-md'}
+          size={24}
+          width="auto"
+        />
+      </Link>
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'send'}
@@ -61,17 +64,19 @@ export const BannerText = ({
 
       {/* RECEIVER */}
       {receiverAddress && (
-        <UserAccountCard
-          address={receiverAddress}
-          addressColor="onBackground"
-          addressVariant={'paragraph-md'}
-          fontWeight="semibold"
-          name={receiverName}
-          nameColor="onBackground"
-          nameOnly
-          size={24}
-          width="auto"
-        />
+        <Link href={receiverName ? `/validators/${receiverAddress}` : ``}>
+          <UserAccountCard
+            address={receiverAddress}
+            addressColor="onBackground"
+            addressVariant={'paragraph-md'}
+            fontWeight="semibold"
+            name={receiverName}
+            nameColor="onBackground"
+            nameOnly
+            size={24}
+            width="auto"
+          />
+        </Link>
       )}
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">

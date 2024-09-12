@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   BlockDetailsBanner,
   DetailsSection,
@@ -17,16 +17,17 @@ import {
   Typography,
   CopyIcon,
 } from '@repo/ui/atoms';
-import { eventsTableHead, transactionTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import { createEventsRows, createTransactionRows } from '../../utils/helpers/helper.tsx';
-import { DataType } from '@repo/ui/types';
-import { getSeedRevealFromAssets, fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
-import { BlockDetailsType, EventsType, TransactionType } from '../../utils/types.ts';
-import { callGetBlocks, callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
-import { usePagination } from '../../utils/hooks/usePagination.ts';
+import {eventsTableHead, transactionTableHead} from '../../utils/helpers/tableHeaders.tsx';
+import {createEventsRows, createTransactionRows} from '../../utils/helpers/helper.tsx';
+import {DataType} from '@repo/ui/types';
+import {getSeedRevealFromAssets, fetchPaginatedData} from '../../utils/helpers/dataHelpers.tsx';
+import {BlockDetailsType, EventsType, TransactionType} from '../../utils/types.ts';
+import {callGetBlocks, callGetEvents, callGetTransactions} from '../../utils/api/apiCalls.tsx';
+import {usePagination} from '../../utils/hooks/usePagination.ts';
+import Link from "next/link";
 
-export const BlockDetails = ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+export const BlockDetails = ({params}: { params: { id: string } }) => {
+  const {id} = params;
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
   const [block, setBlocks] = useState<BlockDetailsType | undefined>(undefined);
@@ -90,7 +91,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       setLoading(true);
       const eventsPromise = fetchPaginatedData(
         callGetEvents,
-        { height: `${block.height}:${block.height}` },
+        {height: `${block.height}:${block.height}`},
         eventsPagination.pageNumber,
         eventsPagination.limit,
       ).then((data) => {
@@ -115,7 +116,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: (
         <div className="flex flex-row gap-1.5 items-baseline ">
           <Typography variant={'paragraph-sm'}>{block?.id}</Typography>
-          <CopyIcon content={block?.id || ''} size={'xxs'} />
+          <CopyIcon content={block?.id || ''} size={'xxs'}/>
         </div>
       ),
     },
@@ -126,7 +127,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: (
         <div className="flex flex-row gap-1.5 items-baseline ">
           <Typography variant={'paragraph-sm'}>{block?.height}</Typography>
-          <CopyIcon content={block?.height.toString() || ''} size={'xxs'} />
+          <CopyIcon content={block?.height.toString() || ''} size={'xxs'}/>
         </div>
       ),
     },
@@ -135,7 +136,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         label: 'Date',
       },
       value: block?.timestamp ? (
-        <DateComponent timestamp={block?.timestamp * 1000} variant={'full'} />
+        <DateComponent timestamp={block?.timestamp * 1000} variant={'full'}/>
       ) : (
         ''
       ),
@@ -145,7 +146,9 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         label: 'Generator',
       },
       value: (
-        <UserAccountCard address={block?.generator?.address ?? ''} name={block?.generator?.name} />
+        <Link href={`/validators/${block?.generator?.address}`}>
+          <UserAccountCard address={block?.generator?.address ?? ''} name={block?.generator?.name}/>
+        </Link>
       ),
     },
     {
@@ -252,7 +255,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       icon: 'List',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader count={eventsMeta?.total} title={'Block events'} titleSizeNotLink={'h5'} />
+          <SectionHeader count={eventsMeta?.total} title={'Block events'} titleSizeNotLink={'h5'}/>
           <TableContainer
             currentNumber={eventsPagination.pageNumber}
             defaultValue={eventsPagination.limit}
@@ -281,7 +284,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         reward={block?.reward || '0'}
         symbol="KLY"
       />
-      <TabButtons tabs={tabs} />
+      <TabButtons tabs={tabs}/>
     </FlexGrid>
   );
 };

@@ -130,10 +130,12 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'From',
       },
       value: (
-        <UserAccountCard
-          address={transaction?.sender?.address ?? ''}
-          name={transaction?.sender?.name}
-        />
+        <Link href={transaction?.sender?.name ? `/validators/${transaction?.sender?.address}` : ``}>
+          <UserAccountCard
+            address={transaction?.sender?.address ?? ''}
+            name={transaction?.sender?.name}
+          />
+        </Link>
       ),
       mobileWidth: 'half',
     },
@@ -144,10 +146,12 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
               label: 'To',
             },
             value: (
-              <UserAccountCard
-                address={transaction?.recipient?.address ?? ''}
-                name={transaction?.recipient?.name}
-              />
+              <Link href={transaction?.recipient?.name ? `/validators/${transaction?.recipient?.address}` : ``}>
+                <UserAccountCard
+                  address={transaction?.recipient?.address ?? ''}
+                  name={transaction?.recipient?.name}
+                />
+              </Link>
             ),
             mobileWidth: 'half',
           },
