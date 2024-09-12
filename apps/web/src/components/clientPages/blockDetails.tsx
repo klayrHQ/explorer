@@ -218,7 +218,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       content: (
         <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4.5xl'}>
           <SectionHeader
-            count={transactions?.length || '0'}
+            count={transactionsMeta?.total || '0'}
             title={'Block transactions'}
             titleSizeNotLink={'h5'}
           />
@@ -229,7 +229,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
               headCols={transactionTableHead(handleSort, sortField, sortOrder)}
               keyPrefix={'transactions'}
               onPerPageChange={transactionsPagination.handleLimitChange}
-              pagination
+              pagination={transactionsMeta?.total ? transactionsMeta?.total > parseInt(transactionsPagination.limit) : false}
               rows={transactionRows}
               setCurrentNumber={transactionsPagination.handlePageChange}
               totalPages={Math.ceil(
@@ -252,14 +252,14 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       icon: 'List',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader count={events?.length} title={'Block events'} titleSizeNotLink={'h5'} />
+          <SectionHeader count={eventsMeta?.total} title={'Block events'} titleSizeNotLink={'h5'} />
           <TableContainer
             currentNumber={eventsPagination.pageNumber}
             defaultValue={eventsPagination.limit}
             headCols={eventsTableHead}
             keyPrefix={'tx-events'}
             onPerPageChange={eventsPagination.handleLimitChange}
-            pagination
+            pagination={eventsMeta?.total ? eventsMeta?.total > parseInt(eventsPagination.limit) : false}
             rows={eventsRows}
             setCurrentNumber={eventsPagination.handlePageChange}
             totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(eventsPagination.limit))}
