@@ -7,6 +7,7 @@ import { StatusIcon } from '../../atoms';
 import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
 import { NetworkSelect } from './networkSelect.tsx';
+import { useRouter } from 'next/navigation';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType;
@@ -30,6 +31,8 @@ export const ChainNetworkPicker = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChain, setSelectedChain] = useState<ChainType | null>(currentChain);
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkType | null>(currentNetwork);
+  const router = useRouter();
+  const explorerUrl = 'explorer.klayr.dev';
 
   const chainOptions = chains?.map((chain) => ({
     label: chain.chainName,
@@ -58,6 +61,10 @@ export const ChainNetworkPicker = ({
     if (network) {
       setSelectedNetwork(network);
       setCurrentNetwork(network);
+      window.location.hostname !== 'localhost' &&
+        (network.networkName === 'mainnet'
+          ? router.push(`https://${explorerUrl}`)
+          : router.push(`https://${network.networkName}-${explorerUrl}`));
     }
   };
 
