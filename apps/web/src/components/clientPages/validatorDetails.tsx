@@ -99,13 +99,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         address: validator.account.address,
       }).then((data) => {
         setIncomingStakes(data.data.stakers);
-        console.log(incomingStakes, 'incoming stakes');
       });
 
       const outgoingStakesPromise = callGetStakes({
         address: validator.account.address,
       }).then((data) => {
-        console.log(data.data);
         setOutgoingStakes(data.data.stakes);
       });
 
@@ -163,7 +161,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     (Number(validator?.validatorWeight) / Number(validator?.selfStake)) *
     10
   ).toFixed(2);
-  console.log(stakeCapacity);
   const totalReceivedStake = Number(validator?.totalStake) + Number(validator?.selfStake);
 
   const details = [
