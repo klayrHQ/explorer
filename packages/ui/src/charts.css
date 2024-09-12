@@ -17,12 +17,13 @@
   border-radius: 6px;
 }
 
-.MuiChartsTooltip-valueCell.MuiChartsTooltip-valueCell, .MuiChartsTooltip-labelCell.MuiChartsTooltip-labelCell {
+.MuiChartsTooltip-labelCell.MuiChartsTooltip-labelCell {
   color: var(--color-onBackgroundHigh);
 }
 
-.MuiChartsTooltip-valueCell.MuiChartsTooltip-valueCell {
+.MuiChartsTooltip-row .MuiChartsTooltip-valueCell.MuiChartsTooltip-valueCell {
   font-weight: 600;
+  color: var(--color-onBackgroundMedium);
 }
 
 .MuiChartsTooltip-cell.MuiChartsTooltip-cell {
