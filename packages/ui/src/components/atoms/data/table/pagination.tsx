@@ -85,7 +85,9 @@ export const Pagination = ({
 
   return (
     <div className="flex justify-between w-full relative ">
-      <PageLimit defaultValue={defaultValue} onPerPageChange={handlePerPageChange} />
+      <div className="hidden desktop:flex">
+        <PageLimit defaultValue={defaultValue} onPerPageChange={handlePerPageChange} />
+      </div>
       <div className="w-full flex flex-col gap-3 items-end justify-center desktop:flex-row desktop:items-center desktop:gap-6">
         {/* DESKTOP PAGINATION */}
         <div className="gap-0.5 hidden desktop:flex">
@@ -142,7 +144,7 @@ export const Pagination = ({
         </div>
 
         {/* PAGE GO */}
-        <div className="flex items-center gap-2">
+        <div className="desktop:flex items-center gap-2 hidden">
           <Typography color="onBackgroundLow" variant="paragraph-sm">
             {'Page'}
           </Typography>
