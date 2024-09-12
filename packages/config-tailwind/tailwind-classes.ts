@@ -61,6 +61,7 @@ const colors = {
   lobsterDark: 'var(--color-lobsterDark)',
   sand: 'var(--color-sand)',
   sandDark: 'var(--color-sandDark)',
+  sandDarkOpacity: 'var(--color-sandDarkOpacity)',
   tulip: 'var(--color-tulip)',
   tulipDark: 'var(--color-tulipDark)',
   green: 'var(--color-green)',
