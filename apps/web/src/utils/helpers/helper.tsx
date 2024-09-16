@@ -1,6 +1,7 @@
 import {
   BlockType,
   EventsType,
+  FavouriteType,
   StakesCalculatorPeriodType,
   StakesType,
   StakeType,
@@ -42,6 +43,7 @@ import {
   transactionTableHead,
   blockTableHead,
   stakesOverviewTableHead,
+  favouritesTableHead,
 } from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
@@ -852,4 +854,22 @@ export const createBlockRows = (
         };
       })
     : getTableSkeletons(columnCount);
+};
+
+export const createFavouritesRows = (favourites: FavouriteType[], loading: boolean) => {
+  return !loading
+    ? favourites?.map((fav) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Link href={`/blocks/${fav.address}`}>
+                  <UserAccountCard address={fav.address} name={fav.name} />
+                </Link>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(favouritesTableHead.length);
 };
