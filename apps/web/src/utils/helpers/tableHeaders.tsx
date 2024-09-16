@@ -77,13 +77,20 @@ export const validatorsTableHead = (
   },
   {
     children: (
-      <SortingTitle
-        onSortChange={onSortChange}
-        sortField={sortField}
-        sortOrder={sortOrder}
-        sortValue="nextAllocatedTime"
-        title="Status"
-      />
+      <div className="flex gap-1 items-center">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="nextAllocatedTime"
+          title="Status"
+        />
+        <InfoTooltip
+          text={
+            ' The current status of the validator and, if it’s a generator, the remaining time until the next block is generated.'
+          }
+        />
+      </div>
     ),
   },
   {
