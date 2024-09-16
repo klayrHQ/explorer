@@ -214,7 +214,7 @@ export interface PerfomanceStatsType {
 export type StakeType = {
   address: string;
   amount: string;
-  name?: string; 
+  name?: string;
 };
 
 export type StakesType = {
@@ -253,4 +253,11 @@ export type UsersType = {
   blockReward: string;
   totalSelfStakeRewards: string;
   totalSharedRewards: string;
+}
+export interface FavouriteType {
+  address: string;
+  name: string;
+  /*weight: number;
+  totalStake: string;
+  stakeCapacity: string;*/
 }

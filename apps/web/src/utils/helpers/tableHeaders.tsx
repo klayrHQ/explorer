@@ -391,6 +391,21 @@ export const blockTableHead = (
   },
 ];
 
+export const favouritesTableHead = [
+  {
+    children: 'User',
+  },
+  /*{
+    children: 'Weight',
+  },
+  {
+    children: 'Stake capacity',
+  },
+  {
+    children: 'Total stake',
+  },*/
+];
+
 export const usersTableHead = (
   onSortChange: (column: string) => void,
   sortField: string,

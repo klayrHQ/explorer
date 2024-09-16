@@ -121,7 +121,6 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
           ? currentChain.networks[0]
           : currentChain.networks.find((network) => network.networkName === networkSubdomain);
       setCurrentNetwork(network ?? currentChain.networks[0]);
-      setBaseURL(network?.networkId ?? currentChain.networks[0].networkId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChain]);
@@ -129,7 +128,6 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
   useEffect(() => {
     callGetNodeInfo().then((data) => {
       setNodeInfo(data as unknown as NodeInfoType);
-      //console.log(data);
     });
   }, []);
 

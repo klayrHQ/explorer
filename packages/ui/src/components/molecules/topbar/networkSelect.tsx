@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as React from 'react';
 import { cva } from 'class-variance-authority';
 import { Typography } from '../../atoms/base/typography';
@@ -47,6 +47,7 @@ export interface CustomSelectProps {
   fontSize?: string;
   width?: string;
   currentNetworkStatusClass?: string;
+  value?: string;
 }
 
 export const NetworkSelect = ({
@@ -57,6 +58,7 @@ export const NetworkSelect = ({
   fontSize = 'paragraph-sm',
   width = 'min-w-20',
   currentNetworkStatusClass,
+  value,
 }: CustomSelectProps) => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>(defaultValue);
   const [listboxVisible, setListboxVisible] = useState<boolean>(false);
@@ -68,6 +70,10 @@ export const NetworkSelect = ({
       onChange(value);
     }
   };
+
+  useEffect(() => {
+    value && handleSelect(value);
+  }, [value]);
 
   const renderSelectedValue = (value: string | undefined, options: Option[]) => {
     const selectedOption = value ? options.find((option) => option.value === value) : null;

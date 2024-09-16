@@ -59,12 +59,14 @@ export const ChainNetworkPicker = ({
   const handleNetworkChange = (networkId: string) => {
     const network = networks.find((network) => network.networkId === networkId);
     if (network) {
-      setSelectedNetwork(network);
-      setCurrentNetwork(network);
-      window.location.hostname !== 'localhost' &&
-        (network.networkName === 'mainnet'
+      if (window.location.hostname !== 'localhost') {
+        network.networkName === 'mainnet'
           ? router.push(`https://${explorerUrl}`)
-          : router.push(`https://${network.networkName}-${explorerUrl}`));
+          : router.push(`https://${network.networkName}-${explorerUrl}`);
+      } else {
+        setSelectedNetwork(network);
+        setCurrentNetwork(network);
+      }
     }
   };
 
@@ -159,6 +161,7 @@ export const ChainNetworkPicker = ({
         }}
         options={networkOptions}
         placeholder={currentNetwork?.networkName}
+        value={currentNetwork?.networkId}
       />
     </FlexGrid>
   );

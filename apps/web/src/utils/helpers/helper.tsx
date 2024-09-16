@@ -1,6 +1,7 @@
 import {
   BlockType,
   EventsType,
+  FavouriteType,
   StakesCalculatorPeriodType,
   UsersType,
   StakeType,
@@ -43,6 +44,7 @@ import {
   blockTableHead,
   stakesOverviewTableHead,
   usersTableHead,
+  favouritesTableHead,
 } from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
@@ -579,7 +581,11 @@ export const createValidatorBlockRows = (blocks: BlockType[], loading: boolean) 
               ),
             },
             {
-              children: <Currency amount={block.reward || 0} decimals={2} symbol={'KLY'} />,
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'-'}
+                </Typography>
+              ),
             },
           ],
         };
@@ -849,6 +855,24 @@ export const createBlockRows = (
         };
       })
     : getTableSkeletons(columnCount);
+};
+
+export const createFavouritesRows = (favourites: FavouriteType[], loading: boolean) => {
+  return !loading
+    ? favourites?.map((fav) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Link href={`/blocks/${fav.address}`}>
+                  <UserAccountCard address={fav.address} name={fav.name} />
+                </Link>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(favouritesTableHead.length);
 };
 
 export const createUsersRows = (users: UsersType[], loading: boolean) => {

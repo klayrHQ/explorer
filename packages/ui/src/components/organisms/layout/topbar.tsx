@@ -8,7 +8,7 @@ import {
   MenuItemProps,
   Popover,
   // MenuItemProps,
-  // NotificationIcon,
+  NotificationIcon,
 } from '../../atoms';
 import { Search } from '../search/search.tsx';
 import React, { ReactNode, useState } from 'react';
@@ -20,6 +20,7 @@ import {
 } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
 import { Modal, Slide } from '@mui/material';
+import Link from 'next/link';
 
 //import {ClickAwayListener} from "@mui/base";
 
@@ -37,8 +38,7 @@ interface TopbarProps {
   searchResults?: any;
   setSearchResults?: any;
   callSearch?: any;
-
-  // newFavourite?: boolean
+  newFavourite?: boolean;
   // optionsMenuItems: MenuItemProps[]
 }
 
@@ -46,7 +46,7 @@ export const Topbar = ({
   kpis,
   chainNetworkData,
   mobileMenuItems,
-  // newFavourite,
+  newFavourite,
   // optionsMenuItems,
   logo,
   searchResults,
@@ -151,6 +151,7 @@ export const Topbar = ({
       </FlexGrid>
 
       <FlexGrid
+        alignItems={'center'}
         className={'w-full hidden desktop:flex whitespace-nowrap'}
         gap={'1.5xl'}
         justify={'end'}
@@ -159,19 +160,20 @@ export const Topbar = ({
           <KeyValueComponent key={`key-value-${index + 1}`} {...item} />
         ))}
         <ChainNetworkPicker {...chainNetworkData} />
-        {/*<FlexGrid gap={"md"}>*/}
-        {/* todo uncomment when adding favourites */}
-        {/*<div className={"relative"}>
-            <IconButton
-              align={"none"}
-              icon={"Heart"}
-              title={"favourites"}
-              variant={"iconOnly"}
-            />
-            {newFavourite && <NotificationIcon className={"absolute top-0 right-0 pointer-events-none"} />}
-          </div>*/}
-        {/* todo uncomment when adding lightmode or currency settings */}
-        {/*<ClickAwayListener onClickAway={() => setOpenOptionsMenu(false)}>
+        <FlexGrid gap={'md'}>
+          <Link href={'/favourites'}>
+            <div className={'relative'}>
+              <IconButton align={'none'} icon={'Heart'} title={'favourites'} variant={'iconOnly'} />
+              {newFavourite && (
+                <NotificationIcon
+                  className={'absolute top-0 right-0 pointer-events-none'}
+                  notificationValue={'!'}
+                />
+              )}
+            </div>
+          </Link>
+          {/* todo uncomment when adding lightmode or currency settings */}
+          {/*<ClickAwayListener onClickAway={() => setOpenOptionsMenu(false)}>
             <div ref={setAnchorElement}>
               <IconButton
                 align={"none"}
@@ -186,7 +188,7 @@ export const Topbar = ({
               />
             </div>
           </ClickAwayListener>*/}
-        {/*</FlexGrid>*/}
+        </FlexGrid>
       </FlexGrid>
     </FlexGrid>
   );
