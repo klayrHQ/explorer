@@ -214,7 +214,7 @@ export interface PerfomanceStatsType {
 export type StakeType = {
   address: string;
   amount: string;
-  name?: string; 
+  name?: string;
 };
 
 export type StakesType = {
@@ -227,3 +227,10 @@ export type StakersType = {
   meta: MetaTransaction;
 };
 
+export interface FavouriteType {
+  address: string;
+  name: string;
+  /*weight: number;
+  totalStake: string;
+  stakeCapacity: string;*/
+}

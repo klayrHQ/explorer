@@ -390,3 +390,18 @@ export const blockTableHead = (
     children: 'Assets',
   },
 ];
+
+export const favouritesTableHead = [
+  {
+    children: 'User',
+  },
+  /*{
+    children: 'Weight',
+  },
+  {
+    children: 'Stake capacity',
+  },
+  {
+    children: 'Total stake',
+  },*/
+];
