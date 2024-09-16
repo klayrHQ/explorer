@@ -179,20 +179,6 @@ export const validatorsTableHead = (
     ),
     className: 'items-end text-end whitespace-nowrap',
   },
-  {
-    children: (
-      <div className="flex items-end justify-end">
-        {' '}
-        <div className="flex items-center justify-end gap-1">
-          <Typography>{'Staking Rewards'}</Typography>{' '}
-          <InfoTooltip
-            text={`The rewards you earn per month by staking 1000KLY + the APR (the yearly rate of return on staking`}
-          />
-        </div>
-      </div>
-    ),
-    className: 'items-end text-end whitespace-nowrap',
-  },
 ];
 
 export const validatorStakeIncomingTableHead: TableCellType[] = [

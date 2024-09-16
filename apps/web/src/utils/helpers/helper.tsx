@@ -471,13 +471,6 @@ export const createValidatorsRows = (
                 </div>
               ),
             },
-            {
-              children: (
-                <div className="flex justify-end text-lobster">
-                  <Currency amount={90977778997} decimals={0} symbol={'KLY'} />
-                </div>
-              ),
-            },
           ].filter(Boolean),
         };
       })
