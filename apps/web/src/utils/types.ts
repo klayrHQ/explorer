@@ -229,7 +229,7 @@ export type StakersType = {
 
 export interface FavouriteType {
   address: string;
-  name: string;
+  name?: string;
   /*weight: number;
   totalStake: string;
   stakeCapacity: string;*/

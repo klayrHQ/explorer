@@ -41,8 +41,8 @@ export * from './banner/bannerFrame';
 export * from './images/imageNotification';
 export * from './account/userAccountCard';
 export * from './account/avatar/avatar';
+export * from './utilities/modal.tsx';
 export * from './utilities/tooltip';
 export * from './utilities/popover';
 export * from './utilities/notFound/notFound.tsx';
 export * from './input/copyIcon.tsx';
-
