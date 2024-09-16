@@ -21,7 +21,6 @@ export const SortingTitle = ({
       <Typography variant={'paragraph-sm'}>{title}</Typography>
       <div onClick={() => onSortChange(sortValue)}>
         <Icon
-          className={'ml-1'}
           color="onBackgroundLow"
           icon={
             sortField === sortValue ? (sortOrder === 'asc' ? 'ArrowUp' : 'ArrowDown') : 'ArrowDown'
