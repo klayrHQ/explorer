@@ -179,7 +179,7 @@ export const validatorsTableHead = (
         <div className="flex items-center justify-end gap-1">
           <Typography>{'Block Rewards'}</Typography>{' '}
           <InfoTooltip
-            text={'The current dynamic block reward a validator receivers for validating a block.'}
+            text={'The current dynamic block reward a validator receives for validating a block.'}
           />
         </div>
       </div>

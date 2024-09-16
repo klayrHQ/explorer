@@ -1,5 +1,5 @@
-import { Tooltip } from '../tooltip';
-import { Icon } from '../../images/icon';
+import { Tooltip } from './tooltip';
+import { Icon } from '../images/icon';
 
 interface InfoTooltipProps {
   text: string;
