@@ -880,7 +880,7 @@ export const createUsersRows = (users: UsersType[], loading: boolean) => {
             {
               //mock_data
               children: (
-                <Link href={`/user/${user?.account.address}`}>
+                <Link href={`/users/${user?.account.address}`}>
                   <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
                     <UserAccountCard
                       address={user?.account.address}
