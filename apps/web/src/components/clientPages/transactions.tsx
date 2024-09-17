@@ -6,6 +6,7 @@ import { transactionTableHead } from '../../utils/helpers/tableHeaders';
 import { createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
+import { useState } from 'react';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
@@ -27,7 +28,8 @@ export const Transactions = () => {
     changeURL: true,
   });
 
-  const rows = createTransactionRows(transactions, loading, 'Copy to clipboard', () => {});
+  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
+  const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
 
   const totalPages = Math.ceil(totalTxs / Number(limit));
 
