@@ -13,5 +13,16 @@
         "networkName": "testnet"
       }
     ]
+  },
+  {
+    "chainId": "01371337",
+    "chainName": "Pepe World",
+    "logo": "https://pepe-world-fe.vercel.app/_next/image?url=%2Fassets%2Fpepe-coin.png&w=256&q=75",
+    "networks": [
+      {
+        "networkId": "01371337",
+        "networkName": "testnet"
+      }
+    ]
   }
 ]

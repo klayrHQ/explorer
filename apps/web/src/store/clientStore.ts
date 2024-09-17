@@ -4,12 +4,14 @@ import axios, { AxiosInstance } from 'axios';
 enum Networks {
   MAINNET = '00000000',
   TESTNET = '01000000',
+  PEPE_WORLD = '01371337',
 }
 
 // TODO: set urls when getting chains and networks
 const networkUrls: { [key in Networks]: string } = {
   [Networks.MAINNET]: 'https://gateway-mainnet.klayr.dev/api/v1/',
   [Networks.TESTNET]: 'https://gateway-testnet.klayr.dev/api/v1/',
+  [Networks.PEPE_WORLD]: 'https://token-factory.klayr.dev/api/v1/',
 };
 
 interface GatewayClientStore {
