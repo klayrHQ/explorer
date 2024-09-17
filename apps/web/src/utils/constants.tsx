@@ -35,6 +35,8 @@ export const mobileMenuItems = [
   {
     label: 'Users',
     icon: 'Users',
+    href: '/users',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Validators',
@@ -76,7 +78,8 @@ export const subMenu = [
   {
     label: 'Users',
     icon: 'Users',
-    disabled: true,
+    href: '/users',
+    linkComponent: DefaultLinkComponent,
   },
   {
     label: 'Validators',

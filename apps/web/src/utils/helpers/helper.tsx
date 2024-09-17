@@ -3,7 +3,7 @@ import {
   EventsType,
   FavouriteType,
   StakesCalculatorPeriodType,
-  StakesType,
+  UsersType,
   StakeType,
   TransactionType,
   ValidatorType,
@@ -43,6 +43,7 @@ import {
   transactionTableHead,
   blockTableHead,
   stakesOverviewTableHead,
+  usersTableHead,
   favouritesTableHead,
 } from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
@@ -865,4 +866,113 @@ export const createFavouritesRows = (favourites: FavouriteType[], loading: boole
         };
       })
     : getTableSkeletons(favouritesTableHead.length);
+};
+
+export const createUsersRows = (users: UsersType[], loading: boolean) => {
+  return !loading
+    ? users?.map((user) => {
+        return {
+          cells: [
+            {
+              //mock_data
+              children: <Typography link>{user.rank}</Typography>,
+            },
+            {
+              //mock_data
+              children: (
+                <Link href={`/user/${user?.account.address}`}>
+                  <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
+                    <UserAccountCard
+                      address={user?.account.address}
+                      addressColor="onBackgroundLow"
+                      addressVariant="caption"
+                      name={user?.account.name}
+                      nameColor="onBackgroundMedium"
+                      nameFontWeight="semibold"
+                      nameVariant="paragraph-sm"
+                    />
+                  </div>
+                </Link>
+              ),
+            },
+            {
+              //mock_data
+              children: (
+                <div className="flex flex-col items-end">
+                  <Currency
+                    amount={user?.validatorWeight}
+                    className="font-semibold"
+                    decimals={0}
+                    symbol={'KLY'}
+                  />
+                  <Typography color={'onBackgroundLow'} variant={'caption'}>
+                    {Number(
+                      (
+                        (Number(user?.validatorWeight || 0) / Number(user?.selfStake || 1)) *
+                        10
+                      ).toFixed(2),
+                    )}
+                    %
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              //mock_data
+              children: (
+                <div className="flex flex-col items-end">
+                  <Currency
+                    amount={user?.validatorWeight}
+                    className="font-semibold"
+                    decimals={0}
+                    symbol={'KLY'}
+                  />
+                  <Typography color={'onBackgroundLow'} variant={'caption'}>
+                    {Number(
+                      (
+                        (Number(user?.validatorWeight || 0) / Number(user?.selfStake || 1)) *
+                        10
+                      ).toFixed(2),
+                    )}
+                    %
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              //mock_data
+              children: (
+                <div className="flex flex-col items-end">
+                  <Currency
+                    amount={user?.validatorWeight}
+                    className="font-semibold"
+                    decimals={0}
+                    symbol={'KLY'}
+                  />
+                  <Typography color={'onBackgroundLow'} variant={'caption'}>
+                    {Number(
+                      (
+                        (Number(user?.validatorWeight || 0) / Number(user?.selfStake || 1)) *
+                        10
+                      ).toFixed(2),
+                    )}
+                    %
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              //mock_data
+              children: (
+                <div className="flex flex-col items-end">
+                  <Typography color={'onBackgroundLow'} variant={'caption'}>
+                    {'77.77%'}
+                  </Typography>
+                </div>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(6);
 };

@@ -432,3 +432,88 @@ export const favouritesTableHead = [
     children: 'Total stake',
   },*/
 ];
+
+export const usersTableHead = (
+  onSortChange: (column: string) => void,
+  sortField: string,
+  sortOrder: string,
+): TableCellType[] => [
+  {
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="mock_data"
+        title="#"
+      />
+    ),
+  },
+  {
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="mock_data"
+        title="User"
+      />
+    ),
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="mock_data"
+          title="Total holding"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="mock_data"
+          title="Available amount"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="mock_data"
+          title="Locked amount"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="mock_data"
+          title="Percentage of tokens"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+];
