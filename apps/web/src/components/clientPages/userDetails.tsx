@@ -231,7 +231,12 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
 
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
-      <TabButtons tabs={tabs} />
+      <div className="desktop:hidden w-full">
+        <TabButtons padding="6" showLabel={false} tabs={tabs} width="full" />
+      </div>
+      <div className="hidden desktop:flex w-full">
+        <TabButtons tabs={tabs} width="full" />
+      </div>
     </FlexGrid>
   );
 };
