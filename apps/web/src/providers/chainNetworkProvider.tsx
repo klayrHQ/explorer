@@ -6,6 +6,7 @@ import { useGatewayClientStore } from '../store/clientStore.ts';
 import { NodeInfoType } from '../utils/types.ts';
 import { callGetNodeInfo } from '../utils/api/apiCalls.tsx';
 import useWebSocket from 'react-use-websocket';
+import { usePathname } from "next/navigation";
 
 type NetworkType = {
   networkId: string;
@@ -46,6 +47,9 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
   const [marketcap, setMarketcap] = useState<number>(0);
   const [tokenPrice, setTokenPrice] = useState<number>(0);
   const [trend, setTrend] = useState<number>(0);
+
+  const pathName = usePathname();
+
 
   const [loading, setLoading] = useState<boolean>(false);
   const setBaseURL = useGatewayClientStore((state) => state.setBaseURL);
@@ -108,6 +112,12 @@ export const ChainNetworkProvider = ({ children }: { children: any }) => {
     getChains();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const firstSubDir = pathName.split('/')[1];
+    const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
+    chainMatch ? setCurrentChain(chainMatch) : setCurrentChain(chains[0]);
+  }, [pathName, chains]);
 
   // get networks from current chain and set currentNetwork to first network
   useEffect(() => {
