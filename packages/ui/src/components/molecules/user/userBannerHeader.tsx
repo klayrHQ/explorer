@@ -2,18 +2,18 @@ import { StatusBadge, Typography } from '../../atoms';
 import { UserAccountCard } from '../../atoms/account/userAccountCard';
 
 export interface ValidatorBannerHeaderProps {
-  senderAddress: string;
+  senderAddress?: string;
   senderName?: string;
   status: string;
 }
 
 export const UserBannerHeader = ({
-  senderAddress,
+  senderAddress = '',
   senderName,
   status,
 }: ValidatorBannerHeaderProps) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center w-full">
       <div className="flex gap-2 items-center">
         <UserAccountCard
           address={senderAddress}

@@ -4,19 +4,8 @@ import { Icon } from '../../atoms';
 import Link from 'next/link';
 import { UserBannerText } from '../../molecules/user/userBannerText';
 import { UserBannerHeader } from '../../molecules/user/userBannerHeader';
-
-interface UserBannerProps {
-  senderAddress: string;
-  senderName?: string;
-  status: string;
-  incomingTransactions: string | number;
-  outgoingTransactions: string | number;
-  coinRate?: number;
-  value?: string | number;
-  valueSymbol?: string;
-  rank: number | string;
-  image: string;
-}
+import { UserBannerProps } from '../../../types/types';
+import { UserBannerButtons } from '../../molecules/user/userBannerButton';
 
 export const UserBanner = ({
   senderAddress,
@@ -36,7 +25,7 @@ export const UserBanner = ({
     <BannerFrame image={image}>
       <FlexGrid direction="col" gap="0" justify="between">
         <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
-          <Link href="/validators">
+          <Link href="/users">
             <Icon
               className="hover:-translate-x-0.5 cursor-pointer transition-transform"
               color="white"
@@ -54,6 +43,10 @@ export const UserBanner = ({
           valueSymbol={valueSymbol}
         />
       </FlexGrid>
+      <UserBannerButtons
+        className="absolute top-8 right-32"
+        validatorAddress={senderAddress || ''}
+      />
     </BannerFrame>
   );
 };

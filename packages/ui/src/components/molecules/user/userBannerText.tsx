@@ -1,7 +1,5 @@
 import { Typography } from '../../atoms';
 import { Currency } from '../../atoms/base/currency';
-import { BadgeNoIcon } from '../../atoms';
-
 export interface ValidatorBannerTextProps {
   incomingTransactions: string | number;
   outgoingTransactions: string | number;
@@ -26,8 +24,8 @@ export const UserBannerText = ({
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'user'}
       </Typography>
-      <Typography className="capitalize" color="onBackgroundMedium" variant="paragraph-md">
-        {rank}
+      <Typography fontWeight="semibold" variant="paragraph-md">
+        #{rank}
       </Typography>
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'with'}
@@ -46,11 +44,13 @@ export const UserBannerText = ({
         {Number(outgoingTransactions)} {'outgoing'}
       </Typography>
       <Typography color="onBackgroundMedium" variant="paragraph-md">
-        {'ransactions and a total holding of'}
+        {'transactions and a total holding of'}
       </Typography>
 
       <Currency amount={value ?? 0} decimals={3} fontWeight="semibold" symbol={valueSymbol} />
-      <Currency amount={dollarValue ?? 0} decimals={2} fontWeight="semibold" sign={'$'} />
+      <span>
+        (<Currency amount={dollarValue ?? 0} decimals={2} fontWeight="semibold" sign={'$'} />)
+      </span>
     </div>
   );
 };

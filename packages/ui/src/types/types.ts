@@ -211,3 +211,16 @@ export interface NewsCardProps {
 }
 
 export type NewsCardPropsArray = NewsCardProps[];
+
+export interface UserBannerProps {
+  senderAddress?: string;
+  senderName?: string;
+  status: string;
+  incomingTransactions: string | number;
+  outgoingTransactions: string | number;
+  coinRate?: number;
+  value?: string | number;
+  valueSymbol?: string;
+  rank: number | string;
+  image: string;
+}
