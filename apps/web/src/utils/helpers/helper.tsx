@@ -54,12 +54,140 @@ export const createTransactionRows = (
   loading: boolean,
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
+  statusOfTransaction?: boolean,
 ) => {
   const columnCount = transactionTableHead(() => '', '', '').length;
 
   return !loading
     ? transactions?.length > 0
       ? transactions?.map((transaction) => {
+          const cells = [
+            {
+              children: (
+                <KeyValueComponent
+                  contentValue={
+                    <Link href={`/transactions/${transaction.id}`}>
+                      <Typography className={'hover:underline'} link>
+                        {' '}
+                        {shortString(transaction?.id, 12, 'center')}
+                      </Typography>
+                    </Link>
+                  }
+                  keyValue={<StatusIcon status={transaction.executionStatus} />}
+                />
+              ),
+            },
+            {
+              children: (
+                <Typography
+                  className={'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer'}
+                  color={'onBackgroundLow'}
+                >
+                  {transaction?.block?.height?.toLocaleString() ?? ''}
+                  <Tooltip placement={'bottom'} text={copyTooltipText}>
+                    <span
+                      className={'w-4 block'}
+                      onClick={() =>
+                        handleCopy(transaction?.block?.height?.toString() ?? '', setCopyTooltipText)
+                      }
+                    >
+                      <Icon
+                        className={'desktop:group-hover/child:inline desktop:hidden cursor-pointer'}
+                        icon={'Copy'}
+                        size={'2xs'}
+                      />
+                    </span>
+                  </Tooltip>
+                </Typography>
+              ),
+              className: 'group/child',
+            },
+            {
+              children: (
+                <Tooltip
+                  placement={'top'}
+                  text={dayjs((transaction.block.timestamp ?? 0) * 1000).format(
+                    'DD MMM YYYY HH:mm',
+                  )}
+                >
+                  <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
+                    {fromNowFormatter((transaction.block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
+                  </Typography>
+                </Tooltip>
+              ),
+            },
+            {
+              children: (
+                <Badge
+                  colorVariant={commandColors[transaction.command]}
+                  label={replaceColonWithSpace(`${transaction?.module}:${transaction?.command}`)}
+                />
+              ),
+            },
+            {
+              children: (
+                <Link
+                  href={
+                    transaction?.sender?.name ? `/validators/${transaction?.sender?.address}` : ``
+                  }
+                >
+                  <UserAccountCard
+                    address={transaction?.sender?.address}
+                    name={transaction?.sender?.name}
+                  />
+                </Link>
+              ),
+            },
+            {
+              children: transaction?.recipient ? (
+                <Link
+                  href={
+                    transaction?.recipient?.name
+                      ? `/validators/${transaction?.recipient?.address}`
+                      : ``
+                  }
+                >
+                  <UserAccountCard
+                    address={transaction?.recipient?.address}
+                    name={transaction?.recipient?.name}
+                  />
+                </Link>
+              ) : (
+                '-'
+              ),
+            },
+            {
+              children: (
+                <Currency
+                  amount={getAmountFromTx(transaction)}
+                  className={'align-middle'}
+                  color={'onBackgroundLow'}
+                  decimals={decimals}
+                  symbol={'KLY'}
+                  variant={'paragraph-sm'}
+                />
+              ),
+            },
+            {
+              children: (
+                <Currency
+                  amount={transaction?.fee}
+                  className={'align-middle'}
+                  color={'onBackgroundLow'}
+                  decimals={5}
+                  symbol={'KLY'}
+                  variant={'paragraph-sm'}
+                />
+              ),
+            },
+          ];
+
+          if (statusOfTransaction) {
+            cells.splice(4, 0, {
+              children: <StatusBadge status={transaction.executionStatus} />,
+            });
+          }
+
           return {
             rowDetails: (
               <TxDataPopover
@@ -70,131 +198,7 @@ export const createTransactionRows = (
                 }}
               />
             ),
-            cells: [
-              {
-                children: (
-                  <KeyValueComponent
-                    contentValue={
-                      <Link href={`/transactions/${transaction.id}`}>
-                        <Typography className={'hover:underline'} link>
-                          {' '}
-                          {shortString(transaction?.id, 12, 'center')}
-                        </Typography>
-                      </Link>
-                    }
-                    keyValue={<StatusIcon status={transaction.executionStatus} />}
-                  />
-                ),
-              },
-              {
-                children: (
-                  <Typography
-                    className={'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer'}
-                    color={'onBackgroundLow'}
-                  >
-                    {transaction?.block?.height?.toLocaleString() ?? ''}
-                    <Tooltip placement={'bottom'} text={copyTooltipText}>
-                      <span
-                        className={'w-4 block'}
-                        onClick={() =>
-                          handleCopy(
-                            transaction?.block?.height?.toString() ?? '',
-                            setCopyTooltipText,
-                          )
-                        }
-                      >
-                        <Icon
-                          className={
-                            'desktop:group-hover/child:inline desktop:hidden cursor-pointer'
-                          }
-                          icon={'Copy'}
-                          size={'2xs'}
-                        />
-                      </span>
-                    </Tooltip>
-                  </Typography>
-                ),
-                className: 'group/child',
-              },
-              {
-                children: (
-                  <Tooltip
-                    placement={'top'}
-                    text={dayjs((transaction.block.timestamp ?? 0) * 1000).format(
-                      'DD MMM YYYY HH:mm',
-                    )}
-                  >
-                    <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
-                      {fromNowFormatter((transaction.block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
-                    </Typography>
-                  </Tooltip>
-                ),
-              },
-              {
-                children: (
-                  <Badge
-                    colorVariant={commandColors[transaction.command]}
-                    label={replaceColonWithSpace(`${transaction?.module}:${transaction?.command}`)}
-                  />
-                ),
-              },
-              {
-                children: (
-                  <Link
-                    href={
-                      transaction?.sender?.name ? `/validators/${transaction?.sender?.address}` : ``
-                    }
-                  >
-                    <UserAccountCard
-                      address={transaction?.sender?.address}
-                      name={transaction?.sender?.name}
-                    />
-                  </Link>
-                ),
-              },
-              {
-                children: transaction?.recipient ? (
-                  <Link
-                    href={
-                      transaction?.recipient?.name
-                        ? `/validators/${transaction?.recipient?.address}`
-                        : ``
-                    }
-                  >
-                    <UserAccountCard
-                      address={transaction?.recipient?.address}
-                      name={transaction?.recipient?.name}
-                    />
-                  </Link>
-                ) : (
-                  '-'
-                ),
-              },
-              {
-                children: (
-                  <Currency
-                    amount={getAmountFromTx(transaction)}
-                    className={'align-middle'}
-                    color={'onBackgroundLow'}
-                    decimals={decimals}
-                    symbol={'KLY'}
-                    variant={'paragraph-sm'}
-                  />
-                ),
-              },
-              {
-                children: (
-                  <Currency
-                    amount={transaction?.fee}
-                    className={'align-middle'}
-                    color={'onBackgroundLow'}
-                    decimals={5}
-                    symbol={'KLY'}
-                    variant={'paragraph-sm'}
-                  />
-                ),
-              },
-            ],
+            cells,
           };
         })
       : [

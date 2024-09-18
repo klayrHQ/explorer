@@ -57,6 +57,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [blocksMeta, setBlocksMeta] = useState<MetaType>({});
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
+  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const blocksPagination = usePagination(1, '10');
   const eventsPagination = usePagination();
@@ -280,8 +281,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     createDetails('Ratio blocks forged/missed', ' -  / - '),
     createDetails('Punishments', ' - '),
   ];
-
-  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
   const eventsRows = createValidatorEventsRow(events, loading);

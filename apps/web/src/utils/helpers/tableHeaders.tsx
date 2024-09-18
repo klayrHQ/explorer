@@ -6,48 +6,57 @@ export const transactionTableHead = (
   onSortChange: (column: string) => void,
   sortField: string,
   sortOrder: string,
-): TableCellType[] => [
-  {
-    children: 'Transaction ID',
-  },
-  {
-    children: (
-      <SortingTitle
-        onSortChange={onSortChange}
-        sortField={sortField}
-        sortOrder={sortOrder}
-        sortValue="height"
-        title="Height"
-      />
-    ),
-  },
-  {
-    children: (
-      <SortingTitle
-        onSortChange={onSortChange}
-        sortField={sortField}
-        sortOrder={sortOrder}
-        sortValue="timestamp"
-        title="Date"
-      />
-    ),
-  },
-  {
-    children: 'Type',
-  },
-  {
-    children: 'From',
-  },
-  {
-    children: 'To',
-  },
-  {
-    children: 'Amount',
-  },
-  {
-    children: 'Fee',
-  },
-];
+  transactionStatus?: boolean,
+): TableCellType[] => {
+  const headers: TableCellType[] = [
+    {
+      children: 'Transaction ID',
+    },
+    {
+      children: (
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="height"
+          title="Height"
+        />
+      ),
+    },
+    {
+      children: (
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="timestamp"
+          title="Date"
+        />
+      ),
+    },
+    {
+      children: 'Type',
+    },
+    {
+      children: 'From',
+    },
+    {
+      children: 'To',
+    },
+    {
+      children: 'Amount',
+    },
+    {
+      children: 'Fee',
+    },
+  ];
+
+  if (transactionStatus) {
+    headers.splice(4, 0, { children: 'Status' });
+  }
+
+  return headers;
+};
 
 export const eventsTableHead = [
   {
