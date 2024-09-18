@@ -23,6 +23,7 @@ export interface MenuItemProps {
   variant?: 'default' | 'small';
   square?: boolean;
   onClick?: () => void;
+  basePath?: string;
 }
 
 const menuItemStyles = cva(
@@ -69,15 +70,19 @@ export const MenuItem = ({
   variant = 'default',
   square = false,
   onClick,
+  basePath,
 }: MenuItemProps) => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
 
   const currentPath = usePathname();
 
-  const firstPartOfCurrentPath = currentPath.split('/')[1];
+  // Remove the basePath from the current path
+  const pathWithoutBase = basePath ? currentPath.replace(basePath, '') : currentPath;
+
+  const firstPartOfPathWithoutBase = pathWithoutBase.split('/')[1];
   const firstPartOfHref = href?.split('/')[1];
-  const isActive = firstPartOfCurrentPath === firstPartOfHref;
+  const isActive = href ? firstPartOfPathWithoutBase === firstPartOfHref : false;
 
   const handleHover = (event: React.MouseEvent<HTMLElement>, open: boolean) => {
     if (open) {

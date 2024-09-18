@@ -7,7 +7,7 @@ import { StatusIcon } from '../../atoms';
 import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
 import { NetworkSelect } from './networkSelect.tsx';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType;
@@ -32,7 +32,11 @@ export const ChainNetworkPicker = ({
   const [selectedChain, setSelectedChain] = useState<ChainType | null>(currentChain);
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkType | null>(currentNetwork);
   const router = useRouter();
-  const explorerUrl = 'explorer.klayr.dev';
+  const pathName = usePathname();
+  const firstSubDir = pathName.split('/')[1];
+  const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
+  const chainSlug = !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
+  const explorerUrl = `explorer.klayr.dev${chainSlug}`;
 
   const chainOptions = chains?.map((chain) => ({
     label: chain.chainName,
@@ -52,7 +56,7 @@ export const ChainNetworkPicker = ({
   const handleChainChange = (chainId: string) => {
     const chain = chains.find((chain) => chain.chainId === chainId);
     if (chain) {
-      setSelectedChain(chain);
+      chain.chainName === 'klayr-main' ? router.push('/') : router.push(`/${chain.chainName}`);
     }
   };
 
@@ -71,10 +75,10 @@ export const ChainNetworkPicker = ({
   };
 
   const handleSave = () => {
-    if (selectedChain && selectedNetwork) {
+    /*if (selectedChain && selectedNetwork) {
       setCurrentChain(selectedChain);
       setCurrentNetwork(selectedNetwork);
-    }
+    }*/
     setIsModalOpen(false);
   };
 
