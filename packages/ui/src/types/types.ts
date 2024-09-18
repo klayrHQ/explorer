@@ -86,6 +86,7 @@ export type IconComponent =
   | 'Eye'
   | 'Info'
   | 'CodeSquare'
+  | 'AlertCircle'
   | string;
 
 export type ColorType =

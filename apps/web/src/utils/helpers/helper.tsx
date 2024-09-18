@@ -863,7 +863,7 @@ export const createFavouritesRows = (favourites: FavouriteType[], loading: boole
           cells: [
             {
               children: (
-                <Link href={`/blocks/${fav.address}`}>
+                <Link href={`/validators/${fav.address}`}>
                   <UserAccountCard address={fav.address} name={fav.name} />
                 </Link>
               ),

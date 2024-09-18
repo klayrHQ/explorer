@@ -44,6 +44,7 @@ import { ArrowDown } from './arrows/arrow-down.tsx';
 import { ArrowUp } from './arrows/arrow-up.tsx';
 import { Overview } from './general/overview.tsx';
 import { Calculator } from './general/calculator.tsx';
+import {AlertCircle} from "./feedback/alert-circle.tsx";
 
 export const icons = {
   ChevronDown,
@@ -92,4 +93,5 @@ export const icons = {
   ArrowUp,
   Overview,
   Calculator,
+  AlertCircle,
 };
