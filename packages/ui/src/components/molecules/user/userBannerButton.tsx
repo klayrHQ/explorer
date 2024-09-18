@@ -41,6 +41,7 @@ export const UserBannerButtons = ({ validatorAddress, className }: UserBannerBut
               direction="row"
               gap="2"
               justify="start"
+              mobileDirection="row"
             >
               <Icon color="onBackgroundLow" icon="User" size="xs" />
               <Typography color="onBackgroundMedium" fontWeight="semibold" variant="paragraph-md">
@@ -56,6 +57,7 @@ export const UserBannerButtons = ({ validatorAddress, className }: UserBannerBut
             direction="row"
             gap="2"
             justify="center"
+            mobileDirection="row"
             onClick={() => setIsFavorite(!isFavorite)}
           >
             {/* FAVORITE TRUE */}

@@ -33,6 +33,7 @@ export const UserBanner = ({
             />
           </Link>
           <UserBannerHeader senderAddress={senderAddress} senderName={senderName} status={status} />
+          <UserBannerButtons className="desktop:hidden" validatorAddress={senderAddress || ''} />
         </FlexGrid>
         <UserBannerText
           coinRate={coinRate}
@@ -44,7 +45,7 @@ export const UserBanner = ({
         />
       </FlexGrid>
       <UserBannerButtons
-        className="absolute top-8 right-32"
+        className="absolute top-8 right-32 hidden desktop:flex"
         validatorAddress={senderAddress || ''}
       />
     </BannerFrame>
