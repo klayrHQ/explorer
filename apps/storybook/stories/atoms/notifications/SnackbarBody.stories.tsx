@@ -2,7 +2,7 @@ import type { StoryObj } from '@storybook/react';
 import { SnackbarBody } from '@repo/ui/atoms';
 
 const meta = {
-  title: 'Atoms/Notifications/NotificationIcon',
+  title: 'Atoms/Notifications/SnackbarBody',
   component: SnackbarBody,
   parameters: {
     layout: 'centered',
