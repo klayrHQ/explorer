@@ -24,7 +24,7 @@ import { getSeedRevealFromAssets, fetchPaginatedData } from '../../utils/helpers
 import { BlockDetailsType, EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetBlocks, callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
-import Link from 'next/link';
+import {Link} from "../link.tsx";
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;

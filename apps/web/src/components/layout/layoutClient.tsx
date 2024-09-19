@@ -1,5 +1,5 @@
 'use client';
-import {ReactNode, useEffect, useState} from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { FlexGrid, Grid, IconButton, Typography } from '@repo/ui/atoms';
 import { Sidebar, InfoBanner } from '@repo/ui/organisms';
 import { cls } from '@repo/ui/utils';
@@ -26,32 +26,27 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Dashboard',
       icon: 'BarChartSquare',
-      href: `${basePath}/`,
-      linkComponent: DefaultLinkComponent,
+      href: `/`,
     },
     {
       label: 'Transactions',
       icon: 'SwitchHorizontal',
-      href: `${basePath}/transactions`,
-      linkComponent: DefaultLinkComponent,
+      href: `/transactions`,
     },
     {
       label: 'Users',
       icon: 'Users',
-      href: `${basePath}/users`,
-      linkComponent: DefaultLinkComponent,
+      href: `/users`,
     },
     {
       label: 'Validators',
       icon: 'Flag',
-      href: `${basePath}/validators`,
-      linkComponent: DefaultLinkComponent,
+      href: `/validators`,
     },
     {
       label: 'Blocks',
       icon: 'Cube',
-      href: `${basePath}/blocks`,
-      linkComponent: DefaultLinkComponent,
+      href: `/blocks`,
     },
     {
       label: 'Tokens',
@@ -64,8 +59,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Stakes',
       icon: 'LayersThree',
-      href: `${basePath}/stakes`,
-      linkComponent: DefaultLinkComponent,
+      href: `/stakes`,
     },
     {
       label: 'Chains',
@@ -81,20 +75,17 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Users',
       icon: 'Users',
-      href: `${basePath}/users`,
-      linkComponent: DefaultLinkComponent,
+      href: `/users`,
     },
     {
       label: 'Validators',
       icon: 'Flag',
-      href: `${basePath}/validators`,
-      linkComponent: DefaultLinkComponent,
+      href: `/validators`,
     },
     {
       label: 'Blocks',
       icon: 'Cube',
-      href: `${basePath}/blocks`,
-      linkComponent: DefaultLinkComponent,
+      href: `/blocks`,
     },
     {
       label: 'Tokens',
@@ -112,8 +103,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Dashboard',
       icon: 'BarChartSquare',
-      href: `${basePath}/`,
-      linkComponent: DefaultLinkComponent,
+      href: `/`,
     },
     {
       label: 'Blockchain',
@@ -123,14 +113,12 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Transactions',
       icon: 'SwitchHorizontal',
-      href: `${basePath}/transactions`,
-      linkComponent: DefaultLinkComponent,
+      href: `/transactions`,
     },
     {
       label: 'Stakes',
       icon: 'LayersThree',
-      href: `${basePath}/stakes`,
-      linkComponent: DefaultLinkComponent,
+      href: `/stakes`,
     },
     {
       label: 'Chains',

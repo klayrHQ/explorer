@@ -1,8 +1,8 @@
 import { Typography } from '../../atoms';
 import { Badge } from '../../atoms';
-import { Currency } from '../../atoms/base/currency';
+import { Currency } from '../../atoms';
 import { UserAccountCard } from '../../atoms';
-import Link from "next/link";
+import { Link } from 'web/src/components/link';
 
 export interface BlockDetailsBannerTextProps {
   reward: string;

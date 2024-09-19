@@ -1,7 +1,6 @@
 import { NewsCardImage, BadgeGroup } from '../../atoms';
 import { NewsTextContent } from '../../molecules';
-import { ColorType } from '../../../types/types';
-import Link from 'next/link';
+import { Link } from 'web/src/components/link';
 import { NewsCardProps } from '../../../types/types';
 
 export const NewsCard = ({

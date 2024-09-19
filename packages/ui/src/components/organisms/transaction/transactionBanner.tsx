@@ -1,12 +1,9 @@
-/** @jsxImportSource @emotion/react */
-
 import { FlexGrid, Icon } from '../../atoms';
 import { trimFour } from '../../../utils/functions';
-import { BannerText } from '../../molecules/transaction/bannerText';
-import { BannerCard } from '../../molecules/transaction/bannerCard';
-import { css } from '@emotion/react';
-import { BannerFrame } from '../../atoms/banner/bannerFrame';
-import Link from 'next/link';
+import { BannerText } from '../../molecules';
+import { BannerCard } from '../../molecules';
+import { BannerFrame } from '../../atoms';
+import { Link } from 'web/src/components/link';
 
 interface TransactionBannerProps {
   id: string;

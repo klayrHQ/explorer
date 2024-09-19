@@ -28,9 +28,8 @@ import {
   StatusBadge,
   StatusIcon,
   KeyValueComponent,
-  FlexGrid,
 } from '@repo/ui/atoms';
-import Link from 'next/link';
+import { Link } from '../../components/link.tsx';
 import React from 'react';
 import { commandColors, decimals } from '../constants.tsx';
 import { convertKLYToBeddows, getSeedRevealFromAssets, getTableSkeletons } from './dataHelpers.tsx';
@@ -43,7 +42,6 @@ import {
   transactionTableHead,
   blockTableHead,
   stakesOverviewTableHead,
-  usersTableHead,
   favouritesTableHead,
 } from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
@@ -57,7 +55,6 @@ export const createTransactionRows = (
   statusOfTransaction?: boolean,
 ) => {
   const columnCount = transactionTableHead(() => '', '', '').length;
-
   return !loading
     ? transactions?.length > 0
       ? transactions?.map((transaction) => {
@@ -319,7 +316,7 @@ export const createValidatorsRows = (
 
   return !loading
     ? validators?.map((validator) => {
-        const { resultPerBlock, capacity, inputStake, newBlockReward } = calculateReward(validator);
+        const { inputStake, newBlockReward } = calculateReward(validator);
         const resultPerPeriod =
           stakingCalculatorPeriod === 'block'
             ? newBlockReward
@@ -680,11 +677,10 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
                 <>
                   <div className="flex flex-col ">
                     {stake?.params?.stakes?.length > 1
-                      ? stake?.params?.stakes?.map((param: any, index: number) => {
+                      ? stake?.params?.stakes?.map((param: any) => {
                           const amount = param?.amount;
                           const color = amount > 0 ? 'success' : 'error';
                           return (
-                            // eslint-disable-next-line react/jsx-key
                             <div
                               className="flex items-center justify-between gap-8 w-72 -m-0.5"
                               key={param?.validatorAddress}
@@ -711,11 +707,10 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
                             </div>
                           );
                         })
-                      : stake?.params?.stakes?.map((param: any, index: number) => {
+                      : stake?.params?.stakes?.map((param: any) => {
                           const amount = param?.amount;
                           const color = amount > 0 ? 'success' : 'error';
                           return (
-                            // eslint-disable-next-line react/jsx-key
                             <div
                               className="flex items-center justify-between gap-8 w-72 -m-0.5"
                               key={param?.validatorAddress}

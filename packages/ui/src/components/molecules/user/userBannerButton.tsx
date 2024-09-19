@@ -1,10 +1,10 @@
 'use client';
 
 import { FlexGrid, Icon, Typography } from '../../atoms';
-import { Popover } from '../../atoms/utilities/popover';
+import { Popover } from '../../atoms';
 import { IconButton } from '../../atoms';
 import { useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'web/src/components/link';
 
 type UserBannerButtonProps = {
   validatorAddress: string;

@@ -1,6 +1,6 @@
 import { FlexGrid } from '../base/flexGrid.tsx';
 import { Typography } from '../base/typography.tsx';
-import Link from 'next/link';
+import { Link } from 'web/src/components/link.tsx';
 
 export interface LogoProps {
   logoSrc: string;

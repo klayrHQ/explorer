@@ -6,7 +6,7 @@ import { Icon } from '../images/icon.tsx';
 import { IconComponent } from '../../../types/types.ts';
 import { SubMenu } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
-import { Link } from './link.tsx';
+import { Link } from 'web/src/components/link.tsx';
 import { usePathname } from 'next/navigation';
 
 export interface MenuItemProps {
@@ -134,7 +134,7 @@ export const MenuItem = ({
           variant,
           square,
         })}
-        component={linkComponent}
+        //component={linkComponent}
         href={href}
       >
         {menuItemInnerComponents}

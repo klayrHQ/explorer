@@ -2,7 +2,7 @@ import { BannerFrame } from '../../atoms';
 import {
   ValidatorBannerText,
   ValidatorBannerTextProps,
-} from '../../molecules/validator/validatorBannerText';
+} from '../../molecules';
 import {
   ValidatorBannerHeader,
   ValidatorBannerHeaderProps,
@@ -13,7 +13,7 @@ import {
 } from '../../molecules/validator/validatorBannerCard';
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
-import Link from 'next/link';
+import { Link } from 'web/src/components/link';
 
 interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBannerHeaderProps {
   image: string;

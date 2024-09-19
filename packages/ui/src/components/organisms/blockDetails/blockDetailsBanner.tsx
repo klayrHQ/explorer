@@ -1,7 +1,7 @@
 import { BannerFrame } from '../../atoms';
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
-import Link from 'next/link';
+import { Link } from 'web/src/components/link';
 import {
   BlockDetailsBannerText,
   BlockDetailsBannerTextProps,

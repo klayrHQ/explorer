@@ -1,11 +1,9 @@
 import { StatusBadge, Typography } from '../../atoms';
 import { Badge } from '../../atoms';
-import { ImageName } from '../../atoms/account/avatarAddress';
-import { Currency } from '../../atoms/base/currency';
-import { trimSix, trimFour } from '../../../utils/functions';
+import { Currency } from '../../atoms';
 import { UserAccountCard } from '../../atoms';
 import { dayjs, fromNowFormatter, replaceColonWithSpace } from '../../../utils/functions';
-import Link from "next/link";
+import { Link } from 'web/src/components/link';
 
 interface TransactionBannerProps {
   amount?: string | number;
@@ -27,10 +25,8 @@ export const BannerText = ({
   symbol,
   senderName,
   senderAddress,
-  senderImageUrl,
   receiverName,
   receiverAddress,
-  receiverImageUrl,
   moduleCommand,
   executionStatus,
   timestamp = 1,

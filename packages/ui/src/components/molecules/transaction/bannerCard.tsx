@@ -1,6 +1,6 @@
 import { Typography } from '../../atoms';
 import { trimSix } from '../../../utils/functions';
-import Link from 'next/link';
+import { Link } from 'web/src/components/link';
 
 interface BannerCardProps {
   blockHeight: number;

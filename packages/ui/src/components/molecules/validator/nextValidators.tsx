@@ -1,6 +1,6 @@
 import { FlexGrid, Typography } from '../../atoms';
-import { UserAccountCard } from '../../atoms/account/userAccountCard';
-import Link from 'next/link';
+import { UserAccountCard } from '../../atoms';
+import { Link } from 'web/src/components/link';
 import { NextValidatorType } from '@repo/ui/types';
 
 type NextValidatorsProps = {
@@ -19,11 +19,9 @@ export const NextValidators = ({ validators }: NextValidatorsProps) => {
       </Typography>
       <div className="flex gap-4">
         {validators.map((validator, index) => (
-          // eslint-disable-next-line react/no-array-index-key
           <Link href={`/validators/${validator.address}`} key={index}>
             <UserAccountCard
               address={validator.address}
-              // eslint-disable-next-line react/no-array-index-key
               name={validator.name}
               nameColor="onBackgroundMedium"
               nameFontWeight="semibold"

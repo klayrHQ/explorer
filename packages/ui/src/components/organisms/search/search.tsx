@@ -5,10 +5,9 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { cls } from '../../../utils/functions.ts';
 import { SearchLg } from '../../../assets/icons/general/search-lg';
 import { CrossClose } from '../../../assets/icons/general/x-close.tsx';
-import Link from 'next/link';
+import { Link } from 'web/src/components/link';
 import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
-import { useSearchStore } from '../../../../../../apps/web/src/store/searchStore.ts';
 import { usePathname } from 'next/navigation';
 import { SearchResultsType } from '@repo/ui/types';
 

@@ -20,7 +20,7 @@ import {
 } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
 import { Modal, Slide } from '@mui/material';
-import Link from 'next/link';
+import { Link } from 'web/src/components/link';
 
 //import {ClickAwayListener} from "@mui/base";
 
