@@ -1,15 +1,17 @@
 'use client';
 
 import { FlexGrid, TabButtons, Typography, CopyIcon } from '@repo/ui/atoms';
-import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
+import { DetailsSection, SectionHeader, TableContainer, UserBanner } from '@repo/ui/organisms';
 import { UsersType, TransactionType } from '../../utils/types.ts';
 import { useState, useEffect } from 'react';
 import { DataType } from '@repo/ui/types';
+import BannerBG from '../../assets/images/bannerBG.png';
 import {
   callGetValidators,
   callGetTransactions,
   callGetEvents,
   callGetStakes,
+  callGetStakers,
 } from '../../utils/api/apiCalls.tsx';
 import {
   transactionTableHead,
@@ -31,7 +33,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
   const [events, setEvents] = useState<any[]>([]);
   const [eventsMeta, setEventsMeta] = useState<any>({});
   const [outgoingStakes, setOutgoingStakes] = useState<any[]>([]);
-  const [outgoingStakesMeta, setOutgoingStakesMeta] = useState<any>({});
+  const [incomingStakes, setIncomingStakes] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
@@ -46,7 +48,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
       address: params.id,
     })
       .then((data) => setUser(data.data[0]))
-      .catch((error) => console.error(error))
+      .catch((error) => console.error('Error fetching validator:', error))
       .finally(() => setLoading(false));
   }, [params.id]);
 
@@ -68,30 +70,47 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         }),
         transactionsPagination.pageNumber,
         transactionsPagination.limit,
-      ).then((data) => {
-        setTransactions(data.data);
-        setTransactionsMeta(data.meta);
-      });
+      )
+        .then((data) => {
+          setTransactions(data.data);
+          setTransactionsMeta(data.meta);
+        })
+        .catch((error) => console.error('Error fetching transactions:', error));
 
       const outgoingStakesPromise = callGetStakes({
         address: user.account.address,
-      }).then((data) => {
-        setOutgoingStakes(data.data.stakes);
-      });
+      })
+        .then((data) => {
+          setOutgoingStakes(data.data.stakes);
+        })
+        .catch((error) => console.error('Error fetching outgoing stakes:', error));
+
+      const incomingStakesPromise = callGetStakers({
+        address: user.account.address,
+      })
+        .then((data) => {
+          setIncomingStakes(data.data.stakers);
+        })
+        .catch((error) => console.error('Error fetching incoming stakers:', error));
 
       const eventsPromise = fetchPaginatedData(
         callGetEvents,
         { senderAddress: user.account.address },
         eventsPagination.pageNumber,
         eventsPagination.limit,
-      ).then((data) => {
-        setEvents(data.data);
-        setEventsMeta(data.meta);
-      });
+      )
+        .then((data) => {
+          setEvents(data.data);
+          setEventsMeta(data.meta);
+        })
+        .catch((error) => console.error('Error fetching events:', error));
 
-      Promise.all([transactionsPromise, outgoingStakesPromise, eventsPromise]).finally(() =>
-        setLoading(false),
-      );
+      Promise.all([
+        transactionsPromise,
+        outgoingStakesPromise,
+        eventsPromise,
+        incomingStakesPromise,
+      ]).finally(() => setLoading(false));
     }
   }, [
     user,
@@ -231,6 +250,18 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
 
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
+      <UserBanner
+        coinRate={0.2}
+        image={BannerBG.src}
+        incomingTransactions={incomingStakes.length}
+        outgoingTransactions={outgoingStakes.length}
+        rank={user?.rank || ''}
+        senderAddress={user?.account.address}
+        senderName={user?.account.name}
+        status={user?.status || 'offline'}
+        value={232}
+        valueSymbol={'KLY'}
+      />
       <div className="desktop:hidden w-full">
         <TabButtons padding="6" showLabel={false} tabs={tabs} width="full" />
       </div>

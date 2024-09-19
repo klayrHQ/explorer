@@ -4,12 +4,19 @@ import { FlexGrid, Icon, Typography } from '../../atoms';
 import { Popover } from '../../atoms/utilities/popover';
 import { IconButton } from '../../atoms';
 import { useState } from 'react';
+import Link from 'next/link';
 
-export const ValidatorBannerButtons = () => {
+type UserBannerButtonProps = {
+  validatorAddress: string;
+  className?: string;
+};
+
+export const UserBannerButtons = ({ validatorAddress, className }: UserBannerButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+
   return (
-    <div className="flex">
+    <div className={`flex ${className}`}>
       {/* POPPER */}
       <Popover
         button={
@@ -25,28 +32,32 @@ export const ValidatorBannerButtons = () => {
         setIsOpen={setIsOpen}
       >
         {/* POPPER CHILDREN */}
-        <FlexGrid className="" direction="col" gap="0">
+        <FlexGrid className="w-full" direction="col" gap="0">
           {/* VIEW AS USER */}
-          <FlexGrid
-            alignItems="center"
-            className="w-full cursor-pointer hover:bg-gray-6 hover:rounded-t-md transition-all py-2.5 px-4"
-            direction="row"
-            gap="2"
-            justify="start"
-          >
-            <Icon color="onBackgroundLow" icon="User" size="xs" />
-            <Typography color="onBackgroundMedium" fontWeight="semibold" variant="paragraph-md">
-              View as user
-            </Typography>
-          </FlexGrid>
+          <Link href={`/validators/${validatorAddress}`}>
+            <FlexGrid
+              alignItems="center"
+              className="cursor-pointer hover:bg-gray-6 hover:rounded-t-md transition-all py-2.5 px-4 w-full"
+              direction="row"
+              gap="2"
+              justify="start"
+              mobileDirection="row"
+            >
+              <Icon color="onBackgroundLow" icon="User" size="xs" />
+              <Typography color="onBackgroundMedium" fontWeight="semibold" variant="paragraph-md">
+                View as validator
+              </Typography>
+            </FlexGrid>
+          </Link>
 
           {/* ADD TO FAVORITES */}
           <FlexGrid
             alignItems="center"
-            className="cursor-pointer hover:rounded-b-md hover:bg-gray-6 transition-all py-2.5 px-4"
+            className="cursor-pointer hover:rounded-b-md hover:bg-gray-6 transition-all py-2.5 px-4 w-full"
             direction="row"
             gap="2"
             justify="center"
+            mobileDirection="row"
             onClick={() => setIsFavorite(!isFavorite)}
           >
             {/* FAVORITE TRUE */}
@@ -69,10 +80,6 @@ export const ValidatorBannerButtons = () => {
           </FlexGrid>
         </FlexGrid>
       </Popover>
-
-      {/* BUTTON STAKE NOW
-      <Button label="Stake now" variant="primary" className="hidden desktop:flex" />
-      <Button label="Stake" variant="primary" className="flex items-center desktop:hidden" /> */}
     </div>
   );
 };
