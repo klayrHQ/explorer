@@ -15,9 +15,10 @@ import { cls } from '../../../utils/functions.ts';
 interface SidebarProps {
   menuItems: MenuItemProps[];
   logo: LogoProps;
+  basePath: string;
 }
 
-export const Sidebar = ({ menuItems, logo }: SidebarProps) => {
+export const Sidebar = ({ menuItems, logo, basePath }: SidebarProps) => {
   const [isMinimized, setIsMinimized] = useState(false);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export const Sidebar = ({ menuItems, logo }: SidebarProps) => {
         className={isMinimized ? ' items-center justify-center' : ''}
         minimized={isMinimized}
       />
-      <MainMenu menuItems={menuItems} minimized={isMinimized} />
+      <MainMenu basePath={basePath} menuItems={menuItems} minimized={isMinimized} />
       <IconButton
         className={
           'absolute top-0 bottom-0 sidebarBp:top-auto sidebarBp:bottom-3xl right-0 my-auto h-max'
