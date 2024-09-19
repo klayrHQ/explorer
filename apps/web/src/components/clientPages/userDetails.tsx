@@ -70,32 +70,40 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         }),
         transactionsPagination.pageNumber,
         transactionsPagination.limit,
-      ).then((data) => {
-        setTransactions(data.data);
-        setTransactionsMeta(data.meta);
-      });
+      )
+        .then((data) => {
+          setTransactions(data.data);
+          setTransactionsMeta(data.meta);
+        })
+        .catch((error) => console.error('Error fetching transactions:', error));
 
       const outgoingStakesPromise = callGetStakes({
         address: user.account.address,
-      }).then((data) => {
-        setOutgoingStakes(data.data.stakes);
-      });
+      })
+        .then((data) => {
+          setOutgoingStakes(data.data.stakes);
+        })
+        .catch((error) => console.error('Error fetching outgoing stakes:', error));
 
       const incomingStakesPromise = callGetStakers({
         address: user.account.address,
-      }).then((data) => {
-        setIncomingStakes(data.data.stakers);
-      });
+      })
+        .then((data) => {
+          setIncomingStakes(data.data.stakers);
+        })
+        .catch((error) => console.error('Error fetching incoming stakers:', error));
 
       const eventsPromise = fetchPaginatedData(
         callGetEvents,
         { senderAddress: user.account.address },
         eventsPagination.pageNumber,
         eventsPagination.limit,
-      ).then((data) => {
-        setEvents(data.data);
-        setEventsMeta(data.meta);
-      });
+      )
+        .then((data) => {
+          setEvents(data.data);
+          setEventsMeta(data.meta);
+        })
+        .catch((error) => console.error('Error fetching events:', error));
 
       Promise.all([
         transactionsPromise,
