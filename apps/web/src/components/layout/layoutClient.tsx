@@ -1,5 +1,5 @@
 'use client'
-import { ReactNode } from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 import { FlexGrid, Grid } from '@repo/ui/atoms';
 import { Sidebar } from '@repo/ui/organisms';
 import { cls } from '@repo/ui/utils';
@@ -13,8 +13,13 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const {chains} = useChainNetwork();
   const pathName = usePathname();
   const firstSubDir = pathName.split('/')[1];
-  const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
-  const basePath = !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
+  const [basePath, setBasePath] = useState<string>('');
+
+  useEffect(() => {
+    const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
+    const basePath = !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
+    setBasePath(basePath)
+  }, [chains]);
 
   const mobileMenuItems = [
     {

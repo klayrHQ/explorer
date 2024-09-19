@@ -7,6 +7,7 @@ interface MobileMenuProps {
   menuItems: Omit<MenuItemProps, 'subMenu'>[];
   chainNetworkData: ChainNetworkPickerProps;
   onClose?: () => void;
+  basePath?: string;
 }
 
 export const MobileMenu = ({
@@ -14,6 +15,7 @@ export const MobileMenu = ({
   menuItems,
   chainNetworkData,
   onClose,
+  basePath,
 }: MobileMenuProps) => {
   return (
     <FlexGrid
@@ -23,7 +25,7 @@ export const MobileMenu = ({
       <nav className={'w-full'}>
         <FlexGrid component={'ul'} direction={'col'} gap={'md'}>
           {menuItems.map((item, index) => (
-            <MenuItem key={`mobile-menu-item-${index + 1}`} onClick={onClose} {...item} />
+            <MenuItem basePath={basePath} key={`mobile-menu-item-${index + 1}`} onClick={onClose} {...item} />
           ))}
         </FlexGrid>
       </nav>
