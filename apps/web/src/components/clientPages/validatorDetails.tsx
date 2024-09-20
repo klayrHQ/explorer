@@ -6,7 +6,6 @@ import { TabButtons, FlexGrid, Currency, Typography, CopyIcon } from '@repo/ui/a
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
-import { useSorting } from '../../utils/hooks/useSorting.ts';
 import {
   transactionTableHead,
   validatorStakeIncomingTableHead,
@@ -28,8 +27,6 @@ import {
   MetaType,
   BlockDetailsType,
   StakeType,
-  StakersType,
-  StakesType,
 } from '../../utils/types';
 import {
   callGetBlocks,
@@ -444,14 +441,14 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     <FlexGrid direction={'col'} gap={'5xl'}>
       <ValidatorBanner
         blockTime={2} // TODO: Implement
-        capacity={233} // TODO: Implement
+        capacity={stakeCapacity} // TODO: Implement
         image={BannerBG.src}
         notificationValue={validator?.rank || 0}
         selfStake={validator?.selfStake || 0}
         selfStakeSymbol="KLY"
         senderAddress={validator?.account.address || ''}
         senderName={validator?.account.name || ''}
-        stakes={1} // TODO: Implement
+        stakes={incomingStake.length} // TODO: Implement
         status={validator?.status || ''}
         value={validator?.totalStake}
         valueSymbol="KLY"
