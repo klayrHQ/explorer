@@ -418,8 +418,7 @@ export const createValidatorsRows = (
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
                       (
-                        (Number(validator?.validatorWeight || 0) /
-                          Number(validator?.selfStake || 1)) *
+                        (Number(validator?.totalStake || 0) / Number(validator?.selfStake || 1)) *
                         10
                       ).toFixed(2),
                     )}
