@@ -9,7 +9,7 @@ export interface ValidatorBannerTextProps {
   valueSymbol?: string;
   selfStake?: string | number;
   selfStakeSymbol?: string;
-  capacity?: number | string;
+  capacity?: number;
 }
 
 export const ValidatorBannerText = ({
