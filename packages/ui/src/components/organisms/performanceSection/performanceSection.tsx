@@ -11,7 +11,6 @@ interface PerformanceSectionProps {
   options: CustomSelectProps['options'];
   setStatsVS?: (value: string) => void;
   href?: string;
-  linkComponent?: LinkComponent;
 }
 
 export const PerformanceSection = ({
@@ -19,17 +18,11 @@ export const PerformanceSection = ({
   options,
   setStatsVS,
   href,
-  linkComponent,
 }: PerformanceSectionProps) => {
   return (
     <FlexGrid className={'w-full'} component="article" direction="col" gap="6">
       <div className="w-full flex items-center justify-between ">
-        <SectionHeader
-          href={href}
-          linkComponent={linkComponent}
-          title={'Performance'}
-          titleSize={'sm'}
-        />
+        <SectionHeader href={href} title={'Performance'} titleSize={'sm'} />
         {/*<FlexGrid alignItems="center" gap="3">
           <Typography
             className={'hidden desktop:inline'}

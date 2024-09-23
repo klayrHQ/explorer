@@ -14,6 +14,7 @@ import {
 } from '../../utils/api/apiCalls.tsx';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
 import { NextValidatorType, TableCellType } from '@repo/ui/types';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);
@@ -28,6 +29,7 @@ export const Validators = () => {
   const newBlockEvent = useSocketStore((state) => state.height);
 
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
+  const basePath = useBasePath();
 
   useEffect(() => {
     callGetChartData().then((data) => {
@@ -69,7 +71,7 @@ export const Validators = () => {
       .finally(() => setLoading(false));
   }, [rowsPerPage, newBlockEvent, sortField, sortOrder, network, validators.length]);
 
-  const rows = createValidatorsRows(validators, loading).map((row) => ({
+  const rows = createValidatorsRows(validators, loading, basePath, false).map((row) => ({
     cells: row.cells.filter((cell) => cell !== null) as TableCellType[],
   }));
 

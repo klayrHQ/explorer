@@ -41,6 +41,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
 
   const transactionsPagination = usePagination();
   const eventsPagination = usePagination();
+  const basePath = useBasePath();
 
   useEffect(() => {
     setLoading(true);
@@ -202,6 +203,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
     loading,
     copyTooltipText,
     setCopyTooltipText,
+    basePath,
   );
   const eventsRows = createEventsRows(events, loading);
 

@@ -46,17 +46,16 @@ import {
 } from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
-import { useBasePath } from '../hooks/useBasePath.ts';
 
 export const createTransactionRows = (
   transactions: TransactionType[],
   loading: boolean,
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
+  basePath: string,
   statusOfTransaction?: boolean,
 ) => {
   const columnCount = transactionTableHead(() => '', '', '').length;
-  const basePath = useBasePath();
 
   return !loading
     ? transactions?.length > 0
@@ -255,12 +254,15 @@ export const createEventsRows = (events: EventsType[], loading: boolean) => {
 export const createValidatorsRows = (
   validators: ValidatorType[],
   loading: boolean,
+  basePath: string,
   stakingRewards = false,
-  stakingCalculatorProps: {
-    stakingCalculatorAmount: number;
-    stakingCalculatorPeriod: StakesCalculatorPeriodType;
-    totalActiveStake: bigint;
-  } = {
+  stakingCalculatorProps:
+    | {
+        stakingCalculatorAmount: number;
+        stakingCalculatorPeriod: StakesCalculatorPeriodType;
+        totalActiveStake: bigint;
+      }
+    | undefined = {
     stakingCalculatorAmount: 1000,
     stakingCalculatorPeriod: 'day',
     totalActiveStake: BigInt(0),
@@ -269,7 +271,6 @@ export const createValidatorsRows = (
   const columnCount = validatorsTableHead(() => '', '', '').length;
   const { stakingCalculatorAmount, stakingCalculatorPeriod, totalActiveStake } =
     stakingCalculatorProps;
-  const basePath = useBasePath();
 
   const calculateReward = (validator: ValidatorType) => {
     if (!totalActiveStake) {
@@ -487,11 +488,13 @@ export const createValidatorsRows = (
     : getTableSkeletons(columnCount);
 };
 
-export const createValidatorIncomingStakeRows = (incomingStakes: StakeType[], loading: boolean) => {
+export const createValidatorIncomingStakeRows = (
+  incomingStakes: StakeType[],
+  loading: boolean,
+  basePath: string,
+) => {
   return !loading
     ? incomingStakes?.map((incomingStake) => {
-        const basePath = useBasePath();
-
         return {
           cells: [
             {
@@ -518,11 +521,10 @@ export const createValidatorOutgoingStakeRows = (
   outgoingStakes: StakeType[],
   validator: ValidatorType | undefined,
   loading: boolean,
+  basePath: string,
 ) => {
   return !loading
     ? outgoingStakes?.map((outgoingStake) => {
-        const basePath = useBasePath();
-
         return {
           cells: [
             {
@@ -555,11 +557,13 @@ export const createValidatorOutgoingStakeRows = (
     : getTableSkeletons(validatorStakeOutgoingTableHead.length);
 };
 
-export const createValidatorBlockRows = (blocks: BlockType[], loading: boolean) => {
+export const createValidatorBlockRows = (
+  blocks: BlockType[],
+  loading: boolean,
+  basePath: string,
+) => {
   return !loading
     ? blocks?.map((block) => {
-        const basePath = useBasePath();
-
         return {
           cells: [
             {
@@ -657,11 +661,13 @@ export const createValidatorEventsRow = (events: EventsType[], loading: boolean)
     : getTableSkeletons(validatorBlocksTableHead.length);
 };
 
-export const createStakesOverviewRows = (stakes: TransactionType[], loading: boolean) => {
+export const createStakesOverviewRows = (
+  stakes: TransactionType[],
+  loading: boolean,
+  basePath: string,
+) => {
   return !loading
     ? stakes?.map((stake) => {
-        const basePath = useBasePath();
-
         return {
           cells: [
             {
@@ -775,10 +781,9 @@ export const createBlockRows = (
   loading: boolean,
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
+  basePath: string,
 ) => {
   const columnCount = blockTableHead(() => '', '', '').length;
-  const basePath = useBasePath();
-
   return !loading
     ? blocks?.map((block) => {
         return {
@@ -875,9 +880,11 @@ export const createBlockRows = (
     : getTableSkeletons(columnCount);
 };
 
-export const createFavouritesRows = (favourites: FavouriteType[], loading: boolean) => {
-  const basePath = useBasePath();
-
+export const createFavouritesRows = (
+  favourites: FavouriteType[],
+  loading: boolean,
+  basePath: string,
+) => {
   return !loading
     ? favourites?.map((fav) => {
         return {
@@ -895,9 +902,7 @@ export const createFavouritesRows = (favourites: FavouriteType[], loading: boole
     : getTableSkeletons(favouritesTableHead.length);
 };
 
-export const createUsersRows = (users: UsersType[], loading: boolean) => {
-  const basePath = useBasePath();
-
+export const createUsersRows = (users: UsersType[], loading: boolean, basePath: string) => {
   return !loading
     ? users?.map((user) => {
         return {

@@ -7,11 +7,13 @@ import { callGetBlocks } from '../../utils/api/apiCalls.tsx';
 import { blockTableHead } from '../../utils/helpers/tableHeaders.tsx';
 import { createBlockRows } from '../../utils/helpers/helper.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const Blocks = () => {
   const defaultLimit = '10';
   const searchParams = useSearchParams();
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
+  const basePath = useBasePath();
 
   const {
     data: blocks,
@@ -34,7 +36,7 @@ export const Blocks = () => {
     useNewBlockEvent: true,
   });
 
-  const rowBlocks = createBlockRows(blocks, loading, copyTooltipText, setCopyTooltipText);
+  const rowBlocks = createBlockRows(blocks, loading, copyTooltipText, setCopyTooltipText, basePath);
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
       <SectionHeader

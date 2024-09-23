@@ -6,9 +6,11 @@ import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorti
 import { callGetValidators } from '../../utils/api/apiCalls.tsx';
 import { usersTableHead } from '../../utils/helpers/tableHeaders';
 import { createUsersRows } from '../../utils/helpers/helper.tsx';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const Users = () => {
   const searchParams = useSearchParams();
+  const basePath = useBasePath();
 
   const {
     data: users,
@@ -27,7 +29,7 @@ export const Users = () => {
     defaultLimit: searchParams.get('limit') || '10',
     changeURL: true,
   });
-  const rows = createUsersRows(users, loading);
+  const rows = createUsersRows(users, loading, basePath);
 
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>

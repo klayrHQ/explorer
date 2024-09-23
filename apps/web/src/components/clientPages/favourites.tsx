@@ -6,6 +6,7 @@ import { FlexGrid } from '@repo/ui/atoms';
 import React, { useState } from 'react';
 import { FavouriteType } from '../../utils/types.ts';
 import { createFavouritesRows } from '../../utils/helpers/helper.tsx';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 //todo remove this mock data after implementing favourite functionality
 const favouriteUsers = [
@@ -25,8 +26,9 @@ const favouriteUsers = [
 export const Favourites = () => {
   const [favourites, setFavourites] = useState<FavouriteType[]>(favouriteUsers);
   //const [loading, setLoading] = useState<boolean>(false);
+  const basePath = useBasePath();
 
-  const rows = createFavouritesRows(favourites, false);
+  const rows = createFavouritesRows(favourites, false, basePath);
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
