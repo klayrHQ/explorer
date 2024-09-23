@@ -456,6 +456,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <ValidatorBanner
+        basePath={basePath}
         blockTime={2} // TODO: Implement
         capacity={233} // TODO: Implement
         image={BannerBG.src}
