@@ -35,7 +35,7 @@ export interface ValidatorQueryParams {
   limit?: string;
   offset?: number;
   sort?: string;
-  name: string;
+  name?: string;
 }
 
 export interface StakesQueryParams {
