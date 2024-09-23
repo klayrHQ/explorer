@@ -53,6 +53,7 @@ const colors = {
   warningBg: 'var(--color-warningBg)',
   success: 'var(--color-success)',
   successBg: 'var(--color-successBg)',
+
   volt: 'var(--color-volt)',
   voltDark: 'var(--color-voltDark)',
   azule: 'var(--color-azule)',
@@ -76,6 +77,8 @@ const colors = {
   grayFiveOpacity: 'var(--color-grayFiveOpacity)',
   redOpacity: 'var(--color-redOpacity)',
   warningOpacity: 'var(--color-warningOpacity)',
+  successOpacity: 'var(--color-successOpacity)',
+  errorOpacity: 'var(--color-errorOpacity)',
   darkBlue: 'var(--color-darkBlue)',
   'gray-1': 'var(--color-gray-1)',
   'gray-2': 'var(--color-gray-2)',

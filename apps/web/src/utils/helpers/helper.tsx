@@ -341,7 +341,7 @@ export const createValidatorsRows = (
           cells: [
             {
               children: (
-                <Link basePath={basePath} href={`/validators/${validator?.account.address}`}>
+                <Link basePath={basePath} href={`/validators/${validator?.account.name}`}>
                   <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
                     <NotificationIcon
                       className="absolute -translate-x-3 -translate-y-3"
@@ -422,8 +422,7 @@ export const createValidatorsRows = (
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
                       (
-                        (Number(validator?.validatorWeight || 0) /
-                          Number(validator?.selfStake || 1)) *
+                        (Number(validator?.totalStake || 0) / Number(validator?.selfStake || 1)) *
                         10
                       ).toFixed(2),
                     )}

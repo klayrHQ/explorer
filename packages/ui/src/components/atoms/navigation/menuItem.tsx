@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography } from '../base/typography';
 import { cva } from 'class-variance-authority';
 import { Icon } from '../images/icon.tsx';
@@ -79,8 +79,17 @@ export const MenuItem = ({
   const pathWithoutBase = basePath ? currentPath.replace(basePath, '') : currentPath;
 
   const firstPartOfPathWithoutBase = pathWithoutBase.split('/')[1];
-  const firstPartOfHref = href?.split('/')[1];
-  const isActive = href ? firstPartOfPathWithoutBase === firstPartOfHref : false;
+  const firstPartOfHref = basePath
+    ? href?.replace(basePath, '').split('/')[1]
+    : href?.split('/')[1];
+  const isActive = href
+    ? firstPartOfPathWithoutBase === firstPartOfHref ||
+      (!firstPartOfPathWithoutBase && !firstPartOfHref)
+    : false;
+
+  useEffect(() => {
+    console.log(pathWithoutBase, firstPartOfPathWithoutBase, firstPartOfHref, isActive);
+  }, [basePath]);
 
   const handleHover = (event: React.MouseEvent<HTMLElement>, open: boolean) => {
     if (open) {
@@ -137,7 +146,12 @@ export const MenuItem = ({
       >
         {menuItemInnerComponents}
         {subMenu && (
-          <SubMenu anchorElement={anchorElement} menuItems={subMenu} open={isSubMenuOpen} />
+          <SubMenu
+            anchorElement={anchorElement}
+            basePath={basePath}
+            menuItems={subMenu}
+            open={isSubMenuOpen}
+          />
         )}
       </Link>
     </li>
