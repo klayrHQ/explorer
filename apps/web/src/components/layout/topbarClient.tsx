@@ -4,6 +4,7 @@ import { Icon, MenuItemProps, Typography } from '@repo/ui/atoms';
 import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
 import React from 'react';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 interface TopbarClientProps {
   logo: {
@@ -32,6 +33,8 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   const setSearchResults = useSearchStore((state) => state.setSearchResults);
   const searchResult = useSearchStore((state) => state.searchResults);
 
+  const basePath = useBasePath();
+
   const kpisObject = [
     {
       keyValue: 'KLY: ',
@@ -45,7 +48,12 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
           <span
             className={`${trend < 0 ? 'text-error' : 'text-success'} text-paragraph-sm font-semibold inline-flex items-center gap-1`}
           >
-            <Icon className={'mt-px'} color={'inherit'} icon={trend < 0 ? 'TrendDown' : 'TrendUp'} size={'xs'} />
+            <Icon
+              className={'mt-px'}
+              color={'inherit'}
+              icon={trend < 0 ? 'TrendDown' : 'TrendUp'}
+              size={'xs'}
+            />
             {`${parseFloat(trend.toFixed(2)).toLocaleString()}%`}
           </span>
         </Typography>
@@ -60,6 +68,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
 
   return (
     <Topbar
+      basePath={basePath}
       callSearch={callSearch}
       chainNetworkData={{
         currentChain,

@@ -158,7 +158,12 @@ export const MenuItem = ({
     >
       {menuItemInnerComponents}
       {subMenu && (
-        <SubMenu anchorElement={anchorElement} menuItems={subMenu} open={isSubMenuOpen} />
+        <SubMenu
+          anchorElement={anchorElement}
+          basePath={basePath}
+          menuItems={subMenu}
+          open={isSubMenuOpen}
+        />
       )}
     </li>
   );

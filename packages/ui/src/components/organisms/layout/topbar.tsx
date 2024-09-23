@@ -9,6 +9,7 @@ import {
   Popover,
   // MenuItemProps,
   NotificationIcon,
+  Link,
 } from '../../atoms';
 import { Search } from '../search/search.tsx';
 import React, { ReactNode, useState } from 'react';
@@ -20,7 +21,6 @@ import {
 } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
 import { Modal, Slide } from '@mui/material';
-import { Link } from '../../atoms';
 
 //import {ClickAwayListener} from "@mui/base";
 
@@ -141,6 +141,7 @@ export const Topbar = ({
             <Slide direction={'left'} in={openMobileMenu} mountOnEnter unmountOnExit>
               <div style={{ pointerEvents: 'all' }}>
                 <MobileMenu
+                  basePath={basePath}
                   chainNetworkData={chainNetworkData}
                   className={'absolute top-topbarMobileHeight left-0'}
                   menuItems={mobileMenuItems}
@@ -163,7 +164,7 @@ export const Topbar = ({
         ))}
         <ChainNetworkPicker {...chainNetworkData} />
         <FlexGrid gap={'md'}>
-          <Link basePath={basePath} href={'/favourites'}>
+          <Link href={'/favourites'}>
             <div className={'relative'}>
               <IconButton align={'none'} icon={'Heart'} title={'favourites'} variant={'iconOnly'} />
               {newFavourite && (
