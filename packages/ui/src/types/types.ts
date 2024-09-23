@@ -227,4 +227,8 @@ export interface UserBannerProps {
   valueSymbol?: string;
   rank: number | string;
   image: string;
+  isFavorite: boolean;
+  setFavorite: () => void;
+  removeFavorite: () => void;
+  
 }
