@@ -9,7 +9,7 @@ export interface ValidatorBannerTextProps {
   valueSymbol?: string;
   selfStake?: string | number;
   selfStakeSymbol?: string;
-  capacity?: number;
+  capacity?: number | string;
 }
 
 export const ValidatorBannerText = ({
@@ -59,7 +59,7 @@ export const ValidatorBannerText = ({
         {'and capacity of'}
       </Typography>
 
-      {capacity && capacity > 100 ? (
+      {Number(capacity) && Number(capacity) > 100 ? (
         <BadgeNoIcon
           backgroundColor="greenOpacity"
           borderColor="success"
