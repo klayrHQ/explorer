@@ -1,7 +1,7 @@
 import { usePathname } from 'next/navigation';
 import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 
-export const getBasePath = () => {
+export const useBasePath = () => {
   const { chains } = useChainNetwork();
   const pathName = usePathname();
   const firstSubDir = pathName.split('/')[1];
