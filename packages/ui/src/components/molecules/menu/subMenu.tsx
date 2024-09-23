@@ -5,9 +5,10 @@ interface SubMenuProps {
   menuItems: MenuItemProps[];
   open: boolean;
   anchorElement: HTMLElement | null;
+  basePath?: string;
 }
 
-export const SubMenu = ({ menuItems, open, anchorElement }: SubMenuProps) => {
+export const SubMenu = ({ menuItems, open, anchorElement, basePath }: SubMenuProps) => {
   return (
     <Popper anchorEl={anchorElement} className={'pl-md'} open={open} placement={'right-start'}>
       <FlexGrid
@@ -19,7 +20,7 @@ export const SubMenu = ({ menuItems, open, anchorElement }: SubMenuProps) => {
         gap="md"
       >
         {menuItems.map((item, index) => (
-          <MenuItem key={`menu-item-${index + 1}`} square {...item} />
+          <MenuItem basePath={basePath} key={`menu-item-${index + 1}`} square {...item} />
         ))}
       </FlexGrid>
     </Popper>
