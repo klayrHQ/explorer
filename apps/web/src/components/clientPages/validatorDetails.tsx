@@ -63,7 +63,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     setLoading(true);
     callGetValidators({
-      address: id,
+      name: id,
     })
       .then((data) => setValidators(data.data[0]))
       .catch((error) => console.error(error))

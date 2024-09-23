@@ -337,7 +337,7 @@ export const createValidatorsRows = (
           cells: [
             {
               children: (
-                <Link href={`/validators/${validator?.account.address}`}>
+                <Link href={`/validators/${validator?.account.name}`}>
                   <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
                     <NotificationIcon
                       className="absolute -translate-x-3 -translate-y-3"
