@@ -1,7 +1,7 @@
 import { BannerFrame } from '../../atoms';
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
-import { Link } from 'web/src/components/link';
+import { Link } from '../../atoms';
 import { UserBannerText } from '../../molecules/user/userBannerText';
 import { UserBannerHeader } from '../../molecules/user/userBannerHeader';
 import { UserBannerProps } from '../../../types/types';
@@ -18,14 +18,14 @@ export const UserBanner = ({
   valueSymbol,
   rank,
   image,
-
+  basePath,
   ...props
 }: UserBannerProps) => {
   return (
     <BannerFrame image={image}>
       <FlexGrid direction="col" gap="0" justify="between">
         <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
-          <Link href="/users">
+          <Link basePath={basePath} href="/users">
             <Icon
               className="hover:-translate-x-0.5 cursor-pointer transition-transform"
               color="white"

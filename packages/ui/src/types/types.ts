@@ -165,7 +165,6 @@ export type DataValueType = string | number | boolean | null | object | undefine
 
 export type DataType = Record<string, DataValueType>;
 
-
 export interface NextValidatorType {
   address: string;
   name: string;
@@ -173,7 +172,6 @@ export interface NextValidatorType {
   nextAllocatedTime: number;
   status: string;
 }
-
 
 //SEARCH TYPES
 export interface SearchResultsType {
@@ -223,4 +221,5 @@ export interface UserBannerProps {
   valueSymbol?: string;
   rank: number | string;
   image: string;
+  basePath: string;
 }

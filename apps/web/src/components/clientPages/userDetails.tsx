@@ -254,6 +254,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <UserBanner
+        basePath={basePath}
         coinRate={0.2}
         image={BannerBG.src}
         incomingTransactions={incomingStakes.length}
