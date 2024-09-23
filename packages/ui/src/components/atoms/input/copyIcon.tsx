@@ -38,12 +38,7 @@ export const CopyIcon = ({ content, size }: CopyIconProps) => {
   return (
     <Tooltip placement={'bottom'} text={copyTooltipText}>
       <div className={'cursor-pointer'} onClick={() => copyToClipboard(content)}>
-        <Icon
-          color="onBackgroundLow"
-          hoverColor="onBackgroundMedium"
-          icon="Copy"
-          size={size}
-        />
+        <Icon color="onBackgroundLow" hoverColor="onBackgroundMedium" icon="Copy" size={size} />
       </div>
     </Tooltip>
   );
