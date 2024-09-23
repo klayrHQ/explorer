@@ -3,7 +3,7 @@ import { Badge } from '../../atoms';
 import { Currency } from '../../atoms';
 import { UserAccountCard } from '../../atoms';
 import { dayjs, fromNowFormatter, replaceColonWithSpace } from '../../../utils/functions';
-import { Link } from 'web/src/components/link';
+import { Link } from '../../atoms';
 
 interface TransactionBannerProps {
   amount?: string | number;
@@ -18,6 +18,7 @@ interface TransactionBannerProps {
   executionStatus: string; // Make executionStatus a required string
   timestamp?: number;
   badgeColor?: string;
+  basePath?: string;
 }
 
 export const BannerText = ({
@@ -31,6 +32,7 @@ export const BannerText = ({
   executionStatus,
   timestamp = 1,
   badgeColor,
+  basePath,
 }: TransactionBannerProps) => {
   const date = dayjs(timestamp * 1000);
 
@@ -39,7 +41,7 @@ export const BannerText = ({
   return (
     <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth max-w-full flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
-      <Link href={senderName ? `/validators/${senderAddress}` : ''}>
+      <Link basePath={basePath} href={senderName ? `/validators/${senderAddress}` : ''}>
         <UserAccountCard
           address={senderAddress}
           addressColor="onBackground"
@@ -60,7 +62,7 @@ export const BannerText = ({
 
       {/* RECEIVER */}
       {receiverAddress && (
-        <Link href={receiverName ? `/validators/${receiverAddress}` : ``}>
+        <Link basePath={basePath} href={receiverName ? `/validators/${receiverAddress}` : ``}>
           <UserAccountCard
             address={receiverAddress}
             addressColor="onBackground"

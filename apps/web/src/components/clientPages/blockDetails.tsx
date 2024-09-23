@@ -24,7 +24,8 @@ import { getSeedRevealFromAssets, fetchPaginatedData } from '../../utils/helpers
 import { BlockDetailsType, EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetBlocks, callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
-import {Link} from "../link.tsx";
+import { Link } from '@repo/ui/atoms';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -146,7 +147,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         label: 'Generator',
       },
       value: (
-        <Link href={`/validators/${block?.generator?.address}`}>
+        <Link basePath={useBasePath()} href={`/validators/${block?.generator?.address}`}>
           <UserAccountCard
             address={block?.generator?.address ?? ''}
             name={block?.generator?.name}

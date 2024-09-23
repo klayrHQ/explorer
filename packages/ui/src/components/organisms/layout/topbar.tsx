@@ -20,7 +20,7 @@ import {
 } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
 import { Modal, Slide } from '@mui/material';
-import { Link } from 'web/src/components/link';
+import { Link } from '../../atoms';
 
 //import {ClickAwayListener} from "@mui/base";
 
@@ -39,6 +39,7 @@ interface TopbarProps {
   setSearchResults?: any;
   callSearch?: any;
   newFavourite?: boolean;
+  basePath?: string;
   // optionsMenuItems: MenuItemProps[]
 }
 
@@ -52,6 +53,7 @@ export const Topbar = ({
   searchResults,
   setSearchResults,
   callSearch,
+  basePath,
 }: TopbarProps) => {
   // const [openOptionsMenu, setOpenOptionsMenu] = useState(false)
   const [mobileSearchAnchor, setMobileSearchAnchor] = useState<HTMLElement | null>(null);
@@ -161,7 +163,7 @@ export const Topbar = ({
         ))}
         <ChainNetworkPicker {...chainNetworkData} />
         <FlexGrid gap={'md'}>
-          <Link href={'/favourites'}>
+          <Link basePath={basePath} href={'/favourites'}>
             <div className={'relative'}>
               <IconButton align={'none'} icon={'Heart'} title={'favourites'} variant={'iconOnly'} />
               {newFavourite && (

@@ -1,17 +1,21 @@
 'use client';
-
 import { FlexGrid, Icon, Typography } from '../../atoms';
 import { Popover } from '../../atoms';
 import { IconButton } from '../../atoms';
 import { useState } from 'react';
-import { Link } from 'web/src/components/link';
+import { Link } from '../../atoms';
 
 type UserBannerButtonProps = {
   validatorAddress: string;
   className?: string;
+  basePath?: string;
 };
 
-export const UserBannerButtons = ({ validatorAddress, className }: UserBannerButtonProps) => {
+export const UserBannerButtons = ({
+  validatorAddress,
+  className,
+  basePath,
+}: UserBannerButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -34,7 +38,7 @@ export const UserBannerButtons = ({ validatorAddress, className }: UserBannerBut
         {/* POPPER CHILDREN */}
         <FlexGrid className="w-full" direction="col" gap="0">
           {/* VIEW AS USER */}
-          <Link href={`/validators/${validatorAddress}`}>
+          <Link basePath={basePath} href={`/validators/${validatorAddress}`}>
             <FlexGrid
               alignItems="center"
               className="cursor-pointer hover:bg-gray-6 hover:rounded-t-md transition-all py-2.5 px-4 w-full"

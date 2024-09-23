@@ -29,7 +29,7 @@ import {
   StatusIcon,
   KeyValueComponent,
 } from '@repo/ui/atoms';
-import { Link } from '../../components/link.tsx';
+import { Link } from '@repo/ui/atoms';
 import React from 'react';
 import { commandColors, decimals } from '../constants.tsx';
 import { convertKLYToBeddows, getSeedRevealFromAssets, getTableSkeletons } from './dataHelpers.tsx';
@@ -46,6 +46,7 @@ import {
 } from './tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
+import { useBasePath } from '../hooks/useBasePath.ts';
 
 export const createTransactionRows = (
   transactions: TransactionType[],
@@ -55,6 +56,8 @@ export const createTransactionRows = (
   statusOfTransaction?: boolean,
 ) => {
   const columnCount = transactionTableHead(() => '', '', '').length;
+  const basePath = useBasePath();
+
   return !loading
     ? transactions?.length > 0
       ? transactions?.map((transaction) => {
@@ -63,7 +66,7 @@ export const createTransactionRows = (
               children: (
                 <KeyValueComponent
                   contentValue={
-                    <Link href={`/transactions/${transaction.id}`}>
+                    <Link basePath={basePath} href={`/transactions/${transaction.id}`}>
                       <Typography className={'hover:underline'} link>
                         {' '}
                         {shortString(transaction?.id, 12, 'center')}
@@ -124,6 +127,7 @@ export const createTransactionRows = (
             {
               children: (
                 <Link
+                  basePath={basePath}
                   href={
                     transaction?.sender?.name ? `/validators/${transaction?.sender?.address}` : ``
                   }
@@ -138,6 +142,7 @@ export const createTransactionRows = (
             {
               children: transaction?.recipient ? (
                 <Link
+                  basePath={basePath}
                   href={
                     transaction?.recipient?.name
                       ? `/validators/${transaction?.recipient?.address}`
@@ -264,6 +269,7 @@ export const createValidatorsRows = (
   const columnCount = validatorsTableHead(() => '', '', '').length;
   const { stakingCalculatorAmount, stakingCalculatorPeriod, totalActiveStake } =
     stakingCalculatorProps;
+  const basePath = useBasePath();
 
   const calculateReward = (validator: ValidatorType) => {
     if (!totalActiveStake) {
@@ -334,7 +340,7 @@ export const createValidatorsRows = (
           cells: [
             {
               children: (
-                <Link href={`/validators/${validator?.account.address}`}>
+                <Link basePath={basePath} href={`/validators/${validator?.account.address}`}>
                   <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
                     <NotificationIcon
                       className="absolute -translate-x-3 -translate-y-3"
@@ -484,11 +490,16 @@ export const createValidatorsRows = (
 export const createValidatorIncomingStakeRows = (incomingStakes: StakeType[], loading: boolean) => {
   return !loading
     ? incomingStakes?.map((incomingStake) => {
+        const basePath = useBasePath();
+
         return {
           cells: [
             {
               children: (
-                <Link href={incomingStake?.name ? `/validators/${incomingStake?.address}` : ``}>
+                <Link
+                  basePath={basePath}
+                  href={incomingStake?.name ? `/validators/${incomingStake?.address}` : ``}
+                >
                   <UserAccountCard address={incomingStake?.address} name={incomingStake?.name} />
                 </Link>
               ),
@@ -510,11 +521,16 @@ export const createValidatorOutgoingStakeRows = (
 ) => {
   return !loading
     ? outgoingStakes?.map((outgoingStake) => {
+        const basePath = useBasePath();
+
         return {
           cells: [
             {
               children: (
-                <Link href={outgoingStake?.name ? `/validators/${outgoingStake?.address}` : ``}>
+                <Link
+                  basePath={basePath}
+                  href={outgoingStake?.name ? `/validators/${outgoingStake?.address}` : ``}
+                >
                   <UserAccountCard address={outgoingStake?.address} name={outgoingStake?.name} />
                 </Link>
               ),
@@ -542,11 +558,13 @@ export const createValidatorOutgoingStakeRows = (
 export const createValidatorBlockRows = (blocks: BlockType[], loading: boolean) => {
   return !loading
     ? blocks?.map((block) => {
+        const basePath = useBasePath();
+
         return {
           cells: [
             {
               children: (
-                <Link href={`/blocks/${block.id}`}>
+                <Link basePath={basePath} href={`/blocks/${block.id}`}>
                   <Typography color="onBackground" variant="paragraph-sm">
                     {block.id}
                   </Typography>
@@ -642,11 +660,13 @@ export const createValidatorEventsRow = (events: EventsType[], loading: boolean)
 export const createStakesOverviewRows = (stakes: TransactionType[], loading: boolean) => {
   return !loading
     ? stakes?.map((stake) => {
+        const basePath = useBasePath();
+
         return {
           cells: [
             {
               children: (
-                <Link href={`/transactions/${stake.id}`}>
+                <Link basePath={basePath} href={`/transactions/${stake.id}`}>
                   <Typography className={'hover:underline'} link>
                     {shortString(stake?.id, 12, 'center')}
                   </Typography>
@@ -667,7 +687,10 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
             },
             {
               children: (
-                <Link href={stake?.sender?.name ? `/validators/${stake?.sender?.address}` : ``}>
+                <Link
+                  basePath={basePath}
+                  href={stake?.sender?.name ? `/validators/${stake?.sender?.address}` : ``}
+                >
                   <UserAccountCard address={stake?.sender?.address} name={stake?.sender?.name} />
                 </Link>
               ),
@@ -686,6 +709,7 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
                               key={param?.validatorAddress}
                             >
                               <Link
+                                basePath={basePath}
                                 href={param?.name ? `/validators/${param?.validatorAddress}` : ``}
                               >
                                 <UserAccountCard
@@ -716,6 +740,7 @@ export const createStakesOverviewRows = (stakes: TransactionType[], loading: boo
                               key={param?.validatorAddress}
                             >
                               <Link
+                                basePath={basePath}
                                 href={param?.name ? `/validators/${param?.validatorAddress}` : ``}
                               >
                                 <UserAccountCard
@@ -752,6 +777,7 @@ export const createBlockRows = (
   setCopyTooltipText: (text: string) => void,
 ) => {
   const columnCount = blockTableHead(() => '', '', '').length;
+  const basePath = useBasePath();
 
   return !loading
     ? blocks?.map((block) => {
@@ -761,7 +787,7 @@ export const createBlockRows = (
               children: (
                 <KeyValueComponent
                   contentValue={
-                    <Link href={`/blocks/${block.id}`}>
+                    <Link basePath={basePath} href={`/blocks/${block.id}`}>
                       <Typography link>{shortString(block.id, 12, 'center')}</Typography>
                     </Link>
                   }
@@ -810,7 +836,7 @@ export const createBlockRows = (
             },
             {
               children: (
-                <Link href={`/validators/${block.generator.address}`}>
+                <Link basePath={basePath} href={`/validators/${block.generator.address}`}>
                   <UserAccountCard address={block.generator.address} name={block.generator.name} />
                 </Link>
               ),
@@ -850,13 +876,15 @@ export const createBlockRows = (
 };
 
 export const createFavouritesRows = (favourites: FavouriteType[], loading: boolean) => {
+  const basePath = useBasePath();
+
   return !loading
     ? favourites?.map((fav) => {
         return {
           cells: [
             {
               children: (
-                <Link href={`/blocks/${fav.address}`}>
+                <Link basePath={basePath} href={`/blocks/${fav.address}`}>
                   <UserAccountCard address={fav.address} name={fav.name} />
                 </Link>
               ),
@@ -868,6 +896,8 @@ export const createFavouritesRows = (favourites: FavouriteType[], loading: boole
 };
 
 export const createUsersRows = (users: UsersType[], loading: boolean) => {
+  const basePath = useBasePath();
+
   return !loading
     ? users?.map((user) => {
         return {
@@ -879,7 +909,7 @@ export const createUsersRows = (users: UsersType[], loading: boolean) => {
             {
               //mock_data
               children: (
-                <Link href={`/users/${user?.account.address}`}>
+                <Link basePath={basePath} href={`/users/${user?.account.address}`}>
                   <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
                     <UserAccountCard
                       address={user?.account.address}

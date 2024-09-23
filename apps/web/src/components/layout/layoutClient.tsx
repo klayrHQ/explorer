@@ -5,7 +5,6 @@ import { Sidebar, InfoBanner } from '@repo/ui/organisms';
 import { cls } from '@repo/ui/utils';
 import { TopbarClient } from './topbarClient.tsx';
 import { logo } from '../../utils/constants.tsx';
-import { DefaultLinkComponent } from 'storybook/stories/utils/constants.tsx';
 import { usePathname } from 'next/navigation';
 import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 

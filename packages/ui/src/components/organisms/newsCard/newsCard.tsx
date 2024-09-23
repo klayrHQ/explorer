@@ -1,6 +1,6 @@
-import { NewsCardImage, BadgeGroup } from '../../atoms';
+import { NewsCardImage, BadgeGroup, Link } from '../../atoms';
 import { NewsTextContent } from '../../molecules';
-import { Link } from '@mui/material';
+
 import { NewsCardProps } from '../../../types/types';
 
 export const NewsCard = ({
@@ -14,7 +14,7 @@ export const NewsCard = ({
   link,
 }: NewsCardProps) => {
   return (
-    <Link href={link}>
+    <Link href={link} outgoing>
       <div className="flex flex-col w-full min-h-newsCardContainerMobileHeight desktop:min-h-newsCardContainerHeight group hover:cursor-pointer">
         <NewsCardImage alt={alt} src={src} />
         <NewsTextContent author={author} date={date} description={description} title={title} />

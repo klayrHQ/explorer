@@ -3,7 +3,7 @@ import { trimFour } from '../../../utils/functions';
 import { BannerText } from '../../molecules';
 import { BannerCard } from '../../molecules';
 import { BannerFrame } from '../../atoms';
-import { Link } from 'web/src/components/link';
+import { Link } from '../../atoms';
 
 interface TransactionBannerProps {
   id: string;
@@ -22,6 +22,7 @@ interface TransactionBannerProps {
   blockHeight: number;
   blockId: string;
   image: string;
+  basePath?: string;
 }
 
 export const TransactionBanner = ({
@@ -41,12 +42,13 @@ export const TransactionBanner = ({
   timestamp,
   badgeColor,
   image,
+  basePath,
 }: TransactionBannerProps) => {
   return (
     <BannerFrame image={image}>
       <div className="items-start justify-start w-full flex flex-col">
         <FlexGrid alignItems="center" direction="row" gap="4" justify="start" mobileDirection="row">
-          <Link href="/transactions">
+          <Link basePath={basePath} href="/transactions">
             {' '}
             <Icon
               className="hover:-translate-x-0.5 cursor-pointer transition-transform"

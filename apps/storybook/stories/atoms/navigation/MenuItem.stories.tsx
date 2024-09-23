@@ -1,7 +1,7 @@
 import type { StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import {MenuItem} from '@repo/ui/atoms';
-import React from "react";
+import { MenuItem } from '@repo/ui/atoms';
+import React from 'react';
 
 const meta = {
   title: 'Atoms/Navigation/MenuItem',
@@ -19,7 +19,7 @@ const meta = {
   },
   args: {
     onClick: fn(),
-    icon: "BarChartSquare",
+    icon: 'BarChartSquare',
     label: 'Navigation',
   },
 };
@@ -28,8 +28,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {
-  },
+  args: {},
 };
 
 export const Disabled: Story = {
@@ -64,14 +63,14 @@ export const IsParent: Story = {
 
 export const HasLink: Story = {
   args: {
-    linkComponent: <a href="#"></a>,
+    href: '/',
   },
 };
 
 export const Small: Story = {
   args: {
-    variant: "small",
-    icon: "CurrencyDollar",
-    label: "Enable Light mode"
+    variant: 'small',
+    icon: 'CurrencyDollar',
+    label: 'Enable Light mode',
   },
 };

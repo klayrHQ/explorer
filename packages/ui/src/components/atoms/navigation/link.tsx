@@ -1,22 +1,28 @@
-import {cloneElement, ReactNode} from "react";
-import {LinkComponent} from "../../../types/types.ts";
+import { ReactNode } from 'react';
+import NextLink from 'next/link';
+import { LinkProps } from 'next/link';
 
-interface LinkProps {
-  children: ReactNode
-  className?: string
-  href: string
-  component?: LinkComponent
+interface CustomLinkProps extends LinkProps {
+  children: ReactNode;
+  className?: string;
+  href: string;
+  outgoing?: boolean;
+  basePath?: string;
 }
 
-export const Link = ({ children, className, href, component, }: LinkProps) => {
-  
-  return component ? (
-    cloneElement(component, {
-      href,
-      className,
-      children,
-    })
+export const Link = ({
+  children,
+  className,
+  href,
+  outgoing,
+  basePath,
+  ...props
+}: CustomLinkProps) => {
+  return !outgoing ? (
+    <NextLink className={className} href={href} {...props}>{`${basePath}${children}`}</NextLink>
   ) : (
-    <a className={className} href={href}>{children}</a>
-  )
-}
+    <a className={className} href={href} target={'_blank'} rel={'noreferrer'}>
+      {children}
+    </a>
+  );
+};

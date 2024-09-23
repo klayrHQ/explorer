@@ -1,7 +1,7 @@
 import { BannerFrame } from '../../atoms';
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
-import { Link } from 'web/src/components/link';
+import { Link } from '../../atoms';
 import {
   BlockDetailsBannerText,
   BlockDetailsBannerTextProps,
@@ -10,6 +10,7 @@ import {
 interface BlockDetailsBannerProps extends BlockDetailsBannerTextProps {
   image: string;
   height: number;
+  basePath?: string;
 }
 
 export const BlockDetailsBanner = ({
@@ -21,12 +22,13 @@ export const BlockDetailsBanner = ({
   reward,
   generatorAddress,
   numberOfTransactions,
+  basePath,
 }: BlockDetailsBannerProps) => {
   return (
     <BannerFrame image={image}>
       <div className="items-start justify-start flex flex-col">
         <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
-          <Link href="/blocks">
+          <Link basePath={basePath} href="/blocks">
             <Icon
               className="hover:-translate-x-0.5 cursor-pointer transition-transform"
               color="white"
