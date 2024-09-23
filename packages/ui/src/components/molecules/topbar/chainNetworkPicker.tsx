@@ -57,6 +57,9 @@ export const ChainNetworkPicker = ({
     const chain = chains.find((chain) => chain.chainId === chainId);
     if (chain) {
       chain.chainName === 'klayr-main' ? router.push('/') : router.push(`/${chain.chainName}`);
+      setSelectedChain(chain);
+
+      setIsModalOpen(false);
     }
   };
 
@@ -71,16 +74,17 @@ export const ChainNetworkPicker = ({
         setSelectedNetwork(network);
         setCurrentNetwork(network);
       }
+      console.log('network', network);
     }
   };
 
-  const handleSave = () => {
-    /*if (selectedChain && selectedNetwork) {
-      setCurrentChain(selectedChain);
-      setCurrentNetwork(selectedNetwork);
-    }*/
-    setIsModalOpen(false);
-  };
+  // const handleSave = () => {
+  //   if (selectedChain && selectedNetwork) {
+  //     setCurrentChain(selectedChain);
+  //     setCurrentNetwork(selectedNetwork);
+  //   }
+  //   setIsModalOpen(false);
+  // };
 
   const handleOpen = () => {
     setIsModalOpen(true);
@@ -116,16 +120,11 @@ export const ChainNetworkPicker = ({
           onClick={() => setIsModalOpen(true)}
         />
       </FlexGrid>
-      <CustomModal
-        onClose={handleClose}
-        onSave={handleSave}
-        open={isModalOpen}
-        title="Select environments"
-      >
+      <CustomModal onClose={handleClose} open={isModalOpen} title="Select environments">
         <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
           <FlexGrid
             alignItems="center"
-            className={'w-full'}
+            className={'w-full mb-8'}
             justify="between"
             mobileDirection="row"
           >
@@ -137,22 +136,6 @@ export const ChainNetworkPicker = ({
               defaultValue={currentChain?.chainId}
               onChange={(value) => handleChainChange(value)}
               options={chainOptions}
-            />
-          </FlexGrid>
-          <FlexGrid
-            alignItems={'center'}
-            className="w-full"
-            justify={'between'}
-            mobileDirection="row"
-          >
-            <Typography color="onBackgroundLow" variant="paragraph-md">
-              {'On network'}
-            </Typography>
-            <CustomSelect
-              classNameList="border-backgroundTertiary border-t-0"
-              defaultValue={currentNetwork?.networkId}
-              onChange={(value) => handleNetworkChange(value)}
-              options={networkOptions}
             />
           </FlexGrid>
         </FlexGrid>
