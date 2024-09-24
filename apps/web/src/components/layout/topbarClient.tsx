@@ -4,6 +4,7 @@ import { Icon, MenuItemProps, Typography } from '@repo/ui/atoms';
 import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
 import React from 'react';
+import {useFavouritesStore} from "../../store/favouritesStore.ts";
 
 interface TopbarClientProps {
   logo: {
@@ -31,6 +32,8 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   const callSearch = useSearchStore((state) => state.callSearch);
   const setSearchResults = useSearchStore((state) => state.setSearchResults);
   const searchResult = useSearchStore((state) => state.searchResults);
+
+  const newFavourite = useFavouritesStore((state) => state.newFavourite);
 
   const kpisObject = [
     {
@@ -75,6 +78,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
       kpis={kpisObject}
       logo={logo}
       mobileMenuItems={mobileMenuItems}
+      newFavourite={newFavourite}
       searchResults={searchResult}
       setSearchResults={setSearchResults}
     />
