@@ -146,7 +146,13 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
               label: 'To',
             },
             value: (
-              <Link href={transaction?.recipient?.name ? `/validators/${transaction?.recipient?.address}` : ``}>
+              <Link
+                href={
+                  transaction?.recipient?.name
+                    ? `/validators/${transaction?.recipient?.address}`
+                    : ``
+                }
+              >
                 <UserAccountCard
                   address={transaction?.recipient?.address ?? ''}
                   name={transaction?.recipient?.name}

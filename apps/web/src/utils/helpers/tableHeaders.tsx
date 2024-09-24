@@ -1,4 +1,4 @@
-import { SortingTitle, Typography } from '@repo/ui/atoms';
+import { SortingTitle, InfoTooltip, Typography, Icon } from '@repo/ui/atoms';
 import { TableCellType } from '@repo/ui/types';
 
 //TRANSACTIONS
@@ -6,48 +6,57 @@ export const transactionTableHead = (
   onSortChange: (column: string) => void,
   sortField: string,
   sortOrder: string,
-): TableCellType[] => [
-  {
-    children: 'Transaction ID',
-  },
-  {
-    children: (
-      <SortingTitle
-        onSortChange={onSortChange}
-        sortField={sortField}
-        sortOrder={sortOrder}
-        sortValue="height"
-        title="Height"
-      />
-    ),
-  },
-  {
-    children: (
-      <SortingTitle
-        onSortChange={onSortChange}
-        sortField={sortField}
-        sortOrder={sortOrder}
-        sortValue="timestamp"
-        title="Date"
-      />
-    ),
-  },
-  {
-    children: 'Type',
-  },
-  {
-    children: 'From',
-  },
-  {
-    children: 'To',
-  },
-  {
-    children: 'Amount',
-  },
-  {
-    children: 'Fee',
-  },
-];
+  transactionStatus?: boolean,
+): TableCellType[] => {
+  const headers: TableCellType[] = [
+    {
+      children: 'Transaction ID',
+    },
+    {
+      children: (
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="height"
+          title="Height"
+        />
+      ),
+    },
+    {
+      children: (
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="timestamp"
+          title="Date"
+        />
+      ),
+    },
+    {
+      children: 'Type',
+    },
+    {
+      children: 'From',
+    },
+    {
+      children: 'To',
+    },
+    {
+      children: 'Amount',
+    },
+    {
+      children: 'Fee',
+    },
+  ];
+
+  if (transactionStatus) {
+    headers.splice(4, 0, { children: 'Status' });
+  }
+
+  return headers;
+};
 
 export const eventsTableHead = [
   {
@@ -77,13 +86,20 @@ export const validatorsTableHead = (
   },
   {
     children: (
-      <SortingTitle
-        onSortChange={onSortChange}
-        sortField={sortField}
-        sortOrder={sortOrder}
-        sortValue="nextAllocatedTime"
-        title="Status"
-      />
+      <div className="flex gap-1 items-center">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="nextAllocatedTime"
+          title="Status"
+        />
+        <InfoTooltip
+          text={
+            ' The current status of the validator and, if it’s a generator, the remaining time until the next block is generated.'
+          }
+        />
+      </div>
     ),
   },
   {
@@ -102,7 +118,7 @@ export const validatorsTableHead = (
   },
   {
     children: (
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-1 items-center">
         <SortingTitle
           onSortChange={onSortChange}
           sortField={sortField}
@@ -110,20 +126,29 @@ export const validatorsTableHead = (
           sortValue="validatorWeight"
           title="Validator weight"
         />
+        <InfoTooltip
+          text={
+            'The total stake received by a validator, capped at a maximum of 10 times its own self-stake.'
+          }
+        />
       </div>
     ),
     className: 'items-end text-end whitespace-nowrap',
   },
   {
     children: (
-      <div className="flex justify-end">
-        {' '}
+      <div className="flex justify-end items-center gap-1">
         <SortingTitle
           onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
           sortValue="selfStake"
           title="Stake capacity"
+        />
+        <InfoTooltip
+          text={
+            'The percentage of the validator’s total stake relative to its maximum allowable weight.'
+          }
         />
       </div>
     ),
@@ -135,7 +160,7 @@ export const validatorsTableHead = (
   },
   {
     children: (
-      <div className="flex justify-end">
+      <div className="flex justify-end items-center gap-1">
         <SortingTitle
           onSortChange={onSortChange}
           sortField={sortField}
@@ -143,20 +168,31 @@ export const validatorsTableHead = (
           sortValue="commission"
           title="Commission"
         />
+        <InfoTooltip text={'The percentage of block rewards that a validator retains.'} />
       </div>
     ),
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: <div className="flex items-end justify-end">{'Total Rewards'}</div>,
+    children: (
+      <div className="flex items-center justify-end gap-1">
+        <Typography>{'Total Rewards'}</Typography>{' '}
+        <InfoTooltip text={'The total rewards the validator has received.'} />
+      </div>
+    ),
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: <div className="flex items-end justify-end flex-nowrap">{'Block Rewards'}</div>,
-    className: 'items-end text-end whitespace-nowrap',
-  },
-  {
-    children: <div className="flex items-end justify-end">{'Staking Rewards'}</div>,
+    children: (
+      <div className="flex items-end justify-end flex-nowrap">
+        <div className="flex items-center justify-end gap-1">
+          <Typography>{'Block Rewards'}</Typography>{' '}
+          <InfoTooltip
+            text={'The current dynamic block reward a validator receives for validating a block.'}
+          />
+        </div>
+      </div>
+    ),
     className: 'items-end text-end whitespace-nowrap',
   },
 ];
@@ -404,4 +440,89 @@ export const favouritesTableHead = [
   {
     children: 'Total stake',
   },*/
+];
+
+export const usersTableHead = (
+  onSortChange: (column: string) => void,
+  sortField: string,
+  sortOrder: string,
+): TableCellType[] => [
+  {
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="mock_data"
+        title="#"
+      />
+    ),
+  },
+  {
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="mock_data"
+        title="User"
+      />
+    ),
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="mock_data"
+          title="Total holding"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="mock_data"
+          title="Available amount"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="mock_data"
+          title="Locked amount"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex justify-end">
+        <SortingTitle
+          onSortChange={onSortChange}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          sortValue="mock_data"
+          title="Percentage of tokens"
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
 ];

@@ -6,7 +6,6 @@ import { TabButtons, FlexGrid, Currency, Typography, CopyIcon } from '@repo/ui/a
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
-import { useSorting } from '../../utils/hooks/useSorting.ts';
 import {
   transactionTableHead,
   validatorStakeIncomingTableHead,
@@ -28,8 +27,6 @@ import {
   MetaType,
   BlockDetailsType,
   StakeType,
-  StakersType,
-  StakesType,
 } from '../../utils/types';
 import {
   callGetBlocks,
@@ -57,6 +54,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [blocksMeta, setBlocksMeta] = useState<MetaType>({});
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
+  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const blocksPagination = usePagination(1, '10');
   const eventsPagination = usePagination();
@@ -65,7 +63,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     setLoading(true);
     callGetValidators({
-      address: id,
+      name: id,
     })
       .then((data) => setValidators(data.data[0]))
       .catch((error) => console.error(error))
@@ -165,7 +163,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
 
   const details = [
     createDetails(
-      'Validator ID',
+      'Validator address',
       <div className="flex flex-row gap-1.5 items-baseline ">
         <Typography variant={'paragraph-sm'}>{validator?.account.address}</Typography>
         <CopyIcon content={validator?.account.address || ''} size={'xxs'} />
@@ -281,8 +279,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     createDetails('Punishments', ' - '),
   ];
 
-  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
-
   const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
   const eventsRows = createValidatorEventsRow(events, loading);
   const incomingStake = createValidatorIncomingStakeRows(incomingStakes, loading);
@@ -361,7 +357,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={transactionTableHead(handleSort, sortField, sortOrder)}
             keyPrefix={'validator-tx'}
             onPerPageChange={transactionsPagination.handleLimitChange}
-            pagination={transactionsMeta?.total ? transactionsMeta?.total > parseInt(transactionsPagination.limit) : false}
+            pagination={
+              transactionsMeta?.total
+                ? transactionsMeta?.total > parseInt(transactionsPagination.limit)
+                : false
+            }
             rows={rows}
             setCurrentNumber={transactionsPagination.handlePageChange}
             totalPages={Math.ceil(
@@ -398,7 +398,9 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={validatorBlocksTableHead}
             keyPrefix={'validator-blocks'}
             onPerPageChange={blocksPagination.handleLimitChange}
-            pagination={blocksMeta?.total ? blocksMeta?.total > parseInt(blocksPagination.limit) : false}
+            pagination={
+              blocksMeta?.total ? blocksMeta?.total > parseInt(blocksPagination.limit) : false
+            }
             rows={validatorBlocksRows}
             setCurrentNumber={blocksPagination.handlePageChange}
             totalPages={Math.ceil((blocksMeta?.total ?? 0) / Number(blocksPagination.limit))}
@@ -423,7 +425,9 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
             headCols={validatorEventsTableHead}
             keyPrefix={'validator-blocks'}
             onPerPageChange={eventsPagination.handleLimitChange}
-            pagination={eventsMeta?.total ? eventsMeta?.total > parseInt(eventsPagination.limit) : false}
+            pagination={
+              eventsMeta?.total ? eventsMeta?.total > parseInt(eventsPagination.limit) : false
+            }
             rows={eventsRows}
             setCurrentNumber={eventsPagination.handlePageChange}
             totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(eventsPagination.limit))}
@@ -437,14 +441,14 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     <FlexGrid direction={'col'} gap={'5xl'}>
       <ValidatorBanner
         blockTime={2} // TODO: Implement
-        capacity={233} // TODO: Implement
+        capacity={stakeCapacity} // TODO: Implement
         image={BannerBG.src}
         notificationValue={validator?.rank || 0}
         selfStake={validator?.selfStake || 0}
         selfStakeSymbol="KLY"
         senderAddress={validator?.account.address || ''}
         senderName={validator?.account.name || ''}
-        stakes={1} // TODO: Implement
+        stakes={incomingStake.length} // TODO: Implement
         status={validator?.status || ''}
         value={validator?.totalStake}
         valueSymbol="KLY"

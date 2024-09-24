@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography } from '../base/typography';
 import { cva } from 'class-variance-authority';
 import { Icon } from '../images/icon.tsx';
@@ -23,6 +23,7 @@ export interface MenuItemProps {
   variant?: 'default' | 'small';
   square?: boolean;
   onClick?: () => void;
+  basePath?: string;
 }
 
 const menuItemStyles = cva(
@@ -69,15 +70,28 @@ export const MenuItem = ({
   variant = 'default',
   square = false,
   onClick,
+  basePath,
 }: MenuItemProps) => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
 
   const currentPath = usePathname();
 
-  const firstPartOfCurrentPath = currentPath.split('/')[1];
-  const firstPartOfHref = href?.split('/')[1];
-  const isActive = firstPartOfCurrentPath === firstPartOfHref;
+  // Remove the basePath from the current path
+  const pathWithoutBase = basePath ? currentPath.replace(basePath, '') : currentPath;
+
+  const firstPartOfPathWithoutBase = pathWithoutBase.split('/')[1];
+  const firstPartOfHref = basePath
+    ? href?.replace(basePath, '').split('/')[1]
+    : href?.split('/')[1];
+  const isActive = href
+    ? firstPartOfPathWithoutBase === firstPartOfHref ||
+      (!firstPartOfPathWithoutBase && !firstPartOfHref)
+    : false;
+
+  useEffect(() => {
+    console.log(pathWithoutBase, firstPartOfPathWithoutBase, firstPartOfHref, isActive);
+  }, [basePath]);
 
   const handleHover = (event: React.MouseEvent<HTMLElement>, open: boolean) => {
     if (open) {
@@ -134,7 +148,12 @@ export const MenuItem = ({
       >
         {menuItemInnerComponents}
         {subMenu && (
-          <SubMenu anchorElement={anchorElement} menuItems={subMenu} open={isSubMenuOpen} />
+          <SubMenu
+            anchorElement={anchorElement}
+            basePath={basePath}
+            menuItems={subMenu}
+            open={isSubMenuOpen}
+          />
         )}
       </Link>
     </li>
@@ -155,7 +174,12 @@ export const MenuItem = ({
     >
       {menuItemInnerComponents}
       {subMenu && (
-        <SubMenu anchorElement={anchorElement} menuItems={subMenu} open={isSubMenuOpen} />
+        <SubMenu
+          anchorElement={anchorElement}
+          basePath={basePath}
+          menuItems={subMenu}
+          open={isSubMenuOpen}
+        />
       )}
     </li>
   );

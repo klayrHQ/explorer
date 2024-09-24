@@ -19,125 +19,6 @@ export const currencies = [
 // todo get from settings when available
 export const currentCurrency = currencies[0];
 
-export const mobileMenuItems = [
-  {
-    label: 'Dashboard',
-    icon: 'BarChartSquare',
-    href: '/',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Transactions',
-    icon: 'SwitchHorizontal',
-    href: '/transactions',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Users',
-    icon: 'Users',
-  },
-  {
-    label: 'Validators',
-    icon: 'Flag',
-    href: '/validators',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Blocks',
-    icon: 'Cube',
-    href: '/blocks',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Tokens',
-    icon: 'CryptoCurrency',
-  },
-  {
-    label: 'Nodes',
-    icon: 'MarkerPin',
-  },
-  {
-    label: 'Stakes',
-    icon: 'LayersThree',
-    href: '/stakes',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Chains',
-    icon: 'Data',
-  },
-  {
-    label: 'NFTs',
-    icon: 'Image',
-  },
-];
-
-export const subMenu = [
-  {
-    label: 'Users',
-    icon: 'Users',
-    disabled: true,
-  },
-  {
-    label: 'Validators',
-    icon: 'Flag',
-    href: '/validators',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Blocks',
-    icon: 'Cube',
-    href: '/blocks',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Tokens',
-    icon: 'CryptoCurrency',
-    disabled: true,
-  },
-  {
-    label: 'Nodes',
-    icon: 'MarkerPin',
-    disabled: true,
-  },
-];
-
-export const menuItems = [
-  {
-    label: 'Dashboard',
-    icon: 'BarChartSquare',
-    href: '/',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Blockchain',
-    icon: 'DataFlow',
-    subMenu,
-  },
-  {
-    label: 'Transactions',
-    icon: 'SwitchHorizontal',
-    href: '/transactions',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Stakes',
-    icon: 'LayersThree',
-    href: '/stakes',
-    linkComponent: DefaultLinkComponent,
-  },
-  {
-    label: 'Chains',
-    icon: 'Data',
-    disabled: true,
-  },
-  {
-    label: 'NFTs',
-    icon: 'Image',
-    disabled: true,
-  },
-];
-
 export const kpisObject = [
   {
     keyValue: 'KLY: ',
@@ -249,7 +130,7 @@ export const performanceStats = [
 ];
 
 export const defaultChain = {
-  chainName: 'Klayr-main',
+  chainName: 'klayr-main',
   chainId: '00000000',
   logo: 'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g',
   networks: [

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, FlexGrid, Icon, Typography } from '../../atoms';
+import { FlexGrid, Icon, Typography } from '../../atoms';
 import { Popover } from '../../atoms/utilities/popover';
 import { IconButton } from '../../atoms';
 import { useState } from 'react';

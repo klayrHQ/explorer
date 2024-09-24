@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import * as React from 'react';
 import { cva } from 'class-variance-authority';
 import { Typography } from '../base/typography';
@@ -48,6 +48,7 @@ export interface CustomSelectProps {
   classNameList?: string;
   fontSize?: string;
   listBorder?: 'defaultBorder' | 'darkBorder';
+  value?: string;
 }
 
 export const CustomSelect = ({
@@ -61,6 +62,7 @@ export const CustomSelect = ({
   classNameList,
   listBorder,
   fontSize = 'paragraph-sm',
+  value,
 }: CustomSelectProps) => {
   const styles = selectStyles({ width });
   const [selectedValue, setSelectedValue] = useState<string | undefined>(defaultValue);
@@ -73,6 +75,10 @@ export const CustomSelect = ({
       onChange(value);
     }
   };
+
+  useEffect(() => {
+    value && handleSelect(value);
+  }, [value]);
 
   const renderSelectedValue = (value: string | undefined, options: Option[]) => {
     const selectedOption = value ? options.find((option) => option.value === value) : null;

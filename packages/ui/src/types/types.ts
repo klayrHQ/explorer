@@ -66,6 +66,10 @@ export type IconComponent =
   | 'Image'
   | 'LayersThree'
   | 'Cube'
+  | 'ErrorIcon'
+  | 'SuccessIcon'
+  | 'InfoIcon'
+  | 'WarningIcon'
   | 'Flag'
   | 'MarkerPin'
   | 'Users'
@@ -212,3 +216,20 @@ export interface NewsCardProps {
 }
 
 export type NewsCardPropsArray = NewsCardProps[];
+
+export interface UserBannerProps {
+  senderAddress?: string;
+  senderName?: string;
+  status: string;
+  incomingTransactions: string | number;
+  outgoingTransactions: string | number;
+  coinRate?: number;
+  value?: string | number;
+  valueSymbol?: string;
+  rank: number | string;
+  image: string;
+  isFavorite: boolean;
+  setFavorite: () => void;
+  removeFavorite: () => void;
+  
+}

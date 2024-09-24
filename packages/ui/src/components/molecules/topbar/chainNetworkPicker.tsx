@@ -7,7 +7,7 @@ import { StatusIcon } from '../../atoms';
 import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
 import { NetworkSelect } from './networkSelect.tsx';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType;
@@ -32,7 +32,11 @@ export const ChainNetworkPicker = ({
   const [selectedChain, setSelectedChain] = useState<ChainType | null>(currentChain);
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkType | null>(currentNetwork);
   const router = useRouter();
-  const explorerUrl = 'explorer.klayr.dev';
+  const pathName = usePathname();
+  const firstSubDir = pathName.split('/')[1];
+  const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
+  const chainSlug = !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
+  const explorerUrl = `explorer.klayr.dev${chainSlug}`;
 
   const chainOptions = chains?.map((chain) => ({
     label: chain.chainName,
@@ -52,7 +56,10 @@ export const ChainNetworkPicker = ({
   const handleChainChange = (chainId: string) => {
     const chain = chains.find((chain) => chain.chainId === chainId);
     if (chain) {
+      chain.chainName === 'klayr-main' ? router.push('/') : router.push(`/${chain.chainName}`);
       setSelectedChain(chain);
+
+      setIsModalOpen(false);
     }
   };
 
@@ -67,16 +74,17 @@ export const ChainNetworkPicker = ({
         setSelectedNetwork(network);
         setCurrentNetwork(network);
       }
+      console.log('network', network);
     }
   };
 
-  const handleSave = () => {
-    if (selectedChain && selectedNetwork) {
-      setCurrentChain(selectedChain);
-      setCurrentNetwork(selectedNetwork);
-    }
-    setIsModalOpen(false);
-  };
+  // const handleSave = () => {
+  //   if (selectedChain && selectedNetwork) {
+  //     setCurrentChain(selectedChain);
+  //     setCurrentNetwork(selectedNetwork);
+  //   }
+  //   setIsModalOpen(false);
+  // };
 
   const handleOpen = () => {
     setIsModalOpen(true);
@@ -112,16 +120,11 @@ export const ChainNetworkPicker = ({
           onClick={() => setIsModalOpen(true)}
         />
       </FlexGrid>
-      <CustomModal
-        onClose={handleClose}
-        onSave={handleSave}
-        open={isModalOpen}
-        title="Select environments"
-      >
+      <CustomModal onClose={handleClose} open={isModalOpen} title="Select environments">
         <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
           <FlexGrid
             alignItems="center"
-            className={'w-full'}
+            className={'w-full mb-8'}
             justify="between"
             mobileDirection="row"
           >
@@ -133,22 +136,6 @@ export const ChainNetworkPicker = ({
               defaultValue={currentChain?.chainId}
               onChange={(value) => handleChainChange(value)}
               options={chainOptions}
-            />
-          </FlexGrid>
-          <FlexGrid
-            alignItems={'center'}
-            className="w-full"
-            justify={'between'}
-            mobileDirection="row"
-          >
-            <Typography color="onBackgroundLow" variant="paragraph-md">
-              {'On network'}
-            </Typography>
-            <CustomSelect
-              classNameList="border-backgroundTertiary border-t-0"
-              defaultValue={currentNetwork?.networkId}
-              onChange={(value) => handleNetworkChange(value)}
-              options={networkOptions}
             />
           </FlexGrid>
         </FlexGrid>

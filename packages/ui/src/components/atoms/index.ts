@@ -45,4 +45,6 @@ export * from './utilities/modal.tsx';
 export * from './utilities/tooltip';
 export * from './utilities/popover';
 export * from './utilities/notFound/notFound.tsx';
+export * from './utilities/infoTooltip.tsx';
 export * from './input/copyIcon.tsx';
+export * from './notifications/snackbarBody.tsx';

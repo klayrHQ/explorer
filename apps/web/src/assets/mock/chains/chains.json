@@ -1,7 +1,7 @@
 [
   {
     "chainId": "00000000",
-    "chainName": "Klayr",
+    "chainName": "klayr-main",
     "logo": "https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g",
     "networks": [
       {
@@ -10,6 +10,17 @@
       },
       {
         "networkId": "01000000",
+        "networkName": "testnet"
+      }
+    ]
+  },
+  {
+    "chainId": "01371337",
+    "chainName": "pepe-world",
+    "logo": "https://pepe-world-fe.vercel.app/_next/image?url=%2Fassets%2Fpepe-coin.png&w=256&q=75",
+    "networks": [
+      {
+        "networkId": "01371337",
         "networkName": "testnet"
       }
     ]
