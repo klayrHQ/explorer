@@ -268,11 +268,14 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         coinRate={0.2}
         image={BannerBG.src}
         incomingTransactions={incomingStakes.length}
+        isFavorite={false}
         outgoingTransactions={outgoingStakes.length}
-        rank={ '0'}
-        senderAddress={user?.address}
-        senderName={user?.name}
-        status={'offline'}
+        rank={user?.rank || ''}
+        removeFavorite={() => {}}
+        senderAddress={user?.account.name}
+        senderName={user?.account.name}
+        setFavorite={() => {}}
+        status={user?.status || 'offline'}
         value={232}
         valueSymbol={'KLY'}
       /> */}
