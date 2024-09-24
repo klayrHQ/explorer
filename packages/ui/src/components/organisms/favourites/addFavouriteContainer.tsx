@@ -36,7 +36,7 @@ export const AddFavouriteContainer = ({
         setSearchResults={setSearchResults}
       />
       {selected && (
-        <FlexGrid className={'bg-backgroundPrimary py-3xl px-1.5xl rounded-xl w-full'} gap={'xl'}>
+        <FlexGrid className={'bg-backgroundPrimary py-3xl px-1.5xl rounded-xl w-full'} gap={'xl'} mobileDirection={'row'}>
           <div
             className={'rounded-full mt-2xs'}
             style={{

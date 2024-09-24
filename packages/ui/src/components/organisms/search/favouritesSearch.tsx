@@ -81,7 +81,7 @@ export const FavouritesSearch = ({
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <div className={cls(['w-full', className])}>
-        <div className="relative cursor-pointer">
+        <div className="relative cursor-pointer flex">
           <div className="absolute h-full flex items-center justify-start text-onBackgroundLow">
             <SearchLg className="ml-3.5 w-6 h-6" />
           </div>
