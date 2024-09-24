@@ -28,7 +28,7 @@ import {
   StatusBadge,
   StatusIcon,
   KeyValueComponent,
-  FlexGrid,
+  FlexGrid, IconButton,
 } from '@repo/ui/atoms';
 import Link from 'next/link';
 import React from 'react';
@@ -853,7 +853,7 @@ export const createBlockRows = (
     : getTableSkeletons(columnCount);
 };
 
-export const createFavouritesRows = (favourites: FavouriteType[], loading: boolean) => {
+export const createFavouritesRows = (favourites: FavouriteType[], loading: boolean, removeFavourite: (favourite: FavouriteType) => void) => {
   return !loading
     ? favourites?.map((fav) => {
         return {
@@ -864,6 +864,12 @@ export const createFavouritesRows = (favourites: FavouriteType[], loading: boole
                   <UserAccountCard address={fav.address} name={fav.name} />
                 </Link>
               ),
+            },
+            {
+              children: (
+                <IconButton className={'group-hover:block desktop:hidden'} icon={'Trash'} onClick={() => removeFavourite(fav)} variant={'quaternary'} />
+              ),
+              className: 'w-iconButtonWidth',
             },
           ],
         };

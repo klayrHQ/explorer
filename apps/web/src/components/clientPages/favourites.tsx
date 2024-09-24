@@ -15,6 +15,7 @@ export const Favourites = () => {
 
   const favourites = useFavouritesStore((state) => state.favourites);
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
+  const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
   const isFavourite = useFavouritesStore((state) => state.isFavourite);
   const setNewFavourite = useFavouritesStore((state) => state.setNewFavourite);
 
@@ -22,7 +23,7 @@ export const Favourites = () => {
   const setSearchResults = useSearchStore((state) => state.setSearchResults);
   const searchResult = useSearchStore((state) => state.searchResults);
 
-  const rows = createFavouritesRows(favourites, false);
+  const rows = createFavouritesRows(favourites, false, removeFavourite);
 
   const onAdd = () => {
     selected && addFavourite(selected);
