@@ -9,7 +9,7 @@ interface InfoTooltipProps {
 
 export const InfoTooltip = ({ text, size = '16px', placement = 'top' }: InfoTooltipProps) => {
   return (
-    <Tooltip placement={placement} text={text}>
+    <Tooltip hideMobile placement={placement} text={text}>
       <Icon color={'onBackgroundLow'} icon={'Info'} size={'small'} style={{ fontSize: size }} />
     </Tooltip>
   );

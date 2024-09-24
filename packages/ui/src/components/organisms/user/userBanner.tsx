@@ -19,6 +19,10 @@ export const UserBanner = ({
   rank,
   image,
   basePath,
+  isFavorite,
+  setFavorite,
+  removeFavorite,
+
   ...props
 }: UserBannerProps) => {
   return (
@@ -33,7 +37,13 @@ export const UserBanner = ({
             />
           </Link>
           <UserBannerHeader senderAddress={senderAddress} senderName={senderName} status={status} />
-          <UserBannerButtons className="desktop:hidden" validatorAddress={senderAddress || ''} />
+          <UserBannerButtons
+            className="desktop:hidden"
+            isFavorite={isFavorite}
+            removeFavorite={removeFavorite}
+            setFavorite={setFavorite}
+            validatorAddress={senderAddress || ''}
+          />
         </FlexGrid>
         <UserBannerText
           coinRate={coinRate}
@@ -46,6 +56,9 @@ export const UserBanner = ({
       </FlexGrid>
       <UserBannerButtons
         className="absolute top-8 right-32 hidden desktop:flex"
+        isFavorite={isFavorite}
+        removeFavorite={removeFavorite}
+        setFavorite={setFavorite}
         validatorAddress={senderAddress || ''}
       />
     </BannerFrame>

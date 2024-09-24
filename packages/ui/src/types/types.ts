@@ -226,4 +226,8 @@ export interface UserBannerProps {
   rank: number | string;
   image: string;
   basePath: string;
+  isFavorite: boolean;
+  setFavorite: () => void;
+  removeFavorite: () => void;
+
 }

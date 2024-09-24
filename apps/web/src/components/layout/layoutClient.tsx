@@ -23,7 +23,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
     const basePath = !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
-    setBasePath(basePath)
+    setBasePath(basePath);
   }, [chains]);
 
   const mobileMenuItems = [
@@ -141,12 +141,16 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       {/* todo remove infobanner when ready */}
       {showInfoBanner && (
         <InfoBanner>
-          <FlexGrid alignItems={'center'} gap={'xl'} justify={'between'} mobileDirection={'row'}>
+          <FlexGrid alignItems={'center'} gap={'1.5xl'} justify={'between'} mobileDirection={'row'}>
             <Typography color={'currentColor'} variant={'paragraph-sm'}>
-              {
-                'Please keep in mind; this is a development environment. Data may be inaccurate due to ongoing work. '
-              }
+              <span aria-label="warning" className="mr-3" role="img">
+                ⚠️
+              </span>
+              {`Urgent Notice:  This is a development environment, and `}
+              <span className="font-semibold">{`data is currently unreliable `}</span>
+              {`due to ongoing work. `}
             </Typography>
+
             {isMounted && window?.location.hostname === 'localhost' && (
               <IconButton
                 className={'desktop:absolute right-xl'}
