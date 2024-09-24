@@ -9,8 +9,8 @@ import { Modal } from '@mui/material';
 
 interface ModalProps {
   open: boolean;
-  onClose: () => void;
-  onSave: () => void;
+  onClose?: () => void;
+  onSave?: () => void;
   title: string;
   children: React.ReactNode;
 }
@@ -47,6 +47,8 @@ export const CustomModal = ({ open, onClose, onSave, title, children }: ModalPro
           />
         </FlexGrid>
         <div className="px-6 my-6">{children}</div>
+
+        {/*  Save and cancel buttons
         <FlexGrid alignItems="center" className="pb-6 px-6 desktop:mt-8 " gap="1" justify="end">
           <Button
             align="none"
@@ -56,7 +58,7 @@ export const CustomModal = ({ open, onClose, onSave, title, children }: ModalPro
             variant="transparent"
           />
           <Button align="none" className="w-full desktop:w-auto" label="Save" onClick={onSave} />
-        </FlexGrid>
+        </FlexGrid> */}
       </div>
     </Modal>
   );
