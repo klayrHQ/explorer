@@ -6,9 +6,10 @@ import React, {useEffect, useState} from 'react';
 import { FavouriteType } from '../../utils/types.ts';
 import { createFavouritesRows } from '../../utils/helpers/helper.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
-import { useFavouritesStore } from '../../store/favouritesStore.ts';
+import {useFavouritesStore, useInitializeFavourites} from '../../store/favouritesStore.ts';
 
 export const Favourites = () => {
+  useInitializeFavourites();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<FavouriteType | null>(null);
 
@@ -44,16 +45,16 @@ export const Favourites = () => {
       <FlexGrid className={'w-full'} justify={'between'} mobileDirection={'row'}>
         <SectionHeader count={rows.length} title={'Favourites'} />
         <Button align={'none'} label={'Add Favourite'} onClick={() => setOpenModal(true)} />
-        <Modal open={openModal} onClose={onCancel} title={'Add favourite user'}>
+        <Modal onClose={onCancel} open={openModal} title={'Add favourite user'}>
           <AddFavouriteContainer
             callSearch={callSearch}
-            searchResult={searchResult}
-            setSearchResults={setSearchResults}
-            selected={selected}
-            setSelected={setSelected}
+            isFavourite={selected ? isFavourite(selected) : false}
             onAdd={onAdd}
             onCancel={onCancel}
-            isFavourite={selected ? isFavourite(selected) : false}
+            searchResult={searchResult}
+            selected={selected}
+            setSearchResults={setSearchResults}
+            setSelected={setSelected}
           />
         </Modal>
       </FlexGrid>

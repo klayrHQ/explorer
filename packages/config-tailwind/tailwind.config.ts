@@ -266,9 +266,13 @@ const config: Omit<Config, 'content'> = {
     ...getKeyMap(colSpan, 'col'),
     ...getKeyMap(alignItems, 'items'),
     ...getKeyMap(numberList, 'translate-y'),
+    ...getKeyMap(spacing, 'translate-y'),
     ...getKeyMap(numberList, 'translate-x'),
+    ...getKeyMap(spacing, 'translate-x'),
     ...getKeyMap(numberList, '-translate-y'),
+    ...getKeyMap(spacing, '-translate-y'),
     ...getKeyMap(numberList, '-translate-x'),
+    ...getKeyMap(spacing, '-translate-x'),
     ...getKeyMap(textAlign, 'text'),
     ...getKeyMap(animate, 'animate'),
     ...getKeyOnlyMap(textOverflow),
@@ -309,6 +313,7 @@ const config: Omit<Config, 'content'> = {
   theme: {
     extend: {
       spacing,
+      translate: spacing,
       fontSize,
       screens,
       grayscale: percentages,

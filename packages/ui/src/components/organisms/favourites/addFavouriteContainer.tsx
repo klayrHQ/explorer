@@ -62,7 +62,7 @@ export const AddFavouriteContainer = ({
               </Typography>
               <Typography color={'onBackgroundLow'}>
                 {'User '}
-                <span className={'inline-flex translate-y-sm'}>
+                <span className={'inline-flex translate-y-sm mx-2xs'}>
                   <UserAccountCard
                     address={selected.address}
                     addressVariant={'paragraph-md'}
@@ -82,7 +82,7 @@ export const AddFavouriteContainer = ({
               </Typography>
               <Typography color={'onBackgroundLow'}>
                 {'You are about to add '}
-                <span className={'inline-flex translate-y-sm'}>
+                <span className={'inline-flex translate-y-sm mx-2xs'}>
                   <UserAccountCard
                     address={selected.address}
                     addressVariant={'paragraph-md'}

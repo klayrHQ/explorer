@@ -78,9 +78,9 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
       kpis={kpisObject}
       logo={logo}
       mobileMenuItems={mobileMenuItems}
+      newFavourite={newFavourite}
       searchResults={searchResult}
       setSearchResults={setSearchResults}
-      newFavourite={newFavourite}
     />
   );
 };
