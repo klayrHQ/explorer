@@ -459,15 +459,7 @@ export const usersTableHead = (
     ),
   },
   {
-    children: (
-      <SortingTitle
-        onSortChange={onSortChange}
-        sortField={sortField}
-        sortOrder={sortOrder}
-        sortValue="mock_data"
-        title="User"
-      />
-    ),
+    children: 'User',
   },
   {
     children: (
@@ -476,7 +468,7 @@ export const usersTableHead = (
           onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
-          sortValue="mock_data"
+          sortValue="totalBalance"
           title="Total holding"
         />
       </div>
@@ -490,7 +482,7 @@ export const usersTableHead = (
           onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
-          sortValue="mock_data"
+          sortValue="availableBalance"
           title="Available amount"
         />
       </div>
@@ -504,7 +496,7 @@ export const usersTableHead = (
           onSortChange={onSortChange}
           sortField={sortField}
           sortOrder={sortOrder}
-          sortValue="mock_data"
+          sortValue="lockedBalance"
           title="Locked amount"
         />
       </div>

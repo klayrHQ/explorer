@@ -227,32 +227,14 @@ export type StakersType = {
   meta: MetaTransaction;
 };
 
-export type UsersType = {
-  //mock_data 
+export type UserType = {
+  lockedBalance: string | number;
   address: string;
-  totalStake: string;
-  selfStake: string;
-  validatorWeight: string;
-  generatedBlocks: number;
-  rank: number;
-  blsKey: string;
-  proofOfPossession: string;
-  generatorKey: string;
-  lastGeneratedHeight: number;
-  isBanned: boolean;
-  status: string;
-  reportMisbehaviorHeights: string[];
-  punishmentPeriods: string;
-  consecutiveMissedBlocks: number;
-  commission: number;
-  lastCommissionIncreaseHeight: number;
-  sharingCoefficients: SharingCoefficientType[];
-  account: AccountType;
-  nextAllocatedTime?: number;
-  totalRewards: string;
-  blockReward: string;
-  totalSelfStakeRewards: string;
-  totalSharedRewards: string;
+  nonce: string;
+  publicKey: string;
+  name: string | null;
+  totalBalance: string;
+  availableBalance: string;
 }
 export interface FavouriteType {
   address: string;
