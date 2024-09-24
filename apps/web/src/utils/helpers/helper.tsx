@@ -873,12 +873,12 @@ export const createFavouritesRows = (favourites: FavouriteType[], loading: boole
 
 export const createUsersRows = (users: UserType[], loading: boolean) => {
   return !loading
-    ? users?.map((user) => {
+    ? users?.map((user, index) => {
         return {
           cells: [
             {
               //mock_data
-              children: <Typography>{'0'}</Typography>,
+              children: <Typography>{index + 1}</Typography>,
             },
             {
               //mock_data

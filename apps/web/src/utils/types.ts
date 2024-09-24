@@ -236,6 +236,11 @@ export type UserType = {
   totalBalance: string;
   availableBalance: string;
 }
+
+export type UsersType = {
+  users: UserType[];
+};
+
 export interface FavouriteType {
   address: string;
   name: string;

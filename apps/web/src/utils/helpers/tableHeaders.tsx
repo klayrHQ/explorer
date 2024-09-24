@@ -448,73 +448,25 @@ export const usersTableHead = (
   sortOrder: string,
 ): TableCellType[] => [
   {
-    children: (
-      <SortingTitle
-        onSortChange={onSortChange}
-        sortField={sortField}
-        sortOrder={sortOrder}
-        sortValue="mock_data"
-        title="#"
-      />
-    ),
+    children: '#',
   },
   {
     children: 'User',
   },
   {
-    children: (
-      <div className="flex justify-end">
-        <SortingTitle
-          onSortChange={onSortChange}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          sortValue="totalBalance"
-          title="Total holding"
-        />
-      </div>
-    ),
+    children: 'Total holding',
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: (
-      <div className="flex justify-end">
-        <SortingTitle
-          onSortChange={onSortChange}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          sortValue="availableBalance"
-          title="Available amount"
-        />
-      </div>
-    ),
+    children: 'Available amount',
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: (
-      <div className="flex justify-end">
-        <SortingTitle
-          onSortChange={onSortChange}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          sortValue="lockedBalance"
-          title="Locked amount"
-        />
-      </div>
-    ),
+    children: 'Locked amount',
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: (
-      <div className="flex justify-end">
-        <SortingTitle
-          onSortChange={onSortChange}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          sortValue="mock_data"
-          title="Percentage of tokens"
-        />
-      </div>
-    ),
+    children: 'Percentage of tokens',
     className: 'items-end text-end whitespace-nowrap',
   },
 ];

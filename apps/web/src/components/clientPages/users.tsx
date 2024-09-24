@@ -23,24 +23,17 @@ export const Users = () => {
     handleSortChange,
   } = usePaginationAndSorting({
     fetchFunction: callGetUsers,
-    defaultLimit: searchParams.get('limit') || '10',
-    changeURL: true,
+    defaultLimit: searchParams.get('limit') || '100',
   });
   const rows = createUsersRows(users, loading);
 
   return (
-    <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
-      <SectionHeader count={1234} title={'Users'} />
+    <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto mb-12" direction={'col'}>
+      <SectionHeader count={100} title={'Top holders'} />
       <TableContainer
-        currentNumber={pageNumber}
-        defaultValue={limit}
         headCols={usersTableHead(handleSortChange, sortField, sortOrder)}
         keyPrefix={'transactions'}
-        onPerPageChange={handleLimitChange}
-        pagination
         rows={rows}
-        setCurrentNumber={handlePageChange}
-        totalPages={1234 / Number(limit)}
       />
     </FlexGrid>
   );
