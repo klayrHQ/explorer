@@ -24,5 +24,17 @@
         "networkName": "testnet"
       }
     ]
+  }, 
+  {
+    "chainId": "01555555",
+    "chainName": "swaptoshi",
+    "logo": "https://avatars.githubusercontent.com/u/150566667?v=4",
+    "networks": [
+      {
+        "networkId": "01555555",
+        "networkName": "testnet"
+      }
+    ]
   }
+
 ]
