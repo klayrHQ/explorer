@@ -8,9 +8,9 @@ import {
 } from '../api/types';
 import { SkeletonComponent } from '@repo/ui/atoms';
 
-const FIXED_POINT = 10 ** 8
-const KLAYR_MAX_DECIMAL_POINTS = 8
-const MAX_UINT64 = BigInt("18446744073709551615") // BigInt((2 ** 64) - 1) - 1
+const FIXED_POINT = 10 ** 8;
+const KLAYR_MAX_DECIMAL_POINTS = 8;
+const MAX_UINT64 = BigInt('18446744073709551615'); // BigInt((2 ** 64) - 1) - 1
 
 enum TransactionCommands {
   POS_STAKE = 'pos:stake',
@@ -102,4 +102,8 @@ export const convertKLYToBeddows = (lskAmount?: string): string => {
   }
 
   return beddowsAmountBigInt.toString();
+};
+
+export const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
+  return { label: { label }, value, mobileWidth };
 };
