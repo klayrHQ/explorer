@@ -526,3 +526,27 @@ export const usersTableHead = (
     className: 'items-end text-end whitespace-nowrap',
   },
 ];
+
+export const chainsTableHead = [
+  {
+    children: 'Name',
+  },
+  {
+    children: 'Chain ID',
+  },
+  {
+    children: 'Status',
+  },
+  {
+    children: 'Created by',
+  },
+  {
+    children: 'Escrow Balance',
+  },
+  {
+    children: 'Last Certificate ',
+  },
+  {
+    children: 'Last Updated',
+  },
+];
