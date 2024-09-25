@@ -7,6 +7,7 @@ import {
   StakeType,
   TransactionType,
   ValidatorType,
+  NodeInfoType,
 } from '../types.ts';
 import {
   dayjs,
@@ -28,7 +29,9 @@ import {
   StatusBadge,
   StatusIcon,
   KeyValueComponent,
-  FlexGrid, IconButton,
+  FlexGrid,
+  IconButton,
+  ImageContainer,
 } from '@repo/ui/atoms';
 import { Link } from '@repo/ui/atoms';
 import React from 'react';
@@ -43,9 +46,10 @@ import {
   transactionTableHead,
   blockTableHead,
   stakesOverviewTableHead,
+  usersTableHead,
   favouritesTableHead,
 } from './tableHeaders.tsx';
-import { DataType } from '@repo/ui/types';
+import { ChainType, DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
 
 export const createTransactionRows = (
@@ -899,7 +903,12 @@ export const createFavouritesRows = (
             },
             {
               children: (
-                <IconButton className={'group-hover:block desktop:hidden'} icon={'Trash'} onClick={() => removeFavourite(fav)} variant={'quaternary'} />
+                <IconButton
+                  className={'group-hover:block desktop:hidden'}
+                  icon={'Trash'}
+                  onClick={() => removeFavourite(fav)}
+                  variant={'quaternary'}
+                />
               ),
               className: 'w-iconButtonWidth',
             },
@@ -1007,4 +1016,43 @@ export const createUsersRows = (users: UserType[], loading: boolean, basePath: s
         };
       })
     : getTableSkeletons(6);
+};
+
+export const createChainRows = (chains: ChainType[], loading: boolean) => {
+  return !loading
+    ? chains?.map((chain) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Link href={`/chains/${chain.chainId}`}>
+                  <div className="flex items-center gap-2">
+                    <ImageContainer alt={chain.chainName} src={chain.logo} variant={'avatar'} />
+                    <Typography>{chain.chainName}</Typography>
+                  </div>
+                </Link>
+              ),
+            },
+            {
+              children: <Typography>{chain.chainId}</Typography>,
+            },
+            {
+              children: <StatusBadge status={'Active'} />,
+            },
+            {
+              children: <Typography>{'Created by'}</Typography>,
+            },
+            {
+              children: <Typography>{'Escrow Balance'}</Typography>,
+            },
+            {
+              children: <Typography>{'Last Certificate'}</Typography>,
+            },
+            {
+              children: <Typography>{'Last Updated'}</Typography>,
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(7);
 };
