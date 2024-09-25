@@ -3,7 +3,7 @@ import {
   EventsType,
   FavouriteType,
   StakesCalculatorPeriodType,
-  UsersType,
+  UserType,
   StakeType,
   TransactionType,
   ValidatorType,
@@ -877,25 +877,25 @@ export const createFavouritesRows = (favourites: FavouriteType[], loading: boole
     : getTableSkeletons(favouritesTableHead.length);
 };
 
-export const createUsersRows = (users: UsersType[], loading: boolean) => {
+export const createUsersRows = (users: UserType[], loading: boolean) => {
   return !loading
-    ? users?.map((user) => {
+    ? users?.map((user, index) => {
         return {
           cells: [
             {
               //mock_data
-              children: <Typography link>{user.rank}</Typography>,
+              children: <Typography>{index + 1}</Typography>,
             },
             {
               //mock_data
               children: (
-                <Link href={`/users/${user?.account.address}`}>
-                  <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
+                <Link href={`/users/${user?.address}`}>
+                  <div className={` relative inline-flex items-center gap-1`}>
                     <UserAccountCard
-                      address={user?.account.address}
+                      address={user?.address}
                       addressColor="onBackgroundLow"
                       addressVariant="caption"
-                      name={user?.account.name}
+                      name={user?.name ?? undefined}
                       nameColor="onBackgroundMedium"
                       nameFontWeight="semibold"
                       nameVariant="paragraph-sm"
@@ -909,7 +909,20 @@ export const createUsersRows = (users: UsersType[], loading: boolean) => {
               children: (
                 <div className="flex flex-col items-end">
                   <Currency
-                    amount={user?.validatorWeight}
+                    amount={user?.totalBalance}
+                    className="font-semibold"
+                    decimals={0}
+                    symbol={'KLY'}
+                  />
+                </div>
+              ),
+            },
+            {
+              //mock_data
+              children: (
+                <div className="flex flex-col items-end">
+                  <Currency
+                    amount={user?.availableBalance}
                     className="font-semibold"
                     decimals={0}
                     symbol={'KLY'}
@@ -917,8 +930,8 @@ export const createUsersRows = (users: UsersType[], loading: boolean) => {
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
                       (
-                        (Number(user?.validatorWeight || 0) / Number(user?.selfStake || 1)) *
-                        10
+                        (Number(user?.availableBalance || 0) / Number(user?.totalBalance || 1)) *
+                        100
                       ).toFixed(2),
                     )}
                     %
@@ -931,7 +944,7 @@ export const createUsersRows = (users: UsersType[], loading: boolean) => {
               children: (
                 <div className="flex flex-col items-end">
                   <Currency
-                    amount={user?.validatorWeight}
+                    amount={user?.lockedBalance}
                     className="font-semibold"
                     decimals={0}
                     symbol={'KLY'}
@@ -939,30 +952,8 @@ export const createUsersRows = (users: UsersType[], loading: boolean) => {
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
                       (
-                        (Number(user?.validatorWeight || 0) / Number(user?.selfStake || 1)) *
-                        10
-                      ).toFixed(2),
-                    )}
-                    %
-                  </Typography>
-                </div>
-              ),
-            },
-            {
-              //mock_data
-              children: (
-                <div className="flex flex-col items-end">
-                  <Currency
-                    amount={user?.validatorWeight}
-                    className="font-semibold"
-                    decimals={0}
-                    symbol={'KLY'}
-                  />
-                  <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {Number(
-                      (
-                        (Number(user?.validatorWeight || 0) / Number(user?.selfStake || 1)) *
-                        10
+                        (Number(user?.lockedBalance || 0) / Number(user?.totalBalance || 1)) *
+                        100
                       ).toFixed(2),
                     )}
                     %
@@ -975,7 +966,7 @@ export const createUsersRows = (users: UsersType[], loading: boolean) => {
               children: (
                 <div className="flex flex-col items-end">
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {'77.77%'}
+                    {'0%'}
                   </Typography>
                 </div>
               ),
