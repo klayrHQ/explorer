@@ -12,7 +12,6 @@ export const Chains = () => {
   const [loading, setLoading] = useState(false);
   const totalChains = chains?.length || 0;
   const rows = createChainRows(chains || [], loading);
-  console.log(nodeInfo);
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
