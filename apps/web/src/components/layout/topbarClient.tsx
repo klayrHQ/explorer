@@ -5,6 +5,7 @@ import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
 import React from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import {useFavouritesStore} from "../../store/favouritesStore.ts";
 
 interface TopbarClientProps {
   logo: {
@@ -33,6 +34,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   const setSearchResults = useSearchStore((state) => state.setSearchResults);
   const searchResult = useSearchStore((state) => state.searchResults);
 
+  const newFavourite = useFavouritesStore((state) => state.newFavourite);
   const basePath = useBasePath();
 
   const kpisObject = [
@@ -84,6 +86,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
       kpis={kpisObject}
       logo={logo}
       mobileMenuItems={mobileMenuItems}
+      newFavourite={newFavourite}
       searchResults={searchResult}
       setSearchResults={setSearchResults}
     />

@@ -8,6 +8,10 @@ import { CrossClose } from '../../../assets/icons/general/x-close.tsx';
 import { Link } from '../../atoms';
 import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
+import {
+  SearchQueryParams,
+  useSearchStore,
+} from '../../../../../../apps/web/src/store/searchStore.ts';
 import { usePathname } from 'next/navigation';
 import { SearchResultsType } from '@repo/ui/types';
 
@@ -15,7 +19,7 @@ interface SearchProps {
   className?: string;
   searchResult?: SearchResultsType;
   setSearchResults?: (results: SearchResultsType) => void;
-  callSearch?: (params: { search: string }) => Promise<void>;
+  callSearch?: (params: SearchQueryParams) => Promise<SearchResultsType>;
   basePath?: string;
 }
 

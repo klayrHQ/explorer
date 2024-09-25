@@ -2,7 +2,7 @@
 
 import { FlexGrid, TabButtons, Typography, CopyIcon } from '@repo/ui/atoms';
 import { DetailsSection, SectionHeader, TableContainer, UserBanner } from '@repo/ui/organisms';
-import { UsersType, TransactionType } from '../../utils/types.ts';
+import { UserType, UsersType, TransactionType, ValidatorType } from '../../utils/types.ts';
 import { useState, useEffect } from 'react';
 import { DataType } from '@repo/ui/types';
 import BannerBG from '../../assets/images/bannerBG.png';
@@ -12,6 +12,7 @@ import {
   callGetEvents,
   callGetStakes,
   callGetStakers,
+  callGetUsers,
 } from '../../utils/api/apiCalls.tsx';
 import {
   transactionTableHead,
@@ -28,13 +29,14 @@ import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const UserDetails = ({ params }: { params: { id: string } }) => {
-  const [user, setUser] = useState<UsersType | undefined>(undefined);
+  const [user, setUser] = useState<UserType>();
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [transactionsMeta, setTransactionsMeta] = useState<any>({});
   const [events, setEvents] = useState<any[]>([]);
   const [eventsMeta, setEventsMeta] = useState<any>({});
   const [outgoingStakes, setOutgoingStakes] = useState<any[]>([]);
   const [incomingStakes, setIncomingStakes] = useState<any[]>([]);
+  const [validator, setValidator] = useState<ValidatorType>();
   const [loading, setLoading] = useState<boolean>(true);
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
@@ -46,16 +48,19 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     setLoading(true);
-    callGetValidators({
+    callGetUsers({
       address: params.id,
     })
-      .then((data) => setUser(data.data[0]))
+      .then((data) => {
+        const userData = Array.isArray(data?.data) && data.data.length > 0 ? data.data[0] : null;
+        setUser(userData);
+      })
       .catch((error) => console.error('Error fetching validator:', error))
       .finally(() => setLoading(false));
   }, [params.id]);
 
   useEffect(() => {
-    if (user && user.account && user.account.address) {
+    if (user && user.address) {
       setLoading(true);
 
       const addSortingParams = (params: any) => {
@@ -68,7 +73,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
       const transactionsPromise = fetchPaginatedData(
         callGetTransactions,
         addSortingParams({
-          address: user.account.address,
+          address: user.address,
         }),
         transactionsPagination.pageNumber,
         transactionsPagination.limit,
@@ -79,8 +84,16 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         })
         .catch((error) => console.error('Error fetching transactions:', error));
 
+      const validatorPromise = callGetValidators({
+        address: user.address,
+      })
+        .then((data) => {
+          setValidator(data.data[0]);
+        })
+        .catch((error) => console.error('Error fetching validator:', error));
+
       const outgoingStakesPromise = callGetStakes({
-        address: user.account.address,
+        address: user.address,
       })
         .then((data) => {
           setOutgoingStakes(data.data.stakes);
@@ -88,7 +101,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         .catch((error) => console.error('Error fetching outgoing stakes:', error));
 
       const incomingStakesPromise = callGetStakers({
-        address: user.account.address,
+        address: user.address,
       })
         .then((data) => {
           setIncomingStakes(data.data.stakers);
@@ -97,7 +110,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
 
       const eventsPromise = fetchPaginatedData(
         callGetEvents,
-        { senderAddress: user.account.address },
+        { senderAddress: user.address },
         eventsPagination.pageNumber,
         eventsPagination.limit,
       )
@@ -110,6 +123,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
       Promise.all([
         transactionsPromise,
         outgoingStakesPromise,
+        validatorPromise,
         eventsPromise,
         incomingStakesPromise,
       ]).finally(() => setLoading(false));
@@ -138,15 +152,15 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
     createDetails(
       'Validator address',
       <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography variant={'paragraph-sm'}>{user?.account.address}</Typography>
-        <CopyIcon content={user?.account.address || ''} size={'xxs'} />
+        <Typography variant={'paragraph-sm'}>{user?.address}</Typography>
+        <CopyIcon content={user?.address || ''} size={'xxs'} />
       </div>,
     ),
     createDetails(
       'Public Key',
       <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography variant={'paragraph-sm'}>{user?.account.publicKey}</Typography>
-        <CopyIcon content={user?.account.publicKey || ''} size={'xxs'} />
+        <Typography variant={'paragraph-sm'}>{user?.publicKey}</Typography>
+        <CopyIcon content={user?.publicKey || ''} size={'xxs'} />
       </div>,
       'half',
     ),
@@ -161,7 +175,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
     true,
   );
   const eventsRows = createValidatorEventsRow(events, loading);
-  const outgoingStake = createValidatorOutgoingStakeRows(outgoingStakes, user, loading, basePath);
+  const outgoingStake = createValidatorOutgoingStakeRows(outgoingStakes, validator, loading, basePath);
 
   const tabs = [
     {
@@ -180,7 +194,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
             count={transactionsMeta?.total}
-            title={`${user?.account.name} transactions`}
+            title={`${user?.name} transactions`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
@@ -211,7 +225,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
             count={outgoingStakes.length}
-            title={`${user?.account.name}'s stakes`}
+            title={`${user?.name}'s stakes`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
@@ -230,7 +244,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
             count={eventsMeta?.total}
-            title={`${user?.account.name}'s events`}
+            title={`${user?.name}'s events`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
@@ -253,8 +267,8 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
 
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
-      <UserBanner
-        basePath={basePath}
+      {/* <UserBanner
+      basePath={basePath}
         coinRate={0.2}
         image={BannerBG.src}
         incomingTransactions={incomingStakes.length}
@@ -268,7 +282,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         status={user?.status || 'offline'}
         value={232}
         valueSymbol={'KLY'}
-      />
+      /> */}
       <div className="desktop:hidden w-full">
         <TabButtons padding="6" showLabel={false} tabs={tabs} width="full" />
       </div>

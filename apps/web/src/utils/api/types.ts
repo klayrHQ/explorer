@@ -49,3 +49,10 @@ export interface StakersQueryParams {
   publicKey?: string;
   name?: number;
 }
+
+export interface UsersQueryParams {
+  address?: string;
+  sort? : string;
+  limit?: string;
+  offset?: number;
+}

@@ -44,6 +44,7 @@ import { ArrowDown } from './arrows/arrow-down.tsx';
 import { ArrowUp } from './arrows/arrow-up.tsx';
 import { Overview } from './general/overview.tsx';
 import { Calculator } from './general/calculator.tsx';
+import { AlertCircle } from "./feedback/alert-circle.tsx";
 import { WarningIcon } from './snackbar/warningIcon.tsx';
 import { ErrorIcon } from './snackbar/errorIcon.tsx';
 import { SuccessIcon } from './snackbar/successIcon.tsx';
@@ -96,6 +97,7 @@ export const icons = {
   ArrowUp,
   Overview,
   Calculator,
+  AlertCircle,
   WarningIcon,
   ErrorIcon,
   SuccessIcon,

@@ -3,7 +3,7 @@ import {
   EventsType,
   FavouriteType,
   StakesCalculatorPeriodType,
-  UsersType,
+  UserType,
   StakeType,
   TransactionType,
   ValidatorType,
@@ -28,6 +28,7 @@ import {
   StatusBadge,
   StatusIcon,
   KeyValueComponent,
+  FlexGrid, IconButton,
 } from '@repo/ui/atoms';
 import { Link } from '@repo/ui/atoms';
 import React from 'react';
@@ -883,6 +884,7 @@ export const createFavouritesRows = (
   favourites: FavouriteType[],
   loading: boolean,
   basePath: string,
+  removeFavourite: (favourite: FavouriteType) => void
 ) => {
   return !loading
     ? favourites?.map((fav) => {
@@ -890,10 +892,16 @@ export const createFavouritesRows = (
           cells: [
             {
               children: (
-                <Link basePath={basePath} href={`/blocks/${fav.address}`}>
+                <Link basePath={basePath} href={`/validators/${fav.address}`}>
                   <UserAccountCard address={fav.address} name={fav.name} />
                 </Link>
               ),
+            },
+            {
+              children: (
+                <IconButton className={'group-hover:block desktop:hidden'} icon={'Trash'} onClick={() => removeFavourite(fav)} variant={'quaternary'} />
+              ),
+              className: 'w-iconButtonWidth',
             },
           ],
         };
@@ -901,25 +909,25 @@ export const createFavouritesRows = (
     : getTableSkeletons(favouritesTableHead.length);
 };
 
-export const createUsersRows = (users: UsersType[], loading: boolean, basePath: string) => {
+export const createUsersRows = (users: UserType[], loading: boolean, basePath: string) => {
   return !loading
-    ? users?.map((user) => {
+    ? users?.map((user, index) => {
         return {
           cells: [
             {
               //mock_data
-              children: <Typography link>{user.rank}</Typography>,
+              children: <Typography>{index + 1}</Typography>,
             },
             {
               //mock_data
               children: (
-                <Link basePath={basePath} href={`/users/${user?.account.address}`}>
-                  <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
+                <Link basePath={basePath} href={`/users/${user?.address}`}>
+                  <div className={` relative inline-flex items-center gap-1`}>
                     <UserAccountCard
-                      address={user?.account.address}
+                      address={user?.address}
                       addressColor="onBackgroundLow"
                       addressVariant="caption"
-                      name={user?.account.name}
+                      name={user?.name ?? undefined}
                       nameColor="onBackgroundMedium"
                       nameFontWeight="semibold"
                       nameVariant="paragraph-sm"
@@ -933,7 +941,20 @@ export const createUsersRows = (users: UsersType[], loading: boolean, basePath: 
               children: (
                 <div className="flex flex-col items-end">
                   <Currency
-                    amount={user?.validatorWeight}
+                    amount={user?.totalBalance}
+                    className="font-semibold"
+                    decimals={0}
+                    symbol={'KLY'}
+                  />
+                </div>
+              ),
+            },
+            {
+              //mock_data
+              children: (
+                <div className="flex flex-col items-end">
+                  <Currency
+                    amount={user?.availableBalance}
                     className="font-semibold"
                     decimals={0}
                     symbol={'KLY'}
@@ -941,8 +962,8 @@ export const createUsersRows = (users: UsersType[], loading: boolean, basePath: 
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
                       (
-                        (Number(user?.validatorWeight || 0) / Number(user?.selfStake || 1)) *
-                        10
+                        (Number(user?.availableBalance || 0) / Number(user?.totalBalance || 1)) *
+                        100
                       ).toFixed(2),
                     )}
                     %
@@ -955,7 +976,7 @@ export const createUsersRows = (users: UsersType[], loading: boolean, basePath: 
               children: (
                 <div className="flex flex-col items-end">
                   <Currency
-                    amount={user?.validatorWeight}
+                    amount={user?.lockedBalance}
                     className="font-semibold"
                     decimals={0}
                     symbol={'KLY'}
@@ -963,30 +984,8 @@ export const createUsersRows = (users: UsersType[], loading: boolean, basePath: 
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
                       (
-                        (Number(user?.validatorWeight || 0) / Number(user?.selfStake || 1)) *
-                        10
-                      ).toFixed(2),
-                    )}
-                    %
-                  </Typography>
-                </div>
-              ),
-            },
-            {
-              //mock_data
-              children: (
-                <div className="flex flex-col items-end">
-                  <Currency
-                    amount={user?.validatorWeight}
-                    className="font-semibold"
-                    decimals={0}
-                    symbol={'KLY'}
-                  />
-                  <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {Number(
-                      (
-                        (Number(user?.validatorWeight || 0) / Number(user?.selfStake || 1)) *
-                        10
+                        (Number(user?.lockedBalance || 0) / Number(user?.totalBalance || 1)) *
+                        100
                       ).toFixed(2),
                     )}
                     %
@@ -999,7 +998,7 @@ export const createUsersRows = (users: UsersType[], loading: boolean, basePath: 
               children: (
                 <div className="flex flex-col items-end">
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {'77.77%'}
+                    {'0%'}
                   </Typography>
                 </div>
               ),

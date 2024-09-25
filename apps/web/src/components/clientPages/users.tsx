@@ -3,7 +3,7 @@ import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useSearchParams } from 'next/navigation';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
-import { callGetValidators } from '../../utils/api/apiCalls.tsx';
+import { callGetUsers } from '../../utils/api/apiCalls.tsx';
 import { usersTableHead } from '../../utils/helpers/tableHeaders';
 import { createUsersRows } from '../../utils/helpers/helper.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
@@ -24,26 +24,18 @@ export const Users = () => {
     handleLimitChange,
     handleSortChange,
   } = usePaginationAndSorting({
-    //mock_data
-    fetchFunction: callGetValidators,
-    defaultLimit: searchParams.get('limit') || '10',
-    changeURL: true,
+    fetchFunction: callGetUsers,
+    defaultLimit: searchParams.get('limit') || '100',
   });
   const rows = createUsersRows(users, loading, basePath);
 
   return (
-    <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
-      <SectionHeader count={totalUsers} title={'Users'} />
+    <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto mb-12" direction={'col'}>
+      <SectionHeader count={100} title={'Top holders'} />
       <TableContainer
-        currentNumber={pageNumber}
-        defaultValue={limit}
         headCols={usersTableHead(handleSortChange, sortField, sortOrder)}
         keyPrefix={'transactions'}
-        onPerPageChange={handleLimitChange}
-        pagination
         rows={rows}
-        setCurrentNumber={handlePageChange}
-        totalPages={totalUsers / Number(limit)}
       />
     </FlexGrid>
   );
