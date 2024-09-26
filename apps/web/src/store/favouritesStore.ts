@@ -42,6 +42,7 @@ export const useFavouritesStore = create<FavouritesStore>((set, get) => ({
     set((state) => {
       const updatedFavourites = state.favourites.filter((f) => f.address !== favourite.address);
       safeLocalStorage.setItem('favourites', JSON.stringify(updatedFavourites));
+      set({ newFavourite: true });
       return { favourites: updatedFavourites };
     }),
   newFavourite: false,

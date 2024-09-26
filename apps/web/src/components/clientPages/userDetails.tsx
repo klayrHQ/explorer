@@ -27,8 +27,12 @@ import {
 import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { useFavouritesStore } from '../../store/favouritesStore.ts';
+import { useInitializeFavourites } from '../../store/favouritesStore.ts';
 
 export const UserDetails = ({ params }: { params: { id: string } }) => {
+  useInitializeFavourites();
+
   const [user, setUser] = useState<UserType>();
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [transactionsMeta, setTransactionsMeta] = useState<any>({});
@@ -41,6 +45,17 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
+
+  const addFavourite = useFavouritesStore((state) => state.addFavourite);
+  const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
+  const isFavourite = useFavouritesStore((state) => state.isFavourite);
+  const [isFav, setIsFav] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (user?.address) {
+      setIsFav(isFavourite({ address: user.address }));
+    }
+  }, [user?.address, isFavourite]);
 
   const transactionsPagination = usePagination();
   const eventsPagination = usePagination();
@@ -175,7 +190,12 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
     true,
   );
   const eventsRows = createValidatorEventsRow(events, loading);
-  const outgoingStake = createValidatorOutgoingStakeRows(outgoingStakes, validator, loading, basePath);
+  const outgoingStake = createValidatorOutgoingStakeRows(
+    outgoingStakes,
+    validator,
+    loading,
+    basePath,
+  );
 
   const tabs = [
     {
@@ -267,22 +287,32 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
 
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
-      {/* <UserBanner
-      basePath={basePath}
+      <UserBanner
+        basePath={basePath}
         coinRate={0.2}
         image={BannerBG.src}
         incomingTransactions={incomingStakes.length}
-        isFavorite={false}
+        isFavorite={isFavourite({ address: user?.address ?? '' })}
         outgoingTransactions={outgoingStakes.length}
-        rank={user?.rank || ''}
-        removeFavorite={() => {}}
-        senderAddress={user?.account.name}
-        senderName={user?.account.name}
-        setFavorite={() => {}}
-        status={user?.status || 'offline'}
+        rank={''}
+        removeFavorite={() => {
+          if (user?.address) {
+            removeFavourite({ address: user.address });
+            setIsFav(false);
+          }
+        }}
+        senderAddress={user?.address ?? undefined}
+        senderName={user?.name ?? undefined}
+        setFavorite={() => {
+          if (user?.address) {
+            addFavourite({ address: user.address });
+            setIsFav(true);
+          }
+        }}
+        status={'active'}
         value={232}
         valueSymbol={'KLY'}
-      /> */}
+      />
       <div className="desktop:hidden w-full">
         <TabButtons padding="6" showLabel={false} tabs={tabs} width="full" />
       </div>
