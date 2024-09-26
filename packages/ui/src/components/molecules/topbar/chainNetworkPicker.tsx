@@ -74,7 +74,6 @@ export const ChainNetworkPicker = ({
         setSelectedNetwork(network);
         setCurrentNetwork(network);
       }
-      console.log('network', network);
     }
   };
 
