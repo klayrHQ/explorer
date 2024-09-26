@@ -1011,10 +1011,15 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
               children: <StatusBadge status={'Active'} />,
             },
             {
-              children: <Typography>{'Created by'}</Typography>,
+              children: (
+                <UserAccountCard
+                  address={'klyu9hw585j9fcod9ca5qxeffukhd29pyh9drrzhf'}
+                  name="Chain Creator"
+                />
+              ),
             },
             {
-              children: <Typography>{'Escrow Balance'}</Typography>,
+              children: <Currency amount={21302000000000} decimals={0} symbol={'KLY'} />,
             },
             {
               children: <Typography>{'Last Certificate'}</Typography>,

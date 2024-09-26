@@ -14,3 +14,4 @@ export * from './blockDetails/blockDetailsBanner.tsx';
 export * from './sections/detailsSection.tsx';
 export * from './user/userBanner.tsx';
 export * from './favourites/addFavouriteContainer.tsx';
+export * from './chains/chainBanner.tsx';
