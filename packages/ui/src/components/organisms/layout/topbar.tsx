@@ -9,6 +9,7 @@ import {
   Popover,
   // MenuItemProps,
   NotificationIcon,
+  Link,
 } from '../../atoms';
 import { Search } from '../search/search.tsx';
 import React, { ReactNode, useState } from 'react';
@@ -20,7 +21,6 @@ import {
 } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
 import { Modal, Slide } from '@mui/material';
-import Link from 'next/link';
 
 //import {ClickAwayListener} from "@mui/base";
 
@@ -39,6 +39,7 @@ interface TopbarProps {
   setSearchResults?: any;
   callSearch?: any;
   newFavourite?: boolean;
+  basePath?: string;
   // optionsMenuItems: MenuItemProps[]
 }
 
@@ -52,6 +53,7 @@ export const Topbar = ({
   searchResults,
   setSearchResults,
   callSearch,
+  basePath,
 }: TopbarProps) => {
   // const [openOptionsMenu, setOpenOptionsMenu] = useState(false)
   const [mobileSearchAnchor, setMobileSearchAnchor] = useState<HTMLElement | null>(null);
@@ -139,6 +141,7 @@ export const Topbar = ({
             <Slide direction={'left'} in={openMobileMenu} mountOnEnter unmountOnExit>
               <div style={{ pointerEvents: 'all' }}>
                 <MobileMenu
+                  basePath={basePath}
                   chainNetworkData={chainNetworkData}
                   className={'absolute top-topbarMobileHeight left-0'}
                   menuItems={mobileMenuItems}

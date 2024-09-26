@@ -7,9 +7,11 @@ import { createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
 import { useState } from 'react';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
+  const basePath = useBasePath();
 
   const {
     data: transactions,
@@ -29,7 +31,13 @@ export const Transactions = () => {
   });
 
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
-  const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
+  const rows = createTransactionRows(
+    transactions,
+    loading,
+    copyTooltipText,
+    setCopyTooltipText,
+    basePath,
+  );
 
   const totalPages = Math.ceil(totalTxs / Number(limit));
 

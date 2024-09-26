@@ -1,8 +1,5 @@
 import { BannerFrame } from '../../atoms';
-import {
-  ValidatorBannerText,
-  ValidatorBannerTextProps,
-} from '../../molecules/validator/validatorBannerText';
+import { ValidatorBannerText, ValidatorBannerTextProps } from '../../molecules';
 import {
   ValidatorBannerHeader,
   ValidatorBannerHeaderProps,
@@ -13,12 +10,13 @@ import {
 } from '../../molecules/validator/validatorBannerCard';
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
-import Link from 'next/link';
+import { Link } from '../../atoms';
 
 interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBannerHeaderProps {
   image: string;
   senderName?: string;
   blockTime?: number;
+  basePath: string;
 }
 
 export const ValidatorBanner = ({
@@ -34,14 +32,14 @@ export const ValidatorBanner = ({
   status,
   notificationValue,
   blockTime,
-
+  basePath,
   ...props
 }: ValidatorBannerProps) => {
   return (
     <BannerFrame image={image}>
       <FlexGrid direction="col" gap="0" justify="between">
         <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
-          <Link href="/validators">
+          <Link basePath={basePath} href="/validators">
             <Icon
               className="hover:-translate-x-0.5 cursor-pointer transition-transform"
               color="white"

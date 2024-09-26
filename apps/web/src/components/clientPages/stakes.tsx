@@ -13,6 +13,7 @@ import { callGetTransactions, callGetValidators } from '../../utils/api/apiCalls
 import { StakeFilters } from '../filterComponents/stakeFilters';
 import { TableCellType } from '@repo/ui/types';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const Stakes = () => {
   const {
@@ -35,8 +36,9 @@ export const Stakes = () => {
 
   const [stakingCalculatorAmount, setStakingCalculatorAmount] = useState<number>(1000);
   const [stakingCalculatorPeriod, setStakingCalculatorPeriod] =
-      useState<StakesCalculatorPeriodType>('month');
+    useState<StakesCalculatorPeriodType>('month');
   const [totalActiveStake, setTotalActiveStake] = useState<bigint>(BigInt(0));
+  const basePath = useBasePath();
 
   const {
     data: validators,
@@ -59,15 +61,15 @@ export const Stakes = () => {
   useEffect(() => {
     callGetValidators({}).then((data) => {
       setTotalActiveStake(
-          data.data
-              .filter((v: ValidatorType) => v.rank <= 51)
-              .reduce((acc, val) => acc + BigInt(val.validatorWeight), BigInt(0)),
+        data.data
+          .filter((v: ValidatorType) => v.rank <= 51)
+          .reduce((acc, val) => acc + BigInt(val.validatorWeight), BigInt(0)),
       );
     });
   }, []);
 
-  const rowsOverview = createStakesOverviewRows(stakes, loadingStakes);
-  const rowCalculator = createValidatorsRows(validators, loadingValidators, true, {
+  const rowsOverview = createStakesOverviewRows(stakes, loadingStakes, basePath);
+  const rowCalculator = createValidatorsRows(validators, loadingValidators, basePath, true, {
     stakingCalculatorAmount,
     stakingCalculatorPeriod,
     totalActiveStake,
@@ -104,11 +106,11 @@ export const Stakes = () => {
           defaultValue={calculatorLimit}
           filtersComponent={
             <StakeFilters
-                calculatorProps={{
-                  amount: stakingCalculatorAmount,
-                  setAmount: setStakingCalculatorAmount,
-                  setPeriod: setStakingCalculatorPeriod,
-                }}
+              calculatorProps={{
+                amount: stakingCalculatorAmount,
+                setAmount: setStakingCalculatorAmount,
+                setPeriod: setStakingCalculatorPeriod,
+              }}
             />
           }
           headCols={stakesCalculatorTableHead(

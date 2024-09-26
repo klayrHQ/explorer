@@ -6,8 +6,8 @@ import { Icon } from '../images/icon.tsx';
 import { IconComponent } from '../../../types/types.ts';
 import { SubMenu } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
-import { Link } from './link.tsx';
 import { usePathname } from 'next/navigation';
+import { Link } from './link.tsx';
 
 export interface MenuItemProps {
   label: string | React.ReactNode;
@@ -18,7 +18,6 @@ export interface MenuItemProps {
   icon: IconComponent;
   subMenu?: MenuItemProps[];
   className?: string;
-  linkComponent?: React.PropsWithChildren<React.ReactElement>;
   href?: string;
   variant?: 'default' | 'small';
   square?: boolean;
@@ -65,7 +64,6 @@ export const MenuItem = ({
   icon,
   subMenu,
   className,
-  linkComponent,
   href,
   variant = 'default',
   square = false,
@@ -134,6 +132,7 @@ export const MenuItem = ({
       onClick={onClick}
     >
       <Link
+        basePath={basePath}
         className={menuItemStyles({
           active: isActive,
           hovered,
@@ -143,7 +142,6 @@ export const MenuItem = ({
           variant,
           square,
         })}
-        component={linkComponent}
         href={href}
       >
         {menuItemInnerComponents}

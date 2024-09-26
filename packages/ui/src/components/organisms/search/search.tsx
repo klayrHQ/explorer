@@ -5,7 +5,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { cls } from '../../../utils/functions.ts';
 import { SearchLg } from '../../../assets/icons/general/search-lg';
 import { CrossClose } from '../../../assets/icons/general/x-close.tsx';
-import Link from 'next/link';
+import { Link } from '../../atoms';
 import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
 import {
@@ -20,9 +20,16 @@ interface SearchProps {
   searchResult?: SearchResultsType;
   setSearchResults?: (results: SearchResultsType) => void;
   callSearch?: (params: SearchQueryParams) => Promise<SearchResultsType>;
+  basePath?: string;
 }
 
-export const Search = ({ className, searchResult, setSearchResults, callSearch }: SearchProps) => {
+export const Search = ({
+  className,
+  searchResult,
+  setSearchResults,
+  callSearch,
+  basePath,
+}: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -126,7 +133,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
                 searchResult.validators.length > 0 &&
                 searchResult.validators.map((validator: any, index: number) => (
                   // eslint-disable-next-line react/no-array-index-key
-                  <Link href={`/validators/${validator.address}`} key={index}>
+                  <Link basePath={basePath} href={`/validators/${validator.address}`} key={index}>
                     <FlexGrid alignItems="center" direction={'row'} gap={'2'} mobileDirection="row">
                       <Avatar address={validator.address} circle size={30} />
                       <FlexGrid direction={'col'} gap={'1'}>
@@ -148,7 +155,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
                 searchResult.blocks.length > 0 &&
                 searchResult.blocks.map((block: any, index: number) => (
                   // eslint-disable-next-line react/no-array-index-key
-                  <Link href={`/blocks/${block.id}`} key={index}>
+                  <Link basePath={basePath} href={`/blocks/${block.id}`} key={index}>
                     <FlexGrid alignItems="center" direction={'row'} gap={'2'} mobileDirection="row">
                       <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                         <Icon color="onBackgroundLow" icon={'Cube'} size="xs" />
@@ -181,7 +188,7 @@ export const Search = ({ className, searchResult, setSearchResults, callSearch }
                 searchResult.transactions.length > 0 &&
                 searchResult.transactions.map((transaction: any, index: number) => (
                   // eslint-disable-next-line react/no-array-index-key
-                  <Link href={`/transactions/${transaction.id}`} key={index}>
+                  <Link basePath={basePath} href={`/transactions/${transaction.id}`} key={index}>
                     <FlexGrid
                       alignItems="center"
                       className=" "

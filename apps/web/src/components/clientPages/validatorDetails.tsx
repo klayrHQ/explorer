@@ -38,6 +38,7 @@ import {
 } from '../../utils/api/apiCalls.tsx';
 
 import { formatCommission, fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -59,6 +60,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const blocksPagination = usePagination(1, '10');
   const eventsPagination = usePagination();
   const transactionsPagination = usePagination();
+  const basePath = useBasePath();
 
   useEffect(() => {
     setLoading(true);
@@ -279,11 +281,22 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     createDetails('Punishments', ' - '),
   ];
 
-  const rows = createTransactionRows(transactions, loading, copyTooltipText, setCopyTooltipText);
+  const rows = createTransactionRows(
+    transactions,
+    loading,
+    copyTooltipText,
+    setCopyTooltipText,
+    basePath,
+  );
   const eventsRows = createValidatorEventsRow(events, loading);
-  const incomingStake = createValidatorIncomingStakeRows(incomingStakes, loading);
-  const outgoingStake = createValidatorOutgoingStakeRows(outgoingStakes, validator, loading);
-  const validatorBlocksRows = createValidatorBlockRows(blocks, loading);
+  const incomingStake = createValidatorIncomingStakeRows(incomingStakes, loading, basePath);
+  const outgoingStake = createValidatorOutgoingStakeRows(
+    outgoingStakes,
+    validator,
+    loading,
+    basePath,
+  );
+  const validatorBlocksRows = createValidatorBlockRows(blocks, loading, basePath);
 
   const stakeTabs = [
     {
@@ -440,6 +453,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <ValidatorBanner
+        basePath={basePath}
         blockTime={2} // TODO: Implement
         capacity={stakeCapacity} // TODO: Implement
         image={BannerBG.src}

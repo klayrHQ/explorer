@@ -26,6 +26,7 @@ import {
 } from '../../utils/helpers/helper.tsx';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const UserDetails = ({ params }: { params: { id: string } }) => {
   const [user, setUser] = useState<UserType>();
@@ -43,6 +44,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
 
   const transactionsPagination = usePagination();
   const eventsPagination = usePagination();
+  const basePath = useBasePath();
 
   useEffect(() => {
     setLoading(true);
@@ -169,10 +171,11 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
     loading,
     copyTooltipText,
     setCopyTooltipText,
+    basePath,
     true,
   );
   const eventsRows = createValidatorEventsRow(events, loading);
-  const outgoingStake = createValidatorOutgoingStakeRows(outgoingStakes, validator, loading);
+  const outgoingStake = createValidatorOutgoingStakeRows(outgoingStakes, validator, loading, basePath);
 
   const tabs = [
     {
@@ -265,6 +268,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       {/* <UserBanner
+      basePath={basePath}
         coinRate={0.2}
         image={BannerBG.src}
         incomingTransactions={incomingStakes.length}

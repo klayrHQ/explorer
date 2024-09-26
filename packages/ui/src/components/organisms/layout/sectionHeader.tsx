@@ -12,9 +12,10 @@ interface SectionHeaderProps {
   count?: number | string;
   className?: string;
   href?: string;
-  linkComponent?: LinkComponent;
   fullWidth?: boolean;
   titleSizeNotLink?: 'h3' | 'h4' | 'h5' | 'h6';
+  basePath?: string;
+  linkOutgoing?: boolean;
 }
 
 export const SectionHeader = ({
@@ -25,8 +26,9 @@ export const SectionHeader = ({
   count,
   className,
   href,
-  linkComponent,
   fullWidth,
+  basePath,
+  linkOutgoing,
 }: SectionHeaderProps) => {
   return (
     <FlexGrid
@@ -34,7 +36,7 @@ export const SectionHeader = ({
       direction={'col'}
     >
       {href ? (
-        <Link component={linkComponent} href={href}>
+        <Link basePath={basePath} href={href} outgoing={linkOutgoing}>
           <FlexGrid className={'group'} gap="2" justify="center" mobileDirection="row">
             <Typography
               className=""

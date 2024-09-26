@@ -7,11 +7,13 @@ import { FavouriteType } from '../../utils/types.ts';
 import { createFavouritesRows } from '../../utils/helpers/helper.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
 import { useFavouritesStore, useInitializeFavourites } from '../../store/favouritesStore.ts';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const Favourites = () => {
   useInitializeFavourites();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<FavouriteType | null>(null);
+  const basePath = useBasePath();
   const [snackbarContent, setSnackbarContent] = useState<{title: string, text: ReactNode}>({ title: '', text: '' });
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
 
@@ -58,7 +60,7 @@ export const Favourites = () => {
     setShowSnackbar(true);
   };
 
-  const rows = createFavouritesRows(favourites, false, onRemove);
+  const rows = createFavouritesRows(favourites, false, basePath, onRemove);
 
   //set newFavourite to false when loading the favourites page and when favourites change while on the page
   useEffect(() => {

@@ -1,7 +1,6 @@
 import { Icon, Typography } from '@repo/ui/atoms';
 import Logo from '../assets/images/logo.svg';
 import LogoText from '../assets/images/logoText.svg';
-import { DefaultLinkComponent, DefaultImageComponent } from 'storybook/stories/utils/constants.tsx';
 import { ColorType } from '@repo/ui/types';
 import React from 'react';
 

@@ -13,17 +13,19 @@ import {
 } from '@repo/ui/atoms';
 import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { eventsTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import Link from 'next/link';
 import { createEventsRows } from '../../utils/helpers/helper.tsx';
 import { DataType } from '@repo/ui/types';
 import { EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
+import { Link } from '@repo/ui/atoms';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [loading, setLoading] = useState<boolean>(true);
   const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);
   const [events, setEvents] = useState<EventsType[]>([]);
+  const basePath = useBasePath();
 
   useEffect(() => {
     setLoading(true);
@@ -130,7 +132,10 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'From',
       },
       value: (
-        <Link href={transaction?.sender?.name ? `/validators/${transaction?.sender?.address}` : ``}>
+        <Link
+          basePath={basePath}
+          href={transaction?.sender?.name ? `/validators/${transaction?.sender?.address}` : ``}
+        >
           <UserAccountCard
             address={transaction?.sender?.address ?? ''}
             name={transaction?.sender?.name}
@@ -147,6 +152,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
             },
             value: (
               <Link
+                basePath={basePath}
                 href={
                   transaction?.recipient?.name
                     ? `/validators/${transaction?.recipient?.address}`
@@ -177,7 +183,11 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Block',
       },
-      value: <Link href={`/blocks/${transaction?.block?.id}`}>{transaction?.block?.id}</Link>,
+      value: (
+        <Link basePath={basePath} href={`/blocks/${transaction?.block?.id}`}>
+          {transaction?.block?.id}
+        </Link>
+      ),
     },
     {
       label: {
@@ -185,7 +195,9 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       },
       value: (
         <div className="flex flex-row gap-1.5 items-baseline ">
-          <Link href={`/blocks/${transaction?.block?.id}`}>{transaction?.block?.height}</Link>
+          <Link basePath={basePath} href={`/blocks/${transaction?.block?.id}`}>
+            {transaction?.block?.height}
+          </Link>
           <CopyIcon content={String(transaction?.block?.height) || ''} size={'xxs'} />
         </div>
       ),

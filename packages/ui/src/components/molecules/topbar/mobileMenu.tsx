@@ -25,7 +25,12 @@ export const MobileMenu = ({
       <nav className={'w-full'}>
         <FlexGrid component={'ul'} direction={'col'} gap={'md'}>
           {menuItems.map((item, index) => (
-            <MenuItem basePath={basePath} key={`mobile-menu-item-${index + 1}`} onClick={onClose} {...item} />
+            <MenuItem
+              basePath={basePath}
+              key={`mobile-menu-item-${index + 1}`}
+              onClick={onClose}
+              {...item}
+            />
           ))}
         </FlexGrid>
       </nav>

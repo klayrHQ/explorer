@@ -1,6 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import {Link} from '@repo/ui/atoms';
-import {DefaultLinkComponent} from "@/stories/utils/constants";
+import { Link } from '@repo/ui/atoms';
 
 const meta = {
   title: 'Atoms/Navigation/Link',
@@ -16,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: "Link",
-    href: "#",
+    children: 'Link',
+    href: '#',
   },
 };
