@@ -34,6 +34,7 @@ import {
   IconButton,
   ImageContainer,
   Avatar,
+  TokenCard,
 } from '@repo/ui/atoms';
 import { Link } from '@repo/ui/atoms';
 import React from 'react';
@@ -1077,14 +1078,24 @@ export const createUserDetailsTokensRow = (token: TokenType[], loading: boolean)
           totalBalance > 0
             ? ((Number(token.lockedBalances?.[0]?.amount ?? 0) / totalBalance) * 100).toFixed(2)
             : '0.00';
+
         return {
           cells: [
             {
-              children: <Typography>{token.tokenId}</Typography>,
+              children: (
+                <TokenCard
+                  chainImage={
+                    'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
+                  }
+                  image={'https://cdn.pixabay.com/photo/2023/10/17/17/01/cat-8321993_1280.jpg'}
+                  name={'Monkeyz'}
+                  symbol={'MON'}
+                />
+              ),
             },
             {
               children: (
-                <div className="flex flex-col ">
+                <div className="flex flex-col">
                   <Currency
                     amount={totalBalance}
                     decimals={0}
@@ -1093,7 +1104,7 @@ export const createUserDetailsTokensRow = (token: TokenType[], loading: boolean)
                   />
                   <Currency
                     amount={Number(token.availableBalance) * 2}
-                    className="text-onBackgroundLow"
+                    className="text-onBackgroundLow text-caption"
                     decimals={2}
                     sign={'$'}
                   />
