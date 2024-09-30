@@ -3,7 +3,7 @@ import {
   EventsType,
   FavouriteType,
   StakesCalculatorPeriodType,
-  UserAccountType,
+  AccountType,
   StakeType,
   TransactionType,
   ValidatorType,
@@ -922,7 +922,7 @@ export const createFavouritesRows = (
 };
 
 export const createAccountsRows = (
-  accounts: UserAccountType[],
+  accounts: AccountType[],
   loading: boolean,
   basePath: string,
 ) => {

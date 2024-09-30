@@ -1,5 +1,5 @@
 import { StoryObj } from '@storybook/react';
-import { CustomSelect } from '@repo/ui/atoms'; 
+import { CustomSelect } from '@repo/ui/atoms';
 
 const meta = {
   title: 'Atoms/Input/Select',
@@ -30,16 +30,15 @@ export const Stats: Story = {
   args: {
     options: [
       { value: 'oneHourAgo', label: 'One hour ago' },
-      { value: 'yesterday', label: 'Yesterday'},
-      { value: 'lastWeek', label: 'Last week'},
+      { value: 'yesterday', label: 'Yesterday' },
+      { value: 'lastWeek', label: 'Last week' },
       { value: 'lastMonth', label: 'Last month' },
-      { value: 'lastYear', label: 'Last year', },
+      { value: 'lastYear', label: 'Last year' },
     ],
-   
-  
+
     defaultValue: 'lastMonth',
     width: 'md',
-    backgroundColor: 'darkBlue'
+    backgroundColor: 'darkBlue',
   },
 };
 
@@ -48,10 +47,8 @@ export const Network: Story = {
     options: [
       { value: 'testnet', label: 'Testnet', labelCircleColor: 'green' },
       { value: 'mainnet', label: 'Mainnet', labelCircleColor: 'lobster' },
-    
     ],
-  
-  
+
     defaultValue: 'testnet',
     width: 'xl',
   },
@@ -60,26 +57,30 @@ export const Network: Story = {
 export const Chain: Story = {
   args: {
     options: [
-      { value: 'klayr', label: 'Klayr-main', labelImage: 'https://explorer.klayr.dev/_next/static/media/logo.f350e9f3.svg' },
+      {
+        value: 'klayr',
+        label: 'Klayr-main',
+        labelImage: 'https://explorer.klayr.dev/_next/static/media/logo.f350e9f3.svg',
+      },
       { value: 'mainnet', label: 'Mainnet', labelImage: 'https://placekitten.com/200/300' },
     ],
-  
+
     defaultValue: 'klayr',
-   
+
     width: 'xl',
   },
 };
 
 export const Icon: Story = {
-    args: {
-        options: [
-            { value: 'favorite', label: 'Favorite', labelIcon: 'Heart' },
-            { value: 'users', label: 'Users', labelIcon: 'Users' },
-            { value: 'settings', label: 'Settings', labelIcon: 'Settings' },
-        ],
-      
-        defaultValue: 'settings',
-         
-        width: 'sm',
-        },
+  args: {
+    options: [
+      { value: 'favorite', label: 'Favorite', labelIcon: 'Heart' },
+      { value: 'top-accounts', label: 'Users', labelIcon: 'Users' },
+      { value: 'settings', label: 'Settings', labelIcon: 'Settings' },
+    ],
+
+    defaultValue: 'settings',
+
+    width: 'sm',
+  },
 };

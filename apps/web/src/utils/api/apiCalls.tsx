@@ -11,7 +11,7 @@ import {
   StakeType,
   StakesType,
   StakersType,
-  UserAccountType,
+  AccountType,
   TokenType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
@@ -99,8 +99,8 @@ export const callGetStakers = async (
 
 export const callGetAccounts = async (
   params: AccountQueryParams,
-): Promise<GatewayRes<UserAccountType>> => {
-  return apiCall<UserAccountType>('account', params);
+): Promise<GatewayRes<AccountType>> => {
+  return apiCall<AccountType>('account', params);
 };
 
 export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayRes<TokenType>> => {

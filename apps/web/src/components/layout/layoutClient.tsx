@@ -40,7 +40,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Top Accounts',
       icon: 'Users',
-      href: `/accounts`,
+      href: `/top-accounts`,
     },
     {
       label: 'Validators',
@@ -81,7 +81,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Top Accounts',
       icon: 'Users',
-      href: `/accounts`,
+      href: `/top-accounts`,
     },
     {
       label: 'Validators',

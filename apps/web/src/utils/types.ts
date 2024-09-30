@@ -18,7 +18,7 @@ export interface TransactionType {
   minFee: string;
   size: number;
   block: BlockType;
-  sender: AccountType;
+  sender: AccountSubType;
   params: any;
   signatures: string[];
   executionStatus: string;
@@ -51,7 +51,7 @@ export interface ParamsType {
 }
 
 export interface MetaType {
-  recipient?: AccountType;
+  recipient?: AccountSubType;
   count?: number;
   total?: number;
 }
@@ -132,7 +132,7 @@ export interface ValidatorType {
   commission: number;
   lastCommissionIncreaseHeight: number;
   sharingCoefficients: SharingCoefficientType[];
-  account: AccountType;
+  account: AccountSubType;
   nextAllocatedTime?: number;
   totalRewards: string;
   blockReward: string;
@@ -145,7 +145,7 @@ export interface SharingCoefficientType {
   coefficient: string;
 }
 
-export interface AccountType {
+export interface AccountSubType {
   address: string;
   publicKey: string;
   name: string;
@@ -227,7 +227,7 @@ export type StakersType = {
   meta: MetaTransaction;
 };
 
-export type UserAccountType = {
+export type AccountType = {
   lockedBalance: string | number;
   address: string;
   nonce: string;
@@ -235,10 +235,10 @@ export type UserAccountType = {
   name: string | null;
   totalBalance: string;
   availableBalance: string;
-}
+};
 
 export type AccountsType = {
-  users: UserAccountType[];
+  accounts: AccountType[];
 };
 
 export interface FavouriteType {

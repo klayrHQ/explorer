@@ -1,13 +1,21 @@
 'use client';
 
 import { FlexGrid, TabButtons, Typography, CopyIcon } from '@repo/ui/atoms';
-import { DetailsSection, SectionHeader, TableContainer, AccountBanner } from '@repo/ui/organisms';
 import {
-  UserAccountType,
+  DetailsSection,
+  SectionHeader,
+  TableContainer,
+  AccountBanner,
+  ValidatorBanner,
+} from '@repo/ui/organisms';
+import {
+  AccountType,
   AccountsType,
   TransactionType,
   ValidatorType,
   TokenType,
+  BlockDetailsType,
+  MetaType,
 } from '../../utils/types.ts';
 import { useState, useEffect } from 'react';
 import { DataType } from '@repo/ui/types';
@@ -20,18 +28,21 @@ import {
   callGetStakers,
   callGetAccounts,
   callGetTokens,
+  callGetBlocks,
 } from '../../utils/api/apiCalls.tsx';
 import {
   transactionTableHead,
   validatorEventsTableHead,
   validatorStakeOutgoingTableHead,
   userTokensTableHead,
+  validatorBlocksTableHead,
 } from '../../utils/helpers/tableHeaders.tsx';
 import {
   createTransactionRows,
   createValidatorEventsRow,
   createValidatorOutgoingStakeRows,
   createUserDetailsTokensRow,
+  createValidatorBlockRows,
 } from '../../utils/helpers/helper.tsx';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
@@ -40,25 +51,30 @@ import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { useInitializeFavourites } from '../../store/favouritesStore.ts';
 
-export const AccountDetails = ({ params }: { params: { id: string } }) => {
+export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   useInitializeFavourites();
 
-  const [user, setUser] = useState<UserAccountType>();
+  const paramIsName = paramAccount.length < 41;
+  const [account, setAccount] = useState<AccountType>();
+  const [validator, setValidator] = useState<ValidatorType>();
+  const isValidator = !!validator;
+
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [transactionsMeta, setTransactionsMeta] = useState<any>({});
   const [events, setEvents] = useState<any[]>([]);
   const [eventsMeta, setEventsMeta] = useState<any>({});
   const [outgoingStakes, setOutgoingStakes] = useState<any[]>([]);
   const [incomingStakes, setIncomingStakes] = useState<any[]>([]);
-  const [validator, setValidator] = useState<ValidatorType>();
   const [tokens, setTokens] = useState<TokenType[]>([]);
+  const [blocks, setBlocks] = useState<BlockDetailsType[]>([]);
+  const [blocksMeta, setBlocksMeta] = useState<MetaType>({});
+
   const [loading, setLoading] = useState<boolean>(true);
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const { currentChain } = useChainNetwork();
-  console.log(currentChain);
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
@@ -66,30 +82,43 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
   const [isFav, setIsFav] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user?.address) {
-      setIsFav(isFavourite({ address: user.address }));
+    if (account?.address) {
+      setIsFav(isFavourite({ address: account.address }));
     }
-  }, [user?.address, isFavourite]);
+  }, [account?.address, isFavourite]);
 
   const transactionsPagination = usePagination();
   const eventsPagination = usePagination();
+  const blocksPagination = usePagination();
   const basePath = useBasePath();
 
   useEffect(() => {
     setLoading(true);
     callGetAccounts({
-      address: params.id,
+      //todo uncomment when name filter is implemented to accounts endpoint
+      /*...(!paramIsName ? {address: paramAccount} : {name: paramAccount})*/
+      ...{ address: paramAccount },
     })
       .then((data) => {
-        const userData = Array.isArray(data?.data) && data.data.length > 0 ? data.data[0] : null;
-        setUser(userData);
+        const AccountData = Array.isArray(data?.data) && data.data.length > 0 ? data.data[0] : null;
+        setAccount(AccountData);
       })
       .catch((error) => console.error('Error fetching validator:', error))
       .finally(() => setLoading(false));
-  }, [params.id]);
+  }, [paramAccount, paramIsName]);
 
   useEffect(() => {
-    if (user && user.address) {
+    callGetValidators({
+      ...(!paramIsName ? { address: paramAccount } : { name: paramAccount }),
+    })
+      .then((data) => {
+        setValidator(data.data[0]);
+      })
+      .catch((error) => console.error('Error fetching validator:', error));
+  }, [paramAccount, paramIsName]);
+
+  useEffect(() => {
+    if (account && account.address) {
       setLoading(true);
 
       const addSortingParams = (params: any) => {
@@ -102,7 +131,7 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
       const transactionsPromise = fetchPaginatedData(
         callGetTransactions,
         addSortingParams({
-          address: user.address,
+          address: account.address,
         }),
         transactionsPagination.pageNumber,
         transactionsPagination.limit,
@@ -113,16 +142,8 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
         })
         .catch((error) => console.error('Error fetching transactions:', error));
 
-      const validatorPromise = callGetValidators({
-        address: user.address,
-      })
-        .then((data) => {
-          setValidator(data.data[0]);
-        })
-        .catch((error) => console.error('Error fetching validator:', error));
-
       const outgoingStakesPromise = callGetStakes({
-        address: user.address,
+        address: account.address,
       })
         .then((data) => {
           setOutgoingStakes(data.data.stakes);
@@ -130,7 +151,7 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
         .catch((error) => console.error('Error fetching outgoing stakes:', error));
 
       const incomingStakesPromise = callGetStakers({
-        address: user.address,
+        address: account.address,
       })
         .then((data) => {
           setIncomingStakes(data.data.stakers);
@@ -139,7 +160,7 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
 
       const eventsPromise = fetchPaginatedData(
         callGetEvents,
-        { senderAddress: user.address },
+        { senderAddress: account.address },
         eventsPagination.pageNumber,
         eventsPagination.limit,
       )
@@ -150,7 +171,7 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
         .catch((error) => console.error('Error fetching events:', error));
 
       const tokensPromise = callGetTokens({
-        address: user.address,
+        address: account.address,
       })
         .then((data) => {
           setTokens(data.data as unknown as TokenType[]);
@@ -160,20 +181,33 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
       Promise.all([
         transactionsPromise,
         outgoingStakesPromise,
-        validatorPromise,
         eventsPromise,
         incomingStakesPromise,
         tokensPromise,
       ]).finally(() => setLoading(false));
     }
+
+    if (validator && validator.account.address) {
+      fetchPaginatedData(
+        callGetBlocks,
+        { generatorAddress: validator.account.address },
+        blocksPagination.pageNumber,
+        blocksPagination.limit,
+      ).then((data) => {
+        setBlocks(data.data);
+        setBlocksMeta(data.meta);
+      });
+    }
   }, [
-    user,
+    account,
     sortField,
     sortOrder,
     eventsPagination.pageNumber,
     eventsPagination.limit,
     transactionsPagination.pageNumber,
     transactionsPagination.limit,
+    blocksPagination.pageNumber,
+    blocksPagination.limit,
   ]);
 
   const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
@@ -188,21 +222,42 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
 
   const details = [
     createDetails(
-      'Validator address',
+      'Address',
       <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography variant={'paragraph-sm'}>{user?.address}</Typography>
-        <CopyIcon content={user?.address || ''} size={'xxs'} />
+        <Typography variant={'paragraph-sm'}>{account?.address}</Typography>
+        <CopyIcon content={account?.address || ''} size={'xxs'} />
       </div>,
     ),
     createDetails(
       'Public Key',
       <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography variant={'paragraph-sm'}>{user?.publicKey}</Typography>
-        <CopyIcon content={user?.publicKey || ''} size={'xxs'} />
+        <Typography variant={'paragraph-sm'}>{account?.publicKey}</Typography>
+        <CopyIcon content={account?.publicKey || ''} size={'xxs'} />
       </div>,
       'half',
     ),
   ];
+
+  const validatorDetails = [
+    createDetails('Validator weight', validator?.validatorWeight),
+    createDetails('Total stake', validator?.totalStake),
+    createDetails('Self stake', validator?.selfStake),
+    createDetails('Generated blocks', validator?.generatedBlocks),
+    createDetails('Last generated height', validator?.lastGeneratedHeight),
+    createDetails('Consecutive missed blocks', validator?.consecutiveMissedBlocks),
+    createDetails('Last commission increase', validator?.lastCommissionIncreaseHeight),
+    createDetails('Total commission', validator?.commission),
+    createDetails('Commission %', validator?.commission),
+    createDetails('Earned rewards', validator?.totalRewards),
+    createDetails('Total self stake rewards', validator?.totalSelfStakeRewards),
+    createDetails('Max height generated', '-'),
+    createDetails('Max height pre-voted', '-'),
+  ];
+
+  const stakeCapacity = (
+    (Number(validator?.validatorWeight) / Number(validator?.selfStake)) *
+    10
+  ).toFixed(2);
 
   const rows = createTransactionRows(
     transactions,
@@ -220,6 +275,7 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
     basePath,
   );
   const tokensRows = createUserDetailsTokensRow(tokens, currentChain, loading);
+  const validatorBlocksRows = createValidatorBlockRows(blocks, loading, basePath);
 
   const tabs = [
     {
@@ -227,18 +283,59 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
       label: 'Details',
       icon: 'InfoSquare',
       content: (
-        <DetailsSection data={details} json={user as unknown as DataType} title={'User Details'} />
+        <DetailsSection data={details} json={account as unknown as DataType} title={'Details'} />
       ),
     },
+    ...(isValidator
+      ? [
+          {
+            content: <DetailsSection data={validatorDetails} title={'Validator Details'} />,
+            icon: 'Flag',
+            label: 'Validator',
+            value: 2,
+          },
+        ]
+      : []),
+    ...(isValidator
+      ? [
+          {
+            value: 3,
+            label: 'Blocks',
+            icon: 'Cube',
+            content: (
+              <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+                <SectionHeader
+                  count={blocksMeta?.total}
+                  title={`${validator?.account.name}'s blocks`}
+                  titleSizeNotLink={'h5'}
+                />
+                <TableContainer
+                  currentNumber={blocksPagination.pageNumber}
+                  defaultValue={blocksPagination.limit}
+                  headCols={validatorBlocksTableHead}
+                  keyPrefix={'validator-blocks'}
+                  onPerPageChange={blocksPagination.handleLimitChange}
+                  pagination={
+                    blocksMeta?.total ? blocksMeta?.total > parseInt(blocksPagination.limit) : false
+                  }
+                  rows={validatorBlocksRows}
+                  setCurrentNumber={blocksPagination.handlePageChange}
+                  totalPages={Math.ceil((blocksMeta?.total ?? 0) / Number(blocksPagination.limit))}
+                />
+              </FlexGrid>
+            ),
+          },
+        ]
+      : []),
     {
-      value: 2,
+      value: isValidator ? 4 : 2,
       label: 'Transactions',
       icon: 'SwitchHorizontal',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
             count={transactionsMeta?.total}
-            title={`${user?.name} transactions`}
+            title={`${account?.name} transactions`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
@@ -262,14 +359,14 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
       ),
     },
     {
-      value: 3,
+      value: isValidator ? 5 : 3,
       label: 'Stakes',
       icon: 'LayersThree',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
             count={outgoingStakes.length}
-            title={`${user?.name}'s stakes`}
+            title={`${account?.name}'s stakes`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
@@ -281,14 +378,14 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
       ),
     },
     {
-      value: 4,
+      value: isValidator ? 6 : 4,
       label: 'Tokens',
       icon: 'CryptoCurrency',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
             count={outgoingStakes.length}
-            title={`${user?.name}'s tokens`}
+            title={`${account?.name}'s tokens`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
@@ -301,14 +398,14 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
     },
 
     {
-      value: 5,
+      value: isValidator ? 7 : 5,
       label: 'Events',
       icon: 'List',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader
             count={eventsMeta?.total}
-            title={`${user?.name}'s events`}
+            title={`${account?.name}'s events`}
             titleSizeNotLink={'h5'}
           />
           <TableContainer
@@ -331,32 +428,50 @@ export const AccountDetails = ({ params }: { params: { id: string } }) => {
 
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
-      <AccountBanner
-        basePath={basePath}
-        coinRate={0.2}
-        image={BannerBG.src}
-        incomingTransactions={incomingStakes.length}
-        isFavorite={isFavourite({ address: user?.address ?? '' })}
-        outgoingTransactions={outgoingStakes.length}
-        rank={''}
-        removeFavorite={() => {
-          if (user?.address) {
-            removeFavourite({ address: user.address });
-            setIsFav(false);
-          }
-        }}
-        senderAddress={user?.address ?? undefined}
-        senderName={user?.name ?? undefined}
-        setFavorite={() => {
-          if (user?.address) {
-            addFavourite({ address: user.address });
-            setIsFav(true);
-          }
-        }}
-        status={'active'}
-        value={232}
-        valueSymbol={'KLY'}
-      />
+      {isValidator ? (
+        <ValidatorBanner
+          basePath={basePath}
+          blockTime={2} // TODO: Implement
+          capacity={stakeCapacity} // TODO: Implement
+          image={BannerBG.src}
+          notificationValue={validator?.rank || 0}
+          selfStake={validator?.selfStake || 0}
+          selfStakeSymbol="KLY"
+          senderAddress={validator?.account.address || ''}
+          senderName={validator?.account.name || ''}
+          //stakes={incomingStake.length} // TODO: Implement
+          status={validator?.status || ''}
+          value={validator?.totalStake}
+          valueSymbol="KLY"
+        />
+      ) : (
+          <AccountBanner
+              basePath={basePath}
+              coinRate={0.2}
+              image={BannerBG.src}
+              incomingTransactions={incomingStakes.length}
+              isFavorite={isFavourite({ address: account?.address ?? '' })}
+              outgoingTransactions={outgoingStakes.length}
+              rank={''}
+              removeFavorite={() => {
+                if (account?.address) {
+                  removeFavourite({ address: account.address });
+                  setIsFav(false);
+                }
+              }}
+              senderAddress={account?.address ?? undefined}
+              senderName={account?.name ?? undefined}
+              setFavorite={() => {
+                if (account?.address) {
+                  addFavourite({ address: account.address });
+                  setIsFav(true);
+                }
+              }}
+              status={'active'}
+              value={232}
+              valueSymbol={'KLY'}
+          />
+      )}
       <div className="desktop:hidden w-full">
         <TabButtons padding="6" showLabel={false} tabs={tabs} width="full" />
       </div>
