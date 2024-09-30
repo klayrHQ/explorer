@@ -31,7 +31,7 @@ export const Accounts = () => {
 
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto mb-12" direction={'col'}>
-      <SectionHeader count={100} title={'Top holders'} />
+      <SectionHeader title={'Top holders'} />
       <TableContainer
         headCols={accountsTableHead(handleSortChange, sortField, sortOrder)}
         keyPrefix={'transactions'}
