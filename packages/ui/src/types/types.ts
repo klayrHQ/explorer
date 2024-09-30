@@ -60,6 +60,7 @@ export type IconComponent =
   | 'DataFlow'
   | 'CryptoCurrency'
   | 'Heart'
+  | 'HeartFull'
   | 'LogIn'
   | 'SearchLg'
   | 'Settings'

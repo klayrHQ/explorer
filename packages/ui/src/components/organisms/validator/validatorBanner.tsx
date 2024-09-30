@@ -1,5 +1,9 @@
 import { BannerFrame } from '../../atoms';
-import { ValidatorBannerText, ValidatorBannerTextProps } from '../../molecules';
+import {
+  ValidatorBannerText,
+  ValidatorBannerTextProps,
+  ValidatorBannerButtons,
+} from '../../molecules';
 import {
   ValidatorBannerHeader,
   ValidatorBannerHeaderProps,
@@ -17,6 +21,9 @@ interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBanner
   senderName?: string;
   blockTime?: number;
   basePath: string;
+  isFavorite: boolean;
+  removeFavorite: () => void;
+  setFavorite: () => void;
 }
 
 export const ValidatorBanner = ({
@@ -33,6 +40,9 @@ export const ValidatorBanner = ({
   notificationValue,
   blockTime,
   basePath,
+  isFavorite,
+  removeFavorite,
+  setFavorite,
   ...props
 }: ValidatorBannerProps) => {
   return (
@@ -64,7 +74,18 @@ export const ValidatorBanner = ({
           {...props}
         />
       </FlexGrid>
-      <ValidatorBannerCard blockTime={blockTime || 0} />
+      <ValidatorBannerCard
+        blockTime={blockTime || 0}
+        isFavorite={isFavorite}
+        removeFavorite={removeFavorite}
+        setFavorite={setFavorite}
+      />
+      <ValidatorBannerButtons
+        className="desktop:hidden absolute top-6 right-6"
+        isFavorite={isFavorite}
+        removeFavorite={removeFavorite}
+        setFavorite={setFavorite}
+      />
     </BannerFrame>
   );
 };

@@ -36,6 +36,7 @@ import {
   callGetStakes,
   callGetStakers,
 } from '../../utils/api/apiCalls.tsx';
+import { useFavouritesStore } from '../../store/favouritesStore.ts';
 
 import { formatCommission, fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
@@ -56,6 +57,8 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
+  const { isFavourite, addFavourite, removeFavourite } = useFavouritesStore();
+  const [isFav, setIsFav] = useState<boolean>(false);
 
   const blocksPagination = usePagination(1, '10');
   const eventsPagination = usePagination();
@@ -457,11 +460,24 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         blockTime={2} // TODO: Implement
         capacity={stakeCapacity} // TODO: Implement
         image={BannerBG.src}
+        isFavorite={isFavourite({ address: validator?.account.address ?? '' })}
         notificationValue={validator?.rank || 0}
+        removeFavorite={() => {
+          if (validator?.account.address) {
+            removeFavourite({ address: validator.account.address });
+            setIsFav(false);
+          }
+        }}
         selfStake={validator?.selfStake || 0}
         selfStakeSymbol="KLY"
         senderAddress={validator?.account.address || ''}
         senderName={validator?.account.name || ''}
+        setFavorite={() => {
+          if (validator?.account.address) {
+            addFavourite({ address: validator.account.address });
+            setIsFav(true);
+          }
+        }}
         stakes={incomingStake.length} // TODO: Implement
         status={validator?.status || ''}
         value={validator?.totalStake}
