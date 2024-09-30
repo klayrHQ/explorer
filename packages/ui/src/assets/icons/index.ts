@@ -14,6 +14,7 @@ import { Data } from './development/data';
 import { DataFlow } from './development/dataflow-03';
 import { CryptoCurrency } from './finance/cryptocurrency-02';
 import { Heart } from './general/heart';
+import { HeartFull } from './general/heart-full';
 import { LogIn } from './general/log-in-03';
 import { SearchLg } from './general/search-lg';
 import { Settings } from './general/settings-01';
@@ -67,6 +68,7 @@ export const icons = {
   DataFlow,
   CryptoCurrency,
   Heart,
+  HeartFull,
   LogIn,
   SearchLg,
   Settings,

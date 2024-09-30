@@ -6,6 +6,7 @@ import { AccountBannerText } from '../../molecules/account/accountBannerText';
 import { AccountBannerHeader } from '../../molecules/account/accountBannerHeader';
 import { AccountBannerProps } from '../../../types/types';
 import { AccountBannerButtons } from '../../molecules/account/accountBannerButton';
+import { ValidatorBannerButtons } from '../../molecules';
 
 export const AccountBanner = ({
   senderAddress,
@@ -38,13 +39,6 @@ export const AccountBanner = ({
             senderName={senderName}
             status={status}
           />
-          <AccountBannerButtons
-            className="desktop:hidden"
-            isFavorite={isFavorite}
-            removeFavorite={removeFavorite}
-            setFavorite={setFavorite}
-            validatorAddress={senderAddress || ''}
-          />
         </FlexGrid>
         <AccountBannerText
           coinRate={coinRate}
@@ -55,11 +49,17 @@ export const AccountBanner = ({
         />
       </FlexGrid>
       <AccountBannerButtons
-        className="absolute top-8 right-32 hidden desktop:flex"
+        className="hidden desktop:flex"
         isFavorite={isFavorite}
         removeFavorite={removeFavorite}
         setFavorite={setFavorite}
         validatorAddress={senderAddress || ''}
+      />
+      <ValidatorBannerButtons
+        className="desktop:hidden absolute top-6 right-6"
+        isFavorite={isFavorite}
+        removeFavorite={removeFavorite}
+        setFavorite={setFavorite}
       />
     </BannerFrame>
   );
