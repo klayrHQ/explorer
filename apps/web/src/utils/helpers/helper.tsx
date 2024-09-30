@@ -3,7 +3,7 @@ import {
   EventsType,
   FavouriteType,
   StakesCalculatorPeriodType,
-  UserType,
+  AccountType,
   StakeType,
   TransactionType,
   ValidatorType,
@@ -921,7 +921,7 @@ export const createFavouritesRows = (
     : getTableSkeletons(favouritesTableHead.length);
 };
 
-export const createUsersRows = (users: UserType[], loading: boolean, basePath: string) => {
+export const createUsersRows = (users: AccountType[], loading: boolean, basePath: string) => {
   return !loading
     ? users?.map((user, index) => {
         return {

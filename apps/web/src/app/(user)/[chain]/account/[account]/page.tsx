@@ -1,9 +1,9 @@
-import { UserDetails } from '../../../../../components/clientPages/userDetails';
+import { AccountDetails } from '../../../../../components/clientPages/accountDetails.tsx';
 
 export default function Page({ params }: { params: { account: string } }) {
   return (
     <div>
-      <UserDetails params={{ id: params.account }} />
+      <AccountDetails paramAccount={params.account} />
     </div>
   );
 }
