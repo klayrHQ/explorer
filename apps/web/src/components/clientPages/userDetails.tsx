@@ -2,7 +2,13 @@
 
 import { FlexGrid, TabButtons, Typography, CopyIcon } from '@repo/ui/atoms';
 import { DetailsSection, SectionHeader, TableContainer, UserBanner } from '@repo/ui/organisms';
-import { UserType, UsersType, TransactionType, ValidatorType } from '../../utils/types.ts';
+import {
+  UserType,
+  UsersType,
+  TransactionType,
+  ValidatorType,
+  TokenType,
+} from '../../utils/types.ts';
 import { useState, useEffect } from 'react';
 import { DataType } from '@repo/ui/types';
 import BannerBG from '../../assets/images/bannerBG.png';
@@ -13,21 +19,25 @@ import {
   callGetStakes,
   callGetStakers,
   callGetUsers,
+  callGetTokens,
 } from '../../utils/api/apiCalls.tsx';
 import {
   transactionTableHead,
   validatorEventsTableHead,
   validatorStakeOutgoingTableHead,
+  userTokensTableHead,
 } from '../../utils/helpers/tableHeaders.tsx';
 import {
   createTransactionRows,
   createValidatorEventsRow,
   createValidatorOutgoingStakeRows,
+  createUserDetailsTokensRow,
 } from '../../utils/helpers/helper.tsx';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
+import { useChainNetwork } from '../../providers/chainNetworkProvider';
 import { useInitializeFavourites } from '../../store/favouritesStore.ts';
 
 export const UserDetails = ({ params }: { params: { id: string } }) => {
@@ -41,10 +51,14 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
   const [outgoingStakes, setOutgoingStakes] = useState<any[]>([]);
   const [incomingStakes, setIncomingStakes] = useState<any[]>([]);
   const [validator, setValidator] = useState<ValidatorType>();
+  const [tokens, setTokens] = useState<TokenType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
+
+  const { currentChain } = useChainNetwork();
+  console.log(currentChain);
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
@@ -135,12 +149,21 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
         })
         .catch((error) => console.error('Error fetching events:', error));
 
+      const tokensPromise = callGetTokens({
+        address: user.address,
+      })
+        .then((data) => {
+          setTokens(data.data as unknown as TokenType[]);
+        })
+        .catch((error) => console.error('Error fetching tokens:', error));
+
       Promise.all([
         transactionsPromise,
         outgoingStakesPromise,
         validatorPromise,
         eventsPromise,
         incomingStakesPromise,
+        tokensPromise,
       ]).finally(() => setLoading(false));
     }
   }, [
@@ -196,6 +219,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
     loading,
     basePath,
   );
+  const tokensRows = createUserDetailsTokensRow(tokens, currentChain, loading);
 
   const tabs = [
     {
@@ -258,6 +282,26 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
     },
     {
       value: 4,
+      label: 'Tokens',
+      icon: 'CryptoCurrency',
+      content: (
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          <SectionHeader
+            count={outgoingStakes.length}
+            title={`${user?.name}'s tokens`}
+            titleSizeNotLink={'h5'}
+          />
+          <TableContainer
+            headCols={userTokensTableHead}
+            keyPrefix={'validator-blocks'}
+            rows={tokensRows}
+          />
+        </FlexGrid>
+      ),
+    },
+
+    {
+      value: 5,
       label: 'Events',
       icon: 'List',
       content: (

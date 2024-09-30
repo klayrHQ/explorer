@@ -494,3 +494,24 @@ export const chainsTableHead = [
     children: 'Last Updated',
   },
 ];
+
+export const userTokensTableHead = [
+  {
+    children: 'Name',
+  },
+  {
+    children: 'Total amount',
+  },
+  {
+    children: 'Available amount',
+  },
+  {
+    children: 'Locked amount',
+  },
+  {
+    children: 'Claimable rewards',
+  },
+  {
+    children: 'Active chain',
+  },
+];

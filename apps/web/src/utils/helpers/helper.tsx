@@ -8,6 +8,7 @@ import {
   TransactionType,
   ValidatorType,
   NodeInfoType,
+  TokenType,
 } from '../types.ts';
 import {
   dayjs,
@@ -32,6 +33,8 @@ import {
   FlexGrid,
   IconButton,
   ImageContainer,
+  Avatar,
+  TokenCard,
 } from '@repo/ui/atoms';
 import { Link } from '@repo/ui/atoms';
 import React from 'react';
@@ -888,7 +891,7 @@ export const createFavouritesRows = (
   favourites: FavouriteType[],
   loading: boolean,
   basePath: string,
-  removeFavourite: (favourite: FavouriteType) => void
+  removeFavourite: (favourite: FavouriteType) => void,
 ) => {
   return !loading
     ? favourites?.map((fav) => {
@@ -1060,4 +1063,109 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
         };
       })
     : getTableSkeletons(7);
+};
+
+export const createUserDetailsTokensRow = (
+  token: TokenType[],
+  chain: ChainType,
+  loading: boolean,
+) => {
+  return !loading
+    ? token?.map((token) => {
+        const totalBalance =
+          Number(token.availableBalance) + Number(token.lockedBalances?.[0]?.amount ?? 0);
+        const availablePercentage =
+          totalBalance > 0
+            ? ((Number(token.availableBalance) / totalBalance) * 100).toFixed(2)
+            : '0.00';
+        const lockedPercentage =
+          totalBalance > 0
+            ? ((Number(token.lockedBalances?.[0]?.amount ?? 0) / totalBalance) * 100).toFixed(2)
+            : '0.00';
+
+        return {
+          cells: [
+            {
+              children: (
+                <TokenCard
+                  chainImage={
+                    'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
+                  }
+                  image={'https://cdn.pixabay.com/photo/2023/10/17/17/01/cat-8321993_1280.jpg'}
+                  name={'Monkeyz'}
+                  symbol={'MON'}
+                />
+              ),
+            },
+            {
+              children: (
+                <div className="flex flex-col">
+                  <Currency
+                    amount={totalBalance}
+                    decimals={0}
+                    fontWeight={'semibold'}
+                    symbol={'KLY'}
+                  />
+                  <Currency
+                    amount={Number(token.availableBalance) * 2}
+                    className="text-onBackgroundLow text-caption"
+                    decimals={2}
+                    sign={'$'}
+                  />
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex flex-col ">
+                  <Currency
+                    amount={token.availableBalance}
+                    decimals={0}
+                    fontWeight={'semibold'}
+                    symbol={'KLY'}
+                  />
+                  <Typography color={'onBackgroundLow'} variant={'caption'}>
+                    {availablePercentage}
+                    {'%'}
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex flex-col ">
+                  <Currency
+                    amount={token.lockedBalances?.[0]?.amount ?? 0}
+                    decimals={0}
+                    fontWeight={'semibold'}
+                    symbol={'KLY'}
+                  />
+                  <Typography color={'onBackgroundLow'} variant={'caption'}>
+                    {lockedPercentage}
+                    {'%'}
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              children: <Typography color={'onBackgroundLow'}>{'2'}</Typography>,
+            },
+            {
+              children: (
+                <div className="flex gap-2 items-center">
+                  <ImageContainer alt={'kly'} src={chain.logo} variant={'avatar'} />
+                  <Typography
+                    color={'onBackgroundMedium'}
+                    fontWeight={'semibold'}
+                    variant={'paragraph-sm'}
+                  >
+                    {chain.chainName}
+                  </Typography>
+                </div>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(6);
 };

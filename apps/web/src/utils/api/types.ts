@@ -56,3 +56,7 @@ export interface UsersQueryParams {
   limit?: string;
   offset?: number;
 }
+
+export interface TokensQueryParams {
+  address?: string;
+}

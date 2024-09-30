@@ -12,6 +12,7 @@ import {
   StakesType,
   StakersType,
   UserType,
+  TokenType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
 import {
@@ -21,6 +22,7 @@ import {
   ValidatorQueryParams,
   StakersQueryParams,
   UsersQueryParams,
+  TokensQueryParams,
 } from './types';
 import { NextValidatorType } from '@repo/ui/types';
 
@@ -97,4 +99,8 @@ export const callGetStakers = async (
 
 export const callGetUsers = async (params: UsersQueryParams): Promise<GatewayRes<UserType>> => {
   return apiCall<UserType>('account', params);
+};
+
+export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayRes<TokenType>> => {
+  return apiCall<TokenType>('token/balances', params);
 };

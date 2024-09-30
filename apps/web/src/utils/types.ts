@@ -248,3 +248,14 @@ export interface FavouriteType {
   totalStake: string;
   stakeCapacity: string;*/
 }
+
+export interface LocalTokenBalancesType {
+  amount: string;
+  module: string;
+}
+
+export interface TokenType {
+  tokenId: string;
+  availableBalance: string;
+  lockedBalances: LocalTokenBalancesType[];
+}
