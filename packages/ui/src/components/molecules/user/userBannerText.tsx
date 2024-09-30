@@ -6,7 +6,6 @@ export interface ValidatorBannerTextProps {
   coinRate?: number;
   value?: string | number;
   valueSymbol?: string;
-  rank: number | string;
 }
 
 export const UserBannerText = ({
@@ -15,7 +14,6 @@ export const UserBannerText = ({
   coinRate,
   value,
   valueSymbol,
-  rank,
 }: ValidatorBannerTextProps) => {
   const dollarValue = coinRate ? Number(value) * Number(coinRate) : 0;
 
@@ -23,9 +21,6 @@ export const UserBannerText = ({
     <div className="transitionBannerContainerWidthMobile desktop:max-w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'user'}
-      </Typography>
-      <Typography fontWeight="semibold" variant="paragraph-md">
-        #{rank}
       </Typography>
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'with'}

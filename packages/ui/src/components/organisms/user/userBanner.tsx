@@ -16,14 +16,11 @@ export const UserBanner = ({
   coinRate,
   value,
   valueSymbol,
-  rank,
   image,
   basePath,
   isFavorite,
   setFavorite,
   removeFavorite,
-
-  ...props
 }: UserBannerProps) => {
   return (
     <BannerFrame image={image}>
@@ -49,7 +46,6 @@ export const UserBanner = ({
           coinRate={coinRate}
           incomingTransactions={incomingTransactions}
           outgoingTransactions={outgoingTransactions}
-          rank={rank}
           value={value}
           valueSymbol={valueSymbol}
         />
