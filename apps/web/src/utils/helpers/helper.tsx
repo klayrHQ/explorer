@@ -921,11 +921,7 @@ export const createFavouritesRows = (
     : getTableSkeletons(favouritesTableHead.length);
 };
 
-export const createAccountsRows = (
-  accounts: AccountType[],
-  loading: boolean,
-  basePath: string,
-) => {
+export const createAccountsRows = (accounts: AccountType[], loading: boolean, basePath: string) => {
   return !loading
     ? accounts?.map((account, index) => {
         return {
@@ -937,7 +933,7 @@ export const createAccountsRows = (
             {
               //mock_data
               children: (
-                <Link basePath={basePath} href={`/accounts/${account?.address}`}>
+                <Link basePath={basePath} href={`/account/${account?.address}`}>
                   <div className={` relative inline-flex items-center gap-1`}>
                     <UserAccountCard
                       address={account?.address}
