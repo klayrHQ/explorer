@@ -37,6 +37,7 @@ import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
+import { useChainNetwork } from '../../providers/chainNetworkProvider';
 import { useInitializeFavourites } from '../../store/favouritesStore.ts';
 
 export const UserDetails = ({ params }: { params: { id: string } }) => {
@@ -55,6 +56,9 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
+
+  const { currentChain } = useChainNetwork();
+  console.log(currentChain);
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
@@ -215,7 +219,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
     loading,
     basePath,
   );
-  const tokensRows = createUserDetailsTokensRow(tokens, loading);
+  const tokensRows = createUserDetailsTokensRow(tokens, currentChain, loading);
 
   const tabs = [
     {

@@ -1065,7 +1065,11 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
     : getTableSkeletons(7);
 };
 
-export const createUserDetailsTokensRow = (token: TokenType[], loading: boolean) => {
+export const createUserDetailsTokensRow = (
+  token: TokenType[],
+  chain: ChainType,
+  loading: boolean,
+) => {
   return !loading
     ? token?.map((token) => {
         const totalBalance =
@@ -1149,19 +1153,13 @@ export const createUserDetailsTokensRow = (token: TokenType[], loading: boolean)
             {
               children: (
                 <div className="flex gap-2 items-center">
-                  <ImageContainer
-                    alt={'kly'}
-                    src={
-                      'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
-                    }
-                    variant={'avatar'}
-                  />
+                  <ImageContainer alt={'kly'} src={chain.logo} variant={'avatar'} />
                   <Typography
                     color={'onBackgroundMedium'}
                     fontWeight={'semibold'}
                     variant={'paragraph-sm'}
                   >
-                    {'Klay-main'}
+                    {chain.chainName}
                   </Typography>
                 </div>
               ),
