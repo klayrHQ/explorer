@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
-import { Users } from '../../../../components/clientPages/users';
+import { Accounts } from '../../../../components/clientPages/accounts';
 
 export default function Page() {
   return (
     <Suspense>
-      <Users />
+      <Accounts />
     </Suspense>
   );
 }

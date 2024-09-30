@@ -1,10 +1,10 @@
 'use client';
 
 import { FlexGrid, TabButtons, Typography, CopyIcon } from '@repo/ui/atoms';
-import { DetailsSection, SectionHeader, TableContainer, UserBanner } from '@repo/ui/organisms';
+import { DetailsSection, SectionHeader, TableContainer, AccountBanner } from '@repo/ui/organisms';
 import {
-  UserType,
-  UsersType,
+  UserAccountType,
+  AccountsType,
   TransactionType,
   ValidatorType,
   TokenType,
@@ -18,7 +18,7 @@ import {
   callGetEvents,
   callGetStakes,
   callGetStakers,
-  callGetUsers,
+  callGetAccounts,
   callGetTokens,
 } from '../../utils/api/apiCalls.tsx';
 import {
@@ -37,13 +37,13 @@ import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
-import { useChainNetwork } from '../../providers/chainNetworkProvider';
+import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { useInitializeFavourites } from '../../store/favouritesStore.ts';
 
-export const UserDetails = ({ params }: { params: { id: string } }) => {
+export const AccountDetails = ({ params }: { params: { id: string } }) => {
   useInitializeFavourites();
 
-  const [user, setUser] = useState<UserType>();
+  const [user, setUser] = useState<UserAccountType>();
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [transactionsMeta, setTransactionsMeta] = useState<any>({});
   const [events, setEvents] = useState<any[]>([]);
@@ -77,7 +77,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     setLoading(true);
-    callGetUsers({
+    callGetAccounts({
       address: params.id,
     })
       .then((data) => {
@@ -331,7 +331,7 @@ export const UserDetails = ({ params }: { params: { id: string } }) => {
 
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
-      <UserBanner
+      <AccountBanner
         basePath={basePath}
         coinRate={0.2}
         image={BannerBG.src}
