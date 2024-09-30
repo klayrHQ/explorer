@@ -3,18 +3,18 @@ import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useSearchParams } from 'next/navigation';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
-import { callGetUsers } from '../../utils/api/apiCalls.tsx';
-import { usersTableHead } from '../../utils/helpers/tableHeaders';
-import { createUsersRows } from '../../utils/helpers/helper.tsx';
+import { callGetAccounts } from '../../utils/api/apiCalls.tsx';
+import { accountsTableHead } from '../../utils/helpers/tableHeaders.tsx';
+import { createAccountsRows } from '../../utils/helpers/helper.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
-export const Users = () => {
+export const Accounts = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
 
   const {
-    data: users,
-    totalItems: totalUsers,
+    data: accounts,
+    totalItems: totalAccounts,
     loading,
     pageNumber,
     limit,
@@ -24,16 +24,16 @@ export const Users = () => {
     handleLimitChange,
     handleSortChange,
   } = usePaginationAndSorting({
-    fetchFunction: callGetUsers,
+    fetchFunction: callGetAccounts,
     defaultLimit: searchParams.get('limit') || '100',
   });
-  const rows = createUsersRows(users, loading, basePath);
+  const rows = createAccountsRows(accounts, loading, basePath);
 
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto mb-12" direction={'col'}>
       <SectionHeader count={100} title={'Top holders'} />
       <TableContainer
-        headCols={usersTableHead(handleSortChange, sortField, sortOrder)}
+        headCols={accountsTableHead(handleSortChange, sortField, sortOrder)}
         keyPrefix={'transactions'}
         rows={rows}
       />

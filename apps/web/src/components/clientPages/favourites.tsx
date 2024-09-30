@@ -1,8 +1,8 @@
 'use client';
 import { AddFavouriteContainer, SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { favouritesTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import {Button, FlexGrid, Modal, NotFound, Snackbar, Typography} from '@repo/ui/atoms';
-import React, {ReactNode, useEffect, useState} from 'react';
+import { Button, FlexGrid, Modal, NotFound, Snackbar, Typography } from '@repo/ui/atoms';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { FavouriteType } from '../../utils/types.ts';
 import { createFavouritesRows } from '../../utils/helpers/helper.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
@@ -14,7 +14,10 @@ export const Favourites = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<FavouriteType | null>(null);
   const basePath = useBasePath();
-  const [snackbarContent, setSnackbarContent] = useState<{title: string, text: ReactNode}>({ title: '', text: '' });
+  const [snackbarContent, setSnackbarContent] = useState<{ title: string; text: ReactNode }>({
+    title: '',
+    text: '',
+  });
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
 
   const favourites = useFavouritesStore((state) => state.favourites);
@@ -34,7 +37,11 @@ export const Favourites = () => {
       title: 'User added',
       text: (
         <span>
-          {'You have successfully added '} <Typography bold color={'onBackgroundHigh'}>{selected?.name ?? selected?.address}</Typography> {' to your favourites'}
+          {'You have successfully added '}{' '}
+          <Typography bold color={'onBackgroundHigh'}>
+            {selected?.name ?? selected?.address}
+          </Typography>{' '}
+          {' to your favourites'}
         </span>
       ),
     });
@@ -53,7 +60,11 @@ export const Favourites = () => {
       title: 'User removed',
       text: (
         <span>
-          {'You have successfully removed '} <Typography bold color={'onBackgroundHigh'}>{favourite?.name ?? favourite?.address}</Typography> {' from your favourites'}
+          {'You have successfully removed '}{' '}
+          <Typography bold color={'onBackgroundHigh'}>
+            {favourite?.name ?? favourite?.address}
+          </Typography>{' '}
+          {' from your favourites'}
         </span>
       ),
     });
@@ -89,7 +100,7 @@ export const Favourites = () => {
         <div className={'mt-4xl w-full'}>
           <NotFound
             headerText={'No favourites yet'}
-            subheaderText={'Click on the button above to start adding favourite users'}
+            subheaderText={'Click on the button above to start adding favourite accounts'}
           />
         </div>
       ) : (

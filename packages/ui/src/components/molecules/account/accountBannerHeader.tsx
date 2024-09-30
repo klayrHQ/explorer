@@ -7,7 +7,7 @@ export interface ValidatorBannerHeaderProps {
   status: string;
 }
 
-export const UserBannerHeader = ({
+export const AccountBannerHeader = ({
   senderAddress = '',
   senderName,
   status,

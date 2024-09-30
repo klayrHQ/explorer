@@ -5,7 +5,7 @@ import {
   DetailsSection,
   SectionHeader,
   TableContainer,
-  UserBanner,
+  AccountBanner,
   ValidatorBanner,
 } from '@repo/ui/organisms';
 import {
@@ -26,7 +26,7 @@ import {
   callGetEvents,
   callGetStakes,
   callGetStakers,
-  callGetUsers,
+  callGetAccounts,
   callGetTokens,
   callGetBlocks,
 } from '../../utils/api/apiCalls.tsx';
@@ -48,7 +48,7 @@ import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
-import { useChainNetwork } from '../../providers/chainNetworkProvider';
+import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { useInitializeFavourites } from '../../store/favouritesStore.ts';
 
 export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
@@ -94,7 +94,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
 
   useEffect(() => {
     setLoading(true);
-    callGetUsers({
+    callGetAccounts({
       //todo uncomment when name filter is implemented to accounts endpoint
       /*...(!paramIsName ? {address: paramAccount} : {name: paramAccount})*/
       ...{ address: paramAccount },
@@ -445,32 +445,32 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           valueSymbol="KLY"
         />
       ) : (
-        <UserBanner
-          basePath={basePath}
-          coinRate={0.2}
-          image={BannerBG.src}
-          incomingTransactions={incomingStakes.length}
-          isFavorite={isFavourite({ address: account?.address ?? '' })}
-          outgoingTransactions={outgoingStakes.length}
-          rank={''}
-          removeFavorite={() => {
-            if (account?.address) {
-              removeFavourite({ address: account.address });
-              setIsFav(false);
-            }
-          }}
-          senderAddress={account?.address ?? undefined}
-          senderName={account?.name ?? undefined}
-          setFavorite={() => {
-            if (account?.address) {
-              addFavourite({ address: account.address });
-              setIsFav(true);
-            }
-          }}
-          status={'active'}
-          value={232}
-          valueSymbol={'KLY'}
-        />
+          <AccountBanner
+              basePath={basePath}
+              coinRate={0.2}
+              image={BannerBG.src}
+              incomingTransactions={incomingStakes.length}
+              isFavorite={isFavourite({ address: account?.address ?? '' })}
+              outgoingTransactions={outgoingStakes.length}
+              rank={''}
+              removeFavorite={() => {
+                if (account?.address) {
+                  removeFavourite({ address: account.address });
+                  setIsFav(false);
+                }
+              }}
+              senderAddress={account?.address ?? undefined}
+              senderName={account?.name ?? undefined}
+              setFavorite={() => {
+                if (account?.address) {
+                  addFavourite({ address: account.address });
+                  setIsFav(true);
+                }
+              }}
+              status={'active'}
+              value={232}
+              valueSymbol={'KLY'}
+          />
       )}
       <div className="desktop:hidden w-full">
         <TabButtons padding="6" showLabel={false} tabs={tabs} width="full" />

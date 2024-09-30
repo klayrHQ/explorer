@@ -14,7 +14,7 @@ type UserBannerButtonProps = {
   removeFavorite: () => void;
 };
 
-export const UserBannerButtons = ({
+export const AccountBannerButtons = ({
   validatorAddress,
   className,
   basePath,
@@ -59,40 +59,39 @@ export const UserBannerButtons = ({
             </FlexGrid>
           </Link>
 
-
-            {/* FAVORITE TRUE */}
-            {isFavorite ? (
-              <FlexGrid
-                alignItems="center"
-                className="cursor-pointer hover:rounded-b-md hover:bg-gray-6 transition-all py-2.5 px-4 w-full"
-                direction="row"
-                gap="2"
-                justify="center"
-                mobileDirection="row"
-                onClick={removeFavorite}
-              >
-                <Icon color="onBackgroundLow" icon="Trash" size="inherit" />
-                <Typography color="onBackgroundMedium" fontWeight="semibold" variant="paragraph-md">
-                  Remove from favorites
-                </Typography>
-              </FlexGrid>
-            ) : (
-              //  FAVORITE FALSE
-              <FlexGrid
-                alignItems="center"
-                className="cursor-pointer hover:rounded-b-md hover:bg-gray-6 transition-all py-2.5 px-4 w-full"
-                direction="row"
-                gap="2"
-                justify="center"
-                mobileDirection="row"
-                onClick={setFavorite}
-              >
-                <Icon color="onBackgroundLow" icon="Plus" size="inherit" />
-                <Typography color="onBackgroundMedium" fontWeight="semibold" variant="paragraph-md">
-                  Add to favorites
-                </Typography>
-              </FlexGrid>
-            )}
+          {/* FAVORITE TRUE */}
+          {isFavorite ? (
+            <FlexGrid
+              alignItems="center"
+              className="cursor-pointer hover:rounded-b-md hover:bg-gray-6 transition-all py-2.5 px-4 w-full"
+              direction="row"
+              gap="2"
+              justify="center"
+              mobileDirection="row"
+              onClick={removeFavorite}
+            >
+              <Icon color="onBackgroundLow" icon="Trash" size="inherit" />
+              <Typography color="onBackgroundMedium" fontWeight="semibold" variant="paragraph-md">
+                Remove from favorites
+              </Typography>
+            </FlexGrid>
+          ) : (
+            //  FAVORITE FALSE
+            <FlexGrid
+              alignItems="center"
+              className="cursor-pointer hover:rounded-b-md hover:bg-gray-6 transition-all py-2.5 px-4 w-full"
+              direction="row"
+              gap="2"
+              justify="center"
+              mobileDirection="row"
+              onClick={setFavorite}
+            >
+              <Icon color="onBackgroundLow" icon="Plus" size="inherit" />
+              <Typography color="onBackgroundMedium" fontWeight="semibold" variant="paragraph-md">
+                Add to favorites
+              </Typography>
+            </FlexGrid>
+          )}
         </FlexGrid>
       </Popover>
     </div>

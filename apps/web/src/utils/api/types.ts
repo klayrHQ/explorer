@@ -50,7 +50,7 @@ export interface StakersQueryParams {
   name?: number;
 }
 
-export interface UsersQueryParams {
+export interface AccountQueryParams {
   address?: string;
   sort? : string;
   limit?: string;

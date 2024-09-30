@@ -49,7 +49,7 @@ import {
   transactionTableHead,
   blockTableHead,
   stakesOverviewTableHead,
-  usersTableHead,
+  accountsTableHead,
   favouritesTableHead,
 } from './tableHeaders.tsx';
 import { ChainType, DataType } from '@repo/ui/types';
@@ -921,9 +921,13 @@ export const createFavouritesRows = (
     : getTableSkeletons(favouritesTableHead.length);
 };
 
-export const createUsersRows = (users: AccountType[], loading: boolean, basePath: string) => {
+export const createAccountsRows = (
+  accounts: AccountType[],
+  loading: boolean,
+  basePath: string,
+) => {
   return !loading
-    ? users?.map((user, index) => {
+    ? accounts?.map((account, index) => {
         return {
           cells: [
             {
@@ -933,13 +937,13 @@ export const createUsersRows = (users: AccountType[], loading: boolean, basePath
             {
               //mock_data
               children: (
-                <Link basePath={basePath} href={`/users/${user?.address}`}>
+                <Link basePath={basePath} href={`/accounts/${account?.address}`}>
                   <div className={` relative inline-flex items-center gap-1`}>
                     <UserAccountCard
-                      address={user?.address}
+                      address={account?.address}
                       addressColor="onBackgroundLow"
                       addressVariant="caption"
-                      name={user?.name ?? undefined}
+                      name={account?.name ?? undefined}
                       nameColor="onBackgroundMedium"
                       nameFontWeight="semibold"
                       nameVariant="paragraph-sm"
@@ -953,7 +957,7 @@ export const createUsersRows = (users: AccountType[], loading: boolean, basePath
               children: (
                 <div className="flex flex-col items-end">
                   <Currency
-                    amount={user?.totalBalance}
+                    amount={account?.totalBalance}
                     className="font-semibold"
                     decimals={0}
                     symbol={'KLY'}
@@ -966,7 +970,7 @@ export const createUsersRows = (users: AccountType[], loading: boolean, basePath
               children: (
                 <div className="flex flex-col items-end">
                   <Currency
-                    amount={user?.availableBalance}
+                    amount={account?.availableBalance}
                     className="font-semibold"
                     decimals={0}
                     symbol={'KLY'}
@@ -974,7 +978,8 @@ export const createUsersRows = (users: AccountType[], loading: boolean, basePath
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
                       (
-                        (Number(user?.availableBalance || 0) / Number(user?.totalBalance || 1)) *
+                        (Number(account?.availableBalance || 0) /
+                          Number(account?.totalBalance || 1)) *
                         100
                       ).toFixed(2),
                     )}
@@ -988,7 +993,7 @@ export const createUsersRows = (users: AccountType[], loading: boolean, basePath
               children: (
                 <div className="flex flex-col items-end">
                   <Currency
-                    amount={user?.lockedBalance}
+                    amount={account?.lockedBalance}
                     className="font-semibold"
                     decimals={0}
                     symbol={'KLY'}
@@ -996,7 +1001,7 @@ export const createUsersRows = (users: AccountType[], loading: boolean, basePath
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
                       (
-                        (Number(user?.lockedBalance || 0) / Number(user?.totalBalance || 1)) *
+                        (Number(account?.lockedBalance || 0) / Number(account?.totalBalance || 1)) *
                         100
                       ).toFixed(2),
                     )}
