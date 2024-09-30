@@ -283,11 +283,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       label: 'Details',
       icon: 'InfoSquare',
       content: (
-        <DetailsSection
-          data={details}
-          json={account as unknown as DataType}
-          title={'User Details'}
-        />
+        <DetailsSection data={details} json={account as unknown as DataType} title={'Details'} />
       ),
     },
     ...(isValidator
