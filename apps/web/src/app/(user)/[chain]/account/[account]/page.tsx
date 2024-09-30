@@ -1,4 +1,4 @@
-import { UserDetails } from '../../../../components/clientPages/userDetails';
+import { UserDetails } from '../../../../../components/clientPages/userDetails';
 
 export default function Page({ params }: { params: { account: string } }) {
   return (
