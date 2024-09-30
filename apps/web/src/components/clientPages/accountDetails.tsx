@@ -434,43 +434,55 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           blockTime={2} // TODO: Implement
           capacity={stakeCapacity} // TODO: Implement
           image={BannerBG.src}
+          isFavorite={isFavourite({ address: account?.address ?? '' })}
           notificationValue={validator?.rank || 0}
+          removeFavorite={() => {
+            if (account?.address) {
+              removeFavourite({ address: account.address });
+              setIsFav(false);
+            }
+          }}
           selfStake={validator?.selfStake || 0}
           selfStakeSymbol="KLY"
           senderAddress={validator?.account.address || ''}
           senderName={validator?.account.name || ''}
-          //stakes={incomingStake.length} // TODO: Implement
+          setFavorite={() => {
+            if (account?.address) {
+              addFavourite({ address: account.address });
+              setIsFav(true);
+            }
+          }}
           status={validator?.status || ''}
           value={validator?.totalStake}
           valueSymbol="KLY"
         />
       ) : (
-          <AccountBanner
-              basePath={basePath}
-              coinRate={0.2}
-              image={BannerBG.src}
-              incomingTransactions={incomingStakes.length}
-              isFavorite={isFavourite({ address: account?.address ?? '' })}
-              outgoingTransactions={outgoingStakes.length}
-              rank={''}
-              removeFavorite={() => {
-                if (account?.address) {
-                  removeFavourite({ address: account.address });
-                  setIsFav(false);
-                }
-              }}
-              senderAddress={account?.address ?? undefined}
-              senderName={account?.name ?? undefined}
-              setFavorite={() => {
-                if (account?.address) {
-                  addFavourite({ address: account.address });
-                  setIsFav(true);
-                }
-              }}
-              status={'active'}
-              value={232}
-              valueSymbol={'KLY'}
-          />
+        <AccountBanner
+          basePath={basePath}
+          coinRate={0.2}
+          image={BannerBG.src}
+          incomingTransactions={incomingStakes.length}
+          isFavorite={isFavourite({ address: account?.address ?? '' })}
+          outgoingTransactions={outgoingStakes.length}
+          rank={''}
+          removeFavorite={() => {
+            if (account?.address) {
+              removeFavourite({ address: account.address });
+              setIsFav(false);
+            }
+          }}
+          senderAddress={account?.address ?? undefined}
+          senderName={account?.name ?? undefined}
+          setFavorite={() => {
+            if (account?.address) {
+              addFavourite({ address: account.address });
+              setIsFav(true);
+            }
+          }}
+          status={'active'}
+          value={232}
+          valueSymbol={'KLY'}
+        />
       )}
       <div className="desktop:hidden w-full">
         <TabButtons padding="6" showLabel={false} tabs={tabs} width="full" />
