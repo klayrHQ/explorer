@@ -12,6 +12,6 @@ export * from './table/tableContainer.tsx';
 export * from './validator/validatorBanner.tsx';
 export * from './blockDetails/blockDetailsBanner.tsx';
 export * from './sections/detailsSection.tsx';
-export * from './user/userBanner.tsx';
+export * from './account/accountBanner.tsx';
 export * from './favourites/addFavouriteContainer.tsx';
 export * from './chains/chainBanner.tsx';

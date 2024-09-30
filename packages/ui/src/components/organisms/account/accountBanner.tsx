@@ -2,12 +2,12 @@ import { BannerFrame } from '../../atoms';
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
 import { Link } from '../../atoms';
-import { UserBannerText } from '../../molecules/user/userBannerText';
-import { UserBannerHeader } from '../../molecules/user/userBannerHeader';
-import { UserBannerProps } from '../../../types/types';
-import { UserBannerButtons } from '../../molecules/user/userBannerButton';
+import { AccountBannerText } from '../../molecules/account/accountBannerText';
+import { AccountBannerHeader } from '../../molecules/account/accountBannerHeader';
+import { AccountBannerProps } from '../../../types/types';
+import { AccountBannerButtons } from '../../molecules/account/accountBannerButton';
 
-export const UserBanner = ({
+export const AccountBanner = ({
   senderAddress,
   senderName,
   status,
@@ -21,7 +21,7 @@ export const UserBanner = ({
   isFavorite,
   setFavorite,
   removeFavorite,
-}: UserBannerProps) => {
+}: AccountBannerProps) => {
   return (
     <BannerFrame image={image}>
       <FlexGrid direction="col" gap="0" justify="between">
@@ -33,8 +33,12 @@ export const UserBanner = ({
               icon="ArrowLeft"
             />
           </Link>
-          <UserBannerHeader senderAddress={senderAddress} senderName={senderName} status={status} />
-          <UserBannerButtons
+          <AccountBannerHeader
+            senderAddress={senderAddress}
+            senderName={senderName}
+            status={status}
+          />
+          <AccountBannerButtons
             className="desktop:hidden"
             isFavorite={isFavorite}
             removeFavorite={removeFavorite}
@@ -42,7 +46,7 @@ export const UserBanner = ({
             validatorAddress={senderAddress || ''}
           />
         </FlexGrid>
-        <UserBannerText
+        <AccountBannerText
           coinRate={coinRate}
           incomingTransactions={incomingTransactions}
           outgoingTransactions={outgoingTransactions}
@@ -50,7 +54,7 @@ export const UserBanner = ({
           valueSymbol={valueSymbol}
         />
       </FlexGrid>
-      <UserBannerButtons
+      <AccountBannerButtons
         className="absolute top-8 right-32 hidden desktop:flex"
         isFavorite={isFavorite}
         removeFavorite={removeFavorite}

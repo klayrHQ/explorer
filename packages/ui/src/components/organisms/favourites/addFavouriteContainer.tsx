@@ -29,14 +29,18 @@ export const AddFavouriteContainer = ({
   return (
     <FlexGrid direction={'col'} gap={'3xl'}>
       <FavouritesSearch
-        selected={selected}
-        setSelected={setSelected}
         callSearch={callSearch}
         searchResult={searchResult}
+        selected={selected}
         setSearchResults={setSearchResults}
+        setSelected={setSelected}
       />
       {selected && (
-        <FlexGrid className={'bg-backgroundPrimary py-3xl px-1.5xl rounded-xl w-full'} gap={'xl'} mobileDirection={'row'}>
+        <FlexGrid
+          className={'bg-backgroundPrimary py-3xl px-1.5xl rounded-xl w-full'}
+          gap={'xl'}
+          mobileDirection={'row'}
+        >
           <div
             className={'rounded-full mt-2xs'}
             style={{

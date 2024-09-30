@@ -215,7 +215,7 @@ export interface NewsCardProps {
 
 export type NewsCardPropsArray = NewsCardProps[];
 
-export interface UserBannerProps {
+export interface AccountBannerProps {
   senderAddress?: string;
   senderName?: string;
   status: string;

@@ -8,7 +8,7 @@ export interface ValidatorBannerTextProps {
   valueSymbol?: string;
 }
 
-export const UserBannerText = ({
+export const AccountBannerText = ({
   incomingTransactions,
   outgoingTransactions,
   coinRate,

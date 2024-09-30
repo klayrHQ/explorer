@@ -38,9 +38,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       href: `/transactions`,
     },
     {
-      label: 'Users',
+      label: 'Top Accounts',
       icon: 'Users',
-      href: `/users`,
+      href: `/accounts`,
     },
     {
       label: 'Validators',
@@ -78,9 +78,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
   const subMenu = [
     {
-      label: 'Users',
+      label: 'Top Accounts',
       icon: 'Users',
-      href: `/users`,
+      href: `/accounts`,
     },
     {
       label: 'Validators',

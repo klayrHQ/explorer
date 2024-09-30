@@ -442,7 +442,7 @@ export const favouritesTableHead = [
   },*/
 ];
 
-export const usersTableHead = (
+export const accountsTableHead = (
   onSortChange: (column: string) => void,
   sortField: string,
   sortOrder: string,

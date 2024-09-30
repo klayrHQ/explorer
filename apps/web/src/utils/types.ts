@@ -227,7 +227,7 @@ export type StakersType = {
   meta: MetaTransaction;
 };
 
-export type UserType = {
+export type UserAccountType = {
   lockedBalance: string | number;
   address: string;
   nonce: string;
@@ -237,8 +237,8 @@ export type UserType = {
   availableBalance: string;
 }
 
-export type UsersType = {
-  users: UserType[];
+export type AccountsType = {
+  users: UserAccountType[];
 };
 
 export interface FavouriteType {
