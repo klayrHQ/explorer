@@ -55,6 +55,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Tokens',
       icon: 'CryptoCurrency',
+      href: `/tokens`,
     },
     {
       label: 'Nodes',
@@ -95,7 +96,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Tokens',
       icon: 'CryptoCurrency',
-      disabled: true,
+      href: `/tokens`,
     },
     {
       label: 'Nodes',
