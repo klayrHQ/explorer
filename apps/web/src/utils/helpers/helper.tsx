@@ -1169,3 +1169,65 @@ export const createUserDetailsTokensRow = (
       })
     : getTableSkeletons(6);
 };
+
+export const createTokensRows = (tokens: TokenType[], loading: boolean) => {
+  return !loading
+    ? tokens?.map((token) => {
+        return {
+          cells: [
+            {
+              children: (
+                <Link href={`/tokens/${token.tokenId}`}>
+                  <TokenCard
+                    chainImage={
+                      'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
+                    }
+                    image={'https://cdn.pixabay.com/photo/2023/10/17/17/01/cat-8321993_1280.jpg'}
+                    name={'Monkeyz'}
+                    symbol={'MON'}
+                  />
+                </Link>
+              ),
+            },
+            {
+              children: (
+                <div className="flex gap-2 items-center">
+                  <ImageContainer
+                    alt={'kly'}
+                    src={
+                      'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
+                    }
+                    variant={'avatar'}
+                  />
+                  <Typography
+                    color={'onBackgroundMedium'}
+                    fontWeight={'semibold'}
+                    variant={'paragraph-sm'}
+                  >
+                    {'Klay-main'}
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-success rounded-full"></div>
+                  <Typography color=" " variant="paragraph-sm">
+                    {'Testnet'}
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <Typography color="onBackgroundLow" variant="paragraph-sm">
+                  {'The description of the token and its purpose'}
+                </Typography>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(4);
+};

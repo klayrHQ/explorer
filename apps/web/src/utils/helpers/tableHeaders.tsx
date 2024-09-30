@@ -515,3 +515,18 @@ export const userTokensTableHead = [
     children: 'Active chain',
   },
 ];
+
+export const tokensTableHead = [
+  {
+    children: 'Token',
+  },
+  {
+    children: 'Active chain',
+  },
+  {
+    children: 'Network',
+  },
+  {
+    children: 'Description',
+  },
+];
