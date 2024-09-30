@@ -259,3 +259,20 @@ export interface TokenType {
   availableBalance: string;
   lockedBalances: LocalTokenBalancesType[];
 }
+
+export interface NodeType {
+  chainID: string;
+  networkVersion: string;
+  nonce: string;
+  advertiseAddress: boolean;
+  options: {
+    height: number;
+    maxHeightPrevoted: number;
+    blockVersion: number;
+    lastBlockID: string;
+    legacy: any[];
+  };
+  ipAddress: string;
+  port: number;
+  peerId: string;
+}

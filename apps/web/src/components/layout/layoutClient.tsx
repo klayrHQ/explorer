@@ -60,6 +60,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Nodes',
       icon: 'MarkerPin',
+      href: `/nodes`,
     },
     {
       label: 'Stakes',
@@ -101,7 +102,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: 'Nodes',
       icon: 'MarkerPin',
-      disabled: true,
+      href: `/nodes`,
     },
   ];
 

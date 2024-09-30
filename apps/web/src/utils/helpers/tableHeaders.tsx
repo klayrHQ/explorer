@@ -530,3 +530,24 @@ export const tokensTableHead = [
     children: 'Description',
   },
 ];
+
+export const nodesTableHead = [
+  {
+    children: 'IP address ',
+  },
+  {
+    children: 'Port',
+  },
+  {
+    children: 'Country       ',
+  },
+  {
+    children: 'Version ',
+  },
+  {
+    children: 'Height',
+  },
+  {
+    children: 'Status',
+  },
+];
