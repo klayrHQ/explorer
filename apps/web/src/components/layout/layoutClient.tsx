@@ -71,6 +71,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       label: 'Chains',
       icon: 'Data',
       href: `/chains`,
+      basePath: '',
     },
     {
       label: 'NFTs',
@@ -131,6 +132,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       label: 'Chains',
       icon: 'Data',
       href: `/chains`,
+      basePath: '',
     },
     {
       label: 'NFTs',
