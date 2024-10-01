@@ -30,7 +30,7 @@ export const BlockDetailsBannerText = ({
       </Typography>
 
       {/* SENDER */}
-      <Link basePath={basePath} href={`/validators/${generatorAddress}`}>
+      <Link basePath={basePath} href={`/account/${generatorName ?? generatorAddress}`}>
         <UserAccountCard
           address={generatorAddress}
           addressColor="onBackground"

@@ -148,7 +148,10 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         label: 'Generator',
       },
       value: (
-        <Link basePath={useBasePath()} href={`/validators/${block?.generator?.address}`}>
+        <Link
+          basePath={useBasePath()}
+          href={`/account/${block?.generator.name ?? block?.generator?.address}`}
+        >
           <UserAccountCard
             address={block?.generator?.address ?? ''}
             name={block?.generator?.name}

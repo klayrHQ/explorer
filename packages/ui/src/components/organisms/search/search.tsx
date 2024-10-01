@@ -133,7 +133,11 @@ export const Search = ({
                 searchResult.validators.length > 0 &&
                 searchResult.validators.map((validator: any, index: number) => (
                   // eslint-disable-next-line react/no-array-index-key
-                  <Link basePath={basePath} href={`/validators/${validator.address}`} key={index}>
+                  <Link
+                    basePath={basePath}
+                    href={`/account/${validator.name ?? validator.address}`}
+                    key={index}
+                  >
                     <FlexGrid alignItems="center" direction={'row'} gap={'2'} mobileDirection="row">
                       <Avatar address={validator.address} circle size={30} />
                       <FlexGrid direction={'col'} gap={'1'}>

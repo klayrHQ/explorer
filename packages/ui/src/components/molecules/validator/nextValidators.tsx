@@ -20,7 +20,11 @@ export const NextValidators = ({ validators, basePath }: NextValidatorsProps) =>
       </Typography>
       <div className="flex gap-4">
         {validators.map((validator, index) => (
-          <Link basePath={basePath} href={`/validators/${validator.address}`} key={index}>
+          <Link
+            basePath={basePath}
+            href={`/account/${validator.name ?? validator.address}`}
+            key={index}
+          >
             <UserAccountCard
               address={validator.address}
               name={validator.name}

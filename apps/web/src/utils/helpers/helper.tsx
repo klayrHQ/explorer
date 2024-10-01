@@ -135,9 +135,7 @@ export const createTransactionRows = (
               children: (
                 <Link
                   basePath={basePath}
-                  href={
-                    transaction?.sender?.name ? `/validators/${transaction?.sender?.address}` : ``
-                  }
+                  href={`/account/${transaction?.sender?.name ?? transaction?.sender?.address}`}
                 >
                   <UserAccountCard
                     address={transaction?.sender?.address}
@@ -150,11 +148,7 @@ export const createTransactionRows = (
               children: transaction?.recipient ? (
                 <Link
                   basePath={basePath}
-                  href={
-                    transaction?.recipient?.name
-                      ? `/validators/${transaction?.recipient?.address}`
-                      : ``
-                  }
+                  href={`/account/${transaction?.recipient.name ?? transaction?.recipient?.address}`}
                 >
                   <UserAccountCard
                     address={transaction?.recipient?.address}
@@ -349,7 +343,10 @@ export const createValidatorsRows = (
           cells: [
             {
               children: (
-                <Link basePath={basePath} href={`/validators/${validator?.account.name}`}>
+                <Link
+                  basePath={basePath}
+                  href={`/account/${validator?.account.name ?? validator?.account.address}`}
+                >
                   <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
                     <NotificationIcon
                       className="absolute -translate-x-3 -translate-y-3"
@@ -508,7 +505,7 @@ export const createValidatorIncomingStakeRows = (
               children: (
                 <Link
                   basePath={basePath}
-                  href={incomingStake?.name ? `/validators/${incomingStake?.address}` : ``}
+                  href={`/account/${incomingStake?.name ?? incomingStake?.address}`}
                 >
                   <UserAccountCard address={incomingStake?.address} name={incomingStake?.name} />
                 </Link>
@@ -538,7 +535,7 @@ export const createValidatorOutgoingStakeRows = (
               children: (
                 <Link
                   basePath={basePath}
-                  href={outgoingStake?.name ? `/validators/${outgoingStake?.address}` : ``}
+                  href={`/account/${outgoingStake?.name ?? outgoingStake?.address}`}
                 >
                   <UserAccountCard address={outgoingStake?.address} name={outgoingStake?.name} />
                 </Link>
@@ -702,7 +699,7 @@ export const createStakesOverviewRows = (
               children: (
                 <Link
                   basePath={basePath}
-                  href={stake?.sender?.name ? `/validators/${stake?.sender?.address}` : ``}
+                  href={`/account/${stake?.sender?.name ?? stake?.sender?.address}`}
                 >
                   <UserAccountCard address={stake?.sender?.address} name={stake?.sender?.name} />
                 </Link>
@@ -723,7 +720,7 @@ export const createStakesOverviewRows = (
                             >
                               <Link
                                 basePath={basePath}
-                                href={param?.name ? `/validators/${param?.validatorAddress}` : ``}
+                                href={`/account/${param?.name ?? param?.validatorAddress}`}
                               >
                                 <UserAccountCard
                                   address={param?.validatorAddress}
@@ -754,7 +751,7 @@ export const createStakesOverviewRows = (
                             >
                               <Link
                                 basePath={basePath}
-                                href={param?.name ? `/validators/${param?.validatorAddress}` : ``}
+                                href={`/account/${param?.name ?? param?.validatorAddress}`}
                               >
                                 <UserAccountCard
                                   address={param?.validatorAddress}
@@ -848,7 +845,10 @@ export const createBlockRows = (
             },
             {
               children: (
-                <Link basePath={basePath} href={`/validators/${block.generator.address}`}>
+                <Link
+                  basePath={basePath}
+                  href={`/account/${block.generator.name ?? block.generator.address}`}
+                >
                   <UserAccountCard address={block.generator.address} name={block.generator.name} />
                 </Link>
               ),
@@ -899,7 +899,7 @@ export const createFavouritesRows = (
           cells: [
             {
               children: (
-                <Link basePath={basePath} href={`/validators/${fav.address}`}>
+                <Link basePath={basePath} href={`/account/${fav.name ?? fav.address}`}>
                   <UserAccountCard address={fav.address} name={fav.name} />
                 </Link>
               ),
@@ -933,7 +933,7 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
             {
               //mock_data
               children: (
-                <Link basePath={basePath} href={`/account/${account?.address}`}>
+                <Link basePath={basePath} href={`/account/${account?.name ?? account?.address}`}>
                   <div className={` relative inline-flex items-center gap-1`}>
                     <UserAccountCard
                       address={account?.address}

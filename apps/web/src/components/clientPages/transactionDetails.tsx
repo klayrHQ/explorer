@@ -134,7 +134,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       value: (
         <Link
           basePath={basePath}
-          href={transaction?.sender?.name ? `/validators/${transaction?.sender?.address}` : ``}
+          href={`/account/${transaction?.sender.name ?? transaction?.sender?.address}`}
         >
           <UserAccountCard
             address={transaction?.sender?.address ?? ''}
@@ -153,11 +153,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
             value: (
               <Link
                 basePath={basePath}
-                href={
-                  transaction?.recipient?.name
-                    ? `/validators/${transaction?.recipient?.address}`
-                    : ``
-                }
+                href={`/account/${transaction?.recipient.name ?? transaction?.recipient?.address}`}
               >
                 <UserAccountCard
                   address={transaction?.recipient?.address ?? ''}

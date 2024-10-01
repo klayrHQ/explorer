@@ -41,7 +41,7 @@ export const BannerText = ({
   return (
     <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth max-w-full flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
-      <Link basePath={basePath} href={senderName ? `/validators/${senderAddress}` : ''}>
+      <Link basePath={basePath} href={`/account/${senderName ?? senderAddress}`}>
         <UserAccountCard
           address={senderAddress}
           addressColor="onBackground"
@@ -62,7 +62,7 @@ export const BannerText = ({
 
       {/* RECEIVER */}
       {receiverAddress && (
-        <Link basePath={basePath} href={receiverName ? `/validators/${receiverAddress}` : ``}>
+        <Link basePath={basePath} href={`/account/${receiverName ?? receiverAddress}`}>
           <UserAccountCard
             address={receiverAddress}
             addressColor="onBackground"
