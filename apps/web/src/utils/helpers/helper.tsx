@@ -601,11 +601,7 @@ export const createValidatorBlockRows = (
               ),
             },
             {
-              children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {block.reward}
-                </Typography>
-              ),
+              children: <Currency amount={block.reward ?? 0} decimals={2} symbol={'KLY'} />,
             },
           ],
         };
