@@ -7,7 +7,7 @@ import {
   StakeType,
   TransactionType,
   ValidatorType,
-  NodeInfoType,
+  NodeType,
   TokenType,
 } from '../types.ts';
 import {
@@ -1231,4 +1231,64 @@ export const createTokensRows = (tokens: TokenType[], loading: boolean) => {
         };
       })
     : getTableSkeletons(4);
+};
+
+export const createNodesRows = (nodes: NodeType[], loading: boolean) => {
+  return !loading
+    ? nodes?.map((node) => {
+        return {
+          cells: [
+            {
+              children: (
+                <div className="flex gap-2 items-center">
+                  <Typography color={'onBackgroundLow'} variant={'paragraph-sm'}>
+                    {node.ipAddress}
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <Typography color={'onBackgroundLow'} variant={'paragraph-sm'}>
+                  {node.port}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <div className="flex gap-2 items-center">
+                  <div className="flex h-6 w-6 bg-white rounded-full items-center justify-center">
+                    <div className="flex h-3 w-3 bg-error rounded-full"></div>
+                  </div>
+                  <Typography
+                    color={'onBackgroundMedium'}
+                    fontWeight={'semibold'}
+                    variant={'paragraph-sm'}
+                  >
+                    {'Japan'}
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <Typography color={'onBackgroundLow'} variant={'paragraph-sm'}>
+                  {node.options.blockVersion}
+                </Typography>
+              ),
+            },
+            {
+              children: (
+                <Typography color={'onBackgroundLow'} variant={'paragraph-sm'}>
+                  {node.options.height}
+                </Typography>
+              ),
+            },
+            {
+              children: <StatusBadge status={'online'} />,
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(6);
 };

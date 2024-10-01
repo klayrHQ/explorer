@@ -52,6 +52,16 @@ const statusColors: { [key: string]: StatusColorProps } = {
     colorVariant: 'error',
     backgroundColor: 'redOpacity',
   },
+  online: {
+    borderColor: 'success',
+    colorVariant: 'success',
+    backgroundColor: 'greenOpacity',
+  },
+  offline: {
+    borderColor: 'error',
+    colorVariant: 'error',
+    backgroundColor: 'redOpacity',
+  },
 };
 
 type ValidatorStatusBadgeProps = {

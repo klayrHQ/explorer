@@ -13,6 +13,7 @@ import {
   StakersType,
   AccountType,
   TokenType,
+  NodeType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
 import {
@@ -105,4 +106,8 @@ export const callGetAccounts = async (
 
 export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayRes<TokenType>> => {
   return apiCall<TokenType>('token/balances', params);
+};
+
+export const callGetNodes = async (): Promise<GatewayRes<NodeType[]>> => {
+  return apiCall<NodeType[]>('network/peers');
 };
