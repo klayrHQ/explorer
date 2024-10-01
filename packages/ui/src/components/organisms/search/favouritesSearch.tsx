@@ -123,16 +123,16 @@ export const FavouritesSearch = ({
           }}
           style={{ width: inputWidth, zIndex: 999999 }}
         >
-          {searchResult?.validators && searchResult.blocks && searchResult.transactions && (
+          {searchResult?.accounts && searchResult.blocks && searchResult.transactions && (
             <FlexGrid
               className={`rounded-t-none rounded-md bg-backgroundSecondary border-solid border-borderMedium border p-4 max-h-96 overflow-y-auto overflow-x-hidden`}
               direction={'col'}
               gap="4"
             >
-              {searchResult?.validators &&
-                searchResult.validators.length > 0 &&
-                searchResult.validators.map((validator: any, index: number) => (
-                  // eslint-disable-next-line react/no-array-index-key
+              {searchResult?.accounts &&
+                searchResult.accounts.length > 0 &&
+                searchResult.accounts.map((account: any, index: number) => (
+                  // eslint-disable-next-line react/no-array-index-key, react/jsx-key
                   <FlexGrid
                     alignItems="center"
                     className={'cursor-pointer w-full'}
@@ -140,22 +140,22 @@ export const FavouritesSearch = ({
                     gap={'2'}
                     mobileDirection="row"
                     onClick={() => {
-                      setSelected({ address: validator.address, name: validator.name });
+                      setSelected({ address: account.address, name: account.name });
                       setOpen(false);
                     }}
                   >
-                    <Avatar address={validator.address} circle size={30} />
+                    <Avatar address={account.address} circle size={30} />
                     <FlexGrid direction={'col'} gap={'1'}>
                       <Typography color="onBackgroundLow" variant="caption">
-                        {'Validator'}
+                        {account.name ? 'Validator' : 'Account'}
                       </Typography>
                       <Typography color="onBackground" fontWeight="semibold" variant="paragraph-md">
-                        {validator.name}
+                        {account.name ?? account.address}
                       </Typography>
                     </FlexGrid>
                   </FlexGrid>
                 ))}
-              {searchResult.validators?.length === 0 &&
+              {searchResult.accounts?.length === 0 &&
                 searchResult.blocks?.length === 0 &&
                 searchResult.transactions?.length === 0 && (
                   <NotFound
