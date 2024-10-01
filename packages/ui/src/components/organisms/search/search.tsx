@@ -123,33 +123,33 @@ export const Search = ({
           }}
           style={{ width: inputWidth }}
         >
-          {searchResult?.validators && searchResult.blocks && searchResult.transactions && (
+          {searchResult?.blocks && searchResult.accounts && searchResult.transactions && (
             <FlexGrid
               className={`rounded-t-none rounded-md bg-backgroundDark border-solid border-gray-7 border p-4 max-h-96 overflow-y-auto overflow-x-hidden`}
               direction={'col'}
               gap="4"
             >
-              {searchResult?.validators &&
-                searchResult.validators.length > 0 &&
-                searchResult.validators.map((validator: any, index: number) => (
-                  // eslint-disable-next-line react/no-array-index-key
+              {searchResult?.accounts &&
+                searchResult.accounts.length > 0 &&
+                searchResult.accounts.map((account: any, index: number) => (
                   <Link
                     basePath={basePath}
-                    href={`/account/${validator.name ?? validator.address}`}
+                    href={`/account/${account.name ?? account.address}`}
+                    // eslint-disable-next-line react/no-array-index-key
                     key={index}
                   >
                     <FlexGrid alignItems="center" direction={'row'} gap={'2'} mobileDirection="row">
-                      <Avatar address={validator.address} circle size={30} />
+                      <Avatar address={account.address} circle size={30} />
                       <FlexGrid direction={'col'} gap={'1'}>
                         <Typography color="onBackgroundLow" variant="caption">
-                          {'Validator'}
+                          {account.name ? 'Validator' : 'Account'}
                         </Typography>
                         <Typography
                           color="onBackground"
                           fontWeight="semibold"
                           variant="paragraph-md"
                         >
-                          {validator.name}
+                          {account.name ?? account.address}
                         </Typography>
                       </FlexGrid>
                     </FlexGrid>
@@ -228,7 +228,7 @@ export const Search = ({
                     </FlexGrid>
                   </Link>
                 ))}
-              {searchResult.validators?.length === 0 &&
+              {searchResult.accounts?.length === 0 &&
                 searchResult.blocks?.length === 0 &&
                 searchResult.transactions?.length === 0 && (
                   <NotFound
