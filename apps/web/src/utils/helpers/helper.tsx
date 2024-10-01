@@ -603,7 +603,7 @@ export const createValidatorBlockRows = (
             {
               children: (
                 <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {'-'}
+                  {block.reward}
                 </Typography>
               ),
             },
