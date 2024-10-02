@@ -1,6 +1,6 @@
 'use client';
 
-import { FlexGrid, TabButtons, Typography, CopyIcon } from '@repo/ui/atoms';
+import { FlexGrid, TabButtons, Typography, CopyIcon, IconButton, Button } from '@repo/ui/atoms';
 import {
   DetailsSection,
   SectionHeader,
@@ -17,6 +17,7 @@ import {
   BlockDetailsType,
   MetaType,
 } from '../../utils/types.ts';
+import { NftCard } from '@repo/ui/molecules';
 import { useState, useEffect } from 'react';
 import { DataType } from '@repo/ui/types';
 import BannerBG from '../../assets/images/bannerBG.png';
@@ -36,6 +37,7 @@ import {
   validatorStakeOutgoingTableHead,
   userTokensTableHead,
   validatorBlocksTableHead,
+  nftsTableHead,
 } from '../../utils/helpers/tableHeaders.tsx';
 import {
   createTransactionRows,
@@ -43,6 +45,7 @@ import {
   createValidatorOutgoingStakeRows,
   createUserDetailsTokensRow,
   createValidatorBlockRows,
+  createNftsRows,
 } from '../../utils/helpers/helper.tsx';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
@@ -58,6 +61,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [account, setAccount] = useState<AccountType>();
   const [validator, setValidator] = useState<ValidatorType>();
   const isValidator = !!validator;
+  const [isGridView, setIsGridView] = useState(false);
 
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [transactionsMeta, setTransactionsMeta] = useState<any>({});
@@ -277,6 +281,84 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const tokensRows = createUserDetailsTokensRow(tokens, currentChain, loading);
   const validatorBlocksRows = createValidatorBlockRows(blocks, loading, basePath);
 
+  //MOCK NFTs
+  const nfts = [
+    {
+      name: 'Orange F',
+      collection: 'CyberPunk AI',
+      price: '145500000000',
+      status: 'active',
+      rarityRank: '213',
+      chain: 'Klayr-main',
+      image:
+        'https://img.freepik.com/free-photo/international-day-education-futuristic-style_23-2150998750.jpg?t=st=1727856493~exp=1727860093~hmac=1cdc94549100461630c13ee835dd86c2e12449c334338d0508f6babf639c368c?uid=R97798057&ga=GA1.1.203049697.1727194306://placehold.co/600x400',
+      chainImage:
+        'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g',
+    },
+    {
+      name: 'White Ki',
+      collection: 'CyberPunk AI',
+      price: '93500000000',
+      status: 'active',
+      rarityRank: '24',
+      chain: 'Klayr-main',
+      image:
+        'https://img.freepik.com/free-photo/cyberpunk-woman-warrior-portrait_23-2150712276.jpg?t=st=1727857940~exp=1727861540~hmac=1b8c47b6d615671e2baf5e0516ca4ee240ebbae5b563b2fb6ba065610767186d?uid=R97798057&ga=GA1.1.203049697.1727194306',
+      chainImage:
+        'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g',
+    },
+    {
+      name: 'Pink B',
+      collection: 'CyberPunk AI',
+      price: '1345500000000',
+      status: 'active',
+      rarityRank: '43',
+      chain: 'Klayr-main',
+      image:
+        'https://img.freepik.com/free-photo/cyberpunk-woman-warrior-portrait_23-2150712588.jpg?t=st=1727857940~exp=1727861540~hmac=227d6f34d4ac97f5fa3af8e423563556cfcf11734d2e3d3956e12dc05f875650?uid=R97798057&ga=GA1.1.203049697.1727194306',
+      chainImage:
+        'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g',
+    },
+    {
+      name: 'Sobaka Laika',
+      collection: 'Lika Laka',
+      price: '4550000000',
+      status: 'active',
+      rarityRank: '34',
+      chain: 'Klayr-main',
+      image:
+        'https://img.freepik.com/premium-photo/dog-painting-portrait-doberman_53876-523706.jpg?w=1060',
+      chainImage:
+        'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g',
+    },
+    {
+      name: 'Pesik Laika',
+      collection: 'Lika Laka',
+      price: '7785400000000',
+      status: 'active',
+      rarityRank: '325',
+      chain: 'Klayr-main',
+      image:
+        'https://img.freepik.com/premium-photo/bulldog-costuming-wearing-halloween-surrealism-portrait-animal-human_53876-521385.jpg?w=996',
+      chainImage:
+        'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g',
+    },
+    {
+      name: 'Kobel Samka',
+      collection: 'Lika Laka',
+      price: '7785400000000',
+      status: 'active',
+      rarityRank: '325',
+      chain: 'Klayr-main',
+      image:
+        'https://img.freepik.com/premium-photo/regal-husky-vintage-attire_53876-305029.jpg?w=1480',
+      chainImage:
+        'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g',
+    },
+  ];
+
+  const nftsRows = createNftsRows(nfts, loading);
+
   const tabs = [
     {
       value: 1,
@@ -371,7 +453,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           />
           <TableContainer
             headCols={validatorStakeOutgoingTableHead}
-            keyPrefix={'validator-blocks'}
+            keyPrefix={'validator-stakes'}
             rows={outgoingStake}
           />
         </FlexGrid>
@@ -396,9 +478,41 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         </FlexGrid>
       ),
     },
-
     {
       value: isValidator ? 7 : 5,
+      label: 'NFTs',
+      icon: 'Image',
+      content: (
+        <FlexGrid className={'w-full relative'} direction={'col'} gap={'4.5xl'}>
+          <SectionHeader title={`${account?.name}'s NFTs`} titleSizeNotLink={'h5'} />
+          <IconButton
+            className="absolute top-0 right-0"
+            icon={isGridView ? 'Menu' : 'DotsVertical'}
+            onClick={() => setIsGridView(!isGridView)}
+            variant="tertiary"
+          />
+          {isGridView ? (
+            <div className="flex flex-wrap gap-6 justify-center desktop:justify-start">
+              {nfts.map((nft) => (
+                <NftCard
+                  chain={nft.chain}
+                  chainImage={nft.chainImage}
+                  collection={nft.collection}
+                  image={nft.image}
+                  key={nft.name}
+                  price={nft.price}
+                  title={nft.name}
+                />
+              ))}
+            </div>
+          ) : (
+            <TableContainer headCols={nftsTableHead} keyPrefix={'account-nfts'} rows={nftsRows} />
+          )}
+        </FlexGrid>
+      ),
+    },
+    {
+      value: isValidator ? 8 : 6,
       label: 'Events',
       icon: 'List',
       content: (

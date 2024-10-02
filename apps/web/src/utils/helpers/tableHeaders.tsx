@@ -551,3 +551,24 @@ export const nodesTableHead = [
     children: 'Status',
   },
 ];
+
+export const nftsTableHead = [
+  {
+    children: 'Title',
+  },
+  {
+    children: 'Collection name',
+  },
+  {
+    children: 'Price',
+  },
+  {
+    children: 'Status',
+  },
+  {
+    children: 'Rarity rank',
+  },
+  {
+    children: 'Chain',
+  },
+];
