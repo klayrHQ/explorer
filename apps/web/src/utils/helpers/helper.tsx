@@ -1357,3 +1357,61 @@ export const createNftsRows = (nfts: NftType[], loading: boolean) => {
       })
     : getTableSkeletons(6);
 };
+
+export const createNftsPageRows = (nfts: NftType[], loading: boolean) => {
+  return !loading
+    ? nfts?.map((nft) => {
+        return {
+          cells: [
+            {
+              children: (
+                <div className="flex gap-2 items-center">
+                  <ImageContainer alt={'kly'} src={nft.image ?? ''} variant={'avatar'} />
+                  <Typography color="onBackgroundMedium" fontWeight="semibold">
+                    {nft.name}
+                  </Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex items-center">
+                  <Typography color="onBackgroundLow">{nft.collection}</Typography>
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex items-center">
+                  <StatusBadge status={nft.status || ''} />
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex flex-col">
+                  {/* <Currency amount={nft.price ?? 0} decimals={3} symbol={'KLY'} /> */}
+                  <Currency
+                    amount={Number(nft.price) * 0.7}
+                    color="onBackgroundLow"
+                    decimals={2}
+                    sign={'$'}
+                  />
+                </div>
+              ),
+            },
+            {
+              children: (
+                <div className="flex gap-2 items-center">
+                  <ImageContainer alt={'kly'} src={nft.chainImage ?? ''} variant={'avatar'} />
+                  <Typography color="onBackgroundMedium" fontWeight="semibold">
+                    {nft.chain ?? ''}
+                  </Typography>
+                </div>
+              ),
+            },
+          ],
+        };
+      })
+    : getTableSkeletons(5);
+};

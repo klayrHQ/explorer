@@ -572,3 +572,21 @@ export const nftsTableHead = [
     children: 'Chain',
   },
 ];
+
+export const nftsPageTableHead = [
+  {
+    children: 'NFT',
+  },
+  {
+    children: 'Collection Name',
+  },
+  {
+    children: 'Status',
+  },
+  {
+    children: 'Price',
+  },
+  {
+    children: 'Chain',
+  },
+];
