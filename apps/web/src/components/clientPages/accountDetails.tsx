@@ -99,11 +99,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
 
   useEffect(() => {
     setLoading(true);
-    callGetAccounts({
-      //todo uncomment when name filter is implemented to accounts endpoint
-      /*...(!paramIsName ? {address: paramAccount} : {name: paramAccount})*/
-      ...{ address: paramAccount },
-    })
+    callGetAccounts({ [paramIsName ? 'name' : 'address']: paramAccount })
       .then((data) => {
         const AccountData = Array.isArray(data?.data) && data.data.length > 0 ? data.data[0] : null;
         setAccount(AccountData);
