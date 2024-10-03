@@ -2,17 +2,18 @@ import { BannerFrame, Currency, ImageContainer, StatusBadge, Typography } from '
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
 import Link from 'next/link';
+import {ChainType} from "../../../types/types.ts";
 
 interface ChainDetailsBannerProps {
   image: string;
-  chainName: string;
+  chain: ChainType | undefined;
   locked: number;
   status?: string;
   logo: string;
 }
 
 export const ChainDetailsBanner = ({
-  chainName,
+  chain,
   image,
   logo,
   locked,
@@ -30,9 +31,9 @@ export const ChainDetailsBanner = ({
             />
           </Link>
           <div className="flex items-center gap-2">
-            <ImageContainer alt={chainName} src={logo} variant="avatarLg" />
+            <ImageContainer alt={chain?.chainName ?? ''} src={logo} variant="avatarLg" />
             <Typography fontWeight="bold" variant={'h3'}>
-              {chainName}
+              {chain?.chainName}
             </Typography>
           </div>
         </FlexGrid>
@@ -40,7 +41,7 @@ export const ChainDetailsBanner = ({
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'a total of '}
           </Typography>
-          <Currency amount={21302000000000} decimals={0} fontWeight="semibold" symbol={'KLY'} />
+          <Currency amount={21302000000000} decimals={0} fontWeight="semibold" symbol={chain?.currency.symbol} />
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'is locked and the chain status is'}
           </Typography>

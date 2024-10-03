@@ -79,6 +79,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const { currentChain } = useChainNetwork();
+  const symbol = currentChain?.currency.symbol;
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
@@ -557,7 +558,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
             }
           }}
           selfStake={validator?.selfStake || 0}
-          selfStakeSymbol="KLY"
+          selfStakeSymbol={symbol}
           senderAddress={validator?.account.address || ''}
           senderName={validator?.account.name || ''}
           setFavorite={() => {
@@ -568,7 +569,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           }}
           status={validator?.status || ''}
           value={validator?.totalStake}
-          valueSymbol="KLY"
+          valueSymbol={symbol}
         />
       ) : (
         <AccountBanner
@@ -595,7 +596,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           }}
           status={'active'}
           value={232}
-          valueSymbol={'KLY'}
+          valueSymbol={symbol}
         />
       )}
       <div className="desktop:hidden w-full">

@@ -144,6 +144,10 @@ export type ChainType = {
   chainName: string;
   logo: string;
   networks: Omit<NetworkType, 'connected'>[];
+  currency: {
+    symbol: string;
+    sign: string;
+  };
 };
 
 export type NetworkType = {
