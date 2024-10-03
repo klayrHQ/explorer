@@ -290,6 +290,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <BlockDetailsBanner
+        basePath={basePath}
         generatorAddress={block?.generator.address || ''}
         generatorName={block?.generator.name || ''}
         height={block?.height || 0}

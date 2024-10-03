@@ -282,6 +282,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
     <FlexGrid direction={'col'} gap={'5xl'}>
       <TransactionBanner
         amount={transaction?.params?.amount || '0'}
+        basePath={basePath}
         blockHeight={transaction?.block.height || 0}
         blockId={transaction?.block.id || ''}
         executionStatus={transaction?.executionStatus}

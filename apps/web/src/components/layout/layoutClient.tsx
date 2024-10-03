@@ -5,26 +5,16 @@ import { Sidebar, InfoBanner } from '@repo/ui/organisms';
 import { cls } from '@repo/ui/utils';
 import { TopbarClient } from './topbarClient.tsx';
 import { logo } from '../../utils/constants.tsx';
-import { usePathname } from 'next/navigation';
-import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
+import {useBasePath} from "../../utils/hooks/useBasePath.ts";
 
 export const Layout = ({ children }: { children: ReactNode }) => {
-  const { chains } = useChainNetwork();
-  const pathName = usePathname();
-  const firstSubDir = pathName.split('/')[1];
-  const [basePath, setBasePath] = useState<string>('');
+  const basePath = useBasePath();
   const [showInfoBanner, setShowInfoBanner] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  useEffect(() => {
-    const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
-    const basePath = !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
-    setBasePath(basePath);
-  }, [chains]);
 
   const mobileMenuItems = [
     {

@@ -87,10 +87,6 @@ export const MenuItem = ({
       (!firstPartOfPathWithoutBase && !firstPartOfHref)
     : false;
 
-  useEffect(() => {
-    console.log(pathWithoutBase, firstPartOfPathWithoutBase, firstPartOfHref, isActive);
-  }, [basePath]);
-
   const handleHover = (event: React.MouseEvent<HTMLElement>, open: boolean) => {
     if (open) {
       setIsSubMenuOpen(true);
