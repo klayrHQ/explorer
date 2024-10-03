@@ -89,7 +89,7 @@ export default function NFTS() {
   const [isGridView, setIsGridView] = useState(false);
 
   return (
-    <FlexGrid className={'w-full relative'} direction={'col'} gap={'4.5xl'}>
+    <FlexGrid className={'w-full relative mb-10'} direction={'col'} gap={'4.5xl'}>
       <SectionHeader count={nfts.length} subTitle={'Overview of all NFTs'} title={'NFTs'} />
       <IconButton
         className="absolute top-0 right-0"
