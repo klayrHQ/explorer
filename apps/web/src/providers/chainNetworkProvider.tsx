@@ -18,6 +18,10 @@ type ChainType = {
   chainName: string;
   logo: string;
   networks: NetworkType[];
+  currency: {
+    symbol: string;
+    sign: string;
+  };
 };
 
 export interface ChainNetworkContextProps {

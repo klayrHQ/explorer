@@ -1,7 +1,7 @@
 import { Typography, TypographyProps } from '@repo/ui/atoms';
 import { cls, parseBeddows } from '../../../utils/functions.ts';
 
-interface CurrencyProps extends Omit<TypographyProps, 'children'> {
+export interface CurrencyProps extends Omit<TypographyProps, 'children'> {
   amount: string | number;
   sign?: string;
   symbol?: string;

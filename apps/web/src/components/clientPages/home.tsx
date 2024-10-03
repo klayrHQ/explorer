@@ -5,13 +5,14 @@ import {
   newsTagColors,
   currencies,
 } from '../../utils/constants.tsx';
-import { Currency, FlexGrid, SkeletonComponent } from '@repo/ui/atoms';
+import { FlexGrid, SkeletonComponent } from '@repo/ui/atoms';
 import { useEffect, useState } from 'react';
 import { formatDate, cleanText } from '../../utils/helpers/dataHelpers.tsx';
 import { NewsCardPropsArray, NewsCardProps } from '@repo/ui/types';
 import { callGetTokenSummary } from '../../utils/api/apiCalls.tsx';
 import { PerfomanceStatsType } from '../../utils/types.ts';
 import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
+import { Currency } from '../currency.tsx';
 
 export const Home = () => {
   const [news, setNews] = useState<NewsCardPropsArray>([]);
@@ -116,7 +117,7 @@ export const Home = () => {
       value: loadingStats ? (
         <SkeletonComponent style={{ height: '28px' }} />
       ) : (
-        <Currency amount={performanceStats?.marketCap ?? 0} symbol={currencies[0].symbol} />
+        <Currency amount={performanceStats?.marketCap ?? 0} />
       ),
       percentage: '20%',
       statsVS: statsVSString,
@@ -149,7 +150,7 @@ export const Home = () => {
       value: loadingStats ? (
         <SkeletonComponent style={{ height: '28px' }} />
       ) : (
-        <Currency amount={performanceStats?.totalValueLocked ?? 0} symbol={currencies[0].symbol} />
+        <Currency amount={performanceStats?.totalValueLocked ?? 0} />
       ),
       percentage: '9.3%',
       statsVS: statsVSString,

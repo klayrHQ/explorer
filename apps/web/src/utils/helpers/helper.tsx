@@ -21,7 +21,6 @@ import {
 import { TxDataPopover } from '@repo/ui/molecules';
 import {
   Badge,
-  Currency,
   Icon,
   JsonViewer,
   Tooltip,
@@ -55,6 +54,7 @@ import {
 } from './tableHeaders.tsx';
 import { ChainType, DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
+import {Currency} from "../../components/currency.tsx";
 
 export const createTransactionRows = (
   transactions: TransactionType[],
@@ -167,7 +167,6 @@ export const createTransactionRows = (
                   className={'align-middle'}
                   color={'onBackgroundLow'}
                   decimals={decimals}
-                  symbol={'KLY'}
                   variant={'paragraph-sm'}
                 />
               ),
@@ -179,7 +178,6 @@ export const createTransactionRows = (
                   className={'align-middle'}
                   color={'onBackgroundLow'}
                   decimals={5}
-                  symbol={'KLY'}
                   variant={'paragraph-sm'}
                 />
               ),
@@ -379,7 +377,6 @@ export const createValidatorsRows = (
                           amount={resultPerPeriod}
                           className="text-paragraph-sm text-lobster font-semibold" //text-onBackground
                           decimals={2}
-                          symbol={'KLY'}
                         />
                       </Tooltip>
                       <Tooltip
@@ -423,7 +420,6 @@ export const createValidatorsRows = (
                     amount={validator?.validatorWeight}
                     className="font-semibold"
                     decimals={0}
-                    symbol={'KLY'}
                   />
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
@@ -445,7 +441,6 @@ export const createValidatorsRows = (
                     amount={validator?.selfStake}
                     className="font-semibold"
                     decimals={0}
-                    symbol={'KLY'}
                   />
                 </div>
               ),
@@ -458,7 +453,6 @@ export const createValidatorsRows = (
                     amount={validator?.totalStake}
                     className="font-semibold"
                     decimals={0}
-                    symbol={'KLY'}
                   />
                 </div>
               ),
@@ -476,14 +470,14 @@ export const createValidatorsRows = (
             {
               children: (
                 <div className="flex justify-end text-onBackgroundLow">
-                  <Currency amount={validator.totalRewards} decimals={0} symbol={'KLY'} />
+                  <Currency amount={validator.totalRewards} decimals={0} />
                 </div>
               ),
             },
             {
               children: (
                 <div className="flex justify-end text-onBackgroundLow">
-                  <Currency amount={validator.blockReward} decimals={5} symbol={'KLY'} />
+                  <Currency amount={validator.blockReward} decimals={5} />
                 </div>
               ),
             },
@@ -514,7 +508,7 @@ export const createValidatorIncomingStakeRows = (
               className: 'desktop:w-1/5',
             },
             {
-              children: <Currency amount={incomingStake?.amount} symbol={'KLY'} />,
+              children: <Currency amount={incomingStake?.amount} />,
             },
           ],
         };
@@ -543,7 +537,7 @@ export const createValidatorOutgoingStakeRows = (
               ),
             },
             {
-              children: <Currency amount={validator?.validatorWeight || 0} symbol={'KLY'} />,
+              children: <Currency amount={validator?.validatorWeight || 0} />,
             },
 
             {
@@ -554,7 +548,7 @@ export const createValidatorOutgoingStakeRows = (
               ),
             },
             {
-              children: <Currency amount={outgoingStake?.amount} symbol={'KLY'} />,
+              children: <Currency amount={outgoingStake?.amount} />,
             },
           ],
         };
@@ -602,7 +596,7 @@ export const createValidatorBlockRows = (
               ),
             },
             {
-              children: <Currency amount={block.reward ?? 0} decimals={2} symbol={'KLY'} />,
+              children: <Currency amount={block.reward ?? 0} decimals={2} />,
             },
           ],
         };
@@ -654,7 +648,7 @@ export const createValidatorEventsRow = (events: EventsType[], loading: boolean)
               className: 'desktop:w-1/5',
             },
             {
-              children: <Currency amount={event.data.amount || 0} decimals={5} symbol={'KLY'} />,
+              children: <Currency amount={event.data.amount || 0} decimals={5} />,
             },
           ],
         };
@@ -732,7 +726,6 @@ export const createStakesOverviewRows = (
                                 color={color}
                                 decimals={2}
                                 fontWeight="normal"
-                                symbol={'KLY'}
                                 variant="paragraph-sm"
                               />
                             </div>
@@ -761,7 +754,6 @@ export const createStakesOverviewRows = (
                                 color={color}
                                 decimals={2}
                                 fontWeight="normal"
-                                symbol={'KLY'}
                                 variant="paragraph-sm"
                               />
                             </div>
@@ -953,7 +945,6 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
                     amount={account?.totalBalance}
                     className="font-semibold"
                     decimals={0}
-                    symbol={'KLY'}
                   />
                 </div>
               ),
@@ -966,7 +957,6 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
                     amount={account?.availableBalance}
                     className="font-semibold"
                     decimals={0}
-                    symbol={'KLY'}
                   />
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
@@ -989,7 +979,6 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
                     amount={account?.lockedBalance}
                     className="font-semibold"
                     decimals={0}
-                    symbol={'KLY'}
                   />
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {Number(
@@ -1049,7 +1038,7 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
               ),
             },
             {
-              children: <Currency amount={21302000000000} decimals={0} symbol={'KLY'} />,
+              children: <Currency amount={21302000000000} decimals={0} />,
             },
             {
               children: <Typography>{'Last Certificate'}</Typography>,
@@ -1102,7 +1091,6 @@ export const createUserDetailsTokensRow = (
                     amount={totalBalance}
                     decimals={0}
                     fontWeight={'semibold'}
-                    symbol={'KLY'}
                   />
                   <Currency
                     amount={Number(token.availableBalance) * 2}
@@ -1120,7 +1108,6 @@ export const createUserDetailsTokensRow = (
                     amount={token.availableBalance}
                     decimals={0}
                     fontWeight={'semibold'}
-                    symbol={'KLY'}
                   />
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {availablePercentage}
@@ -1136,7 +1123,6 @@ export const createUserDetailsTokensRow = (
                     amount={token.lockedBalances?.[0]?.amount ?? 0}
                     decimals={0}
                     fontWeight={'semibold'}
-                    symbol={'KLY'}
                   />
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {lockedPercentage}
@@ -1315,7 +1301,7 @@ export const createNftsRows = (nfts: NftType[], loading: boolean) => {
             {
               children: (
                 <div className="flex flex-col">
-                  <Currency amount={nft.price ?? 0} decimals={3} symbol={'KLY'} />
+                  <Currency amount={nft.price ?? 0} decimals={3} />
                   <Currency
                     amount={Number(nft.price) * 0.7}
                     color="onBackgroundLow"

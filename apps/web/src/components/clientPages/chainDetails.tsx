@@ -66,7 +66,7 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <ChainDetailsBanner
-        chainName={mockChainData?.chainName ?? ''}
+        chain={mockChainData}
         image={BannerBG.src}
         locked={0}
         logo={mockChainData?.logo ?? ''}

@@ -142,6 +142,10 @@ export const defaultChain = {
       networkId: '01000000',
     },
   ],
+  currency: {
+    symbol: "KLY",
+    sign: "Ҝ"
+  }
 };
 
 export const decimals = 3;

@@ -8,7 +8,6 @@ import {
 } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 import {
-  Currency,
   DateComponent,
   FlexGrid,
   NotFound,
@@ -26,6 +25,8 @@ import { callGetBlocks, callGetEvents, callGetTransactions } from '../../utils/a
 import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { Link } from '@repo/ui/atoms';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { Currency } from '../currency.tsx';
+import {useChainNetwork} from "../../providers/chainNetworkProvider.tsx";
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -38,6 +39,8 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const [eventsMeta, setEventsMeta] = useState<any>({});
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
+  const { currentChain } = useChainNetwork();
+  const symbol = currentChain?.currency.symbol;
 
   const transactionsPagination = usePagination();
   const eventsPagination = usePagination();
@@ -193,7 +196,6 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
           className={'truncate max-w-full'}
           decimals={4}
           marketValue={undefined}
-          symbol={'KLY'}
         />
       ) : (
         '-'
@@ -297,7 +299,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         isFinal={block?.isFinal || false}
         numberOfTransactions={block?.numberOfTransactions || 0}
         reward={block?.reward || '0'}
-        symbol="KLY"
+        symbol={symbol}
       />
       <TabButtons tabs={tabs} />
     </FlexGrid>

@@ -12,7 +12,11 @@
         "networkId": "01000000",
         "networkName": "testnet"
       }
-    ]
+    ],
+    "currency": {
+      "symbol": "KLY",
+      "sign": "Ҝ"
+    }
   },
   {
     "chainId": "01371337",
@@ -23,7 +27,11 @@
         "networkId": "01371337",
         "networkName": "testnet"
       }
-    ]
+    ],
+    "currency": {
+      "symbol": "PEPE",
+      "sign": "P"
+    }
   }, 
   {
     "chainId": "01555555",
@@ -34,7 +42,11 @@
         "networkId": "01555555",
         "networkName": "testnet"
       }
-    ]
+    ],
+    "currency": {
+      "symbol": "SWAP",
+      "sign": "S"
+    }
   }
 
 ]

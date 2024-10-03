@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
 import {
-  Currency,
   DateComponent,
   FlexGrid,
   TabButtons,
@@ -19,6 +18,8 @@ import { EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { Link } from '@repo/ui/atoms';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import {Currency} from "../currency.tsx";
+import {useChainNetwork} from "../../providers/chainNetworkProvider.tsx";
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -26,6 +27,8 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);
   const [events, setEvents] = useState<EventsType[]>([]);
   const basePath = useBasePath();
+  const { currentChain } = useChainNetwork();
+  const symbol = currentChain?.currency.symbol;
 
   useEffect(() => {
     setLoading(true);
@@ -99,7 +102,6 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
                 amount={transaction?.params?.amount}
                 className={'truncate max-w-full'}
                 marketValue={undefined}
-                symbol={'KLY'}
               />
             ),
             mobileWidth: 'half',
@@ -116,7 +118,6 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
           className={'truncate max-w-full'}
           decimals={4}
           marketValue={undefined}
-          symbol={'KLY'}
         />
       ),
       mobileWidth: transaction?.params?.amount ? 'half' : 'full',
@@ -292,7 +293,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         receiverName={transaction?.meta?.recipient?.name}
         senderAddress={transaction?.sender?.address || ''}
         senderName={transaction?.sender?.name}
-        symbol={'KLY'}
+        symbol={symbol}
         timestamp={transaction?.block.timestamp || 0}
       />
       <TabButtons tabs={tabs} />

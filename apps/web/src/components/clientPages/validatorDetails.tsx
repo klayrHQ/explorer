@@ -2,7 +2,7 @@
 import { ValidatorBanner } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { useEffect, useState } from 'react';
-import { TabButtons, FlexGrid, Currency, Typography, CopyIcon } from '@repo/ui/atoms';
+import { TabButtons, FlexGrid, Typography, CopyIcon } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer, DetailsSection } from '@repo/ui/organisms';
 import { DataType } from '@repo/ui/types';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
@@ -40,6 +40,8 @@ import { useFavouritesStore } from '../../store/favouritesStore.ts';
 
 import { formatCommission, fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { Currency } from '../currency.tsx';
+import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -59,6 +61,8 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const { isFavourite, addFavourite, removeFavourite } = useFavouritesStore();
   const [isFav, setIsFav] = useState<boolean>(false);
+  const { currentChain } = useChainNetwork();
+  const symbol = currentChain?.currency.symbol;
 
   const blocksPagination = usePagination(1, '10');
   const eventsPagination = usePagination();
@@ -194,12 +198,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         amount={validator?.totalStake || 0}
         className={'truncate max-w-full'}
         decimals={2}
-        symbol={'KLY'}
       />,
     ),
     createDetails(
       'Locked tokens',
-      <Currency amount={''} className={'truncate max-w-full'} decimals={2} symbol={'KLY'} />,
+      <Currency amount={''} className={'truncate max-w-full'} decimals={2} />,
     ),
     createDetails('Claimable rewards', ' - '),
     createDetails(
@@ -207,7 +210,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       <Currency
         amount={validator?.validatorWeight || 0}
         className={'truncate max-w-full'}
-        symbol={'KLY'}
       />,
     ),
     createDetails(
@@ -222,7 +224,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       <Currency
         amount={totalReceivedStake || 0}
         className={'truncate max-w-full'}
-        symbol={'KLY'}
       />,
     ),
     createDetails(
@@ -230,7 +231,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
       <Currency
         amount={validator?.selfStake || 0}
         className={'truncate max-w-full'}
-        symbol={'KLY'}
       />,
     ),
     createDetails(
@@ -246,7 +246,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           amount={validator?.totalRewards || 0}
           className={'truncate max-w-full'}
           decimals={2}
-          symbol={'KLY'}
         />
       </div>,
     ),
@@ -257,7 +256,6 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           amount={validator?.totalSelfStakeRewards || 0}
           className={'truncate max-w-full'}
           decimals={2}
-          symbol={'KLY'}
         />
       </div>,
     ),
@@ -267,12 +265,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         amount={validator?.totalSharedRewards || 0}
         className={'truncate max-w-full'}
         decimals={2}
-        symbol={'KLY'}
       />,
     ),
     createDetails(
       'Dynamic block rewards',
-      <Currency amount={validator?.blockReward || 0} decimals={4} symbol={'KLY'} />,
+      <Currency amount={validator?.blockReward || 0} decimals={4} />,
     ),
     createDetails('Last generated heights', validator?.lastGeneratedHeight),
     createDetails('Max height generated', ' - '),
@@ -469,7 +466,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
           }
         }}
         selfStake={validator?.selfStake || 0}
-        selfStakeSymbol="KLY"
+        selfStakeSymbol={symbol}
         senderAddress={validator?.account.address || ''}
         senderName={validator?.account.name || ''}
         setFavorite={() => {
@@ -481,7 +478,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
         stakes={incomingStake.length} // TODO: Implement
         status={validator?.status || ''}
         value={validator?.totalStake}
-        valueSymbol="KLY"
+        valueSymbol={symbol}
       />
       <div className="desktop:hidden w-full">
         <TabButtons padding="6" showLabel={false} tabs={tabs} width="full" />
