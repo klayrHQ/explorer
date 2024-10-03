@@ -63,16 +63,16 @@ export const NetworkSelect = ({
   const [selectedValue, setSelectedValue] = useState<string | undefined>(defaultValue);
   const [listboxVisible, setListboxVisible] = useState<boolean>(false);
 
-  const handleSelect = (value: string) => {
+  const handleSelect = (value: string, runOnChange: boolean = true) => {
     setSelectedValue(value);
     setListboxVisible(false);
-    if (onChange) {
+    if (onChange && runOnChange) {
       onChange(value);
     }
   };
 
   useEffect(() => {
-    value && handleSelect(value);
+    value && handleSelect(value, false);
   }, [value]);
 
   const renderSelectedValue = (value: string | undefined, options: Option[]) => {
