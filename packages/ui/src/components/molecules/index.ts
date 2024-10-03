@@ -15,5 +15,5 @@ export * from "./validator/validatorBannerText";
 export * from "./validator/validatorBannerButtons";
 export * from "./validator/nextValidators";
 export * from "./stakes/calculator";
-
+export * from "./nft/nftCard";
 

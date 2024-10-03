@@ -276,3 +276,14 @@ export interface NodeType {
   port: number;
   peerId: string;
 }
+
+export interface NftType {
+  name?: string;
+  image?: string;
+  collection?: string;
+  price?: string;
+  status?: string;
+  rarityRank?: string;
+  chain?: string;
+  chainImage?: string;
+}

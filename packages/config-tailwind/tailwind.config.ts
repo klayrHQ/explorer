@@ -309,6 +309,9 @@ const config: Omit<Config, 'content'> = {
     'desktop:group-hover/child:inline',
     'font-body',
     'font-mono',
+    'aspect-square',
+    'aspect-auto',
+    'aspect-video',
   ],
   theme: {
     extend: {
