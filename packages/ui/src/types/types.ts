@@ -181,12 +181,12 @@ export interface NextValidatorType {
 
 //SEARCH TYPES
 export interface SearchResultsType {
-  validators?: SearchValidator[];
+  accounts?: SearchAccount[];
   blocks?: SearchBlock[];
   transactions?: SearchTransaction[];
 }
 
-interface SearchValidator {
+interface SearchAccount {
   name: string;
   address: string;
   publicKey: string;
