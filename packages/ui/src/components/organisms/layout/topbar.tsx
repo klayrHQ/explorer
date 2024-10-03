@@ -164,7 +164,7 @@ export const Topbar = ({
         ))}
         <ChainNetworkPicker {...chainNetworkData} />
         <FlexGrid gap={'md'}>
-          <Link href={'/favourites'}>
+          <Link basePath={basePath} href={'/favourites'}>
             <div className={'relative'}>
               <IconButton align={'none'} icon={'Heart'} title={'favourites'} variant={'iconOnly'} />
               {newFavourite && (
