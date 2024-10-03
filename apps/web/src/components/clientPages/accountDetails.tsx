@@ -484,7 +484,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       label: 'NFTs',
       icon: 'Image',
       content: (
-        <FlexGrid className={'w-full relative'} direction={'col'} gap={'4.5xl'}>
+        <FlexGrid className={'w-full relative mb-10'} direction={'col'} gap={'4.5xl'}>
           <SectionHeader title={`${account?.name}'s NFTs`} titleSizeNotLink={'h5'} />
           <IconButton
             className="absolute top-0 right-0"

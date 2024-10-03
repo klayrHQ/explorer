@@ -50,6 +50,8 @@ import { WarningIcon } from './snackbar/warningIcon.tsx';
 import { ErrorIcon } from './snackbar/errorIcon.tsx';
 import { SuccessIcon } from './snackbar/successIcon.tsx';
 import { InfoIcon } from './snackbar/infoIcon.tsx';
+import { GridOne } from './layout/grid-01.tsx';
+import { LayoutAlt } from './layout/layout-alt.tsx';
 
 export const icons = {
   ChevronDown,
@@ -104,4 +106,6 @@ export const icons = {
   ErrorIcon,
   SuccessIcon,
   InfoIcon,
+  GridOne,
+  LayoutAlt,
 };

@@ -92,6 +92,8 @@ export type IconComponent =
   | 'Info'
   | 'CodeSquare'
   | 'AlertCircle'
+  | 'LayoutAlt'
+  | 'GridOne'
   | string;
 
 export type ColorType =
