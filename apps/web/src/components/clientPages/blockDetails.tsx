@@ -26,7 +26,7 @@ import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { Link } from '@repo/ui/atoms';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { Currency } from '../currency.tsx';
-import {useChainNetwork} from "../../providers/chainNetworkProvider.tsx";
+import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -217,25 +217,15 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: (
-        <DetailsSection
-          data={details}
-          json={block as unknown as DataType}
-          title={'Block Details'}
-        />
-      ),
+      content: <DetailsSection data={details} json={block as unknown as DataType} />,
     },
     {
       value: 2,
       label: 'Transactions',
       icon: 'SwitchHorizontal',
+      count: transactionsMeta?.total || '0',
       content: (
         <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4.5xl'}>
-          <SectionHeader
-            count={transactionsMeta?.total || '0'}
-            title={'Block transactions'}
-            titleSizeNotLink={'h5'}
-          />
           {transactions?.length && transactions.length > 0 ? (
             <TableContainer
               currentNumber={transactionsPagination.pageNumber}
@@ -270,7 +260,6 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       icon: 'List',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader count={eventsMeta?.total} title={'Block events'} titleSizeNotLink={'h5'} />
           <TableContainer
             currentNumber={eventsPagination.pageNumber}
             defaultValue={eventsPagination.limit}

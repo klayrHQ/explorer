@@ -13,6 +13,7 @@ interface TabData {
   label: string;
   icon?: IconComponent;
   content: ReactNode;
+  count?: number | string;
 }
 
 interface TabButtonsProps {
@@ -55,6 +56,18 @@ export const TabButtons = ({
                 <Typography color="" fontWeight="semibold" variant="paragraph-lg">
                   {tab.label}
                 </Typography>
+              )}
+
+              {tab.count !== undefined && tab.count !== null && (
+                <div
+                  className={
+                    'bg-secondary rounded-sm p-1 h-6 min-w-6 items-center justify-center hidden desktop:flex'
+                  }
+                >
+                  <Typography color="onSecondary" variant="paragraph-sm">
+                    {tab.count}
+                  </Typography>
+                </div>
               )}
             </div>
           </Tab>
