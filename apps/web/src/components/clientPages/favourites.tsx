@@ -1,7 +1,15 @@
 'use client';
 import { AddFavouriteContainer, SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { favouritesTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import { Button, FlexGrid, Modal, NotFound, Snackbar, Typography } from '@repo/ui/atoms';
+import {
+  Button,
+  FlexGrid,
+  IconButton,
+  Modal,
+  NotFound,
+  Snackbar,
+  Typography,
+} from '@repo/ui/atoms';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { FavouriteType } from '../../utils/types.ts';
 import { createFavouritesRows } from '../../utils/helpers/helper.tsx';
@@ -82,7 +90,18 @@ export const Favourites = () => {
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
       <FlexGrid className={'w-full'} justify={'between'} mobileDirection={'row'}>
         <SectionHeader count={rows.length} title={'Favourites'} />
-        <Button align={'none'} label={'Add Favourite'} onClick={() => setOpenModal(true)} />
+        <Button
+          align={'none'}
+          className={'hidden desktop:flex'}
+          label={'Add Favourite'}
+          onClick={() => setOpenModal(true)}
+        />
+        <IconButton
+          align={'none'}
+          className={'desktop:hidden'}
+          icon={'Plus'}
+          onClick={() => setOpenModal(true)}
+        />
         <Modal onClose={onCancel} open={openModal} title={'Add favourite user'}>
           <AddFavouriteContainer
             callSearch={callSearch}
