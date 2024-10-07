@@ -21,11 +21,19 @@ export const NftCard = ({
 }: NftCardGridProps) => {
   return (
     <div className="flex flex-col  overflow-hidden">
-      <div className="max-w-72 hidden desktop:block aspect-square ">
-        <img alt={title} className=" object-cover w-full h-full  rounded-2xl" src={image} />
+      <div className="hidden desktop:block aspect-square ">
+        <img
+          alt={title}
+          className=" object-cover w-full h-full aspect-square rounded-2xl"
+          src={image}
+        />
       </div>
-      <div className="max-w-96 desktop:hidden aspect-video">
-        <img alt={title} className=" object-cover w-full h-full  rounded-2xl" src={image} />
+      <div className="desktop:hidden aspect-video">
+        <img
+          alt={title}
+          className=" object-cover w-full aspect-video h-full rounded-2xl"
+          src={image}
+        />
       </div>
 
       <div className="mt-3">
@@ -43,9 +51,6 @@ export const NftCard = ({
 
       <div className="flex justify-between items-center mt-4">
         <div className="flex items-center gap-1">
-          <Typography color="onBackgroundLow" variant="footer">
-            {'Active on chain'}
-          </Typography>
           <ImageContainer
             alt="Chain logo"
             className="rounded-full"

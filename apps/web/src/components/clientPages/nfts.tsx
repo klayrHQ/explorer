@@ -98,7 +98,12 @@ export default function NFTS() {
         variant="tertiary"
       />
       {isGridView ? (
-        <div className="flex flex-wrap gap-6 justify-center desktop:justify-start">
+        <div
+          className={'w-full grid relative mb-10 gap-6'}
+          style={{
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          }}
+        >
           {nfts.map((nft) => (
             <NftCard
               chain={nft.chain}
