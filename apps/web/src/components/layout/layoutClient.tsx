@@ -5,7 +5,7 @@ import { Sidebar, InfoBanner } from '@repo/ui/organisms';
 import { cls } from '@repo/ui/utils';
 import { TopbarClient } from './topbarClient.tsx';
 import { logo } from '../../utils/constants.tsx';
-import {useBasePath} from "../../utils/hooks/useBasePath.ts";
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const basePath = useBasePath();
@@ -61,13 +61,11 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       label: 'Chains',
       icon: 'Data',
       href: `/chains`,
-      basePath: '',
     },
     {
       label: 'NFTs',
       icon: 'Image',
       href: `/nfts`,
-      basePath: '',
     },
   ];
 
@@ -124,13 +122,11 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       label: 'Chains',
       icon: 'Data',
       href: `/chains`,
-      basePath: '',
     },
     {
       label: 'NFTs',
       icon: 'Image',
       href: `/nfts`,
-      basePath: '',
     },
   ];
 

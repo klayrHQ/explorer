@@ -8,6 +8,7 @@ import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
 import { NetworkSelect } from './networkSelect.tsx';
 import { useRouter, usePathname } from 'next/navigation';
+import { useBasePath } from '../../../../../../apps/web/src/utils/hooks/useBasePath.ts';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType;
@@ -32,11 +33,9 @@ export const ChainNetworkPicker = ({
   const [selectedChain, setSelectedChain] = useState<ChainType | null>(currentChain);
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkType | null>(currentNetwork);
   const router = useRouter();
-  const pathName = usePathname();
-  const firstSubDir = pathName.split('/')[1];
-  const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
-  const chainSlug = !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
+  const chainSlug = useBasePath();
   const explorerUrl = `explorer.klayr.dev${chainSlug}`;
+  const baseExplorerUrl = `explorer.klayr.dev`;
 
   const chainOptions = chains?.map((chain) => ({
     label: chain.chainName,
@@ -56,7 +55,16 @@ export const ChainNetworkPicker = ({
   const handleChainChange = (chainId: string) => {
     const chain = chains.find((chain) => chain.chainId === chainId);
     if (chain) {
-      chain.chainName === 'klayr-main' ? router.push('/') : router.push(`/${chain.chainName}`);
+      const firstNetwork = chain.networks[0];
+      if (window.location.hostname !== 'localhost') {
+        firstNetwork.networkName === 'mainnet'
+          ? router.push(`https://${baseExplorerUrl}/${chain.chainName}`)
+          : router.push(
+              `https://${firstNetwork.networkName}-${baseExplorerUrl}/${chain.chainName}`,
+            );
+      } else {
+        chain.chainName === 'klayr-main' ? router.push('/') : router.push(`/${chain.chainName}`);
+      }
       setSelectedChain(chain);
 
       setIsModalOpen(false);
