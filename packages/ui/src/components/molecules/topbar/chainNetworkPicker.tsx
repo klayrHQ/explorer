@@ -33,7 +33,10 @@ export const ChainNetworkPicker = ({
   const [selectedChain, setSelectedChain] = useState<ChainType | null>(currentChain);
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkType | null>(currentNetwork);
   const router = useRouter();
-  const chainSlug = useBasePath();
+  const pathName = usePathname();
+  const firstSubDir = pathName.split('/')[1];
+  const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
+  const chainSlug = !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
   const explorerUrl = `explorer.klayr.dev${chainSlug}`;
   const baseExplorerUrl = `explorer.klayr.dev`;
 
