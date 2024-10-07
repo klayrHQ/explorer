@@ -47,7 +47,7 @@ export const Tokens = () => {
 
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
-      <SectionHeader count={10} subTitle={'Overview of all tokens'} title={'Stakes'} />
+      <SectionHeader count={10} subTitle={'Overview of all tokens'} title={'Tokens'} />
       <TableContainer headCols={tokensTableHead} keyPrefix={'tokens'} rows={rows} />
     </FlexGrid>
   );
