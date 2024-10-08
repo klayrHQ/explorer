@@ -6,7 +6,7 @@ import { transactionTableHead } from '../../utils/helpers/tableHeaders';
 import { createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { TransactionsFilter } from '../filterComponents/transactionsFilter.tsx';
 import React from 'react';
@@ -15,39 +15,26 @@ export const Transactions = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
 
-  const [filterValueTo, setFilterValueTo] = useState<string>('');
-  const [filterValueFrom, setFilterValueFrom] = useState<string>('');
-  const [inputValueTo, setInputValueTo] = useState<string>('');
-  const [inputValueFrom, setInputValueFrom] = useState<string>('');
+  const [inputValues, setInputValues] = useState({ from: '', to: '' });
+  const [filterValues, setFilterValues] = useState({ from: '', to: '' });
 
   const handleBlur = useCallback(() => {
-    setFilterValueTo(inputValueTo);
-    setFilterValueFrom(inputValueFrom);
-    if (!inputValueTo && !inputValueFrom) {
-      setFilterValueTo('');
-      setFilterValueFrom('');
-    }
-  }, [inputValueTo, inputValueFrom]);
+    setFilterValues(inputValues);
+  }, [inputValues]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
-        setFilterValueTo(inputValueTo);
-        setFilterValueFrom(inputValueFrom);
+        setFilterValues(inputValues);
       }
     },
-    [inputValueTo, inputValueFrom],
+    [inputValues],
   );
 
-  const handleClearFrom = () => {
-    setInputValueFrom('');
-    setFilterValueFrom('');
-  };
-
-  const handleClearTo = () => {
-    setInputValueTo('');
-    setFilterValueTo('');
-  };
+  const handleClear = useCallback((field: 'from' | 'to') => {
+    setInputValues((prev) => ({ ...prev, [field]: '' }));
+    setFilterValues((prev) => ({ ...prev, [field]: '' }));
+  }, []);
 
   const {
     data: transactions,
@@ -65,23 +52,18 @@ export const Transactions = () => {
     defaultLimit: searchParams.get('limit') || '10',
     changeURL: true,
     searchParams: {
-      senderAddress: filterValueFrom,
-      recipientAddress: filterValueTo,
+      senderAddress: filterValues.from,
+      recipientAddress: filterValues.to,
     },
-    additionalDependencies: [filterValueFrom, filterValueTo],
+    additionalDependencies: [filterValues],
   });
 
-  const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
-
-  const rows = createTransactionRows(
-    transactions,
-    loading,
-    copyTooltipText,
-    setCopyTooltipText,
-    basePath,
+  const rows = useMemo(
+    () => createTransactionRows(transactions, loading, 'Copy to clipboard', () => {}, basePath),
+    [transactions, loading, basePath],
   );
 
-  const totalPages = Math.ceil(totalTxs / Number(limit));
+  const totalPages = useMemo(() => Math.ceil(totalTxs / Number(limit)), [totalTxs, limit]);
 
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
@@ -95,14 +77,14 @@ export const Transactions = () => {
         defaultValue={limit}
         filtersComponent={
           <TransactionsFilter
-            handleClearFrom={handleClearFrom}
-            handleClearTo={handleClearTo}
+            handleClearFrom={() => handleClear('from')}
+            handleClearTo={() => handleClear('to')}
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
-            setValueFrom={setInputValueFrom}
-            setValueTo={setInputValueTo}
-            valueFrom={inputValueFrom}
-            valueTo={inputValueTo}
+            setValueFrom={(value) => setInputValues((prev) => ({ ...prev, from: value }))}
+            setValueTo={(value) => setInputValues((prev) => ({ ...prev, to: value }))}
+            valueFrom={inputValues.from}
+            valueTo={inputValues.to}
           />
         }
         headCols={transactionTableHead(handleSortChange, sortField, sortOrder)}
