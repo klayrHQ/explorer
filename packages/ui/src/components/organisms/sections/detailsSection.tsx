@@ -17,7 +17,7 @@ import { DataType } from '../../../types/types.ts';
 
 interface DetailsSectionsProps {
   headerWidth?: string;
-  title: string;
+  title?: string;
   data: {
     label: {
       label: string;
@@ -48,15 +48,57 @@ export const DetailsSection = ({
   };
 
   return (
-    <FlexGrid className={'w-full'} component={'section'} direction={'col'} gap={'4.5xl'}>
-      <FlexGrid
-        alignItems="center"
-        className={'w-full'}
-        justify={'between'}
-        mobileDirection={'row'}
-      >
-        <SectionHeader title={title} titleSize={'sm'} titleSizeNotLink={'h5'} />
-        {json && (
+    <FlexGrid className={'w-full relative'} component={'section'} direction={'col'} gap={'4.5xl'}>
+      {title ? (
+        <FlexGrid
+          alignItems="center"
+          className={'w-full'}
+          justify={'between'}
+          mobileDirection={'row'}
+        >
+          <SectionHeader title={title} titleSize={'sm'} titleSizeNotLink={'h5'} />
+          {json && (
+            <Popover
+              button={
+                <IconButton
+                  active={menuOpen}
+                  align={'none'}
+                  icon={'DotsVertical'}
+                  variant={'semiTransparent'}
+                />
+              }
+              isOpen={menuOpen}
+              placement={'bottom-end'}
+              setIsOpen={setMenuOpen}
+            >
+              <Button
+                label={
+                  <Typography
+                    className={'inline-flex items-center gap-sm'}
+                    color={'onBackgroundMedium'}
+                  >
+                    <Icon color={'onBackgroundLow'} icon={'CodeSquare'} size={'xs'} />
+                    {'View as .json'}
+                  </Typography>
+                }
+                onClick={() => setJsonOpen(true)}
+                variant={'transparent'}
+              />
+              <SlideInModal
+                onClose={() => setJsonOpen(false)}
+                open={jsonOpen}
+                title={'View as .json'}
+              >
+                <FlexGrid direction={'col'} gap={'3xl'}>
+                  <JsonViewer copy data={json} startOpen />
+                  <Button align={'right'} label={buttonText} onClick={handleCopyClick} />
+                </FlexGrid>
+              </SlideInModal>
+            </Popover>
+          )}
+        </FlexGrid>
+      ) : (
+        json && (
           <Popover
             button={
               <IconButton
@@ -66,6 +108,7 @@ export const DetailsSection = ({
                 variant={'semiTransparent'}
               />
             }
+            containerClassName={'absolute right-0 top-0'}
             isOpen={menuOpen}
             placement={'bottom-end'}
             setIsOpen={setMenuOpen}
@@ -94,8 +137,8 @@ export const DetailsSection = ({
               </FlexGrid>
             </SlideInModal>
           </Popover>
-        )}
-      </FlexGrid>
+        )
+      )}
       <FlexGrid
         className={'w-full grid grid-cols-2 desktop:flex'}
         direction={'col'}
