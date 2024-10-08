@@ -11,6 +11,8 @@ interface TransactionsFilterProps {
   setValueTo: (value: string) => void;
   onBlur?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleClearFrom: () => void;
+  handleClearTo: () => void;
 }
 
 export const TransactionsFilter = ({
@@ -20,16 +22,10 @@ export const TransactionsFilter = ({
   setValueTo,
   onBlur,
   onKeyDown,
+  handleClearFrom,
+  handleClearTo,
 }: TransactionsFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const handleClearFrom = () => {
-    setValueFrom('');
-  };
-
-  const handleClearTo = () => {
-    setValueTo('');
-  };
 
   return (
     <div className={`relative flex flex-row-reverse items-center w-full gap-12`}>
@@ -50,7 +46,9 @@ export const TransactionsFilter = ({
         <Input
           leftContent={<span>{'From'}</span>}
           leftContentPadding="pl-16"
+          onBlur={onBlur}
           onChange={(e) => setValueFrom((e.target as HTMLInputElement).value)}
+          onKeyDown={onKeyDown}
           placeholder="Type an address"
           rightContent={
             <div
@@ -68,7 +66,9 @@ export const TransactionsFilter = ({
         <Input
           leftContent={<span>{'To'}</span>}
           leftContentPadding="pl-10"
+          onBlur={onBlur}
           onChange={(e) => setValueTo((e.target as HTMLInputElement).value)}
+          onKeyDown={onKeyDown}
           placeholder="Type an address"
           rightContent={
             <div

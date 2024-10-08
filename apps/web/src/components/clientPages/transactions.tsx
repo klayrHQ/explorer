@@ -9,13 +9,45 @@ import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorti
 import { useState, useCallback } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { TransactionsFilter } from '../filterComponents/transactionsFilter.tsx';
+import React from 'react';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
 
-  const [valueFrom, setValueFrom] = useState<string>('');
-  const [valueTo, setValueTo] = useState<string>('');
+  const [filterValueTo, setFilterValueTo] = useState<string>('');
+  const [filterValueFrom, setFilterValueFrom] = useState<string>('');
+  const [inputValueTo, setInputValueTo] = useState<string>('');
+  const [inputValueFrom, setInputValueFrom] = useState<string>('');
+
+  const handleBlur = useCallback(() => {
+    setFilterValueTo(inputValueTo);
+    setFilterValueFrom(inputValueFrom);
+    if (!inputValueTo && !inputValueFrom) {
+      setFilterValueTo('');
+      setFilterValueFrom('');
+    }
+  }, [inputValueTo, inputValueFrom]);
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        setFilterValueTo(inputValueTo);
+        setFilterValueFrom(inputValueFrom);
+      }
+    },
+    [inputValueTo, inputValueFrom],
+  );
+
+  const handleClearFrom = () => {
+    setInputValueFrom('');
+    setFilterValueFrom('');
+  };
+
+  const handleClearTo = () => {
+    setInputValueTo('');
+    setFilterValueTo('');
+  };
 
   const {
     data: transactions,
@@ -33,10 +65,10 @@ export const Transactions = () => {
     defaultLimit: searchParams.get('limit') || '10',
     changeURL: true,
     searchParams: {
-      senderAddress: valueFrom,
-      recipientAddress: valueTo,
+      senderAddress: filterValueFrom,
+      recipientAddress: filterValueTo,
     },
-    additionalDependencies: [valueFrom, valueTo],
+    additionalDependencies: [filterValueFrom, filterValueTo],
   });
 
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
@@ -63,10 +95,14 @@ export const Transactions = () => {
         defaultValue={limit}
         filtersComponent={
           <TransactionsFilter
-            setValueFrom={setValueFrom}
-            setValueTo={setValueTo}
-            valueFrom={valueFrom}
-            valueTo={valueTo}
+            handleClearFrom={handleClearFrom}
+            handleClearTo={handleClearTo}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            setValueFrom={setInputValueFrom}
+            setValueTo={setInputValueTo}
+            valueFrom={inputValueFrom}
+            valueTo={inputValueTo}
           />
         }
         headCols={transactionTableHead(handleSortChange, sortField, sortOrder)}
