@@ -14,6 +14,7 @@ interface UsePaginationAndSortingProps {
   changeURL?: boolean;
   searchParams?: Record<string, any>;
   useNewBlockEvent?: boolean; 
+  additi
 }
 
 export const usePaginationAndSorting = ({

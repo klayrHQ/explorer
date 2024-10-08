@@ -6,12 +6,16 @@ import { transactionTableHead } from '../../utils/helpers/tableHeaders';
 import { createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { TransactionsFilter } from '../filterComponents/transactionsFilter.tsx';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
+
+  const [valueFrom, setValueFrom] = useState<string>('');
+  const [valueTo, setValueTo] = useState<string>('');
 
   const {
     data: transactions,
@@ -28,9 +32,15 @@ export const Transactions = () => {
     fetchFunction: callGetTransactions,
     defaultLimit: searchParams.get('limit') || '10',
     changeURL: true,
+    searchParams: {
+      senderAddress: valueFrom,
+      recipientAddress: valueTo,
+    },
+    additionalDependencies: [valueFrom, valueTo],
   });
 
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
+
   const rows = createTransactionRows(
     transactions,
     loading,
@@ -51,6 +61,14 @@ export const Transactions = () => {
       <TableContainer
         currentNumber={pageNumber}
         defaultValue={limit}
+        filtersComponent={
+          <TransactionsFilter
+            setValueFrom={setValueFrom}
+            setValueTo={setValueTo}
+            valueFrom={valueFrom}
+            valueTo={valueTo}
+          />
+        }
         headCols={transactionTableHead(handleSortChange, sortField, sortOrder)}
         keyPrefix={'transactions'}
         onPerPageChange={handleLimitChange}
