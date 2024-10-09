@@ -41,7 +41,7 @@ import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { formatCommission, fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { Currency } from '../currency.tsx';
-import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
+import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -61,7 +61,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const { isFavourite, addFavourite, removeFavourite } = useFavouritesStore();
   const [isFav, setIsFav] = useState<boolean>(false);
-  const { currentChain } = useChainNetwork();
+  const currentChain = useChainNetworkStore((state) => state.currentChain);
   const symbol = currentChain?.currency.symbol;
 
   const blocksPagination = usePagination(1, '10');

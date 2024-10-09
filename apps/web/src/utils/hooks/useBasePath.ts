@@ -1,8 +1,8 @@
 import { usePathname } from 'next/navigation';
-import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
+import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
 
 export const useBasePath = () => {
-  const { chains } = useChainNetwork();
+  const chains = useChainNetworkStore((state) => state.chains);
   const pathName = usePathname();
   const firstSubDir = pathName.split('/')[1];
   const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);

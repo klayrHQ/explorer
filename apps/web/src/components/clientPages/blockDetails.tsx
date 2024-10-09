@@ -26,7 +26,7 @@ import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { Link } from '@repo/ui/atoms';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { Currency } from '../currency.tsx';
-import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -39,7 +39,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const [eventsMeta, setEventsMeta] = useState<any>({});
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
-  const { currentChain } = useChainNetwork();
+  const currentChain = useChainNetworkStore((state) => state.currentChain);
   const symbol = currentChain?.currency.symbol;
 
   const transactionsPagination = usePagination();

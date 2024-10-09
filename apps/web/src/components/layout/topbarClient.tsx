@@ -1,11 +1,13 @@
 'use client';
 import { Topbar } from '@repo/ui/organisms';
 import { Icon, MenuItemProps, Typography } from '@repo/ui/atoms';
-import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
 import React from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import {useFavouritesStore} from "../../store/favouritesStore.ts";
+import {useChainNetworkStore, useInitializeCurrentChain} from "../../store/chainNetworkStore.ts";
+import {useNodeStore} from "../../store/nodeStore.ts";
+import useMarketcap from "../../utils/hooks/useMarketcap.ts";
 
 interface TopbarClientProps {
   logo: {
@@ -17,18 +19,21 @@ interface TopbarClientProps {
 }
 
 export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
+  useInitializeCurrentChain();
   const {
-    currentChain,
-    setCurrentChain,
-    currentNetwork,
-    setCurrentNetwork,
-    chains,
-    networks,
-    nodeInfo,
-    marketcap,
+    // marketcap,
     trend,
     tokenPrice,
-  } = useChainNetwork();
+  } = useMarketcap();
+
+  const currentChain = useChainNetworkStore((state) => state.currentChain);
+  const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
+  const chains = useChainNetworkStore((state) => state.chains);
+  const networks = useChainNetworkStore((state) => state.networks);
+  const setCurrentChain = useChainNetworkStore((state) => state.setCurrentChain);
+  const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
+
+  const nodeInfo = useNodeStore((state) => state.nodeInfo);
 
   const callSearch = useSearchStore((state) => state.callSearch);
   const setSearchResults = useSearchStore((state) => state.setSearchResults);

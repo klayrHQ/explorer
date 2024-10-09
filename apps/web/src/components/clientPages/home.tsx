@@ -11,15 +11,16 @@ import { formatDate, cleanText } from '../../utils/helpers/dataHelpers.tsx';
 import { NewsCardPropsArray, NewsCardProps } from '@repo/ui/types';
 import { callGetTokenSummary } from '../../utils/api/apiCalls.tsx';
 import { PerfomanceStatsType } from '../../utils/types.ts';
-import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { Currency } from '../currency.tsx';
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 
 export const Home = () => {
   const [news, setNews] = useState<NewsCardPropsArray>([]);
   const [performanceStats, setPerformanceStats] = useState<PerfomanceStatsType>();
   const [statsVS, setStatsVS] = useState<string>('lastMonth');
   const [loadingStats, setLoadingStats] = useState<boolean>(true);
-  const { currentNetwork, currentChain } = useChainNetwork();
+  const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
+  const currentChain = useChainNetworkStore((state) => state.currentChain);
 
   useEffect(() => {
     const getNews = async () => {
