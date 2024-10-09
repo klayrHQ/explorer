@@ -1,14 +1,14 @@
 'use client';
-
 import { FlexGrid } from '@repo/ui/atoms';
 import { DetailsSection } from '@repo/ui/organisms';
-import { useChainNetwork } from '../../providers/chainNetworkProvider';
 import { createDetails } from '../../utils/helpers/dataHelpers';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { Typography } from '@repo/ui/atoms';
 import { ChainDetailsBanner } from '@repo/ui/organisms';
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+
 export const ChainDetails = ({ params }: { params: { id: string } }) => {
-  const { chains, nodeInfo } = useChainNetwork();
+  const chains = useChainNetworkStore((state) => state.chains);
   const mockChainData = chains?.[0];
 
   const details = [

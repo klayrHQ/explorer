@@ -19,7 +19,7 @@ import { callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx
 import { Link } from '@repo/ui/atoms';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import {Currency} from "../currency.tsx";
-import {useChainNetwork} from "../../providers/chainNetworkProvider.tsx";
+import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -27,7 +27,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);
   const [events, setEvents] = useState<EventsType[]>([]);
   const basePath = useBasePath();
-  const { currentChain } = useChainNetwork();
+  const currentChain = useChainNetworkStore((state) => state.currentChain);
   const symbol = currentChain?.currency.symbol;
 
   useEffect(() => {

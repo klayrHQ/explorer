@@ -51,8 +51,8 @@ import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
-import { useChainNetwork } from '../../providers/chainNetworkProvider.tsx';
 import { useInitializeFavourites } from '../../store/favouritesStore.ts';
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 
 export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   useInitializeFavourites();
@@ -78,7 +78,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [sortOrder, setSortOrder] = useState<string>('');
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
-  const { currentChain } = useChainNetwork();
+  const currentChain = useChainNetworkStore((state) => state.currentChain);
   const symbol = currentChain?.currency.symbol;
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
