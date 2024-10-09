@@ -254,25 +254,15 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: (
-        <DetailsSection
-          data={details}
-          json={transaction as unknown as DataType}
-          title={'Transaction Details'}
-        />
-      ),
+      content: <DetailsSection data={details} json={transaction as unknown as DataType} />,
     },
     {
       value: 2,
       label: 'Events',
       icon: 'List',
+      count: events?.length,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader
-            count={events?.length}
-            title={'Transaction events'}
-            titleSizeNotLink={'h5'}
-          />
           <TableContainer headCols={eventsTableHead} keyPrefix={'tx-events'} rows={eventsRows} />
         </FlexGrid>
       ),

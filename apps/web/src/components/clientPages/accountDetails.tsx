@@ -53,6 +53,7 @@ import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { useInitializeFavourites } from '../../store/favouritesStore.ts';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+import { shortString } from '@repo/ui/utils';
 
 export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   useInitializeFavourites();
@@ -225,17 +226,26 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     createDetails(
       'Address',
       <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography variant={'paragraph-sm'}>{account?.address}</Typography>
+        <Typography className={'hidden desktop:inline'} variant={'paragraph-sm'}>
+          {account?.address}
+        </Typography>
+        <Typography className={'desktop:hidden'} variant={'paragraph-sm'}>
+          {shortString(account?.address ?? ' ', 16, 'center')}
+        </Typography>
         <CopyIcon content={account?.address || ''} size={'xxs'} />
       </div>,
     ),
     createDetails(
       'Public Key',
       <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography variant={'paragraph-sm'}>{account?.publicKey}</Typography>
+        <Typography className={'hidden desktop:inline'} variant={'paragraph-sm'}>
+          {account?.publicKey}
+        </Typography>
+        <Typography className={'desktop:hidden'} variant={'paragraph-sm'}>
+          {shortString(account?.publicKey ?? ' ', 16, 'center')}
+        </Typography>
         <CopyIcon content={account?.publicKey || ''} size={'xxs'} />
       </div>,
-      'half',
     ),
   ];
 
@@ -361,14 +371,12 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: (
-        <DetailsSection data={details} json={account as unknown as DataType} title={'Details'} />
-      ),
+      content: <DetailsSection data={details} json={account as unknown as DataType} />,
     },
     ...(isValidator
       ? [
           {
-            content: <DetailsSection data={validatorDetails} title={'Validator Details'} />,
+            content: <DetailsSection data={validatorDetails} />,
             icon: 'Flag',
             label: 'Validator',
             value: 2,
@@ -383,11 +391,6 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
             icon: 'Cube',
             content: (
               <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-                <SectionHeader
-                  count={blocksMeta?.total}
-                  title={`${validator?.account.name}'s blocks`}
-                  titleSizeNotLink={'h5'}
-                />
                 <TableContainer
                   currentNumber={blocksPagination.pageNumber}
                   defaultValue={blocksPagination.limit}
@@ -410,13 +413,9 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       value: isValidator ? 4 : 2,
       label: 'Transactions',
       icon: 'SwitchHorizontal',
+      count: transactionsMeta?.total,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader
-            count={transactionsMeta?.total}
-            title={`${account?.name} transactions`}
-            titleSizeNotLink={'h5'}
-          />
           <TableContainer
             currentNumber={transactionsPagination.pageNumber}
             defaultValue={transactionsPagination.limit}
@@ -441,13 +440,9 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       value: isValidator ? 5 : 3,
       label: 'Stakes',
       icon: 'LayersThree',
+      count: outgoingStakes.length,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader
-            count={outgoingStakes.length}
-            title={`${account?.name}'s stakes`}
-            titleSizeNotLink={'h5'}
-          />
           <TableContainer
             headCols={validatorStakeOutgoingTableHead}
             keyPrefix={'validator-stakes'}
@@ -460,13 +455,9 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       value: isValidator ? 6 : 4,
       label: 'Tokens',
       icon: 'CryptoCurrency',
+      count: outgoingStakes.length,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader
-            count={outgoingStakes.length}
-            title={`${account?.name}'s tokens`}
-            titleSizeNotLink={'h5'}
-          />
           <TableContainer
             headCols={userTokensTableHead}
             keyPrefix={'validator-blocks'}
@@ -480,8 +471,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       label: 'NFTs',
       icon: 'Image',
       content: (
-        <FlexGrid className={'w-full relative mb-10'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader title={`${account?.name}'s NFTs`} titleSizeNotLink={'h5'} />
+        <div className={'w-full relative mb-10 pt-5xl'}>
           <IconButton
             className="absolute top-0 right-0"
             icon={isGridView ? 'Menu' : 'DotsVertical'}
@@ -505,20 +495,16 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           ) : (
             <TableContainer headCols={nftsTableHead} keyPrefix={'account-nfts'} rows={nftsRows} />
           )}
-        </FlexGrid>
+        </div>
       ),
     },
     {
       value: isValidator ? 8 : 6,
       label: 'Events',
       icon: 'List',
+      count: eventsMeta?.total,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <SectionHeader
-            count={eventsMeta?.total}
-            title={`${account?.name}'s events`}
-            titleSizeNotLink={'h5'}
-          />
           <TableContainer
             currentNumber={eventsPagination.pageNumber}
             defaultValue={eventsPagination.limit}
