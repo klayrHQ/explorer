@@ -4,7 +4,7 @@ import { Avatar } from './avatar/avatar.tsx';
 import { TypographyVariant, FontWeight } from '../../../types/types.ts';
 import { CopyIcon } from '../input/copyIcon.tsx';
 
-interface UserAccountCardProps {
+export interface UserAccountCardProps {
   address: string;
   name?: string;
   size?: number;

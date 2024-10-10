@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import NextLink from 'next/link';
 import { LinkProps } from 'next/link';
 
-interface CustomLinkProps extends LinkProps {
+export interface CustomLinkProps extends LinkProps {
   children: ReactNode;
   className?: string;
   href: string;
