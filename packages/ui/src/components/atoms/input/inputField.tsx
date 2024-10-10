@@ -3,28 +3,31 @@ import { cva } from 'class-variance-authority';
 import { IconComponent } from '../../../types/types.ts';
 import { Icon } from '../images/icon.tsx';
 import { cls } from '../../../utils/functions.ts';
+import { ReactNode } from 'react';
 
 interface InputFieldProps extends Omit<HTMLProps<HTMLInputElement>, 'label'> {
-  variant?: 'onBgPrimary' | 'onBgSecondary';
+  variant?: 'onBgPrimary' | 'onBgSecondary' | 'filters';
   className?: string;
   icon?: IconComponent;
+  rightContent?: ReactNode;
+  leftContent?: ReactNode;
+  rightContentPadding?: string;
+  leftContentPadding?: string;
   error?: boolean;
   success?: boolean;
 }
 
 const inputFieldStyles = cva(
-  [
-    'border-solid border rounded-md',
-    'h-inputHeight w-full',
-    'pt-xl pb-lg',
-    'focus:ring-0 focus:outline-none',
-    'bg-transparent',
-  ],
+  ['border-solid border rounded-md', 'w-full', 'focus:ring-0 focus:outline-none', 'bg-transparent'],
   {
     variants: {
       variant: {
-        onBgPrimary: 'border-backgroundSecondary focus:border-gray-6 hover:border-gray-6',
-        onBgSecondary: 'border-backgroundTertiary focus:border-gray-5 hover:border-gray-5',
+        onBgPrimary:
+          'h-inputHeight  border-backgroundSecondary focus:border-gray-6 hover:border-gray-6',
+        onBgSecondary:
+          'h-inputHeight  border-backgroundTertiary focus:border-gray-5 hover:border-gray-5',
+        filters:
+          ' h-10 min-w-64 text-paragraph-sm bg-backgroundDark  border-backgroundTertiary placeholder:text-paragraph-sm placeholder:text-backgroundTertiary placeholder:font-normal focus:bg-backgroundSecondary focus:border-backgroundTertiary focus:outline-0',
       },
       error: {
         true: 'border-error',
@@ -85,30 +88,45 @@ export const InputField = ({
   variant = 'onBgSecondary',
   className,
   icon,
+  rightContent,
+  leftContent,
   error,
   success,
+  rightContentPadding = 'pr-lg',
+  leftContentPadding = 'pl-lg',
   ...props
 }: InputFieldProps) => {
   return (
     <div className={'relative z-1 w-full'}>
       {icon && (
         <Icon
-          className={'absolute p left-lg h-max top-0 bottom-0 my-auto -z-1'}
+          className={'absolute left-lg h-max top-0 bottom-0 my-auto -z-1'}
           color={'gray-5'}
           icon={icon}
         />
+      )}
+      {leftContent && (
+        <div className={'absolute left-lg h-max top-0 bottom-0 my-auto '}>{leftContent}</div>
       )}
       <input
         className={inputFieldStyles({
           variant,
           error,
           success,
-          className: cls([icon ? 'pl-10 pr-lg' : 'px-lg', className]),
+          className: cls([
+            icon ? 'pl-10 pr-lg' : 'px-lg',
+            leftContent ? leftContentPadding : '',
+            rightContent ? rightContentPadding : '',
+            className,
+          ]),
         })}
         style={{}}
         type={type}
         {...props}
       />
+      {rightContent && (
+        <div className={'absolute right-lg h-max top-0 bottom-0 my-auto '}>{rightContent}</div>
+      )}
     </div>
   );
 };
