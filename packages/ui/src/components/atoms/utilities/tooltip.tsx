@@ -4,7 +4,7 @@ import { CSSProperties, ReactNode, useState } from 'react';
 import { Typography } from '../base/typography.tsx';
 import { cls } from '../../../utils/functions.ts';
 
-interface TooltipProps {
+export interface TooltipProps {
   placement: 'top' | 'bottom' | 'left' | 'right';
   text: string;
   children: ReactNode;
