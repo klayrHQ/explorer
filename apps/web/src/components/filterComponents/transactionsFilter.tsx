@@ -52,7 +52,7 @@ export const TransactionsFilter = ({
           placeholder="Type an address"
           rightContent={
             <div
-              className={`flex items-center justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueFrom ? 'opacity-100' : 'opacity-0'}`}
+              className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueFrom ? 'opacity-100' : 'opacity-0'}`}
               onClick={handleClearFrom}
             >
               <Icon color="backgroundDark" icon="CrossClose" size="xxs" />
@@ -72,7 +72,7 @@ export const TransactionsFilter = ({
           placeholder="Type an address"
           rightContent={
             <div
-              className={`flex items-center justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueTo ? 'opacity-100' : 'opacity-0'}`}
+              className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueTo ? 'opacity-100' : 'opacity-0'}`}
               onClick={handleClearTo}
             >
               <Icon color="backgroundDark" icon="CrossClose" onClick={handleClearTo} size="xxs" />
