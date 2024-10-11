@@ -391,13 +391,20 @@ export const createValidatorsRows = (
                     className="font-semibold"
                     decimals={0}
                   />
-                  <Typography
-                    color={weightPercents > 100 ? 'error' : 'onBackgroundLow'}
-                    variant={'caption'}
+                  <Tooltip
+                    placement={'top'}
+                    text={
+                      'The percentage of the validator’s total stake relative to its maximum allowable weight.'
+                    }
                   >
-                    {weightPercents}
-                    {'%'}
-                  </Typography>
+                    <Typography
+                      color={weightPercents > 100 ? 'error' : 'onBackgroundLow'}
+                      variant={'caption'}
+                    >
+                      {weightPercents}
+                      {'%'}
+                    </Typography>
+                  </Tooltip>
                 </div>
               ),
             },
