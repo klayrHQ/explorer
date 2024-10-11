@@ -57,7 +57,7 @@ export const BannerText = ({
       </Link>
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
-        {'send'}
+        {'sent'}
       </Typography>
 
       {/* RECEIVER */}
