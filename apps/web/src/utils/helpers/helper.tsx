@@ -294,7 +294,6 @@ export const createValidatorsRows = (
             2,
           ),
         );
-        console.log('weightPercents', weightPercents);
         const resultPerPeriod =
           stakingCalculatorPeriod === 'block'
             ? newBlockReward
