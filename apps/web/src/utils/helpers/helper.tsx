@@ -54,7 +54,8 @@ import {
 } from './tableHeaders.tsx';
 import { ChainType, DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
-import {Currency} from "../../components/currency.tsx";
+import { Currency } from '../../components/currency.tsx';
+import { FormattedValue } from '../../components/formattedValue.tsx';
 
 export const createTransactionRows = (
   transactions: TransactionType[],
@@ -74,12 +75,11 @@ export const createTransactionRows = (
               children: (
                 <KeyValueComponent
                   contentValue={
-                    <Link basePath={basePath} href={`/transactions/${transaction.id}`}>
-                      <Typography className={'hover:underline'} link>
-                        {' '}
-                        {shortString(transaction?.id, 12, 'center')}
-                      </Typography>
-                    </Link>
+                    <FormattedValue
+                      format={'string'}
+                      link={`/transactions/${transaction.id}`}
+                      value={shortString(transaction?.id, 12, 'center')}
+                    />
                   }
                   keyValue={<StatusIcon status={transaction.executionStatus} />}
                 />
@@ -87,41 +87,23 @@ export const createTransactionRows = (
             },
             {
               children: (
-                <Typography
-                  className={'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer'}
-                  color={'onBackgroundLow'}
-                >
-                  {transaction?.block?.height?.toLocaleString() ?? ''}
-                  <Tooltip placement={'bottom'} text={copyTooltipText}>
-                    <span
-                      className={'w-4 block'}
-                      onClick={() =>
-                        handleCopy(transaction?.block?.height?.toString() ?? '', setCopyTooltipText)
-                      }
-                    >
-                      <Icon
-                        className={'desktop:group-hover/child:inline desktop:hidden cursor-pointer'}
-                        icon={'Copy'}
-                        size={'2xs'}
-                      />
-                    </span>
-                  </Tooltip>
-                </Typography>
+                <FormattedValue
+                  copy
+                  format={'number'}
+                  showCopyOnHover
+                  typographyProps={{ color: 'onBackgroundLow' }}
+                  value={transaction.block.height}
+                />
               ),
               className: 'group/child',
             },
             {
               children: (
-                <Tooltip
-                  placement={'top'}
-                  text={dayjs((transaction.block.timestamp ?? 0) * 1000).format(
-                    'DD MMM YYYY HH:mm',
-                  )}
-                >
-                  <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
-                    {fromNowFormatter((transaction.block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
-                  </Typography>
-                </Tooltip>
+                <FormattedValue
+                  format={'fromNow'}
+                  typographyProps={{ color: 'onBackgroundLow' }}
+                  value={transaction.block.timestamp}
+                />
               ),
             },
             {
@@ -133,29 +115,11 @@ export const createTransactionRows = (
               ),
             },
             {
-              children: (
-                <Link
-                  basePath={basePath}
-                  href={`/account/${transaction?.sender?.name ?? transaction?.sender?.address}`}
-                >
-                  <UserAccountCard
-                    address={transaction?.sender?.address}
-                    name={transaction?.sender?.name}
-                  />
-                </Link>
-              ),
+              children: <FormattedValue format={'account'} value={transaction.sender} />,
             },
             {
               children: transaction?.recipient ? (
-                <Link
-                  basePath={basePath}
-                  href={`/account/${transaction?.recipient.name ?? transaction?.recipient?.address}`}
-                >
-                  <UserAccountCard
-                    address={transaction?.recipient?.address}
-                    name={transaction?.recipient?.name}
-                  />
-                </Link>
+                <FormattedValue format={'account'} value={transaction.recipient} />
               ) : (
                 '-'
               ),
@@ -437,11 +401,7 @@ export const createValidatorsRows = (
               children: (
                 //Not sure about data
                 <div className="flex justify-end">
-                  <Currency
-                    amount={validator?.selfStake}
-                    className="font-semibold"
-                    decimals={0}
-                  />
+                  <Currency amount={validator?.selfStake} className="font-semibold" decimals={0} />
                 </div>
               ),
             },
@@ -449,11 +409,7 @@ export const createValidatorsRows = (
               children: (
                 //how to get the percentage?
                 <div className="flex justify-end">
-                  <Currency
-                    amount={validator?.totalStake}
-                    className="font-semibold"
-                    decimals={0}
-                  />
+                  <Currency amount={validator?.totalStake} className="font-semibold" decimals={0} />
                 </div>
               ),
             },
@@ -941,11 +897,7 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
               //mock_data
               children: (
                 <div className="flex flex-col items-end">
-                  <Currency
-                    amount={account?.totalBalance}
-                    className="font-semibold"
-                    decimals={0}
-                  />
+                  <Currency amount={account?.totalBalance} className="font-semibold" decimals={0} />
                 </div>
               ),
             },
@@ -1087,11 +1039,7 @@ export const createUserDetailsTokensRow = (
             {
               children: (
                 <div className="flex flex-col">
-                  <Currency
-                    amount={totalBalance}
-                    decimals={0}
-                    fontWeight={'semibold'}
-                  />
+                  <Currency amount={totalBalance} decimals={0} fontWeight={'semibold'} />
                   <Currency
                     amount={Number(token.availableBalance) * 2}
                     className="text-onBackgroundLow text-caption"
@@ -1104,11 +1052,7 @@ export const createUserDetailsTokensRow = (
             {
               children: (
                 <div className="flex flex-col ">
-                  <Currency
-                    amount={token.availableBalance}
-                    decimals={0}
-                    fontWeight={'semibold'}
-                  />
+                  <Currency amount={token.availableBalance} decimals={0} fontWeight={'semibold'} />
                   <Typography color={'onBackgroundLow'} variant={'caption'}>
                     {availablePercentage}
                     {'%'}
