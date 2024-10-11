@@ -19,12 +19,14 @@ export const Transactions = () => {
   const [filterValues, setFilterValues] = useState({ from: '', to: '' });
 
   const handleBlur = useCallback(() => {
-    setFilterValues(inputValues);
+    if (inputValues.from.length === 41 || inputValues.to.length === 41) {
+      setFilterValues(inputValues);
+    }
   }, [inputValues]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' && (inputValues.from.length === 41 || inputValues.to.length === 41)) {
         setFilterValues(inputValues);
       }
     },

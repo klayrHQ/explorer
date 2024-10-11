@@ -26,6 +26,8 @@ export const TransactionsFilter = ({
   handleClearTo,
 }: TransactionsFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const isErrorFrom = valueFrom.length > 0 && valueFrom !== '41';
+  const isErrorTo = valueTo.length > 0 && valueTo !== '41';
 
   return (
     <div className={`relative flex flex-row-reverse items-center w-full gap-12`}>
@@ -44,6 +46,7 @@ export const TransactionsFilter = ({
         className={`hidden desktop:flex gap-4 w-full transition-all ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
       >
         <Input
+          className={`${valueFrom.length > 0 ? 'bg-tulip' : 'bg-backgroundSecondary'} ${isErrorFrom ? 'border-error' : ''} `}
           leftContent={<span>{'From'}</span>}
           leftContentPadding="pl-16"
           onBlur={onBlur}
@@ -64,6 +67,7 @@ export const TransactionsFilter = ({
           variant="filters"
         />
         <Input
+          className={`${valueTo.length > 0 ? 'bg-backgroundSecondary' : ''} ${isErrorTo ? 'border-error' : ''} `}
           leftContent={<span>{'To'}</span>}
           leftContentPadding="pl-10"
           onBlur={onBlur}

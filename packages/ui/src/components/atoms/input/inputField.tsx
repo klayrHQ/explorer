@@ -27,7 +27,7 @@ const inputFieldStyles = cva(
         onBgSecondary:
           'h-inputHeight  border-backgroundTertiary focus:border-gray-5 hover:border-gray-5',
         filters:
-          ' h-10 min-w-64 text-paragraph-sm bg-backgroundDark  border-backgroundTertiary placeholder:text-paragraph-sm placeholder:text-backgroundTertiary placeholder:font-normal focus:bg-backgroundSecondary focus:border-backgroundTertiary focus:outline-0',
+          ' h-10 min-w-64 text-paragraph-sm   border-backgroundTertiary placeholder:text-paragraph-sm placeholder:text-backgroundTertiary placeholder:font-normal focus:bg-backgroundSecondary active:bg-backgroundSecondary focus:border-backgroundTertiary focus:outline-0',
       },
       error: {
         true: 'border-error',
