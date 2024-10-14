@@ -80,12 +80,6 @@ export const ValidatorBanner = ({
         removeFavorite={removeFavorite}
         setFavorite={setFavorite}
       />
-      <ValidatorBannerButtons
-        className="desktop:hidden absolute top-6 right-6"
-        isFavorite={isFavorite}
-        removeFavorite={removeFavorite}
-        setFavorite={setFavorite}
-      />
     </BannerFrame>
   );
 };
