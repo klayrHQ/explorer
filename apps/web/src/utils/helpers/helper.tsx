@@ -289,6 +289,11 @@ export const createValidatorsRows = (
   return !loading
     ? validators?.map((validator) => {
         const { inputStake, newBlockReward } = calculateReward(validator);
+        const weightPercents = Number(
+          ((Number(validator?.totalStake || 0) / Number(validator?.selfStake || 1)) * 10).toFixed(
+            2,
+          ),
+        );
         const resultPerPeriod =
           stakingCalculatorPeriod === 'block'
             ? newBlockReward
@@ -385,15 +390,20 @@ export const createValidatorsRows = (
                     className="font-semibold"
                     decimals={0}
                   />
-                  <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {Number(
-                      (
-                        (Number(validator?.totalStake || 0) / Number(validator?.selfStake || 1)) *
-                        10
-                      ).toFixed(2),
-                    )}
-                    %
-                  </Typography>
+                  <Tooltip
+                    placement={'top'}
+                    text={
+                      'The percentage of the validator’s total stake relative to its maximum allowable weight.'
+                    }
+                  >
+                    <Typography
+                      color={weightPercents > 100 ? 'error' : 'onBackgroundLow'}
+                      variant={'caption'}
+                    >
+                      {weightPercents}
+                      {'%'}
+                    </Typography>
+                  </Tooltip>
                 </div>
               ),
             },
