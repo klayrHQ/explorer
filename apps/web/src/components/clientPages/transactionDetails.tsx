@@ -18,8 +18,10 @@ import { EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { Link } from '@repo/ui/atoms';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
-import {Currency} from "../currency.tsx";
-import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
+import { Currency } from '../currency.tsx';
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+import { FormattedValue } from '../formattedValue.tsx';
+import { shortString } from '@repo/ui/utils';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -59,10 +61,20 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'Transaction ID',
       },
       value: (
-        <div className="flex flex-row gap-1.5 items-baseline ">
-          <Typography variant={'paragraph-sm'}>{transaction?.id}</Typography>
-          <CopyIcon content={transaction?.id || ''} size={'xxs'} />
-        </div>
+        <>
+          <FormattedValue
+            copy
+            value={transaction?.id}
+            format={'string'}
+            typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+          />
+          <FormattedValue
+            copy
+            value={shortString(transaction?.id ?? ' ', 16, 'center')}
+            format={'string'}
+            typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+          />
+        </>
       ),
     },
     {
@@ -132,17 +144,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'From',
       },
-      value: (
-        <Link
-          basePath={basePath}
-          href={`/account/${transaction?.sender.name ?? transaction?.sender?.address}`}
-        >
-          <UserAccountCard
-            address={transaction?.sender?.address ?? ''}
-            name={transaction?.sender?.name}
-          />
-        </Link>
-      ),
+      value: <FormattedValue format={'account'} value={transaction?.sender} />,
       mobileWidth: 'half',
     },
     ...(transaction?.recipient
@@ -151,17 +153,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
             label: {
               label: 'To',
             },
-            value: (
-              <Link
-                basePath={basePath}
-                href={`/account/${transaction?.recipient.name ?? transaction?.recipient?.address}`}
-              >
-                <UserAccountCard
-                  address={transaction?.recipient?.address ?? ''}
-                  name={transaction?.recipient?.name}
-                />
-              </Link>
-            ),
+            value: <FormattedValue format={'account'} value={transaction?.recipient} />,
             mobileWidth: 'half',
           },
         ]
@@ -172,7 +164,25 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
             label: {
               label: 'Sender Public Key',
             },
-            value: transaction?.sender?.publicKey,
+            value: (
+              <>
+                <FormattedValue
+                  copy
+                  value={transaction?.sender.publicKey}
+                  format={'string'}
+                  typographyProps={{
+                    color: 'onBackgroundHigh',
+                    className: 'hidden desktop:inline-flex',
+                  }}
+                />
+                <FormattedValue
+                  copy
+                  value={shortString(transaction?.sender.publicKey ?? ' ', 16, 'center')}
+                  format={'string'}
+                  typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+                />
+              </>
+            ),
           },
         ]
       : []),
@@ -181,9 +191,22 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'Block',
       },
       value: (
-        <Link basePath={basePath} href={`/blocks/${transaction?.block?.id}`}>
-          {transaction?.block?.id}
-        </Link>
+        <>
+          <FormattedValue
+            copy
+            link={`/blocks/${transaction?.block?.id}`}
+            value={transaction?.block?.id}
+            format={'string'}
+            typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+          />
+          <FormattedValue
+            copy
+            link={`/blocks/${transaction?.block?.id}`}
+            value={shortString(transaction?.block?.id ?? ' ', 16, 'center')}
+            format={'string'}
+            typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+          />
+        </>
       ),
     },
     {
@@ -191,12 +214,13 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'Block Height',
       },
       value: (
-        <div className="flex flex-row gap-1.5 items-baseline ">
-          <Link basePath={basePath} href={`/blocks/${transaction?.block?.id}`}>
-            {transaction?.block?.height}
-          </Link>
-          <CopyIcon content={String(transaction?.block?.height) || ''} size={'xxs'} />
-        </div>
+        <FormattedValue
+          copy
+          value={transaction?.block?.height}
+          format={'number'}
+          link={`/blocks/${transaction?.block?.id}`}
+          typographyProps={{ color: 'onBackgroundHigh' }}
+        />
       ),
     },
     /*{

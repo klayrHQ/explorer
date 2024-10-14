@@ -1,8 +1,10 @@
 import {
   CopyIcon,
-  CurrencyProps, CustomLinkProps,
+  CurrencyProps,
+  CustomLinkProps,
   Link,
-  Tooltip, TooltipProps,
+  Tooltip,
+  TooltipProps,
   Typography,
   TypographyProps,
   UserAccountCard,
@@ -15,7 +17,7 @@ import { useBasePath } from '../utils/hooks/useBasePath.ts';
 
 interface AccountObject {
   address: string;
-  name?: string;
+  name?: string | null;
   publicKey?: string;
   nonce?: string;
 }
@@ -32,19 +34,20 @@ interface FormattedValueProps {
     | 'date'
     | 'fromNow';
   typographyProps?: Omit<TypographyProps, 'children'>;
-  accountProps?: UserAccountCardProps;
+  accountProps?: Omit<UserAccountCardProps, 'address' | 'name'>;
   currencyProps?: CurrencyProps;
   copy?: boolean;
   showCopyOnHover?: boolean;
   link?: Omit<CustomLinkProps, 'children'> | string;
   tooltip?: Omit<TooltipProps, 'children'> | string;
+  accountIconComponent?: React.ReactNode;
 }
 
 function isAccountObject(value: any): value is AccountObject {
   return (
     value &&
     typeof value.address === 'string' &&
-    (typeof value.name === 'string' || typeof value.name === 'undefined')
+    (typeof value.name === 'string' || typeof value.name === 'undefined' || value.name === null)
   );
 }
 
@@ -58,6 +61,7 @@ export const FormattedValue = ({
   showCopyOnHover,
   link,
   tooltip,
+  accountIconComponent,
 }: FormattedValueProps) => {
   const basePath = useBasePath();
 
@@ -68,9 +72,11 @@ export const FormattedValue = ({
           {...typographyProps}
           className={cls([
             typographyProps?.className,
-            copy ? 'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer' : '',
+            copy ? 'whitespace-nowrap inline-flex gap-sm items-center' : '',
           ])}
+          color={typographyProps?.color ?? 'onBackgroundLow'}
           link={!!link}
+          variant={typographyProps?.variant ?? 'paragraph-sm'}
         >
           {value}
           {copy && <CopyIcon content={value.toString()} hover={showCopyOnHover} size={'xxs'} />}
@@ -84,9 +90,11 @@ export const FormattedValue = ({
           {...typographyProps}
           className={cls([
             typographyProps?.className,
-            copy ? 'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer' : '',
+            copy ? 'whitespace-nowrap inline-flex gap-sm items-center' : '',
           ])}
+          color={typographyProps?.color ?? 'onBackgroundLow'}
           link={!!link}
+          variant={typographyProps?.variant ?? 'paragraph-sm'}
         >
           {Number(value).toLocaleString()}
           {copy && <CopyIcon content={value.toString()} hover={showCopyOnHover} size={'xxs'} />}
@@ -100,11 +108,13 @@ export const FormattedValue = ({
           {...typographyProps}
           className={cls([
             typographyProps?.className,
-            copy ? 'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer' : '',
+            copy ? 'whitespace-nowrap inline-flex gap-sm items-center' : '',
           ])}
+          color={typographyProps?.color ?? 'onBackgroundLow'}
           link={!!link}
+          variant={typographyProps?.variant ?? 'caption'}
         >
-          {Number(value).toLocaleString() + '%'}
+          {Number(value).toFixed(2) + '%'}
           {copy && <CopyIcon content={value.toString()} hover={showCopyOnHover} size={'xxs'} />}
         </Typography>
       );
@@ -117,18 +127,42 @@ export const FormattedValue = ({
     if (format === 'account' && isAccountObject(value)) {
       return (
         <Link basePath={basePath} href={`/account/${value.name ?? value.address}`}>
-          <UserAccountCard {...accountProps} {...value} />
+          {accountIconComponent ? (
+            <div className={'relative inline-flex items-center gap-1 ml-2.5'}>
+              {accountIconComponent}
+              <UserAccountCard {...accountProps} {...value} />
+            </div>
+          ) : (
+            <UserAccountCard {...accountProps} {...value} />
+          )}
         </Link>
       );
     }
 
     if (format === 'address' && typeof value === 'string') {
-      return <Typography {...typographyProps}>{shortString(value, 12, 'center')}</Typography>;
+      return (
+        <Typography
+          {...typographyProps}
+          className={cls([
+            typographyProps?.className,
+            copy ? 'whitespace-nowrap inline-flex gap-sm items-center' : '',
+          ])}
+          color={typographyProps?.color ?? 'onBackgroundLow'}
+          variant={typographyProps?.variant ?? 'paragraph-sm'}
+        >
+          {shortString(value, 12, 'center')}
+          {copy && <CopyIcon content={value.toString()} hover={showCopyOnHover} size={'xxs'} />}
+        </Typography>
+      );
     }
 
     if (format === 'date' && typeof value === 'number') {
       return (
-        <Typography {...typographyProps}>
+        <Typography
+          {...typographyProps}
+          color={typographyProps?.color ?? 'onBackgroundLow'}
+          variant={typographyProps?.variant ?? 'paragraph-sm'}
+        >
           {dayjs((value ?? 0) * 1000).format('DD MMM YYYY HH:mm')}
         </Typography>
       );
@@ -137,44 +171,47 @@ export const FormattedValue = ({
     if (format === 'fromNow' && typeof value === 'number') {
       return (
         <Tooltip placement={'top'} text={dayjs((value ?? 0) * 1000).format('DD MMM YYYY HH:mm')}>
-          <Typography className={'whitespace-nowrap'} {...typographyProps}>
+          <Typography
+            className={'whitespace-nowrap'}
+            {...typographyProps}
+            color={typographyProps?.color ?? 'onBackgroundLow'}
+            variant={typographyProps?.variant ?? 'paragraph-sm'}
+          >
             {fromNowFormatter((value ?? 0) * 1000, 'DD MMM YYYY')}
           </Typography>
         </Tooltip>
       );
     }
 
-    return <Typography color={'error'}>{'type of value is incorrect for chosen format'}</Typography>;
-  }
+    if (value === undefined) {
+      return '';
+    }
+
+    return (
+      <Typography color={'tulip'} variant={'caption'}>
+        {'type of value is incorrect for chosen format'}
+      </Typography>
+    );
+  };
 
   if (link && tooltip) {
     typeof link === 'string' && (link = { href: link });
     typeof tooltip === 'string' && (tooltip = { text: tooltip, placement: 'top' });
     return (
       <Tooltip {...tooltip}>
-        <Link {...link}>
-          {innerComponent()}
-        </Link>
+        <Link {...link}>{innerComponent()}</Link>
       </Tooltip>
     );
   }
 
   if (link) {
     typeof link === 'string' && (link = { href: link });
-    return (
-      <Link {...link}>
-        {innerComponent()}
-      </Link>
-    );
+    return <Link {...link}>{innerComponent()}</Link>;
   }
 
   if (tooltip) {
     typeof tooltip === 'string' && (tooltip = { text: tooltip, placement: 'top' });
-    return (
-      <Tooltip {...tooltip}>
-        {innerComponent()}
-      </Tooltip>
-    );
+    return <Tooltip {...tooltip}>{innerComponent()}</Tooltip>;
   }
 
   return innerComponent();

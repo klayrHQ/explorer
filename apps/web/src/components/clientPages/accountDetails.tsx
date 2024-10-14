@@ -54,6 +54,8 @@ import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { useInitializeFavourites } from '../../store/favouritesStore.ts';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { shortString } from '@repo/ui/utils';
+import { FormattedValue } from '../formattedValue.tsx';
+import { Currency } from '../currency.tsx';
 
 export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   useInitializeFavourites();
@@ -225,44 +227,102 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const details = [
     createDetails(
       'Address',
-      <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography className={'hidden desktop:inline'} variant={'paragraph-sm'}>
-          {account?.address}
-        </Typography>
-        <Typography className={'desktop:hidden'} variant={'paragraph-sm'}>
-          {shortString(account?.address ?? ' ', 16, 'center')}
-        </Typography>
-        <CopyIcon content={account?.address || ''} size={'xxs'} />
-      </div>,
+      <>
+        <FormattedValue
+          copy
+          value={account?.address}
+          format={'string'}
+          typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+        />
+        <FormattedValue
+          copy
+          value={shortString(account?.address ?? ' ', 16, 'center')}
+          format={'string'}
+          typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+        />
+      </>,
     ),
     createDetails(
       'Public Key',
-      <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography className={'hidden desktop:inline'} variant={'paragraph-sm'}>
-          {account?.publicKey}
-        </Typography>
-        <Typography className={'desktop:hidden'} variant={'paragraph-sm'}>
-          {shortString(account?.publicKey ?? ' ', 16, 'center')}
-        </Typography>
-        <CopyIcon content={account?.publicKey || ''} size={'xxs'} />
-      </div>,
+      <>
+        <FormattedValue
+          copy
+          value={account?.publicKey}
+          format={'string'}
+          typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+        />
+        <FormattedValue
+          copy
+          value={shortString(account?.publicKey ?? ' ', 16, 'center')}
+          format={'string'}
+          typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+        />
+      </>,
     ),
   ];
 
   const validatorDetails = [
-    createDetails('Validator weight', validator?.validatorWeight),
-    createDetails('Total stake', validator?.totalStake),
-    createDetails('Self stake', validator?.selfStake),
-    createDetails('Generated blocks', validator?.generatedBlocks),
-    createDetails('Last generated height', validator?.lastGeneratedHeight),
-    createDetails('Consecutive missed blocks', validator?.consecutiveMissedBlocks),
-    createDetails('Last commission increase', validator?.lastCommissionIncreaseHeight),
-    createDetails('Total commission', validator?.commission),
-    createDetails('Commission %', validator?.commission),
-    createDetails('Earned rewards', validator?.totalRewards),
-    createDetails('Total self stake rewards', validator?.totalSelfStakeRewards),
-    createDetails('Max height generated', '-'),
-    createDetails('Max height pre-voted', '-'),
+    createDetails('Validator weight', <Currency amount={validator?.validatorWeight ?? 0} />),
+    createDetails('Total stake', <Currency amount={validator?.totalStake ?? 0} />),
+    createDetails('Self stake', <Currency amount={validator?.selfStake ?? 0} />),
+    createDetails(
+      'Generated blocks',
+      <FormattedValue
+        value={validator?.generatedBlocks}
+        format={'number'}
+        typographyProps={{ color: 'onBackgroundHigh' }}
+      />,
+    ),
+    createDetails(
+      'Last generated height',
+      <FormattedValue
+        value={validator?.lastGeneratedHeight}
+        format={'number'}
+        typographyProps={{ color: 'onBackgroundHigh' }}
+      />,
+    ),
+    createDetails(
+      'Consecutive missed blocks',
+      <FormattedValue
+        value={validator?.consecutiveMissedBlocks}
+        format={'number'}
+        typographyProps={{ color: 'onBackgroundHigh' }}
+      />,
+    ),
+    createDetails(
+      'Last commission increase',
+      <FormattedValue
+        value={validator?.lastCommissionIncreaseHeight}
+        format={'number'}
+        typographyProps={{ color: 'onBackgroundHigh' }}
+      />,
+    ),
+    createDetails(
+      'Total commission',
+      <Currency amount={validator?.commission ?? 0} decimals={5} />,
+    ),
+    createDetails('Commission %', <Currency amount={validator?.commission ?? 0} decimals={5} />),
+    createDetails('Earned rewards', <Currency amount={validator?.totalRewards ?? 0} />),
+    createDetails(
+      'Total self stake rewards',
+      <Currency amount={validator?.totalSelfStakeRewards ?? 0} />,
+    ),
+    createDetails(
+      'Max height generated',
+      <FormattedValue
+        value={'-'}
+        format={'string'}
+        typographyProps={{ color: 'onBackgroundHigh' }}
+      />,
+    ),
+    createDetails(
+      'Max height pre-voted',
+      <FormattedValue
+        value={'-'}
+        format={'string'}
+        typographyProps={{ color: 'onBackgroundHigh' }}
+      />,
+    ),
   ];
 
   const stakeCapacity = (

@@ -6,7 +6,7 @@ import { CopyIcon } from '../input/copyIcon.tsx';
 
 export interface UserAccountCardProps {
   address: string;
-  name?: string;
+  name?: string | null;
   size?: number;
   nameColor?: string;
   nameVariant?: TypographyVariant;
@@ -36,12 +36,7 @@ export const UserAccountCard = ({
   truncateName = false,
 }: UserAccountCardProps) => {
   return (
-    <FlexGrid
-      alignItems={'center'}
-      className={`w-${width}`}
-      gap={'md'}
-      mobileDirection={'row'}
-    >
+    <FlexGrid alignItems={'center'} className={`w-${width}`} gap={'md'} mobileDirection={'row'}>
       <Avatar address={address} circle size={size} />
       <FlexGrid direction={'col'} gap={'0'}>
         {name && nameOnly && !truncateName && (

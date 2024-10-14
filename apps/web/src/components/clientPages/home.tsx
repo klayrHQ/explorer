@@ -129,7 +129,7 @@ export const Home = () => {
       value: loadingStats ? (
         <SkeletonComponent style={{ height: '28px' }} />
       ) : (
-        (performanceStats?.totalAccounts ?? 0)
+        (performanceStats?.totalAccounts ?? 0).toLocaleString()
       ),
       percentage: '9.3%',
       statsVS: statsVSString,
@@ -140,7 +140,7 @@ export const Home = () => {
       value: loadingStats ? (
         <SkeletonComponent style={{ height: '28px' }} />
       ) : (
-        (performanceStats?.totalTransactions ?? 0)
+        (performanceStats?.totalTransactions ?? 0).toLocaleString()
       ),
       percentage: '20%',
       statsVS: statsVSString,

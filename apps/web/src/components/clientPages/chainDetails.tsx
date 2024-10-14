@@ -6,6 +6,7 @@ import BannerBG from '../../assets/images/bannerBG.png';
 import { Typography } from '@repo/ui/atoms';
 import { ChainDetailsBanner } from '@repo/ui/organisms';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+import { FormattedValue } from '../formattedValue.tsx';
 
 export const ChainDetails = ({ params }: { params: { id: string } }) => {
   const chains = useChainNetworkStore((state) => state.chains);
@@ -14,53 +15,40 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
   const details = [
     createDetails(
       'Description',
-      <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography variant={'paragraph-sm'}>{'Here is the description of the chain'}</Typography>
-      </div>,
+      <Typography variant={'paragraph-sm'}>{'Here is the description of the chain'}</Typography>,
     ),
     createDetails(
       'Block time',
-      <div className="flex flex-row gap-1.5 items-baseline ">
-        <Typography variant={'paragraph-sm'}>{'block time'}</Typography>
-      </div>,
+      <Typography variant={'paragraph-sm'}>{'block time'}</Typography>,
       'half',
     ),
     createDetails(
       'Height',
-      <div>
-        <Typography variant={'paragraph-sm'}>{'213.423.345'}</Typography>
-      </div>,
+      <FormattedValue
+        value={213423345}
+        format={'number'}
+        typographyProps={{ color: 'onBackgroundHigh' }}
+      />,
     ),
     createDetails(
       'Finalized height',
-      <div>
-        <Typography variant={'paragraph-sm'}>{'256.234.123'}</Typography>
-      </div>,
+      <FormattedValue
+        value={256234123}
+        format={'number'}
+        typographyProps={{ color: 'onBackgroundHigh' }}
+      />,
     ),
     createDetails(
       'Blocks until finalized',
-      <div>
-        <Typography variant={'paragraph-sm'}>{'2453.454'}</Typography>
-      </div>,
+      <FormattedValue
+        value={2453}
+        format={'number'}
+        typographyProps={{ color: 'onBackgroundHigh' }}
+      />,
     ),
-    createDetails(
-      'Network version',
-      <div>
-        <Typography variant={'paragraph-sm'}>{'3.0'}</Typography>
-      </div>,
-    ),
-    createDetails(
-      'Network identifier',
-      <div>
-        <Typography variant={'paragraph-sm'}>{'KLY'}</Typography>
-      </div>,
-    ),
-    createDetails(
-      'Max payload length',
-      <div>
-        <Typography variant={'paragraph-sm'}>{'7'}</Typography>
-      </div>,
-    ),
+    createDetails('Network version', <Typography variant={'paragraph-sm'}>{'3.0'}</Typography>),
+    createDetails('Network identifier', <Typography variant={'paragraph-sm'}>{'KLY'}</Typography>),
+    createDetails('Max payload length', <Typography variant={'paragraph-sm'}>{'7'}</Typography>),
   ];
 
   return (

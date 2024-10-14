@@ -76,9 +76,11 @@ export const createTransactionRows = (
                 <KeyValueComponent
                   contentValue={
                     <FormattedValue
-                      format={'string'}
+                      copy
+                      format={'address'}
                       link={`/transactions/${transaction.id}`}
-                      value={shortString(transaction?.id, 12, 'center')}
+                      showCopyOnHover
+                      value={transaction?.id}
                     />
                   }
                   keyValue={<StatusIcon status={transaction.executionStatus} />}
@@ -197,17 +199,21 @@ export const createEventsRows = (events: EventsType[], loading: boolean) => {
           cells: [
             {
               children: (
-                <Typography color={'onBackgroundHigh'} variant={'paragraph-sm'}>
-                  {event.module}
-                </Typography>
+                <FormattedValue
+                  value={event.module}
+                  format={'string'}
+                  typographyProps={{ color: 'onBackgroundHigh' }}
+                />
               ),
               className: 'desktop:w-1/5',
             },
             {
               children: (
-                <Typography color={'onBackgroundHigh'} variant={'paragraph-sm'}>
-                  {event.name}
-                </Typography>
+                <FormattedValue
+                  value={event.name}
+                  format={'string'}
+                  typographyProps={{ color: 'onBackgroundHigh' }}
+                />
               ),
             },
           ],
@@ -311,27 +317,17 @@ export const createValidatorsRows = (
           cells: [
             {
               children: (
-                <Link
-                  basePath={basePath}
-                  href={`/account/${validator?.account.name ?? validator?.account.address}`}
-                >
-                  <div className={` relative inline-flex items-center gap-1 ml-2.5`}>
+                <FormattedValue
+                  value={validator?.account}
+                  format={'account'}
+                  accountIconComponent={
                     <NotificationIcon
                       className="absolute -translate-x-3 -translate-y-3"
                       notificationValue={validator?.rank < 999 ? validator?.rank : ''}
                       size="lg"
                     />
-                    <UserAccountCard
-                      address={validator?.account.address}
-                      addressColor="onBackgroundLow"
-                      addressVariant="caption"
-                      name={validator?.account.name}
-                      nameColor="onBackgroundMedium"
-                      nameFontWeight="semibold"
-                      nameVariant="paragraph-sm"
-                    />
-                  </div>
-                </Link>
+                  }
+                />
               ),
             },
             stakingRewards
@@ -374,13 +370,8 @@ export const createValidatorsRows = (
               ),
             },
             {
-              children: (
-                <div className="flex justify-end">
-                  <Typography color={'onBackgroundLow'}>
-                    {validator?.generatedBlocks.toLocaleString()}
-                  </Typography>
-                </div>
-              ),
+              children: <FormattedValue value={validator?.generatedBlocks} format={'number'} />,
+              className: 'text-right',
             },
             {
               children: (
@@ -390,62 +381,53 @@ export const createValidatorsRows = (
                     className="font-semibold"
                     decimals={0}
                   />
-                  <Tooltip
-                    placement={'top'}
-                    text={
-                      'The percentage of the validator’s total stake relative to its maximum allowable weight.'
-                    }
-                  >
-                    <Typography
-                      color={weightPercents > 100 ? 'error' : 'onBackgroundLow'}
-                      variant={'caption'}
-                    >
-                      {weightPercents}
-                      {'%'}
-                    </Typography>
-                  </Tooltip>
+                  <FormattedValue
+                    value={weightPercents}
+                    format={'percentage'}
+                    tooltip={{
+                      text: 'The percentage of the validator’s total stake relative to its maximum allowable weight.',
+                      placement: 'top',
+                    }}
+                    typographyProps={{
+                      color: weightPercents > 100 ? 'error' : 'onBackgroundLow',
+                    }}
+                  />
                 </div>
               ),
             },
             {
               children: (
-                //Not sure about data
-                <div className="flex justify-end">
-                  <Currency amount={validator?.selfStake} className="font-semibold" decimals={0} />
-                </div>
+                <Currency amount={validator?.selfStake} className="font-semibold" decimals={0} />
               ),
+              className: 'text-right',
             },
             {
               children: (
-                //how to get the percentage?
-                <div className="flex justify-end">
-                  <Currency amount={validator?.totalStake} className="font-semibold" decimals={0} />
-                </div>
+                <Currency amount={validator?.totalStake} className="font-semibold" decimals={0} />
               ),
+              className: 'text-right',
             },
             {
               children: (
-                //how to get the percentage?
-                <div className="flex justify-end">
-                  <Typography color={'onBackgroundLow'}>
-                    {formatCommission(validator?.commission)}%
-                  </Typography>
-                </div>
+                <FormattedValue
+                  value={formatCommission(validator?.commission)}
+                  format={'percentage'}
+                  typographyProps={{ variant: 'paragraph-sm' }}
+                />
               ),
+              className: 'text-right',
             },
             {
               children: (
-                <div className="flex justify-end text-onBackgroundLow">
-                  <Currency amount={validator.totalRewards} decimals={0} />
-                </div>
+                <Currency amount={validator.totalRewards} color={'onBackgroundLow'} decimals={0} />
               ),
+              className: 'text-right',
             },
             {
               children: (
-                <div className="flex justify-end text-onBackgroundLow">
-                  <Currency amount={validator.blockReward} decimals={5} />
-                </div>
+                <Currency amount={validator.blockReward} color={'onBackgroundLow'} decimals={5} />
               ),
+              className: 'text-right',
             },
           ].filter(Boolean),
         };
@@ -463,14 +445,7 @@ export const createValidatorIncomingStakeRows = (
         return {
           cells: [
             {
-              children: (
-                <Link
-                  basePath={basePath}
-                  href={`/account/${incomingStake?.name ?? incomingStake?.address}`}
-                >
-                  <UserAccountCard address={incomingStake?.address} name={incomingStake?.name} />
-                </Link>
-              ),
+              children: <FormattedValue value={incomingStake} format={'account'} />,
               className: 'desktop:w-1/5',
             },
             {
@@ -493,24 +468,18 @@ export const createValidatorOutgoingStakeRows = (
         return {
           cells: [
             {
-              children: (
-                <Link
-                  basePath={basePath}
-                  href={`/account/${outgoingStake?.name ?? outgoingStake?.address}`}
-                >
-                  <UserAccountCard address={outgoingStake?.address} name={outgoingStake?.name} />
-                </Link>
-              ),
+              children: <FormattedValue value={outgoingStake} format={'account'} />,
             },
             {
               children: <Currency amount={validator?.validatorWeight || 0} />,
             },
-
             {
               children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {formatCommission(validator?.commission)} %
-                </Typography>
+                <FormattedValue
+                  value={formatCommission(validator?.commission)}
+                  format={'percentage'}
+                  typographyProps={{ variant: 'paragraph-sm' }}
+                />
               ),
             },
             {
@@ -533,33 +502,17 @@ export const createValidatorBlockRows = (
           cells: [
             {
               children: (
-                <Link basePath={basePath} href={`/blocks/${block.id}`}>
-                  <Typography color="onBackground" variant="paragraph-sm">
-                    {block.id}
-                  </Typography>
-                </Link>
+                <FormattedValue value={block.id} format={'string'} link={`/blocks/${block.id}`} />
               ),
             },
             {
-              children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {block.height?.toLocaleString() ?? '0'}
-                </Typography>
-              ),
+              children: <FormattedValue value={block.height} format={'number'} />,
             },
             {
-              children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {fromNowFormatter((block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
-                </Typography>
-              ),
+              children: <FormattedValue value={block.timestamp} format={'fromNow'} />,
             },
             {
-              children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {block.numberOfTransactions}
-                </Typography>
-              ),
+              children: <FormattedValue value={block.numberOfTransactions} format={'number'} />,
             },
             {
               children: <Currency amount={block.reward ?? 0} decimals={2} />,
@@ -585,32 +538,22 @@ export const createValidatorEventsRow = (events: EventsType[], loading: boolean)
           cells: [
             {
               children: (
-                <Typography color="onBackground" variant="paragraph-sm">
-                  {fromNowFormatter((event.block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
-                </Typography>
+                <FormattedValue
+                  value={event.block.timestamp}
+                  format={'fromNow'}
+                  typographyProps={{ color: 'onBackground' }}
+                />
               ),
               className: 'desktop:w-1/5',
             },
             {
-              children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {event.block.height?.toLocaleString() ?? '0'}
-                </Typography>
-              ),
+              children: <FormattedValue value={event.block.height} format={'number'} />,
             },
             {
-              children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {event.module}
-                </Typography>
-              ),
+              children: <FormattedValue value={event.module} format={'string'} />,
             },
             {
-              children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {event.name}
-                </Typography>
-              ),
+              children: <FormattedValue value={event.name} format={'string'} />,
               className: 'desktop:w-1/5',
             },
             {
@@ -633,34 +576,18 @@ export const createStakesOverviewRows = (
           cells: [
             {
               children: (
-                <Link basePath={basePath} href={`/transactions/${stake.id}`}>
-                  <Typography className={'hover:underline'} link>
-                    {shortString(stake?.id, 12, 'center')}
-                  </Typography>
-                </Link>
+                <FormattedValue
+                  value={stake?.id}
+                  format={'address'}
+                  link={`/transactions/${stake.id}`}
+                />
               ),
             },
             {
-              children: (
-                <Tooltip
-                  placement={'top'}
-                  text={dayjs((stake?.block.timestamp ?? 0) * 1000).format('DD MMM YYYY HH:mm')}
-                >
-                  <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
-                    {fromNowFormatter((stake.block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
-                  </Typography>
-                </Tooltip>
-              ),
+              children: <FormattedValue value={stake.block.timestamp} format={'fromNow'} />,
             },
             {
-              children: (
-                <Link
-                  basePath={basePath}
-                  href={`/account/${stake?.sender?.name ?? stake?.sender?.address}`}
-                >
-                  <UserAccountCard address={stake?.sender?.address} name={stake?.sender?.name} />
-                </Link>
-              ),
+              children: <FormattedValue value={stake?.sender} format={'account'} />,
             },
             {
               children: (
@@ -751,90 +678,52 @@ export const createBlockRows = (
               children: (
                 <KeyValueComponent
                   contentValue={
-                    <Link basePath={basePath} href={`/blocks/${block.id}`}>
-                      <Typography link>{shortString(block.id, 12, 'center')}</Typography>
-                    </Link>
+                    <FormattedValue
+                      copy
+                      format={'address'}
+                      link={`/blocks/${block.id}`}
+                      showCopyOnHover
+                      value={block.id}
+                    />
                   }
                   keyValue={<StatusIcon connected={block.isFinal} />}
                 />
               ),
+              className: 'group/child',
             },
             {
               children: (
-                <Typography
-                  className={'whitespace-nowrap inline-flex gap-sm items-center cursor-pointer'}
-                  color={'onBackgroundLow'}
-                >
-                  {block?.height?.toLocaleString() ?? ''}
-                  <Tooltip placement={'bottom'} text={copyTooltipText}>
-                    <span
-                      className={'w-4 block'}
-                      onClick={() =>
-                        handleCopy(block?.height?.toString() ?? '', setCopyTooltipText)
-                      }
-                    >
-                      <Icon
-                        className={'desktop:group-hover/child:inline desktop:hidden cursor-pointer'}
-                        icon={'Copy'}
-                        size={'2xs'}
-                      />
-                    </span>
-                  </Tooltip>
-                </Typography>
+                <FormattedValue
+                  copy
+                  format={'number'}
+                  showCopyOnHover
+                  typographyProps={{ color: 'onBackgroundLow' }}
+                  value={block.height}
+                />
               ),
               className: 'group/child min-w-[120px]',
             },
             {
+              children: <FormattedValue format={'fromNow'} value={block.timestamp} />,
+            },
+            {
+              children: <FormattedValue value={block.generator} format={'account'} />,
+            },
+            {
               children: (
-                <div className="flex items-center">
-                  <Tooltip
-                    placement={'top'}
-                    text={dayjs((block.timestamp ?? 0) * 1000).format('DD MMM YYYY HH:mm')}
-                  >
-                    <Typography className={'whitespace-nowrap'} color={'onBackgroundLow'}>
-                      {fromNowFormatter((block.timestamp ?? 0) * 1000, 'DD MMM YYYY')}
-                    </Typography>
-                  </Tooltip>
-                </div>
+                <FormattedValue value={getSeedRevealFromAssets(block.assets)} format={'address'} />
               ),
             },
             {
               children: (
-                <Link
-                  basePath={basePath}
-                  href={`/account/${block.generator.name ?? block.generator.address}`}
-                >
-                  <UserAccountCard address={block.generator.address} name={block.generator.name} />
-                </Link>
+                <FormattedValue value={block.numberOfTransactions || 0} format={'number'} />
               ),
             },
             {
-              children: (
-                <Typography color={'onBackgroundLow'}>
-                  {shortString(getSeedRevealFromAssets(block.assets), 12, 'center')}
-                </Typography>
-              ),
+              children: <FormattedValue value={block.numberOfEvents || 0} format={'number'} />,
             },
             {
-              children: (
-                <Typography color={'onBackgroundLow'}>
-                  {(block.numberOfTransactions || 0).toLocaleString()}
-                </Typography>
-              ),
-            },
-            {
-              children: (
-                <Typography color={'onBackgroundLow'}>
-                  {(block.numberOfEvents || 0).toLocaleString()}
-                </Typography>
-              ),
-            },
-            {
-              children: (
-                <Typography color={'onBackgroundLow'}>
-                  {(block.numberOfAssets || 0).toLocaleString()}
-                </Typography>
-              ),
+              children: <FormattedValue value={block.numberOfAssets || 0} format={'number'} />,
             },
           ],
         };
@@ -853,11 +742,7 @@ export const createFavouritesRows = (
         return {
           cells: [
             {
-              children: (
-                <Link basePath={basePath} href={`/account/${fav.name ?? fav.address}`}>
-                  <UserAccountCard address={fav.address} name={fav.name} />
-                </Link>
-              ),
+              children: <FormattedValue value={fav} format={'account'} />,
             },
             {
               children: (
@@ -888,19 +773,17 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
             {
               //mock_data
               children: (
-                <Link basePath={basePath} href={`/account/${account?.name ?? account?.address}`}>
-                  <div className={` relative inline-flex items-center gap-1`}>
-                    <UserAccountCard
-                      address={account?.address}
-                      addressColor="onBackgroundLow"
-                      addressVariant="caption"
-                      name={account?.name ?? undefined}
-                      nameColor="onBackgroundMedium"
-                      nameFontWeight="semibold"
-                      nameVariant="paragraph-sm"
-                    />
-                  </div>
-                </Link>
+                <FormattedValue
+                  value={account}
+                  format={'account'}
+                  accountProps={{
+                    addressColor: 'onBackgroundLow',
+                    addressVariant: 'caption',
+                    nameColor: 'onBackgroundMedium',
+                    nameFontWeight: 'semibold',
+                    nameVariant: 'paragraph-sm',
+                  }}
+                />
               ),
             },
             {
@@ -920,16 +803,16 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
                     className="font-semibold"
                     decimals={0}
                   />
-                  <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {Number(
+                  <FormattedValue
+                    value={Number(
                       (
                         (Number(account?.availableBalance || 0) /
                           Number(account?.totalBalance || 1)) *
                         100
                       ).toFixed(2),
                     )}
-                    %
-                  </Typography>
+                    format={'percentage'}
+                  />
                 </div>
               ),
             },
@@ -942,27 +825,22 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
                     className="font-semibold"
                     decimals={0}
                   />
-                  <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {Number(
+                  <FormattedValue
+                    value={Number(
                       (
                         (Number(account?.lockedBalance || 0) / Number(account?.totalBalance || 1)) *
                         100
                       ).toFixed(2),
                     )}
-                    %
-                  </Typography>
+                    format={'percentage'}
+                  />
                 </div>
               ),
             },
             {
               //mock_data
-              children: (
-                <div className="flex flex-col items-end">
-                  <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {'0%'}
-                  </Typography>
-                </div>
-              ),
+              children: <FormattedValue format={'percentage'} value={0} />,
+              className: 'text-right',
             },
           ],
         };
@@ -986,16 +864,25 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
               ),
             },
             {
-              children: <Typography>{chain.chainId}</Typography>,
+              children: (
+                <FormattedValue
+                  value={chain.chainId}
+                  format={'string'}
+                  typographyProps={{ color: 'onBackgroundHigh' }}
+                />
+              ),
             },
             {
               children: <StatusBadge status={'Active'} />,
             },
             {
               children: (
-                <UserAccountCard
-                  address={'klyu9hw585j9fcod9ca5qxeffukhd29pyh9drrzhf'}
-                  name="Chain Creator"
+                <FormattedValue
+                  value={{
+                    address: 'klyu9hw585j9fcod9ca5qxeffukhd29pyh9drrzhf',
+                    name: 'Chain Creator',
+                  }}
+                  format={'account'}
                 />
               ),
             },
@@ -1003,10 +890,10 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
               children: <Currency amount={21302000000000} decimals={0} />,
             },
             {
-              children: <Typography>{'Last Certificate'}</Typography>,
+              children: <FormattedValue value={1599456799} format={'fromNow'} />,
             },
             {
-              children: <Typography>{'Last Updated'}</Typography>,
+              children: <FormattedValue value={1599456799} format={'fromNow'} />,
             },
           ],
         };
@@ -1063,10 +950,7 @@ export const createUserDetailsTokensRow = (
               children: (
                 <div className="flex flex-col ">
                   <Currency amount={token.availableBalance} decimals={0} fontWeight={'semibold'} />
-                  <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {availablePercentage}
-                    {'%'}
-                  </Typography>
+                  <FormattedValue value={availablePercentage} format={'percentage'} />
                 </div>
               ),
             },
@@ -1078,15 +962,12 @@ export const createUserDetailsTokensRow = (
                     decimals={0}
                     fontWeight={'semibold'}
                   />
-                  <Typography color={'onBackgroundLow'} variant={'caption'}>
-                    {lockedPercentage}
-                    {'%'}
-                  </Typography>
+                  <FormattedValue value={lockedPercentage} format={'percentage'} />
                 </div>
               ),
             },
             {
-              children: <Typography color={'onBackgroundLow'}>{'2'}</Typography>,
+              children: <FormattedValue value={2} format={'number'} />,
             },
             {
               children: (
@@ -1142,26 +1023,31 @@ export const createTokensRows = (tokens: TokenType[], loading: boolean) => {
                     fontWeight={'semibold'}
                     variant={'paragraph-sm'}
                   >
-                    {'Klay-main'}
+                    {'Klayr-main'}
                   </Typography>
                 </div>
               ),
             },
             {
               children: (
-                <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-success rounded-full"></div>
-                  <Typography color=" " variant="paragraph-sm">
-                    {'Testnet'}
-                  </Typography>
-                </div>
+                <KeyValueComponent
+                  keyValue={<StatusIcon status={'successful'} />}
+                  contentValue={
+                    <FormattedValue
+                      value={'Testnet'}
+                      format={'string'}
+                      typographyProps={{ color: 'onBackgroundHigh' }}
+                    />
+                  }
+                />
               ),
             },
             {
               children: (
-                <Typography color="onBackgroundLow" variant="paragraph-sm">
-                  {'The description of the token and its purpose'}
-                </Typography>
+                <FormattedValue
+                  value={'The description of the token and its purpose'}
+                  format={'string'}
+                />
               ),
             },
           ],
@@ -1176,20 +1062,10 @@ export const createNodesRows = (nodes: NodeType[], loading: boolean) => {
         return {
           cells: [
             {
-              children: (
-                <div className="flex gap-2 items-center">
-                  <Typography color={'onBackgroundLow'} variant={'paragraph-sm'}>
-                    {node.ipAddress}
-                  </Typography>
-                </div>
-              ),
+              children: <FormattedValue value={node.ipAddress} format={'string'} />,
             },
             {
-              children: (
-                <Typography color={'onBackgroundLow'} variant={'paragraph-sm'}>
-                  {node.port}
-                </Typography>
-              ),
+              children: <FormattedValue value={node.port} format={'string'} />,
             },
             {
               children: (
@@ -1208,18 +1084,10 @@ export const createNodesRows = (nodes: NodeType[], loading: boolean) => {
               ),
             },
             {
-              children: (
-                <Typography color={'onBackgroundLow'} variant={'paragraph-sm'}>
-                  {node.options.blockVersion}
-                </Typography>
-              ),
+              children: <FormattedValue value={node.options.blockVersion} format={'number'} />,
             },
             {
-              children: (
-                <Typography color={'onBackgroundLow'} variant={'paragraph-sm'}>
-                  {node.options.height}
-                </Typography>
-              ),
+              children: <FormattedValue value={node.options.height} format={'number'} />,
             },
             {
               children: <StatusBadge status={'online'} />,
@@ -1246,11 +1114,7 @@ export const createNftsRows = (nfts: NftType[], loading: boolean) => {
               ),
             },
             {
-              children: (
-                <div className="flex items-center">
-                  <Typography color="onBackgroundLow">{nft.collection}</Typography>
-                </div>
-              ),
+              children: <FormattedValue value={nft.collection} format={'string'} />,
             },
             {
               children: (
@@ -1266,21 +1130,10 @@ export const createNftsRows = (nfts: NftType[], loading: boolean) => {
               ),
             },
             {
-              children: (
-                <div className="flex items-center">
-                  <StatusBadge status={nft.status || ''} />
-                </div>
-              ),
+              children: <StatusBadge status={nft.status || ''} />,
             },
             {
-              children: (
-                <div className="flex items-center">
-                  <Typography color="onBackgroundLow">
-                    {'#'}
-                    {nft.rarityRank}
-                  </Typography>
-                </div>
-              ),
+              children: <FormattedValue value={`#${nft.rarityRank}`} format={'string'} />,
             },
             {
               children: (
@@ -1314,18 +1167,10 @@ export const createNftsPageRows = (nfts: NftType[], loading: boolean) => {
               ),
             },
             {
-              children: (
-                <div className="flex items-center">
-                  <Typography color="onBackgroundLow">{nft.collection}</Typography>
-                </div>
-              ),
+              children: <FormattedValue value={nft.collection} format={'string'} />,
             },
             {
-              children: (
-                <div className="flex items-center">
-                  <StatusBadge status={nft.status || ''} />
-                </div>
-              ),
+              children: <StatusBadge status={nft.status || ''} />,
             },
             {
               children: (
