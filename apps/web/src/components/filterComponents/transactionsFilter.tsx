@@ -29,7 +29,6 @@ export const TransactionsFilter = ({
   const isErrorFrom = valueFrom.length > 0 && valueFrom.length !== 41;
   const isErrorTo = valueTo.length > 0 && valueTo.length !== 41;
   const [isActive, setIsActive] = useState(false);
-  console.log('isActive', isActive);
 
   const handleBlur = () => {
     if (onBlur) {
