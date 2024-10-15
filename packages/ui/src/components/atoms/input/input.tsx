@@ -18,6 +18,7 @@ interface InputProps extends Omit<HTMLProps<HTMLInputElement>, 'label'> {
   leftContent?: ReactNode;
   rightContentPadding?: string;
   leftContentPadding?: string;
+  errorNotification?: string;
 }
 
 export const Input = ({
@@ -34,6 +35,7 @@ export const Input = ({
   leftContent,
   rightContentPadding,
   leftContentPadding,
+  errorNotification,
   ...props
 }: InputProps) => {
   return (
@@ -72,6 +74,7 @@ export const Input = ({
         </select>
       ) : (
         <InputField
+          errorNotification={errorNotification}
           icon={icon}
           leftContent={leftContent}
           leftContentPadding={leftContentPadding}

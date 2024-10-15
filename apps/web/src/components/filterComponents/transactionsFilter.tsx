@@ -1,6 +1,6 @@
 'use client';
 
-import { IconButton, Input, Icon } from '@repo/ui/atoms';
+import { IconButton, Input, Icon, Typography } from '@repo/ui/atoms';
 import { useState } from 'react';
 import React from 'react';
 
@@ -26,8 +26,8 @@ export const TransactionsFilter = ({
   handleClearTo,
 }: TransactionsFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const isErrorFrom = valueFrom.length > 0 && valueFrom !== '41';
-  const isErrorTo = valueTo.length > 0 && valueTo !== '41';
+  const isErrorFrom = valueFrom.length > 0 && valueFrom.length !== 41;
+  const isErrorTo = valueTo.length > 0 && valueTo.length !== 41;
 
   return (
     <div className={`relative flex flex-row-reverse items-center w-full gap-12`}>
@@ -46,7 +46,8 @@ export const TransactionsFilter = ({
         className={`hidden desktop:flex gap-4 w-full transition-all ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
       >
         <Input
-          className={`${valueFrom.length > 0 ? 'bg-tulip' : 'bg-backgroundSecondary'} ${isErrorFrom ? 'border-error' : ''} `}
+          className={`${valueFrom.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorFrom ? 'border-error' : 'border-backgroundTertiary'} relative `}
+          errorNotification={isErrorFrom ? 'Invalid address' : ''}
           leftContent={<span>{'From'}</span>}
           leftContentPadding="pl-16"
           onBlur={onBlur}
@@ -66,8 +67,10 @@ export const TransactionsFilter = ({
           value={valueFrom}
           variant="filters"
         />
+
         <Input
-          className={`${valueTo.length > 0 ? 'bg-backgroundSecondary' : ''} ${isErrorTo ? 'border-error' : ''} `}
+          className={`${valueTo.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorTo ? 'border-error' : 'border-backgroundTertiary'} `}
+          errorNotification={isErrorTo ? 'Invalid address' : ''}
           leftContent={<span>{'To'}</span>}
           leftContentPadding="pl-10"
           onBlur={onBlur}

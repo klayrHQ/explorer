@@ -1,9 +1,12 @@
+'use client';
 import { HTMLProps } from 'react';
+import { useState } from 'react';
 import { cva } from 'class-variance-authority';
 import { IconComponent } from '../../../types/types.ts';
 import { Icon } from '../images/icon.tsx';
 import { cls } from '../../../utils/functions.ts';
 import { ReactNode } from 'react';
+import { Typography } from '../base/typography.tsx';
 
 interface InputFieldProps extends Omit<HTMLProps<HTMLInputElement>, 'label'> {
   variant?: 'onBgPrimary' | 'onBgSecondary' | 'filters';
@@ -15,10 +18,11 @@ interface InputFieldProps extends Omit<HTMLProps<HTMLInputElement>, 'label'> {
   leftContentPadding?: string;
   error?: boolean;
   success?: boolean;
+  errorNotification?: string;
 }
 
 const inputFieldStyles = cva(
-  ['border-solid border rounded-md', 'w-full', 'focus:ring-0 focus:outline-none', 'bg-transparent'],
+  ['border-solid border rounded-md', 'w-full', 'focus:ring-0 focus:outline-none'],
   {
     variants: {
       variant: {
@@ -94,6 +98,7 @@ export const InputField = ({
   success,
   rightContentPadding = 'pr-lg',
   leftContentPadding = 'pl-lg',
+  errorNotification,
   ...props
 }: InputFieldProps) => {
   return (
@@ -106,7 +111,7 @@ export const InputField = ({
         />
       )}
       {leftContent && (
-        <div className={'absolute left-lg h-max top-0 bottom-0 my-auto '}>{leftContent}</div>
+        <div className={'absolute left-lg h-max top-0 bottom-0 my-auto z-1'}>{leftContent}</div>
       )}
       <input
         className={inputFieldStyles({
@@ -126,6 +131,13 @@ export const InputField = ({
       />
       {rightContent && (
         <div className={'absolute right-lg h-max top-0 bottom-0 my-auto '}>{rightContent}</div>
+      )}
+      {errorNotification && (
+        <div className={`absolute left-3 top-9 h-max`}>
+          <Typography color={'error'} variant={'caption'}>
+            {errorNotification}
+          </Typography>
+        </div>
       )}
     </div>
   );
