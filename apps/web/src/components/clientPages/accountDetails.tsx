@@ -230,15 +230,15 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       <>
         <FormattedValue
           copy
-          value={account?.address}
           format={'string'}
           typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+          value={account?.address}
         />
         <FormattedValue
           copy
-          value={shortString(account?.address ?? ' ', 16, 'center')}
           format={'string'}
           typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+          value={shortString(account?.address ?? ' ', 16, 'center')}
         />
       </>,
     ),
@@ -247,15 +247,15 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       <>
         <FormattedValue
           copy
-          value={account?.publicKey}
           format={'string'}
           typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+          value={account?.publicKey}
         />
         <FormattedValue
           copy
-          value={shortString(account?.publicKey ?? ' ', 16, 'center')}
           format={'string'}
           typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+          value={shortString(account?.publicKey ?? ' ', 16, 'center')}
         />
       </>,
     ),
@@ -268,33 +268,33 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     createDetails(
       'Generated blocks',
       <FormattedValue
-        value={validator?.generatedBlocks}
         format={'number'}
         typographyProps={{ color: 'onBackgroundHigh' }}
+        value={validator?.generatedBlocks}
       />,
     ),
     createDetails(
       'Last generated height',
       <FormattedValue
-        value={validator?.lastGeneratedHeight}
         format={'number'}
         typographyProps={{ color: 'onBackgroundHigh' }}
+        value={validator?.lastGeneratedHeight}
       />,
     ),
     createDetails(
       'Consecutive missed blocks',
       <FormattedValue
-        value={validator?.consecutiveMissedBlocks}
         format={'number'}
         typographyProps={{ color: 'onBackgroundHigh' }}
+        value={validator?.consecutiveMissedBlocks}
       />,
     ),
     createDetails(
       'Last commission increase',
       <FormattedValue
-        value={validator?.lastCommissionIncreaseHeight}
         format={'number'}
         typographyProps={{ color: 'onBackgroundHigh' }}
+        value={validator?.lastCommissionIncreaseHeight}
       />,
     ),
     createDetails(
@@ -310,17 +310,17 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     createDetails(
       'Max height generated',
       <FormattedValue
-        value={'-'}
         format={'string'}
         typographyProps={{ color: 'onBackgroundHigh' }}
+        value={'-'}
       />,
     ),
     createDetails(
       'Max height pre-voted',
       <FormattedValue
-        value={'-'}
         format={'string'}
         typographyProps={{ color: 'onBackgroundHigh' }}
+        value={'-'}
       />,
     ),
   ];

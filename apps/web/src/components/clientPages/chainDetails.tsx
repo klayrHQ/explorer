@@ -25,25 +25,25 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
     createDetails(
       'Height',
       <FormattedValue
-        value={213423345}
         format={'number'}
         typographyProps={{ color: 'onBackgroundHigh' }}
+        value={213423345}
       />,
     ),
     createDetails(
       'Finalized height',
       <FormattedValue
-        value={256234123}
         format={'number'}
         typographyProps={{ color: 'onBackgroundHigh' }}
+        value={256234123}
       />,
     ),
     createDetails(
       'Blocks until finalized',
       <FormattedValue
-        value={2453}
         format={'number'}
         typographyProps={{ color: 'onBackgroundHigh' }}
+        value={2453}
       />,
     ),
     createDetails('Network version', <Typography variant={'paragraph-sm'}>{'3.0'}</Typography>),

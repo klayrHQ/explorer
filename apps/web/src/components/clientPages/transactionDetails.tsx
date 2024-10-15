@@ -64,15 +64,15 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         <>
           <FormattedValue
             copy
-            value={transaction?.id}
             format={'string'}
             typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+            value={transaction?.id}
           />
           <FormattedValue
             copy
-            value={shortString(transaction?.id ?? ' ', 16, 'center')}
             format={'string'}
             typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+            value={shortString(transaction?.id ?? ' ', 16, 'center')}
           />
         </>
       ),
@@ -168,18 +168,18 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
               <>
                 <FormattedValue
                   copy
-                  value={transaction?.sender.publicKey}
                   format={'string'}
                   typographyProps={{
                     color: 'onBackgroundHigh',
                     className: 'hidden desktop:inline-flex',
                   }}
+                  value={transaction?.sender.publicKey}
                 />
                 <FormattedValue
                   copy
-                  value={shortString(transaction?.sender.publicKey ?? ' ', 16, 'center')}
                   format={'string'}
                   typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+                  value={shortString(transaction?.sender.publicKey ?? ' ', 16, 'center')}
                 />
               </>
             ),
@@ -194,17 +194,17 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         <>
           <FormattedValue
             copy
-            link={`/blocks/${transaction?.block?.id}`}
-            value={transaction?.block?.id}
             format={'string'}
+            link={`/blocks/${transaction?.block?.id}`}
             typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+            value={transaction?.block?.id}
           />
           <FormattedValue
             copy
-            link={`/blocks/${transaction?.block?.id}`}
-            value={shortString(transaction?.block?.id ?? ' ', 16, 'center')}
             format={'string'}
+            link={`/blocks/${transaction?.block?.id}`}
             typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+            value={shortString(transaction?.block?.id ?? ' ', 16, 'center')}
           />
         </>
       ),
@@ -216,10 +216,10 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       value: (
         <FormattedValue
           copy
-          value={transaction?.block?.height}
           format={'number'}
           link={`/blocks/${transaction?.block?.id}`}
           typographyProps={{ color: 'onBackgroundHigh' }}
+          value={transaction?.block?.height}
         />
       ),
     },

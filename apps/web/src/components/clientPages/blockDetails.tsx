@@ -124,15 +124,15 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         <>
           <FormattedValue
             copy
-            value={block?.id}
             format={'string'}
             typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+            value={block?.id}
           />
           <FormattedValue
             copy
-            value={shortString(block?.id ?? ' ', 16, 'center')}
             format={'string'}
             typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+            value={shortString(block?.id ?? ' ', 16, 'center')}
           />
         </>
       ),
@@ -144,9 +144,9 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: (
         <FormattedValue
           copy
-          value={block?.height}
           format={'string'}
           typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+          value={block?.height}
         />
       ),
     },
@@ -164,7 +164,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Generator',
       },
-      value: <FormattedValue value={block?.generator} format={'account'} />,
+      value: <FormattedValue format={'account'} value={block?.generator} />,
     },
     {
       label: {
@@ -178,9 +178,9 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       },
       value: (
         <FormattedValue
-          value={block?.numberOfTransactions}
           format={'number'}
           typographyProps={{ color: 'onBackgroundHigh' }}
+          value={block?.numberOfTransactions}
         />
       ),
     },
@@ -190,9 +190,9 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       },
       value: (
         <FormattedValue
-          value={block?.numberOfEvents}
           format={'number'}
           typographyProps={{ color: 'onBackgroundHigh' }}
+          value={block?.numberOfEvents}
         />
       ),
     },
@@ -202,9 +202,9 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       },
       value: (
         <FormattedValue
-          value={block?.numberOfAssets}
           format={'number'}
           typographyProps={{ color: 'onBackgroundHigh' }}
+          value={block?.numberOfAssets}
         />
       ),
     },

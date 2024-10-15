@@ -35,7 +35,7 @@ interface FormattedValueProps {
     | 'fromNow';
   typographyProps?: Omit<TypographyProps, 'children'>;
   accountProps?: Omit<UserAccountCardProps, 'address' | 'name'>;
-  currencyProps?: CurrencyProps;
+  currencyProps?: Omit<CurrencyProps, 'amount'>;
   copy?: boolean;
   showCopyOnHover?: boolean;
   link?: Omit<CustomLinkProps, 'children'> | string;
