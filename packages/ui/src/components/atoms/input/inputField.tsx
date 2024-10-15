@@ -19,6 +19,7 @@ interface InputFieldProps extends Omit<HTMLProps<HTMLInputElement>, 'label'> {
   error?: boolean;
   success?: boolean;
   errorNotification?: string;
+  isActive?: boolean;
 }
 
 const inputFieldStyles = cva(
@@ -92,6 +93,7 @@ export const InputField = ({
   variant = 'onBgSecondary',
   className,
   icon,
+  isActive,
   rightContent,
   leftContent,
   error,
@@ -132,7 +134,7 @@ export const InputField = ({
       {rightContent && (
         <div className={'absolute right-lg h-max top-0 bottom-0 my-auto '}>{rightContent}</div>
       )}
-      {errorNotification && (
+      {isActive && (
         <div className={`absolute left-3 top-9 h-max`}>
           <Typography color={'error'} variant={'caption'}>
             {errorNotification}

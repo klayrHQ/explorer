@@ -28,6 +28,15 @@ export const TransactionsFilter = ({
   const [isOpen, setIsOpen] = useState(false);
   const isErrorFrom = valueFrom.length > 0 && valueFrom.length !== 41;
   const isErrorTo = valueTo.length > 0 && valueTo.length !== 41;
+  const [isActive, setIsActive] = useState(false);
+  console.log('isActive', isActive);
+
+  const handleBlur = () => {
+    if (onBlur) {
+      onBlur();
+      setIsActive(true);
+    }
+  };
 
   return (
     <div className={`relative flex flex-row-reverse items-center w-full gap-12`}>
@@ -48,10 +57,12 @@ export const TransactionsFilter = ({
         <Input
           className={`${valueFrom.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorFrom ? 'border-error' : 'border-backgroundTertiary'} relative `}
           errorNotification={isErrorFrom ? 'Invalid address' : ''}
+          isActive={isActive}
           leftContent={<span>{'From'}</span>}
           leftContentPadding="pl-16"
-          onBlur={onBlur}
+          onBlur={handleBlur}
           onChange={(e) => setValueFrom((e.target as HTMLInputElement).value)}
+          onFocus={() => setIsActive(false)}
           onKeyDown={onKeyDown}
           placeholder="Type an address"
           rightContent={
@@ -71,10 +82,12 @@ export const TransactionsFilter = ({
         <Input
           className={`${valueTo.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorTo ? 'border-error' : 'border-backgroundTertiary'} `}
           errorNotification={isErrorTo ? 'Invalid address' : ''}
+          isActive={isActive}
           leftContent={<span>{'To'}</span>}
           leftContentPadding="pl-10"
-          onBlur={onBlur}
+          onBlur={handleBlur}
           onChange={(e) => setValueTo((e.target as HTMLInputElement).value)}
+          onFocus={() => setIsActive(false)}
           onKeyDown={onKeyDown}
           placeholder="Type an address"
           rightContent={
