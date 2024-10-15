@@ -21,9 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={'overflow-hidden'}>
-        <ChainNetworkProvider>
-          <Layout>{children}</Layout>
-        </ChainNetworkProvider>
+        <Layout>{children}</Layout>
       </body>
     </html>
   );

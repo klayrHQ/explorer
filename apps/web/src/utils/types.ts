@@ -287,3 +287,65 @@ export interface NftType {
   chain?: string;
   chainImage?: string;
 }
+
+export interface ServiceURLsType {
+  http: string;
+  ws: string;
+  apiCertificatePublicKey: string;
+  appChainID: string;
+}
+
+export interface ChainType {
+  chainID: string;
+  chainName: string;
+  displayName: string;
+  title: string;
+  status: string;
+  description: string;
+  networkType: string;
+  isDefault: boolean;
+  genesisURL: string;
+  projectPage: string;
+  backgroundColor: string;
+  serviceURLs: ServiceURLsType[];
+  logo: {
+    png: string;
+    svg: string;
+    appChainID: string;
+  };
+  explorers: {
+    url: string;
+    txnPage: string;
+    appChainID: string;
+  }[];
+  appNodes: {
+    url: string;
+    maintainer: string;
+    apiCertificatePublicKey: string;
+    appChainID: string;
+  }[];
+  token: ChainTokenType;
+}
+
+export interface ChainTokenType {
+  chainName: string;
+  networkType: string;
+  tokenID: string;
+  chainID: string;
+  tokenName: string;
+  description: string;
+  symbol: string;
+  displayDenom: string;
+  baseDenom: string;
+  logo: {
+    png: string;
+    svg: string;
+    tokenID: string;
+  };
+  denomUnits: {
+    denom: string;
+    decimals: number;
+    aliases: string[];
+    tokenID: string;
+  }[];
+}

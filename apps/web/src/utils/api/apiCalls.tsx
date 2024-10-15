@@ -13,7 +13,7 @@ import {
   StakersType,
   AccountType,
   TokenType,
-  NodeType,
+  NodeType, ChainType, ChainTokenType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
 import {
@@ -111,3 +111,11 @@ export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayR
 export const callGetNodes = async (): Promise<GatewayRes<NodeType[]>> => {
   return apiCall<NodeType[]>('network/peers');
 };
+
+export const callGetChains = async (): Promise<GatewayRes<ChainType[]>> => {
+  return apiCall<ChainType[]>('blockchain/apps/meta');
+}
+
+export const callGetChainTokens = async (): Promise<GatewayRes<ChainTokenType[]>> => {
+  return apiCall<ChainTokenType[]>('blockchain/apps/meta/tokens');
+}

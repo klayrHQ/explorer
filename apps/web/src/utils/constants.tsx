@@ -129,22 +129,84 @@ export const performanceStats = [
 ];
 
 export const defaultChain = {
-  chainName: 'klayr-main',
-  chainId: '00000000',
-  logo: 'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g',
-  networks: [
+  chainID: "00000000",
+  chainName: "klayr_mainchain",
+  displayName: "Klayr",
+  title: "Klayr - Mainnet",
+  status: "activated",
+  description: "Metadata configuration for the Klayr blockchain (mainchain) in mainnet",
+  networkType: "mainnet",
+  isDefault: false,
+  genesisURL: "https://github.com/KlayrHQ/klayr-core/blob/development/config/mainnet/genesis_assets.json",
+  projectPage: "https://klayr.xyz",
+  backgroundColor: "#EDEDCE",
+  serviceURLs: [
     {
-      networkName: 'mainnet',
-      networkId: '00000000',
-    },
-    {
-      networkName: 'testnet',
-      networkId: '01000000',
-    },
+      http: "https://gateway-mainnet.klayr.dev/api/v1",
+      ws: "wss://gateway-mainnet.klayr.dev/api/v1",
+      apiCertificatePublicKey: '',
+      appChainID: "00000000"
+    }
   ],
-  currency: {
+  logo: {
+    png: "https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/application/klayr.png",
+    svg: "https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/application/klayr.svg",
+    appChainID: "00000000"
+  },
+  explorers: [
+    {
+      url: "https://explorer.klayr.dev/",
+      txnPage: "https://explorer.klayr.dev/transactions",
+      appChainID: "00000000"
+    }
+  ],
+  appNodes: [
+    {
+      url: "https://mainnet.klayr.xyz",
+      maintainer: "Klayr Labs B.V.",
+      apiCertificatePublicKey: '',
+      appChainID: "00000000"
+    },
+    {
+      url: "wss://mainnet.klayr.xyz",
+      maintainer: "Klayr Labs B.V.",
+      apiCertificatePublicKey: '',
+      appChainID: "00000000",
+    }
+  ],
+  token: {
+    chainName: "klayr_mainchain",
+    networkType: "mainnet",
+    tokenID: "0000000000000000",
+    chainID: "00000000",
+    tokenName: "Klayr",
+    description: "Default token for the entire Klayr ecosystem",
     symbol: "KLY",
-    sign: "Ҝ"
+    displayDenom: "kly",
+    baseDenom: "beddows",
+    logo: {
+      png: "https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/tokens/klayr.png",
+      svg: "https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/tokens/klayr.svg",
+      tokenID: "0000000000000000"
+    },
+    denomUnits: [
+      {
+        denom: "beddows",
+        decimals: 0,
+        aliases: [
+          "Beddows"
+        ],
+        tokenID: "0000000000000000"
+      },
+      {
+        denom: "kly",
+        decimals: 8,
+        aliases: [
+          "Klayr"
+        ],
+        tokenID: "0000000000000000"
+      }
+    ]
   }
 };
 

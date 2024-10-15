@@ -3,21 +3,12 @@ import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
+import {ChainType, ChainTokenType} from "../utils/types.ts";
+import {callGetChains, callGetChainTokens} from "../utils/api/apiCalls.tsx";
 
 type NetworkType = {
-  networkId: string;
   networkName: string;
-};
-
-type ChainType = {
-  chainId: string;
-  chainName: string;
-  logo: string;
-  networks: NetworkType[];
-  currency: {
-    symbol: string;
-    sign: string;
-  };
+  networkId: string;
 };
 
 interface ChainNetworkStoreProps {
@@ -33,14 +24,21 @@ interface ChainNetworkStoreProps {
 export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
   const fetchChains = async () => {
     try {
-      const response = await fetch('/api/chains', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+
+      // Fetch chains
+      let chainsData: ChainType[] = [];
+      const chainsResponse = callGetChains().then((data) => { chainsData = data });
+
+      // Fetch tokens
+      let tokensData: ChainTokenType[] = [];
+      const tokensResponse = callGetChainTokens().then((data) => { tokensData = data });
+
+      // Match tokens to chains
+      const chainsWithTokens = chainsData?.map((chain: ChainType) => {
+        const matchingTokens = tokensData?.filter((token: ChainTokenType) => token.chainID === chain.chainID);
+        return { ...chain, tokens: matchingTokens };
       });
-      const data = await response.json();
-      set({ chains: data.chains });
+      set({ chains: chainsWithTokens });
     } catch (error) {
       console.error('Error fetching chains', error);
     }
@@ -51,7 +49,7 @@ export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
   return {
     currentChain: defaultChain,
     setCurrentChain: (chain: ChainType) => set({ currentChain: chain }),
-    currentNetwork: defaultChain.networks[0],
+    currentNetwork: {networkName: defaultChain.networkType, networkId: defaultChain.networkType},
     setCurrentNetwork: (network: NetworkType) => {
       set({ currentNetwork: network });
       useGatewayClientStore.getState().setBaseURL(network.networkId);
@@ -78,12 +76,18 @@ export const useInitializeCurrentChain = () => {
 useChainNetworkStore.subscribe((state, prevState) => {
   if (state.currentChain !== prevState.currentChain) {
     const { setCurrentNetwork, setNetworks } = useChainNetworkStore.getState();
-    setNetworks(state?.currentChain?.networks ?? []);
+    const currentChains = useChainNetworkStore.getState().chains.filter((chain) => chain.chainName === state.currentChain.chainName);
+    const networks = currentChains.map((chain) => chain.networkType).flat();
+    const networkObjects = networks.map((network) => ({
+      networkName: network,
+      networkId: network,
+    }));
+    setNetworks(networkObjects ?? []);
     const networkSubdomain = window.location.hostname.split('.')[0].split('-')[0];
     const network =
       networkSubdomain === 'explorer'
-        ? state?.currentChain?.networks[0]
-        : state?.currentChain?.networks.find((network) => network.networkName === networkSubdomain);
-    setCurrentNetwork(network ?? state?.currentChain?.networks[0] ?? []);
+        ? networkObjects[0]
+        : networkObjects.find((network) => network.networkName === networkSubdomain);
+    setCurrentNetwork(network ?? networkObjects[0] ?? []);
   }
 });
