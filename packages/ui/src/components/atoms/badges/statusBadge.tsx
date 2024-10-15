@@ -12,6 +12,11 @@ const statusColors: { [key: string]: StatusColorProps } = {
     colorVariant: 'success',
     backgroundColor: 'greenOpacity',
   },
+  activeValidator: {
+    borderColor: 'success',
+    colorVariant: 'success',
+    backgroundColor: 'greenOpacity',
+  },
   inactive: {
     borderColor: 'error',
     colorVariant: 'error',
@@ -32,7 +37,17 @@ const statusColors: { [key: string]: StatusColorProps } = {
     colorVariant: 'volt',
     backgroundColor: 'yellowOpacity',
   },
+  punishedValidator: {
+    borderColor: 'volt',
+    colorVariant: 'volt',
+    backgroundColor: 'yellowOpacity',
+  },
   banned: {
+    borderColor: 'tulip',
+    colorVariant: 'tulip',
+    backgroundColor: 'pinkOpacity',
+  },
+  bannedValidator: {
     borderColor: 'tulip',
     colorVariant: 'tulip',
     backgroundColor: 'pinkOpacity',
@@ -69,8 +84,18 @@ type ValidatorStatusBadgeProps = {
   nextAllocatedTime?: string;
 };
 
+const toCamelCase = (str: string) => {
+  return str
+    .toLowerCase()
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) =>
+      index === 0 ? match.toLowerCase() : match.toUpperCase(),
+    )
+    .replace(/\s+/g, '');
+};
+
 export const StatusBadge = ({ status, nextAllocatedTime }: ValidatorStatusBadgeProps) => {
-  const { borderColor, colorVariant, backgroundColor } = statusColors[status] || {};
+  const camelCaseStatus = toCamelCase(status);
+  const { borderColor, colorVariant, backgroundColor } = statusColors[camelCaseStatus] || {};
 
   return (
     <Badge

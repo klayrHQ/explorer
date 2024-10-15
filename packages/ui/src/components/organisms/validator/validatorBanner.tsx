@@ -49,7 +49,7 @@ export const ValidatorBanner = ({
     <BannerFrame image={image}>
       <FlexGrid direction="col" gap="0" justify="between">
         <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
-          <Link basePath={basePath} href="/validators">
+          <Link basePath={basePath} className="hidden desktop:block" href="/validators">
             <Icon
               className="hover:-translate-x-0.5 cursor-pointer transition-transform"
               color="white"
@@ -63,16 +63,18 @@ export const ValidatorBanner = ({
             status={status}
           />
         </FlexGrid>
-        <ValidatorBannerText
-          capacity={capacity}
-          selfStake={selfStake}
-          selfStakeSymbol={selfStakeSymbol}
-          senderName={senderName}
-          stakes={stakes}
-          value={value}
-          valueSymbol={valueSymbol}
-          {...props}
-        />
+        <div className="hidden desktop:block">
+          <ValidatorBannerText
+            capacity={capacity}
+            selfStake={selfStake}
+            selfStakeSymbol={selfStakeSymbol}
+            senderName={senderName}
+            stakes={stakes}
+            value={value}
+            valueSymbol={valueSymbol}
+            {...props}
+          />
+        </div>
       </FlexGrid>
       <ValidatorBannerCard
         blockTime={blockTime || 0}
