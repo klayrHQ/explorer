@@ -577,10 +577,15 @@ export const createStakesOverviewRows = (
           cells: [
             {
               children: (
-                <FormattedValue
-                  format={'address'}
-                  link={`/transactions/${stake.id}`}
-                  value={stake?.id}
+                <KeyValueComponent
+                  contentValue={
+                    <FormattedValue
+                      format={'address'}
+                      link={`/transactions/${stake.id}`}
+                      value={shortString(stake?.id, 12, 'center')}
+                    />
+                  }
+                  keyValue={<StatusIcon status={stake.executionStatus} />}
                 />
               ),
             },
