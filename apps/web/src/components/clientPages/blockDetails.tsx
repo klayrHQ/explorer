@@ -27,6 +27,8 @@ import { Link } from '@repo/ui/atoms';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { Currency } from '../currency.tsx';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+import { FormattedValue } from '../formattedValue.tsx';
+import { shortString } from '@repo/ui/utils';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -119,10 +121,20 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         label: 'Block ID',
       },
       value: (
-        <div className="flex flex-row gap-1.5 items-baseline ">
-          <Typography variant={'paragraph-sm'}>{block?.id}</Typography>
-          <CopyIcon content={block?.id || ''} size={'xxs'} />
-        </div>
+        <>
+          <FormattedValue
+            copy
+            format={'string'}
+            typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+            value={block?.id}
+          />
+          <FormattedValue
+            copy
+            format={'string'}
+            typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+            value={shortString(block?.id ?? ' ', 16, 'center')}
+          />
+        </>
       ),
     },
     {
@@ -130,10 +142,12 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         label: 'Block height',
       },
       value: (
-        <div className="flex flex-row gap-1.5 items-baseline ">
-          <Typography variant={'paragraph-sm'}>{block?.height}</Typography>
-          <CopyIcon content={block?.height.toString() || ''} size={'xxs'} />
-        </div>
+        <FormattedValue
+          copy
+          format={'string'}
+          typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
+          value={block?.height}
+        />
       ),
     },
     {
@@ -150,17 +164,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Generator',
       },
-      value: (
-        <Link
-          basePath={useBasePath()}
-          href={`/account/${block?.generator.name ?? block?.generator?.address}`}
-        >
-          <UserAccountCard
-            address={block?.generator?.address ?? ''}
-            name={block?.generator?.name}
-          />
-        </Link>
-      ),
+      value: <FormattedValue format={'account'} value={block?.generator} />,
     },
     {
       label: {
@@ -172,19 +176,37 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       label: {
         label: 'Transactions',
       },
-      value: block?.numberOfTransactions,
+      value: (
+        <FormattedValue
+          format={'number'}
+          typographyProps={{ color: 'onBackgroundHigh' }}
+          value={block?.numberOfTransactions}
+        />
+      ),
     },
     {
       label: {
         label: 'Events',
       },
-      value: block?.numberOfEvents,
+      value: (
+        <FormattedValue
+          format={'number'}
+          typographyProps={{ color: 'onBackgroundHigh' }}
+          value={block?.numberOfEvents}
+        />
+      ),
     },
     {
       label: {
         label: 'Assets',
       },
-      value: block?.numberOfAssets,
+      value: (
+        <FormattedValue
+          format={'number'}
+          typographyProps={{ color: 'onBackgroundHigh' }}
+          value={block?.numberOfAssets}
+        />
+      ),
     },
     {
       label: {
