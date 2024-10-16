@@ -13,7 +13,9 @@ import {
   StakersType,
   AccountType,
   TokenType,
-  NodeType, ChainType, ChainTokenType,
+  NodeType,
+  ChainType,
+  ChainTokenType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
 import {
@@ -24,8 +26,11 @@ import {
   StakersQueryParams,
   AccountQueryParams,
   TokensQueryParams,
+  ChainsQueryParams,
+  ChainTokenQueryParams,
 } from './types';
 import { NextValidatorType } from '@repo/ui/types';
+import axios from 'axios';
 
 async function apiCall<T>(
   endpoint: string,
@@ -112,10 +117,42 @@ export const callGetNodes = async (): Promise<GatewayRes<NodeType[]>> => {
   return apiCall<NodeType[]>('network/peers');
 };
 
-export const callGetChains = async (): Promise<GatewayRes<ChainType[]>> => {
-  return apiCall<ChainType[]>('blockchain/apps/meta');
+async function mainChainApiCall<T>(
+  endpoint: string,
+  params: Record<string, any> = {},
+): Promise<GatewayRes<T>> {
+  const mainChainClient = axios.create({
+    baseURL: 'https://gateway-mainnet.klayr.dev/api/v1/',
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Access-Control-Allow-Methods': 'POST,GET',
+    },
+  });
+
+  try {
+    const { data } = await mainChainClient.get<GatewayRes<T>>(endpoint, { params });
+
+    if (data) {
+      return data;
+    } else {
+      throw new Error('No data received');
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
 
-export const callGetChainTokens = async (): Promise<GatewayRes<ChainTokenType[]>> => {
-  return apiCall<ChainTokenType[]>('blockchain/apps/meta/tokens');
-}
+export const callGetChains = async (
+  params: ChainsQueryParams,
+): Promise<GatewayRes<ChainType[]>> => {
+  return apiCall<ChainType[]>('blockchain/apps/meta', params);
+};
+
+export const callGetChainTokens = async (
+  params: ChainTokenQueryParams,
+): Promise<GatewayRes<ChainTokenType[]>> => {
+  return apiCall<ChainTokenType[]>('blockchain/apps/meta/tokens', params);
+};
