@@ -52,7 +52,7 @@ module.exports = {
         shorthandLast: false,
         multiline: 'ignore',
         ignoreCase: true,
-        noSortAlphabetically: false,
+        noSortAlphabetically: true,
         reservedFirst: false,
         locale: 'auto',
       },
