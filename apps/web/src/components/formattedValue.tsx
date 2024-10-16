@@ -199,14 +199,20 @@ export const FormattedValue = ({
     typeof tooltip === 'string' && (tooltip = { text: tooltip, placement: 'top' });
     return (
       <Tooltip {...tooltip}>
-        <Link {...link}>{innerComponent()}</Link>
+        <Link {...link} basePath={link.basePath ?? basePath}>
+          {innerComponent()}
+        </Link>
       </Tooltip>
     );
   }
 
   if (link) {
     typeof link === 'string' && (link = { href: link });
-    return <Link {...link}>{innerComponent()}</Link>;
+    return (
+      <Link {...link} basePath={link.basePath ?? basePath}>
+        {innerComponent()}
+      </Link>
+    );
   }
 
   if (tooltip) {
