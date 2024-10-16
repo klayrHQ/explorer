@@ -16,6 +16,7 @@ import { createFavouritesRows } from '../../utils/helpers/helper.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
 import { useFavouritesStore, useInitializeFavourites } from '../../store/favouritesStore.ts';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { FormattedValue } from '../formattedValue.tsx';
 
 export const Favourites = () => {
   useInitializeFavourites();
@@ -70,7 +71,9 @@ export const Favourites = () => {
         <span>
           {'You have successfully removed '}{' '}
           <Typography bold color={'onBackgroundHigh'}>
-            {favourite?.name ?? favourite?.address}
+            {favourite?.name ?? (
+              <FormattedValue format={'address'} value={favourite?.address}></FormattedValue>
+            )}
           </Typography>{' '}
           {' from your favourites'}
         </span>
