@@ -6,5 +6,5 @@ export const useBasePath = () => {
   const pathName = usePathname();
   const firstSubDir = pathName.split('/')[1];
   const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
-  return !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
+  return !chainMatch || firstSubDir === 'klayr_mainchain' ? '' : `/${firstSubDir}`;
 };

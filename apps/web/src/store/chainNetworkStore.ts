@@ -6,11 +6,6 @@ import { useEffect } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
 import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
 
-type NetworkType = {
-  networkName: string;
-  networkId: string;
-};
-
 interface ChainNetworkStoreProps {
   currentChain: ChainType;
   setCurrentChain: (chain: ChainType) => void;
@@ -78,16 +73,18 @@ export const useInitializeCurrentChain = () => {
           return { ...chain, tokens: matchingTokens };
         });
         setChains(chainsWithTokens);
+
+        const firstSubDir = pathname.split('/')[1];
+        const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === firstSubDir);
+        const chainMatch = matchingChains?.find((chain) => chain.networkType === currentNetwork);
+        console.log('matchingChains', matchingChains, '\nfirstSubDir', firstSubDir, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
+        setCurrentChain(chainMatch ?? chains[0] ?? defaultChain);
       } catch (error) {
         console.error('Error fetching chains', error);
       }
     };
 
     fetchChains();
-    const firstSubDir = pathname.split('/')[1];
-    const matchingChains = chains?.filter((chain) => chain.chainName === firstSubDir);
-    const chainMatch = matchingChains?.find((chain) => chain.networkType === currentNetwork);
-    setCurrentChain(chainMatch ?? chains[0] ?? defaultChain);
   }, [currentNetwork]);
 
   useEffect(() => {

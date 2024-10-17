@@ -103,7 +103,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
         setCurrentChain,
         currentNetwork: {
           syncing: nodeInfo?.syncing,
-          ...currentNetwork,
+          networkName: currentNetwork,
         },
         setCurrentNetwork,
         chains: filteredChains,

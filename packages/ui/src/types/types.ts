@@ -1,4 +1,5 @@
 import { HTMLAttributes, PropsWithChildren, ReactElement, ReactNode } from 'react';
+import { ChainTokenType, ServiceURLsType } from 'web/src/utils/types.ts';
 
 export type TypographyVariant =
   | 'display-1'
@@ -141,19 +142,39 @@ export type ColorType =
   | 'inherit'
   | string;
 
-export type ChainType = {
-  chainId: string;
+export interface ChainType {
+  chainID: string;
   chainName: string;
-  logo: string;
-  networks: Omit<NetworkType, 'connected'>[];
-  currency: {
-    symbol: string;
-    sign: string;
+  displayName: string;
+  title: string;
+  status: string;
+  description: string;
+  networkType: string;
+  isDefault: boolean;
+  genesisURL: string;
+  projectPage: string;
+  backgroundColor: string;
+  serviceURLs: ServiceURLsType[];
+  logo: {
+    png: string;
+    svg: string;
+    appChainID: string;
   };
-};
+  explorers: {
+    url: string;
+    txnPage: string;
+    appChainID: string;
+  }[];
+  appNodes: {
+    url: string;
+    maintainer: string;
+    apiCertificatePublicKey: string;
+    appChainID: string;
+  }[];
+  token: ChainTokenType;
+}
 
 export type NetworkType = {
-  networkId: string;
   networkName: string;
   syncing?: boolean | null;
 };
@@ -237,5 +258,4 @@ export interface AccountBannerProps {
   isFavorite: boolean;
   setFavorite: () => void;
   removeFavorite: () => void;
-
 }
