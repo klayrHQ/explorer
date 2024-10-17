@@ -149,7 +149,7 @@ export const Pagination = ({
             {'Page'}
           </Typography>
           <Input
-            className="max-w-11 h-11 max-h-11 text-paragraph-sm"
+            className="max-w-11 h-11 max-h-11 text-paragraph-sm bg-backgroundSecondary"
             onChange={handleInputChange}
             value={pageNumber}
             variant="onBgPrimary"

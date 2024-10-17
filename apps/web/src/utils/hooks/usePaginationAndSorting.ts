@@ -14,6 +14,7 @@ interface UsePaginationAndSortingProps {
   changeURL?: boolean;
   searchParams?: Record<string, any>;
   useNewBlockEvent?: boolean; 
+  additionalDependencies?: any[];
 }
 
 export const usePaginationAndSorting = ({
@@ -24,6 +25,7 @@ export const usePaginationAndSorting = ({
   changeURL,
   searchParams = {},
   useNewBlockEvent = false, 
+  additionalDependencies = [],
 }: UsePaginationAndSortingProps) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -70,7 +72,7 @@ export const usePaginationAndSorting = ({
         setLoading(false);
       }
     }, 300),
-    [pageNumber, limit, sortField, sortOrder, fetchFunction, network, ...(useNewBlockEvent ? [newBlockEvent] : [])]
+    [pageNumber, limit, sortField, sortOrder, fetchFunction, network, ...additionalDependencies, ...(useNewBlockEvent ? [newBlockEvent] : [])]
   );
 
   useEffect(() => {
