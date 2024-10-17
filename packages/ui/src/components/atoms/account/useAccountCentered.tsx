@@ -20,13 +20,13 @@ export const UserAccountCentered = ({
   notificationValue,
 }: UserAccountCenteredProps) => {
   return (
-    <div className="desktop:hidden flex gap-2">
+    <div className="flex gap-2 ">
       <div className="flex items-center">
         <ImageNotification notificationValue={notificationValue} />
         <Avatar address={address} circle size={40} />
       </div>
-      <div className="flex flex-col gap-1.5">
-        <div>
+      <div className="flex flex-col gap-1.5 desktop:gap-0">
+        <div className="flex desktop:hidden">
           <StatusBadge status={`${status} Validator`} />
         </div>
         <Typography color={'onBackground'} fontWeight={'semibold'} variant={'h3'}>

@@ -20,32 +20,15 @@ export const ValidatorBannerHeader = ({
   notificationValue,
 }: ValidatorBannerHeaderProps) => {
   return (
-    <div className="flex flex-col gap-1.5 desktop:gap-0  justify-between items-start desktop:items-center">
-      <div className="desktop:hidden flex gap-2">
-        <UserAccountCentered
-          address={senderAddress}
-          name={senderName}
-          notificationValue={notificationValue}
-          status={status}
-        />
-      </div>
-      <div className="desktop:flex gap-2 items-center hidden">
-        <ImageNotification notificationValue={notificationValue} />
-        <UserAccountCard
-          address={senderAddress}
-          addressColor="onBackgroundMedium"
-          addressVariant="caption"
-          copyIcon
-          name={senderName}
-          nameColor="onBackground"
-          nameFontWeight="bold"
-          nameVariant="h3"
-          size={40}
-          width="auto"
-        />
-        <div className="hidden desktop:flex mb-4">
-          <StatusBadge status={status || ''} />
-        </div>
+    <div className="flex gap-1 desktop:gap-2  justify-between items-center ">
+      <UserAccountCentered
+        address={senderAddress}
+        name={senderName}
+        notificationValue={notificationValue}
+        status={status}
+      />
+      <div className="hidden desktop:flex mb-4">
+        <StatusBadge status={status || ''} />
       </div>
     </div>
   );
