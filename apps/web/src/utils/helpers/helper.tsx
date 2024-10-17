@@ -136,6 +136,7 @@ export const createTransactionRows = (
                   variant={'paragraph-sm'}
                 />
               ),
+              className: 'text-right',
             },
             {
               children: (
@@ -147,6 +148,7 @@ export const createTransactionRows = (
                   variant={'paragraph-sm'}
                 />
               ),
+              className: 'text-right',
             },
           ];
 

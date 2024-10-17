@@ -45,9 +45,11 @@ export const transactionTableHead = (
     },
     {
       children: 'Amount',
+      className: 'items-end text-end whitespace-nowrap',
     },
     {
       children: 'Fee',
+      className: 'items-end text-end whitespace-nowrap',
     },
   ];
 
