@@ -72,7 +72,11 @@ export const Favourites = () => {
           {'You have successfully removed '}{' '}
           <Typography bold color={'onBackgroundHigh'}>
             {favourite?.name ?? (
-              <FormattedValue format={'address'} value={favourite?.address}></FormattedValue>
+              <FormattedValue
+                typographyProps={{ color: 'onBackgroundHigh' }}
+                format={'address'}
+                value={favourite?.address}
+              ></FormattedValue>
             )}
           </Typography>{' '}
           {' from your favourites'}
