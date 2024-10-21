@@ -139,7 +139,7 @@ export const validatorsTableHead = (
     children: (
       <div className="flex justify-end gap-1 items-center">
         <div className="flex justify-end">{'Total stake'}</div>
-        <InfoTooltip text={'The total stakes'} />
+        <InfoTooltip text={'Total received stakes'} />
       </div>
     ),
     className: 'items-end text-end whitespace-nowrap',
