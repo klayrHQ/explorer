@@ -137,25 +137,11 @@ export const validatorsTableHead = (
   },
   {
     children: (
-      <div className="flex justify-end items-center gap-1">
-        <SortingTitle
-          onSortChange={onSortChange}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          sortValue="selfStake"
-          title="Stake capacity"
-        />
-        <InfoTooltip
-          text={
-            'The percentage of the validator’s total stake relative to its maximum allowable weight.'
-          }
-        />
+      <div className="flex justify-end gap-1 items-center">
+        <div className="flex justify-end">{'Total stake'}</div>
+        <InfoTooltip text={'The total stakes'} />
       </div>
     ),
-    className: 'items-end text-end whitespace-nowrap',
-  },
-  {
-    children: <div className="flex justify-end">{'Total stake'}</div>,
     className: 'items-end text-end whitespace-nowrap',
   },
   {
