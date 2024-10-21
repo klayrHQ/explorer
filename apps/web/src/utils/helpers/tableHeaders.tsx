@@ -452,7 +452,7 @@ export const accountsTableHead = (
     className: 'items-end text-end whitespace-nowrap',
   },
   {
-    children: 'Percentage of tokens',
+    children: '% of total supply',
     className: 'items-end text-end whitespace-nowrap',
   },
 ];
