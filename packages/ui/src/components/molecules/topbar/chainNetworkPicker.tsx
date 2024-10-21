@@ -57,7 +57,7 @@ export const ChainNetworkPicker = ({
 
   const handleChainChange = (chainName: string) => {
     const chain = chains.find((chain) => chain.chainName === chainName);
-    console.log('chainName',chainName, '\nchains', chains);
+    //console.log('chainName',chainName, '\nchains', chains);
     if (chain) {
       const chainNetwork = chain.networkType;
       if (window.location.hostname !== 'localhost') {

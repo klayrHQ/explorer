@@ -66,7 +66,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
         </Typography>
       ),
     },
-    {
+    /*{
       keyValue: ' test',
       contentValue: (
         <button
@@ -86,7 +86,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
           test
         </button>
       ),
-    },
+    },*/
     //todo - uncomment when marketcap is available (awaiting verification)
     /*{
       keyValue: 'MC: ',

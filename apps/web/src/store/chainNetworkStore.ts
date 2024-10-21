@@ -81,7 +81,7 @@ export const useInitializeCurrentChain = () => {
         const firstSubDir = pathname.split('/')[1];
         const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === firstSubDir);
         const chainMatch = matchingChains?.find((chain) => chain.networkType === currentNetwork);
-        console.log('matchingChains', matchingChains, '\nfirstSubDir', firstSubDir, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
+        //console.log('matchingChains', matchingChains, '\nfirstSubDir', firstSubDir, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
         setCurrentChain(chainMatch ?? chains[0] ?? defaultChain);
       } catch (error) {
         console.error('Error fetching chains', error);
