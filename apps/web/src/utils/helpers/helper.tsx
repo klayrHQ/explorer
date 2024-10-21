@@ -338,34 +338,6 @@ export const createValidatorsRows = (
                 />
               ),
             },
-            stakingRewards
-              ? {
-                  children: (
-                    <div className="flex flex-col items-end">
-                      <FormattedValue
-                        currencyProps={{
-                          className: 'font-semibold',
-                          color: 'error',
-                          variant: 'paragraph-sm',
-                          decimals: 2,
-                        }}
-                        format={'currency'}
-                        tooltip={`Staking Rewards per ${stakingCalculatorAmount} KLY per ${stakingCalculatorPeriod}`}
-                        value={resultPerPeriod}
-                      />
-                      <FormattedValue
-                        format={'percentage'}
-                        tooltip={{
-                          placement: 'bottom',
-                          text: `APR is the yearly rate of return on staking ${stakingCalculatorAmount} KLY`,
-                        }}
-                        typographyProps={{ color: 'error', variant: 'caption' }}
-                        value={APR.toFixed(2)}
-                      />
-                    </div>
-                  ),
-                }
-              : null,
             {
               children: (
                 <StatusBadge
@@ -378,10 +350,13 @@ export const createValidatorsRows = (
                 />
               ),
             },
-            {
-              children: <FormattedValue format={'number'} value={validator?.generatedBlocks} />,
-              className: 'text-right',
-            },
+            stakingRewards
+              ? null
+              : {
+                  children: <FormattedValue format={'number'} value={validator?.generatedBlocks} />,
+                  className: 'text-right',
+                },
+
             {
               children: (
                 <div className="flex flex-col items-end">
@@ -404,23 +379,33 @@ export const createValidatorsRows = (
                 </div>
               ),
             },
-            {
-              children: (
-                <div className="flex flex-col items-end">
-                  <Currency amount={validator?.totalStake} className="font-semibold" decimals={0} />
-                  <FormattedValue
-                    format={'currency'}
-                    tooltip={{
-                      text: 'Self stake',
-                      placement: 'top',
-                    }}
-                    currencyProps={{ decimals: 0, className: 'text-caption text-onBackgroundLow' }}
-                    value={validator?.selfStake}
-                  />
-                </div>
-              ),
-              className: 'text-right',
-            },
+            stakingRewards
+              ? null
+              : {
+                  children: (
+                    <div className="flex flex-col items-end">
+                      <Currency
+                        amount={validator?.totalStake}
+                        className="font-semibold"
+                        decimals={0}
+                      />
+                      <FormattedValue
+                        format={'currency'}
+                        tooltip={{
+                          text: 'Self stake',
+                          placement: 'top',
+                        }}
+                        currencyProps={{
+                          decimals: 0,
+                          className: 'text-caption text-onBackgroundLow',
+                        }}
+                        value={validator?.selfStake}
+                      />
+                    </div>
+                  ),
+                  className: 'text-right',
+                },
+
             {
               children: (
                 <FormattedValue
