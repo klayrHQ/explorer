@@ -41,7 +41,7 @@ import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { formatCommission, fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { Currency } from '../currency.tsx';
-import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 
 export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -207,10 +207,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     createDetails('Claimable rewards', ' - '),
     createDetails(
       'Validator weight',
-      <Currency
-        amount={validator?.validatorWeight || 0}
-        className={'truncate max-w-full'}
-      />,
+      <Currency amount={validator?.validatorWeight || 0} className={'truncate max-w-full'} />,
     ),
     createDetails(
       'Stake capacity',
@@ -221,17 +218,11 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
     ),
     createDetails(
       'Total received stake',
-      <Currency
-        amount={totalReceivedStake || 0}
-        className={'truncate max-w-full'}
-      />,
+      <Currency amount={totalReceivedStake || 0} className={'truncate max-w-full'} />,
     ),
     createDetails(
       'Self stake',
-      <Currency
-        amount={validator?.selfStake || 0}
-        className={'truncate max-w-full'}
-      />,
+      <Currency amount={validator?.selfStake || 0} className={'truncate max-w-full'} />,
     ),
     createDetails(
       'Commission',
@@ -283,6 +274,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
 
   const rows = createTransactionRows(
     transactions,
+    currentChain,
     loading,
     copyTooltipText,
     setCopyTooltipText,

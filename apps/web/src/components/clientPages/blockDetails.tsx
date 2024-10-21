@@ -227,6 +227,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
 
   const transactionRows = createTransactionRows(
     transactions,
+    currentChain,
     loading,
     copyTooltipText,
     setCopyTooltipText,

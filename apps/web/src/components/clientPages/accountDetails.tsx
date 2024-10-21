@@ -332,6 +332,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
 
   const rows = createTransactionRows(
     transactions,
+    currentChain,
     loading,
     copyTooltipText,
     setCopyTooltipText,
