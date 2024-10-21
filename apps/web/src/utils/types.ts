@@ -23,6 +23,7 @@ export interface TransactionType {
   signatures: string[];
   executionStatus: string;
   index: number;
+  receivingChainID: string;
   recipient: {
     address: string;
     name?: string;

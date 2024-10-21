@@ -59,6 +59,7 @@ import { FormattedValue } from '../../components/formattedValue.tsx';
 
 export const createTransactionRows = (
   transactions: TransactionType[],
+  currentChain: ChainType,
   loading: boolean,
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
@@ -66,6 +67,9 @@ export const createTransactionRows = (
   statusOfTransaction?: boolean,
 ) => {
   const columnCount = transactionTableHead(() => '', '', '').length;
+
+  const chainLogo = currentChain?.logo;
+  console.log(chainLogo);
 
   return !loading
     ? transactions?.length > 0
@@ -117,11 +121,45 @@ export const createTransactionRows = (
               ),
             },
             {
-              children: <FormattedValue format={'account'} value={transaction.sender} />,
+              children: (
+                <FormattedValue
+                  format={'account'}
+                  value={transaction.sender}
+                  accountIconComponent={
+                    transaction.receivingChainID ? (
+                      <div className="w-5 h-5">
+                        <img
+                          alt="Chain Icon"
+                          className="absolute left-2 bottom-4 rounded-full"
+                          height={20}
+                          src={chainLogo}
+                          width={20}
+                        />
+                      </div>
+                    ) : null
+                  }
+                />
+              ),
             },
             {
               children: transaction?.recipient ? (
-                <FormattedValue format={'account'} value={transaction.recipient} />
+                <FormattedValue
+                  format={'account'}
+                  value={transaction.recipient}
+                  accountIconComponent={
+                    transaction.receivingChainID ? (
+                      <div className="w-5 h-5">
+                        <img
+                          alt="Chain Icon"
+                          className="absolute left-2 bottom-4 rounded-full"
+                          height={20}
+                          src={transaction.receivingChainID}
+                          width={20}
+                        />
+                      </div>
+                    ) : null
+                  }
+                />
               ) : (
                 '-'
               ),

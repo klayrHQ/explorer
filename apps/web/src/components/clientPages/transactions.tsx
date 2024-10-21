@@ -9,6 +9,7 @@ import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorti
 import { useState, useCallback, useMemo } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { TransactionsFilter } from '../filterComponents/transactionsFilter.tsx';
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import React from 'react';
 
 export const Transactions = () => {
@@ -17,6 +18,8 @@ export const Transactions = () => {
 
   const [inputValues, setInputValues] = useState({ from: '', to: '' });
   const [filterValues, setFilterValues] = useState({ from: '', to: '' });
+
+  const currentChain = useChainNetworkStore((state) => state.currentChain);
 
   const handleBlur = useCallback(() => {
     if (inputValues.from.length === 41 || inputValues.to.length === 41) {
@@ -61,7 +64,15 @@ export const Transactions = () => {
   });
 
   const rows = useMemo(
-    () => createTransactionRows(transactions, loading, 'Copy to clipboard', () => {}, basePath),
+    () =>
+      createTransactionRows(
+        transactions,
+        currentChain,
+        loading,
+        'Copy to clipboard',
+        () => {},
+        basePath,
+      ),
     [transactions, loading, basePath],
   );
 
