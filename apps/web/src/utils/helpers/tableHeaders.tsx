@@ -276,10 +276,6 @@ export const stakesCalculatorTableHead = (
     ),
   },
   {
-    children: 'Staking rewards',
-    className: 'items-end text-end whitespace-nowrap',
-  },
-  {
     children: (
       <SortingTitle
         onSortChange={onSortChange}
@@ -290,20 +286,7 @@ export const stakesCalculatorTableHead = (
       />
     ),
   },
-  {
-    children: (
-      <div className="flex justify-end">
-        <SortingTitle
-          onSortChange={onSortChange}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          sortValue="generatedBlocks"
-          title="Total blocks"
-        />
-      </div>
-    ),
-    className: 'items-end text-end whitespace-nowrap',
-  },
+
   {
     children: (
       <div className="flex justify-end">
@@ -331,10 +314,6 @@ export const stakesCalculatorTableHead = (
         />
       </div>
     ),
-    className: 'items-end text-end whitespace-nowrap',
-  },
-  {
-    children: <div className="flex justify-end">{'Total stake'}</div>,
     className: 'items-end text-end whitespace-nowrap',
   },
   {
