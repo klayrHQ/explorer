@@ -69,7 +69,6 @@ export const createTransactionRows = (
   const columnCount = transactionTableHead(() => '', '', '').length;
 
   const chainLogo = currentChain?.logo;
-  console.log(chainLogo);
 
   return !loading
     ? transactions?.length > 0
