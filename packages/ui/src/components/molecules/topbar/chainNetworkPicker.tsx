@@ -68,9 +68,10 @@ export const ChainNetworkPicker = ({
             );
       } else {
         chain.chainName === 'klayr_mainchain' ? router.push('/') : router.push(`/${chain.chainName}`);
+        setSelectedChain(chain);
+        setCurrentChain(chain);
+        setCurrentNetwork(chain.networkType);
       }
-      setSelectedChain(chain);
-
       setIsModalOpen(false);
     }
   };
@@ -80,9 +81,10 @@ export const ChainNetworkPicker = ({
     if (network) {
       if (window.location.hostname !== 'localhost') {
         network === 'mainnet'
-          ? router.push(`https://${explorerUrl}`)
-          : router.push(`https://${network}-${explorerUrl}`);
+          ? router.push(`https://${baseExplorerUrl}`)
+          : router.push(`https://${network}-${baseExplorerUrl}`);
       } else {
+        router.push('/');
         setSelectedNetwork(network);
         setCurrentNetwork(network);
       }

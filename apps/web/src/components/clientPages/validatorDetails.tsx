@@ -62,7 +62,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { isFavourite, addFavourite, removeFavourite } = useFavouritesStore();
   const [isFav, setIsFav] = useState<boolean>(false);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const symbol = currentChain?.currency.symbol;
+  const symbol = currentChain?.token.symbol;
 
   const blocksPagination = usePagination(1, '10');
   const eventsPagination = usePagination();

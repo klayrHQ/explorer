@@ -3,7 +3,6 @@ import '@repo/ui/styles.css';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import { Layout } from '../../components/layout/layoutClient.tsx';
-import { ChainNetworkProvider } from '../../providers/chainNetworkProvider.tsx';
 import Favicon from '../../public/images/favicon.ico';
 
 export const metadata: Metadata = {

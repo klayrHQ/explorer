@@ -47,7 +47,11 @@ export const useInitializeCurrentChain = () => {
       networkSubdomain === 'explorer'
         ? networks[0]
         : networks.find((network) => network === networkSubdomain);
-    setCurrentNetwork(network ?? 'mainnet');
+    if (window.location.hostname !== 'localhost') {
+      setCurrentNetwork(network ?? 'mainnet');
+    } else {
+      setCurrentNetwork(currentChain.networkType);
+    }
   }, [pathname]);
 
   useEffect(() => {
