@@ -387,7 +387,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     copyTooltipText,
     setCopyTooltipText,
     basePath,
-    true,
+    false,
   );
   const eventsRows = createValidatorEventsRow(events, loading);
   const outgoingStake = createValidatorOutgoingStakeRows(
@@ -530,7 +530,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           <TableContainer
             currentNumber={transactionsPagination.pageNumber}
             defaultValue={transactionsPagination.limit}
-            headCols={transactionTableHead(handleSort, sortField, sortOrder, true)}
+            headCols={transactionTableHead(handleSort, sortField, sortOrder, false)}
             keyPrefix={'validator-tx'}
             onPerPageChange={transactionsPagination.handleLimitChange}
             pagination={
