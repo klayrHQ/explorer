@@ -83,7 +83,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const symbol = currentChain?.currency.symbol;
+  const symbol = currentChain?.token?.symbol;
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);

@@ -3,6 +3,7 @@ import { debounce } from 'lodash';
 import { usePathname, useRouter, } from 'next/navigation';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
 import { useSocketStore } from '../../store/socketStore.ts';
+import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
 
 
 
@@ -45,7 +46,7 @@ export const usePaginationAndSorting = ({
     [router, pathname]
   );
 
-  const network = useGatewayClientStore((state) => state.network);
+  const network = useChainNetworkStore((state) => state.currentNetwork);
   const newBlockEvent = useSocketStore((state) => state.height);
 
 

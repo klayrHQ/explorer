@@ -847,10 +847,10 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
           cells: [
             {
               children: (
-                <Link href={`/chains/${chain.chainId}`}>
+                <Link href={`/chains/${chain.chainID}`}>
                   <div className="flex items-center gap-2">
-                    <ImageContainer alt={chain.chainName} src={chain.logo} variant={'avatar'} />
-                    <Typography>{chain.chainName}</Typography>
+                    <ImageContainer alt={chain.displayName ?? chain.chainName} src={chain.logo.png} variant={'avatar'} />
+                    <Typography>{chain.displayName ?? chain.chainName}</Typography>
                   </div>
                 </Link>
               ),
@@ -860,7 +860,7 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
                 <FormattedValue
                   format={'string'}
                   typographyProps={{ color: 'onBackgroundHigh' }}
-                  value={chain.chainId}
+                  value={chain.chainID}
                 />
               ),
             },
@@ -964,13 +964,13 @@ export const createUserDetailsTokensRow = (
             {
               children: (
                 <div className="flex gap-2 items-center">
-                  <ImageContainer alt={'kly'} src={chain.logo} variant={'avatar'} />
+                  <ImageContainer alt={'kly'} src={chain.logo.png} variant={'avatar'} />
                   <Typography
                     color={'onBackgroundMedium'}
                     fontWeight={'semibold'}
                     variant={'paragraph-sm'}
                   >
-                    {chain.chainName}
+                    {chain.displayName ?? chain.chainName}
                   </Typography>
                 </div>
               ),

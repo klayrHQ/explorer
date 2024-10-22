@@ -41,7 +41,7 @@ export const ChainDetailsBanner = ({
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'a total of '}
           </Typography>
-          <Currency amount={21302000000000} decimals={0} fontWeight="semibold" symbol={chain?.currency.symbol} />
+          <Currency amount={21302000000000} decimals={0} fontWeight="semibold" symbol={chain?.token.symbol} />
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'is locked and the chain status is'}
           </Typography>

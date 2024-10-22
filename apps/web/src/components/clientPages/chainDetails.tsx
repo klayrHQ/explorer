@@ -57,7 +57,7 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
         chain={mockChainData}
         image={BannerBG.src}
         locked={0}
-        logo={mockChainData?.logo ?? ''}
+        logo={mockChainData?.logo.png ?? ''}
         status={'Active'}
       />
       <DetailsSection data={details} title="Chain details" />

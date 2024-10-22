@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
 import { useGatewayClientStore } from '../../store/clientStore.ts';
+import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
 
 interface UsePaginationAndSortingProps {
   defaultLimit?: string;
@@ -24,7 +25,7 @@ export const useSorting = ({
   const [sortField, setSortField] = useState<string>(initialSortField);
   const [sortOrder, setSortOrder] = useState<string>(initialSortOrder);
 
-  const network = useGatewayClientStore((state) => state.network);
+  const network = useChainNetworkStore((state) => state.currentNetwork);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = useCallback(

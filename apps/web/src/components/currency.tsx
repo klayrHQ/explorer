@@ -4,7 +4,7 @@ import { useChainNetworkStore } from '../store/chainNetworkStore.ts';
 
 export const Currency = ({ symbol, ...props }: CurrencyProps) => {
   const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const currency = currentChain?.currency;
+  const currency = currentChain?.token?.symbol;
 
-  return <UICurrency {...props} symbol={symbol ?? currency?.symbol} />;
+  return <UICurrency {...props} symbol={symbol ?? currency ?? 'KLY'} />;
 };

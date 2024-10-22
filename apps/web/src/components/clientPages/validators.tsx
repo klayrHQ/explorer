@@ -15,6 +15,7 @@ import {
 import { useGatewayClientStore } from '../../store/clientStore.ts';
 import { NextValidatorType, TableCellType } from '@repo/ui/types';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);
@@ -25,7 +26,7 @@ export const Validators = () => {
   const [sortField, setSortField] = useState<string>('rank');
   const [sortOrder, setSortOrder] = useState<string>('asc');
 
-  const network = useGatewayClientStore((state) => state.network);
+  const network = useChainNetworkStore((state) => state.currentNetwork);
   const newBlockEvent = useSocketStore((state) => state.height);
 
   const [chartData, setChartData] = useState<ChartDataType[]>([]);

@@ -1,4 +1,4 @@
-import { Search } from "@repo/ui/organisms";
+import { Search } from '@repo/ui/organisms';
 
 export interface BlocksQueryParams {
   blockID?: string;
@@ -52,11 +52,35 @@ export interface StakersQueryParams {
 
 export interface AccountQueryParams {
   address?: string;
-  sort? : string;
+  sort?: string;
   limit?: string;
   offset?: number;
 }
 
 export interface TokensQueryParams {
   address?: string;
+}
+
+export interface ChainsQueryParams {
+  chainName?: string;
+  displayName?: string;
+  chainID?: string;
+  isDefault?: boolean;
+  network?: string;
+  search?: string;
+  limit?: number;
+  offset?: number;
+  sort?: string;
+}
+
+export interface ChainTokenQueryParams {
+  chainName?: string;
+  chainID?: string;
+  tokenName?: string;
+  tokenID?: string;
+  network?: string;
+  search?: string;
+  limit?: number;
+  offset?: number;
+  sort?: string;
 }

@@ -4,10 +4,10 @@ import { Icon, MenuItemProps, Typography } from '@repo/ui/atoms';
 import { useSearchStore } from '../../store/searchStore.ts';
 import React from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
-import {useFavouritesStore} from "../../store/favouritesStore.ts";
-import {useChainNetworkStore, useInitializeCurrentChain} from "../../store/chainNetworkStore.ts";
-import {useNodeStore} from "../../store/nodeStore.ts";
-import useMarketcap from "../../utils/hooks/useMarketcap.ts";
+import { useFavouritesStore } from '../../store/favouritesStore.ts';
+import { useChainNetworkStore, useInitializeCurrentChain } from '../../store/chainNetworkStore.ts';
+import { useNodeStore } from '../../store/nodeStore.ts';
+import useMarketcap from '../../utils/hooks/useMarketcap.ts';
 
 interface TopbarClientProps {
   logo: {
@@ -28,7 +28,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
 
   const currentChain = useChainNetworkStore((state) => state.currentChain);
   const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
-  const chains = useChainNetworkStore((state) => state.chains);
+  const filteredChains = useChainNetworkStore((state) => state.chains);
   const networks = useChainNetworkStore((state) => state.networks);
   const setCurrentChain = useChainNetworkStore((state) => state.setCurrentChain);
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
@@ -66,6 +66,27 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
         </Typography>
       ),
     },
+    /*{
+      keyValue: ' test',
+      contentValue: (
+        <button
+          onClick={() =>
+            console.log(
+              'chains',
+              filteredChains,
+              '\n currentChain',
+              currentChain,
+              '\n networks',
+              networks,
+              '\n currentNetwork',
+              currentNetwork,
+            )
+          }
+        >
+          test
+        </button>
+      ),
+    },*/
     //todo - uncomment when marketcap is available (awaiting verification)
     /*{
       keyValue: 'MC: ',
@@ -82,10 +103,10 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
         setCurrentChain,
         currentNetwork: {
           syncing: nodeInfo?.syncing,
-          ...currentNetwork,
+          networkName: currentNetwork,
         },
         setCurrentNetwork,
-        chains,
+        chains: filteredChains,
         networks,
       }}
       kpis={kpisObject}
