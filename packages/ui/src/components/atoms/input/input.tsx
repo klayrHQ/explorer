@@ -6,7 +6,7 @@ import { TextAreaField } from './textAreaField.tsx';
 import { InputField } from './inputField.tsx';
 
 interface InputProps extends Omit<HTMLProps<HTMLInputElement>, 'label'> {
-  variant?: 'onBgPrimary' | 'onBgSecondary';
+  variant?: 'onBgPrimary' | 'onBgSecondary' | 'filters';
   label?: string | ReactNode;
   labelColor?: ColorType;
   labelPosition?: 'left' | 'top' | 'right';
@@ -14,6 +14,12 @@ interface InputProps extends Omit<HTMLProps<HTMLInputElement>, 'label'> {
   options?: string[];
   placeholder?: string;
   icon?: IconComponent;
+  rightContent?: ReactNode;
+  leftContent?: ReactNode;
+  rightContentPadding?: string;
+  leftContentPadding?: string;
+  errorNotification?: string;
+  isActive?: boolean;
 }
 
 export const Input = ({
@@ -26,6 +32,12 @@ export const Input = ({
   name,
   placeholder,
   icon,
+  rightContent,
+  leftContent,
+  rightContentPadding,
+  leftContentPadding,
+  errorNotification,
+  isActive,
   ...props
 }: InputProps) => {
   return (
@@ -64,9 +76,15 @@ export const Input = ({
         </select>
       ) : (
         <InputField
+          errorNotification={errorNotification}
           icon={icon}
+          isActive={isActive}
+          leftContent={leftContent}
+          leftContentPadding={leftContentPadding}
           name={name}
           placeholder={placeholder}
+          rightContent={rightContent}
+          rightContentPadding={rightContentPadding}
           type={type}
           variant={variant}
           {...props}

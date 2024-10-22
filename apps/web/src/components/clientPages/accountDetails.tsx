@@ -56,6 +56,7 @@ import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { shortString } from '@repo/ui/utils';
 import { FormattedValue } from '../formattedValue.tsx';
 import { Currency } from '../currency.tsx';
+import { create } from 'domain';
 
 export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   useInitializeFavourites();
@@ -256,6 +257,56 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           format={'string'}
           typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
           value={shortString(account?.publicKey ?? ' ', 16, 'center')}
+        />
+      </>,
+    ),
+    createDetails(
+      'Nonce',
+      <>
+        <FormattedValue
+          format="number"
+          typographyProps={{ color: 'onBackgroundHigh' }}
+          value={account?.nonce}
+        />
+      </>,
+    ),
+    createDetails(
+      'Total Balance',
+      <>
+        <FormattedValue
+          format="currency"
+          currencyProps={{ className: 'font-onBackgroundHigh' }}
+          value={account?.totalBalance}
+        />
+      </>,
+    ),
+    createDetails(
+      'Locked Balance',
+      <>
+        <FormattedValue
+          format="currency"
+          currencyProps={{ className: 'font-onBackgroundHigh' }}
+          value={account?.lockedBalance}
+        />
+      </>,
+    ),
+    createDetails(
+      'Available Balance',
+      <>
+        <FormattedValue
+          format="currency"
+          currencyProps={{ className: 'font-onBackgroundHigh' }}
+          value={account?.availableBalance}
+        />
+      </>,
+    ),
+    createDetails(
+      'Claimable Rewards',
+      <>
+        <FormattedValue
+          format="currency"
+          currencyProps={{ className: 'font-onBackgroundHigh opacity-40' }}
+          value={'0'}
         />
       </>,
     ),

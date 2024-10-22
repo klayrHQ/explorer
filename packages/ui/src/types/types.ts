@@ -62,6 +62,7 @@ export type IconComponent =
   | 'CryptoCurrency'
   | 'Heart'
   | 'HeartFull'
+  | 'FilterLines'
   | 'LogIn'
   | 'SearchLg'
   | 'Settings'
