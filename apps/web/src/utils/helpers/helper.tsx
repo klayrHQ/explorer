@@ -855,7 +855,11 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
               children: (
                 <Link href={`/chains/${chain.chainID}`}>
                   <div className="flex items-center gap-2">
-                    <ImageContainer alt={chain.displayName ?? chain.chainName} src={chain.logo.png} variant={'avatar'} />
+                    <ImageContainer
+                      alt={chain.displayName ?? chain.chainName}
+                      src={chain.logo.png}
+                      variant={'avatar'}
+                    />
                     <Typography>{chain.displayName ?? chain.chainName}</Typography>
                   </div>
                 </Link>
