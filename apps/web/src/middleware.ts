@@ -10,7 +10,7 @@ export function middleware(req: NextRequest) {
 
   //console.log({ basePath });
   // Avoid infinite redirect loops by checking if "network" is already set in search params
-  if (url.searchParams.has('network')) {
+  if (url.searchParams.has('network') && url.searchParams.has('app')) {
     //console.log('Network param already exists:', url.searchParams.get('network'));
     return NextResponse.next(); // Skip the redirect and continue normally
   }
@@ -22,6 +22,13 @@ export function middleware(req: NextRequest) {
   } else if (subdomain === 'explorer') {
     //console.log('mainnet');
     url.searchParams.set('network', 'mainnet');
+  }
+
+  if (subdomain !== 'explorer' && subdomain !== 'testnet-explorer') {
+    url.searchParams.set('network', 'mainnet');
+    url.searchParams.set('app', 'klayr');
+    url.pathname = '/klayr';
+    return NextResponse.redirect(url);
   }
 
   if (pathname === '/') {
