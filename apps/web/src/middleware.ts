@@ -26,14 +26,14 @@ export function middleware(req: NextRequest) {
 
   if (subdomain !== 'explorer' && subdomain !== 'testnet-explorer') {
     url.searchParams.set('network', 'mainnet');
-    url.searchParams.set('app', 'klayr');
-    url.pathname = '/klayr';
+    url.searchParams.set('app', 'klayr_mainchain');
+    url.pathname = '/klayr_mainchain';
     return NextResponse.redirect(url);
   }
 
   if (pathname === '/') {
-    url.searchParams.set('app', 'klayr');
-    url.pathname = '/klayr';
+    url.searchParams.set('app', 'klayr_mainchain');
+    url.pathname = '/klayr_mainchain';
     return NextResponse.redirect(url);
   }
 
