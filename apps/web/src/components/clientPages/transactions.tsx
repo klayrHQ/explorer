@@ -6,11 +6,12 @@ import { transactionTableHead } from '../../utils/helpers/tableHeaders';
 import { createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { callGetTransactions } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, use } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { TransactionsFilter } from '../filterComponents/transactionsFilter.tsx';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import React from 'react';
+import { ChildProcess } from 'child_process';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
@@ -19,6 +20,7 @@ export const Transactions = () => {
   const [inputValues, setInputValues] = useState({ from: '', to: '' });
   const [filterValues, setFilterValues] = useState({ from: '', to: '' });
 
+  const chains = useChainNetworkStore((state) => state.chains);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
 
   const handleBlur = useCallback(() => {
@@ -68,12 +70,13 @@ export const Transactions = () => {
       createTransactionRows(
         transactions,
         currentChain,
+        chains,
         loading,
         'Copy to clipboard',
         () => {},
         basePath,
       ),
-    [transactions, loading, basePath],
+    [transactions, loading, basePath, chains], // Add chains to the dependencies array
   );
 
   const totalPages = useMemo(() => Math.ceil(totalTxs / Number(limit)), [totalTxs, limit]);

@@ -56,10 +56,12 @@ import { ChainType, DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
 import { Currency } from '../../components/currency.tsx';
 import { FormattedValue } from '../../components/formattedValue.tsx';
+import { get } from 'http';
 
 export const createTransactionRows = (
   transactions: TransactionType[],
   currentChain: ChainType,
+  chains: ChainType[],
   loading: boolean,
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
@@ -69,6 +71,14 @@ export const createTransactionRows = (
   const columnCount = transactionTableHead(() => '', '', '').length;
 
   const chainLogo = currentChain?.logo;
+  const getChainLogo = (chainID: string) => {
+    const fromChain = chains.find((chain) => {
+      const isTheChain = chain.chainId === chainID;
+      return isTheChain;
+    });
+    const logo = fromChain?.logo;
+    return logo;
+  };
 
   return !loading
     ? transactions?.length > 0
@@ -152,7 +162,7 @@ export const createTransactionRows = (
                           alt="Chain Icon"
                           className="absolute left-2 bottom-4 rounded-full"
                           height={20}
-                          src={transaction.receivingChainID}
+                          src={getChainLogo(transaction.receivingChainID)}
                           width={20}
                         />
                       </div>
