@@ -304,7 +304,13 @@ export const createValidatorsRows = (
               2,
             ),
           );
-          return isNaN(rawPercents) ? 0 : rawPercents;
+          if (isNaN(rawPercents)) {
+            return 0;
+          } else if (!isFinite(rawPercents)) {
+            return 0;
+          } else {
+            return rawPercents;
+          }
         };
         const weightPercents = getWeightPercents(validator);
 
