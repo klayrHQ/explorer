@@ -42,6 +42,8 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
   const currentChain = useChainNetworkStore((state) => state.currentChain);
+  const chains = useChainNetworkStore((state) => state.chains);
+
   const symbol = currentChain?.currency.symbol;
 
   const transactionsPagination = usePagination();
@@ -228,6 +230,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const transactionRows = createTransactionRows(
     transactions,
     currentChain,
+    chains,
     loading,
     copyTooltipText,
     setCopyTooltipText,

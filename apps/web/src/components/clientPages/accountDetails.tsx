@@ -82,6 +82,8 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const currentChain = useChainNetworkStore((state) => state.currentChain);
+  const chains = useChainNetworkStore((state) => state.chains);
+
   const symbol = currentChain?.currency.symbol;
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
@@ -333,6 +335,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const rows = createTransactionRows(
     transactions,
     currentChain,
+    chains,
     loading,
     copyTooltipText,
     setCopyTooltipText,

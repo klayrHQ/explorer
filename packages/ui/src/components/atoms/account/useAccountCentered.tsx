@@ -10,7 +10,9 @@ export interface UserAccountCenteredProps {
   address: string;
   name?: string;
   status?: string;
-  notificationValue: number | string;
+  notificationValue?: number | string;
+  role?: string;
+  validator?: boolean;
 }
 
 export const UserAccountCentered = ({
@@ -18,19 +20,21 @@ export const UserAccountCentered = ({
   name,
   status,
   notificationValue,
+  role = 'Validator',
+  validator = true,
 }: UserAccountCenteredProps) => {
   return (
     <div className="flex gap-2 ">
       <div className="flex items-center">
-        <ImageNotification notificationValue={notificationValue} />
+        {validator && <ImageNotification notificationValue={notificationValue ?? 0} />}
         <Avatar address={address} circle size={40} />
       </div>
       <div className="flex flex-col gap-1.5 desktop:gap-0">
         <div className="flex desktop:hidden">
-          <StatusBadge status={`${status} Validator`} />
+          <StatusBadge status={`${status} ${role}`} />
         </div>
         <Typography color={'onBackground'} fontWeight={'semibold'} variant={'h3'}>
-          {name}
+          {name ? name : '-'}
         </Typography>
         <div className="flex items-center gap-2">
           <Typography color={'onBackgroundMedium'} fontWeight={'normal'} variant={'caption'}>

@@ -62,6 +62,8 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const { isFavourite, addFavourite, removeFavourite } = useFavouritesStore();
   const [isFav, setIsFav] = useState<boolean>(false);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
+  const chains = useChainNetworkStore((state) => state.chains);
+
   const symbol = currentChain?.currency.symbol;
 
   const blocksPagination = usePagination(1, '10');
@@ -275,6 +277,7 @@ export const ValidatorDetails = ({ params }: { params: { id: string } }) => {
   const rows = createTransactionRows(
     transactions,
     currentChain,
+    chains,
     loading,
     copyTooltipText,
     setCopyTooltipText,
