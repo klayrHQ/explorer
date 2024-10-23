@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
-import { useSearchParams } from 'next/navigation';
+import {redirect, usePathname, useRouter, useSearchParams} from 'next/navigation';
 import { useEffect } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
 import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
@@ -37,6 +37,8 @@ export const useInitializeCurrentChain = () => {
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
+  const router = useRouter();
+  const pathName = usePathname();
 
   const searchParams = useSearchParams();
 
@@ -74,9 +76,12 @@ export const useInitializeCurrentChain = () => {
         const chainMatch = matchingChains?.find((chain) => chain.networkType === currentNetwork);
         //console.log('matchingChains', matchingChains, '\nfirstSubDir', chainParam, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
         if (chainMatch) {
-          //console.log('baseUrl', chainMatch.serviceURLs[0]);
+          console.log('baseUrl', chainMatch.serviceURLs[0]);
           setBaseUrl(chainMatch.serviceURLs[0].http);
           setCurrentChain(chainMatch);
+        } else if (pathName.split('/')[2] !== '404') {
+          console.log('404 no matching chain')
+          router.push('/klayr_mainchain/404');
         }
       } catch (error) {
         console.error('Error fetching chains', error);
