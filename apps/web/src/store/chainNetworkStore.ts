@@ -58,7 +58,7 @@ export const useInitializeCurrentChain = () => {
         setBaseUrl(gateways.testnet);
       }
     }
-    console.log('running network effect')
+    //console.log('running network effect')
     networkParam && networks.includes(networkParam) && setCurrentNetwork(networkParam);
   }, [searchParams]);
 
@@ -89,9 +89,9 @@ export const useInitializeCurrentChain = () => {
         const chainParam = searchParams.get('app')
         const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === chainParam);
         const chainMatch = matchingChains?.find((chain) => chain.networkType === currentNetwork);
-        console.log('matchingChains', matchingChains, '\napp', chainParam, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
+        //console.log('matchingChains', matchingChains, '\napp', chainParam, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
         if (chainMatch) {
-          console.log('baseUrl', chainMatch.serviceURLs[0]);
+          //console.log('baseUrl', chainMatch.serviceURLs[0]);
           chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
           setCurrentChain(chainMatch);
         } else if (pathName.split('/')[2] !== '404') {
