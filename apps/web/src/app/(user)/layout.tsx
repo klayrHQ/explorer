@@ -1,7 +1,7 @@
 import './globals.css';
 import '@repo/ui/styles.css';
 import type { Metadata } from 'next';
-import { ReactNode } from 'react';
+import {ReactNode, Suspense} from 'react';
 import { Layout } from '../../components/layout/layoutClient.tsx';
 import Favicon from '../../public/images/favicon.ico';
 
@@ -20,7 +20,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={'overflow-hidden'}>
-        <Layout>{children}</Layout>
+        <Suspense>
+          <Layout>{children}</Layout>
+        </Suspense>
       </body>
     </html>
   );

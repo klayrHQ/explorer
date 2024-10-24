@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
-import { usePathname } from 'next/navigation';
+import {redirect, usePathname, useRouter, useSearchParams} from 'next/navigation';
 import { useEffect } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
 import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
@@ -31,28 +31,21 @@ export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
 });
 
 export const useInitializeCurrentChain = () => {
-  const pathname = usePathname();
-  const chains = useChainNetworkStore((state) => state.chains);
   const setChains = useChainNetworkStore((state) => state.setChains);
   const setCurrentChain = useChainNetworkStore((state) => state.setCurrentChain);
   const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
-  const currentChain = useChainNetworkStore((state) => state.currentChain);
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
+  const router = useRouter();
+  const pathName = usePathname();
+
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const networkSubdomain = window.location.hostname.split('.')[0].split('-')[0];
-    const network =
-      networkSubdomain === 'explorer'
-        ? networks[0]
-        : networks.find((network) => network === networkSubdomain);
-    if (window.location.hostname !== 'localhost') {
-      setCurrentNetwork(network ?? 'mainnet');
-    } else {
-      setCurrentNetwork(currentChain.networkType);
-    }
-  }, [pathname]);
+    const networkParam = searchParams.get('network');
+    networkParam && networks.includes(networkParam) ? setCurrentNetwork(networkParam) : setCurrentNetwork(networks[0]);
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchChains = async () => {
@@ -78,11 +71,18 @@ export const useInitializeCurrentChain = () => {
         });
         setChains(chainsWithTokens);
 
-        const firstSubDir = pathname.split('/')[1];
-        const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === firstSubDir);
+        const chainParam = searchParams.get('app')
+        const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === chainParam);
         const chainMatch = matchingChains?.find((chain) => chain.networkType === currentNetwork);
-        //console.log('matchingChains', matchingChains, '\nfirstSubDir', firstSubDir, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
-        setCurrentChain(chainMatch ?? chains[0] ?? defaultChain);
+        //console.log('matchingChains', matchingChains, '\nfirstSubDir', chainParam, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
+        if (chainMatch) {
+          console.log('baseUrl', chainMatch.serviceURLs[0]);
+          setBaseUrl(chainMatch.serviceURLs[0].http);
+          setCurrentChain(chainMatch);
+        } else if (pathName.split('/')[2] !== '404') {
+          console.log('404 no matching chain')
+          router.push('/klayr_mainchain/404');
+        }
       } catch (error) {
         console.error('Error fetching chains', error);
       }
@@ -90,8 +90,4 @@ export const useInitializeCurrentChain = () => {
 
     fetchChains();
   }, [currentNetwork]);
-
-  useEffect(() => {
-    setBaseUrl(currentChain?.serviceURLs[0].http ?? defaultChain?.serviceURLs[0].http);
-  }, [currentChain]);
 };
