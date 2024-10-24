@@ -76,7 +76,6 @@ export const createTransactionRows = (
       return isTheChain;
     });
     const logo = fromChain?.logo.png;
-    console.log('logo', logo);
     return logo;
   };
 
