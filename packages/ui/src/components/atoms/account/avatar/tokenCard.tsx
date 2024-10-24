@@ -11,10 +11,15 @@ export const TokenCard = ({ name, symbol, image, chainImage }: TokenCardProps) =
   return (
     <div className="flex gap-2 items-center">
       <div className="flex items-center justify-center relative">
-        <ImageContainer alt={name} className="ml-2 mt-0.5" src={image} variant={'avatarLg'} />
+        <ImageContainer
+          alt={name}
+          className="ml-2 mt-0.5 border-1 border-backgroundTertiary"
+          src={image}
+          variant={'avatarLg'}
+        />
         <img
           alt={name}
-          className="absolute top-0 left-0 w-5 h-5 rounded-full"
+          className="absolute top-0 left-0 w-5 h-5 rounded-full border-1 border-black"
           height={16}
           src={chainImage}
           width={16}

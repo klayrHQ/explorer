@@ -183,6 +183,7 @@ export const createTransactionRows = (
                   variant={'paragraph-sm'}
                 />
               ),
+              className: 'text-right',
             },
             {
               children: (
@@ -194,6 +195,7 @@ export const createTransactionRows = (
                   variant={'paragraph-sm'}
                 />
               ),
+              className: 'text-right',
             },
           ];
 
@@ -342,11 +344,23 @@ export const createValidatorsRows = (
   return !loading
     ? validators?.map((validator) => {
         const { inputStake, newBlockReward } = calculateReward(validator);
-        const weightPercents = Number(
-          ((Number(validator?.totalStake || 0) / Number(validator?.selfStake || 1)) * 10).toFixed(
-            2,
-          ),
-        );
+
+        const getWeightPercents = (validator: ValidatorType) => {
+          const rawPercents = Number(
+            ((Number(validator?.totalStake || 0) / Number(validator?.selfStake || 1)) * 10).toFixed(
+              2,
+            ),
+          );
+          if (isNaN(rawPercents)) {
+            return 0;
+          } else if (!isFinite(rawPercents)) {
+            return 0;
+          } else {
+            return rawPercents;
+          }
+        };
+        const weightPercents = getWeightPercents(validator);
+
         const resultPerPeriod =
           stakingCalculatorPeriod === 'block'
             ? newBlockReward
@@ -377,34 +391,6 @@ export const createValidatorsRows = (
                 />
               ),
             },
-            stakingRewards
-              ? {
-                  children: (
-                    <div className="flex flex-col items-end">
-                      <FormattedValue
-                        currencyProps={{
-                          className: 'font-semibold',
-                          color: 'error',
-                          variant: 'paragraph-sm',
-                          decimals: 2,
-                        }}
-                        format={'currency'}
-                        tooltip={`Staking Rewards per ${stakingCalculatorAmount} KLY per ${stakingCalculatorPeriod}`}
-                        value={resultPerPeriod}
-                      />
-                      <FormattedValue
-                        format={'percentage'}
-                        tooltip={{
-                          placement: 'bottom',
-                          text: `APR is the yearly rate of return on staking ${stakingCalculatorAmount} KLY`,
-                        }}
-                        typographyProps={{ color: 'error', variant: 'caption' }}
-                        value={APR.toFixed(2)}
-                      />
-                    </div>
-                  ),
-                }
-              : null,
             {
               children: (
                 <StatusBadge
@@ -417,10 +403,13 @@ export const createValidatorsRows = (
                 />
               ),
             },
-            {
-              children: <FormattedValue format={'number'} value={validator?.generatedBlocks} />,
-              className: 'text-right',
-            },
+            stakingRewards
+              ? null
+              : {
+                  children: <FormattedValue format={'number'} value={validator?.generatedBlocks} />,
+                  className: 'text-right',
+                },
+
             {
               children: (
                 <div className="flex flex-col items-end">
@@ -432,7 +421,7 @@ export const createValidatorsRows = (
                   <FormattedValue
                     format={'percentage'}
                     tooltip={{
-                      text: 'The percentage of the validator’s total stake relative to its maximum allowable weight.',
+                      text: 'Stake capacity',
                       placement: 'top',
                     }}
                     typographyProps={{
@@ -443,23 +432,38 @@ export const createValidatorsRows = (
                 </div>
               ),
             },
-            {
-              children: (
-                <Currency amount={validator?.selfStake} className="font-semibold" decimals={0} />
-              ),
-              className: 'text-right',
-            },
-            {
-              children: (
-                <Currency amount={validator?.totalStake} className="font-semibold" decimals={0} />
-              ),
-              className: 'text-right',
-            },
+            stakingRewards
+              ? null
+              : {
+                  children: (
+                    <div className="flex flex-col items-end">
+                      <Currency
+                        amount={validator?.totalStake}
+                        className="font-semibold"
+                        decimals={0}
+                      />
+                      <FormattedValue
+                        format={'currency'}
+                        tooltip={{
+                          text: 'Self stake',
+                          placement: 'top',
+                        }}
+                        currencyProps={{
+                          decimals: 0,
+                          className: 'text-caption text-onBackgroundLow',
+                        }}
+                        value={validator?.selfStake}
+                      />
+                    </div>
+                  ),
+                  className: 'text-right',
+                },
+
             {
               children: (
                 <FormattedValue
                   format={'percentage'}
-                  typographyProps={{ variant: 'paragraph-sm' }}
+                  currencyProps={{ variant: 'paragraph-sm' }}
                   value={formatCommission(validator?.commission)}
                 />
               ),
@@ -896,10 +900,14 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
           cells: [
             {
               children: (
-                <Link href={`/chains/${chain.chainId}`}>
+                <Link href={`/chains/${chain.chainID}`}>
                   <div className="flex items-center gap-2">
-                    <ImageContainer alt={chain.chainName} src={chain.logo} variant={'avatar'} />
-                    <Typography>{chain.chainName}</Typography>
+                    <ImageContainer
+                      alt={chain.displayName ?? chain.chainName}
+                      src={chain.logo.png}
+                      variant={'avatar'}
+                    />
+                    <Typography>{chain.displayName ?? chain.chainName}</Typography>
                   </div>
                 </Link>
               ),
@@ -909,7 +917,7 @@ export const createChainRows = (chains: ChainType[], loading: boolean) => {
                 <FormattedValue
                   format={'string'}
                   typographyProps={{ color: 'onBackgroundHigh' }}
-                  value={chain.chainId}
+                  value={chain.chainID}
                 />
               ),
             },
@@ -1013,13 +1021,13 @@ export const createUserDetailsTokensRow = (
             {
               children: (
                 <div className="flex gap-2 items-center">
-                  <ImageContainer alt={'kly'} src={chain.logo} variant={'avatar'} />
+                  <ImageContainer alt={'kly'} src={chain.logo.png} variant={'avatar'} />
                   <Typography
                     color={'onBackgroundMedium'}
                     fontWeight={'semibold'}
                     variant={'paragraph-sm'}
                   >
-                    {chain.chainName}
+                    {chain.displayName ?? chain.chainName}
                   </Typography>
                 </div>
               ),

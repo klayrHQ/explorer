@@ -56,6 +56,7 @@ import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { shortString } from '@repo/ui/utils';
 import { FormattedValue } from '../formattedValue.tsx';
 import { Currency } from '../currency.tsx';
+import { create } from 'domain';
 
 export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   useInitializeFavourites();
@@ -82,9 +83,10 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const chains = useChainNetworkStore((state) => state.chains);
 
-  const symbol = currentChain?.currency.symbol;
+  const chains = useChainNetworkStore((state) => state.chains);
+  const symbol = currentChain?.token?.symbol;
+
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
@@ -261,6 +263,56 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         />
       </>,
     ),
+    createDetails(
+      'Nonce',
+      <>
+        <FormattedValue
+          format="number"
+          typographyProps={{ color: 'onBackgroundHigh' }}
+          value={account?.nonce}
+        />
+      </>,
+    ),
+    createDetails(
+      'Total Balance',
+      <>
+        <FormattedValue
+          format="currency"
+          currencyProps={{ className: 'font-onBackgroundHigh' }}
+          value={account?.totalBalance}
+        />
+      </>,
+    ),
+    createDetails(
+      'Locked Balance',
+      <>
+        <FormattedValue
+          format="currency"
+          currencyProps={{ className: 'font-onBackgroundHigh' }}
+          value={account?.lockedBalance}
+        />
+      </>,
+    ),
+    createDetails(
+      'Available Balance',
+      <>
+        <FormattedValue
+          format="currency"
+          currencyProps={{ className: 'font-onBackgroundHigh' }}
+          value={account?.availableBalance}
+        />
+      </>,
+    ),
+    createDetails(
+      'Claimable Rewards',
+      <>
+        <FormattedValue
+          format="currency"
+          currencyProps={{ className: 'font-onBackgroundHigh opacity-40' }}
+          value={'0'}
+        />
+      </>,
+    ),
   ];
 
   const validatorDetails = [
@@ -340,7 +392,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     copyTooltipText,
     setCopyTooltipText,
     basePath,
-    true,
+    false,
   );
   const eventsRows = createValidatorEventsRow(events, loading);
   const outgoingStake = createValidatorOutgoingStakeRows(
@@ -483,7 +535,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           <TableContainer
             currentNumber={transactionsPagination.pageNumber}
             defaultValue={transactionsPagination.limit}
-            headCols={transactionTableHead(handleSort, sortField, sortOrder, true)}
+            headCols={transactionTableHead(handleSort, sortField, sortOrder, false)}
             keyPrefix={'validator-tx'}
             onPerPageChange={transactionsPagination.handleLimitChange}
             pagination={

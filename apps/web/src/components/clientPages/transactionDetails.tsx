@@ -30,7 +30,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const [events, setEvents] = useState<EventsType[]>([]);
   const basePath = useBasePath();
   const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const symbol = currentChain?.currency.symbol;
+  const symbol = currentChain?.token.symbol;
 
   useEffect(() => {
     setLoading(true);

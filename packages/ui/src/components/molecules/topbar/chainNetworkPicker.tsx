@@ -14,9 +14,9 @@ export interface ChainNetworkPickerProps {
   currentChain: ChainType;
   setCurrentChain: (chain: ChainType) => void;
   currentNetwork: NetworkType;
-  setCurrentNetwork: (network: NetworkType) => void;
+  setCurrentNetwork: (network: string) => void;
   chains?: ChainType[];
-  networks?: NetworkType[];
+  networks?: string[];
   imgComponent?: ReactElement;
 }
 
@@ -31,7 +31,7 @@ export const ChainNetworkPicker = ({
 }: ChainNetworkPickerProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChain, setSelectedChain] = useState<ChainType | null>(currentChain);
-  const [selectedNetwork, setSelectedNetwork] = useState<NetworkType | null>(currentNetwork);
+  const [selectedNetwork, setSelectedNetwork] = useState<string | null>(currentNetwork.networkName);
   const router = useRouter();
   const pathName = usePathname();
   const firstSubDir = pathName.split('/')[1];
@@ -41,47 +41,50 @@ export const ChainNetworkPicker = ({
   const baseExplorerUrl = `explorer.klayr.dev`;
 
   const chainOptions = chains?.map((chain) => ({
-    label: chain.chainName,
-    value: chain.chainId,
-    labelImage: chain.logo,
+    label: chain.displayName ?? chain.chainName,
+    value: chain.chainName,
+    labelImage: chain.logo.png,
   }));
 
   const networkOptions = networks?.map((network) => ({
-    label: network.networkName,
-    value: network.networkId,
+    label: network,
+    value: network,
   }));
 
   const handleClose = () => {
     setIsModalOpen(false);
   };
 
-  const handleChainChange = (chainId: string) => {
-    const chain = chains.find((chain) => chain.chainId === chainId);
+  const handleChainChange = (chainName: string) => {
+    const chain = chains.find((chain) => chain.chainName === chainName);
+    //console.log('chainName',chainName, '\nchains', chains);
     if (chain) {
-      const firstNetwork = chain.networks[0];
+      const chainNetwork = chain.networkType;
       if (window.location.hostname !== 'localhost') {
-        firstNetwork.networkName === 'mainnet'
+        chainNetwork === 'mainnet'
           ? router.push(`https://${baseExplorerUrl}/${chain.chainName}`)
           : router.push(
-              `https://${firstNetwork.networkName}-${baseExplorerUrl}/${chain.chainName}`,
+              `https://${chainNetwork}-${baseExplorerUrl}/${chain.chainName}`,
             );
       } else {
-        chain.chainName === 'klayr-main' ? router.push('/') : router.push(`/${chain.chainName}`);
+        chain.chainName === 'klayr_mainchain' ? router.push('/') : router.push(`/${chain.chainName}`);
+        setSelectedChain(chain);
+        setCurrentChain(chain);
+        setCurrentNetwork(chain.networkType);
       }
-      setSelectedChain(chain);
-
       setIsModalOpen(false);
     }
   };
 
-  const handleNetworkChange = (networkId: string) => {
-    const network = networks.find((network) => network.networkId === networkId);
+  const handleNetworkChange = (networkName: string) => {
+    const network = networks.find((network) => network === networkName);
     if (network) {
       if (window.location.hostname !== 'localhost') {
-        network.networkName === 'mainnet'
-          ? router.push(`https://${explorerUrl}`)
-          : router.push(`https://${network.networkName}-${explorerUrl}`);
+        network === 'mainnet'
+          ? router.push(`https://${baseExplorerUrl}`)
+          : router.push(`https://${network}-${baseExplorerUrl}`);
       } else {
+        router.push('/');
         setSelectedNetwork(network);
         setCurrentNetwork(network);
       }
@@ -117,13 +120,13 @@ export const ChainNetworkPicker = ({
     <FlexGrid gap="1.5xl" mobileDirection="row">
       <FlexGrid gap="1.5xl" mobileDirection={'row'} onClick={handleOpen}>
         <KeyValueComponent
-          contentValue={currentChain?.chainName || 'Select chain'}
+          contentValue={currentChain?.displayName ?? currentChain?.chainName ?? 'Select chain'}
           hover
           keyValue={
             <ImageContainer
-              alt={currentChain?.chainName}
+              alt={currentChain?.displayName}
               component={imgComponent}
-              src={currentChain?.logo}
+              src={currentChain?.logo.png}
               variant={'chainLogo'}
             />
           }
@@ -143,7 +146,7 @@ export const ChainNetworkPicker = ({
             </Typography>
             <CustomSelect
               classNameList="border-backgroundTertiary border-t-0"
-              defaultValue={currentChain?.chainId}
+              defaultValue={currentChain?.chainName}
               onChange={(value) => handleChainChange(value)}
               options={chainOptions}
             />
@@ -152,13 +155,13 @@ export const ChainNetworkPicker = ({
       </CustomModal>
       <NetworkSelect
         currentNetworkStatusClass={currentNetworkStatusClass}
-        defaultValue={currentNetwork?.networkId}
+        defaultValue={currentNetwork?.networkName}
         onChange={(value) => {
           handleNetworkChange(value);
         }}
         options={networkOptions}
         placeholder={currentNetwork?.networkName}
-        value={currentNetwork?.networkId}
+        value={currentNetwork?.networkName}
       />
     </FlexGrid>
   );
