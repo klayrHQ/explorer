@@ -40,13 +40,15 @@ export const AccountBanner = ({
             status={status}
           />
         </FlexGrid>
-        <AccountBannerText
-          coinRate={coinRate}
-          incomingTransactions={incomingTransactions}
-          outgoingTransactions={outgoingTransactions}
-          value={value}
-          valueSymbol={valueSymbol}
-        />
+        <div className="hidden desktop:block">
+          <AccountBannerText
+            coinRate={coinRate}
+            incomingTransactions={incomingTransactions}
+            outgoingTransactions={outgoingTransactions}
+            value={value}
+            valueSymbol={valueSymbol}
+          />
+        </div>
       </FlexGrid>
       <AccountBannerButtons
         className="hidden desktop:flex"
