@@ -60,12 +60,25 @@ import { FormattedValue } from '../../components/formattedValue.tsx';
 export const createTransactionRows = (
   transactions: TransactionType[],
   loading: boolean,
+  currentChain: ChainType,
+  chains: ChainType[],
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
   basePath: string,
   statusOfTransaction?: boolean,
 ) => {
   const columnCount = transactionTableHead(() => '', '', '').length;
+
+  const chainLogo = currentChain?.logo;
+  const getChainLogo = (chainID: string) => {
+    const fromChain = chains.find((chain) => {
+      const isTheChain = chain.chainID === chainID;
+      return isTheChain;
+    });
+    const logo = fromChain?.logo.png;
+    console.log('logo', logo);
+    return logo;
+  };
 
   return !loading
     ? transactions?.length > 0
@@ -117,11 +130,45 @@ export const createTransactionRows = (
               ),
             },
             {
-              children: <FormattedValue format={'account'} value={transaction.sender} />,
+              children: (
+                <FormattedValue
+                  format={'account'}
+                  value={transaction.sender}
+                  accountIconComponent={
+                    transaction.receivingChainID ? (
+                      <div className="w-5 h-5">
+                        <img
+                          alt="Chain Icon"
+                          className="absolute left-2 bottom-4 rounded-full"
+                          height={20}
+                          src={chainLogo.png}
+                          width={20}
+                        />
+                      </div>
+                    ) : null
+                  }
+                />
+              ),
             },
             {
               children: transaction?.recipient ? (
-                <FormattedValue format={'account'} value={transaction.recipient} />
+                <FormattedValue
+                  format={'account'}
+                  value={transaction.recipient}
+                  accountIconComponent={
+                    transaction.receivingChainID ? (
+                      <div className="w-5 h-5">
+                        <img
+                          alt="Chain Icon"
+                          className="absolute left-2 bottom-4 rounded-full"
+                          height={20}
+                          src={getChainLogo(transaction.receivingChainID)}
+                          width={20}
+                        />
+                      </div>
+                    ) : null
+                  }
+                />
               ) : (
                 '-'
               ),

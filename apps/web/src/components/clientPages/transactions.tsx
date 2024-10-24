@@ -10,10 +10,13 @@ import { useState, useCallback, useMemo } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { TransactionsFilter } from '../filterComponents/transactionsFilter.tsx';
 import React from 'react';
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
+  const chains = useChainNetworkStore((state) => state.chains);
+  const currentChain = useChainNetworkStore((state) => state.currentChain);
 
   const [inputValues, setInputValues] = useState({ from: '', to: '' });
   const [filterValues, setFilterValues] = useState({ from: '', to: '' });
@@ -61,7 +64,16 @@ export const Transactions = () => {
   });
 
   const rows = useMemo(
-    () => createTransactionRows(transactions, loading, 'Copy to clipboard', () => {}, basePath),
+    () =>
+      createTransactionRows(
+        transactions,
+        loading,
+        currentChain,
+        chains,
+        'Copy to clipboard',
+        () => {},
+        basePath,
+      ),
     [transactions, loading, basePath],
   );
 

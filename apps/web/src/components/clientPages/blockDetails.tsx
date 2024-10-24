@@ -41,6 +41,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const [eventsMeta, setEventsMeta] = useState<any>({});
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
+  const chains = useChainNetworkStore((state) => state.chains);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
   const symbol = currentChain?.token.symbol;
 
@@ -228,6 +229,8 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const transactionRows = createTransactionRows(
     transactions,
     loading,
+    currentChain,
+    chains,
     copyTooltipText,
     setCopyTooltipText,
     basePath,
