@@ -18,6 +18,7 @@ export const Link = ({
   basePath,
   ...props
 }: CustomLinkProps) => {
+
   return !outgoing ? (
     <NextLink className={className} href={`${basePath ? basePath : ''}${href}`} {...props}>
       {children}
