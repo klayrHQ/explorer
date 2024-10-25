@@ -15,7 +15,27 @@ export function middleware(req: NextRequest) {
 
   // Don't add params on 404 pages and don't redirect
   if (pathname.split('/')[2] === '404') {
-    return NextResponse.next(); // Skip the redirect and continue normally
+    return NextResponse.next();
+  }
+
+  // todo add permanent fix for vercel previews
+  // Temporarily skip the redirect for Vercel previews
+  if (hostname.split('.')[1] === 'vercel') {
+    return NextResponse.next();
+  }
+
+  // Set the default searchParams if the subdomain is not explorer or testnet-explorer (mainly for localhost)
+  if (subdomain !== 'explorer' && subdomain !== 'testnet-explorer') {
+    url.searchParams.set('network', 'mainnet');
+    url.searchParams.set('app', 'klayr_mainchain');
+    url.pathname = '/klayr_mainchain';
+
+    // Add a subdomain to the redirect
+    let hostnameParts = hostname.split('.');
+    hostnameParts.unshift('explorer');
+    url.host = hostnameParts.join('.');
+
+    return NextResponse.redirect(url);
   }
 
   // Set the network param based on the subdomain
@@ -23,14 +43,6 @@ export function middleware(req: NextRequest) {
     url.searchParams.set('network', 'testnet');
   } else if (subdomain === 'explorer') {
     url.searchParams.set('network', 'mainnet');
-  }
-
-  // Set the default searchParams if the subdomain is not explorer or testnet-explorer (mainly for localhost & previews)
-  if (subdomain !== 'explorer' && subdomain !== 'testnet-explorer') {
-    url.searchParams.set('network', 'mainnet');
-    url.searchParams.set('app', 'klayr_mainchain');
-    url.pathname = '/klayr_mainchain';
-    return NextResponse.redirect(url);
   }
 
   // If no app is specified, redirect to the mainchain app
