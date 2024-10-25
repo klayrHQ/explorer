@@ -8,6 +8,7 @@ import { SubMenu } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
 import { usePathname } from 'next/navigation';
 import { Link } from './link.tsx';
+import { Tooltip } from '../utilities/tooltip.tsx';
 
 export interface MenuItemProps {
   label: string | React.ReactNode;
@@ -103,14 +104,28 @@ export const MenuItem = ({
       color={'inherit'}
       fontWeight={'semibold'}
     >
-      <div className={variant === 'default' ? 'w-menuIconWidth' : 'w-menuIconSmallWidth'}>
-        <Icon
-          className={'group-hover:text-gray-1'}
-          color={'gray-5'}
-          icon={icon}
-          size={variant === 'default' ? 'medium' : 'xs'}
-        />
-      </div>
+      {minimized && !subMenu ? (
+        <Tooltip text={typeof label === 'string' ? label : ''} placement={'right'}>
+          <div className={variant === 'default' ? 'w-menuIconWidth' : 'w-menuIconSmallWidth'}>
+            <Icon
+              className={'group-hover:text-gray-1'}
+              color={'gray-5'}
+              icon={icon}
+              size={variant === 'default' ? 'medium' : 'xs'}
+            />
+          </div>
+        </Tooltip>
+      ) : (
+        <div className={variant === 'default' ? 'w-menuIconWidth' : 'w-menuIconSmallWidth'}>
+          <Icon
+            className={'group-hover:text-gray-1'}
+            color={'gray-5'}
+            icon={icon}
+            size={variant === 'default' ? 'medium' : 'xs'}
+          />
+        </div>
+      )}
+
       {!minimized && (
         <>
           <span className={cls(['overflow-hidden', minimized ? 'w-0' : 'w-max'])}>{label}</span>

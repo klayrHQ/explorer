@@ -71,7 +71,7 @@ export const Tooltip = ({ placement, text, children, hideMobile }: TooltipProps)
             placement === 'top' && 'pb-lg',
             placement === 'bottom' && 'pt-lg',
             placement === 'left' && 'pr-lg',
-            placement === 'right' && 'pl-lg',
+            placement === 'right' && 'pl-6',
           ])}
           open={open}
           placement={placement}
