@@ -130,44 +130,44 @@ export const createTransactionRows = (
             },
             {
               children: (
-                <FormattedValue
-                  format={'account'}
-                  value={transaction.sender}
-                  accountIconComponent={
-                    transaction.receivingChainID ? (
-                      <div className="w-5 h-5">
+                <div className="">
+                  <FormattedValue
+                    format={'account'}
+                    value={transaction.sender}
+                    accountIconComponent={
+                      transaction.receivingChainID ? (
                         <img
                           alt="Chain Icon"
-                          className="absolute left-2 bottom-4 rounded-full"
+                          className="absolute -left-2 bottom-4 rounded-full"
                           height={20}
                           src={chainLogo.png}
                           width={20}
                         />
-                      </div>
-                    ) : null
-                  }
-                />
+                      ) : null
+                    }
+                  />
+                </div>
               ),
             },
             {
               children: transaction?.recipient ? (
-                <FormattedValue
-                  format={'account'}
-                  value={transaction.recipient}
-                  accountIconComponent={
-                    transaction.receivingChainID ? (
-                      <div className="w-5 h-5">
+                <div className="">
+                  <FormattedValue
+                    format={'account'}
+                    value={transaction.recipient}
+                    accountIconComponent={
+                      transaction.receivingChainID ? (
                         <img
                           alt="Chain Icon"
-                          className="absolute left-2 bottom-4 rounded-full"
+                          className="absolute -left-2 bottom-4 rounded-full"
                           height={20}
                           src={getChainLogo(transaction.receivingChainID)}
                           width={20}
                         />
-                      </div>
-                    ) : null
-                  }
-                />
+                      ) : null
+                    }
+                  />
+                </div>
               ) : (
                 '-'
               ),

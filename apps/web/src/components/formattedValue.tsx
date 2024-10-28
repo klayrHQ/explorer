@@ -128,12 +128,14 @@ export const FormattedValue = ({
       return (
         <Link basePath={basePath} href={`/account/${value.name ?? value.address}`}>
           {accountIconComponent ? (
-            <div className={'relative inline-flex items-center gap-1 ml-2.5'}>
+            <div className={'relative inline-flex items-center gap-1'}>
               {accountIconComponent}
               <UserAccountCard {...accountProps} {...value} />
             </div>
           ) : (
-            <UserAccountCard {...accountProps} {...value} />
+            <div className={'relative inline-flex items-center gap-1 mr-2'}>
+              <UserAccountCard {...accountProps} {...value} />
+            </div>
           )}
         </Link>
       );
