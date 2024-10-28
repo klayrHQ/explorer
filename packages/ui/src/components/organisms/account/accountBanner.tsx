@@ -11,7 +11,6 @@ import { ValidatorBannerButtons } from '../../molecules';
 export const AccountBanner = ({
   senderAddress,
   senderName,
-  status,
   incomingTransactions,
   outgoingTransactions,
   coinRate,
@@ -34,11 +33,7 @@ export const AccountBanner = ({
               icon="ArrowLeft"
             />
           </Link>
-          <AccountBannerHeader
-            senderAddress={senderAddress}
-            senderName={senderName}
-            status={status}
-          />
+          <AccountBannerHeader senderAddress={senderAddress} senderName={senderName} />
         </FlexGrid>
         <div className="hidden desktop:block">
           <AccountBannerText

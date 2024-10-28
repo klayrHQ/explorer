@@ -1,28 +1,17 @@
 import { StatusBadge, Typography } from '../../atoms';
 import { UserAccountCentered } from '../../atoms/account/useAccountCentered';
-export interface ValidatorBannerHeaderProps {
+export interface AccountBannerHeaderProps {
   senderAddress?: string;
   senderName?: string;
-  status: string;
 }
 
 export const AccountBannerHeader = ({
   senderAddress = '',
   senderName,
-  status,
-}: ValidatorBannerHeaderProps) => {
+}: AccountBannerHeaderProps) => {
   return (
     <div className="flex gap-1 desktop:gap-2  justify-between items-center ">
-      <UserAccountCentered
-        address={senderAddress}
-        name={senderName}
-        status={status}
-        role=""
-        validator={false}
-      />
-      <div className="hidden desktop:flex mb-4">
-        <StatusBadge status={status || ''} />
-      </div>
+      <UserAccountCentered address={senderAddress} name={senderName} role="" validator={false} />
     </div>
   );
 };
