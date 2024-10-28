@@ -247,18 +247,41 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     createDetails(
       'Public Key',
       <>
-        <FormattedValue
-          copy
-          format={'string'}
-          typographyProps={{ color: 'onBackgroundHigh', className: 'hidden desktop:inline-flex' }}
-          value={account?.publicKey}
-        />
-        <FormattedValue
-          copy
-          format={'string'}
-          typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
-          value={shortString(account?.publicKey ?? ' ', 16, 'center')}
-        />
+        {account?.publicKey ? (
+          <>
+            <FormattedValue
+              copy
+              format={'string'}
+              typographyProps={{
+                color: 'onBackgroundHigh',
+                className: 'hidden desktop:inline-flex',
+              }}
+              value={account.publicKey}
+            />
+            <FormattedValue
+              copy
+              format={'string'}
+              typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+              value={shortString(account.publicKey, 16, 'center')}
+            />
+          </>
+        ) : (
+          <>
+            <FormattedValue
+              format={'string'}
+              typographyProps={{
+                color: 'onBackgroundHigh',
+                className: 'hidden desktop:inline-flex',
+              }}
+              value="-"
+            />
+            <FormattedValue
+              format={'string'}
+              typographyProps={{ color: 'onBackgroundHigh', className: 'desktop:hidden' }}
+              value="-"
+            />
+          </>
+        )}
       </>,
     ),
     createDetails(
