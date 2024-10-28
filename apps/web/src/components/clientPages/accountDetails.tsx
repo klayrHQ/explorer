@@ -1,16 +1,9 @@
 'use client';
 
 import { FlexGrid, TabButtons, Typography, CopyIcon, IconButton, Button } from '@repo/ui/atoms';
-import {
-  DetailsSection,
-  SectionHeader,
-  TableContainer,
-  AccountBanner,
-  ValidatorBanner,
-} from '@repo/ui/organisms';
+import { DetailsSection, TableContainer, AccountBanner, ValidatorBanner } from '@repo/ui/organisms';
 import {
   AccountType,
-  AccountsType,
   TransactionType,
   ValidatorType,
   TokenType,
@@ -56,7 +49,6 @@ import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { shortString } from '@repo/ui/utils';
 import { FormattedValue } from '../formattedValue.tsx';
 import { Currency } from '../currency.tsx';
-import { create } from 'domain';
 
 export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   useInitializeFavourites();
@@ -690,9 +682,9 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
               setIsFav(true);
             }
           }}
-          status={'active'}
           value={232}
           valueSymbol={symbol}
+          status={''}
         />
       )}
       <div className="desktop:hidden w-full">

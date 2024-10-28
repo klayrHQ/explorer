@@ -31,7 +31,7 @@ export const UserAccountCentered = ({
       </div>
       <div className="flex flex-col gap-1.5 desktop:gap-0">
         <div className="flex desktop:hidden">
-          <StatusBadge status={`${status} ${role}`} />
+          {status && <StatusBadge status={`${status} ${role}`} />}
         </div>
         <Typography color={'onBackground'} fontWeight={'semibold'} variant={'h3'}>
           {name ? name : '-'}
