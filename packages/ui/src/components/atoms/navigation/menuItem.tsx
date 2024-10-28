@@ -104,28 +104,14 @@ export const MenuItem = ({
       color={'inherit'}
       fontWeight={'semibold'}
     >
-      {minimized && !subMenu ? (
-        <Tooltip text={typeof label === 'string' ? label : ''} placement={'right'}>
-          <div className={variant === 'default' ? 'w-menuIconWidth' : 'w-menuIconSmallWidth'}>
-            <Icon
-              className={'group-hover:text-gray-1'}
-              color={'gray-5'}
-              icon={icon}
-              size={variant === 'default' ? 'medium' : 'xs'}
-            />
-          </div>
-        </Tooltip>
-      ) : (
-        <div className={variant === 'default' ? 'w-menuIconWidth' : 'w-menuIconSmallWidth'}>
-          <Icon
-            className={'group-hover:text-gray-1'}
-            color={'gray-5'}
-            icon={icon}
-            size={variant === 'default' ? 'medium' : 'xs'}
-          />
-        </div>
-      )}
-
+      <div className={variant === 'default' ? 'w-menuIconWidth' : 'w-menuIconSmallWidth'}>
+        <Icon
+          className={'group-hover:text-gray-1'}
+          color={'gray-5'}
+          icon={icon}
+          size={variant === 'default' ? 'medium' : 'xs'}
+        />
+      </div>
       {!minimized && (
         <>
           <span className={cls(['overflow-hidden', minimized ? 'w-0' : 'w-max'])}>{label}</span>
@@ -135,39 +121,9 @@ export const MenuItem = ({
     </Typography>
   );
 
-  return href ? (
-    <li
-      className={'h-max flex w-full'}
-      onMouseEnter={(event) => handleHover(event, true)}
-      onMouseLeave={(event) => handleHover(event, false)}
-      onClick={onClick}
-    >
-      <Link
-        basePath={basePath}
-        className={menuItemStyles({
-          active: isActive,
-          hovered,
-          disabled,
-          className,
-          minimized,
-          variant,
-          square,
-        })}
-        href={href}
-      >
-        {menuItemInnerComponents}
-        {subMenu && (
-          <SubMenu
-            anchorElement={anchorElement}
-            basePath={basePath}
-            menuItems={subMenu}
-            open={isSubMenuOpen}
-          />
-        )}
-      </Link>
-    </li>
-  ) : (
-    <li
+  const menuItemContent = (
+    <Link
+      basePath={basePath}
       className={menuItemStyles({
         active: isActive,
         hovered,
@@ -177,9 +133,7 @@ export const MenuItem = ({
         variant,
         square,
       })}
-      onMouseEnter={(event) => handleHover(event, true)}
-      onMouseLeave={(event) => handleHover(event, false)}
-      onClick={onClick}
+      href={href || '#'}
     >
       {menuItemInnerComponents}
       {subMenu && (
@@ -190,6 +144,25 @@ export const MenuItem = ({
           open={isSubMenuOpen}
         />
       )}
+    </Link>
+  );
+
+  const listItem = (
+    <li
+      className={'h-max flex w-full'}
+      onMouseEnter={(event) => handleHover(event, true)}
+      onMouseLeave={(event) => handleHover(event, false)}
+      onClick={onClick}
+    >
+      {menuItemContent}
     </li>
+  );
+
+  return minimized && !subMenu ? (
+    <Tooltip text={typeof label === 'string' ? label : ''} placement="right">
+      {listItem}
+    </Tooltip>
+  ) : (
+    listItem
   );
 };
