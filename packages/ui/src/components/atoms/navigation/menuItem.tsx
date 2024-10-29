@@ -8,6 +8,7 @@ import { SubMenu } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
 import { usePathname } from 'next/navigation';
 import { Link } from './link.tsx';
+import { Tooltip } from '../utilities/tooltip.tsx';
 
 export interface MenuItemProps {
   label: string | React.ReactNode;
@@ -120,39 +121,9 @@ export const MenuItem = ({
     </Typography>
   );
 
-  return href ? (
-    <li
-      className={'h-max flex w-full'}
-      onMouseEnter={(event) => handleHover(event, true)}
-      onMouseLeave={(event) => handleHover(event, false)}
-      onClick={onClick}
-    >
-      <Link
-        basePath={basePath}
-        className={menuItemStyles({
-          active: isActive,
-          hovered,
-          disabled,
-          className,
-          minimized,
-          variant,
-          square,
-        })}
-        href={href}
-      >
-        {menuItemInnerComponents}
-        {subMenu && (
-          <SubMenu
-            anchorElement={anchorElement}
-            basePath={basePath}
-            menuItems={subMenu}
-            open={isSubMenuOpen}
-          />
-        )}
-      </Link>
-    </li>
-  ) : (
-    <li
+  const menuItemContent = (
+    <Link
+      basePath={basePath}
       className={menuItemStyles({
         active: isActive,
         hovered,
@@ -162,9 +133,7 @@ export const MenuItem = ({
         variant,
         square,
       })}
-      onMouseEnter={(event) => handleHover(event, true)}
-      onMouseLeave={(event) => handleHover(event, false)}
-      onClick={onClick}
+      href={href || '#'}
     >
       {menuItemInnerComponents}
       {subMenu && (
@@ -175,6 +144,25 @@ export const MenuItem = ({
           open={isSubMenuOpen}
         />
       )}
+    </Link>
+  );
+
+  const listItem = (
+    <li
+      className={'h-max flex w-full'}
+      onMouseEnter={(event) => handleHover(event, true)}
+      onMouseLeave={(event) => handleHover(event, false)}
+      onClick={onClick}
+    >
+      {menuItemContent}
     </li>
+  );
+
+  return minimized && !subMenu ? (
+    <Tooltip text={typeof label === 'string' ? label : ''} placement="right">
+      {listItem}
+    </Tooltip>
+  ) : (
+    listItem
   );
 };
