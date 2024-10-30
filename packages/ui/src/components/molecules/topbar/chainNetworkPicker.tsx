@@ -1,20 +1,16 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ChainType, NetworkType } from '../../../types/types.ts';
 import { FlexGrid, KeyValueComponent, Typography } from '../../atoms';
 import { ImageContainer } from '../../atoms';
-import { StatusIcon } from '../../atoms';
 import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
 import { NetworkSelect } from './networkSelect.tsx';
-import { useRouter, usePathname } from 'next/navigation';
-import { useBasePath } from '../../../../../../apps/web/src/utils/hooks/useBasePath.ts';
+import { useRouter } from 'next/navigation';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType;
-  setCurrentChain: (chain: ChainType) => void;
   currentNetwork: NetworkType;
-  setCurrentNetwork: (network: string) => void;
   chains?: ChainType[];
   networks?: string[];
   imgComponent?: ReactElement;
@@ -22,23 +18,15 @@ export interface ChainNetworkPickerProps {
 
 export const ChainNetworkPicker = ({
   currentChain,
-  setCurrentChain,
   currentNetwork,
-  setCurrentNetwork,
   chains = [],
   networks = [],
   imgComponent,
 }: ChainNetworkPickerProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedChain, setSelectedChain] = useState<ChainType | null>(currentChain);
-  const [selectedNetwork, setSelectedNetwork] = useState<string | null>(currentNetwork.networkName);
   const router = useRouter();
-  const pathName = usePathname();
-  const firstSubDir = pathName.split('/')[1];
-  const chainMatch = chains?.find((chain) => chain.chainName === firstSubDir);
-  const chainSlug = !chainMatch || firstSubDir === 'klayr-main' ? '' : `/${firstSubDir}`;
-  const explorerUrl = `explorer.klayr.dev${chainSlug}`;
   const baseExplorerUrl = `explorer.klayr.dev`;
+  const localhostHostnames = ['localhost', 'explorer.localhost', 'testnet-explorer.localhost'];
 
   const chainOptions = chains?.map((chain) => ({
     label: chain.displayName ?? chain.chainName,
@@ -57,21 +45,8 @@ export const ChainNetworkPicker = ({
 
   const handleChainChange = (chainName: string) => {
     const chain = chains.find((chain) => chain.chainName === chainName);
-    //console.log('chainName',chainName, '\nchains', chains);
     if (chain) {
-      const chainNetwork = chain.networkType;
-      if (window.location.hostname !== 'localhost') {
-        chainNetwork === 'mainnet'
-          ? router.push(`https://${baseExplorerUrl}/${chain.chainName}`)
-          : router.push(
-              `https://${chainNetwork}-${baseExplorerUrl}/${chain.chainName}`,
-            );
-      } else {
-        chain.chainName === 'klayr_mainchain' ? router.push('/') : router.push(`/${chain.chainName}`);
-        setSelectedChain(chain);
-        setCurrentChain(chain);
-        setCurrentNetwork(chain.networkType);
-      }
+      router.push(`/${chain.chainName}`);
       setIsModalOpen(false);
     }
   };
@@ -79,25 +54,17 @@ export const ChainNetworkPicker = ({
   const handleNetworkChange = (networkName: string) => {
     const network = networks.find((network) => network === networkName);
     if (network) {
-      if (window.location.hostname !== 'localhost') {
+      if (!localhostHostnames.includes(window.location.hostname)) {
         network === 'mainnet'
           ? router.push(`https://${baseExplorerUrl}`)
           : router.push(`https://${network}-${baseExplorerUrl}`);
       } else {
-        router.push('/');
-        setSelectedNetwork(network);
-        setCurrentNetwork(network);
+        network === 'mainnet'
+          ? router.push(`http://explorer.localhost:${window.location.port}`)
+          : router.push(`http://testnet-explorer.localhost:${window.location.port}`);
       }
     }
   };
-
-  // const handleSave = () => {
-  //   if (selectedChain && selectedNetwork) {
-  //     setCurrentChain(selectedChain);
-  //     setCurrentNetwork(selectedNetwork);
-  //   }
-  //   setIsModalOpen(false);
-  // };
 
   const handleOpen = () => {
     setIsModalOpen(true);

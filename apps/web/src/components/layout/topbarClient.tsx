@@ -30,8 +30,6 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
   const filteredChains = useChainNetworkStore((state) => state.chains);
   const networks = useChainNetworkStore((state) => state.networks);
-  const setCurrentChain = useChainNetworkStore((state) => state.setCurrentChain);
-  const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
 
   const nodeInfo = useNodeStore((state) => state.nodeInfo);
 
@@ -100,12 +98,10 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
       callSearch={callSearch}
       chainNetworkData={{
         currentChain,
-        setCurrentChain,
         currentNetwork: {
           syncing: nodeInfo?.syncing,
           networkName: currentNetwork,
         },
-        setCurrentNetwork,
         chains: filteredChains,
         networks,
       }}
