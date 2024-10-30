@@ -325,7 +325,7 @@ export interface ChainType {
     apiCertificatePublicKey: string;
     appChainID: string;
   }[];
-  token: ChainTokenType;
+  tokens: ChainTokenType[];
 }
 
 export interface ChainTokenType {

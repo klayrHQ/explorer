@@ -129,85 +129,84 @@ export const performanceStats = [
 ];
 
 export const defaultChain = {
-  chainID: "00000000",
-  chainName: "klayr_mainchain",
-  displayName: "Klayr",
-  title: "Klayr - Mainnet",
-  status: "activated",
-  description: "Metadata configuration for the Klayr blockchain (mainchain) in mainnet",
-  networkType: "mainnet",
+  chainID: '00000000',
+  chainName: 'klayr_mainchain',
+  displayName: 'Klayr',
+  title: 'Klayr - Mainnet',
+  status: 'activated',
+  description: 'Metadata configuration for the Klayr blockchain (mainchain) in mainnet',
+  networkType: 'mainnet',
   isDefault: false,
-  genesisURL: "https://github.com/KlayrHQ/klayr-core/blob/development/config/mainnet/genesis_assets.json",
-  projectPage: "https://klayr.xyz",
-  backgroundColor: "#EDEDCE",
+  genesisURL:
+    'https://github.com/KlayrHQ/klayr-core/blob/development/config/mainnet/genesis_assets.json',
+  projectPage: 'https://klayr.xyz',
+  backgroundColor: '#EDEDCE',
   serviceURLs: [
     {
-      http: "https://gateway-mainnet.klayr.dev/api/v1",
-      ws: "wss://gateway-mainnet.klayr.dev/api/v1",
+      http: 'https://gateway-mainnet.klayr.dev/api/v1',
+      ws: 'wss://gateway-mainnet.klayr.dev/api/v1',
       apiCertificatePublicKey: '',
-      appChainID: "00000000"
-    }
+      appChainID: '00000000',
+    },
   ],
   logo: {
-    png: "https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/application/klayr.png",
-    svg: "https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/application/klayr.svg",
-    appChainID: "00000000"
+    png: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/application/klayr.png',
+    svg: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/application/klayr.svg',
+    appChainID: '00000000',
   },
   explorers: [
     {
-      url: "https://explorer.klayr.dev/",
-      txnPage: "https://explorer.klayr.dev/transactions",
-      appChainID: "00000000"
-    }
+      url: 'https://explorer.klayr.dev/',
+      txnPage: 'https://explorer.klayr.dev/transactions',
+      appChainID: '00000000',
+    },
   ],
   appNodes: [
     {
-      url: "https://mainnet.klayr.xyz",
-      maintainer: "Klayr Labs B.V.",
+      url: 'https://mainnet.klayr.xyz',
+      maintainer: 'Klayr Labs B.V.',
       apiCertificatePublicKey: '',
-      appChainID: "00000000"
+      appChainID: '00000000',
     },
     {
-      url: "wss://mainnet.klayr.xyz",
-      maintainer: "Klayr Labs B.V.",
+      url: 'wss://mainnet.klayr.xyz',
+      maintainer: 'Klayr Labs B.V.',
       apiCertificatePublicKey: '',
-      appChainID: "00000000",
-    }
-  ],
-  token: {
-    chainName: "klayr_mainchain",
-    networkType: "mainnet",
-    tokenID: "0000000000000000",
-    chainID: "00000000",
-    tokenName: "Klayr",
-    description: "Default token for the entire Klayr ecosystem",
-    symbol: "KLY",
-    displayDenom: "kly",
-    baseDenom: "beddows",
-    logo: {
-      png: "https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/tokens/klayr.png",
-      svg: "https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/tokens/klayr.svg",
-      tokenID: "0000000000000000"
+      appChainID: '00000000',
     },
-    denomUnits: [
-      {
-        denom: "beddows",
-        decimals: 0,
-        aliases: [
-          "Beddows"
-        ],
-        tokenID: "0000000000000000"
+  ],
+  tokens: [
+    {
+      chainName: 'klayr_mainchain',
+      networkType: 'mainnet',
+      tokenID: '0000000000000000',
+      chainID: '00000000',
+      tokenName: 'Klayr',
+      description: 'Default token for the entire Klayr ecosystem',
+      symbol: 'KLY',
+      displayDenom: 'kly',
+      baseDenom: 'beddows',
+      logo: {
+        png: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/tokens/klayr.png',
+        svg: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/tokens/klayr.svg',
+        tokenID: '0000000000000000',
       },
-      {
-        denom: "kly",
-        decimals: 8,
-        aliases: [
-          "Klayr"
-        ],
-        tokenID: "0000000000000000"
-      }
-    ]
-  }
+      denomUnits: [
+        {
+          denom: 'beddows',
+          decimals: 0,
+          aliases: ['Beddows'],
+          tokenID: '0000000000000000',
+        },
+        {
+          denom: 'kly',
+          decimals: 8,
+          aliases: ['Klayr'],
+          tokenID: '0000000000000000',
+        },
+      ],
+    },
+  ],
 };
 
 export const decimals = 3;
