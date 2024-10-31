@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
-import {redirect, usePathname, useRouter, useSearchParams} from 'next/navigation';
-import {useEffect, useRef} from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useRef } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
 import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
 
@@ -37,7 +37,6 @@ export const useInitializeCurrentChain = () => {
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
-  const router = useRouter();
   const pathName = usePathname();
   const gateways = {
     mainnet: 'https://gateway-mainnet.klayr.dev/api/v1/',
@@ -49,9 +48,9 @@ export const useInitializeCurrentChain = () => {
 
   useEffect(() => {
     const networkParam = searchParams.get('network');
-    const chainParam = searchParams.get('app')
+    const chainParam = searchParams.get('app');
 
-    if(chainParam === 'klayr_mainchain') {
+    if (chainParam === 'klayr_mainchain') {
       if (networkParam === 'mainnet') {
         setBaseUrl(gateways.mainnet);
       } else if (networkParam === 'testnet') {
@@ -60,7 +59,7 @@ export const useInitializeCurrentChain = () => {
     }
     //console.log('running network effect')
     networkParam && networks.includes(networkParam) && setCurrentNetwork(networkParam);
-  }, [searchParams]);
+  }, [searchParams, pathName]);
 
   useEffect(() => {
     const fetchChains = async () => {
@@ -86,7 +85,7 @@ export const useInitializeCurrentChain = () => {
         });
         setChains(chainsWithTokens);
 
-        const chainParam = searchParams.get('app')
+        const chainParam = searchParams.get('app');
         const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === chainParam);
         const chainMatch = matchingChains?.find((chain) => chain.networkType === currentNetwork);
         //console.log('matchingChains', matchingChains, '\napp', chainParam, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
@@ -95,7 +94,7 @@ export const useInitializeCurrentChain = () => {
           chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
           setCurrentChain(chainMatch);
         } else if (pathName.split('/')[2] !== '404') {
-          console.error('404 no matching chain')
+          console.error('404 no matching chain');
           //router.push('/klayr_mainchain/404');
         }
       } catch (error) {
@@ -108,5 +107,5 @@ export const useInitializeCurrentChain = () => {
     } else {
       hasMounted.current = true;
     }
-  }, [currentNetwork]);
+  }, [currentNetwork, pathName]);
 };
