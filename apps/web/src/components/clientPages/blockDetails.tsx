@@ -43,7 +43,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const [sortOrder, setSortOrder] = useState<string>('');
   const chains = useChainNetworkStore((state) => state.chains);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const symbol = currentChain?.token.symbol;
+  const symbol = currentChain?.tokens[0]?.symbol;
 
   const transactionsPagination = usePagination();
   const eventsPagination = usePagination();

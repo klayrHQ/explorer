@@ -76,7 +76,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
 
   const currentChain = useChainNetworkStore((state) => state.currentChain);
   const chains = useChainNetworkStore((state) => state.chains);
-  const symbol = currentChain?.token?.symbol;
+  const symbol = currentChain?.tokens[0]?.symbol;
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
