@@ -350,3 +350,38 @@ export interface ChainTokenType {
     tokenID: string;
   }[];
 }
+
+export interface NetworkStatus {
+  version: string,
+  networkVersion: string,
+  chainID: string,
+  lastBlockID: string,
+  height: number,
+  finalizedHeight: 0,
+  syncing: true,
+  unconfirmedTransactions: number,
+  genesisHeight: number,
+  genesis: {
+    block: {
+      fromFile: string
+  },
+    blockTime: number,
+    bftBatchSize: number,
+    maxTransactionsSize: number,
+    minimumCertifyHeight: number,
+    chainID: string
+},
+  network: {
+  version: string,
+  port: number,
+  seedPeers: [
+    string
+  ]
+},
+  registeredModules: [
+  string
+],
+  moduleCommands: [
+  string
+]
+}

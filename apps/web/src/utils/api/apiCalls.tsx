@@ -16,6 +16,7 @@ import {
   NodeType,
   ChainType,
   ChainTokenType,
+  NetworkStatus,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
 import {
@@ -115,6 +116,10 @@ export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayR
 
 export const callGetNodes = async (): Promise<GatewayRes<NodeType[]>> => {
   return apiCall<NodeType[]>('network/peers');
+};
+
+export const callGetNetworkStatus = async (): Promise<GatewayRes<NetworkStatus>> => {
+  return apiCall<NetworkStatus>('network/status');
 };
 
 async function mainChainApiCall<T>(

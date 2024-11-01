@@ -96,6 +96,9 @@ export type IconComponent =
   | 'AlertCircle'
   | 'LayoutAlt'
   | 'GridOne'
+  | 'Overview'
+  | 'Calculator'
+  | 'Check'
   | string;
 
 export type ColorType =

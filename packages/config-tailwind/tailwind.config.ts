@@ -312,6 +312,9 @@ const config: Omit<Config, 'content'> = {
     'aspect-square',
     'aspect-auto',
     'aspect-video',
+    'appearance-none',
+    'uppercase',
+    'capitalize',
   ],
   theme: {
     extend: {
