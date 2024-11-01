@@ -95,9 +95,14 @@ export const Transactions = () => {
     defaultLimit: searchParams.get('limit') || '10',
     changeURL: true,
     searchParams: {
-      senderAddress: filterValues.from,
-      recipientAddress: filterValues.to,
-      moduleCommand: filterValues.moduleCommand,
+      senderAddress:
+        filterValues.from && filterValues.from.length === 41 ? filterValues.from : undefined,
+      recipientAddress:
+        filterValues.to && filterValues.to.length === 41 ? filterValues.to : undefined,
+      moduleCommand:
+        filterValues.moduleCommand && filterValues.moduleCommand.includes(':')
+          ? filterValues.moduleCommand
+          : undefined,
     },
     additionalDependencies: [filterValues],
   });
