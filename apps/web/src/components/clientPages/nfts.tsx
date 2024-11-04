@@ -1,11 +1,11 @@
 'use client';
 
-import {FlexGrid, IconButton, ViewSwitcher} from '@repo/ui/atoms';
-import {SectionHeader, TableContainer} from '@repo/ui/organisms';
-import {nftsPageTableHead} from '../../utils/helpers/tableHeaders';
-import {createNftsPageRows} from '../../utils/helpers/helper';
-import React, {useState} from 'react';
-import {NftCard, Table} from '@repo/ui/molecules';
+import { FlexGrid, ViewSwitcher } from '@repo/ui/atoms';
+import { SectionHeader } from '@repo/ui/organisms';
+import { nftsPageTableHead } from '../../utils/helpers/tableHeaders';
+import { createNftsPageRows } from '../../utils/helpers/helper';
+import React, { useState } from 'react';
+import { NftCard, Table } from '@repo/ui/molecules';
 
 const nfts = [
   {
@@ -113,8 +113,8 @@ export default function NFTS() {
     },
     {
       name: 'Table',
-      icon: 'LayoutAlt',
-      view: <Table headCols={nftsPageTableHead} keyPrefix={'nftsTable'} rows={rows}/>,
+      icon: 'List',
+      view: <Table headCols={nftsPageTableHead} keyPrefix={'nftsTable'} rows={rows} />,
     },
   ];
 
@@ -122,7 +122,7 @@ export default function NFTS() {
 
   return (
     <FlexGrid className={'w-full relative mb-10'} direction={'col'} gap={'4.5xl'}>
-      <SectionHeader count={nfts.length} subTitle={'Overview of all NFTs'} title={'NFTs'}/>
+      <SectionHeader count={nfts.length} subTitle={'Overview of all NFTs'} title={'NFTs'} />
       <ViewSwitcher views={views} currentView={currentView} setCurrentView={setCurrentView} />
     </FlexGrid>
   );
