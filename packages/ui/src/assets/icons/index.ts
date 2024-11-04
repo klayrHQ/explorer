@@ -53,6 +53,7 @@ import { InfoIcon } from './snackbar/infoIcon.tsx';
 import { GridOne } from './layout/grid-01.tsx';
 import { LayoutAlt } from './layout/layout-alt.tsx';
 import { FilterLines } from './general/filter-lines.tsx';
+import { Check } from './general/check.tsx';
 
 export const icons = {
   ChevronDown,
@@ -110,4 +111,5 @@ export const icons = {
   GridOne,
   LayoutAlt,
   FilterLines,
+  Check,
 };

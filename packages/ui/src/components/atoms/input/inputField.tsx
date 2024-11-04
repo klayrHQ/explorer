@@ -99,7 +99,7 @@ export const InputField = ({
   error,
   success,
   rightContentPadding = 'pr-lg',
-  leftContentPadding = 'pl-lg',
+  leftContentPadding = 'pl-4',
   errorNotification,
   ...props
 }: InputFieldProps) => {
@@ -113,7 +113,7 @@ export const InputField = ({
         />
       )}
       {leftContent && (
-        <div className={'absolute left-lg h-max top-0 bottom-0 my-auto z-1'}>{leftContent}</div>
+        <div className={'absolute left-4 h-max top-0 bottom-0 my-auto z-1'}>{leftContent}</div>
       )}
       <input
         className={inputFieldStyles({
