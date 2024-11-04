@@ -26,7 +26,7 @@ export const ImageName = ({
 }: ImageNameProps) => {
   const innerComponent = () => {
     return (
-      <FlexGrid alignItems={'center'} className={cls([className, href && 'cursor-pointer'])} gap={'2'}>
+      <FlexGrid alignItems={'center'} className={cls([className, href && 'cursor-pointer'])} gap={'2'} mobileDirection={'row'}>
         <ImageContainer alt={name} src={imageUrl} variant="avatar" imgClassName={'object-cover'} />
         <Typography
           color={color ?? 'onBackgroundMedium'}
