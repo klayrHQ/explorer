@@ -94,7 +94,12 @@ export const Search = ({
           )}
 
           <input
-            className="bg-backgroundDark min-h-11 py-4 px-12 rounded-lg focus:outline-0 border focus:outline-none focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:rounded-b-none min-w-full desktop:min-w-auto desktop:max-w-searchBarWidth placeholder:text-grayFiveOpacity placeholder:text-paragraph-m"
+            className={cls([
+              'bg-backgroundDark min-h-11 py-4 px-12 rounded-lg focus:outline-0 border focus:outline-none focus-visible:border-none',
+              'hover:cursor-pointer text-onBackground border-borderLow min-w-full desktop:min-w-auto',
+              'desktop:max-w-searchBarWidth placeholder:text-grayFiveOpacity placeholder:text-paragraph-m',
+              inputValue.length > 0 && open && 'rounded-b-none',
+            ])}
             onChange={(e) => {
               setInputValue(e.target.value);
               debouncedHandleSearch(e.target.value);
