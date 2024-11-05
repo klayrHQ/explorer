@@ -1,4 +1,4 @@
-import React, { ForwardedRef, forwardRef, Ref } from 'react';
+import React, { forwardRef, Ref } from 'react';
 import { Button as MuiButton, ButtonOwnProps } from '@mui/base';
 import { Typography } from '../base/typography';
 import { cva } from 'class-variance-authority';
@@ -217,6 +217,7 @@ export const Button = forwardRef(
         onClick={onClick}
         ref={ref}
         type="button"
+        disabled={disabled}
       >
         <Typography className={'inline-flex items-center gap-2'} fontWeight={'semibold'}>
           {label}
