@@ -39,7 +39,7 @@ export const BannerText = ({
   const fromNowPrefix = dayjs().diff(date, 'hour') >= 1 ? 'on' : 'over';
 
   return (
-    <div className="transitionBannerContainerWidthMobile desktop:w-transitionBannerContainerWidth max-w-full flex flex-wrap items-center gap-1.5 mt-5">
+    <div className="max-w-full flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
       <Link basePath={basePath} href={`/account/${senderName ?? senderAddress}`}>
         <UserAccountCard
