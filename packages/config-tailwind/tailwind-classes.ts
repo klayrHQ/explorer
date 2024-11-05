@@ -342,6 +342,7 @@ const width = {
   detailsLabelWidthLarge: 'max(20%, 225px)',
   pagNumWidth: '34px',
   calculatorWidth: '536px',
+  tooltipWidth: '300px',
 };
 
 const lineClamp = {
