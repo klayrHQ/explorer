@@ -14,7 +14,7 @@ export const NewsCard = ({
   link,
 }: NewsCardProps) => {
   return (
-    <Link href={link} outgoing>
+    <Link className={'contents'} href={link} outgoing>
       <div className="flex flex-col w-full min-h-newsCardContainerMobileHeight desktop:min-h-newsCardContainerHeight group hover:cursor-pointer">
         <NewsCardImage alt={alt} src={src} />
         <NewsTextContent author={author} date={date} description={description} title={title} />
