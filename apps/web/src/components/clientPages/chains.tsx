@@ -5,12 +5,14 @@ import { chainsTableHead } from '../../utils/helpers/tableHeaders';
 import { createChainRows } from '../../utils/helpers/helper';
 import { useState } from 'react';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+import {useBasePath} from "../../utils/hooks/useBasePath.ts";
 
 export const Chains = () => {
   const chains = useChainNetworkStore((state) => state.chains);
   const [loading, setLoading] = useState(false);
   const totalChains = chains?.length || 0;
-  const rows = createChainRows(chains || [], loading);
+  const basePath = useBasePath();
+  const rows = createChainRows(chains || [], loading, basePath);
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>

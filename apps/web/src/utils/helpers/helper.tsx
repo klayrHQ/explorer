@@ -12,28 +12,20 @@ import {
   NftType,
 } from '../types.ts';
 import {
-  dayjs,
   fromNowFormatter,
-  handleCopy,
   replaceColonWithSpace,
   shortString,
 } from '@repo/ui/utils';
-import { TxDataPopover } from '@repo/ui/molecules';
+import { ImageName, TxDataPopover } from '@repo/ui/molecules';
 import {
   Badge,
-  Icon,
   JsonViewer,
-  Tooltip,
   Typography,
-  UserAccountCard,
   NotificationIcon,
   StatusBadge,
   StatusIcon,
   KeyValueComponent,
-  FlexGrid,
   IconButton,
-  ImageContainer,
-  Avatar,
   TokenCard,
 } from '@repo/ui/atoms';
 import { Link } from '@repo/ui/atoms';
@@ -49,7 +41,6 @@ import {
   transactionTableHead,
   blockTableHead,
   stakesOverviewTableHead,
-  accountsTableHead,
   favouritesTableHead,
 } from './tableHeaders.tsx';
 import { ChainType, DataType } from '@repo/ui/types';
@@ -892,23 +883,19 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
     : getTableSkeletons(6);
 };
 
-export const createChainRows = (chains: ChainType[], loading: boolean) => {
+export const createChainRows = (chains: ChainType[], loading: boolean, basePath: string) => {
   return !loading
     ? chains?.map((chain) => {
         return {
           cells: [
             {
               children: (
-                <Link href={`/chains/${chain.chainID}`}>
-                  <div className="flex items-center gap-2">
-                    <ImageContainer
-                      alt={chain.displayName ?? chain.chainName}
-                      src={chain.logo.png}
-                      variant={'avatar'}
-                    />
-                    <Typography>{chain.displayName ?? chain.chainName}</Typography>
-                  </div>
-                </Link>
+                <ImageName
+                  basePath={basePath}
+                  href={`/chains/${chain.chainID}`}
+                  imageUrl={chain.logo.png}
+                  name={chain.displayName ?? chain.chainName}
+                />
               ),
             },
             {
@@ -1019,16 +1006,10 @@ export const createUserDetailsTokensRow = (
             },
             {
               children: (
-                <div className="flex gap-2 items-center">
-                  <ImageContainer alt={'kly'} src={chain.logo.png} variant={'avatar'} />
-                  <Typography
-                    color={'onBackgroundMedium'}
-                    fontWeight={'semibold'}
-                    variant={'paragraph-sm'}
-                  >
-                    {chain.displayName ?? chain.chainName}
-                  </Typography>
-                </div>
+                <ImageName
+                  imageUrl={chain.logo.png ?? ''}
+                  name={chain.displayName ?? chain.chainName ?? ''}
+                />
               ),
             },
           ],
@@ -1037,14 +1018,14 @@ export const createUserDetailsTokensRow = (
     : getTableSkeletons(6);
 };
 
-export const createTokensRows = (tokens: TokenType[], loading: boolean) => {
+export const createTokensRows = (tokens: TokenType[], loading: boolean, basePath: string) => {
   return !loading
     ? tokens?.map((token) => {
         return {
           cells: [
             {
               children: (
-                <Link href={`/tokens/${token.tokenId}`}>
+                <Link basePath={basePath} href={`/tokens/${token.tokenId}`}>
                   <TokenCard
                     chainImage={
                       'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
@@ -1058,22 +1039,12 @@ export const createTokensRows = (tokens: TokenType[], loading: boolean) => {
             },
             {
               children: (
-                <div className="flex gap-2 items-center">
-                  <ImageContainer
-                    alt={'kly'}
-                    src={
-                      'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
-                    }
-                    variant={'avatar'}
-                  />
-                  <Typography
-                    color={'onBackgroundMedium'}
-                    fontWeight={'semibold'}
-                    variant={'paragraph-sm'}
-                  >
-                    {'Klayr-main'}
-                  </Typography>
-                </div>
+                <ImageName
+                  imageUrl={
+                    'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
+                  }
+                  name={'Klayr-main'}
+                />
               ),
             },
             {
@@ -1152,14 +1123,7 @@ export const createNftsRows = (nfts: NftType[], loading: boolean) => {
         return {
           cells: [
             {
-              children: (
-                <div className="flex gap-2 items-center">
-                  <ImageContainer alt={'kly'} src={nft.image ?? ''} variant={'avatar'} />
-                  <Typography color="onBackgroundMedium" fontWeight="semibold">
-                    {nft.name}
-                  </Typography>
-                </div>
-              ),
+              children: <ImageName imageUrl={nft.image ?? ''} name={nft.name ?? ''} />,
             },
             {
               children: <FormattedValue format={'string'} value={nft.collection} />,
@@ -1184,14 +1148,7 @@ export const createNftsRows = (nfts: NftType[], loading: boolean) => {
               children: <FormattedValue format={'string'} value={`#${nft.rarityRank}`} />,
             },
             {
-              children: (
-                <div className="flex gap-2 items-center">
-                  <ImageContainer alt={'kly'} src={nft.chainImage ?? ''} variant={'avatar'} />
-                  <Typography color="onBackgroundMedium" fontWeight="semibold">
-                    {nft.chain ?? ''}
-                  </Typography>
-                </div>
-              ),
+              children: <ImageName imageUrl={nft.chainImage ?? ''} name={nft.chain ?? ''} />,
             },
           ],
         };
@@ -1205,14 +1162,7 @@ export const createNftsPageRows = (nfts: NftType[], loading: boolean) => {
         return {
           cells: [
             {
-              children: (
-                <div className="flex gap-2 items-center">
-                  <ImageContainer alt={'kly'} src={nft.image ?? ''} variant={'avatar'} />
-                  <Typography color="onBackgroundMedium" fontWeight="semibold">
-                    {nft.name}
-                  </Typography>
-                </div>
-              ),
+              children: <ImageName imageUrl={nft.image ?? ''} name={nft.name ?? ''} />,
             },
             {
               children: <FormattedValue format={'string'} value={nft.collection} />,
@@ -1234,14 +1184,7 @@ export const createNftsPageRows = (nfts: NftType[], loading: boolean) => {
               ),
             },
             {
-              children: (
-                <div className="flex gap-2 items-center">
-                  <ImageContainer alt={'kly'} src={nft.chainImage ?? ''} variant={'avatar'} />
-                  <Typography color="onBackgroundMedium" fontWeight="semibold">
-                    {nft.chain ?? ''}
-                  </Typography>
-                </div>
-              ),
+              children: <ImageName imageUrl={nft.chainImage ?? ''} name={nft.chain ?? ''} />,
             },
           ],
         };
