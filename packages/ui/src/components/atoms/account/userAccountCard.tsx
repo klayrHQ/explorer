@@ -24,7 +24,7 @@ export const UserAccountCard = ({
   address,
   name,
   size = 32,
-  nameColor = 'onBackgroundMediumHigh',
+  nameColor = 'onBackgroundMedium',
   nameVariant = 'paragraph-sm',
   addressColor = 'onBackgroundLow',
   addressVariant = 'caption',
