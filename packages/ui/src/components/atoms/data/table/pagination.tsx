@@ -8,7 +8,7 @@ import { Input } from '../../input/input';
 import { useState, useEffect } from 'react';
 import { PageLimit } from './pageLimit';
 
-interface NumberListProps {
+export interface NumberListProps {
   totalPages: number;
   currentNumber: number;
   setCurrentNumber: (number: number) => void;

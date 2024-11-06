@@ -1,11 +1,11 @@
 'use client';
 
-import { FlexGrid, IconButton } from '@repo/ui/atoms';
-import { SectionHeader, TableContainer } from '@repo/ui/organisms';
+import { FlexGrid, ViewSwitcher } from '@repo/ui/atoms';
+import { SectionHeader } from '@repo/ui/organisms';
 import { nftsPageTableHead } from '../../utils/helpers/tableHeaders';
 import { createNftsPageRows } from '../../utils/helpers/helper';
-import { useState } from 'react';
-import { NftCard } from '@repo/ui/molecules';
+import React, { useState } from 'react';
+import { NftCard, Table } from '@repo/ui/molecules';
 
 const nfts = [
   {
@@ -86,20 +86,13 @@ export default function NFTS() {
   const [loading, setLoading] = useState(false);
   const rows = createNftsPageRows(nfts, loading);
 
-  const [isGridView, setIsGridView] = useState(false);
-
-  return (
-    <FlexGrid className={'w-full relative mb-10'} direction={'col'} gap={'4.5xl'}>
-      <SectionHeader count={nfts.length} subTitle={'Overview of all NFTs'} title={'NFTs'} />
-      <IconButton
-        className="absolute top-0 right-0"
-        icon={isGridView ? 'LayoutAlt' : 'GridOne'}
-        onClick={() => setIsGridView(!isGridView)}
-        variant="tertiary"
-      />
-      {isGridView ? (
+  const views = [
+    {
+      name: 'Grid',
+      icon: 'GridOne',
+      view: (
         <div
-          className={'w-full grid relative mb-10 gap-6'}
+          className={'w-full grid relative gap-6 p-3xl'}
           style={{
             gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           }}
@@ -116,9 +109,21 @@ export default function NFTS() {
             />
           ))}
         </div>
-      ) : (
-        <TableContainer headCols={nftsPageTableHead} keyPrefix={'NFTs'} rows={rows} />
-      )}
+      ),
+    },
+    {
+      name: 'Table',
+      icon: 'List',
+      view: <Table headCols={nftsPageTableHead} keyPrefix={'nftsTable'} rows={rows} />,
+    },
+  ];
+
+  const [currentView, setCurrentView] = useState(views[0].name);
+
+  return (
+    <FlexGrid className={'w-full relative mb-10'} direction={'col'} gap={'4.5xl'}>
+      <SectionHeader count={nfts.length} subTitle={'Overview of all NFTs'} title={'NFTs'} />
+      <ViewSwitcher views={views} currentView={currentView} setCurrentView={setCurrentView} />
     </FlexGrid>
   );
 }
