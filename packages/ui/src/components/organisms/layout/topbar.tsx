@@ -112,6 +112,7 @@ export const Topbar = ({
           setIsOpen={setShowSearch}
         >
           <Search
+            autoFocus
             callSearch={callSearch}
             className="absolute left-0 top-0 w-screen h-full z-20"
             searchResult={searchResults}
