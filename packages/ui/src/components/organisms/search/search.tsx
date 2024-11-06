@@ -21,6 +21,7 @@ interface SearchProps {
   setSearchResults?: (results: SearchResultsType) => void;
   callSearch?: (params: SearchQueryParams) => Promise<SearchResultsType>;
   basePath?: string;
+  autoFocus?: boolean;
 }
 
 export const Search = ({
@@ -29,6 +30,7 @@ export const Search = ({
   setSearchResults,
   callSearch,
   basePath,
+  autoFocus,
 }: SearchProps) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
@@ -94,6 +96,7 @@ export const Search = ({
           )}
 
           <input
+            autoFocus={autoFocus}
             className="bg-backgroundDark min-h-11 py-4 px-12 rounded-lg focus:outline-0 border focus:outline-none focus-visible:border-none hover:cursor-pointer text-onBackground border-borderLow focus:rounded-b-none min-w-full desktop:min-w-auto desktop:max-w-searchBarWidth placeholder:text-grayFiveOpacity placeholder:text-paragraph-m"
             onChange={(e) => {
               setInputValue(e.target.value);

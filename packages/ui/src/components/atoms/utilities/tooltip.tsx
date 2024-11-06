@@ -78,7 +78,7 @@ export const Tooltip = ({ placement, text, children, hideMobile }: TooltipProps)
         >
           <div
             className={
-              'relative bg-background rounded-sm px-lg py-sm shadow-below shadow-shadow-gray-3 z-10 box-border'
+              'relative bg-background rounded-sm px-lg py-sm shadow-below shadow-shadow-gray-3 z-10 box-border max-w-tooltipWidth'
             }
           >
             <Typography fontWeight={'semibold'} variant={'caption'}>

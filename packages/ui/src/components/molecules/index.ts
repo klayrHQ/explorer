@@ -6,7 +6,7 @@ export * from "./topbar/chainNetworkPicker";
 export * from "./topbar/optionsMenu";
 export * from "./topbar/mobileMenu";
 export * from "../organisms/transaction/transactionBanner";
-export * from "../atoms/account/avatarAddress";
+export * from "../atoms/account/imageName.tsx";
 export * from "./data/table";
 export * from "./data/txDataPopover";
 export * from "./transaction/bannerCard";
@@ -16,4 +16,6 @@ export * from "./validator/validatorBannerButtons";
 export * from "./validator/nextValidators";
 export * from "./stakes/calculator";
 export * from "./nft/nftCard";
+export * from "./data/accordionWithCheckboxes";
+
 

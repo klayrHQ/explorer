@@ -6,9 +6,11 @@ import { tokensTableHead } from '../../utils/helpers/tableHeaders';
 import { createTokensRows } from '../../utils/helpers/helper';
 import { useState } from 'react';
 import { TokenType } from '../../utils/types';
+import {useBasePath} from "../../utils/hooks/useBasePath.ts";
 
 export const Tokens = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const basePath = useBasePath();
 
   const tokens: TokenType[] = [
     {
@@ -43,7 +45,7 @@ export const Tokens = () => {
     },
   ];
 
-  const rows = createTokensRows(tokens, loading);
+  const rows = createTokensRows(tokens, loading, basePath);
 
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>

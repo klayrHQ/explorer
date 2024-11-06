@@ -1,10 +1,10 @@
-import React, { ForwardedRef, forwardRef, Ref } from 'react';
+import React, { forwardRef, Ref } from 'react';
 import { Button as MuiButton, ButtonOwnProps } from '@mui/base';
 import { Typography } from '../base/typography';
 import { cva } from 'class-variance-authority';
 
 interface ButtonProps extends ButtonOwnProps {
-  variant?: 'primary' | 'secondary' | 'transparent';
+  variant?: 'primary' | 'secondary' | 'transparent' | 'bordered';
   className?: string;
   fullWidth?: boolean;
   label: string | React.ReactNode;
@@ -27,6 +27,7 @@ const buttonStyles = cva(
         primary: 'text-gray-8',
         secondary: 'text-gray-1',
         transparent: 'text-gray-1',
+        bordered: 'text-gray-1',
       },
       iconOnly: {
         true: 'p-xl w-iconButtonWidth',
@@ -95,6 +96,19 @@ const buttonStyles = cva(
         disabled: false,
         className: 'transparent hover:bg-gray-7',
       },
+      {
+        hovered: true,
+        variant: 'bordered',
+        disabled: false,
+        className: 'bg-gray-7 border-1 border-borderMedium ',
+      },
+      {
+        hovered: false,
+        variant: 'bordered',
+        disabled: false,
+        className: 'transparent hover:bg-gray-7 border-1 border-borderMedium ',
+      },
+
       //active
       {
         active: true,
@@ -132,6 +146,18 @@ const buttonStyles = cva(
         disabled: false,
         className: 'text-gray-5 hover:text-gray-6',
       },
+      {
+        active: true,
+        variant: 'bordered',
+        disabled: false,
+        className: 'text-gray-6 border border-1 border-borderMedium',
+      },
+      {
+        active: false,
+        variant: 'bordered',
+        disabled: false,
+        className: 'text-gray-5 hover:text-gray-6 border-1 border-borderMedium',
+      },
       //disabled
       {
         disabled: true,
@@ -147,6 +173,11 @@ const buttonStyles = cva(
         disabled: true,
         variant: 'transparent',
         className: 'grayscale-60p cursor-not-allowed',
+      },
+      {
+        disabled: true,
+        variant: 'bordered',
+        className: 'grayscale-60p cursor-not-allowed border-1 border-borderMedium',
       },
     ],
   },
@@ -186,6 +217,7 @@ export const Button = forwardRef(
         onClick={onClick}
         ref={ref}
         type="button"
+        disabled={disabled}
       >
         <Typography className={'inline-flex items-center gap-2'} fontWeight={'semibold'}>
           {label}

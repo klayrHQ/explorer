@@ -1,18 +1,24 @@
 'use client';
 
 import { IconButton, Input, Icon, Typography } from '@repo/ui/atoms';
+import { AccordionWithCheckboxes } from '@repo/ui/molecules';
 import { useState } from 'react';
 import React from 'react';
+import { Button } from '@repo/ui/atoms';
 
 interface TransactionsFilterProps {
   valueFrom: string;
   setValueFrom: (value: string) => void;
   valueTo: string;
   setValueTo: (value: string) => void;
-  onBlur?: () => void;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleApply: () => void;
   handleClearFrom: () => void;
   handleClearTo: () => void;
+  data: Record<string, string[]>;
+  checkedItems: Record<string, Record<string, boolean>>;
+  handleCheckboxChange: (category: string, value: string, isChecked: boolean) => void;
+  handleSelectAllChange: (category: string, values: string[], isChecked: boolean) => void;
+  handleClear: () => void;
 }
 
 export const TransactionsFilter = ({
@@ -20,92 +26,111 @@ export const TransactionsFilter = ({
   setValueFrom,
   valueTo,
   setValueTo,
-  onBlur,
-  onKeyDown,
   handleClearFrom,
   handleClearTo,
+  data,
+  checkedItems,
+  handleCheckboxChange,
+  handleSelectAllChange,
+  handleApply,
+  handleClear,
 }: TransactionsFilterProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const isErrorFrom = valueFrom.length > 0 && valueFrom.length !== 41;
   const isErrorTo = valueTo.length > 0 && valueTo.length !== 41;
   const [isActive, setIsActive] = useState(false);
-
-  const handleBlur = () => {
-    if (onBlur) {
-      onBlur();
-      setIsActive(true);
-    }
-  };
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   return (
-    <div className={`relative flex flex-row-reverse items-center w-full gap-12`}>
+    <div className={`relative z-100 flex flex-row-reverse items-center w-full gap-12`}>
       <div className="flex">
         <IconButton
-          active={isOpen}
+          active={isAccordionOpen}
           className=""
           icon="FilterLines"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsAccordionOpen(!isAccordionOpen)}
           variant="tertiary"
         />
       </div>
 
       {/* DESKTOP VERSION */}
-      <div
-        className={`hidden desktop:flex gap-4 w-full transition-all ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-      >
-        <Input
-          className={`${valueFrom.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorFrom ? 'border-error' : 'border-backgroundTertiary'} relative `}
-          errorNotification={isErrorFrom ? 'Invalid address' : ''}
-          isActive={isActive}
-          leftContent={<span>{'From'}</span>}
-          leftContentPadding="pl-16"
-          onBlur={handleBlur}
-          onChange={(e) => setValueFrom((e.target as HTMLInputElement).value)}
-          onFocus={() => setIsActive(false)}
-          onKeyDown={onKeyDown}
-          placeholder="Type an address"
-          rightContent={
-            <div
-              className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueFrom ? 'opacity-100' : 'opacity-0'}`}
-              onClick={handleClearFrom}
-            >
-              <Icon color="backgroundDark" icon="CrossClose" size="xxs" />
-            </div>
-          }
-          rightContentPadding="pr-10"
-          type="text"
-          value={valueFrom}
-          variant="filters"
-        />
 
-        <Input
-          className={`${valueTo.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorTo ? 'border-error' : 'border-backgroundTertiary'} `}
-          errorNotification={isErrorTo ? 'Invalid address' : ''}
-          isActive={isActive}
-          leftContent={<span>{'To'}</span>}
-          leftContentPadding="pl-10"
-          onBlur={handleBlur}
-          onChange={(e) => setValueTo((e.target as HTMLInputElement).value)}
-          onFocus={() => setIsActive(false)}
-          onKeyDown={onKeyDown}
-          placeholder="Type an address"
-          rightContent={
-            <div
-              className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueTo ? 'opacity-100' : 'opacity-0'}`}
-              onClick={handleClearTo}
-            >
-              <Icon color="backgroundDark" icon="CrossClose" onClick={handleClearTo} size="xxs" />
-            </div>
-          }
-          rightContentPadding="pr-10"
-          type="text"
-          value={valueTo}
-          variant="filters"
-        />
-      </div>
+      {isAccordionOpen && (
+        <div className="absolute right-0 top-14 flex flex-col justify-between px-4 py-2 items-center  bg-backgroundPrimary border-1 gap-2  border-borderLow rounded-sm shadow-md">
+          <span className="text-caption font-semibold self-start text-gray-5 mt-4 ">
+            Module Command
+          </span>
 
-      {/* MOBILE VERSION */}
-      {isOpen && <div className="flex desktop:hidden">{'Mobile Filter'}</div>}
+          <AccordionWithCheckboxes
+            data={data}
+            checkedItems={checkedItems}
+            handleCheckboxChange={handleCheckboxChange}
+            handleSelectAllChange={handleSelectAllChange}
+          />
+
+          <span className="text-caption font-semibold self-start text-gray-5 mt-4 ">
+            Sender/Receiver
+          </span>
+
+          <div className="rounded-sm w-96 ">
+            <div className="flex flex-col gap-4 rounded-sm">
+              <Input
+                className={`${valueFrom.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorFrom ? 'border-error' : 'border-backgroundTertiary'} relative `}
+                errorNotification={isErrorFrom ? 'Invalid address' : ''}
+                isActive={isActive}
+                leftContent={<span className="text-paragraph-sm">{'From'}</span>}
+                leftContentPadding="pl-16"
+                onChange={(e) => setValueFrom((e.target as HTMLInputElement).value)}
+                onFocus={() => setIsActive(false)}
+                placeholder="Type an address"
+                rightContent={
+                  <div
+                    className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueFrom ? 'opacity-100' : 'opacity-0'}`}
+                    onClick={handleClearFrom}
+                  >
+                    <Icon color="backgroundDark" icon="CrossClose" size="xxs" />
+                  </div>
+                }
+                rightContentPadding="pr-10"
+                type="text"
+                value={valueFrom}
+                variant="filters"
+              />
+
+              <Input
+                className={`${valueTo.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorTo ? 'border-error' : 'border-backgroundTertiary'} `}
+                errorNotification={isErrorTo ? 'Invalid address' : ''}
+                isActive={isActive}
+                leftContent={<span className="text-paragraph-sm">{'To'}</span>}
+                leftContentPadding="pl-10"
+                onChange={(e) => setValueTo((e.target as HTMLInputElement).value)}
+                onFocus={() => setIsActive(false)}
+                placeholder="Type an address"
+                rightContent={
+                  <div
+                    className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueTo ? 'opacity-100' : 'opacity-0'}`}
+                    onClick={handleClearTo}
+                  >
+                    <Icon
+                      color="backgroundDark"
+                      icon="CrossClose"
+                      onClick={handleClearTo}
+                      size="xxs"
+                    />
+                  </div>
+                }
+                rightContentPadding="pr-10"
+                type="text"
+                value={valueTo}
+                variant="filters"
+              />
+            </div>
+          </div>
+          <div className="flex gap-2 my-4">
+            <Button onClick={handleApply} label="Apply" variant="primary" />
+            <Button onClick={handleClear} label="Clear" variant="transparent" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

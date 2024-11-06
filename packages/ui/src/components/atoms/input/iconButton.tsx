@@ -272,6 +272,7 @@ export const IconButton = forwardRef(
         onClick={onClick}
         ref={ref}
         type="button"
+        disabled={disabled}
       >
         <Icon className={'mx-auto'} color={color ?? 'inherit'} icon={icon} size={'small'} />
       </MuiButton>
