@@ -18,7 +18,7 @@ export const AccountBannerText = ({
   const dollarValue = coinRate ? Number(value) * Number(coinRate) : 0;
 
   return (
-    <div className="transitionBannerContainerWidthMobile desktop:max-w-transitionBannerContainerWidth  flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
+    <div className="flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'user'}
       </Typography>

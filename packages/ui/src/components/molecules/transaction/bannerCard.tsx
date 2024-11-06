@@ -10,7 +10,7 @@ interface BannerCardProps {
 
 export const BannerCard = ({ blockHeight, blockId, basePath }: BannerCardProps) => {
   return (
-    <div className="border border-onBackground rounded-xl max-w-transitionBannerContainerWidthMobile hidden desktop:flex desktop:w-auto">
+    <div className="border border-onBackground rounded-xl hidden desktop:flex">
       <div className="p-6 flex items-start flex-col">
         <Typography
           className="text-right"
