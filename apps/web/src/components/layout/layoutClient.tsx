@@ -1,6 +1,6 @@
 'use client';
-import { ReactNode, useEffect, useState } from 'react';
-import { FlexGrid, Grid, IconButton, Typography } from '@repo/ui/atoms';
+import { ReactNode } from 'react';
+import { FlexGrid, Grid, Typography } from '@repo/ui/atoms';
 import { Sidebar, InfoBanner } from '@repo/ui/organisms';
 import { cls } from '@repo/ui/utils';
 import { TopbarClient } from './topbarClient.tsx';
@@ -9,12 +9,6 @@ import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const basePath = useBasePath();
-  const [showInfoBanner, setShowInfoBanner] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const mobileMenuItems = [
     {
@@ -132,8 +126,6 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <Grid gap={'0'}>
-      {/* todo remove infobanner when ready */}
-
       <FlexGrid className={'bg-backgroundDark'} direction={'row'} gap={'0'}>
         <Sidebar basePath={basePath} logo={logo} menuItems={menuItems} />
         <Grid className={'w-full overflow-hidden h-full'} gap={'0'}>
@@ -147,35 +139,23 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               'desktop:rounded-tl-3xl',
             ])}
           >
-            {showInfoBanner && (
-              <InfoBanner className={'mb-3xl rounded-md'}>
-                <FlexGrid
-                  alignItems={'center'}
-                  gap={'1.5xl'}
-                  justify={'between'}
-                  mobileDirection={'row'}
-                >
-                  <Typography color={'currentColor'} variant={'paragraph-sm'}>
-                    <span aria-label="warning" className="mr-3" role="img">
-                      ⚠️
-                    </span>
-                    {`Urgent Notice:  This is a development environment, and `}
-                    <span className="font-semibold">{`data is currently unreliable `}</span>
-                    {`due to ongoing work. `}
-                  </Typography>
-
-                  {isMounted && window?.location.hostname === 'localhost' && (
-                    <IconButton
-                      className={'desktop:absolute right-xl'}
-                      color={'onSecondary'}
-                      icon={'CrossClose'}
-                      onClick={() => setShowInfoBanner(false)}
-                      variant={'transparent'}
-                    />
-                  )}
-                </FlexGrid>
-              </InfoBanner>
-            )}
+            <InfoBanner className={'mb-3xl rounded-md'}>
+              <FlexGrid
+                alignItems={'center'}
+                gap={'1.5xl'}
+                justify={'between'}
+                mobileDirection={'row'}
+              >
+                <Typography color={'currentColor'} variant={'paragraph-sm'}>
+                  <span aria-label="warning" className="mr-3" role="img">
+                    ⚠️
+                  </span>
+                  {`Urgent Notice:  This is a development environment, and `}
+                  <span className="font-semibold">{`data is currently unreliable `}</span>
+                  {`due to ongoing work. `}
+                </Typography>
+              </FlexGrid>
+            </InfoBanner>
             {children}
           </main>
         </Grid>
