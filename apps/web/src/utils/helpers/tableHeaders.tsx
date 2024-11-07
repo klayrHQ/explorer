@@ -248,7 +248,7 @@ export const validatorEventsTableHead: TableCellType[] = [
 //STAKES
 export const stakesOverviewTableHead: TableCellType[] = [
   {
-    children: 'Stake ID',
+    children: 'Transaction ID',
   },
   {
     children: 'Date',
