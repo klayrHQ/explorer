@@ -11,6 +11,7 @@ interface KeyValueProps {
   size?: TypographyVariant;
   hover?: boolean;
   onClick?: () => void;
+  className?: string;
 }
 
 export const KeyValueComponent = ({
@@ -20,11 +21,12 @@ export const KeyValueComponent = ({
   color = 'gray-5',
   size = 'paragraph-sm',
   hover,
+  className,
 }: KeyValueProps) => {
   return (
     <FlexGrid
       alignItems={'center'}
-      className={cls(['group', hover ? 'cursor-pointer' : ''])}
+      className={cls(['group', hover ? 'cursor-pointer' : '', className])}
       gap={'sm'}
       mobileDirection={'row'}
       onClick={onClick}

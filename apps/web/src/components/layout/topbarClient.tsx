@@ -8,6 +8,7 @@ import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { useChainNetworkStore, useInitializeCurrentChain } from '../../store/chainNetworkStore.ts';
 import { useNodeStore } from '../../store/nodeStore.ts';
 import useMarketcap from '../../utils/hooks/useMarketcap.ts';
+import {FormattedValue} from "../formattedValue.tsx";
 
 interface TopbarClientProps {
   logo: {
@@ -42,12 +43,20 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
 
   const kpisObject = [
     {
+      keyValue: 'Height: ',
+      contentValue: (
+        <FormattedValue value={nodeInfo?.height} format={'number'} typographyProps={{fontWeight: 'medium'}} />
+      ),
+      className: 'hidden desktop:flex',
+    },
+    {
       keyValue: 'KLY: ',
       contentValue: (
         <Typography
           className={'inline-flex items-center gap-1'}
           color={'gray-5'}
           variant={'paragraph-sm'}
+          fontWeight={'medium'}
         >
           {`$${parseFloat(tokenPrice.toFixed(5)).toLocaleString()}`}
           <span

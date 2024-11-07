@@ -32,6 +32,7 @@ interface TopbarProps {
   kpis: {
     keyValue: string | ReactNode;
     contentValue: string | ReactNode;
+    className?: string;
   }[];
   chainNetworkData: ChainNetworkPickerProps;
   mobileMenuItems: Omit<MenuItemProps, 'subMenu'>[];
