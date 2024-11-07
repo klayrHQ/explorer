@@ -11,11 +11,7 @@ import {
   TokenType,
   NftType,
 } from '../types.ts';
-import {
-  fromNowFormatter,
-  replaceColonWithSpace,
-  shortString,
-} from '@repo/ui/utils';
+import { fromNowFormatter, replaceColonWithSpace, shortString } from '@repo/ui/utils';
 import { ImageName, TxDataPopover } from '@repo/ui/molecules';
 import {
   Badge,
@@ -820,6 +816,13 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
                   value={account}
                 />
               ),
+            },
+            {
+              children: account?.description ? (
+                <Typography color={'onBackgroundMedium'} variant={'caption'}>
+                  {account?.description}
+                </Typography>
+              ) : null,
             },
             {
               //mock_data

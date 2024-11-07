@@ -236,6 +236,7 @@ export type AccountType = {
   name: string | null;
   totalBalance: string;
   availableBalance: string;
+  description: string | null;
 };
 
 export type AccountsType = {
@@ -352,36 +353,30 @@ export interface ChainTokenType {
 }
 
 export interface NetworkStatus {
-  version: string,
-  networkVersion: string,
-  chainID: string,
-  lastBlockID: string,
-  height: number,
-  finalizedHeight: 0,
-  syncing: true,
-  unconfirmedTransactions: number,
-  genesisHeight: number,
+  version: string;
+  networkVersion: string;
+  chainID: string;
+  lastBlockID: string;
+  height: number;
+  finalizedHeight: 0;
+  syncing: true;
+  unconfirmedTransactions: number;
+  genesisHeight: number;
   genesis: {
     block: {
-      fromFile: string
-  },
-    blockTime: number,
-    bftBatchSize: number,
-    maxTransactionsSize: number,
-    minimumCertifyHeight: number,
-    chainID: string
-},
+      fromFile: string;
+    };
+    blockTime: number;
+    bftBatchSize: number;
+    maxTransactionsSize: number;
+    minimumCertifyHeight: number;
+    chainID: string;
+  };
   network: {
-  version: string,
-  port: number,
-  seedPeers: [
-    string
-  ]
-},
-  registeredModules: [
-  string
-],
-  moduleCommands: [
-  string
-]
+    version: string;
+    port: number;
+    seedPeers: [string];
+  };
+  registeredModules: [string];
+  moduleCommands: [string];
 }

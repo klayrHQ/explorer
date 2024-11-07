@@ -421,6 +421,9 @@ export const accountsTableHead = (
     children: 'User',
   },
   {
+    children: 'Description',
+  },
+  {
     children: 'Total holding',
     className: 'items-end text-end whitespace-nowrap',
   },
