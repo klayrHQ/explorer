@@ -85,21 +85,6 @@ export const ChainNetworkPicker = ({
 
   return (
     <FlexGrid gap="1.5xl" mobileDirection="row">
-      <FlexGrid gap="1.5xl" mobileDirection={'row'} onClick={handleOpen}>
-        <KeyValueComponent
-          contentValue={currentChain?.displayName ?? currentChain?.chainName ?? 'Select chain'}
-          hover
-          keyValue={
-            <ImageContainer
-              alt={currentChain?.displayName}
-              component={imgComponent}
-              src={currentChain?.logo.png}
-              variant={'chainLogo'}
-            />
-          }
-          onClick={() => setIsModalOpen(true)}
-        />
-      </FlexGrid>
       <CustomModal onClose={handleClose} open={isModalOpen} title="Select environments">
         <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
           <FlexGrid
@@ -130,6 +115,21 @@ export const ChainNetworkPicker = ({
         placeholder={currentNetwork?.networkName}
         value={currentNetwork?.networkName}
       />
+      <FlexGrid gap="1.5xl" mobileDirection={'row'} onClick={handleOpen}>
+        <KeyValueComponent
+          contentValue={currentChain?.displayName ?? currentChain?.chainName ?? 'Select chain'}
+          hover
+          keyValue={
+            <ImageContainer
+              alt={currentChain?.displayName}
+              component={imgComponent}
+              src={currentChain?.logo.png}
+              variant={'chainLogo'}
+            />
+          }
+          onClick={() => setIsModalOpen(true)}
+        />
+      </FlexGrid>
     </FlexGrid>
   );
 };
