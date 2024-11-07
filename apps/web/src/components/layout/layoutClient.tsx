@@ -131,49 +131,55 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   ];
 
   return (
-    <>
+    <Grid gap={'0'}>
       {/* todo remove infobanner when ready */}
-      {showInfoBanner && (
-        <InfoBanner>
-          <FlexGrid alignItems={'center'} gap={'1.5xl'} justify={'between'} mobileDirection={'row'}>
-            <Typography color={'currentColor'} variant={'paragraph-sm'}>
-              <span aria-label="warning" className="mr-3" role="img">
-                ⚠️
-              </span>
-              {`Urgent Notice:  This is a development environment, and `}
-              <span className="font-semibold">{`data is currently unreliable `}</span>
-              {`due to ongoing work. `}
-            </Typography>
 
-            {isMounted && window?.location.hostname === 'localhost' && (
-              <IconButton
-                className={'desktop:absolute right-xl'}
-                color={'onSecondary'}
-                icon={'CrossClose'}
-                onClick={() => setShowInfoBanner(false)}
-                variant={'transparent'}
-              />
-            )}
-          </FlexGrid>
-        </InfoBanner>
-      )}
       <FlexGrid className={'bg-backgroundDark'} direction={'row'} gap={'0'}>
         <Sidebar basePath={basePath} logo={logo} menuItems={menuItems} />
-        <Grid className={'w-full overflow-hidden'} gap={'0'}>
+        <Grid className={'w-full overflow-hidden h-full'} gap={'0'}>
           <TopbarClient logo={logo} mobileMenuItems={mobileMenuItems} />
           <main
             className={cls([
-              'w-full h-screenUnderTopbarMobile desktop:h-screenUnderTopbar bg-background p-6 desktop:p-8',
+              'w-full h-screenUnderTopbarMobile desktop:h-screenUnderTopbar bg-background p-6 desktop:p-8 max-h-full',
               'overflow-y-auto overflow-x-hidden',
               'border-t-backgroundSecondary border-t-1 border-solid',
               'desktop:border-l-backgroundSecondary desktop:border-l-1',
               'desktop:rounded-tl-3xl',
             ])}
           >
+            {showInfoBanner && (
+              <InfoBanner className={'mb-3xl rounded-md'}>
+                <FlexGrid
+                  alignItems={'center'}
+                  gap={'1.5xl'}
+                  justify={'between'}
+                  mobileDirection={'row'}
+                >
+                  <Typography color={'currentColor'} variant={'paragraph-sm'}>
+                    <span aria-label="warning" className="mr-3" role="img">
+                      ⚠️
+                    </span>
+                    {`Urgent Notice:  This is a development environment, and `}
+                    <span className="font-semibold">{`data is currently unreliable `}</span>
+                    {`due to ongoing work. `}
+                  </Typography>
+
+                  {isMounted && window?.location.hostname === 'localhost' && (
+                    <IconButton
+                      className={'desktop:absolute right-xl'}
+                      color={'onSecondary'}
+                      icon={'CrossClose'}
+                      onClick={() => setShowInfoBanner(false)}
+                      variant={'transparent'}
+                    />
+                  )}
+                </FlexGrid>
+              </InfoBanner>
+            )}
             {children}
           </main>
         </Grid>
       </FlexGrid>
-    </>
+    </Grid>
   );
 };
