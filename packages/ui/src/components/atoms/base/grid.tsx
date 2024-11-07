@@ -2,102 +2,58 @@ import { CSSProperties, ReactNode } from 'react';
 import { cva } from 'class-variance-authority';
 import { cls } from '../../../utils/functions.ts';
 
+type GapType =
+  | '0'
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | '8'
+  | '9'
+  | '10'
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '1.5xl'
+  | '2xl'
+  | '3xl'
+  | '4xl'
+  | '4.5xl'
+  | '5xl';
+
+type ColsRowsType =
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | '8'
+  | '9'
+  | '10'
+  | '11'
+  | '12'
+  | 'none'
+  | 'subgrid';
+
 interface GridProps {
-  columns?:
-    | '1'
-    | '2'
-    | '3'
-    | '4'
-    | '5'
-    | '6'
-    | '7'
-    | '8'
-    | '9'
-    | '10'
-    | '11'
-    | '12'
-    | 'none'
-    | 'subgrid';
-  rows?:
-    | '1'
-    | '2'
-    | '3'
-    | '4'
-    | '5'
-    | '6'
-    | '7'
-    | '8'
-    | '9'
-    | '10'
-    | '11'
-    | '12'
-    | 'none'
-    | 'subgrid';
+  columns?: ColsRowsType
+  rows?: ColsRowsType
   autoCols?: 'auto' | 'min' | 'max' | 'fr';
   autoRows?: 'auto' | 'min' | 'max' | 'fr';
-  gap?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
-  tabletGap?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
-  tabletCols?:
-    | '1'
-    | '2'
-    | '3'
-    | '4'
-    | '5'
-    | '6'
-    | '7'
-    | '8'
-    | '9'
-    | '10'
-    | '11'
-    | '12'
-    | 'none'
-    | 'subgrid';
-  tabletRows?:
-    | '1'
-    | '2'
-    | '3'
-    | '4'
-    | '5'
-    | '6'
-    | '7'
-    | '8'
-    | '9'
-    | '10'
-    | '11'
-    | '12'
-    | 'none'
-    | 'subgrid';
-  desktopGap?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
-  desktopCols?:
-    | '1'
-    | '2'
-    | '3'
-    | '4'
-    | '5'
-    | '6'
-    | '7'
-    | '8'
-    | '9'
-    | '10'
-    | '11'
-    | '12'
-    | 'none'
-    | 'subgrid';
-  desktopRows?:
-    | '1'
-    | '2'
-    | '3'
-    | '4'
-    | '5'
-    | '6'
-    | '7'
-    | '8'
-    | '9'
-    | '10'
-    | '11'
-    | '12'
-    | 'none'
-    | 'subgrid';
+  gap?: GapType
+  tabletGap?: GapType
+  tabletCols?: ColsRowsType
+  tabletRows?: ColsRowsType
+  desktopGap?: GapType
+  desktopCols?: ColsRowsType
+  desktopRows?: ColsRowsType
   className?: string;
   children: ReactNode;
   style?: CSSProperties;
