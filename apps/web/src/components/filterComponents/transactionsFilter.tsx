@@ -4,7 +4,7 @@ import { IconButton, Input, Icon, Typography, FilterBadge } from '@repo/ui/atoms
 import { AccordionWithCheckboxes } from '@repo/ui/molecules';
 import { useState } from 'react';
 import React, { useEffect } from 'react';
-import { Button } from '@repo/ui/atoms';
+import { Button, Modal } from '@repo/ui/atoms';
 
 interface TransactionsFilterProps {
   valueFrom: string;
@@ -99,8 +99,8 @@ export const TransactionsFilter = ({
 
       {/* DESKTOP VERSION */}
 
-      {isAccordionOpen && (
-        <div className="absolute right-0 top-14 flex flex-col justify-between px-4 py-2 items-center  bg-backgroundPrimary border-1 gap-2  border-borderLow rounded-sm shadow-md">
+      <Modal open={isAccordionOpen} onClose={() => setIsAccordionOpen(false)} title="Filters">
+        <div className=" flex flex-col justify-between px-4 py-2 items-center  bg-backgroundPrimary border-1 gap-2  border-borderLow rounded-sm shadow-md">
           <span className="text-caption font-semibold self-start text-gray-5 mt-4 ">
             {'Module Command'}
           </span>
@@ -175,7 +175,7 @@ export const TransactionsFilter = ({
             <Button onClick={handleClear} label="Clear" variant="transparent" />
           </div>
         </div>
-      )}
+      </Modal>
     </div>
   );
 };
