@@ -66,7 +66,7 @@ export const Topbar = ({
       alignItems={'center'}
       className={cls([
         'w-full h-topbarMobileHeight desktop:h-topbarHeight bg-gray-8 p-3xl desktop:pl-0 dekstop:py-0 pr-3xl',
-        'gap-4 desktop:gap-8 relative',
+        'gap-4 desktop:gap-8 relative z-50',
       ])}
       component={'header'}
       justify={'between'}
