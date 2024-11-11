@@ -1,5 +1,5 @@
 'use client';
-import { FlexGrid } from '@repo/ui/atoms';
+import { FilterBadge, FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useSearchParams } from 'next/navigation';
 import { transactionTableHead } from '../../utils/helpers/tableHeaders';
@@ -25,7 +25,6 @@ export const Transactions = () => {
   const handleClear = useCallback((field: 'from' | 'to') => {
     setInputValues((prev) => ({ ...prev, [field]: '' }));
     setFilterValues((prev) => ({ ...prev, [field]: '' }));
-    setCheckedItems({});
   }, []);
 
   const handleCheckboxChange = (category: string, value: string, isChecked: boolean) => {
@@ -36,6 +35,35 @@ export const Transactions = () => {
         [value]: isChecked,
       },
     }));
+  };
+
+  const handleCheckboxClose = (category: string, value: string) => {
+    setCheckedItems((prevState) => {
+      const updatedCheckedItems = {
+        ...prevState,
+        [category]: {
+          ...prevState[category],
+          [value]: false,
+        },
+      };
+
+      // Compute the new filterValues based on updatedCheckedItems
+      const selectedItems: string[] = [];
+      Object.entries(updatedCheckedItems).forEach(([cat, values]) => {
+        Object.entries(values).forEach(([val, isChecked]) => {
+          if (isChecked) {
+            selectedItems.push(`${cat}:${val}`);
+          }
+        });
+      });
+
+      setFilterValues((prevFilterValues) => ({
+        ...prevFilterValues,
+        moduleCommand: selectedItems.join('=&'),
+      }));
+
+      return updatedCheckedItems;
+    });
   };
 
   const handleSelectAllChange = (category: string, values: string[], isChecked: boolean) => {
@@ -63,14 +91,11 @@ export const Transactions = () => {
         }
       });
     });
-    setFilterValues((prev) => ({
-      ...prev,
+    setFilterValues({
       from: inputValues.from,
       to: inputValues.to,
-      moduleCommand: selectedItems.join('=&'), //How to join
-    }));
-    console.log('Filter values:', filterValues);
-    console.log('Checked items:', selectedItems);
+      moduleCommand: selectedItems.join('=&'),
+    });
   };
 
   const handleClearAll = () => {
@@ -178,6 +203,7 @@ export const Transactions = () => {
             handleSelectAllChange={handleSelectAllChange}
             handleApply={handleApply}
             handleClear={handleClearAll}
+            handleCheckboxClose={handleCheckboxClose}
           />
         }
         headCols={transactionTableHead(handleSortChange, sortField, sortOrder)}

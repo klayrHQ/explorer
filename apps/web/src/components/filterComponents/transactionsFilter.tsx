@@ -1,9 +1,9 @@
 'use client';
 
-import { IconButton, Input, Icon, Typography } from '@repo/ui/atoms';
+import { IconButton, Input, Icon, Typography, FilterBadge } from '@repo/ui/atoms';
 import { AccordionWithCheckboxes } from '@repo/ui/molecules';
 import { useState } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@repo/ui/atoms';
 
 interface TransactionsFilterProps {
@@ -19,6 +19,7 @@ interface TransactionsFilterProps {
   handleCheckboxChange: (category: string, value: string, isChecked: boolean) => void;
   handleSelectAllChange: (category: string, values: string[], isChecked: boolean) => void;
   handleClear: () => void;
+  handleCheckboxClose: (category: string, value: string) => void;
 }
 
 export const TransactionsFilter = ({
@@ -34,15 +35,59 @@ export const TransactionsFilter = ({
   handleSelectAllChange,
   handleApply,
   handleClear,
+  handleCheckboxClose,
 }: TransactionsFilterProps) => {
   const isErrorFrom = valueFrom.length > 0 && valueFrom.length !== 41;
   const isErrorTo = valueTo.length > 0 && valueTo.length !== 41;
   const [isActive, setIsActive] = useState(false);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
+  const hasSelectedFilters =
+    Object.values(checkedItems).some((values) =>
+      Object.values(values).some((isChecked) => isChecked),
+    ) ||
+    valueFrom ||
+    valueTo;
+
+  useEffect(() => {
+    return setIsAccordionOpen(!!hasSelectedFilters);
+  }, [checkedItems, valueFrom, valueTo, hasSelectedFilters]);
+
   return (
-    <div className={`relative z-100 flex flex-row-reverse items-center w-full gap-12`}>
-      <div className="flex">
+    <div
+      className={`relative z-100 flex flex-row items-center w-full gap-12 min-w-18 justify-between`}
+    >
+      <div className="flex gap-4 flex-wrap">
+        {Object.entries(checkedItems).map(([category, values]) =>
+          Object.entries(values).map(
+            ([value, isChecked]) =>
+              isChecked && (
+                <FilterBadge
+                  key={value}
+                  label={'Type'}
+                  onClose={() => handleCheckboxClose(category, value)}
+                  value={`${category} ${value}`}
+                />
+              ),
+          ),
+        )}
+        {valueFrom && (
+          <FilterBadge
+            key="from"
+            label="From"
+            onClose={() => handleClearFrom()}
+            value={valueFrom.slice(0, 6) + '...' + valueFrom.slice(-6)}
+          />
+        )}
+        {valueTo && (
+          <FilterBadge key="to" label="To" onClose={() => handleClearTo()} value={valueTo} />
+        )}
+      </div>
+
+      <div className="flex gap-1 shrink-0">
+        {hasSelectedFilters && (
+          <Button onClick={handleClear} label="Clear All" variant="transparent" />
+        )}
         <IconButton
           active={isAccordionOpen}
           className=""
@@ -57,7 +102,7 @@ export const TransactionsFilter = ({
       {isAccordionOpen && (
         <div className="absolute right-0 top-14 flex flex-col justify-between px-4 py-2 items-center  bg-backgroundPrimary border-1 gap-2  border-borderLow rounded-sm shadow-md">
           <span className="text-caption font-semibold self-start text-gray-5 mt-4 ">
-            Module Command
+            {'Module Command'}
           </span>
 
           <AccordionWithCheckboxes

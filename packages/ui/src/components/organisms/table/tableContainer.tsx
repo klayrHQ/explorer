@@ -39,7 +39,11 @@ export const TableContainer = ({
       gap={'0'}
     >
       {filtersComponent && (
-        <FlexGrid className={'p-3xl border-b-1 border-borderLow w-full min-h-10'}>
+        <FlexGrid
+          justify="center"
+          alignItems="center"
+          className={'p-3xl border-b-1 border-borderLow w-full min-h-20'}
+        >
           {filtersComponent}
         </FlexGrid>
       )}
