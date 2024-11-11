@@ -343,6 +343,7 @@ const width = {
   pagNumWidth: '34px',
   calculatorWidth: '536px',
   tooltipWidth: '300px',
+  notFoundContentWidth: '600px',
 };
 
 const lineClamp = {
