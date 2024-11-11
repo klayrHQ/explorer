@@ -74,6 +74,7 @@ export const Topbar = ({
       ref={setMobileSearchAnchor}
     >
       <Search
+        basePath={basePath}
         callSearch={callSearch}
         className="hidden desktop:block"
         searchResult={searchResults}
@@ -114,6 +115,7 @@ export const Topbar = ({
         >
           <Search
             autoFocus
+            basePath={basePath}
             callSearch={callSearch}
             className="absolute left-0 top-0 w-screen h-full z-20"
             searchResult={searchResults}
