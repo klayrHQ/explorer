@@ -1,10 +1,6 @@
 'use client';
 
-import {
-  FlexGrid,
-  TabButtons,
-  ViewSwitcher,
-} from '@repo/ui/atoms';
+import { FlexGrid, TabButtons, ViewSwitcher } from '@repo/ui/atoms';
 import { DetailsSection, TableContainer, AccountBanner, ValidatorBanner } from '@repo/ui/organisms';
 import {
   AccountType,
@@ -645,6 +641,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           />
         </div>
       ),
+      disabled: true,
     },
     {
       value: isValidator ? 8 : 6,

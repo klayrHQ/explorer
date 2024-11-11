@@ -233,9 +233,9 @@ const config: Omit<Config, 'content'> = {
     ...getKeyMap(spacing, 'left'),
     ...getKeyMap(height, 'left'),
     ...getKeyMap(width, 'left'),
-    ...getKeyMap(numberList, '-left'), 
-    ...getKeyMap(spacing, '-left'), 
-    ...getKeyMap(height, '-left'), 
+    ...getKeyMap(numberList, '-left'),
+    ...getKeyMap(spacing, '-left'),
+    ...getKeyMap(height, '-left'),
     ...getKeyMap(width, '-left'),
     ...getKeyMap(numberList, 'right'),
     ...getKeyMap(spacing, 'right'),
@@ -319,6 +319,7 @@ const config: Omit<Config, 'content'> = {
     'appearance-none',
     'uppercase',
     'capitalize',
+    'grayscale',
   ],
   theme: {
     extend: {
