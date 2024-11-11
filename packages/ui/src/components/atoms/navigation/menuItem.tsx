@@ -41,7 +41,7 @@ const menuItemStyles = cva(
         true: 'bg-gray-7',
       },
       disabled: {
-        true: 'text-gray-1 hover:text-gray-1 grayscale-6 cursor-not-allowed',
+        true: 'text-gray-1 opacity-50p cursor-not-allowed',
         false: 'text-gray-4 hover:text-gray-1 hover:bg-gray-7 cursor-pointer',
       },
       variant: {
@@ -106,7 +106,7 @@ export const MenuItem = ({
     >
       <div className={variant === 'default' ? 'w-menuIconWidth' : 'w-menuIconSmallWidth'}>
         <Icon
-          className={'group-hover:text-gray-1'}
+          className={cls([!disabled ? 'group-hover:text-gray-1' : ''])}
           color={'gray-5'}
           icon={icon}
           size={variant === 'default' ? 'medium' : 'xs'}
@@ -121,7 +121,7 @@ export const MenuItem = ({
     </Typography>
   );
 
-  const menuItemContent = (
+  const menuItemContent = href ? (
     <Link
       basePath={basePath}
       className={menuItemStyles({
@@ -133,7 +133,7 @@ export const MenuItem = ({
         variant,
         square,
       })}
-      href={href || '#'}
+      href={href}
     >
       {menuItemInnerComponents}
       {subMenu && (
@@ -145,6 +145,28 @@ export const MenuItem = ({
         />
       )}
     </Link>
+  ) : (
+    <div
+      className={menuItemStyles({
+        active: isActive,
+        hovered,
+        disabled,
+        className,
+        minimized,
+        variant,
+        square,
+      })}
+    >
+      {menuItemInnerComponents}
+      {subMenu && (
+        <SubMenu
+          anchorElement={anchorElement}
+          basePath={basePath}
+          menuItems={subMenu}
+          open={isSubMenuOpen}
+        />
+      )}
+    </div>
   );
 
   const listItem = (

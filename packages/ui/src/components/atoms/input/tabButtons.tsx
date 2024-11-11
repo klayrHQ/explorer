@@ -14,6 +14,7 @@ interface TabData {
   icon?: IconComponent;
   content: ReactNode;
   count?: number | string;
+  disabled?: boolean;
 }
 
 interface TabButtonsProps {
@@ -37,15 +38,18 @@ export const TabButtons = ({
       defaultValue={1}
     >
       {/*todo remove overflow-auto when new solution gets implemented*/}
-      <TabsList className={`flex gap-2 bg-background active:text-lobster overflow-auto ${className}`}>
+      <TabsList
+        className={`flex gap-2 bg-background active:text-lobster overflow-auto ${className}`}
+      >
         {tabs.map((tab) => (
           <Tab
             key={tab.value}
+            disabled={tab.disabled}
             slotProps={{
               root: ({ selected, disabled }) => ({
                 className: `p-lg px-${padding} rounded-sm ${
                   selected ? 'bg-backgroundSecondary text-onBackground' : 'text-onBackgroundMedium'
-                } ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'} `,
+                } ${disabled ? 'cursor-not-allowed opacity-50p' : 'cursor-pointer'} `,
               }),
             }}
             value={tab.value}
