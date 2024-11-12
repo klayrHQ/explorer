@@ -376,6 +376,7 @@ export const createValidatorsRows = (
                   value={validator?.account}
                 />
               ),
+              className: 'sticky left-0 bg-background shadow-border-r',
             },
             {
               children: (
