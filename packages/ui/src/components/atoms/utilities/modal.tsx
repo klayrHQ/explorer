@@ -23,7 +23,7 @@ export const Modal = ({ open, onClose, title, children }: ModalProps) => {
       slots={{ backdrop: Backdrop }}
     >
       <div
-        className={` bg-backgroundSecondary text-white rounded-lg shadow-lg  outline-none relative w-modalWidthMobile desktop:w-modalWidth`}
+        className={` bg-backgroundSecondary text-white rounded-lg shadow-lg  outline-none relative w-modalWidthMobile  max-h-screen desktop:w-modalWidth`}
       >
         <FlexGrid
           alignItems="center"
@@ -45,7 +45,7 @@ export const Modal = ({ open, onClose, title, children }: ModalProps) => {
             variant="transparent"
           />
         </FlexGrid>
-        <div className="px-6 my-6">{children}</div>
+        <div className="px-6 my-3">{children}</div>
       </div>
     </MuiModal>
   );

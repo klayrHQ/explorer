@@ -28,7 +28,7 @@ export const AccordionWithCheckboxes: React.FC<AccordionWithCheckboxesProps> = (
   };
 
   return (
-    <div className="border-1 border-borderMedium rounded-sm w-96 ">
+    <div className="border-1 border-borderMedium rounded-sm w-full ">
       {Object.entries(data).map(([category, values]) => (
         <Accordion
           key={category}
@@ -36,10 +36,10 @@ export const AccordionWithCheckboxes: React.FC<AccordionWithCheckboxesProps> = (
           title={category}
           badgeCount={getCheckedCount(category)}
         >
-          <div className="flex flex-col gap-2.5 w-full">
+          <div className="flex flex-col gap-2.5">
             {values.length > 1 && (
               <div
-                className="cursor-pointer flex gap-1 items-center mb-1 text-caption text-semibold text-onBackgroundLow hover:text-onBackground"
+                className="cursor-pointer flex gap-1.5 items-center  text-caption text-semibold text-onBackgroundLow hover:text-onBackground"
                 onClick={() => handleSelectAllChange(category, values, !isAllChecked(category))}
               >
                 {isAllChecked(category) ? 'Clear All' : 'Select All'}

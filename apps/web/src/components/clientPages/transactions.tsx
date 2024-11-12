@@ -21,6 +21,7 @@ export const Transactions = () => {
   const [inputValues, setInputValues] = useState({ from: '', to: '' });
   const [filterValues, setFilterValues] = useState({ from: '', to: '', moduleCommand: '' });
   const [checkedItems, setCheckedItems] = useState<Record<string, Record<string, boolean>>>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClear = useCallback((field: 'from' | 'to') => {
     setInputValues((prev) => ({ ...prev, [field]: '' }));
@@ -35,35 +36,6 @@ export const Transactions = () => {
         [value]: isChecked,
       },
     }));
-  };
-
-  const handleCheckboxClose = (category: string, value: string) => {
-    setCheckedItems((prevState) => {
-      const updatedCheckedItems = {
-        ...prevState,
-        [category]: {
-          ...prevState[category],
-          [value]: false,
-        },
-      };
-
-      // Compute the new filterValues based on updatedCheckedItems
-      const selectedItems: string[] = [];
-      Object.entries(updatedCheckedItems).forEach(([cat, values]) => {
-        Object.entries(values).forEach(([val, isChecked]) => {
-          if (isChecked) {
-            selectedItems.push(`${cat}:${val}`);
-          }
-        });
-      });
-
-      setFilterValues((prevFilterValues) => ({
-        ...prevFilterValues,
-        moduleCommand: selectedItems.join('=&'),
-      }));
-
-      return updatedCheckedItems;
-    });
   };
 
   const handleSelectAllChange = (category: string, values: string[], isChecked: boolean) => {
@@ -94,14 +66,43 @@ export const Transactions = () => {
     setFilterValues({
       from: inputValues.from,
       to: inputValues.to,
-      moduleCommand: selectedItems.join('=&'),
+      moduleCommand: selectedItems.join(','),
     });
+    setIsModalOpen(false);
   };
 
   const handleClearAll = () => {
     setInputValues({ from: '', to: '' });
     setFilterValues({ from: '', to: '', moduleCommand: '' });
     setCheckedItems({});
+  };
+
+  const handleCheckboxClose = (category: string, value: string) => {
+    setCheckedItems((prevState) => {
+      const updatedCheckedItems = {
+        ...prevState,
+        [category]: {
+          ...prevState[category],
+          [value]: false,
+        },
+      };
+
+      const selectedItems: string[] = [];
+      Object.entries(updatedCheckedItems).forEach(([cat, values]) => {
+        Object.entries(values).forEach(([val, isChecked]) => {
+          if (isChecked) {
+            selectedItems.push(`${cat}:${val}`);
+          }
+        });
+      });
+
+      setFilterValues((prevFilterValues) => ({
+        ...prevFilterValues,
+        moduleCommand: selectedItems.join(','),
+      }));
+
+      return updatedCheckedItems;
+    });
   };
 
   const {
@@ -143,7 +144,7 @@ export const Transactions = () => {
         () => {},
         basePath,
       ),
-    [transactions, loading, basePath],
+    [transactions, loading, basePath, chains, currentChain],
   );
 
   const totalPages = useMemo(() => Math.ceil(totalTxs / Number(limit)), [totalTxs, limit]);
@@ -204,6 +205,8 @@ export const Transactions = () => {
             handleApply={handleApply}
             handleClear={handleClearAll}
             handleCheckboxClose={handleCheckboxClose}
+            setIsModalOpen={setIsModalOpen}
+            filterValues={filterValues} // Pass the filterValues state
           />
         }
         headCols={transactionTableHead(handleSortChange, sortField, sortOrder)}
