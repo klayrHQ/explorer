@@ -65,13 +65,13 @@ export const useInitializeCurrentChain = () => {
     const fetchChains = async () => {
       try {
         // Fetch chains
-        const chainsResponse = callGetChains({ network: currentNetwork }).then((data) => {
+        const chainsResponse = callGetChains({ network: networks.join(',') }).then((data) => {
           return data.data;
         });
         const chainsData: ChainType[] = await chainsResponse;
 
         // Fetch tokens
-        const tokensResponse = callGetChainTokens({ network: currentNetwork }).then((data) => {
+        const tokensResponse = callGetChainTokens({ network: networks.join(',') }).then((data) => {
           return data.data;
         });
         const tokensData: ChainTokenType[] = await tokensResponse;

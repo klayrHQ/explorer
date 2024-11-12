@@ -1,11 +1,10 @@
 'use client';
 import React, { useState } from 'react';
 import { ChainType, NetworkType } from '../../../types/types.ts';
-import { FlexGrid, KeyValueComponent, Typography } from '../../atoms';
+import {Button, FlexGrid, KeyValueComponent, StatusIcon, Typography} from '../../atoms';
 import { ImageContainer } from '../../atoms';
 import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
-import { NetworkSelect } from './networkSelect.tsx';
 import { useRouter } from 'next/navigation';
 
 export interface ChainNetworkPickerProps {
@@ -24,11 +23,19 @@ export const ChainNetworkPicker = ({
   imgComponent,
 }: ChainNetworkPickerProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedChain, setSelectedChain] = useState<string>();
+  const [selectedNetwork, setSelectedNetwork] = useState<string>();
+  const filteredChains = chains.filter((chain) => chain.networkType === (selectedNetwork ?? currentNetwork.networkName));
   const router = useRouter();
   const baseExplorerUrl = `explorer.klayr.dev`;
   const localhostHostnames = ['localhost', 'explorer.localhost', 'testnet-explorer.localhost'];
 
-  const chainOptions = chains?.map((chain) => ({
+  const handleNetworkSelect = (network: string) => {
+    setSelectedNetwork(network);
+    setSelectedChain(filteredChains[0].chainName);
+  }
+
+  const chainOptions = filteredChains?.map((chain) => ({
     label: chain.displayName ?? chain.chainName,
     value: chain.chainName,
     labelImage: chain.logo.png,
@@ -40,11 +47,13 @@ export const ChainNetworkPicker = ({
   }));
 
   const handleClose = () => {
+    setSelectedNetwork(undefined);
+    setSelectedChain(undefined);
     setIsModalOpen(false);
   };
 
   const handleChainChange = (chainName: string) => {
-    const chain = chains.find((chain) => chain.chainName === chainName);
+    const chain = filteredChains.find((chain) => chain.chainName === chainName);
     if (chain) {
       router.push(`/${chain.chainName}`);
       setIsModalOpen(false);
@@ -63,6 +72,42 @@ export const ChainNetworkPicker = ({
           ? router.push(`http://explorer.localhost:${window.location.port}`)
           : router.push(`http://testnet-explorer.localhost:${window.location.port}`);
       }
+    }
+  };
+
+  const handleChainNetworkChange = (chainName: string, networkName: string) => {
+    const chain = filteredChains.find((chain) => chain.chainName === chainName);
+    const network = networks.find((network) => network === networkName);
+
+    if (chain && network) {
+      router.push(`/${chain.chainName}`);
+      if (!localhostHostnames.includes(window.location.hostname)) {
+        network === 'mainnet'
+          ? router.push(`https://${baseExplorerUrl}/${chain.chainName}`)
+          : router.push(`https://${network}-${baseExplorerUrl}/${chain.chainName}`);
+      } else {
+        network === 'mainnet'
+          ? router.push(`http://explorer.localhost:${window.location.port}/${chain.chainName}`)
+          : router.push(`http://testnet-explorer.localhost:${window.location.port}/${chain.chainName}`);
+      }
+    }
+    setIsModalOpen(false);
+  }
+
+  const handleSave = () => {
+    if (selectedChain && !selectedNetwork) {
+      handleChainChange(selectedChain);
+      return;
+    }
+
+    if (selectedNetwork && !selectedChain) {
+      handleNetworkChange(selectedNetwork);
+      return;
+    }
+
+    if (selectedChain && selectedNetwork) {
+      handleChainNetworkChange(selectedChain, selectedNetwork);
+      return;
     }
   };
 
@@ -89,33 +134,55 @@ export const ChainNetworkPicker = ({
         <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
           <FlexGrid
             alignItems="center"
-            className={'w-full mb-8'}
+            className={'w-full'}
             justify="between"
             mobileDirection="row"
           >
             <Typography color="onBackgroundLow" variant="paragraph-md">
-              {'On chain'}
+              {'Network'}
+            </Typography>
+            <CustomSelect
+              classNameList="border-backgroundTertiary border-t-0"
+              defaultValue={currentNetwork?.networkName}
+              onChange={(value) => handleNetworkSelect(value)}
+              options={networkOptions}
+            />
+          </FlexGrid>
+          <FlexGrid
+            alignItems="center"
+            className={'w-full'}
+            justify="between"
+            mobileDirection="row"
+          >
+            <Typography color="onBackgroundLow" variant="paragraph-md">
+              {'Chain'}
             </Typography>
             <CustomSelect
               classNameList="border-backgroundTertiary border-t-0"
               defaultValue={currentChain?.chainName}
-              onChange={(value) => handleChainChange(value)}
+              onChange={(value) => setSelectedChain(value)}
               options={chainOptions}
+              value={selectedChain}
             />
+          </FlexGrid>
+          <FlexGrid alignItems="center" className="w-full mt-md" gap="1" justify="end">
+            <Button
+              align="none"
+              className="hidden desktop:flex text-gray-5 hover:text-gray-1"
+              label="Cancel"
+              onClick={handleClose}
+              variant="transparent"
+            />
+            <Button align="none" className="w-full desktop:w-auto" disabled={!selectedChain && !selectedNetwork} label="Save" onClick={handleSave} />
           </FlexGrid>
         </FlexGrid>
       </CustomModal>
-      <NetworkSelect
-        currentNetworkStatusClass={currentNetworkStatusClass}
-        defaultValue={currentNetwork?.networkName}
-        onChange={(value) => {
-          handleNetworkChange(value);
-        }}
-        options={networkOptions}
-        placeholder={currentNetwork?.networkName}
-        value={currentNetwork?.networkName}
-      />
       <FlexGrid gap="1.5xl" mobileDirection={'row'} onClick={handleOpen}>
+        <KeyValueComponent
+          contentValue={currentNetwork.networkName || 'Network'}
+          hover
+          keyValue={<StatusIcon status={currentNetworkStatusClass} />}
+        />
         <KeyValueComponent
           contentValue={currentChain?.displayName ?? currentChain?.chainName ?? 'Select chain'}
           hover
