@@ -66,7 +66,7 @@ export const Topbar = ({
       alignItems={'center'}
       className={cls([
         'w-full h-topbarMobileHeight desktop:h-topbarHeight bg-gray-8 p-3xl desktop:pl-0 dekstop:py-0 pr-3xl',
-        'gap-4 desktop:gap-8 relative',
+        'gap-4 desktop:gap-8 relative z-50',
       ])}
       component={'header'}
       justify={'between'}
@@ -74,6 +74,7 @@ export const Topbar = ({
       ref={setMobileSearchAnchor}
     >
       <Search
+        basePath={basePath}
         callSearch={callSearch}
         className="hidden desktop:block"
         searchResult={searchResults}
@@ -114,6 +115,7 @@ export const Topbar = ({
         >
           <Search
             autoFocus
+            basePath={basePath}
             callSearch={callSearch}
             className="absolute left-0 top-0 w-screen h-full z-20"
             searchResult={searchResults}

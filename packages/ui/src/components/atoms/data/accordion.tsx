@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, ReactNode } from 'react';
 import { Icon } from '../images/icon';
 interface AccordionProps {

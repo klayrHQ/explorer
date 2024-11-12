@@ -331,6 +331,7 @@ const config: Omit<Config, 'content'> = {
     'appearance-none',
     'uppercase',
     'capitalize',
+    'grayscale',
   ],
   theme: {
     extend: {

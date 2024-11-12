@@ -228,3 +228,119 @@ export const newsTagColors: Record<string, string> = {
   tokenomics: 'greenDark',
   // Add more tag-to-color mappings as needed
 };
+
+export const mobileMenuItems = [
+  {
+    label: 'Dashboard',
+    icon: 'BarChartSquare',
+    href: `/`,
+  },
+  {
+    label: 'Transactions',
+    icon: 'SwitchHorizontal',
+    href: `/transactions`,
+  },
+  {
+    label: 'Top Accounts',
+    icon: 'Users',
+    href: `/top-accounts`,
+  },
+  {
+    label: 'Validators',
+    icon: 'Flag',
+    href: `/validators`,
+  },
+  {
+    label: 'Blocks',
+    icon: 'Cube',
+    href: `/blocks`,
+  },
+  {
+    label: 'Tokens',
+    icon: 'CryptoCurrency',
+    href: `/tokens`,
+  },
+  {
+    label: 'Nodes',
+    icon: 'MarkerPin',
+    href: `/nodes`,
+  },
+  {
+    label: 'Stakes',
+    icon: 'LayersThree',
+    href: `/stakes`,
+  },
+  {
+    label: 'Chains',
+    icon: 'Data',
+    href: `/chains`,
+  },
+  {
+    label: 'NFTs',
+    icon: 'Image',
+    /*href: `/nfts`,*/
+    disabled: true,
+  },
+];
+
+export const subMenu = [
+  {
+    label: 'Top Accounts',
+    icon: 'Users',
+    href: `/top-accounts`,
+  },
+  {
+    label: 'Validators',
+    icon: 'Flag',
+    href: `/validators`,
+  },
+  {
+    label: 'Blocks',
+    icon: 'Cube',
+    href: `/blocks`,
+  },
+  {
+    label: 'Tokens',
+    icon: 'CryptoCurrency',
+    href: `/tokens`,
+  },
+  {
+    label: 'Nodes',
+    icon: 'MarkerPin',
+    href: `/nodes`,
+  },
+];
+
+export const menuItems = [
+  {
+    label: 'Dashboard',
+    icon: 'BarChartSquare',
+    href: `/`,
+  },
+  {
+    label: 'Blockchain',
+    icon: 'DataFlow',
+    subMenu,
+  },
+  {
+    label: 'Transactions',
+    icon: 'SwitchHorizontal',
+    href: `/transactions`,
+  },
+  {
+    label: 'Stakes',
+    icon: 'LayersThree',
+    href: `/stakes`,
+  },
+  {
+    label: 'Chains',
+    icon: 'Data',
+    href: `/chains`,
+  },
+  {
+    label: 'NFTs',
+    icon: 'Image',
+    /*href: `/nfts`,*/
+    disabled: true,
+  },
+];
