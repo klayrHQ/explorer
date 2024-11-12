@@ -11,99 +11,27 @@ import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { TransactionsFilter } from '../filterComponents/transactionsFilter.tsx';
 import React from 'react';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+import { useFilterManagement } from '../../utils/helpers/filterHandlers.ts';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
   const chains = useChainNetworkStore((state) => state.chains);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
+  const {
+    inputValues,
+    setInputValues,
+    filterValues,
+    checkedItems,
+    handleClear,
+    handleCheckboxChange,
+    handleSelectAllChange,
+    handleApply,
+    handleCheckboxClose,
+    clearAllFields,
+  } = useFilterManagement();
 
-  const [inputValues, setInputValues] = useState({ from: '', to: '' });
-  const [filterValues, setFilterValues] = useState({ from: '', to: '', moduleCommand: '' });
-  const [checkedItems, setCheckedItems] = useState<Record<string, Record<string, boolean>>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleClear = useCallback((field: 'from' | 'to') => {
-    setInputValues((prev) => ({ ...prev, [field]: '' }));
-    setFilterValues((prev) => ({ ...prev, [field]: '' }));
-  }, []);
-
-  const handleCheckboxChange = (category: string, value: string, isChecked: boolean) => {
-    setCheckedItems((prevState) => ({
-      ...prevState,
-      [category]: {
-        ...prevState[category],
-        [value]: isChecked,
-      },
-    }));
-  };
-
-  const handleSelectAllChange = (category: string, values: string[], isChecked: boolean) => {
-    setCheckedItems((prevState) => {
-      const updatedCategory = values.reduce(
-        (acc, value) => {
-          acc[value] = isChecked;
-          return acc;
-        },
-        {} as Record<string, boolean>,
-      );
-      return {
-        ...prevState,
-        [category]: updatedCategory,
-      };
-    });
-  };
-
-  const handleApply = () => {
-    const selectedItems: string[] = [];
-    Object.entries(checkedItems).forEach(([category, values]) => {
-      Object.entries(values).forEach(([value, isChecked]) => {
-        if (isChecked) {
-          selectedItems.push(`${category}:${value}`);
-        }
-      });
-    });
-    setFilterValues({
-      from: inputValues.from,
-      to: inputValues.to,
-      moduleCommand: selectedItems.join(','),
-    });
-    setIsModalOpen(false);
-  };
-
-  const handleClearAll = () => {
-    setInputValues({ from: '', to: '' });
-    setFilterValues({ from: '', to: '', moduleCommand: '' });
-    setCheckedItems({});
-  };
-
-  const handleCheckboxClose = (category: string, value: string) => {
-    setCheckedItems((prevState) => {
-      const updatedCheckedItems = {
-        ...prevState,
-        [category]: {
-          ...prevState[category],
-          [value]: false,
-        },
-      };
-
-      const selectedItems: string[] = [];
-      Object.entries(updatedCheckedItems).forEach(([cat, values]) => {
-        Object.entries(values).forEach(([val, isChecked]) => {
-          if (isChecked) {
-            selectedItems.push(`${cat}:${val}`);
-          }
-        });
-      });
-
-      setFilterValues((prevFilterValues) => ({
-        ...prevFilterValues,
-        moduleCommand: selectedItems.join(','),
-      }));
-
-      return updatedCheckedItems;
-    });
-  };
 
   const {
     data: transactions,
@@ -203,10 +131,10 @@ export const Transactions = () => {
             handleCheckboxChange={handleCheckboxChange}
             handleSelectAllChange={handleSelectAllChange}
             handleApply={handleApply}
-            handleClear={handleClearAll}
+            handleClear={clearAllFields}
             handleCheckboxClose={handleCheckboxClose}
             setIsModalOpen={setIsModalOpen}
-            filterValues={filterValues} // Pass the filterValues state
+            filterValues={filterValues}
           />
         }
         headCols={transactionTableHead(handleSortChange, sortField, sortOrder)}
