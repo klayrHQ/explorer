@@ -14,6 +14,7 @@ import { StakeFilters } from '../filterComponents/stakeFilters';
 import { TableCellType } from '@repo/ui/types';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import {useIsHorizontallyScrolled} from "../../utils/hooks/useIsHorizontallyScrolled.ts";
 
 export const Stakes = () => {
   const {
@@ -68,8 +69,10 @@ export const Stakes = () => {
     });
   }, []);
 
+  const [isScrolled, scrollRef] = useIsHorizontallyScrolled();
+
   const rowsOverview = createStakesOverviewRows(stakes, loadingStakes, basePath);
-  const rowCalculator = createValidatorsRows(validators, loadingValidators, basePath, true, {
+  const rowCalculator = createValidatorsRows(validators, loadingValidators, isScrolled,  true, {
     stakingCalculatorAmount,
     stakingCalculatorPeriod,
     totalActiveStake,
@@ -124,6 +127,7 @@ export const Stakes = () => {
           rows={rowCalculator}
           setCurrentNumber={handleCalculatorPageChange}
           totalPages={totalValidators / Number(calculatorLimit)}
+          scrollRef={scrollRef}
         />
       ),
     },

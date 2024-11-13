@@ -2,7 +2,7 @@ import { cls } from '../../../utils/functions.ts';
 import { FlexGrid } from '../../atoms';
 import { Table, TableProps } from '../../molecules';
 import { Pagination } from '../../atoms';
-import React from 'react';
+import React, {MutableRefObject} from 'react';
 
 interface TableContainerProps extends TableProps {
   pagination?: boolean;
@@ -14,6 +14,7 @@ interface TableContainerProps extends TableProps {
   options?: { label: string; value: string }[];
   defaultValue?: string;
   onPerPageChange?: (value: string) => void;
+  scrollRef?: MutableRefObject<HTMLDivElement | null>;
 }
 
 export const TableContainer = ({
@@ -27,6 +28,7 @@ export const TableContainer = ({
   options,
   defaultValue,
   onPerPageChange,
+  scrollRef,
   ...props
 }: TableContainerProps) => {
   return (
@@ -43,7 +45,7 @@ export const TableContainer = ({
           {filtersComponent}
         </FlexGrid>
       )}
-      <Table className={tableClassName} {...props} />
+      <Table className={tableClassName} scrollRef={scrollRef} {...props} />
       {pagination && (
         <FlexGrid className={'px-3xl py-lg border-t-1 border-borderLow w-full'}>
           <Pagination
