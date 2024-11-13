@@ -9,7 +9,6 @@ export const useIsHorizontallyScrolled = (): [boolean, MutableRefObject<HTMLDivE
     if (!element) return;
 
     const handleScroll = () => {
-      console.log('scrolling');
       setIsScrolled(element.scrollLeft > 0);
     };
 
