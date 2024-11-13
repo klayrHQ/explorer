@@ -21,7 +21,7 @@ export const Accordion: React.FC<AccordionProps> = ({ id, title, badgeCount, chi
       <div key={id} className="group">
         <button
           onClick={() => toggleItem(id)}
-          className={`w-full flex items-center uppercase  justify-between text-left px-4 py-3 transition-all text-paragraph-sm text-onBackground border-b-1 border-b-borderLow ${isOpen ? 'border-b-1 border-b-borderMedium bg-backgroundTertiary rounded-t-none' : 'border-b-1 border-b-borderLow bg-background rounded-sm'}`}
+          className={`w-full flex items-center uppercase  justify-between text-left px-4 py-3 transition-all text-paragraph-sm text-onBackground last:rounded-sm   ${isOpen ? ' bg-backgroundTertiary border-b-1 border-b-borderMedium last:border-b-none ' : ' bg-backgroundSecondary border-b-borderMedium border-b-1 last:border-b-none'}`}
         >
           <div className="flex justify-between items-center gap-2">
             <span className=" capitalize">{title}</span>
@@ -37,11 +37,7 @@ export const Accordion: React.FC<AccordionProps> = ({ id, title, badgeCount, chi
             className={`h-5 w-5 transform transition-transform duration-100 group-hover:text-onBackground ${isOpen ? '-rotate-180 text-onBackground' : 'rotate-0 text-onBackgroundLow'}`}
           />
         </button>
-        {isOpen && (
-          <div className="flex flex-col p-4 border-b-1 border-b-borderMedium bg-backgroundPrimary ">
-            {children}
-          </div>
-        )}
+        {isOpen && <div className="flex flex-col p-4  bg-backgroundSecondary ">{children}</div>}
       </div>
     </div>
   );

@@ -26,6 +26,7 @@ export * from './badges/badgeIcon';
 export * from './badges/badgeGroup';
 export * from './badges/badgeNoIcon';
 export * from './badges/statusBadge';
+export * from './badges/filterBadge';
 export * from './data/keyValueComponent';
 export * from './data/dateComponent.tsx';
 export * from './data/chainToChainComponent';

@@ -30,7 +30,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id, label, checked, onChange
       </label>
       {label && (
         <label
-          className="cursor-pointer ml-2 text-onBackgroundLow hover:text-onBackgroundMedium  text-paragraph-sm"
+          className="cursor-pointer ml-2 text-onBackgroundMedium hover:text-onBackgroundHigh  text-paragraph-sm"
           htmlFor={id}
         >
           {label}

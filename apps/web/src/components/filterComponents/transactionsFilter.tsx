@@ -1,10 +1,10 @@
 'use client';
 
-import { IconButton, Input, Icon, Typography } from '@repo/ui/atoms';
+import { IconButton, Input, Icon, Typography, FilterBadge } from '@repo/ui/atoms';
 import { AccordionWithCheckboxes } from '@repo/ui/molecules';
 import { useState } from 'react';
-import React from 'react';
-import { Button } from '@repo/ui/atoms';
+import React, { useEffect } from 'react';
+import { Button, Modal } from '@repo/ui/atoms';
 
 interface TransactionsFilterProps {
   valueFrom: string;
@@ -19,6 +19,9 @@ interface TransactionsFilterProps {
   handleCheckboxChange: (category: string, value: string, isChecked: boolean) => void;
   handleSelectAllChange: (category: string, values: string[], isChecked: boolean) => void;
   handleClear: () => void;
+  handleCheckboxClose: (category: string, value: string) => void;
+  setIsModalOpen: (isOpen: boolean) => void;
+  filterValues: { from: string; to: string; moduleCommand: string }; // Add this line
 }
 
 export const TransactionsFilter = ({
@@ -34,15 +37,59 @@ export const TransactionsFilter = ({
   handleSelectAllChange,
   handleApply,
   handleClear,
+  handleCheckboxClose,
+  setIsModalOpen,
+  filterValues,
 }: TransactionsFilterProps) => {
   const isErrorFrom = valueFrom.length > 0 && valueFrom.length !== 41;
   const isErrorTo = valueTo.length > 0 && valueTo.length !== 41;
   const [isActive, setIsActive] = useState(false);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
+  const hasSelectedFilters =
+    Object.values(checkedItems).some((values) =>
+      Object.values(values).some((isChecked) => isChecked),
+    ) ||
+    valueFrom ||
+    valueTo;
+
   return (
-    <div className={`relative z-100 flex flex-row-reverse items-center w-full gap-12`}>
-      <div className="flex">
+    <div className={`relative flex flex-row items-center w-full gap-4 min-w-18 justify-between`}>
+      <div className="flex gap-4 flex-wrap">
+        {filterValues.moduleCommand &&
+          filterValues.moduleCommand.split(',').map((filter, index) => {
+            const [category, value] = filter.split(':');
+            return (
+              <FilterBadge
+                key={value}
+                label={category}
+                onClose={() => handleCheckboxClose(category, value)}
+                value={value}
+              />
+            );
+          })}
+        {filterValues.from && (
+          <FilterBadge
+            key="from"
+            label="From"
+            onClose={() => handleClearFrom()}
+            value={filterValues.from.slice(0, 6) + '...' + filterValues.from.slice(-6)}
+          />
+        )}
+        {filterValues.to && (
+          <FilterBadge
+            key="to"
+            label="To"
+            onClose={() => handleClearTo()}
+            value={filterValues.to}
+          />
+        )}
+      </div>
+
+      <div className="flex gap-2 shrink-0">
+        {hasSelectedFilters && (
+          <Button onClick={handleClear} label="Clear All" variant="transparent" />
+        )}
         <IconButton
           active={isAccordionOpen}
           className=""
@@ -52,13 +99,12 @@ export const TransactionsFilter = ({
         />
       </div>
 
-      {/* DESKTOP VERSION */}
-
-      {isAccordionOpen && (
-        <div className="absolute right-0 top-14 flex flex-col justify-between px-4 py-2 items-center  bg-backgroundPrimary border-1 gap-2  border-borderLow rounded-sm shadow-md">
-          <span className="text-caption font-semibold self-start text-gray-5 mt-4 ">
-            Module Command
-          </span>
+      <Modal open={isAccordionOpen} onClose={() => setIsAccordionOpen(false)} title="Filters">
+        <div
+          style={{ maxHeight: '70vh' }}
+          className="max-h-full overflow-auto flex flex-col justify-between px-4 items-center  bg-backgroundSecondary border-1 gap-2  border-borderLow rounded-sm "
+        >
+          <span className="text-paragraph-sm  self-start text-gray-5 ">{'Transaction Type'}</span>
 
           <AccordionWithCheckboxes
             data={data}
@@ -67,14 +113,14 @@ export const TransactionsFilter = ({
             handleSelectAllChange={handleSelectAllChange}
           />
 
-          <span className="text-caption font-semibold self-start text-gray-5 mt-4 ">
-            Sender/Receiver
+          <span className="text-paragraph-sm self-start text-gray-5 mt-4 ">
+            {'Sender/Receiver'}
           </span>
 
-          <div className="rounded-sm w-96 ">
+          <div className="rounded-sm w-full ">
             <div className="flex flex-col gap-4 rounded-sm">
               <Input
-                className={`${valueFrom.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorFrom ? 'border-error' : 'border-backgroundTertiary'} relative `}
+                className={`bg-backgroundSecondary ${isErrorTo ? 'border-error' : 'border-backgroundTertiary'} `}
                 errorNotification={isErrorFrom ? 'Invalid address' : ''}
                 isActive={isActive}
                 leftContent={<span className="text-paragraph-sm">{'From'}</span>}
@@ -97,7 +143,7 @@ export const TransactionsFilter = ({
               />
 
               <Input
-                className={`${valueTo.length > 0 ? 'bg-backgroundSecondary' : 'bg-background'} ${isErrorTo ? 'border-error' : 'border-backgroundTertiary'} `}
+                className={`${valueTo.length > 0 ? 'bg-backgroundSecondary' : 'bg-backgroundSecondary'} ${isErrorTo ? 'border-error' : 'border-backgroundTertiary'} `}
                 errorNotification={isErrorTo ? 'Invalid address' : ''}
                 isActive={isActive}
                 leftContent={<span className="text-paragraph-sm">{'To'}</span>}
@@ -126,11 +172,18 @@ export const TransactionsFilter = ({
             </div>
           </div>
           <div className="flex gap-2 my-4">
-            <Button onClick={handleApply} label="Apply" variant="primary" />
+            <Button
+              onClick={() => {
+                handleApply();
+                setIsAccordionOpen(false);
+              }}
+              label="Apply"
+              variant="primary"
+            />
             <Button onClick={handleClear} label="Clear" variant="transparent" />
           </div>
         </div>
-      )}
+      </Modal>
     </div>
   );
 };
