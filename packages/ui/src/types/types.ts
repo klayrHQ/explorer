@@ -99,6 +99,7 @@ export type IconComponent =
   | 'Overview'
   | 'Calculator'
   | 'Check'
+  | 'CoinsStacked'
   | string;
 
 export type ColorType =
