@@ -133,7 +133,6 @@ export const Transactions = () => {
             handleApply={handleApply}
             handleClear={clearAllFields}
             handleCheckboxClose={handleCheckboxClose}
-            setIsModalOpen={setIsModalOpen}
             filterValues={filterValues}
           />
         }
