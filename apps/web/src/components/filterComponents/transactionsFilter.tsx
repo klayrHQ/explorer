@@ -20,7 +20,6 @@ interface TransactionsFilterProps {
   handleSelectAllChange: (category: string, values: string[], isChecked: boolean) => void;
   handleClear: () => void;
   handleCheckboxClose: (category: string, value: string) => void;
-  setIsModalOpen: (isOpen: boolean) => void;
   filterValues: { from: string; to: string; moduleCommand: string }; // Add this line
 }
 
@@ -38,13 +37,18 @@ export const TransactionsFilter = ({
   handleApply,
   handleClear,
   handleCheckboxClose,
-  setIsModalOpen,
+
   filterValues,
 }: TransactionsFilterProps) => {
-  const isErrorFrom = valueFrom.length > 0 && valueFrom.length !== 41;
-  const isErrorTo = valueTo.length > 0 && valueTo.length !== 41;
+  const [isErrorFrom, setIsErrorFrom] = useState(false);
+  const [isErrorTo, setIsErrorTo] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+
+  useEffect(() => {
+    setIsErrorFrom(valueFrom.length > 0 && valueFrom.length !== 41);
+    setIsErrorTo(valueTo.length > 0 && valueTo.length !== 41);
+  }, [valueFrom, valueTo]);
 
   const hasSelectedFilters =
     Object.values(checkedItems).some((values) =>
@@ -104,7 +108,9 @@ export const TransactionsFilter = ({
           style={{ maxHeight: '70vh' }}
           className="max-h-full overflow-auto flex flex-col justify-between px-4 items-center  bg-backgroundSecondary border-1 gap-2  border-borderLow rounded-sm "
         >
-          <span className="text-paragraph-sm  self-start text-gray-5 ">{'Transaction Type'}</span>
+          <span className="text-paragraph-sm font-medium  self-start text-gray-5 mb-2 ">
+            {'Transaction Type'}
+          </span>
 
           <AccordionWithCheckboxes
             data={data}
@@ -113,15 +119,15 @@ export const TransactionsFilter = ({
             handleSelectAllChange={handleSelectAllChange}
           />
 
-          <span className="text-paragraph-sm self-start text-gray-5 mt-4 ">
+          <span className="text-paragraph-sm font-medium self-start text-gray-5 mt-4 mb-2 ">
             {'Sender/Receiver'}
           </span>
 
           <div className="rounded-sm w-full ">
-            <div className="flex flex-col gap-4 rounded-sm">
+            <div className="flex flex-col gap-5 rounded-sm">
               <Input
-                className={`bg-backgroundSecondary ${isErrorTo ? 'border-error' : 'border-backgroundTertiary'} `}
-                errorNotification={isErrorFrom ? 'Invalid address' : ''}
+                className={`bg-backgroundSecondary  `}
+                errorNotification={isErrorFrom ? 'Invalid sender address' : ''}
                 isActive={isActive}
                 leftContent={<span className="text-paragraph-sm">{'From'}</span>}
                 leftContentPadding="pl-16"
@@ -130,7 +136,7 @@ export const TransactionsFilter = ({
                 placeholder="Type an address"
                 rightContent={
                   <div
-                    className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueFrom ? 'opacity-100' : 'opacity-0'}`}
+                    className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-tulipDark rounded-full transition-all ${valueFrom ? 'opacity-100' : 'opacity-0'}`}
                     onClick={handleClearFrom}
                   >
                     <Icon color="backgroundDark" icon="CrossClose" size="xxs" />
@@ -140,11 +146,11 @@ export const TransactionsFilter = ({
                 type="text"
                 value={valueFrom}
                 variant="filters"
+                isErrorFrom={isErrorFrom}
               />
-
               <Input
-                className={`${valueTo.length > 0 ? 'bg-backgroundSecondary' : 'bg-backgroundSecondary'} ${isErrorTo ? 'border-error' : 'border-backgroundTertiary'} `}
-                errorNotification={isErrorTo ? 'Invalid address' : ''}
+                className={`bg-backgroundSecondary`}
+                errorNotification={isErrorTo ? 'Invalid receiver address' : ''}
                 isActive={isActive}
                 leftContent={<span className="text-paragraph-sm">{'To'}</span>}
                 leftContentPadding="pl-10"
@@ -153,7 +159,7 @@ export const TransactionsFilter = ({
                 placeholder="Type an address"
                 rightContent={
                   <div
-                    className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-volt rounded-full transition-all ${valueTo ? 'opacity-100' : 'opacity-0'}`}
+                    className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-tulipDark  rounded-full transition-all ${valueTo ? 'opacity-100' : 'opacity-0'}`}
                     onClick={handleClearTo}
                   >
                     <Icon
@@ -168,6 +174,7 @@ export const TransactionsFilter = ({
                 type="text"
                 value={valueTo}
                 variant="filters"
+                isErrorTo={isErrorTo}
               />
             </div>
           </div>
@@ -177,6 +184,7 @@ export const TransactionsFilter = ({
                 handleApply();
                 setIsAccordionOpen(false);
               }}
+              disabled={isErrorFrom || isErrorTo}
               label="Apply"
               variant="primary"
             />
