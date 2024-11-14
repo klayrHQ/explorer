@@ -16,6 +16,7 @@ import { useGatewayClientStore } from '../../store/clientStore.ts';
 import { NextValidatorType, TableCellType } from '@repo/ui/types';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
+import {useIsHorizontallyScrolled} from "../../utils/hooks/useIsHorizontallyScrolled.ts";
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);
@@ -72,7 +73,9 @@ export const Validators = () => {
       .finally(() => setLoading(false));
   }, [rowsPerPage, newBlockEvent, sortField, sortOrder, network, validators.length]);
 
-  const rows = createValidatorsRows(validators, loading, basePath, false).map((row) => ({
+  const [isScrolled, scrollRef] = useIsHorizontallyScrolled();
+
+  const rows = createValidatorsRows(validators, loading, isScrolled, false).map((row) => ({
     cells: row.cells.filter((cell) => cell !== null) as TableCellType[],
   }));
 
@@ -107,6 +110,7 @@ export const Validators = () => {
         keyPrefix={'validators'}
         pagination
         rows={rows}
+        scrollRef={scrollRef}
       />
       <Button
         align={'center'}

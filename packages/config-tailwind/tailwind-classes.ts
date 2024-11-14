@@ -359,6 +359,10 @@ const lineClamp = {
 const shadow = {
   md: 'var(--shadow-md)',
   below: 'var(--shadow-below)',
+  'border-r': '1px 0 0 0 var(--color-borderLow)',
+  'border-l': '-1px 0 0 0 var(--color-borderLow)',
+  'border-t': '0 -1px 0 0 var(--color-borderLow)',
+  'border-b': '0 1px 0 0 var(--color-borderLow)',
 };
 
 const justify = {

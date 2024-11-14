@@ -11,7 +11,7 @@ import {
   TokenType,
   NftType,
 } from '../types.ts';
-import { fromNowFormatter, replaceColonWithSpace, shortString } from '@repo/ui/utils';
+import { cls, fromNowFormatter, replaceColonWithSpace, shortString } from '@repo/ui/utils';
 import { ImageName, TxDataPopover } from '@repo/ui/molecules';
 import {
   Badge,
@@ -260,7 +260,7 @@ export const createEventsRows = (events: EventsType[], loading: boolean) => {
 export const createValidatorsRows = (
   validators: ValidatorType[],
   loading: boolean,
-  basePath: string,
+  isScrolled: boolean,
   stakingRewards = false,
   stakingCalculatorProps:
     | {
@@ -376,6 +376,7 @@ export const createValidatorsRows = (
                   value={validator?.account}
                 />
               ),
+              className: cls([!stakingRewards && 'sticky left-0 bg-background group-hover:bg-backgroundSecondary', !stakingRewards && isScrolled ? 'shadow-border-r' : '']),
             },
             {
               children: (
