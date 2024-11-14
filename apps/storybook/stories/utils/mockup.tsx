@@ -1,6 +1,6 @@
-import {Icon, TableCell, Typography} from "@repo/ui/atoms";
-import Logo from "@/stories/assets/images/logo.svg";
-import {DefaultImageComponent} from "@/stories/utils/constants";
+import { Icon, TableCell, Typography } from '@repo/ui/atoms';
+import Logo from '@/stories/assets/images/logo.svg';
+import { DefaultImageComponent } from '@/stories/utils/constants';
 
 export const mobileMenuItems = [
   {
@@ -25,7 +25,7 @@ export const mobileMenuItems = [
   },
   {
     label: 'Tokens',
-    icon: 'CryptoCurrency',
+    icon: 'CoinsStacked',
   },
   {
     label: 'Nodes',
@@ -60,7 +60,7 @@ export const subMenu = [
   },
   {
     label: 'Tokens',
-    icon: 'CryptoCurrency',
+    icon: 'CoinsStacked',
   },
   {
     label: 'Nodes',
@@ -98,45 +98,58 @@ export const menuItems = [
 
 export const kpisObject = [
   {
-    keyValue: "KLY: ",
+    keyValue: 'KLY: ',
     contentValue: (
-      <Typography className={"inline-flex items-center justify-center"} fontWeight="medium" color={"gray-5"} variant={"paragraph-sm"}>
-        {"$181.66"}
-        <span className={"text-green text-paragraph-sm inline-flex items-center justify-center font-semibold"}>
-          <Icon className={"inline ml-1 mb-px mr-0.5 w-3.5 h-3.5 stroke-2"} color={"inherit"} icon={"TrendUp"} />
-          {"0.3%"}
+      <Typography
+        className={'inline-flex items-center justify-center'}
+        fontWeight="medium"
+        color={'gray-5'}
+        variant={'paragraph-sm'}
+      >
+        {'$181.66'}
+        <span
+          className={
+            'text-green text-paragraph-sm inline-flex items-center justify-center font-semibold'
+          }
+        >
+          <Icon
+            className={'inline ml-1 mb-px mr-0.5 w-3.5 h-3.5 stroke-2'}
+            color={'inherit'}
+            icon={'TrendUp'}
+          />
+          {'0.3%'}
         </span>
       </Typography>
     ),
   },
   {
-    keyValue: "MC: ",
-    contentValue: "$27.324",
+    keyValue: 'MC: ',
+    contentValue: '$27.324',
   },
 ];
 
 export const chainNetworkData = {
   currentChain: {
-    chainName: "Klayr-main",
-    chainId: "00000000",
+    chainName: 'Klayr-main',
+    chainId: '00000000',
     chainLogo: Logo.src,
   },
   currentNetwork: {
-    networkName: "Testnet",
-    networkId: "01000000",
+    networkName: 'Testnet',
+    networkId: '01000000',
     connected: true,
   },
   imgComponent: DefaultImageComponent,
-}
+};
 
 export const optionsMenuItems = [
   {
-    label: "Enable Light mode",
-    icon: "Sun",
+    label: 'Enable Light mode',
+    icon: 'Sun',
   },
   {
-    label: "Set Currency",
-    icon: "CurrencyDollar",
+    label: 'Set Currency',
+    icon: 'CurrencyDollar',
   },
 ];
 
@@ -162,28 +175,38 @@ export const rows = Array.from({ length: 5 }, (_, index) => ({
 
 export const rowsAlt = Array.from({ length: 5 }, (_, index) => (
   <>
-    <TableCell><Typography>{`Cell ${index + 1}.1`}</Typography></TableCell>
-    <TableCell><Typography>{`Cell ${index + 1}.2`}</Typography></TableCell>
-    <TableCell><Typography>{`Cell ${index + 1}.3`}</Typography></TableCell>
-    <TableCell><Typography>{`Cell ${index + 1}.4`}</Typography></TableCell>
-    <TableCell><Typography>{`Cell ${index + 1}.5`}</Typography></TableCell>
+    <TableCell>
+      <Typography>{`Cell ${index + 1}.1`}</Typography>
+    </TableCell>
+    <TableCell>
+      <Typography>{`Cell ${index + 1}.2`}</Typography>
+    </TableCell>
+    <TableCell>
+      <Typography>{`Cell ${index + 1}.3`}</Typography>
+    </TableCell>
+    <TableCell>
+      <Typography>{`Cell ${index + 1}.4`}</Typography>
+    </TableCell>
+    <TableCell>
+      <Typography>{`Cell ${index + 1}.5`}</Typography>
+    </TableCell>
   </>
 ));
 
 export const headCols = [
   {
-    children: <Typography color={"inherit"}>{"Header 1"}</Typography>,
+    children: <Typography color={'inherit'}>{'Header 1'}</Typography>,
   },
   {
-    children: <Typography color={"inherit"}>{"Header 2"}</Typography>,
+    children: <Typography color={'inherit'}>{'Header 2'}</Typography>,
   },
   {
-    children: <Typography color={"inherit"}>{"Header 3"}</Typography>,
+    children: <Typography color={'inherit'}>{'Header 3'}</Typography>,
   },
   {
-    children: <Typography color={"inherit"}>{"Header 4"}</Typography>,
+    children: <Typography color={'inherit'}>{'Header 4'}</Typography>,
   },
   {
-    children: <Typography color={"inherit"}>{"Header 5"}</Typography>,
+    children: <Typography color={'inherit'}>{'Header 5'}</Typography>,
   },
 ];

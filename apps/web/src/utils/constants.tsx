@@ -257,7 +257,7 @@ export const mobileMenuItems = [
   },
   {
     label: 'Tokens',
-    icon: 'CryptoCurrency',
+    icon: 'CoinsStacked',
     href: `/tokens`,
   },
   {
@@ -301,7 +301,7 @@ export const subMenu = [
   },
   {
     label: 'Tokens',
-    icon: 'CryptoCurrency',
+    icon: 'CoinsStacked',
     href: `/tokens`,
   },
   {

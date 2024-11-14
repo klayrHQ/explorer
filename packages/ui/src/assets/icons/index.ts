@@ -40,12 +40,12 @@ import { Info } from './general/help-circle.tsx';
 import { InfoSquare } from './general/info-square.tsx';
 import { List } from './general/list.tsx';
 import { ArrowRight } from './arrows/arrow-right.tsx';
-import {CodeSquare} from "./development/code-square-02.tsx";
+import { CodeSquare } from './development/code-square-02.tsx';
 import { ArrowDown } from './arrows/arrow-down.tsx';
 import { ArrowUp } from './arrows/arrow-up.tsx';
 import { Overview } from './general/overview.tsx';
 import { Calculator } from './general/calculator.tsx';
-import { AlertCircle } from "./feedback/alert-circle.tsx";
+import { AlertCircle } from './feedback/alert-circle.tsx';
 import { WarningIcon } from './snackbar/warningIcon.tsx';
 import { ErrorIcon } from './snackbar/errorIcon.tsx';
 import { SuccessIcon } from './snackbar/successIcon.tsx';
@@ -55,6 +55,7 @@ import { LayoutAlt } from './layout/layout-alt.tsx';
 import { FilterLines } from './general/filter-lines.tsx';
 import { Check } from './general/check.tsx';
 import {LinkExternal} from "./general/link-external-01.tsx";
+import { CoinsStacked } from './finance/coins-stacked.tsx';
 
 export const icons = {
   ChevronDown,
@@ -114,4 +115,5 @@ export const icons = {
   FilterLines,
   Check,
   LinkExternal,
+  CoinsStacked,
 };

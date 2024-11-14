@@ -616,7 +616,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     {
       value: isValidator ? 6 : 4,
       label: 'Tokens',
-      icon: 'CryptoCurrency',
+      icon: 'CoinsStacked',
       count: outgoingStakes.length,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>

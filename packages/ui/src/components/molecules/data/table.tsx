@@ -1,4 +1,4 @@
-import {HTMLAttributes, ReactNode} from "react";
+import {HTMLAttributes, MutableRefObject, ReactNode} from "react";
 import {TableRow} from "../../atoms";
 import {TableCellType} from "../../../types/types.ts";
 import {TableCell} from "../../atoms";
@@ -9,11 +9,12 @@ export interface TableProps extends HTMLAttributes<HTMLTableElement>{
   headCols?: TableCellType[]
   rows?: { cells: TableCellType[], rowDetails?: ReactNode, }[] | NonNullable<ReactNode>[]
   pagination?: boolean;
+  scrollRef?: MutableRefObject<HTMLDivElement | null>;
 }
 
-export const Table = ({ className, headCols, rows, keyPrefix, pagination, ...props }: TableProps) => {
+export const Table = ({ className, headCols, rows, keyPrefix, pagination, scrollRef, ...props }: TableProps) => {
   return (
-    <div className={"w-full max-w-full overflow-auto"}>
+    <div className={"w-full max-w-full overflow-auto"} ref={scrollRef}>
       <table
         className={cls([
           className,

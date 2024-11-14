@@ -100,6 +100,7 @@ export type IconComponent =
   | 'Calculator'
   | 'Check'
   | 'LinkExternal'
+  | 'CoinsStacked'
   | string;
 
 export type ColorType =
