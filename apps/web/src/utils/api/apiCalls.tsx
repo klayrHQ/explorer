@@ -16,7 +16,7 @@ import {
   NodeType,
   ChainType,
   ChainTokenType,
-  NetworkStatus,
+  NetworkStatus, AppsType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
 import {
@@ -28,7 +28,7 @@ import {
   AccountQueryParams,
   TokensQueryParams,
   ChainsQueryParams,
-  ChainTokenQueryParams,
+  ChainTokenQueryParams, AppsQueryParams,
 } from './types';
 import { NextValidatorType } from '@repo/ui/types';
 import axios from 'axios';
@@ -161,3 +161,9 @@ export const callGetChainTokens = async (
 ): Promise<GatewayRes<ChainTokenType[]>> => {
   return apiCall<ChainTokenType[]>('blockchain/apps/meta/tokens', params);
 };
+
+export const callGetApps = async (
+  params: AppsQueryParams,
+): Promise<GatewayRes<AppsType[]>> => {
+  return apiCall<AppsType[]>('blockchain/apps', params);
+}

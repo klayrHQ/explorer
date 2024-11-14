@@ -77,6 +77,26 @@ const statusColors: { [key: string]: StatusColorProps } = {
     colorVariant: 'error',
     backgroundColor: 'redOpacity',
   },
+  activated: {
+    borderColor: 'success',
+    colorVariant: 'success',
+    backgroundColor: 'greenOpacity',
+  },
+  registered: {
+    borderColor: 'volt',
+    colorVariant: 'volt',
+    backgroundColor: 'yellowOpacity',
+  },
+  terminated: {
+    borderColor: 'error',
+    colorVariant: 'error',
+    backgroundColor: 'redOpacity',
+  },
+  unregistered: {
+    borderColor: 'error',
+    colorVariant: 'error',
+    backgroundColor: 'redOpacity',
+  },
 };
 
 type ValidatorStatusBadgeProps = {

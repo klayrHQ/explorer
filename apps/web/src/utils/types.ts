@@ -380,3 +380,28 @@ export interface NetworkStatus {
   registeredModules: [string];
   moduleCommands: [string];
 }
+
+export interface AppsType {
+  chainID: string
+  chainName: string
+  status: string
+  address: string
+  lastCerticateHeight: number
+  lastUpdated: number
+  escrowedKLY: string
+  escrow: Escrow[]
+}
+
+export interface Escrow {
+  tokenID: string
+  amount: string
+}
+
+export interface CombinedAppsType extends AppsType {
+  logo?: {
+    png: string;
+    svg: string;
+    appChainID: string;
+  };
+  displayName?: string;
+}

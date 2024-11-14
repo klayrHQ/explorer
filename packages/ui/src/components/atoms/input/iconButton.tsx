@@ -90,14 +90,14 @@ const iconButtonStyles = cva(['rounded-md block'], {
       hovered: true,
       variant: 'tertiary',
       disabled: false,
-      className: 'bg-gray-7',
+      className: 'bg-gray-6',
     },
     {
       hovered: false,
       variant: 'tertiary',
       disabled: false,
       active: false,
-      className: 'bg-gray-6 hover:bg-gray-7',
+      className: 'bg-gray-7 hover:bg-gray-6',
     },
     {
       hovered: true,
@@ -175,12 +175,12 @@ const iconButtonStyles = cva(['rounded-md block'], {
     {
       active: true,
       variant: 'tertiary',
-      className: 'bg-gray-7',
+      className: 'bg-gray-6',
     },
     {
       active: false,
       variant: 'tertiary',
-      className: 'bg-gray-6 hover:bg-gray-7',
+      className: 'bg-gray-7 hover:bg-gray-6',
     },
     {
       active: true,
