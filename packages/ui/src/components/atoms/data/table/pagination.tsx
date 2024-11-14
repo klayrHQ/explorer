@@ -55,7 +55,7 @@ export const Pagination = ({
   };
 
   return (
-    <div className="flex justify-between items-center w-full desktop:w-60p relative ">
+    <div className="flex justify-between items-center w-full relative ">
       <div className="hidden desktop:flex ">
         <PageLimit defaultValue={defaultValue} onPerPageChange={handlePerPageChange} />
       </div>
