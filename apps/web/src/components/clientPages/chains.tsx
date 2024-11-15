@@ -3,21 +3,63 @@ import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { chainsTableHead } from '../../utils/helpers/tableHeaders';
 import { createChainRows } from '../../utils/helpers/helper';
-import { useState } from 'react';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
-import {useBasePath} from "../../utils/hooks/useBasePath.ts";
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { callGetApps } from '../../utils/api/apiCalls.tsx';
+import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
+import { useSearchParams } from 'next/navigation';
 
 export const Chains = () => {
   const chains = useChainNetworkStore((state) => state.chains);
-  const [loading, setLoading] = useState(false);
-  const totalChains = chains?.length || 0;
+  const defaultLimit = '10';
+  const searchParams = useSearchParams();
   const basePath = useBasePath();
-  const rows = createChainRows(chains || [], loading, basePath);
+
+  const {
+    data: apps,
+    totalItems: totalApps,
+    loading,
+    pageNumber,
+    limit,
+    handlePageChange,
+    handleLimitChange,
+  } = usePaginationAndSorting({
+    fetchFunction: callGetApps,
+    defaultLimit: searchParams.get('limit') || defaultLimit,
+    searchParams: {
+      //status: 'registered,activated,terminated,unregistered',
+    },
+    changeURL: true,
+    useNewBlockEvent: true,
+  });
+
+  const combinedApps = apps.map((app) => {
+    const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
+    const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
+
+    return {
+      ...app,
+      logo,
+      displayName,
+    };
+  });
+
+  const rows = createChainRows(combinedApps || [], loading, basePath);
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
-      <SectionHeader count={totalChains} title={'Chains'} />
-      <TableContainer headCols={chainsTableHead} keyPrefix={'blocks'} rows={rows} />
+      <SectionHeader count={totalApps} title={'Chains'} />
+      <TableContainer
+        headCols={chainsTableHead}
+        keyPrefix={'chains'}
+        rows={rows}
+        pagination
+        onPerPageChange={handleLimitChange}
+        totalPages={Math.ceil(totalApps / Number(limit))}
+        setCurrentNumber={handlePageChange}
+        currentNumber={pageNumber}
+        defaultValue={defaultLimit}
+      />
     </FlexGrid>
   );
 };

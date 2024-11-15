@@ -446,23 +446,15 @@ export const chainsTableHead = [
     children: 'Name',
   },
   {
-    children: 'Chain ID',
-  },
-  {
     children: 'Status',
   },
   {
-    children: 'Created by',
+    children: 'Total Locked',
+    className: 'text-right',
   },
   {
-    children: 'Escrow Balance',
-  },
-  {
-    children: 'Last Certificate ',
-  },
-  {
-    children: 'Last Updated',
-  },
+    children: '',
+  }
 ];
 
 export const userTokensTableHead = [

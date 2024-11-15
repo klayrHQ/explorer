@@ -1,4 +1,4 @@
-import { HTMLAttributes, PropsWithChildren, ReactElement, ReactNode } from 'react';
+import {CSSProperties, HTMLAttributes, PropsWithChildren, ReactElement, ReactNode} from 'react';
 import { ChainTokenType, ServiceURLsType } from 'web/src/utils/types.ts';
 
 export type TypographyVariant =
@@ -99,6 +99,7 @@ export type IconComponent =
   | 'Overview'
   | 'Calculator'
   | 'Check'
+  | 'LinkExternal'
   | 'CoinsStacked'
   | string;
 
@@ -263,4 +264,9 @@ export interface AccountBannerProps {
   isFavorite: boolean;
   setFavorite: () => void;
   removeFavorite: () => void;
+}
+
+export interface SVGIconProps {
+  className?: string;
+  style?: CSSProperties;
 }

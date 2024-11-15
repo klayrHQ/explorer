@@ -10,6 +10,8 @@ import {
   NodeType,
   TokenType,
   NftType,
+  AppsType,
+  CombinedAppsType,
 } from '../types.ts';
 import { cls, fromNowFormatter, replaceColonWithSpace, shortString } from '@repo/ui/utils';
 import { ImageName, TxDataPopover } from '@repo/ui/molecules';
@@ -23,6 +25,8 @@ import {
   KeyValueComponent,
   IconButton,
   TokenCard,
+  FlexGrid,
+  Button,
 } from '@repo/ui/atoms';
 import { Link } from '@repo/ui/atoms';
 import React from 'react';
@@ -38,11 +42,13 @@ import {
   blockTableHead,
   stakesOverviewTableHead,
   favouritesTableHead,
+  chainsTableHead,
 } from './tableHeaders.tsx';
 import { ChainType, DataType } from '@repo/ui/types';
 import { formatCommission, getAmountFromTx } from './dataHelpers.tsx';
 import { Currency } from '../../components/currency.tsx';
 import { FormattedValue } from '../../components/formattedValue.tsx';
+import { AppType } from 'next/app';
 
 export const createTransactionRows = (
   transactions: TransactionType[],
@@ -887,57 +893,45 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
     : getTableSkeletons(6);
 };
 
-export const createChainRows = (chains: ChainType[], loading: boolean, basePath: string) => {
+export const createChainRows = (chains: CombinedAppsType[], loading: boolean, basePath: string) => {
   return !loading
     ? chains?.map((chain) => {
         return {
           cells: [
             {
               children: (
-                <ImageName
-                  basePath={basePath}
-                  href={`/chains/${chain.chainID}`}
-                  imageUrl={chain.logo.png}
-                  name={chain.displayName ?? chain.chainName}
-                />
+                <ImageName imageUrl={chain.logo?.png} name={chain.displayName ?? chain.chainName} />
               ),
+              className: 'w-72',
             },
             {
-              children: (
-                <FormattedValue
-                  format={'string'}
-                  typographyProps={{ color: 'onBackgroundHigh' }}
-                  value={chain.chainID}
-                />
-              ),
+              children: <StatusBadge status={chain.status} />,
+              className: 'w-44',
             },
             {
-              children: <StatusBadge status={'Active'} />,
+              children: <Currency amount={chain.escrowedKLY} decimals={3} />,
+              className: 'text-right w-52',
             },
-            {
-              children: (
-                <FormattedValue
-                  format={'account'}
-                  value={{
-                    address: 'klyu9hw585j9fcod9ca5qxeffukhd29pyh9drrzhf',
-                    name: 'Chain Creator',
-                  }}
-                />
-              ),
-            },
-            {
-              children: <Currency amount={21302000000000} decimals={0} />,
-            },
-            {
-              children: <FormattedValue format={'fromNow'} value={1599456799} />,
-            },
-            {
-              children: <FormattedValue format={'fromNow'} value={1599456799} />,
-            },
+            chain.logo
+              ? {
+                  children: (
+                    <FlexGrid mobileDirection={'row'} gap={'lg'}>
+                      <Link
+                        className={'contents'}
+                        basePath={basePath}
+                        href={`/chains/${chain.chainID}`}
+                      >
+                        <Button align={'right'} label={'Details'} variant={'bordered'} />
+                      </Link>
+                      <IconButton align={'none'} icon={'LinkExternal'} variant={'quaternary'} />
+                    </FlexGrid>
+                  ),
+                }
+              : { children: null },
           ],
         };
       })
-    : getTableSkeletons(7);
+    : getTableSkeletons(chainsTableHead.length);
 };
 
 export const createUserDetailsTokensRow = (

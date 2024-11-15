@@ -84,3 +84,12 @@ export interface ChainTokenQueryParams {
   offset?: number;
   sort?: string;
 }
+
+export interface AppsQueryParams {
+  chainID?: string;
+  chainName?: string;
+  status?: string;
+  search?: string;
+  limit?: number;
+  offset?: number;
+}

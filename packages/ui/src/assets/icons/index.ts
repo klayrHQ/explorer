@@ -54,6 +54,7 @@ import { GridOne } from './layout/grid-01.tsx';
 import { LayoutAlt } from './layout/layout-alt.tsx';
 import { FilterLines } from './general/filter-lines.tsx';
 import { Check } from './general/check.tsx';
+import {LinkExternal} from "./general/link-external-01.tsx";
 import { CoinsStacked } from './finance/coins-stacked.tsx';
 
 export const icons = {
@@ -113,5 +114,6 @@ export const icons = {
   LayoutAlt,
   FilterLines,
   Check,
+  LinkExternal,
   CoinsStacked,
 };

@@ -4,7 +4,7 @@ import { FontWeight, TypographyVariant } from '../../../types/types.ts';
 import {cls} from "../../../utils/functions.ts";
 
 export interface ImageNameProps {
-  imageUrl: string;
+  imageUrl?: string;
   name: string;
   className?: string;
   color?: string;
@@ -27,7 +27,7 @@ export const ImageName = ({
   const innerComponent = () => {
     return (
       <FlexGrid alignItems={'center'} className={cls([className, href && 'cursor-pointer'])} gap={'2'} mobileDirection={'row'}>
-        <ImageContainer alt={name} src={imageUrl} variant="avatar" imgClassName={'object-cover'} />
+        <ImageContainer alt={name} src={imageUrl ?? ''} variant="avatar" imgClassName={cls(['object-cover', !imageUrl && 'bg-backgroundTertiary'])} />
         <Typography
           color={color ?? 'onBackgroundMedium'}
           fontWeight={fontWeight ?? 'semibold'}
