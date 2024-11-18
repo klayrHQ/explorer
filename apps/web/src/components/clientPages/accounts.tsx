@@ -38,8 +38,6 @@ export const Accounts = () => {
     fetchTokenSummary();
   }
 
-  console.log('marketCap ', tokenSummary?.marketCap);
-
   const rows = createAccountsRows(
     accounts,
     loading,
