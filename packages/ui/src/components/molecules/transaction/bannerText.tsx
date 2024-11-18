@@ -36,7 +36,7 @@ export const BannerText = ({
 }: TransactionBannerProps) => {
   const date = dayjs(timestamp * 1000);
 
-  const fromNowPrefix = dayjs().diff(date, 'hour') >= 1 ? 'on' : 'over';
+  const fromNowPrefix = dayjs().diff(date, 'hour') >= 1 ? 'on' : '';
 
   return (
     <div className="max-w-full flex flex-wrap items-center gap-1.5 mt-5">
@@ -76,10 +76,6 @@ export const BannerText = ({
           />
         </Link>
       )}
-
-      <Typography color="onBackgroundMedium" variant="paragraph-md">
-        {'the amount of'}
-      </Typography>
 
       {/* AMOUNT */}
       <Currency amount={amount ?? 0} decimals={2} fontWeight="semibold" symbol={symbol} />
