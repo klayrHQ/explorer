@@ -5,9 +5,9 @@ import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useSearchParams } from 'next/navigation';
 import { callGetBlocks } from '../../utils/api/apiCalls.tsx';
 import { blockTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import { createBlockRows } from '../../utils/helpers/helper.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { createBlockRows } from '../../utils/helpers/TableHelpers/blockTableHelper.tsx';
 
 export const Blocks = () => {
   const defaultLimit = '10';

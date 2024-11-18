@@ -12,7 +12,6 @@ import {
 } from '@repo/ui/atoms';
 import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { eventsTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import { createEventsRows } from '../../utils/helpers/helper.tsx';
 import { DataType } from '@repo/ui/types';
 import { EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
@@ -22,6 +21,7 @@ import { Currency } from '../currency.tsx';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { FormattedValue } from '../formattedValue.tsx';
 import { shortString } from '@repo/ui/utils';
+import { createEventsRows } from '../../utils/helpers/TableHelpers/eventTableHelper.tsx';
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;

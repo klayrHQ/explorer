@@ -4,7 +4,6 @@ import { FlexGrid, TabButtons } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useEffect, useState } from 'react';
 import { StakesCalculatorPeriodType, TransactionType, ValidatorType } from '../../utils/types';
-import { createStakesOverviewRows, createValidatorsRows } from '../../utils/helpers/helper';
 import {
   stakesOverviewTableHead,
   stakesCalculatorTableHead,
@@ -14,7 +13,9 @@ import { StakeFilters } from '../filterComponents/stakeFilters';
 import { TableCellType } from '@repo/ui/types';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
-import {useIsHorizontallyScrolled} from "../../utils/hooks/useIsHorizontallyScrolled.ts";
+import { useIsHorizontallyScrolled } from '../../utils/hooks/useIsHorizontallyScrolled.ts';
+import { createValidatorsRows } from '../../utils/helpers/TableHelpers/accountTableHelper.tsx';
+import { createStakesOverviewRows } from '../../utils/helpers/TableHelpers/stakeTableHelper.tsx';
 
 export const Stakes = () => {
   const {
@@ -72,7 +73,7 @@ export const Stakes = () => {
   const [isScrolled, scrollRef] = useIsHorizontallyScrolled();
 
   const rowsOverview = createStakesOverviewRows(stakes, loadingStakes, basePath);
-  const rowCalculator = createValidatorsRows(validators, loadingValidators, isScrolled,  true, {
+  const rowCalculator = createValidatorsRows(validators, loadingValidators, isScrolled, true, {
     stakingCalculatorAmount,
     stakingCalculatorPeriod,
     totalActiveStake,

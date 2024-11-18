@@ -2,12 +2,12 @@
 import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { chainsTableHead } from '../../utils/helpers/tableHeaders';
-import { createChainRows } from '../../utils/helpers/helper';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { callGetApps } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
 import { useSearchParams } from 'next/navigation';
+import { createChainRows } from '../../utils/helpers/TableHelpers/chainTableHelper.tsx';
 
 export const Chains = () => {
   const chains = useChainNetworkStore((state) => state.chains);

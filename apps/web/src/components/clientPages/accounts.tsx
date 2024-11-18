@@ -5,8 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
 import { callGetAccounts } from '../../utils/api/apiCalls.tsx';
 import { accountsTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import { createAccountsRows } from '../../utils/helpers/helper.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { createAccountsRows } from '../../utils/helpers/TableHelpers/accountTableHelper.tsx';
 
 export const Accounts = () => {
   const searchParams = useSearchParams();

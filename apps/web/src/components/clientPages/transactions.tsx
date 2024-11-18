@@ -3,7 +3,6 @@ import { FilterBadge, FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { useSearchParams } from 'next/navigation';
 import { transactionTableHead } from '../../utils/helpers/tableHeaders';
-import { createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { callGetTransactions, callGetNetworkStatus } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
 import { useState, useCallback, useMemo, useEffect } from 'react';
@@ -12,6 +11,7 @@ import { TransactionsFilter } from '../filterComponents/transactionsFilter.tsx';
 import React from 'react';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { useFilterManagement } from '../../utils/helpers/filterHandlers.ts';
+import { createTransactionRows } from '../../utils/helpers/TableHelpers/transactionTableHelper.tsx';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();

@@ -17,7 +17,6 @@ import {
   CopyIcon,
 } from '@repo/ui/atoms';
 import { eventsTableHead, transactionTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import { createEventsRows, createTransactionRows } from '../../utils/helpers/helper.tsx';
 import { DataType } from '@repo/ui/types';
 import { getSeedRevealFromAssets, fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { BlockDetailsType, EventsType, TransactionType } from '../../utils/types.ts';
@@ -29,6 +28,8 @@ import { Currency } from '../currency.tsx';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { FormattedValue } from '../formattedValue.tsx';
 import { shortString } from '@repo/ui/utils';
+import { createTransactionRows } from '../../utils/helpers/TableHelpers/transactionTableHelper.tsx';
+import { createEventsRows } from '../../utils/helpers/TableHelpers/eventTableHelper.tsx';
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
