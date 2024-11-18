@@ -13,10 +13,7 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
   const mockChainData = chains?.[0];
 
   const details = [
-    createDetails(
-      'Description',
-      <Typography variant={'paragraph-sm'}>{'Here is the description of the chain'}</Typography>,
-    ),
+    createDetails('Description', <Typography variant={'paragraph-sm'}>{'-'}</Typography>),
     createDetails(
       'Block time',
       <Typography variant={'paragraph-sm'}>{'block time'}</Typography>,
