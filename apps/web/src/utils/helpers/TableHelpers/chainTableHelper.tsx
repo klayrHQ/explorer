@@ -4,6 +4,7 @@ import { Button, FlexGrid, IconButton, Link, StatusBadge } from '@repo/ui/atoms'
 import { Currency } from '../../../components/currency.tsx';
 import { getTableSkeletons } from '../dataHelpers.tsx';
 import { chainsTableHead } from '../tableHeaders.tsx';
+import Placeholder from '../../../assets/images/placeholder.png';
 import React from 'react';
 
 export const createChainRows = (chains: CombinedAppsType[], loading: boolean, basePath: string) => {
@@ -13,7 +14,10 @@ export const createChainRows = (chains: CombinedAppsType[], loading: boolean, ba
           cells: [
             {
               children: (
-                <ImageName imageUrl={chain.logo?.png} name={chain.displayName ?? chain.chainName} />
+                <ImageName
+                  imageUrl={chain.logo?.png ?? Placeholder.src}
+                  name={chain.displayName ?? chain.chainName}
+                />
               ),
               className: 'w-72',
             },
