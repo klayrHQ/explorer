@@ -6,21 +6,24 @@ import {
   currencies,
 } from '../../utils/constants.tsx';
 import { FlexGrid, SkeletonComponent } from '@repo/ui/atoms';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { formatDate, cleanText } from '../../utils/helpers/dataHelpers.tsx';
 import { NewsCardPropsArray, NewsCardProps } from '@repo/ui/types';
-import { callGetTokenSummary } from '../../utils/api/apiCalls.tsx';
-import { PerfomanceStatsType } from '../../utils/types.ts';
 import { Currency } from '../currency.tsx';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+import { tokenSummaryStore } from '../../store/tokenSummaryStore.ts';
 
 export const Home = () => {
   const [news, setNews] = useState<NewsCardPropsArray>([]);
-  const [performanceStats, setPerformanceStats] = useState<PerfomanceStatsType>();
   const [statsVS, setStatsVS] = useState<string>('lastMonth');
   const [loadingStats, setLoadingStats] = useState<boolean>(true);
   const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
+
+  const { tokenSummary, fetchTokenSummary } = tokenSummaryStore((state) => ({
+    tokenSummary: state.tokenSummary,
+    fetchTokenSummary: state.fetchTokenSummary,
+  }));
 
   useEffect(() => {
     const getNews = async () => {
@@ -66,28 +69,9 @@ export const Home = () => {
 
   useEffect(() => {
     setLoadingStats(true);
-    callGetTokenSummary()
-      .then((data) => {
-        const tokenSummary = data.data;
-        const marketCap = tokenSummary.totalSupply.reduce(
-          (acc, token) => acc + parseInt(token.totalSupply),
-          0,
-        );
-        const totalValueLocked = tokenSummary.escrowedAmounts.reduce(
-          (acc, token) => acc + parseInt(token.amount),
-          0,
-        );
-
-        setPerformanceStats({
-          marketCap: marketCap,
-          totalAccounts: tokenSummary.totalAccounts,
-          totalTransactions: tokenSummary.totalTransactions,
-          totalValueLocked: totalValueLocked,
-        });
-        //console.log(data.data);
-      })
-      .finally(() => setLoadingStats(false));
-  }, [currentChain, currentNetwork]);
+    fetchTokenSummary().finally(() => setLoadingStats(false));
+    console.log(tokenSummary);
+  }, [currentChain, currentNetwork, fetchTokenSummary]);
 
   let statsVSString;
 
@@ -118,7 +102,7 @@ export const Home = () => {
       value: loadingStats ? (
         <SkeletonComponent style={{ height: '28px' }} />
       ) : (
-        <Currency amount={performanceStats?.marketCap ?? 0} />
+        <Currency amount={tokenSummary?.marketCap ?? 0} />
       ),
       percentage: '20%',
       statsVS: statsVSString,
@@ -129,7 +113,7 @@ export const Home = () => {
       value: loadingStats ? (
         <SkeletonComponent style={{ height: '28px' }} />
       ) : (
-        (performanceStats?.totalAccounts ?? 0).toLocaleString()
+        (tokenSummary?.totalAccounts ?? 0).toLocaleString()
       ),
       percentage: '9.3%',
       statsVS: statsVSString,
@@ -140,7 +124,7 @@ export const Home = () => {
       value: loadingStats ? (
         <SkeletonComponent style={{ height: '28px' }} />
       ) : (
-        (performanceStats?.totalTransactions ?? 0).toLocaleString()
+        (tokenSummary?.totalTransactions ?? 0).toLocaleString()
       ),
       percentage: '20%',
       statsVS: statsVSString,
@@ -151,7 +135,7 @@ export const Home = () => {
       value: loadingStats ? (
         <SkeletonComponent style={{ height: '28px' }} />
       ) : (
-        <Currency amount={performanceStats?.totalValueLocked ?? 0} />
+        <Currency amount={tokenSummary?.totalValueLocked ?? 0} />
       ),
       percentage: '9.3%',
       statsVS: statsVSString,
