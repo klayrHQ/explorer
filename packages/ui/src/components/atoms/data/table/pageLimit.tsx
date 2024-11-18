@@ -15,14 +15,11 @@ const itemsOptions = [
 
 export const PageLimit = ({ defaultValue, onPerPageChange }: PageLimitProps) => {
   return (
-    <div className={'flex items-center gap-2'}>
-      <Typography color="onBackgroundLow" fontWeight="semibold" variant="paragraph-sm">
-        {'Show'}
+    <div className={'flex items-center gap-2 shrink-0'}>
+      <Typography color="onBackgroundLow" variant="paragraph-sm">
+        {'Records per page'}
       </Typography>
       <SelectUp defaultValue={defaultValue} onChange={onPerPageChange} options={itemsOptions} />
-      <Typography color="onBackgroundLow" fontWeight="semibold" variant="paragraph-sm">
-        {'Records'}
-      </Typography>
     </div>
   );
 };
