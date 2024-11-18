@@ -45,11 +45,7 @@ export const Sidebar = ({ menuItems, logo, basePath }: SidebarProps) => {
       ])}
       direction={'col'}
     >
-      <Logo
-        {...logo}
-        className={isMinimized ? ' items-center justify-center' : ''}
-        minimized={isMinimized}
-      />
+      <Logo {...logo} minimized={isMinimized} />
       <MainMenu basePath={basePath} menuItems={menuItems} minimized={isMinimized} />
       <IconButton
         className={

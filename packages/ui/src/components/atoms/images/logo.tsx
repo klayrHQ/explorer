@@ -23,7 +23,7 @@ export const Logo = ({
     <Link basePath={basePath} href="/">
       <FlexGrid className={className}>
         {!minimized && logoFullSrc ? (
-          <img alt={altText} className={' mt-md mb-lxl'} src={logoFullSrc} />
+          <img alt={altText} className={' mt-md mb-lxl ml-3'} src={logoFullSrc} />
         ) : (
           <img
             alt={altText}
