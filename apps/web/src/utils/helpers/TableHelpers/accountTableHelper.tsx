@@ -5,7 +5,8 @@ import { FormattedValue } from '../../../components/formattedValue.tsx';
 import { NotificationIcon, StatusBadge, Typography } from '@repo/ui/atoms';
 import { cls, fromNowFormatter } from '@repo/ui/utils';
 import { Currency } from '../../../components/currency.tsx';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { tokenSummaryStore } from '../../../store/tokenSummaryStore.ts';
 
 export const createValidatorsRows = (
   validators: ValidatorType[],
@@ -226,7 +227,12 @@ export const createValidatorsRows = (
       })
     : getTableSkeletons(columnCount);
 };
-export const createAccountsRows = (accounts: AccountType[], loading: boolean, basePath: string) => {
+export const createAccountsRows = (
+  accounts: AccountType[],
+  loading: boolean,
+  basePath: string,
+  totalSupply: string,
+) => {
   return !loading
     ? accounts?.map((account, index) => {
         return {
@@ -311,7 +317,14 @@ export const createAccountsRows = (accounts: AccountType[], loading: boolean, ba
             },
             {
               //mock_data
-              children: <FormattedValue format={'percentage'} value={0} />,
+              children: (
+                <FormattedValue
+                  format={'percentage'}
+                  value={Number(
+                    ((Number(account?.totalBalance) || 0) / Number(totalSupply || 1)) * 100,
+                  )}
+                />
+              ),
               className: 'text-right',
             },
           ],
