@@ -3,9 +3,9 @@
 import { FlexGrid, ViewSwitcher } from '@repo/ui/atoms';
 import { SectionHeader } from '@repo/ui/organisms';
 import { nftsPageTableHead } from '../../utils/helpers/tableHeaders';
-import { createNftsPageRows } from '../../utils/helpers/helper';
 import React, { useState } from 'react';
 import { NftCard, Table } from '@repo/ui/molecules';
+import { createNftsPageRows } from '../../utils/helpers/TableHelpers/nftTableHelper.tsx';
 
 const nfts = [
   {

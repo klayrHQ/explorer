@@ -3,10 +3,10 @@
 import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { tokensTableHead } from '../../utils/helpers/tableHeaders';
-import { createTokensRows } from '../../utils/helpers/helper';
 import { useState } from 'react';
 import { TokenType } from '../../utils/types';
-import {useBasePath} from "../../utils/hooks/useBasePath.ts";
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { createTokensRows } from '../../utils/helpers/TableHelpers/tokenTableHelper.tsx';
 
 export const Tokens = () => {
   const [loading, setLoading] = useState<boolean>(false);

@@ -12,11 +12,11 @@ import {
 } from '@repo/ui/atoms';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { FavouriteType } from '../../utils/types.ts';
-import { createFavouritesRows } from '../../utils/helpers/helper.tsx';
 import { useSearchStore } from '../../store/searchStore.ts';
 import { useFavouritesStore, useInitializeFavourites } from '../../store/favouritesStore.ts';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { FormattedValue } from '../formattedValue.tsx';
+import { createFavouritesRows } from '../../utils/helpers/TableHelpers/favouriteTableHelper.tsx';
 
 export const Favourites = () => {
   useInitializeFavourites();

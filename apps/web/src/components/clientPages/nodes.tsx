@@ -2,10 +2,10 @@
 import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { nodesTableHead } from '../../utils/helpers/tableHeaders';
-import { createNodesRows } from '../../utils/helpers/helper.tsx';
 import { useState, useEffect } from 'react';
 import { callGetNodes } from '../../utils/api/apiCalls.tsx';
 import { NodeType } from '../../utils/types.ts';
+import { createNodesRows } from '../../utils/helpers/TableHelpers/nodeTableHelper.tsx';
 
 export const Nodes = () => {
   const [loading, setLoading] = useState(false);

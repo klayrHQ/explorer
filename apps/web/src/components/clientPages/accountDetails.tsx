@@ -32,14 +32,6 @@ import {
   validatorBlocksTableHead,
   nftsTableHead,
 } from '../../utils/helpers/tableHeaders.tsx';
-import {
-  createTransactionRows,
-  createValidatorEventsRow,
-  createValidatorOutgoingStakeRows,
-  createUserDetailsTokensRow,
-  createValidatorBlockRows,
-  createNftsRows,
-} from '../../utils/helpers/helper.tsx';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
@@ -49,6 +41,12 @@ import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { shortString } from '@repo/ui/utils';
 import { FormattedValue } from '../formattedValue.tsx';
 import { Currency } from '../currency.tsx';
+import { createTransactionRows } from '../../utils/helpers/TableHelpers/transactionTableHelper.tsx';
+import { createValidatorOutgoingStakeRows } from '../../utils/helpers/TableHelpers/stakeTableHelper.tsx';
+import { createValidatorBlockRows } from '../../utils/helpers/TableHelpers/blockTableHelper.tsx';
+import { createValidatorEventsRow } from '../../utils/helpers/TableHelpers/eventTableHelper.tsx';
+import { createUserDetailsTokensRow } from '../../utils/helpers/TableHelpers/tokenTableHelper.tsx';
+import { createNftsRows } from '../../utils/helpers/TableHelpers/nftTableHelper.tsx';
 
 //MOCK NFTs
 const nfts = [
