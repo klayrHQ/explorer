@@ -41,7 +41,7 @@ export const ChainDetailsBanner = ({
             </Typography>
           </div>
         </FlexGrid>
-        <div className="flex items-center gap-1.5">
+        <div className="hidden desktop:flex items-center gap-1.5">
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'a total of '}
           </Typography>

@@ -25,6 +25,7 @@ interface DetailsSectionsProps {
     };
     value: ReactNode;
     mobileWidth?: 'full' | 'half' | string;
+    noTruncate?: boolean;
   }[];
   json?: DataType;
 }
@@ -147,7 +148,7 @@ export const DetailsSection = ({
         mobileDirection={'row'}
         wrap
       >
-        {data.map(({ label, value, mobileWidth }, index) => (
+        {data.map(({ label, value, mobileWidth, noTruncate }, index) => (
           <FlexGrid
             className={cls([
               'w-full desktop:gap-1.5xl',
@@ -185,7 +186,7 @@ export const DetailsSection = ({
               )}
             </FlexGrid>
             <div className={'w-full inline-flex'}>
-              <Typography className={'truncate max-w-full inline-block'} variant={'paragraph-sm'}>
+              <Typography className={cls(['max-w-full inline-block', !noTruncate && 'truncate'])} variant={'paragraph-sm'}>
                 {value}
               </Typography>
             </div>

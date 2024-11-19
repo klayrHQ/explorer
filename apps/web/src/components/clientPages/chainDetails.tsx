@@ -80,6 +80,8 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
     createDetails(
       'Description',
       <Typography variant={'paragraph-sm'}>{chainMeta?.description ?? '-'}</Typography>,
+      undefined,
+      true,
     ),
     createDetails(
       'Chain Icon',
