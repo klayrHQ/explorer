@@ -57,9 +57,19 @@ export const TransactionsFilter = ({
     valueFrom ||
     valueTo;
 
+  const totalSelectedFilters =
+    Object.values(checkedItems).reduce(
+      (acc, values) => acc + Object.values(values).filter((isChecked) => isChecked).length,
+      0,
+    ) +
+    (valueFrom ? 1 : 0) +
+    (valueTo ? 1 : 0);
+
   return (
-    <div className={`relative flex flex-row items-center w-full gap-4 min-w-18 justify-between`}>
-      <div className="flex gap-4 flex-wrap">
+    <div
+      className={`relative flex flex-row items-center w-full gap-4 min-w-18 justify-end desktop:justify-between`}
+    >
+      <div className="hidden desktop:flex gap-4 flex-wrap">
         {filterValues.moduleCommand &&
           filterValues.moduleCommand.split(',').map((filter, index) => {
             const [category, value] = filter.split(':');
@@ -94,13 +104,20 @@ export const TransactionsFilter = ({
         {hasSelectedFilters && (
           <Button onClick={handleClear} label="Clear All" variant="transparent" />
         )}
-        <IconButton
-          active={isAccordionOpen}
-          className=""
-          icon="FilterLines"
-          onClick={() => setIsAccordionOpen(!isAccordionOpen)}
-          variant="tertiary"
-        />
+        <div className="relative">
+          <IconButton
+            active={isAccordionOpen}
+            className="relative"
+            icon="FilterLines"
+            onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+            variant="tertiary"
+          />
+          {totalSelectedFilters > 0 && (
+            <div className="absolute  -top-1 -right-1 w-4 h-4 bg-volt text-gray-7 rounded-full flex items-center justify-center text-xs">
+              {totalSelectedFilters}
+            </div>
+          )}
+        </div>
       </div>
 
       <Modal open={isAccordionOpen} onClose={() => setIsAccordionOpen(false)} title="Filters">
