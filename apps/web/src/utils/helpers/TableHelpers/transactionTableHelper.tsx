@@ -9,6 +9,7 @@ import { Currency } from '../../../components/currency.tsx';
 import { getAmountFromTx, getTableSkeletons } from '../dataHelpers.tsx';
 import { TxDataPopover } from '@repo/ui/molecules';
 import React from 'react';
+import Placeholder from '../../../assets/images/placeholder.png';
 
 export const createTransactionRows = (
   transactions: TransactionType[],
@@ -29,7 +30,7 @@ export const createTransactionRows = (
       return isTheChain;
     });
     const logo = fromChain?.logo.png;
-    return logo;
+    return logo ?? Placeholder.src;
   };
 
   return !loading
@@ -93,7 +94,7 @@ export const createTransactionRows = (
                           alt="Chain Icon"
                           className="absolute -left-2 bottom-4 rounded-full"
                           height={20}
-                          src={chainLogo.png}
+                          src={chainLogo.png ?? Placeholder.src}
                           width={20}
                         />
                       ) : null
