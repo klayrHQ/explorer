@@ -1,7 +1,7 @@
 'use client';
 
 import { FlexGrid, TabButtons, ViewSwitcher } from '@repo/ui/atoms';
-import { DetailsSection, TableContainer, AccountBanner, ValidatorBanner } from '@repo/ui/organisms';
+import {DetailsSection, TableContainer, AccountBanner, ValidatorBanner, SectionHeader} from '@repo/ui/organisms';
 import {
   AccountType,
   TransactionType,
@@ -30,7 +30,7 @@ import {
   validatorStakeOutgoingTableHead,
   userTokensTableHead,
   validatorBlocksTableHead,
-  nftsTableHead,
+  nftsTableHead, validatorStakeIncomingTableHead,
 } from '../../utils/helpers/tableHeaders.tsx';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
@@ -42,7 +42,10 @@ import { shortString } from '@repo/ui/utils';
 import { FormattedValue } from '../formattedValue.tsx';
 import { Currency } from '../currency.tsx';
 import { createTransactionRows } from '../../utils/helpers/TableHelpers/transactionTableHelper.tsx';
-import { createValidatorOutgoingStakeRows } from '../../utils/helpers/TableHelpers/stakeTableHelper.tsx';
+import {
+  createValidatorIncomingStakeRows,
+  createValidatorOutgoingStakeRows
+} from '../../utils/helpers/TableHelpers/stakeTableHelper.tsx';
 import { createValidatorBlockRows } from '../../utils/helpers/TableHelpers/blockTableHelper.tsx';
 import { createValidatorEventsRow } from '../../utils/helpers/TableHelpers/eventTableHelper.tsx';
 import { createUserDetailsTokensRow } from '../../utils/helpers/TableHelpers/tokenTableHelper.tsx';
@@ -524,7 +527,37 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     },
   ];
 
-  const [currentView, setCurrentView] = useState(nftViews[0].name);
+  const [currentViewNfts, setCurrentViewNfts] = useState(nftViews[0].name);
+
+  const incomingStake = createValidatorIncomingStakeRows(incomingStakes, loading, basePath);
+
+  const stakeViews = [
+    {
+      name: 'Outgoing',
+      view: (
+        <Table
+          className={'w-full'}
+          headCols={validatorStakeOutgoingTableHead}
+          keyPrefix={'validator-blocks'}
+          rows={outgoingStake}
+        />
+      ),
+    },
+    {
+      name: 'Incoming',
+      view: (
+        <Table
+          className={'w-full'}
+          headCols={validatorStakeIncomingTableHead}
+          keyPrefix={'validator-blocks'}
+          rows={incomingStake}
+        />
+      ),
+      disabled: !isValidator,
+    },
+  ];
+
+  const [currentViewStakes, setCurrentViewStakes] = useState(stakeViews[0].name);
 
   const tabs = [
     {
@@ -600,22 +633,21 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       value: isValidator ? 5 : 3,
       label: 'Stakes',
       icon: 'LayersThree',
-      count: outgoingStakes.length,
       content: (
-        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <TableContainer
-            headCols={validatorStakeOutgoingTableHead}
-            keyPrefix={'validator-stakes'}
-            rows={outgoingStake}
+        <div className={'w-full relative mb-10 pt-5xl'}>
+          <ViewSwitcher
+            views={stakeViews}
+            currentView={currentViewStakes}
+            setCurrentView={setCurrentViewStakes}
           />
-        </FlexGrid>
+        </div>
       ),
     },
     {
       value: isValidator ? 6 : 4,
       label: 'Tokens',
       icon: 'CoinsStacked',
-      count: outgoingStakes.length,
+      count: tokens.length,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           <TableContainer
@@ -634,8 +666,8 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <div className={'w-full relative mb-10 pt-5xl'}>
           <ViewSwitcher
             views={nftViews}
-            currentView={currentView}
-            setCurrentView={setCurrentView}
+            currentView={currentViewNfts}
+            setCurrentView={setCurrentViewNfts}
           />
         </div>
       ),
