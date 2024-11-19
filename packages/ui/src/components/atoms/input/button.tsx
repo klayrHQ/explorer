@@ -4,7 +4,7 @@ import { Typography } from '../base/typography';
 import { cva } from 'class-variance-authority';
 
 interface ButtonProps extends ButtonOwnProps {
-  variant?: 'primary' | 'secondary' | 'transparent' | 'bordered';
+  variant?: 'primary' | 'secondary' | 'transparent' | 'bordered' | 'semiTransparent';
   className?: string;
   fullWidth?: boolean;
   label: string | React.ReactNode;
@@ -28,6 +28,7 @@ const buttonStyles = cva(
         secondary: 'text-gray-1',
         transparent: 'text-gray-1',
         bordered: 'text-gray-1',
+        semiTransparent: 'text-gray-1',
       },
       iconOnly: {
         true: 'p-xl w-iconButtonWidth',
@@ -50,7 +51,7 @@ const buttonStyles = cva(
         false: '',
       },
       disabled: {
-        true: '',
+        true: 'cursor-not-allowed',
         false: '',
       },
       active: {
@@ -108,7 +109,19 @@ const buttonStyles = cva(
         disabled: false,
         className: 'transparent hover:bg-gray-7 border-1 border-borderMedium ',
       },
-
+      {
+        hovered: true,
+        variant: 'semiTransparent',
+        disabled: false,
+        className: 'bg-gray-6',
+      },
+      {
+        hovered: false,
+        variant: 'semiTransparent',
+        disabled: false,
+        active: false,
+        className: 'bg-transparent hover:bg-gray-6',
+      },
       //active
       {
         active: true,
@@ -158,26 +171,41 @@ const buttonStyles = cva(
         disabled: false,
         className: 'text-gray-5 hover:text-gray-6 border-1 border-borderMedium',
       },
+      {
+        active: true,
+        variant: 'semiTransparent',
+        className: 'bg-gray-6',
+      },
+      {
+        active: false,
+        variant: 'semiTransparent',
+        className: 'bg-transparent hover:bg-gray-6',
+      },
       //disabled
       {
         disabled: true,
         variant: 'primary',
-        className: 'grayscale-60p bg-volt cursor-not-allowed',
+        className: 'grayscale-60p bg-volt',
       },
       {
         disabled: true,
         variant: 'secondary',
-        className: 'grayscale-60p bg-azule cursor-not-allowed',
+        className: 'grayscale-60p bg-azule',
       },
       {
         disabled: true,
         variant: 'transparent',
-        className: 'grayscale-60p cursor-not-allowed',
+        className: 'grayscale-60p',
       },
       {
         disabled: true,
         variant: 'bordered',
-        className: 'grayscale-60p cursor-not-allowed border-1 border-borderMedium',
+        className: 'grayscale-60p border-1 border-borderMedium',
+      },
+      {
+        disabled: true,
+        variant: 'semiTransparent',
+        className: 'hover:bg-gray-7',
       },
     ],
   },

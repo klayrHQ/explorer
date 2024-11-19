@@ -4,12 +4,14 @@ import { IconComponent } from '../../../types/types.ts';
 import { IconButton } from '../input/iconButton.tsx';
 import { FlexGrid } from '../base/flexGrid.tsx';
 import { NumberListProps, Pagination } from '../data/table/pagination.tsx';
+import { Button } from '../input/button.tsx';
 
 interface ViewSwitcherProps {
   views: {
     view: ReactNode;
     name: string;
-    icon: IconComponent;
+    icon?: IconComponent;
+    disabled?: boolean;
   }[];
   currentView: string;
   setCurrentView: (view: string) => void;
@@ -17,7 +19,13 @@ interface ViewSwitcherProps {
   filterComponent?: ReactNode;
 }
 
-export const ViewSwitcher = ({ views, paginationProps, filterComponent, currentView, setCurrentView }: ViewSwitcherProps) => {
+export const ViewSwitcher = ({
+  views,
+  paginationProps,
+  filterComponent,
+  currentView,
+  setCurrentView,
+}: ViewSwitcherProps) => {
   const currentViewObject = views.find(({ name }) => name === currentView);
 
   return (
@@ -35,15 +43,27 @@ export const ViewSwitcher = ({ views, paginationProps, filterComponent, currentV
       >
         {filterComponent}
         <FlexGrid className={'bg-backgroundSecondary rounded-md'} mobileDirection={'row'} gap={'0'}>
-          {views.map(({ name, icon }) => (
-            <IconButton
-              active={currentView === name}
-              icon={icon}
-              key={`view-button-${name}`}
-              onClick={() => setCurrentView(name)}
-              variant={'semiTransparent'}
-            />
-          ))}
+          {views.map(({ name, icon, disabled }) =>
+            icon ? (
+              <IconButton
+                active={currentView === name}
+                disabled={disabled}
+                icon={icon}
+                key={`view-button-${name}`}
+                onClick={() => setCurrentView(name)}
+                variant={'semiTransparent'}
+              />
+            ) : (
+              <Button
+                active={currentView === name}
+                disabled={disabled}
+                label={name}
+                key={`view-button-${name}`}
+                onClick={() => setCurrentView(name)}
+                variant={'semiTransparent'}
+              />
+            ),
+          )}
         </FlexGrid>
       </FlexGrid>
       <FlexGrid className={'w-full'}>{currentViewObject?.view}</FlexGrid>
