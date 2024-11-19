@@ -46,10 +46,10 @@ export const ChainDetailsBanner = ({
             {'a total of '}
           </Typography>
           <Currency
-            amount={21302000000000}
-            decimals={0}
+            amount={locked}
+            decimals={3}
             fontWeight="semibold"
-            symbol={chain?.tokens[0]?.symbol}
+            symbol={'KLY'}
           />
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'is locked and the chain status is'}

@@ -1,5 +1,5 @@
 'use client';
-import { FlexGrid, ImageContainer, Link, StatusBadge } from '@repo/ui/atoms';
+import {Currency, FlexGrid, ImageContainer, Link, StatusBadge} from '@repo/ui/atoms';
 import { DetailsSection } from '@repo/ui/organisms';
 import { createDetails } from '../../utils/helpers/dataHelpers';
 import BannerBG from '../../assets/images/bannerBG.png';
@@ -8,13 +8,34 @@ import { ChainDetailsBanner } from '@repo/ui/organisms';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { FormattedValue } from '../formattedValue.tsx';
 import Placeholder from '../../assets/images/placeholder.png';
+import {useCallback, useEffect, useState} from "react";
+import {AppsType} from "../../utils/types.ts";
+import {debounce} from "lodash";
+import {callGetApps} from "../../utils/api/apiCalls.tsx";
 
 export const ChainDetails = ({ params }: { params: { id: string } }) => {
   const chains = useChainNetworkStore((state) => state.chains);
-  const chain = chains?.find((chain) => chain.chainID === params.id);
+  const chainMeta = chains?.find((chain) => chain.chainID === params.id);
+  const [chainApp, setChainApp] = useState<AppsType>();
 
-  const serviceURLDetails = chain?.serviceURLs
-    ? chain?.serviceURLs?.map((serviceURL) => {
+  const fetchData = useCallback(
+    debounce(async () => {
+      try {
+        const response = await callGetApps({chainID: params.id});
+        setChainApp(response.data[0]);
+      } catch (error) {
+        console.error(error);
+      }
+    }, 300),
+    []
+  );
+
+  useEffect(() => {
+    fetchData();
+  }, [chainMeta]);
+
+  const serviceURLDetails = chainMeta?.serviceURLs
+    ? chainMeta?.serviceURLs?.map((serviceURL) => {
         return (
           createDetails(
             'http',
@@ -43,42 +64,43 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
       'Chain ID',
       <FormattedValue
         format={'string'}
-        value={chain?.chainID ?? ''}
+        value={chainMeta?.chainID ?? ''}
         copy
         typographyProps={{ color: 'onBackgroundHigh' }}
       />,
     ),
     createDetails(
       'Chain Name',
-      <Typography variant={'paragraph-sm'}>{chain?.chainName}</Typography>,
+      <Typography variant={'paragraph-sm'}>{chainMeta?.chainName}</Typography>,
     ),
     createDetails(
       'Display Name',
-      <Typography variant={'paragraph-sm'}>{chain?.displayName}</Typography>,
+      <Typography variant={'paragraph-sm'}>{chainMeta?.displayName}</Typography>,
     ),
     createDetails(
       'Description',
-      <Typography variant={'paragraph-sm'}>{chain?.description ?? '-'}</Typography>,
+      <Typography variant={'paragraph-sm'}>{chainMeta?.description ?? '-'}</Typography>,
     ),
     createDetails(
       'Chain Icon',
       <ImageContainer
-        alt={chain?.displayName ?? chain?.chainName ?? ''}
-        src={chain?.logo.png ?? chain?.logo.svg ?? Placeholder.src}
+        alt={chainMeta?.displayName ?? chainMeta?.chainName ?? ''}
+        src={chainMeta?.logo.png ?? chainMeta?.logo.svg ?? Placeholder.src}
         variant={'avatar'}
       />,
     ),
-    createDetails('Status', <StatusBadge status={chain?.status ?? 'inactive'} />),
+    createDetails('Total Locked', <Currency amount={Number(chainApp?.escrowedKLY)} symbol={'KLY'} />),
+    createDetails('Status', <StatusBadge status={chainMeta?.status ?? 'inactive'} />),
     createDetails(
-      'Network Type',
-      <Typography variant={'paragraph-sm'}>{chain?.networkType}</Typography>,
+      'Network',
+      <Typography variant={'paragraph-sm'}>{chainMeta?.networkType}</Typography>,
     ),
     createDetails(
       'Project Page',
-      chain?.projectPage ? (
-        <Link href={chain?.projectPage} outgoing>
+      chainMeta?.projectPage ? (
+        <Link href={chainMeta?.projectPage} outgoing>
           <Typography className={'underline'} variant={'paragraph-sm'} link>
-            {chain?.projectPage}
+            {chainMeta?.projectPage}
           </Typography>
         </Link>
       ) : (
@@ -87,10 +109,10 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
     ),
     createDetails(
       'Genesis URL',
-      chain?.genesisURL ? (
-        <Link href={chain?.genesisURL} outgoing>
+      chainMeta?.genesisURL ? (
+        <Link href={chainMeta?.genesisURL} outgoing>
           <Typography className={'underline'} variant={'paragraph-sm'} link>
-            {chain?.genesisURL}
+            {chainMeta?.genesisURL}
           </Typography>
         </Link>
       ) : (
@@ -101,13 +123,13 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
       'Service URLs',
       <FlexGrid direction={'col'} gap={'md'}>
         <FormattedValue
-          value={chain?.serviceURLs[0]?.http}
+          value={chainMeta?.serviceURLs[0]?.http}
           format={'string'}
           copy
           typographyProps={{ color: 'onBackgroundHigh' }}
         />
         <FormattedValue
-          value={chain?.serviceURLs[0]?.ws}
+          value={chainMeta?.serviceURLs[0]?.ws}
           format={'string'}
           copy
           typographyProps={{ color: 'onBackgroundHigh' }}
@@ -119,10 +141,10 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <ChainDetailsBanner
-        chain={chain}
+        chain={chainMeta}
         image={BannerBG.src}
-        locked={0}
-        logo={chain?.logo.png ?? chain?.logo.svg ?? Placeholder.src}
+        locked={Number(chainApp?.escrowedKLY)}
+        logo={chainMeta?.logo.png ?? chainMeta?.logo.svg ?? Placeholder.src}
         status={'Active'}
       />
       <DetailsSection data={details} title="Chain details" />
