@@ -1,12 +1,12 @@
 'use client';
 import { Topbar } from '@repo/ui/organisms';
-import { Icon, MenuItemProps, Typography } from '@repo/ui/atoms';
+import {Icon, MenuItemProps, SkeletonComponent, Typography} from '@repo/ui/atoms';
 import { useSearchStore } from '../../store/searchStore.ts';
 import React from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { useChainNetworkStore, useInitializeCurrentChain } from '../../store/chainNetworkStore.ts';
-import { useNodeStore } from '../../store/nodeStore.ts';
+import {useNodeStore, useUpdateNodeInfo} from '../../store/nodeStore.ts';
 import useMarketcap from '../../utils/hooks/useMarketcap.ts';
 import {FormattedValue} from "../formattedValue.tsx";
 
@@ -21,6 +21,7 @@ interface TopbarClientProps {
 
 export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   useInitializeCurrentChain();
+  useUpdateNodeInfo();
   const {
     // marketcap,
     trend,
@@ -44,8 +45,14 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   const kpisObject = [
     {
       keyValue: 'Height: ',
-      contentValue: (
-        <FormattedValue value={nodeInfo?.height} format={'number'} typographyProps={{fontWeight: 'medium'}} />
+      contentValue: nodeInfo?.height ? (
+        <FormattedValue
+          value={nodeInfo?.height}
+          format={'number'}
+          typographyProps={{ fontWeight: 'medium' }}
+        />
+      ) : (
+        <SkeletonComponent width={'16'} height={'4'} />
       ),
       className: 'hidden desktop:flex',
     },
