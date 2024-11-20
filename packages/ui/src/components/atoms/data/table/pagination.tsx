@@ -78,24 +78,28 @@ export const Pagination = ({
             onClick={handleFirstPage}
             variant="bordered"
             disabled={currentNumber === 1}
+            aria-label="First Page"
           />
           <IconButton
             icon="ChevronLeft"
             onClick={handlePreviousPage}
             variant="bordered"
             disabled={currentNumber === 1}
+            aria-label="Previous Page"
           />
           <IconButton
             icon="ChevronRight"
             onClick={handleNextPage}
             variant="bordered"
             disabled={currentNumber === totalPages}
+            aria-label="Next Page"
           />
           <IconButton
             icon="ChevronRightDouble"
             onClick={handleLastPage}
             variant="bordered"
             disabled={currentNumber === totalPages}
+            aria-label="Last Page"
           />
         </div>
       </div>

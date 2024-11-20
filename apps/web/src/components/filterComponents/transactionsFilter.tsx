@@ -102,7 +102,12 @@ export const TransactionsFilter = ({
 
       <div className="flex gap-2 shrink-0">
         {hasSelectedFilters && (
-          <Button onClick={handleClear} label="Clear All" variant="transparent" />
+          <Button
+            onClick={handleClear}
+            label="Clear All"
+            variant="transparent"
+            aria-label="clear all"
+          />
         )}
         <div className="relative">
           <IconButton
@@ -111,6 +116,7 @@ export const TransactionsFilter = ({
             icon="FilterLines"
             onClick={() => setIsAccordionOpen(!isAccordionOpen)}
             variant="tertiary"
+            aria-label="filter"
           />
           {totalSelectedFilters > 0 && (
             <div className="absolute  -top-1 -right-1 w-4 h-4 bg-volt text-gray-7 rounded-full flex items-center justify-center text-xs">
@@ -184,6 +190,7 @@ export const TransactionsFilter = ({
                       icon="CrossClose"
                       onClick={handleClearTo}
                       size="xxs"
+                      aria-label="close"
                     />
                   </div>
                 }
@@ -204,8 +211,9 @@ export const TransactionsFilter = ({
               disabled={isErrorFrom || isErrorTo}
               label="Apply"
               variant="primary"
+              aria-label="apply"
             />
-            <Button onClick={handleClear} label="Clear" variant="transparent" />
+            <Button onClick={handleClear} label="Clear" variant="transparent" aria-label="clear" />
           </div>
         </div>
       </Modal>
