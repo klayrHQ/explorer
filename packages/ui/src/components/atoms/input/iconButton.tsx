@@ -238,6 +238,11 @@ const iconButtonStyles = cva(['rounded-md block'], {
       variant: 'transparent',
       className: 'grayscale-60p cursor-not-allowed',
     },
+    {
+      disabled: true,
+      variant: 'bordered',
+      className: 'opacity-50p cursor-not-allowed',
+    },
   ],
 });
 
