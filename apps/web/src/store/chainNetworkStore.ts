@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
 import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
@@ -33,7 +33,6 @@ export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
 export const useInitializeCurrentChain = () => {
   const setChains = useChainNetworkStore((state) => state.setChains);
   const setCurrentChain = useChainNetworkStore((state) => state.setCurrentChain);
-  const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
@@ -45,6 +44,7 @@ export const useInitializeCurrentChain = () => {
 
   const searchParams = useSearchParams();
   const hasMounted = useRef(false);
+  const router = useRouter();
 
   useEffect(() => {
     const networkParam = searchParams.get('network');
@@ -57,11 +57,8 @@ export const useInitializeCurrentChain = () => {
         setBaseUrl(gateways.testnet);
       }
     }
-    //console.log('running network effect')
     networkParam && networks.includes(networkParam) && setCurrentNetwork(networkParam);
-  }, [searchParams, pathName]);
 
-  useEffect(() => {
     const fetchChains = async () => {
       try {
         // Fetch chains
@@ -87,15 +84,12 @@ export const useInitializeCurrentChain = () => {
 
         const chainParam = searchParams.get('app');
         const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === chainParam);
-        const chainMatch = matchingChains?.find((chain) => chain.networkType === currentNetwork);
-        //console.log('matchingChains', matchingChains, '\napp', chainParam, '\nchains', chainsWithTokens, '\nchainMatch', chainMatch);
+        const chainMatch = matchingChains?.find((chain) => chain.networkType === networkParam);
         if (chainMatch) {
-          //console.log('baseUrl', chainMatch.serviceURLs[0]);
           chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
           setCurrentChain(chainMatch);
         } else if (pathName.split('/')[2] !== '404') {
-          console.error('404 no matching chain');
-          //router.push('/klayr_mainchain/404');
+          router.push('/klayr_mainchain/404');
         }
       } catch (error) {
         console.error('Error fetching chains', error);
@@ -107,5 +101,5 @@ export const useInitializeCurrentChain = () => {
     } else {
       hasMounted.current = true;
     }
-  }, [currentNetwork, pathName]);
+  }, [searchParams, pathName]);
 };
