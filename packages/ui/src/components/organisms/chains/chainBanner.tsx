@@ -2,7 +2,7 @@ import { BannerFrame, Currency, ImageContainer, StatusBadge, Typography } from '
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
 import Link from 'next/link';
-import {ChainType} from "../../../types/types.ts";
+import { ChainType } from '../../../types/types.ts';
 
 interface ChainDetailsBannerProps {
   image: string;
@@ -31,21 +31,30 @@ export const ChainDetailsBanner = ({
             />
           </Link>
           <div className="flex items-center gap-2">
-            <ImageContainer alt={chain?.chainName ?? ''} src={logo} variant="avatarLg" />
+            <ImageContainer
+              alt={chain?.displayName ?? chain?.chainName ?? ''}
+              src={logo}
+              variant="avatarLg"
+            />
             <Typography fontWeight="bold" variant={'h3'}>
-              {chain?.chainName}
+              {chain?.displayName ?? chain?.chainName}
             </Typography>
           </div>
         </FlexGrid>
-        <div className="flex items-center gap-1.5">
+        <div className="hidden desktop:flex items-center gap-1.5">
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'a total of '}
           </Typography>
-          <Currency amount={21302000000000} decimals={0} fontWeight="semibold" symbol={chain?.tokens[0]?.symbol} />
+          <Currency
+            amount={locked}
+            decimals={3}
+            fontWeight="semibold"
+            symbol={'KLY'}
+          />
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'is locked and the chain status is'}
           </Typography>
-          <StatusBadge status={'active'} />
+          <StatusBadge status={chain?.status ?? 'inactive'} />
         </div>
       </div>
     </BannerFrame>

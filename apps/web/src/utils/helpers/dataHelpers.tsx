@@ -104,6 +104,6 @@ export const convertKLYToBeddows = (lskAmount?: string): string => {
   return beddowsAmountBigInt.toString();
 };
 
-export const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
-  return { label: { label }, value, mobileWidth };
+export const createDetails = (label: string, value: any = ' - ', mobileWidth?: string, noTruncate?: boolean) => {
+  return { label: { label }, value, mobileWidth, noTruncate };
 };
