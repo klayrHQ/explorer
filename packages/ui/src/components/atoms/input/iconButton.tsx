@@ -50,7 +50,7 @@ const iconButtonStyles = cva(['rounded-md block'], {
       false: '',
     },
     disabled: {
-      true: 'hover:bg-transparent hover:text-onBackgroundMedium text-onBackgroundLow ',
+      true: ' ',
       false: '',
     },
     active: {
@@ -237,6 +237,11 @@ const iconButtonStyles = cva(['rounded-md block'], {
       disabled: true,
       variant: 'transparent',
       className: 'grayscale-60p cursor-not-allowed',
+    },
+    {
+      disabled: true,
+      variant: 'bordered',
+      className: 'opacity-50p cursor-not-allowed',
     },
   ],
 });
