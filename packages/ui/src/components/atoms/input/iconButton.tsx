@@ -50,7 +50,7 @@ const iconButtonStyles = cva(['rounded-md block'], {
       false: '',
     },
     disabled: {
-      true: '',
+      true: 'hover:bg-transparent hover:text-onBackgroundMedium text-onBackgroundLow ',
       false: '',
     },
     active: {

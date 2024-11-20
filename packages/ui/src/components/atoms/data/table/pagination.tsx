@@ -73,10 +73,30 @@ export const Pagination = ({
           </Typography>
         </div>
         <div className="flex gap-1.5 desktop:gap-3 items-center justify-between">
-          <IconButton icon="ChevronLeftDouble" onClick={handleFirstPage} variant="bordered" />
-          <IconButton icon="ChevronLeft" onClick={handlePreviousPage} variant="bordered" />
-          <IconButton icon="ChevronRight" onClick={handleNextPage} variant="bordered" />
-          <IconButton icon="ChevronRightDouble" onClick={handleLastPage} variant="bordered" />
+          <IconButton
+            icon="ChevronLeftDouble"
+            onClick={handleFirstPage}
+            variant="bordered"
+            disabled={currentNumber === 1}
+          />
+          <IconButton
+            icon="ChevronLeft"
+            onClick={handlePreviousPage}
+            variant="bordered"
+            disabled={currentNumber === 1}
+          />
+          <IconButton
+            icon="ChevronRight"
+            onClick={handleNextPage}
+            variant="bordered"
+            disabled={currentNumber === totalPages}
+          />
+          <IconButton
+            icon="ChevronRightDouble"
+            onClick={handleLastPage}
+            variant="bordered"
+            disabled={currentNumber === totalPages}
+          />
         </div>
       </div>
     </div>
