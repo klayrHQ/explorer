@@ -26,7 +26,7 @@ export const AccountBanner = ({
     <BannerFrame image={image}>
       <FlexGrid direction="col" gap="0" justify="between">
         <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
-          <Link basePath={basePath} href="/users">
+          <Link basePath={basePath} href="/accounts">
             <Icon
               className="hover:-translate-x-0.5 cursor-pointer transition-transform"
               color="white"
