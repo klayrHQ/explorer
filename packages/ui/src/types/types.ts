@@ -1,4 +1,4 @@
-import {CSSProperties, HTMLAttributes, PropsWithChildren, ReactElement, ReactNode} from 'react';
+import { CSSProperties, HTMLAttributes, PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { ChainTokenType, ServiceURLsType } from 'web/src/utils/types.ts';
 
 export type TypographyVariant =
@@ -89,6 +89,7 @@ export type IconComponent =
   | 'DotsVertical'
   | 'Trash'
   | 'User'
+  | 'Minus'
   | 'Plus'
   | 'Eye'
   | 'Info'

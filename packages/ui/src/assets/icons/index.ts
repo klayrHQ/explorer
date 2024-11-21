@@ -33,6 +33,7 @@ import { CrossClose } from './general/x-close.tsx';
 import { DotsVertical } from './general/dots-vertical.tsx';
 import { Trash } from './general/trash.tsx';
 import { User } from './users/user.tsx';
+import { Minus } from './general/minus.tsx';
 import { Plus } from './general/plus.tsx';
 import { Eye } from './general/eye.tsx';
 import { Copy } from './general/copy-01.tsx';
@@ -54,7 +55,7 @@ import { GridOne } from './layout/grid-01.tsx';
 import { LayoutAlt } from './layout/layout-alt.tsx';
 import { FilterLines } from './general/filter-lines.tsx';
 import { Check } from './general/check.tsx';
-import {LinkExternal} from "./general/link-external-01.tsx";
+import { LinkExternal } from './general/link-external-01.tsx';
 import { CoinsStacked } from './finance/coins-stacked.tsx';
 
 export const icons = {
@@ -95,6 +96,7 @@ export const icons = {
   DotsVertical,
   Trash,
   User,
+  Minus,
   Plus,
   Eye,
   Info,

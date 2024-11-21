@@ -1,14 +1,15 @@
 'use client';
 import { Topbar } from '@repo/ui/organisms';
-import {Icon, MenuItemProps, SkeletonComponent, Typography} from '@repo/ui/atoms';
+import { Icon, MenuItemProps, Modal, SkeletonComponent, Typography } from '@repo/ui/atoms';
 import { useSearchStore } from '../../store/searchStore.ts';
 import React from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { useChainNetworkStore, useInitializeCurrentChain } from '../../store/chainNetworkStore.ts';
-import {useNodeStore, useUpdateNodeInfo} from '../../store/nodeStore.ts';
+import { useNodeStore, useUpdateNodeInfo } from '../../store/nodeStore.ts';
 import useMarketcap from '../../utils/hooks/useMarketcap.ts';
-import {FormattedValue} from "../formattedValue.tsx";
+import { FormattedValue } from '../formattedValue.tsx';
+import { Settings } from '../settings.tsx';
 
 interface TopbarClientProps {
   logo: {
@@ -108,25 +109,47 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
     },*/
   ];
 
+  const [openSettings, setOpenSettings] = React.useState(false);
+
+  const optionsMenuItems: MenuItemProps[] = [
+    {
+      icon: 'CoinsStacked',
+      label: 'Currency Settings',
+      onClick: () => setOpenSettings(true),
+    },
+  ];
+
   return (
-    <Topbar
-      basePath={basePath}
-      callSearch={callSearch}
-      chainNetworkData={{
-        currentChain,
-        currentNetwork: {
-          syncing: nodeInfo?.syncing,
-          networkName: currentNetwork,
-        },
-        chains: filteredChains,
-        networks,
-      }}
-      kpis={kpisObject}
-      logo={logo}
-      mobileMenuItems={mobileMenuItems}
-      newFavourite={newFavourite}
-      searchResults={searchResult}
-      setSearchResults={setSearchResults}
-    />
+    <>
+      <Topbar
+        basePath={basePath}
+        callSearch={callSearch}
+        chainNetworkData={{
+          currentChain,
+          currentNetwork: {
+            syncing: nodeInfo?.syncing,
+            networkName: currentNetwork,
+          },
+          chains: filteredChains,
+          networks,
+        }}
+        kpis={kpisObject}
+        logo={logo}
+        mobileMenuItems={mobileMenuItems}
+        newFavourite={newFavourite}
+        optionsMenuItems={optionsMenuItems}
+        searchResults={searchResult}
+        setSearchResults={setSearchResults}
+      />
+      <Modal
+        open={openSettings}
+        onClose={() => setOpenSettings(false)}
+        title={'Select your preferable Currency!'}
+        subTitle={'Format the way the explorer shows all currency values.'}
+        width={'settingsModalWidth'}
+      >
+        <Settings />
+      </Modal>
+    </>
   );
 };

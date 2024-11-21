@@ -6,15 +6,18 @@ import { Typography } from '../base/typography.tsx';
 import { IconButton } from '../input/iconButton.tsx';
 import { Button } from '../input/button.tsx';
 import { Backdrop } from '../input/modal/modalBackdrop.tsx';
+import { cls } from '../../../utils/functions.ts';
 
 interface ModalProps {
   open: boolean;
   onClose: () => void;
   title: string;
+  subTitle?: string;
   children: React.ReactNode;
+  width?: string;
 }
 
-export const Modal = ({ open, onClose, title, children }: ModalProps) => {
+export const Modal = ({ open, onClose, title, subTitle, children, width }: ModalProps) => {
   return (
     <MuiModal
       className="fixed inset-0 flex items-center justify-between p-4"
@@ -23,7 +26,10 @@ export const Modal = ({ open, onClose, title, children }: ModalProps) => {
       slots={{ backdrop: Backdrop }}
     >
       <div
-        className={` bg-backgroundSecondary text-white rounded-lg shadow-lg  outline-none relative w-modalWidthMobile  max-h-screen desktop:w-modalWidth`}
+        className={cls([
+          'bg-backgroundSecondary text-white rounded-lg shadow-lg outline-none relative max-h-screen',
+          width ? `w-${width} max-w-80p` : 'w-modalWidthMobile desktop:w-modalWidth',
+        ])}
       >
         <FlexGrid
           alignItems="center"
@@ -32,11 +38,12 @@ export const Modal = ({ open, onClose, title, children }: ModalProps) => {
           justify="between"
           mobileDirection="row"
         >
-          {title && (
+          <FlexGrid direction={'col'} gap={'md'}>
             <Typography fontWeight="bold" variant="h4">
               {title}
             </Typography>
-          )}
+            {subTitle && <Typography variant="paragraph-sm">{subTitle}</Typography>}
+          </FlexGrid>
           <IconButton
             align="none"
             className="w-3 h-3"

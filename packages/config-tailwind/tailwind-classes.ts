@@ -10,6 +10,7 @@ const borderWidth = {
 
 const borderRadius = {
   none: '0px',
+  '2xs': '2px',
   xs: '4px',
   sm: '6px',
   md: '8px',
@@ -344,6 +345,7 @@ const width = {
   calculatorWidth: '536px',
   tooltipWidth: '300px',
   notFoundContentWidth: '600px',
+  settingsModalWidth: '600px',
 };
 
 const lineClamp = {
