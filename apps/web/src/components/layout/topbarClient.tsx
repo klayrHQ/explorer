@@ -143,6 +143,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
         mobileMenuItems={mobileMenuItems}
         newFavourite={newFavourite}
         optionsMenuItems={optionsMenuItems}
+        setOpenSettings={setOpenSettings}
         searchResults={searchResult}
         setSearchResults={setSearchResults}
       />

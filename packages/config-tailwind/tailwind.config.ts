@@ -56,6 +56,11 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `group-hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `last:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `!${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `before:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `after:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `checked:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `checked:before:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `checked:after:${prefix}-${key}`),
   ];
 };
 
@@ -76,6 +81,11 @@ const getKeyOnlyMap = (obj) => {
     ...Object.keys(obj).map((key) => `group-hover:${key}`),
     ...Object.keys(obj).map((key) => `last:${key}`),
     ...Object.keys(obj).map((key) => `!${key}`),
+    ...Object.keys(obj).map((key) => `before:${key}`),
+    ...Object.keys(obj).map((key) => `after:${key}`),
+    ...Object.keys(obj).map((key) => `checked:${key}`),
+    ...Object.keys(obj).map((key) => `checked:before:${key}`),
+    ...Object.keys(obj).map((key) => `checked:after:${key}`),
   ];
 };
 
