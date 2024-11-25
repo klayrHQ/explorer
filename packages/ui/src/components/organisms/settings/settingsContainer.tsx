@@ -1,5 +1,5 @@
 import { Button, FlexGrid, Grid, Typography } from '../../atoms';
-import { Currency } from 'web/src/components/currency.tsx';
+import { Currency } from '../../atoms';
 import { Setting } from '../../atoms';
 
 interface SettingsContainerProps {
@@ -34,7 +34,14 @@ export const SettingsContainer = ({
   return (
     <FlexGrid direction={'col'} gap={'3xl'}>
       <Typography variant={'paragraph-md'}>
-        Example: <Currency amount={123412345678} color={'volt'} />
+        {'Example: '}
+        <Currency
+          amount={123412345678}
+          color={'volt'}
+          decimals={Number(mantissaSize) ?? 3}
+          symbol={formatting.includes('Symbol') ? 'KLY' : undefined}
+          sign={formatting.includes('Sign') ? 'Ҝ' : undefined}
+        />
       </Typography>
       <Grid
         className={'w-full desktop:flex desktop:justify-between desktop:gap-xl'}
