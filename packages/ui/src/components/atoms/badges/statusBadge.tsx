@@ -105,6 +105,9 @@ type ValidatorStatusBadgeProps = {
 };
 
 const toCamelCase = (str: string) => {
+  if (str === null || str === undefined) {
+    return '';
+  }
   return str
     .toLowerCase()
     .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) =>
