@@ -39,6 +39,8 @@ export const SettingsContainer = ({
           amount={123412345678}
           color={'volt'}
           decimals={Number(mantissaSize) ?? 3}
+          separator={decimalSeparator === 'Comma' ? 'Comma' : 'Period'}
+          trailingZeroes={trailingZeroes}
           symbol={formatting.includes('Symbol') ? 'KLY' : undefined}
           sign={formatting.includes('Sign') ? 'Ҝ' : undefined}
         />

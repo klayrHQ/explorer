@@ -7,6 +7,8 @@ export interface CurrencyProps extends Omit<TypographyProps, 'children'> {
   symbol?: string;
   decimals?: number;
   marketValue?: number;
+  separator?: 'Comma' | 'Period';
+  trailingZeroes?: boolean;
 }
 
 export const Currency = ({
@@ -16,6 +18,8 @@ export const Currency = ({
   decimals,
   className,
   marketValue,
+  separator,
+  trailingZeroes,
   ...props
 }: CurrencyProps) => {
   return (
@@ -23,7 +27,7 @@ export const Currency = ({
       {amount ? (
         <>
           {sign && <span>{sign}</span>}
-          {parseBeddows(Number(amount), decimals)}
+          {parseBeddows(Number(amount), decimals, separator, trailingZeroes)}
           {symbol && (
             <span>
               {'\u00A0'}

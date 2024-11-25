@@ -99,11 +99,13 @@ export const fromNowFormatter = (value: any, format?: string) => {
   return date.fromNow();
 };
 
-export const parseBeddows = (beddows: number, decimals: number = 2) => {
+export const parseBeddows = (beddows: number, decimals: number = 2, separator?: 'Comma' | 'Period', trailingZeroes?: boolean) => {
+  const locale = separator === 'Period' ? 'en-US' : 'nl-NL';
+
   if (beddows) {
     const amountFromBeddows = beddows / 100000000;
-    return amountFromBeddows.toLocaleString(undefined, {
-      minimumFractionDigits: decimals,
+    return amountFromBeddows.toLocaleString(separator ? [locale] : [], {
+      minimumFractionDigits: trailingZeroes ? decimals : undefined,
       maximumFractionDigits: decimals,
     });
   }
