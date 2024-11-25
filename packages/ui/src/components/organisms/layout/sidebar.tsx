@@ -54,6 +54,7 @@ export const Sidebar = ({ menuItems, logo, basePath }: SidebarProps) => {
         icon={isMinimized ? 'ChevronRightDouble' : 'ChevronLeftDouble'}
         onClick={toggleMinimized}
         variant={'iconOnlyAlt'}
+        aria-label="Minimized sidebar"
       />
       {/* Uncomment when implementing login functionality */}
       {/*<Button

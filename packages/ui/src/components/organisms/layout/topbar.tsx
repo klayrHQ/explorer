@@ -184,6 +184,7 @@ export const Topbar = ({
             icon={'Settings'}
             onClick={() => setOpenSettings && setOpenSettings(true)}
             variant={'iconOnly'}
+            aria-label="Settings"
           />
           {
             // TODO: Implement OptionsMenu when we have more options
@@ -201,7 +202,8 @@ export const Topbar = ({
                 open={openOptionsMenu}
               />
             </div>
-          </ClickAwayListener>*/}
+          </ClickAwayListener>*/
+          }
         </FlexGrid>
       </FlexGrid>
     </FlexGrid>
