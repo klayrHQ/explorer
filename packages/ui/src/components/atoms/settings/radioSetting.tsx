@@ -11,12 +11,12 @@ export const RadioSetting = ({ value, setValue, options }: RadioSettingProps) =>
   return (
     <div className={'flex gap-md items-center'}>
       {options.map((option) => (
-        <label key={option} className={'flex gap-xs items-center'}>
+        <label key={option} className={'flex gap-xs items-center cursor-pointer'}>
           <input
             className={cls([
               'relative appearance-none w-4 h-4 border-1 border-solid border-borderHigh rounded-full cursor-pointer bg-backgroundSecondary',
               'checked:bg-volt checked:border-volt',
-              'checked:before:w-50p checked:before:h-50p before:bg-backgroundSecondary before:rounded-full',
+              'checked:before:w-2 checked:before:h-2 before:bg-backgroundSecondary before:rounded-full',
               'before:block before:inset-0 before:m-auto before:absolute',
             ])}
             type="radio"

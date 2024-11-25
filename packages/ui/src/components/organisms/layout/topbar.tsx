@@ -39,6 +39,7 @@ interface TopbarProps {
   newFavourite?: boolean;
   basePath?: string;
   optionsMenuItems: MenuItemProps[];
+  setOpenSettings?: (open: boolean) => void;
 }
 
 export const Topbar = ({
@@ -47,13 +48,14 @@ export const Topbar = ({
   mobileMenuItems,
   newFavourite,
   optionsMenuItems,
+  setOpenSettings,
   logo,
   searchResults,
   setSearchResults,
   callSearch,
   basePath,
 }: TopbarProps) => {
-  const [openOptionsMenu, setOpenOptionsMenu] = useState(false);
+  //const [openOptionsMenu, setOpenOptionsMenu] = useState(false);
   const [mobileSearchAnchor, setMobileSearchAnchor] = useState<HTMLElement | null>(null);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -177,7 +179,15 @@ export const Topbar = ({
               )}
             </div>
           </Link>
-          <ClickAwayListener onClickAway={() => setOpenOptionsMenu(false)}>
+          <IconButton
+            align={'none'}
+            icon={'Settings'}
+            onClick={() => setOpenSettings && setOpenSettings(true)}
+            variant={'iconOnly'}
+          />
+          {
+            // TODO: Implement OptionsMenu when we have more options
+            /*<ClickAwayListener onClickAway={() => setOpenOptionsMenu(false)}>
             <div ref={setAnchorElement}>
               <IconButton
                 align={'none'}
@@ -191,7 +201,7 @@ export const Topbar = ({
                 open={openOptionsMenu}
               />
             </div>
-          </ClickAwayListener>
+          </ClickAwayListener>*/}
         </FlexGrid>
       </FlexGrid>
     </FlexGrid>
