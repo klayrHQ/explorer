@@ -55,3 +55,8 @@ export * from './input/copyIcon.tsx';
 export * from './account/avatar/tokenCard.tsx';
 export * from './input/checkbox.tsx';
 export * from './data/accordion.tsx';
+export * from './settings/setting.tsx';
+export * from './settings/numberSetting.tsx';
+export * from './settings/radioSetting.tsx';
+export * from './settings/checkboxGroupSetting.tsx';
+export * from './settings/checkboxSetting.tsx';

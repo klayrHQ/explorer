@@ -1,13 +1,11 @@
 'use client';
 import {
   FlexGrid,
-  // Icon,
   IconButton,
   KeyValueComponent,
   Logo,
   MenuItemProps,
   Popover,
-  // MenuItemProps,
   NotificationIcon,
   Link,
 } from '../../atoms';
@@ -17,12 +15,11 @@ import {
   ChainNetworkPicker,
   ChainNetworkPickerProps,
   MobileMenu,
-  // OptionsMenu,
+  OptionsMenu,
 } from '../../molecules';
 import { cls } from '../../../utils/functions.ts';
 import { Modal, Slide } from '@mui/material';
-
-//import {ClickAwayListener} from "@mui/base";
+import { ClickAwayListener } from '@mui/base';
 
 interface TopbarProps {
   logo: {
@@ -41,7 +38,7 @@ interface TopbarProps {
   callSearch?: any;
   newFavourite?: boolean;
   basePath?: string;
-  // optionsMenuItems: MenuItemProps[]
+  optionsMenuItems: MenuItemProps[];
 }
 
 export const Topbar = ({
@@ -49,17 +46,18 @@ export const Topbar = ({
   chainNetworkData,
   mobileMenuItems,
   newFavourite,
-  // optionsMenuItems,
+  optionsMenuItems,
   logo,
   searchResults,
   setSearchResults,
   callSearch,
   basePath,
 }: TopbarProps) => {
-  // const [openOptionsMenu, setOpenOptionsMenu] = useState(false)
+  const [openOptionsMenu, setOpenOptionsMenu] = useState(false);
   const [mobileSearchAnchor, setMobileSearchAnchor] = useState<HTMLElement | null>(null);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
 
   return (
     <FlexGrid
@@ -179,14 +177,13 @@ export const Topbar = ({
               )}
             </div>
           </Link>
-          {/* todo uncomment when adding lightmode or currency settings */}
-          {/*<ClickAwayListener onClickAway={() => setOpenOptionsMenu(false)}>
+          <ClickAwayListener onClickAway={() => setOpenOptionsMenu(false)}>
             <div ref={setAnchorElement}>
               <IconButton
-                align={"none"}
-                icon={"Settings"}
+                align={'none'}
+                icon={'Settings'}
                 onClick={() => setOpenOptionsMenu(!openOptionsMenu)}
-                variant={"iconOnly"}
+                variant={'iconOnly'}
               />
               <OptionsMenu
                 anchorElement={anchorElement}
@@ -194,7 +191,7 @@ export const Topbar = ({
                 open={openOptionsMenu}
               />
             </div>
-          </ClickAwayListener>*/}
+          </ClickAwayListener>
         </FlexGrid>
       </FlexGrid>
     </FlexGrid>
