@@ -1,4 +1,4 @@
-import { Icon, Typography } from '@repo/ui/atoms';
+import { Icon, Typography } from '../index.ts';
 
 interface NumberSettingProps {
   value: number;

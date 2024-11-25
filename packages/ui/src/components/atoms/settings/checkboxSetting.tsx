@@ -1,4 +1,4 @@
-import { cls } from '@repo/ui/utils';
+import { cls } from '../../../utils/functions.ts';
 
 interface CheckboxSettingProps {
   value: boolean;

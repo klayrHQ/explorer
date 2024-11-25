@@ -15,3 +15,4 @@ export * from './sections/detailsSection.tsx';
 export * from './account/accountBanner.tsx';
 export * from './favourites/addFavouriteContainer.tsx';
 export * from './chains/chainBanner.tsx';
+export * from './settings/settingsContainer.tsx';

@@ -2,14 +2,14 @@
 import { Topbar } from '@repo/ui/organisms';
 import { Icon, MenuItemProps, Modal, SkeletonComponent, Typography } from '@repo/ui/atoms';
 import { useSearchStore } from '../../store/searchStore.ts';
-import React from 'react';
+import React, { useState } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { useChainNetworkStore, useInitializeCurrentChain } from '../../store/chainNetworkStore.ts';
 import { useNodeStore, useUpdateNodeInfo } from '../../store/nodeStore.ts';
 import useMarketcap from '../../utils/hooks/useMarketcap.ts';
 import { FormattedValue } from '../formattedValue.tsx';
-import { Settings } from '../settings.tsx';
+import { SettingsContainer } from '@repo/ui/organisms';
 
 interface TopbarClientProps {
   logo: {
@@ -42,6 +42,11 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
 
   const newFavourite = useFavouritesStore((state) => state.newFavourite);
   const basePath = useBasePath();
+
+  const [mantissaSize, setMantissaSize] = useState<number | string>(2);
+  const [decimalSeparator, setDecimalSeparator] = useState<string>('Comma');
+  const [formatting, setFormatting] = useState<string[]>(['Symbol']);
+  const [trailingZeroes, setTrailingZeroes] = useState<boolean>(false);
 
   const kpisObject = [
     {
@@ -148,7 +153,18 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
         subTitle={'Format the way the explorer shows all currency values.'}
         width={'settingsModalWidth'}
       >
-        <Settings />
+        <SettingsContainer
+          onClose={() => setOpenSettings(false)}
+          onSave={() => console.log('saved')}
+          mantissaSize={mantissaSize}
+          setMantissaSize={setMantissaSize}
+          decimalSeparator={decimalSeparator}
+          setDecimalSeparator={setDecimalSeparator}
+          formatting={formatting}
+          setFormatting={setFormatting}
+          trailingZeroes={trailingZeroes}
+          setTrailingZeroes={setTrailingZeroes}
+        />
       </Modal>
     </>
   );

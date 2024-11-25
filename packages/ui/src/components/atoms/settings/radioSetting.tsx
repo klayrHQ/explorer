@@ -1,5 +1,5 @@
-import { Typography } from '@repo/ui/atoms';
-import { cls } from '@repo/ui/utils';
+import { Typography } from '../index.ts';
+import { cls } from '../../../utils/functions.ts';
 
 interface RadioSettingProps {
   value: string;

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { FlexGrid, Typography } from '@repo/ui/atoms';
+import { FlexGrid, Typography } from '../index.ts';
 import { NumberSetting } from './numberSetting.tsx';
 import { RadioSetting } from './radioSetting.tsx';
 import { CheckboxGroupSetting } from './checkboxGroupSetting.tsx';
