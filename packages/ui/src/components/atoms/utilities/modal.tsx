@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
-
 import { Modal as MuiModal } from '@mui/material';
 import { FlexGrid } from '../base/flexGrid.tsx';
 import { Typography } from '../base/typography.tsx';
 import { IconButton } from '../input/iconButton.tsx';
-import { Button } from '../input/button.tsx';
 import { Backdrop } from '../input/modal/modalBackdrop.tsx';
 import { cls } from '../../../utils/functions.ts';
+import { ReactNode } from 'react';
 
 interface ModalProps {
   open: boolean;
   onClose: () => void;
   title: string;
   subTitle?: string;
-  children: React.ReactNode;
+  children: ReactNode;
   width?: string;
 }
 
@@ -32,7 +30,6 @@ export const Modal = ({ open, onClose, title, subTitle, children, width }: Modal
         ])}
       >
         <FlexGrid
-          alignItems="center"
           className="pt-8 pb-4 desktop:pb-6 px-6"
           component="div"
           justify="between"
