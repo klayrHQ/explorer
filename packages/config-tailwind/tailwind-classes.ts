@@ -282,6 +282,7 @@ const leading = {
 
 const height = {
   screen: '100dvh',
+  '90vh': '90dvh',
   screenUnderTopbar: 'calc(100dvh - 88px)',
   screenUnderTopbarMobile: 'calc(100dvh - 76px)',
   full: '100%',
