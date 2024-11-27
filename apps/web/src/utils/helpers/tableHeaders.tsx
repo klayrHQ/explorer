@@ -449,7 +449,14 @@ export const chainsTableHead = [
     children: 'Status',
   },
   {
+    children: 'Created By',
+  },
+  {
     children: 'Total Locked',
+    className: 'text-right',
+  },
+  {
+    children: 'Last Updated',
     className: 'text-right',
   },
   {
