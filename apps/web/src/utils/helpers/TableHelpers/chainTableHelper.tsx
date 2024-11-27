@@ -1,6 +1,6 @@
 import { CombinedAppsType } from '../../types.ts';
 import { ImageName } from '@repo/ui/molecules';
-import { Button, FlexGrid, IconButton, Link, StatusBadge, UserAccountCard } from '@repo/ui/atoms';
+import { Button, FlexGrid, IconButton, Link, StatusBadge } from '@repo/ui/atoms';
 import { Currency } from '../../../components/currency.tsx';
 import { getTableSkeletons } from '../dataHelpers.tsx';
 import { chainsTableHead } from '../tableHeaders.tsx';
@@ -46,7 +46,7 @@ export const createChainRows = (chains: CombinedAppsType[], loading: boolean, ba
               ),
               className: 'text-right desktop:w-52 min-w-52',
             },
-            chain.logo
+            chain.meta
               ? {
                   children: (
                     <FlexGrid mobileDirection={'row'} gap={'lg'}>
@@ -57,7 +57,13 @@ export const createChainRows = (chains: CombinedAppsType[], loading: boolean, ba
                       >
                         <Button align={'right'} label={'Details'} variant={'bordered'} />
                       </Link>
-                      <IconButton align={'none'} icon={'LinkExternal'} variant={'quaternary'} />
+                      <Link
+                        className={'contents'}
+                        href={chain.projectPage ?? ''}
+                        outgoing
+                      >
+                        <IconButton align={'none'} disabled={!chain.projectPage} icon={'LinkExternal'} variant={'quaternary'} />
+                      </Link>
                     </FlexGrid>
                   ),
                 }

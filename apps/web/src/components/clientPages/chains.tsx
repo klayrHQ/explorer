@@ -34,13 +34,17 @@ export const Chains = () => {
   });
 
   const combinedApps = apps.map((app) => {
+    const meta = chains.find((chain) => chain.chainID === app.chainID);
     const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
     const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
+    const projectPage = chains.find((chain) => chain.chainID === app.chainID)?.projectPage;
 
     return {
       ...app,
       logo,
       displayName,
+      projectPage,
+      meta,
     };
   });
 
