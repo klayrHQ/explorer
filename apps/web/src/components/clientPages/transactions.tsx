@@ -12,6 +12,7 @@ import React from 'react';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { useFilterManagement } from '../../utils/helpers/filterHandlers.ts';
 import { createTransactionRows } from '../../utils/helpers/TableHelpers/transactionTableHelper.tsx';
+import { UniversalFilter } from '../filterComponents/Filter.tsx';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
@@ -108,6 +109,36 @@ export const Transactions = () => {
     fetchNetworkStatus();
   }, []);
 
+  const filterConfigurations = [
+    {
+      title: 'Transaction Type',
+      type: 'checkbox' as 'checkbox',
+      dataKey: commandObject,
+    },
+    {
+      title: 'From Address',
+      type: 'input' as 'input',
+      dataKey: 'from',
+      inputProps: {
+        placeholder: 'Type an address',
+        validation: (value) => value.length === 42,
+        errorMessage: 'Invalid sender address',
+      },
+    },
+    {
+      title: 'To Address',
+      type: 'input',
+      dataKey: 'to',
+      inputProps: {
+        placeholder: 'Type an address',
+        validation: (value) => value.length === 42,
+        errorMessage: 'Invalid receiver address',
+      },
+    },
+  ];
+
+  console.log('object', commandObject);
+
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
       <SectionHeader
@@ -119,13 +150,11 @@ export const Transactions = () => {
         currentNumber={pageNumber}
         defaultValue={limit}
         filtersComponent={
-          <TransactionsFilter
-            handleClearFrom={() => handleClear('from')}
-            handleClearTo={() => handleClear('to')}
-            setValueFrom={(value) => setInputValues((prev) => ({ ...prev, from: value }))}
-            setValueTo={(value) => setInputValues((prev) => ({ ...prev, to: value }))}
-            valueFrom={inputValues.from}
-            valueTo={inputValues.to}
+          <UniversalFilter
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            handleClearField={clearAllFields}
+            filterConfigurations={filterConfigurations} // Add appropriate filter configurations here
             data={commandObject}
             checkedItems={checkedItems}
             handleCheckboxChange={handleCheckboxChange}
