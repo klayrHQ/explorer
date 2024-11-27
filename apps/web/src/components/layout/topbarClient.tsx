@@ -2,7 +2,7 @@
 import { Topbar } from '@repo/ui/organisms';
 import { Icon, MenuItemProps, Modal, SkeletonComponent, Typography } from '@repo/ui/atoms';
 import { useSearchStore } from '../../store/searchStore.ts';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useFavouritesStore } from '../../store/favouritesStore.ts';
 import { useChainNetworkStore, useInitializeCurrentChain } from '../../store/chainNetworkStore.ts';
@@ -10,6 +10,7 @@ import { useNodeStore, useUpdateNodeInfo } from '../../store/nodeStore.ts';
 import useMarketcap from '../../utils/hooks/useMarketcap.ts';
 import { FormattedValue } from '../formattedValue.tsx';
 import { SettingsContainer } from '@repo/ui/organisms';
+import { useSettings } from '../../store/settingsStore.ts';
 
 interface TopbarClientProps {
   logo: {
@@ -42,11 +43,33 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
 
   const newFavourite = useFavouritesStore((state) => state.newFavourite);
   const basePath = useBasePath();
+  const { settings, setSetting } = useSettings();
+  const currencySettings = settings.currency;
 
-  const [mantissaSize, setMantissaSize] = useState<number | string>(2);
-  const [decimalSeparator, setDecimalSeparator] = useState<string>('Comma');
-  const [formatting, setFormatting] = useState<string[]>(['Symbol']);
-  const [trailingZeroes, setTrailingZeroes] = useState<boolean>(false);
+  const [mantissaSize, setMantissaSize] = useState<number | string>(currencySettings.mantissaSize);
+  const [decimalSeparator, setDecimalSeparator] = useState<string>(
+    currencySettings.decimalSeparator,
+  );
+  const [formatting, setFormatting] = useState<string[]>(currencySettings.formatting);
+  const [trailingZeroes, setTrailingZeroes] = useState<boolean>(currencySettings.trailingZeroes);
+
+  const onSaveSettings = () => {
+    setSetting('currency', {
+      mantissaSize,
+      decimalSeparator,
+      formatting,
+      trailingZeroes,
+    });
+
+    setOpenSettings(false);
+  };
+
+  useEffect(() => {
+    setMantissaSize(currencySettings.mantissaSize);
+    setDecimalSeparator(currencySettings.decimalSeparator);
+    setFormatting(currencySettings.formatting);
+    setTrailingZeroes(currencySettings.trailingZeroes);
+  }, [settings]);
 
   const kpisObject = [
     {
@@ -156,7 +179,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
       >
         <SettingsContainer
           onClose={() => setOpenSettings(false)}
-          onSave={() => console.log('saved')}
+          onSave={onSaveSettings}
           mantissaSize={mantissaSize}
           setMantissaSize={setMantissaSize}
           decimalSeparator={decimalSeparator}
