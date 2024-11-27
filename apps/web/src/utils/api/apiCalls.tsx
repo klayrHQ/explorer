@@ -1,34 +1,35 @@
 // src/helpers/blockHelpers.ts
 import {
+  AccountType,
+  AppsType,
   BlockDetailsType,
+  ChainTokenType,
+  ChainType,
   ChartDataType,
   EventsType,
   GatewayRes,
+  NetworkStatus,
   NodeInfoType,
+  NodeType,
+  StakersType,
+  StakesType,
   TokenSummaryType,
+  TokenType,
   TransactionType,
   ValidatorType,
-  StakeType,
-  StakesType,
-  StakersType,
-  AccountType,
-  TokenType,
-  NodeType,
-  ChainType,
-  ChainTokenType,
-  NetworkStatus, AppsType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
 import {
+  AccountQueryParams,
+  AppsQueryParams,
   BlocksQueryParams,
+  ChainsQueryParams,
+  ChainTokenQueryParams,
   EventsQueryParams,
+  StakersQueryParams,
+  TokensQueryParams,
   TransactionQueryParams,
   ValidatorQueryParams,
-  StakersQueryParams,
-  AccountQueryParams,
-  TokensQueryParams,
-  ChainsQueryParams,
-  ChainTokenQueryParams, AppsQueryParams,
 } from './types';
 import { NextValidatorType } from '@repo/ui/types';
 import axios from 'axios';
@@ -52,6 +53,36 @@ async function apiCall<T>(
     throw error;
   }
 }
+
+async function customApiCall<T>(
+  baseUrl: string,
+  endpoint: string,
+  params: Record<string, any> = {},
+): Promise<GatewayRes<T>> {
+  const mainChainClient = axios.create({
+    baseURL: baseUrl,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Access-Control-Allow-Methods': 'POST,GET',
+    },
+  });
+
+  try {
+    const { data } = await mainChainClient.get<GatewayRes<T>>(endpoint, { params });
+
+    if (data) {
+      return data;
+    } else {
+      throw new Error('No data received');
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export const callGetBlocks = async (
   params: BlocksQueryParams,
 ): Promise<GatewayRes<BlockDetailsType[]>> => {
@@ -122,38 +153,19 @@ export const callGetNetworkStatus = async (): Promise<GatewayRes<NetworkStatus>>
   return apiCall<NetworkStatus>('network/status');
 };
 
-async function mainChainApiCall<T>(
-  endpoint: string,
-  params: Record<string, any> = {},
-): Promise<GatewayRes<T>> {
-  const mainChainClient = axios.create({
-    baseURL: 'https://gateway-mainnet.klayr.dev/api/v1/',
-    timeout: 5000,
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'Access-Control-Allow-Methods': 'POST,GET',
-    },
-  });
-
-  try {
-    const { data } = await mainChainClient.get<GatewayRes<T>>(endpoint, { params });
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error('No data received');
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
 export const callGetChains = async (
   params: ChainsQueryParams,
 ): Promise<GatewayRes<ChainType[]>> => {
-  return apiCall<ChainType[]>('blockchain/apps/meta', params);
+  const mainnetResponse = await customApiCall<ChainType[]>(
+    'https://gateway-mainnet.klayr.dev/api/v1/',
+    'blockchain/apps/meta',
+    params,
+  );
+  const testnetResponse = await customApiCall<ChainType[]>('https://gateway-testnet.klayr.dev/api/v1/','blockchain/apps/meta', params);
+  return {
+    data: mainnetResponse.data.concat(testnetResponse.data),
+    meta: {...mainnetResponse.meta, ...testnetResponse.meta},
+  };
 };
 
 export const callGetChainTokens = async (
