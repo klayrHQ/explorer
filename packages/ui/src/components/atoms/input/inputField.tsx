@@ -20,8 +20,7 @@ interface InputFieldProps extends Omit<HTMLProps<HTMLInputElement>, 'label'> {
   success?: boolean;
   errorNotification?: string;
   isActive?: boolean;
-  isErrorTo?: boolean;
-  isErrorFrom?: boolean;
+  isError?: boolean;
 }
 
 const inputFieldStyles = cva(
@@ -103,8 +102,7 @@ export const InputField = ({
   rightContentPadding = 'pr-lg',
   leftContentPadding = 'pl-4',
   errorNotification,
-  isErrorTo,
-  isErrorFrom,
+  isError,
   ...props
 }: InputFieldProps) => {
   return (
@@ -126,7 +124,7 @@ export const InputField = ({
           success,
           className: cls([
             icon ? 'pl-10 pr-lg' : 'px-lg',
-            isErrorTo || isErrorFrom ? 'border-tulipDark' : 'border-backgroundTertiary',
+            isError ? 'border-tulipDark' : 'border-backgroundTertiary',
             leftContent ? leftContentPadding : '',
             rightContent ? rightContentPadding : '',
             className,
@@ -139,7 +137,7 @@ export const InputField = ({
       {rightContent && (
         <div className={'absolute right-lg h-max top-0 bottom-0 my-auto '}>{rightContent}</div>
       )}
-      {(isErrorFrom || isErrorTo) && (
+      {isError && (
         <div className={`absolute left-1 top-9 h-max z-1`}>
           <Typography color={'tulipDark'} variant={'caption'}>
             {errorNotification}

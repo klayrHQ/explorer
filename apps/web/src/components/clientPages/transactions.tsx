@@ -116,22 +116,22 @@ export const Transactions = () => {
       dataKey: commandObject,
     },
     {
-      title: 'From Address',
+      title: 'Sender Address',
       type: 'input' as 'input',
       dataKey: 'from',
       inputProps: {
         placeholder: 'Type an address',
-        validation: (value) => value.length === 42,
+        validation: (value: string | any[]) => value.length === 41,
         errorMessage: 'Invalid sender address',
       },
     },
     {
-      title: 'To Address',
+      title: 'Receiver Address',
       type: 'input',
       dataKey: 'to',
       inputProps: {
         placeholder: 'Type an address',
-        validation: (value) => value.length === 42,
+        validation: (value: string | any[]) => value.length === 41,
         errorMessage: 'Invalid receiver address',
       },
     },

@@ -44,6 +44,7 @@ export const UniversalFilter = ({
 }: FilterProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
+  console.log('object', errors);
 
   const handleInputChange = (field: string, value: string) => {
     setInputValues((prevState) => ({
@@ -56,7 +57,13 @@ export const UniversalFilter = ({
     const newErrors: Record<string, boolean> = {};
     filterConfigurations.forEach(({ type, dataKey, inputProps }) => {
       if (type === 'input' && inputProps?.validation) {
-        newErrors[dataKey] = inputProps.validation(inputValues[dataKey]);
+        const value = inputValues[dataKey];
+        if (value && value.length > 0) {
+          const isValid = inputProps.validation(value);
+          newErrors[dataKey] = !isValid;
+        } else {
+          newErrors[dataKey] = false; // No error if the input is empty
+        }
       }
     });
     setErrors(newErrors);
@@ -72,6 +79,10 @@ export const UniversalFilter = ({
       (acc, values) => acc + Object.values(values).filter((isChecked) => isChecked).length,
       0,
     ) + Object.values(inputValues).filter((value) => value).length;
+
+  const capitalizeFirstLetter = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   return (
     <div className="relative flex flex-row items-center w-full gap-4 min-w-18 justify-end desktop:justify-between">
@@ -140,7 +151,9 @@ export const UniversalFilter = ({
                   value={inputValues[dataKey]}
                   onChange={(e) => handleInputChange(dataKey, (e.target as HTMLInputElement).value)}
                   placeholder={inputProps?.placeholder || ''}
-                  leftContent={<span className="text-paragraph-sm">{dataKey}</span>}
+                  leftContent={
+                    <span className="text-paragraph-sm">{capitalizeFirstLetter(dataKey)}</span>
+                  }
                   leftContentPadding="pl-16"
                   rightContent={
                     <div
@@ -152,6 +165,7 @@ export const UniversalFilter = ({
                   }
                   type="text"
                   variant="filters"
+                  isError={errors[dataKey]}
                 />
               )}
               {type === 'checkbox' && (

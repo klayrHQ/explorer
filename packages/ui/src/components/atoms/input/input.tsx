@@ -20,8 +20,7 @@ interface InputProps extends Omit<HTMLProps<HTMLInputElement>, 'label'> {
   leftContentPadding?: string;
   errorNotification?: string;
   isActive?: boolean;
-  isErrorTo?: boolean;
-  isErrorFrom?: boolean;
+  isError?: boolean;
 }
 
 export const Input = ({
@@ -40,8 +39,7 @@ export const Input = ({
   leftContentPadding,
   errorNotification,
   isActive,
-  isErrorTo,
-  isErrorFrom,
+  isError,
   ...props
 }: InputProps) => {
   return (
@@ -91,8 +89,7 @@ export const Input = ({
           rightContentPadding={rightContentPadding}
           type={type}
           variant={variant}
-          isErrorTo={isErrorTo}
-          isErrorFrom={isErrorFrom}
+          isError={isError}
           {...props}
         />
       )}
