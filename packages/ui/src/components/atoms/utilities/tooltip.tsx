@@ -3,15 +3,17 @@ import { Popper } from '@mui/base';
 import { CSSProperties, ReactNode, useState } from 'react';
 import { Typography } from '../base/typography.tsx';
 import { cls } from '../../../utils/functions.ts';
+import {ClassNamesArg} from "@emotion/react";
 
 export interface TooltipProps {
   placement: 'top' | 'bottom' | 'left' | 'right';
   text: string;
   children: ReactNode;
   hideMobile?: boolean;
+  containerClassName?: string;
 }
 
-export const Tooltip = ({ placement, text, children, hideMobile }: TooltipProps) => {
+export const Tooltip = ({ placement, text, children, hideMobile, containerClassName }: TooltipProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const arrowSize = 4;
@@ -59,7 +61,7 @@ export const Tooltip = ({ placement, text, children, hideMobile }: TooltipProps)
   return (
     <>
       <div
-        className="hidden desktop:flex"
+        className={cls(['hidden desktop:flex', containerClassName])}
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
         ref={setAnchorEl}
@@ -98,7 +100,7 @@ export const Tooltip = ({ placement, text, children, hideMobile }: TooltipProps)
           </div>
         </Popper>
       </div>
-      {!hideMobile && <div className="desktop:hidden">{children}</div>}
+      {!hideMobile && <div className={cls(['desktop:hidden', containerClassName])}>{children}</div>}
     </>
   );
 };
