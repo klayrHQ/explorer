@@ -7,11 +7,12 @@ import { callGetTransactions, callGetNetworkStatus } from '../../utils/api/apiCa
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
-import { TransactionsFilter } from '../filterComponents/transactionsFilter.tsx';
 import React from 'react';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { useFilterManagement } from '../../utils/helpers/filterHandlers.ts';
 import { createTransactionRows } from '../../utils/helpers/TableHelpers/transactionTableHelper.tsx';
+import { UniversalFilter } from '../filterComponents/UniversalFilter.tsx';
+import { FilterConfigType } from '../filterComponents/filterTypes.tsx';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
@@ -30,8 +31,6 @@ export const Transactions = () => {
     handleCheckboxClose,
     clearAllFields,
   } = useFilterManagement();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     data: transactions,
@@ -108,6 +107,36 @@ export const Transactions = () => {
     fetchNetworkStatus();
   }, []);
 
+  const filterConfigurations: FilterConfigType[] = [
+    {
+      title: 'Transaction Type',
+      type: 'checkbox' as 'checkbox',
+      dataKey: 'transactionType',
+    },
+    {
+      title: 'Sender Address',
+      type: 'input' as 'input',
+      dataKey: 'from',
+      inputProps: {
+        placeholder: 'Type an address',
+        validation: (value: string | any[]) => value.length === 41,
+        errorMessage: 'Invalid sender address',
+      },
+    },
+    {
+      title: 'Receiver Address',
+      type: 'input',
+      dataKey: 'to',
+      inputProps: {
+        placeholder: 'Type an address',
+        validation: (value: string | any[]) => value.length === 41,
+        errorMessage: 'Invalid receiver address',
+      },
+    },
+  ];
+
+  console.log('object', commandObject);
+
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
       <SectionHeader
@@ -119,13 +148,11 @@ export const Transactions = () => {
         currentNumber={pageNumber}
         defaultValue={limit}
         filtersComponent={
-          <TransactionsFilter
-            handleClearFrom={() => handleClear('from')}
-            handleClearTo={() => handleClear('to')}
-            setValueFrom={(value) => setInputValues((prev) => ({ ...prev, from: value }))}
-            setValueTo={(value) => setInputValues((prev) => ({ ...prev, to: value }))}
-            valueFrom={inputValues.from}
-            valueTo={inputValues.to}
+          <UniversalFilter
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            handleClearField={(field: keyof typeof inputValues) => handleClear(field)}
+            filterConfigurations={filterConfigurations}
             data={commandObject}
             checkedItems={checkedItems}
             handleCheckboxChange={handleCheckboxChange}
