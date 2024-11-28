@@ -1,5 +1,5 @@
 'use client';
-import { FlexGrid } from '@repo/ui/atoms';
+import { FlexGrid, NotFound } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { chainsTableHead } from '../../utils/helpers/tableHeaders';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
@@ -33,7 +33,7 @@ export const Chains = () => {
     useNewBlockEvent: true,
   });
 
-  const combinedApps = apps.map((app) => {
+  const combinedApps = apps.filter(app => app.chainName !== 'klayr_mainchain').map((app) => {
     const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
     const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
 
@@ -49,17 +49,24 @@ export const Chains = () => {
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
       <SectionHeader count={totalApps} title={'Chains'} />
-      <TableContainer
-        headCols={chainsTableHead}
-        keyPrefix={'chains'}
-        rows={rows}
-        pagination
-        onPerPageChange={handleLimitChange}
-        totalPages={Math.ceil(totalApps / Number(limit))}
-        setCurrentNumber={handlePageChange}
-        currentNumber={pageNumber}
-        defaultValue={defaultLimit}
-      />
+      {combinedApps.length > 0 ? (
+        <TableContainer
+          headCols={chainsTableHead}
+          keyPrefix={'chains'}
+          rows={rows}
+          pagination
+          onPerPageChange={handleLimitChange}
+          totalPages={Math.ceil(totalApps / Number(limit))}
+          setCurrentNumber={handlePageChange}
+          currentNumber={pageNumber}
+          defaultValue={defaultLimit}
+        />
+      ) : (
+        <NotFound
+          headerText={'No Chains Here'}
+          subheaderText={'We could not find any chains on this network'}
+        />
+      )}
     </FlexGrid>
   );
 };
