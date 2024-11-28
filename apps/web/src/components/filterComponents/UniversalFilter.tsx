@@ -1,32 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { IconButton, Input, Icon, Typography, FilterBadge, Button, Modal } from '@repo/ui/atoms';
 import { AccordionWithCheckboxes } from '@repo/ui/molecules';
-
-interface FilterProps {
-  data: Record<string, string[]>;
-  checkedItems: Record<string, Record<string, boolean>>;
-  inputValues: Record<string, string>;
-  setInputValues: React.Dispatch<React.SetStateAction<Record<string, string>>>;
-  filterValues: Record<string, string>;
-  handleApply: () => void;
-  handleClear: () => void;
-  handleCheckboxChange: (category: string, value: string, isChecked: boolean) => void;
-  handleSelectAllChange: (category: string, values: string[], isChecked: boolean) => void;
-  handleClearField: (field: string) => void;
-  handleCheckboxClose: (category: string, value: string) => void;
-  filterConfigurations: FilterConfig[];
-}
-
-interface FilterConfig {
-  title: string;
-  type: 'input' | 'checkbox' | 'radio';
-  dataKey: string;
-  inputProps?: {
-    placeholder: string;
-    validation?: (value: string) => boolean;
-    errorMessage?: string;
-  };
-}
+import { FilterProps } from './filterTypes';
 
 export const UniversalFilter = ({
   data,
@@ -107,7 +82,7 @@ export const UniversalFilter = ({
                 <FilterBadge
                   key={key}
                   label={key}
-                  onClose={() => handleClearField(key)}
+                  onClose={() => handleClearField(key as keyof typeof inputValues)}
                   value={value}
                 />
               ),
@@ -137,10 +112,10 @@ export const UniversalFilter = ({
       <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)} title="Filters">
         <div
           style={{ maxHeight: '70vh' }}
-          className="max-h-full overflow-auto flex flex-col justify-between px-4 items-center bg-backgroundSecondary border-1 gap-2 border-borderLow rounded-sm"
+          className="max-h-full overflow-auto flex flex-col justify-between px-4 items-center bg-backgroundSecondary border-1 gap-3 border-borderLow rounded-sm"
         >
           {filterConfigurations.map(({ title, type, dataKey, inputProps }) => (
-            <div key={dataKey} className="w-full">
+            <div key={dataKey} className="w-full flex flex-col">
               <Typography variant="paragraph-sm" className="text-gray-5 mb-2">
                 {title}
               </Typography>

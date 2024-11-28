@@ -138,7 +138,7 @@ export const InputField = ({
         <div className={'absolute right-lg h-max top-0 bottom-0 my-auto '}>{rightContent}</div>
       )}
       {isError && (
-        <div className={`absolute left-1 top-9 h-max z-1`}>
+        <div className={`absolute right-1 top-9 h-max z-1`}>
           <Typography color={'tulipDark'} variant={'caption'}>
             {errorNotification}
           </Typography>

@@ -382,19 +382,19 @@ export interface NetworkStatus {
 }
 
 export interface AppsType {
-  chainID: string
-  chainName: string
-  status: string
-  address: string
-  lastCerticateHeight: number
-  lastUpdated: number
-  escrowedKLY: string
-  escrow: Escrow[]
+  chainID: string;
+  chainName: string;
+  status: string;
+  address: string;
+  lastCerticateHeight: number;
+  lastUpdated: number;
+  escrowedKLY: string;
+  escrow: Escrow[];
 }
 
 export interface Escrow {
-  tokenID: string
-  amount: string
+  tokenID: string;
+  amount: string;
 }
 
 export interface CombinedAppsType extends AppsType {
