@@ -1,6 +1,7 @@
 import { Button, FlexGrid, Grid, Typography } from '../../atoms';
 import { Currency } from '../../atoms';
 import { Setting } from '../../atoms';
+import { CurrencyPicker } from '../../molecules';
 
 interface SettingsContainerProps {
   onClose: () => void;
@@ -13,6 +14,13 @@ interface SettingsContainerProps {
   setFormatting: (value: string[]) => void;
   trailingZeroes: boolean;
   setTrailingZeroes: (value: boolean) => void;
+  currencies: {
+    sign: string;
+    symbol: string;
+    label: string;
+  }[];
+  selectedCurrency?: string;
+  onSelectCurrency?: (currency: string) => void;
 }
 
 export const SettingsContainer = ({
@@ -26,13 +34,16 @@ export const SettingsContainer = ({
   setFormatting,
   setDecimalSeparator,
   decimalSeparator,
+  currencies,
+  selectedCurrency,
+  onSelectCurrency,
 }: SettingsContainerProps) => {
   const decimalSeparatorOptions = ['Comma', 'Period'];
   const formattingOptions = ['Symbol', 'Sign'];
   const saveDisabled = !mantissaSize && !trailingZeroes && !formatting && !decimalSeparator;
 
   return (
-    <FlexGrid direction={'col'} gap={'3xl'}>
+    <FlexGrid className={'max-h-full overflow-auto'} direction={'col'} gap={'3xl'}>
       <Typography variant={'paragraph-md'}>
         {'Example: '}
         <Currency
@@ -78,6 +89,14 @@ export const SettingsContainer = ({
           setValue={setTrailingZeroes}
         />
       </Grid>
+      <div className={'mt-2xl w-full'}>
+        <CurrencyPicker
+          currencies={currencies}
+          selectedCurrency={selectedCurrency}
+          onSelectCurrency={onSelectCurrency}
+          disabled
+        />
+      </div>
       <FlexGrid alignItems="center" className="w-full mt-2xl" gap="1" justify="end">
         <Button
           align="none"

@@ -60,3 +60,4 @@ export * from './settings/numberSetting.tsx';
 export * from './settings/radioSetting.tsx';
 export * from './settings/checkboxGroupSetting.tsx';
 export * from './settings/checkboxSetting.tsx';
+export * from './settings/currencySetting.tsx';

@@ -360,6 +360,14 @@ const config: Omit<Config, 'content'> = {
         ...height,
         ...percentages,
       },
+      maxHeight: {
+        ...height,
+        ...percentages,
+      },
+      minHeight: {
+        ...height,
+        ...percentages,
+      },
       width: {
         ...width,
         ...percentages,

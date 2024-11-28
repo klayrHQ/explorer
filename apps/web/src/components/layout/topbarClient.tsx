@@ -18,6 +18,7 @@ import useMarketcap from '../../utils/hooks/useMarketcap.ts';
 import { FormattedValue } from '../formattedValue.tsx';
 import { SettingsContainer } from '@repo/ui/organisms';
 import { useSettings } from '../../store/settingsStore.ts';
+import {currencies} from "../../utils/constants.tsx";
 
 interface TopbarClientProps {
   logo: {
@@ -196,6 +197,8 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
           setFormatting={setFormatting}
           trailingZeroes={trailingZeroes}
           setTrailingZeroes={setTrailingZeroes}
+          currencies={currencies}
+          selectedCurrency={currencies[0].label}
         />
       </Modal>
       <Snackbar

@@ -150,6 +150,7 @@ export const Topbar = ({
                   className={'absolute top-topbarMobileHeight left-0'}
                   menuItems={mobileMenuItems}
                   onClose={() => setOpenMobileMenu(false)}
+                  setOpenSettings={setOpenSettings}
                 />
               </div>
             </Slide>

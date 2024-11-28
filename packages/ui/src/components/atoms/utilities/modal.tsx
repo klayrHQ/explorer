@@ -25,8 +25,8 @@ export const Modal = ({ open, onClose, title, subTitle, children, width }: Modal
     >
       <div
         className={cls([
-          'bg-backgroundSecondary text-white rounded-lg shadow-lg outline-none relative max-h-screen',
-          width ? `w-${width} max-w-80p` : 'w-modalWidthMobile desktop:w-modalWidth',
+          'bg-backgroundSecondary text-white rounded-lg shadow-lg outline-none relative max-h-90vh flex flex-col',
+          width ? `w-${width} max-w-95p` : 'w-modalWidthMobile desktop:w-modalWidth',
         ])}
       >
         <FlexGrid
@@ -49,7 +49,7 @@ export const Modal = ({ open, onClose, title, subTitle, children, width }: Modal
             variant="transparent"
           />
         </FlexGrid>
-        <div className="px-6 my-3">{children}</div>
+        <div className="px-6 my-3 min-h-0 overflow-y-auto">{children}</div>
       </div>
     </MuiModal>
   );
