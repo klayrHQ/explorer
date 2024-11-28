@@ -19,7 +19,6 @@ export const UniversalFilter = ({
 }: FilterProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
-  console.log('object', errors);
 
   const handleInputChange = (field: string, value: string) => {
     setInputValues((prevState) => ({
@@ -59,10 +58,12 @@ export const UniversalFilter = ({
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+  const hasAppliedFilters = Object.values(filterValues).some((value) => value);
+
   return (
     <div className="relative flex flex-row items-center w-full gap-4 min-w-18 justify-end desktop:justify-between">
       <div className="hidden desktop:flex gap-4 flex-wrap">
-        {hasSelectedFilters &&
+        {hasAppliedFilters &&
           Object.entries(checkedItems).flatMap(([category, values]) =>
             Object.entries(values)
               .filter(([, isChecked]) => isChecked)
@@ -75,7 +76,8 @@ export const UniversalFilter = ({
                 />
               )),
           )}
-        {Object.values(inputValues).some((value) => value) &&
+        {hasAppliedFilters &&
+          Object.values(inputValues).some((value) => value) &&
           Object.entries(inputValues).map(
             ([key, value]) =>
               value && (
