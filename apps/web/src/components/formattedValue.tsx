@@ -40,6 +40,7 @@ interface FormattedValueProps {
   showCopyOnHover?: boolean;
   link?: Omit<CustomLinkProps, 'children'> | string;
   tooltip?: Omit<TooltipProps, 'children'> | string;
+  tooltipContainerClassName?: string;
   accountIconComponent?: React.ReactNode;
 }
 
@@ -61,6 +62,7 @@ export const FormattedValue = ({
   showCopyOnHover,
   link,
   tooltip,
+  tooltipContainerClassName,
   accountIconComponent,
 }: FormattedValueProps) => {
   const basePath = useBasePath();
@@ -172,7 +174,11 @@ export const FormattedValue = ({
 
     if (format === 'fromNow' && typeof value === 'number') {
       return (
-        <Tooltip placement={'top'} text={dayjs((value ?? 0) * 1000).format('DD MMM YYYY HH:mm')}>
+        <Tooltip
+          containerClassName={tooltipContainerClassName}
+          placement={'top'}
+          text={dayjs((value ?? 0) * 1000).format('DD MMM YYYY HH:mm')}
+        >
           <Typography
             className={'whitespace-nowrap'}
             {...typographyProps}
@@ -200,7 +206,7 @@ export const FormattedValue = ({
     typeof link === 'string' && (link = { href: link });
     typeof tooltip === 'string' && (tooltip = { text: tooltip, placement: 'top' });
     return (
-      <Tooltip {...tooltip}>
+      <Tooltip {...tooltip} containerClassName={tooltipContainerClassName}>
         <Link {...link} basePath={link.basePath ?? basePath}>
           {innerComponent()}
         </Link>
@@ -219,7 +225,11 @@ export const FormattedValue = ({
 
   if (tooltip) {
     typeof tooltip === 'string' && (tooltip = { text: tooltip, placement: 'top' });
-    return <Tooltip {...tooltip}>{innerComponent()}</Tooltip>;
+    return (
+      <Tooltip {...tooltip} containerClassName={tooltipContainerClassName}>
+        {innerComponent()}
+      </Tooltip>
+    );
   }
 
   return innerComponent();

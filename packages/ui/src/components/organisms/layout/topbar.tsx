@@ -86,7 +86,7 @@ export const Topbar = ({
         gap={'3xl'}
         mobileDirection="row"
       >
-        <Logo altText={logo.altText} className={'shrink-0'} logoSrc={logo.logoSrc} />
+        <Logo altText={logo.altText} basePath={basePath} className={'shrink-0'} logoSrc={logo.logoSrc} />
         <Popover
           button={
             <IconButton

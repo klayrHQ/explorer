@@ -1,6 +1,7 @@
 import { FavouriteType } from '../utils/types.ts';
 import { create } from 'zustand';
 import { useEffect } from 'react';
+import {safeLocalStorage} from "../utils/helpers/dataHelpers.tsx";
 
 interface FavouritesStore {
   favourites: FavouriteType[];
@@ -11,21 +12,6 @@ interface FavouritesStore {
   isFavourite: (favourite: FavouriteType) => boolean;
   setFavourites: (favourites: FavouriteType[]) => void; // Add setFavourites to the interface
 }
-
-// Utility function to safely access localStorage
-const safeLocalStorage = {
-  getItem: (key: string) => {
-    if (typeof window !== 'undefined') {
-      return window.localStorage.getItem(key);
-    }
-    return null;
-  },
-  setItem: (key: string, value: string) => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(key, value);
-    }
-  },
-};
 
 // Zustand store
 export const useFavouritesStore = create<FavouritesStore>((set, get) => ({

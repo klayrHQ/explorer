@@ -104,6 +104,26 @@ export const convertKLYToBeddows = (lskAmount?: string): string => {
   return beddowsAmountBigInt.toString();
 };
 
-export const createDetails = (label: string, value: any = ' - ', mobileWidth?: string, noTruncate?: boolean) => {
+export const createDetails = (
+  label: string,
+  value: any = ' - ',
+  mobileWidth?: string,
+  noTruncate?: boolean,
+) => {
   return { label: { label }, value, mobileWidth, noTruncate };
+};
+
+// Utility function to safely access localStorage
+export const safeLocalStorage = {
+  getItem: (key: string) => {
+    if (typeof window !== 'undefined') {
+      return window.localStorage.getItem(key);
+    }
+    return null;
+  },
+  setItem: (key: string, value: string) => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(key, value);
+    }
+  },
 };
