@@ -12,7 +12,10 @@ import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { useFilterManagement } from '../../utils/helpers/filterHandlers.ts';
 import { createTransactionRows } from '../../utils/helpers/TableHelpers/transactionTableHelper.tsx';
 import { UniversalFilter } from '../filterComponents/UniversalFilter.tsx';
-import { FilterConfigType } from '../filterComponents/filterTypes.tsx';
+import {
+  transactionFilterConfig,
+  constructSearchParams,
+} from '../filterComponents/filtersConfig.tsx';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
@@ -47,16 +50,7 @@ export const Transactions = () => {
     fetchFunction: callGetTransactions,
     defaultLimit: searchParams.get('limit') || '10',
     changeURL: true,
-    searchParams: {
-      senderAddress:
-        filterValues.from && filterValues.from.length === 41 ? filterValues.from : undefined,
-      recipientAddress:
-        filterValues.to && filterValues.to.length === 41 ? filterValues.to : undefined,
-      moduleCommand:
-        filterValues.moduleCommand && filterValues.moduleCommand.includes(':')
-          ? filterValues.moduleCommand
-          : undefined,
-    },
+    searchParams: constructSearchParams(filterValues, transactionFilterConfig),
     additionalDependencies: [filterValues],
   });
 
@@ -107,36 +101,6 @@ export const Transactions = () => {
     fetchNetworkStatus();
   }, []);
 
-  const filterConfigurations: FilterConfigType[] = [
-    {
-      title: 'Transaction Type',
-      type: 'checkbox' as 'checkbox',
-      dataKey: 'transactionType',
-    },
-    {
-      title: 'Sender Address',
-      type: 'input' as 'input',
-      dataKey: 'from',
-      inputProps: {
-        placeholder: 'Type an address',
-        validation: (value: string | any[]) => value.length === 41,
-        errorMessage: 'Invalid sender address',
-      },
-    },
-    {
-      title: 'Receiver Address',
-      type: 'input',
-      dataKey: 'to',
-      inputProps: {
-        placeholder: 'Type an address',
-        validation: (value: string | any[]) => value.length === 41,
-        errorMessage: 'Invalid receiver address',
-      },
-    },
-  ];
-
-  console.log('object', commandObject);
-
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
       <SectionHeader
@@ -152,7 +116,7 @@ export const Transactions = () => {
             inputValues={inputValues}
             setInputValues={setInputValues}
             handleClearField={(field: keyof typeof inputValues) => handleClear(field)}
-            filterConfigurations={filterConfigurations}
+            filterConfigurations={transactionFilterConfig}
             data={commandObject}
             checkedItems={checkedItems}
             handleCheckboxChange={handleCheckboxChange}

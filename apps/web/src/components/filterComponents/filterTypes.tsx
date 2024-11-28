@@ -4,6 +4,7 @@ export interface FilterConfigType {
   title: string;
   type: 'input' | 'checkbox' | 'radio';
   dataKey: string;
+  searchKey?: string;
   inputProps?: {
     placeholder: string;
     validation?: (value: string) => boolean;
