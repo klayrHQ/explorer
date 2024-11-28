@@ -254,11 +254,10 @@ export interface AccountBannerProps {
   senderAddress?: string;
   senderName?: string;
   status: string;
-  incomingTransactions: string | number;
-  outgoingTransactions: string | number;
+  transactions: string | number;
   coinRate?: number;
-  value?: string | number;
-  valueSymbol?: string;
+  balance?: string | number;
+  balanceSymbol?: string;
   rank: number | string;
   image: string;
   basePath: string;

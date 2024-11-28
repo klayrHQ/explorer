@@ -22,7 +22,7 @@ export const ValidatorBannerText = ({
   capacity,
 }: ValidatorBannerTextProps) => {
   const getStakeWord = (stake: number) => {
-    return stake > 1 ? 'stakes' : 'stake';
+    return stake > 1 || stake === 0 ? 'stakes' : 'stake';
   };
 
   return (

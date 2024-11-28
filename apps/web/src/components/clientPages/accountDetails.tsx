@@ -1,7 +1,7 @@
 'use client';
 
 import { FlexGrid, TabButtons, ViewSwitcher } from '@repo/ui/atoms';
-import {DetailsSection, TableContainer, AccountBanner, ValidatorBanner} from '@repo/ui/organisms';
+import { DetailsSection, TableContainer, AccountBanner, ValidatorBanner } from '@repo/ui/organisms';
 import {
   AccountType,
   TransactionType,
@@ -30,7 +30,8 @@ import {
   validatorStakeOutgoingTableHead,
   userTokensTableHead,
   validatorBlocksTableHead,
-  nftsTableHead, validatorStakeIncomingTableHead,
+  nftsTableHead,
+  validatorStakeIncomingTableHead,
 } from '../../utils/helpers/tableHeaders.tsx';
 import { usePagination } from '../../utils/hooks/usePagination.ts';
 import { fetchPaginatedData } from '../../utils/helpers/dataHelpers.tsx';
@@ -44,12 +45,13 @@ import { Currency } from '../currency.tsx';
 import { createTransactionRows } from '../../utils/helpers/TableHelpers/transactionTableHelper.tsx';
 import {
   createValidatorIncomingStakeRows,
-  createValidatorOutgoingStakeRows
+  createValidatorOutgoingStakeRows,
 } from '../../utils/helpers/TableHelpers/stakeTableHelper.tsx';
 import { createValidatorBlockRows } from '../../utils/helpers/TableHelpers/blockTableHelper.tsx';
 import { createValidatorEventsRow } from '../../utils/helpers/TableHelpers/eventTableHelper.tsx';
 import { createUserDetailsTokensRow } from '../../utils/helpers/TableHelpers/tokenTableHelper.tsx';
 import { createNftsRows } from '../../utils/helpers/TableHelpers/nftTableHelper.tsx';
+import useMarketcap from '../../utils/hooks/useMarketcap.ts';
 
 //MOCK NFTs
 const nfts = [
@@ -154,6 +156,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const tokenID = currentChain?.tokens[0]?.tokenID;
   const chains = useChainNetworkStore((state) => state.chains);
   const symbol = currentChain?.tokens[0]?.symbol;
+  const { tokenPrice } = useMarketcap();
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
@@ -727,6 +730,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
               setIsFav(true);
             }
           }}
+          stakes={incomingStakes.length}
           status={validator?.status || ''}
           value={validator?.totalStake}
           valueSymbol={symbol}
@@ -734,11 +738,10 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       ) : (
         <AccountBanner
           basePath={basePath}
-          coinRate={0.2}
+          coinRate={tokenPrice}
           image={BannerBG.src}
-          incomingTransactions={incomingStakes.length}
           isFavorite={isFavourite({ address: account?.address ?? '' })}
-          outgoingTransactions={outgoingStakes.length}
+          transactions={transactionsMeta?.total || 0}
           rank={''}
           removeFavorite={() => {
             if (account?.address) {
@@ -754,8 +757,8 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
               setIsFav(true);
             }
           }}
-          value={232}
-          valueSymbol={symbol}
+          balance={mainTokenBalance?.totalBalance}
+          balanceSymbol={symbol}
           status={''}
         />
       )}
