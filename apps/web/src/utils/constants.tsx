@@ -8,10 +8,32 @@ export const currencies = [
   {
     sign: 'Ҝ',
     symbol: 'KLY',
+    label: 'Klayr',
   },
   {
+    label: 'Euro',
+    sign: '€',
+    symbol: 'EUR',
+  },
+  {
+    label: 'Dollar',
     sign: '$',
     symbol: 'USD',
+  },
+  {
+    label: 'Pound',
+    sign: '£',
+    symbol: 'GBP',
+  },
+  {
+    label: 'Yen',
+    sign: '¥',
+    symbol: 'JPY',
+  },
+  {
+    label: 'Rupee',
+    sign: '₹',
+    symbol: 'INR',
   },
 ];
 

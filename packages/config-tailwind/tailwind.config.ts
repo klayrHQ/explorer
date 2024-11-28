@@ -51,6 +51,8 @@ const getKeyMap = (obj, prefix) => {
     ...Object.keys(obj).map((key) => `mobile:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `sidebarBp:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `hover:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `hover:before:${prefix}-${key}`),
+    ...Object.keys(obj).map((key) => `hover:after:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `focus:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `focus:hover:${prefix}-${key}`),
     ...Object.keys(obj).map((key) => `group-hover:${prefix}-${key}`),
@@ -76,6 +78,8 @@ const getKeyOnlyMap = (obj) => {
     ...Object.keys(obj).map((key) => `mobile:${key}`),
     ...Object.keys(obj).map((key) => `sidebarBp:${key}`),
     ...Object.keys(obj).map((key) => `hover:${key}`),
+    ...Object.keys(obj).map((key) => `hover:before:${key}`),
+    ...Object.keys(obj).map((key) => `hover:after:${key}`),
     ...Object.keys(obj).map((key) => `focus:${key}`),
     ...Object.keys(obj).map((key) => `focus:hover:${key}`),
     ...Object.keys(obj).map((key) => `group-hover:${key}`),
@@ -353,6 +357,14 @@ const config: Omit<Config, 'content'> = {
       brightness: percentages,
       opacity: percentages,
       height: {
+        ...height,
+        ...percentages,
+      },
+      maxHeight: {
+        ...height,
+        ...percentages,
+      },
+      minHeight: {
         ...height,
         ...percentages,
       },

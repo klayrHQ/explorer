@@ -10,6 +10,8 @@ interface MobileMenuProps {
   onClose?: () => void;
   basePath?: string;
   newFavourite?: boolean;
+  openSettings?: boolean;
+  setOpenSettings?: (open: boolean) => void;
 }
 
 export const MobileMenu = ({
@@ -19,6 +21,7 @@ export const MobileMenu = ({
   onClose,
   basePath,
   newFavourite,
+  setOpenSettings,
 }: MobileMenuProps) => {
   return (
     <FlexGrid
@@ -57,7 +60,12 @@ export const MobileMenu = ({
           </div>
         </Link>
         <ChainNetworkPicker {...chainNetworkData} />
-        <div className={'w-iconButtonWidth'} />
+        <IconButton
+          align={'none'}
+          icon={'Settings'}
+          onClick={() => setOpenSettings && setOpenSettings(true)}
+          variant={'iconOnly'}
+        />
       </FlexGrid>
     </FlexGrid>
   );

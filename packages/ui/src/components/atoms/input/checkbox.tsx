@@ -44,8 +44,8 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id, label, checked, onChange
   <path
     d="M17 1L6 12L1 7"
     stroke="black"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   />
 </svg>;

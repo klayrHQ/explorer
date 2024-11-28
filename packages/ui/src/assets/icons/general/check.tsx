@@ -12,7 +12,7 @@ export const Check = ({ className }: { className?: string }) => (
       stroke="currentColor"
       strokeWidth="3"
       strokeLinecap="round"
-      stroke-Linejoin="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

@@ -17,3 +17,4 @@ export * from './validator/nextValidators';
 export * from './stakes/calculator';
 export * from './nft/nftCard';
 export * from './data/accordionWithCheckboxes';
+export * from './settings/currencyPicker.tsx';

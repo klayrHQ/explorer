@@ -1,9 +1,22 @@
 import { useState, useCallback } from 'react';
+import {
+  InputValues,
+  FilterValues,
+  CheckedItems,
+  HandleCheckboxChange,
+  HandleSelectAllChange,
+  HandleCheckboxClose,
+  HandleClear,
+} from '../../components/filterComponents/filterTypes.tsx';
 
 export const useFilterManagement = () => {
-  const [inputValues, setInputValues] = useState({ from: '', to: '' });
-  const [filterValues, setFilterValues] = useState({ from: '', to: '', moduleCommand: '' });
-  const [checkedItems, setCheckedItems] = useState<Record<string, Record<string, boolean>>>({});
+  const [inputValues, setInputValues] = useState<InputValues>({ from: '', to: '' });
+  const [filterValues, setFilterValues] = useState<FilterValues>({
+    from: '',
+    to: '',
+    moduleCommand: '',
+  });
+  const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
 
   const clearAllFields = useCallback(() => {
     setInputValues({ from: '', to: '' });
@@ -11,27 +24,10 @@ export const useFilterManagement = () => {
     setCheckedItems({});
   }, []);
 
-  const handleClear = useCallback((field: keyof InputValues) => {
+  const handleClear: HandleClear = useCallback((field: keyof InputValues) => {
     setInputValues((prev) => ({ ...prev, [field]: '' }));
     setFilterValues((prev) => ({ ...prev, [field]: '' }));
   }, []);
-
-  interface InputValues {
-    from: string;
-    to: string;
-  }
-
-  interface FilterValues extends InputValues {
-    moduleCommand: string;
-  }
-
-  interface CheckedItems {
-    [category: string]: {
-      [value: string]: boolean;
-    };
-  }
-
-  type HandleCheckboxChange = (category: string, value: string, isChecked: boolean) => void;
 
   const handleCheckboxChange: HandleCheckboxChange = (category, value, isChecked) => {
     setCheckedItems((prevState) => ({
@@ -39,10 +35,6 @@ export const useFilterManagement = () => {
       [category]: { ...prevState[category], [value]: isChecked },
     }));
   };
-
-  interface HandleSelectAllChange {
-    (category: string, values: string[], isChecked: boolean): void;
-  }
 
   const handleSelectAllChange: HandleSelectAllChange = (category, values, isChecked) => {
     setCheckedItems((prevState) => ({
@@ -60,10 +52,6 @@ export const useFilterManagement = () => {
 
     setFilterValues({ ...inputValues, moduleCommand: selectedItems.join(',') });
   };
-
-  interface HandleCheckboxClose {
-    (category: string, value: string): void;
-  }
 
   const handleCheckboxClose: HandleCheckboxClose = (category, value) => {
     setCheckedItems((prevState) => {

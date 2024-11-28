@@ -1,6 +1,13 @@
 'use client';
 import { Topbar } from '@repo/ui/organisms';
-import { Icon, MenuItemProps, Modal, SkeletonComponent, Typography } from '@repo/ui/atoms';
+import {
+  Icon,
+  MenuItemProps,
+  Modal,
+  SkeletonComponent,
+  Snackbar,
+  Typography,
+} from '@repo/ui/atoms';
 import { useSearchStore } from '../../store/searchStore.ts';
 import React, { useEffect, useState } from 'react';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
@@ -11,6 +18,7 @@ import useMarketcap from '../../utils/hooks/useMarketcap.ts';
 import { FormattedValue } from '../formattedValue.tsx';
 import { SettingsContainer } from '@repo/ui/organisms';
 import { useSettings } from '../../store/settingsStore.ts';
+import {currencies} from "../../utils/constants.tsx";
 
 interface TopbarClientProps {
   logo: {
@@ -60,7 +68,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
       formatting,
       trailingZeroes,
     });
-
+    setShowSnackbar(true);
     setOpenSettings(false);
   };
 
@@ -138,6 +146,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   ];
 
   const [openSettings, setOpenSettings] = React.useState(false);
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
 
   const optionsMenuItems: MenuItemProps[] = [
     {
@@ -188,8 +197,18 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
           setFormatting={setFormatting}
           trailingZeroes={trailingZeroes}
           setTrailingZeroes={setTrailingZeroes}
+          currencies={currencies}
+          selectedCurrency={currencies[0].label}
         />
       </Modal>
+      <Snackbar
+        autoHideDuration={3000}
+        open={showSnackbar}
+        title={'Settings saved'}
+        text={'Your settings have been saved succesfully'}
+        variant={'success'}
+        onClose={() => setShowSnackbar(false)}
+      />
     </>
   );
 };
