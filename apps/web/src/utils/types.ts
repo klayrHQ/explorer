@@ -404,4 +404,6 @@ export interface CombinedAppsType extends AppsType {
     appChainID: string;
   };
   displayName?: string;
+  projectPage?: string;
+  meta?: boolean;
 }

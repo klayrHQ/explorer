@@ -36,11 +36,15 @@ export const Chains = () => {
   const combinedApps = apps.filter(app => app.chainName !== 'klayr_mainchain').map((app) => {
     const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
     const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
+    const projectPage = chains.find((chain) => chain.chainID === app.chainID)?.projectPage;
+    const meta = chains.find((chain) => chain.chainID === app.chainID);
 
     return {
       ...app,
       logo,
       displayName,
+      projectPage,
+      meta,
     };
   });
 
