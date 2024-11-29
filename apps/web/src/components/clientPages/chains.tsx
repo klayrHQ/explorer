@@ -21,10 +21,12 @@ export const Chains = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
 
+  // Filter configurations that are available for the chains table hardcoded
   const [commandObject, setCommandObject] = useState<{ [key: string]: string[] }>({
     status: ['registered', 'activated', 'terminated', 'unregistered'],
   });
 
+  //This is for the filter
   const searchKeys = getSearchKeys(chainFilterConfig);
 
   const {
@@ -94,7 +96,7 @@ export const Chains = () => {
             <UniversalFilter
               inputValues={inputValues}
               setInputValues={setInputValues}
-              handleClearField={(field: keyof typeof inputValues) => handleClear(field)}
+              handleClearField={(field: string | number) => handleClear(field)}
               filterConfigurations={chainFilterConfig}
               data={commandObject}
               checkedItems={checkedItems}

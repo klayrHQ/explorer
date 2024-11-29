@@ -25,7 +25,7 @@ export const Transactions = () => {
   const currentChain = useChainNetworkStore((state) => state.currentChain);
 
   const searchKeys = getSearchKeys(transactionFilterConfig);
- 
+
   const {
     inputValues,
     setInputValues,
@@ -119,7 +119,7 @@ export const Transactions = () => {
           <UniversalFilter
             inputValues={inputValues}
             setInputValues={setInputValues}
-            handleClearField={(field: keyof typeof inputValues) => handleClear(field)}
+            handleClearField={(field: string | number) => handleClear(field)}
             filterConfigurations={transactionFilterConfig}
             data={commandObject}
             checkedItems={checkedItems}
