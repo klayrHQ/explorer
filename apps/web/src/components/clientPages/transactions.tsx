@@ -16,12 +16,16 @@ import {
   transactionFilterConfig,
   constructSearchParams,
 } from '../filterComponents/filtersConfig.tsx';
+import { getSearchKeys } from '../../utils/helpers/filterHandlers.ts';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
   const chains = useChainNetworkStore((state) => state.chains);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
+
+  const searchKeys = getSearchKeys(transactionFilterConfig);
+ 
   const {
     inputValues,
     setInputValues,
@@ -33,7 +37,7 @@ export const Transactions = () => {
     handleApply,
     handleCheckboxClose,
     clearAllFields,
-  } = useFilterManagement();
+  } = useFilterManagement(searchKeys);
 
   const {
     data: transactions,
@@ -50,7 +54,7 @@ export const Transactions = () => {
     fetchFunction: callGetTransactions,
     defaultLimit: searchParams.get('limit') || '10',
     changeURL: true,
-    searchParams: constructSearchParams(filterValues, transactionFilterConfig),
+    searchParams: constructSearchParams(filterValues, searchKeys),
     additionalDependencies: [filterValues],
   });
 

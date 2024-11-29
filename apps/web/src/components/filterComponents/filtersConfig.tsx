@@ -42,20 +42,14 @@ export const chainFilterConfig: FilterConfigType[] = [
 
 export const constructSearchParams = (
   filterValues: Record<string, string>,
-  filterConfigurations: FilterConfigType[],
+  searchKeys: string[],
 ): Record<string, string | undefined> => {
   const searchParams: Record<string, string | undefined> = {};
 
-  filterConfigurations.forEach(({ dataKey, searchKey, inputProps }) => {
-    const value = filterValues[dataKey];
+  searchKeys.forEach((key) => {
+    const value = filterValues[key];
     if (value && value.length > 0) {
-      if (inputProps?.validation && !inputProps.validation(value)) {
-        delete searchParams[searchKey as string];
-      } else {
-        if (searchKey) {
-          searchParams[searchKey] = value;
-        }
-      }
+      searchParams[key] = value;
     }
   });
 

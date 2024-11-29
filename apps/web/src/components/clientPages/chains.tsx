@@ -8,12 +8,37 @@ import { callGetApps } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
 import { useSearchParams } from 'next/navigation';
 import { createChainRows } from '../../utils/helpers/TableHelpers/chainTableHelper.tsx';
+import { UniversalFilter } from '../filterComponents/UniversalFilter.tsx';
+import { useFilterManagement } from '../../utils/helpers/filterHandlers.ts';
+import { chainFilterConfig, constructSearchParams } from '../filterComponents/filtersConfig.tsx';
+import { useState } from 'react';
+import { FilterConfigType } from '../filterComponents/filterTypes.tsx';
+import { getSearchKeys } from '../../utils/helpers/filterHandlers.ts';
 
 export const Chains = () => {
   const chains = useChainNetworkStore((state) => state.chains);
   const defaultLimit = '10';
   const searchParams = useSearchParams();
   const basePath = useBasePath();
+
+  const [commandObject, setCommandObject] = useState<{ [key: string]: string[] }>({
+    status: ['registered', 'activated', 'terminated', 'unregistered'],
+  });
+
+  const searchKeys = getSearchKeys(chainFilterConfig);
+
+  const {
+    inputValues,
+    setInputValues,
+    filterValues,
+    checkedItems,
+    handleClear,
+    handleCheckboxChange,
+    handleSelectAllChange,
+    handleApply,
+    handleCheckboxClose,
+    clearAllFields,
+  } = useFilterManagement(searchKeys);
 
   const {
     data: apps,
@@ -26,27 +51,28 @@ export const Chains = () => {
   } = usePaginationAndSorting({
     fetchFunction: callGetApps,
     defaultLimit: searchParams.get('limit') || defaultLimit,
-    searchParams: {
-      //status: 'registered,activated,terminated,unregistered',
-    },
+    searchParams: constructSearchParams(filterValues, searchKeys),
     changeURL: true,
     useNewBlockEvent: true,
+    additionalDependencies: [filterValues],
   });
 
-  const combinedApps = apps.filter(app => app.chainName !== 'klayr_mainchain').map((app) => {
-    const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
-    const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
-    const projectPage = chains.find((chain) => chain.chainID === app.chainID)?.projectPage;
-    const meta = chains.find((chain) => chain.chainID === app.chainID);
+  const combinedApps = apps
+    .filter((app) => app.chainName !== 'klayr_mainchain')
+    .map((app) => {
+      const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
+      const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
+      const projectPage = chains.find((chain) => chain.chainID === app.chainID)?.projectPage;
+      const meta = chains.find((chain) => chain.chainID === app.chainID);
 
-    return {
-      ...app,
-      logo,
-      displayName,
-      projectPage,
-      meta,
-    };
-  });
+      return {
+        ...app,
+        logo,
+        displayName,
+        projectPage,
+        meta,
+      };
+    });
 
   const rows = createChainRows(combinedApps || [], loading, basePath);
 
@@ -64,6 +90,22 @@ export const Chains = () => {
           setCurrentNumber={handlePageChange}
           currentNumber={pageNumber}
           defaultValue={defaultLimit}
+          filtersComponent={
+            <UniversalFilter
+              inputValues={inputValues}
+              setInputValues={setInputValues}
+              handleClearField={(field: keyof typeof inputValues) => handleClear(field)}
+              filterConfigurations={chainFilterConfig}
+              data={commandObject}
+              checkedItems={checkedItems}
+              handleCheckboxChange={handleCheckboxChange}
+              handleSelectAllChange={handleSelectAllChange}
+              handleApply={handleApply}
+              handleClear={clearAllFields}
+              handleCheckboxClose={handleCheckboxClose}
+              filterValues={filterValues}
+            />
+          }
         />
       ) : (
         <NotFound
