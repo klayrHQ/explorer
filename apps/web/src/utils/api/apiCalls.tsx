@@ -14,7 +14,7 @@ import {
   StakersType,
   StakesType,
   TokenSummaryType,
-  TokenType,
+  TokenType, TopAccountsType, TopAccountType,
   TransactionType,
   ValidatorType,
 } from '../types';
@@ -27,7 +27,7 @@ import {
   ChainTokenQueryParams,
   EventsQueryParams,
   StakersQueryParams,
-  TokensQueryParams,
+  TokensQueryParams, TopAccountQueryParams,
   TransactionQueryParams,
   ValidatorQueryParams,
 } from './types';
@@ -141,6 +141,12 @@ export const callGetAccounts = async (
   return apiCall<AccountType>('account', params);
 };
 
+export const callGetTopAccounts = async (
+  params: TopAccountQueryParams,
+): Promise<GatewayRes<TopAccountsType>> => {
+  return apiCall<TopAccountsType>('token/balances/top', params);
+}
+
 export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayRes<TokenType>> => {
   return apiCall<TokenType>('token/balances', params);
 };
@@ -161,21 +167,36 @@ export const callGetChains = async (
     'blockchain/apps/meta',
     params,
   );
-  const testnetResponse = await customApiCall<ChainType[]>('https://gateway-testnet.klayr.dev/api/v1/','blockchain/apps/meta', params);
+  const testnetResponse = await customApiCall<ChainType[]>(
+    'https://gateway-testnet.klayr.dev/api/v1/',
+    'blockchain/apps/meta',
+    params,
+  );
   return {
     data: mainnetResponse.data.concat(testnetResponse.data),
-    meta: {...mainnetResponse.meta, ...testnetResponse.meta},
+    meta: { ...mainnetResponse.meta, ...testnetResponse.meta },
   };
 };
 
 export const callGetChainTokens = async (
   params: ChainTokenQueryParams,
 ): Promise<GatewayRes<ChainTokenType[]>> => {
-  return apiCall<ChainTokenType[]>('blockchain/apps/meta/tokens', params);
+  const mainnetResponse = await customApiCall<ChainTokenType[]>(
+    'https://gateway-mainnet.klayr.dev/api/v1/',
+    'blockchain/apps/meta/tokens',
+    params,
+  );
+  const testnetResponse = await customApiCall<ChainTokenType[]>(
+    'https://gateway-testnet.klayr.dev/api/v1/',
+    'blockchain/apps/meta/tokens',
+    params,
+  );
+  return {
+    data: mainnetResponse.data.concat(testnetResponse.data),
+    meta: { ...mainnetResponse.meta, ...testnetResponse.meta },
+  };
 };
 
-export const callGetApps = async (
-  params: AppsQueryParams,
-): Promise<GatewayRes<AppsType[]>> => {
+export const callGetApps = async (params: AppsQueryParams): Promise<GatewayRes<AppsType[]>> => {
   return apiCall<AppsType[]>('blockchain/apps', params);
-}
+};

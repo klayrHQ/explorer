@@ -57,6 +57,13 @@ export interface AccountQueryParams {
   offset?: number;
 }
 
+export interface TopAccountQueryParams {
+  tokenID: string;
+  limit?: number;
+  offset?: number;
+  sort?: string;
+}
+
 export interface TokensQueryParams {
   address?: string;
 }

@@ -247,6 +247,18 @@ export type AccountsType = {
   accounts: AccountType[];
 };
 
+export type TopAccountType = {
+  address: string;
+  publicKey: string;
+  name: string;
+  description: string;
+  totalBalance: string;
+  availableBalance: string;
+  lockedBalance: string;
+}
+
+export type TopAccountsType = Record<string, TopAccountType[]>
+
 export interface FavouriteType {
   address: string;
   name?: string;
