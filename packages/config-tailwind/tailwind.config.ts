@@ -323,6 +323,8 @@ const config: Omit<Config, 'content'> = {
     'flex-wrap-reverse',
     'capitalize',
     'bg-no-repeat',
+    'bg-cover',
+    'bg-center',
     'truncate',
     'align-middle',
     'group-hover:flex',
