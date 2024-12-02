@@ -17,6 +17,7 @@ import { getSearchKeys } from '../../utils/helpers/filterHandlers.ts';
 
 export const Chains = () => {
   const chains = useChainNetworkStore((state) => state.chains);
+  const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
   const defaultLimit = '10';
   const searchParams = useSearchParams();
   const basePath = useBasePath();
@@ -55,66 +56,74 @@ export const Chains = () => {
     defaultLimit: searchParams.get('limit') || defaultLimit,
     searchParams: constructSearchParams(filterValues, searchKeys),
     changeURL: true,
-    useNewBlockEvent: true,
+    useNewBlockEvent: false,
     additionalDependencies: [filterValues],
   });
 
-  const combinedApps = apps
+  // const mappedApps = apps
+  //   .filter((app) => app.chainName !== 'klayr_mainchain')
+  //   .map((app) => {
+  //     const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
+  //     const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
+  //     const projectPage = chains.find((chain) => chain.chainID === app.chainID)?.projectPage;
+  //     const meta = chains.find((chain) => chain.chainID === app.chainID);
+
+  //     return {
+  //       ...app,
+  //       logo,
+  //       displayName,
+  //       projectPage,
+  //       meta,
+  //     };
+  //   });
+
+  const filteredApps = apps
     .filter((app) => app.chainName !== 'klayr_mainchain')
-    .map((app) => {
-      const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
-      const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
-      const projectPage = chains.find((chain) => chain.chainID === app.chainID)?.projectPage;
-      const meta = chains.find((chain) => chain.chainID === app.chainID);
+    .filter((app) => !chains.some((chain) => chain.chainID === app.chainID));
 
-      return {
-        ...app,
-        logo,
-        displayName,
-        projectPage,
-        meta,
-      };
-    });
+  const filteredChains = chains
+    .filter((chain) => chain.chainName !== 'klayr_mainchain')
+    .filter((chain) => chain.networkType === currentNetwork);
 
-  const rows = createChainRows(combinedApps || [], loading, basePath);
+  const combinedApps = [...filteredChains, ...filteredApps];
+
+  const rows = createChainRows(
+    pageNumber > 1 ? filteredApps : combinedApps || [],
+    loading,
+    basePath,
+  );
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
       <SectionHeader count={totalApps} title={'Chains'} />
-      {combinedApps.length > 0 ? (
-        <TableContainer
-          headCols={chainsTableHead}
-          keyPrefix={'chains'}
-          rows={rows}
-          pagination
-          onPerPageChange={handleLimitChange}
-          totalPages={Math.ceil(totalApps / Number(limit))}
-          setCurrentNumber={handlePageChange}
-          currentNumber={pageNumber}
-          defaultValue={defaultLimit}
-          filtersComponent={
-            <UniversalFilter
-              inputValues={inputValues}
-              setInputValues={setInputValues}
-              handleClearField={(field: string | number) => handleClear(field)}
-              filterConfigurations={chainFilterConfig}
-              data={commandObject}
-              checkedItems={checkedItems}
-              handleCheckboxChange={handleCheckboxChange}
-              handleSelectAllChange={handleSelectAllChange}
-              handleApply={handleApply}
-              handleClear={clearAllFields}
-              handleCheckboxClose={handleCheckboxClose}
-              filterValues={filterValues}
-            />
-          }
-        />
-      ) : (
-        <NotFound
-          headerText={'No Chains Here'}
-          subheaderText={'We could not find any chains on this network'}
-        />
-      )}
+
+      <TableContainer
+        headCols={chainsTableHead}
+        keyPrefix={'chains'}
+        rows={rows}
+        pagination
+        onPerPageChange={handleLimitChange}
+        totalPages={Math.ceil(totalApps / Number(limit))}
+        setCurrentNumber={handlePageChange}
+        currentNumber={pageNumber}
+        defaultValue={defaultLimit}
+        filtersComponent={
+          <UniversalFilter
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            handleClearField={(field: string | number) => handleClear(field)}
+            filterConfigurations={chainFilterConfig}
+            data={commandObject}
+            checkedItems={checkedItems}
+            handleCheckboxChange={handleCheckboxChange}
+            handleSelectAllChange={handleSelectAllChange}
+            handleApply={handleApply}
+            handleClear={clearAllFields}
+            handleCheckboxClose={handleCheckboxClose}
+            filterValues={filterValues}
+          />
+        }
+      />
     </FlexGrid>
   );
 };
