@@ -2,20 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
-import {
-  DateComponent,
-  FlexGrid,
-  TabButtons,
-  UserAccountCard,
-  Typography,
-  CopyIcon,
-} from '@repo/ui/atoms';
-import { DetailsSection, SectionHeader, TableContainer } from '@repo/ui/organisms';
+import { DateComponent, FlexGrid, TabButtons } from '@repo/ui/atoms';
+import { DetailsSection, TableContainer } from '@repo/ui/organisms';
 import { eventsTableHead } from '../../utils/helpers/tableHeaders.tsx';
 import { DataType } from '@repo/ui/types';
 import { EventsType, TransactionType } from '../../utils/types.ts';
 import { callGetEvents, callGetTransactions } from '../../utils/api/apiCalls.tsx';
-import { Link } from '@repo/ui/atoms';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { Currency } from '../currency.tsx';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
