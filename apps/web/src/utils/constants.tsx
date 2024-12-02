@@ -163,6 +163,11 @@ export const defaultChain = {
     'https://github.com/KlayrHQ/klayr-core/blob/development/config/mainnet/genesis_assets.json',
   projectPage: 'https://klayr.xyz',
   backgroundColor: '#EDEDCE',
+  blockchainApp: {
+    address: '',
+    escrowedKLY: null,
+    lastUpdated: null,
+  },
   serviceURLs: [
     {
       http: 'https://gateway-mainnet.klayr.dev/api/v1',

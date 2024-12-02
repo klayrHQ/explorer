@@ -311,8 +311,8 @@ export interface ChainType {
   backgroundColor: string;
   blockchainApp: {
     address: string;
-    escrowedKLY: string;
-    lastUpdated: number;
+    escrowedKLY: string | null;
+    lastUpdated: number | null;
   };
   serviceURLs: ServiceURLsType[];
   logo: {
