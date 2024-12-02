@@ -64,6 +64,7 @@ export const TransactionBanner = ({
         </FlexGrid>
         <BannerText
           amount={amount}
+          basePath={basePath}
           badgeColor={badgeColor}
           executionStatus={executionStatus || ''}
           moduleCommand={moduleCommand}
