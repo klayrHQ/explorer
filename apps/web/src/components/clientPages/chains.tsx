@@ -17,6 +17,7 @@ import { getSearchKeys } from '../../utils/helpers/filterHandlers.ts';
 
 export const Chains = () => {
   const chains = useChainNetworkStore((state) => state.chains);
+  const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
   const defaultLimit = '10';
   const searchParams = useSearchParams();
   const basePath = useBasePath();
@@ -80,12 +81,11 @@ export const Chains = () => {
     .filter((app) => app.chainName !== 'klayr_mainchain')
     .filter((app) => !chains.some((chain) => chain.chainID === app.chainID));
 
-  const filteredChains = chains.filter((chain) => chain.chainName !== 'klayr_mainchain');
+  const filteredChains = chains
+    .filter((chain) => chain.chainName !== 'klayr_mainchain')
+    .filter((chain) => chain.networkType === currentNetwork);
 
   const combinedApps = [...filteredChains, ...filteredApps];
-
-  console.log('filteredChains', filteredChains);
-  console.log('filteredApps', filteredApps);
 
   const rows = createChainRows(
     pageNumber > 1 ? filteredApps : combinedApps || [],
