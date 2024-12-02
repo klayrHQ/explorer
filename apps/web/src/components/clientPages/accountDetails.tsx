@@ -1,7 +1,7 @@
 'use client';
 
 import { FlexGrid, TabButtons, ViewSwitcher } from '@repo/ui/atoms';
-import {DetailsSection, TableContainer, AccountBanner, ValidatorBanner, SectionHeader} from '@repo/ui/organisms';
+import {DetailsSection, TableContainer, AccountBanner, ValidatorBanner} from '@repo/ui/organisms';
 import {
   AccountType,
   TransactionType,
@@ -151,6 +151,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const currentChain = useChainNetworkStore((state) => state.currentChain);
+  const tokenID = currentChain?.tokens[0]?.tokenID;
   const chains = useChainNetworkStore((state) => state.chains);
   const symbol = currentChain?.tokens[0]?.symbol;
 
@@ -284,6 +285,8 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     blocksPagination.limit,
   ]);
 
+  const mainTokenBalance = account?.tokenBalances[tokenID][0];
+
   const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
     return { label: { label }, value, mobileWidth };
   };
@@ -368,7 +371,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <FormattedValue
           format="currency"
           currencyProps={{ className: 'font-onBackgroundHigh' }}
-          value={account?.totalBalance}
+          value={mainTokenBalance?.totalBalance}
         />
       </>,
     ),
@@ -378,7 +381,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <FormattedValue
           format="currency"
           currencyProps={{ className: 'font-onBackgroundHigh' }}
-          value={account?.lockedBalance}
+          value={mainTokenBalance?.lockedBalance}
         />
       </>,
     ),
@@ -388,11 +391,11 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <FormattedValue
           format="currency"
           currencyProps={{ className: 'font-onBackgroundHigh' }}
-          value={account?.availableBalance}
+          value={mainTokenBalance?.availableBalance}
         />
       </>,
     ),
-    createDetails(
+    /*createDetails(
       'Claimable Rewards',
       <>
         <FormattedValue
@@ -401,7 +404,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           value={'0'}
         />
       </>,
-    ),
+    ),*/
   ];
 
   const validatorDetails = [

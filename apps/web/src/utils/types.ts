@@ -229,15 +229,19 @@ export type StakersType = {
 };
 
 export type AccountType = {
-  lockedBalance: string | number;
   address: string;
   nonce: string;
   publicKey: string;
   name: string | null;
-  totalBalance: string;
-  availableBalance: string;
+  tokenBalances: Record<string, TokenBalancesType[]>
   description: string | null;
 };
+
+export type TokenBalancesType = {
+  totalBalance: string;
+  availableBalance: string;
+  lockedBalance: string | number;
+}
 
 export type AccountsType = {
   accounts: AccountType[];
