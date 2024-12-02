@@ -40,7 +40,7 @@ export const SnackbarBody = forwardRef(
   ({ title, text, handleClose, variant }: SnackbarProps, ref: Ref<HTMLDivElement>) => {
     const { style, icon } = SnackbarVariant[variant];
     return (
-      <div className={'bg-backgroundPrimary'} ref={ref}>
+      <div className={'bg-backgroundPrimary rounded-lg'} ref={ref}>
         <div className={`w-96 ${style} rounded-lg border-1 relative`}>
           <div className="absolute top-2 right-2">
             <IconButton
