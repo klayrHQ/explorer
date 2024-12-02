@@ -55,7 +55,7 @@ export const Chains = () => {
     defaultLimit: searchParams.get('limit') || defaultLimit,
     searchParams: constructSearchParams(filterValues, searchKeys),
     changeURL: true,
-    useNewBlockEvent: true,
+    useNewBlockEvent: false,
     additionalDependencies: [filterValues],
   });
 
@@ -83,40 +83,34 @@ export const Chains = () => {
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
       <SectionHeader count={totalApps} title={'Chains'} />
-      {combinedApps.length > 0 ? (
-        <TableContainer
-          headCols={chainsTableHead}
-          keyPrefix={'chains'}
-          rows={rows}
-          pagination
-          onPerPageChange={handleLimitChange}
-          totalPages={Math.ceil(totalApps / Number(limit))}
-          setCurrentNumber={handlePageChange}
-          currentNumber={pageNumber}
-          defaultValue={defaultLimit}
-          filtersComponent={
-            <UniversalFilter
-              inputValues={inputValues}
-              setInputValues={setInputValues}
-              handleClearField={(field: string | number) => handleClear(field)}
-              filterConfigurations={chainFilterConfig}
-              data={commandObject}
-              checkedItems={checkedItems}
-              handleCheckboxChange={handleCheckboxChange}
-              handleSelectAllChange={handleSelectAllChange}
-              handleApply={handleApply}
-              handleClear={clearAllFields}
-              handleCheckboxClose={handleCheckboxClose}
-              filterValues={filterValues}
-            />
-          }
-        />
-      ) : (
-        <NotFound
-          headerText={'No Chains Here'}
-          subheaderText={'We could not find any chains on this network'}
-        />
-      )}
+
+      <TableContainer
+        headCols={chainsTableHead}
+        keyPrefix={'chains'}
+        rows={rows}
+        pagination
+        onPerPageChange={handleLimitChange}
+        totalPages={Math.ceil(totalApps / Number(limit))}
+        setCurrentNumber={handlePageChange}
+        currentNumber={pageNumber}
+        defaultValue={defaultLimit}
+        filtersComponent={
+          <UniversalFilter
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            handleClearField={(field: string | number) => handleClear(field)}
+            filterConfigurations={chainFilterConfig}
+            data={commandObject}
+            checkedItems={checkedItems}
+            handleCheckboxChange={handleCheckboxChange}
+            handleSelectAllChange={handleSelectAllChange}
+            handleApply={handleApply}
+            handleClear={clearAllFields}
+            handleCheckboxClose={handleCheckboxClose}
+            filterValues={filterValues}
+          />
+        }
+      />
     </FlexGrid>
   );
 };
