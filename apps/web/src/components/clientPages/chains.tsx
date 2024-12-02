@@ -59,26 +59,39 @@ export const Chains = () => {
     additionalDependencies: [filterValues],
   });
 
-  const mappedApps = apps
+  // const mappedApps = apps
+  //   .filter((app) => app.chainName !== 'klayr_mainchain')
+  //   .map((app) => {
+  //     const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
+  //     const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
+  //     const projectPage = chains.find((chain) => chain.chainID === app.chainID)?.projectPage;
+  //     const meta = chains.find((chain) => chain.chainID === app.chainID);
+
+  //     return {
+  //       ...app,
+  //       logo,
+  //       displayName,
+  //       projectPage,
+  //       meta,
+  //     };
+  //   });
+
+  const filteredApps = apps
     .filter((app) => app.chainName !== 'klayr_mainchain')
-    .map((app) => {
-      const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
-      const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
-      const projectPage = chains.find((chain) => chain.chainID === app.chainID)?.projectPage;
-      const meta = chains.find((chain) => chain.chainID === app.chainID);
+    .filter((app) => !chains.some((chain) => chain.chainID === app.chainID));
 
-      return {
-        ...app,
-        logo,
-        displayName,
-        projectPage,
-        meta,
-      };
-    });
+  const filteredChains = chains.filter((chain) => chain.chainName !== 'klayr_mainchain');
 
-  const combinedApps = [...mappedApps].sort((a, b) => (b.projectPage ? 1 : -1));
+  const combinedApps = [...filteredChains, ...filteredApps];
 
-  const rows = createChainRows(combinedApps || [], loading, basePath);
+  console.log('filteredChains', filteredChains);
+  console.log('filteredApps', filteredApps);
+
+  const rows = createChainRows(
+    pageNumber > 1 ? filteredApps : combinedApps || [],
+    loading,
+    basePath,
+  );
 
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>

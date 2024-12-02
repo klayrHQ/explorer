@@ -309,6 +309,11 @@ export interface ChainType {
   genesisURL: string;
   projectPage: string;
   backgroundColor: string;
+  blockchainApp: {
+    address: string;
+    escrowedKLY: string;
+    lastUpdated: number;
+  };
   serviceURLs: ServiceURLsType[];
   logo: {
     png: string;
@@ -406,4 +411,9 @@ export interface CombinedAppsType extends AppsType {
   displayName?: string;
   projectPage?: string;
   meta?: boolean;
+  blockchainApp?: {
+    address: string;
+    escrowedKLY: string;
+    lastUpdated: number;
+  };
 }

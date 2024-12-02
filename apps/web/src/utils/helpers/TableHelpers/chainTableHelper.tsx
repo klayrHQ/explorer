@@ -1,4 +1,4 @@
-import { CombinedAppsType } from '../../types.ts';
+import { CombinedAppsType, ChainType } from '../../types.ts';
 import { ImageName } from '@repo/ui/molecules';
 import { Button, FlexGrid, IconButton, Link, StatusBadge, NotFound } from '@repo/ui/atoms';
 import { Currency } from '../../../components/currency.tsx';
@@ -30,30 +30,37 @@ export const createChainRows = (chains: CombinedAppsType[], loading: boolean, ba
                 className: 'w-44',
               },
               {
-                children: chain.address ? (
-                  <FormattedValue value={{ address: chain.address }} format={'account'} />
-                ) : (
-                  <FormattedValue value={'-'} format={'string'} />
-                ),
+                children:
+                  chain.address || chain?.blockchainApp?.address ? (
+                    <FormattedValue
+                      value={{ address: chain.address || chain?.blockchainApp?.address || '' }}
+                      format={'account'}
+                    />
+                  ) : (
+                    <FormattedValue value={'-'} format={'string'} />
+                  ),
                 className: 'w-44',
               },
               {
-                children: <Currency amount={chain.escrowedKLY} />,
+                children: (
+                  <Currency amount={chain.escrowedKLY || chain?.blockchainApp?.escrowedKLY || ''} />
+                ),
                 className: 'text-right w-52',
               },
               {
-                children: chain.lastUpdated ? (
-                  <FormattedValue
-                    value={chain.lastUpdated}
-                    format={'fromNow'}
-                    tooltipContainerClassName={'justify-end text-right'}
-                  />
-                ) : (
-                  <FormattedValue value={'-'} format={'string'} />
-                ),
+                children:
+                  chain.lastUpdated || chain?.blockchainApp?.escrowedKLY ? (
+                    <FormattedValue
+                      value={chain.lastUpdated || chain?.blockchainApp?.lastUpdated || ''}
+                      format={'fromNow'}
+                      tooltipContainerClassName={'justify-end text-right'}
+                    />
+                  ) : (
+                    <FormattedValue value={'-'} format={'string'} />
+                  ),
                 className: 'text-right desktop:w-52 min-w-52',
               },
-              chain.meta
+              chain.projectPage
                 ? {
                     children: (
                       <FlexGrid mobileDirection={'row'} gap={'lg'}>
