@@ -70,7 +70,6 @@ export const Home = () => {
   useEffect(() => {
     setLoadingStats(true);
     fetchTokenSummary().finally(() => setLoadingStats(false));
-    console.log(tokenSummary);
   }, [currentChain, currentNetwork, fetchTokenSummary]);
 
   let statsVSString;
