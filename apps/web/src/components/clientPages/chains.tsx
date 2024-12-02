@@ -59,7 +59,7 @@ export const Chains = () => {
     additionalDependencies: [filterValues],
   });
 
-  const combinedApps = apps
+  const mappedApps = apps
     .filter((app) => app.chainName !== 'klayr_mainchain')
     .map((app) => {
       const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
@@ -75,6 +75,8 @@ export const Chains = () => {
         meta,
       };
     });
+
+  const combinedApps = [...mappedApps].sort((a, b) => (b.projectPage ? 1 : -1));
 
   const rows = createChainRows(combinedApps || [], loading, basePath);
 
