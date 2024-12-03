@@ -18,10 +18,13 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // todo add permanent fix for vercel previews
-  // Temporarily skip the redirect for Vercel previews
+  // Redirect for Vercel previews: mainchain and mainnet by default, rest has to be done manually
   if (hostname.split('.')[1] === 'vercel') {
-    return NextResponse.next();
+    url.searchParams.set('network', 'mainnet');
+    url.searchParams.set('app', 'klayr_mainchain');
+    url.pathname = '/klayr_mainchain';
+
+    return NextResponse.redirect(url);
   }
 
   // Set the default searchParams if the subdomain is not explorer or testnet-explorer (mainly for localhost)
