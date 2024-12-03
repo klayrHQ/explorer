@@ -22,7 +22,6 @@ export function middleware(req: NextRequest) {
   if (hostname.split('.')[1] === 'vercel') {
     url.searchParams.set('network', 'mainnet');
     url.searchParams.set('app', 'klayr_mainchain');
-    url.pathname = '/klayr_mainchain';
 
     return NextResponse.redirect(url);
   }
