@@ -1,21 +1,19 @@
 import { Typography } from '../../atoms';
 import { Currency } from '../../atoms/base/currency';
 export interface ValidatorBannerTextProps {
-  incomingTransactions: string | number;
-  outgoingTransactions: string | number;
+  transactions: string | number;
   coinRate?: number;
-  value?: string | number;
-  valueSymbol?: string;
+  balance?: string | number;
+  balanceSymbol?: string;
 }
 
 export const AccountBannerText = ({
-  incomingTransactions,
-  outgoingTransactions,
+  transactions,
   coinRate,
-  value,
-  valueSymbol,
+  balance,
+  balanceSymbol,
 }: ValidatorBannerTextProps) => {
-  const dollarValue = coinRate ? Number(value) * Number(coinRate) : 0;
+  const dollarValue = coinRate ? Number(balance) * Number(coinRate) : 0;
 
   return (
     <div className="flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
@@ -25,24 +23,24 @@ export const AccountBannerText = ({
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'with'}
       </Typography>
-      {Number(incomingTransactions) > 0 ? (
+      {/*{Number(incomingTransactions) > 0 ? (
         <Typography fontWeight="semibold" variant="paragraph-md">
           {Number(incomingTransactions)} {'incoming'}
         </Typography>
-      ) : null}
+      ) : null}*/}
 
-      <Typography color="onBackgroundMedium" variant="paragraph-md">
+      {/*<Typography color="onBackgroundMedium" variant="paragraph-md">
         {'and'}
-      </Typography>
+      </Typography>*/}
 
       <Typography fontWeight="semibold" variant="paragraph-md">
-        {Number(outgoingTransactions)} {'outgoing'}
+        {Number(transactions)} {/*{'outgoing'}*/}
       </Typography>
       <Typography color="onBackgroundMedium" variant="paragraph-md">
-        {'transactions and a total holding of'}
+        {'transactions and a total balance of'}
       </Typography>
 
-      <Currency amount={value ?? 0} decimals={3} fontWeight="semibold" symbol={valueSymbol} />
+      <Currency amount={balance ?? 0} decimals={3} fontWeight="semibold" symbol={balanceSymbol} />
       <span>
         (<Currency amount={dollarValue ?? 0} decimals={2} fontWeight="semibold" sign={'$'} />)
       </span>
