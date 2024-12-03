@@ -20,6 +20,9 @@ export function middleware(req: NextRequest) {
 
   // Redirect for Vercel previews: mainchain and mainnet by default, rest has to be done manually
   if (hostname.split('.')[1] === 'vercel') {
+    if (url.searchParams.has('network') && url.searchParams.has('app')) {
+      return NextResponse.next(); // Skip the redirect and continue normally
+    }
     url.searchParams.set('network', 'mainnet');
     url.searchParams.set('app', 'klayr_mainchain');
 
