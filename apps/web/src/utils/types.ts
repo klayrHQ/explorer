@@ -233,7 +233,7 @@ export type AccountType = {
   nonce: string;
   publicKey: string;
   name: string | null;
-  tokenBalances: Record<string, TokenBalancesType[]>
+  tokenBalances: Record<string, TokenBalancesType[]>;
   description: string | null;
 };
 
@@ -241,11 +241,23 @@ export type TokenBalancesType = {
   totalBalance: string;
   availableBalance: string;
   lockedBalance: string | number;
-}
+};
 
 export type AccountsType = {
   accounts: AccountType[];
 };
+
+export type TopAccountType = {
+  address: string;
+  publicKey: string;
+  name: string;
+  description: string;
+  totalBalance: string;
+  availableBalance: string;
+  lockedBalance: string;
+};
+
+export type TopAccountsType = Record<string, TopAccountType[]>;
 
 export interface FavouriteType {
   address: string;
@@ -271,6 +283,7 @@ export interface NodeType {
   networkVersion: string;
   nonce: string;
   advertiseAddress: boolean;
+  height: number;
   options: {
     height: number;
     maxHeightPrevoted: number;
@@ -278,9 +291,17 @@ export interface NodeType {
     lastBlockID: string;
     legacy: any[];
   };
-  ipAddress: string;
+  location: {
+    ip: string;
+    countryCode: string;
+    countryName: string;
+    latitude: number;
+    longitude: number;
+  };
+  ip: string;
   port: number;
   peerId: string;
+  state: string;
 }
 
 export interface NftType {
@@ -313,6 +334,11 @@ export interface ChainType {
   genesisURL: string;
   projectPage: string;
   backgroundColor: string;
+  blockchainApp: {
+    address: string;
+    escrowedKLY: string | null;
+    lastUpdated: number | null;
+  };
   serviceURLs: ServiceURLsType[];
   logo: {
     png: string;
@@ -410,4 +436,9 @@ export interface CombinedAppsType extends AppsType {
   displayName?: string;
   projectPage?: string;
   meta?: boolean;
+  blockchainApp?: {
+    address: string;
+    escrowedKLY: string;
+    lastUpdated: number;
+  };
 }

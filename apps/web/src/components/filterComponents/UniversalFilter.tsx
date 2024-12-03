@@ -36,7 +36,7 @@ export const UniversalFilter = ({
           const isValid = inputProps.validation(value);
           newErrors[dataKey] = !isValid;
         } else {
-          newErrors[dataKey] = false; // No error if the input is empty
+          newErrors[dataKey] = false;
         }
       }
     });

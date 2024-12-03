@@ -12,13 +12,20 @@ import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { useFilterManagement } from '../../utils/helpers/filterHandlers.ts';
 import { createTransactionRows } from '../../utils/helpers/TableHelpers/transactionTableHelper.tsx';
 import { UniversalFilter } from '../filterComponents/UniversalFilter.tsx';
-import { FilterConfigType } from '../filterComponents/filterTypes.tsx';
+import {
+  transactionFilterConfig,
+  constructSearchParams,
+} from '../filterComponents/filtersConfig.tsx';
+import { getSearchKeys } from '../../utils/helpers/filterHandlers.ts';
 
 export const Transactions = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
   const chains = useChainNetworkStore((state) => state.chains);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
+
+  const searchKeys = getSearchKeys(transactionFilterConfig);
+
   const {
     inputValues,
     setInputValues,
@@ -30,7 +37,7 @@ export const Transactions = () => {
     handleApply,
     handleCheckboxClose,
     clearAllFields,
-  } = useFilterManagement();
+  } = useFilterManagement(searchKeys);
 
   const {
     data: transactions,
@@ -47,16 +54,7 @@ export const Transactions = () => {
     fetchFunction: callGetTransactions,
     defaultLimit: searchParams.get('limit') || '10',
     changeURL: true,
-    searchParams: {
-      senderAddress:
-        filterValues.from && filterValues.from.length === 41 ? filterValues.from : undefined,
-      recipientAddress:
-        filterValues.to && filterValues.to.length === 41 ? filterValues.to : undefined,
-      moduleCommand:
-        filterValues.moduleCommand && filterValues.moduleCommand.includes(':')
-          ? filterValues.moduleCommand
-          : undefined,
-    },
+    searchParams: constructSearchParams(filterValues, searchKeys),
     additionalDependencies: [filterValues],
   });
 
@@ -107,36 +105,6 @@ export const Transactions = () => {
     fetchNetworkStatus();
   }, []);
 
-  const filterConfigurations: FilterConfigType[] = [
-    {
-      title: 'Transaction Type',
-      type: 'checkbox' as 'checkbox',
-      dataKey: 'transactionType',
-    },
-    {
-      title: 'Sender Address',
-      type: 'input' as 'input',
-      dataKey: 'from',
-      inputProps: {
-        placeholder: 'Type an address',
-        validation: (value: string | any[]) => value.length === 41,
-        errorMessage: 'Invalid sender address',
-      },
-    },
-    {
-      title: 'Receiver Address',
-      type: 'input',
-      dataKey: 'to',
-      inputProps: {
-        placeholder: 'Type an address',
-        validation: (value: string | any[]) => value.length === 41,
-        errorMessage: 'Invalid receiver address',
-      },
-    },
-  ];
-
-  console.log('object', commandObject);
-
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>
       <SectionHeader
@@ -151,8 +119,8 @@ export const Transactions = () => {
           <UniversalFilter
             inputValues={inputValues}
             setInputValues={setInputValues}
-            handleClearField={(field: keyof typeof inputValues) => handleClear(field)}
-            filterConfigurations={filterConfigurations}
+            handleClearField={(field: string | number) => handleClear(field)}
+            filterConfigurations={transactionFilterConfig}
             data={commandObject}
             checkedItems={checkedItems}
             handleCheckboxChange={handleCheckboxChange}

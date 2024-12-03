@@ -456,12 +456,34 @@ export const chainsTableHead = [
     className: 'text-right',
   },
   {
-    children: 'Last Updated',
-    className: 'text-right',
+    children: (
+      <div className="flex items-center justify-end gap-1">
+        <Typography>{'Total Locked'}</Typography>{' '}
+        <InfoTooltip
+          text={
+            'Indicates the date of the last update received from the sidechain; a chain is considered live if its not terminated, and has submitted a certificate within the last 30 days.'
+          }
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
+  },
+  {
+    children: (
+      <div className="flex items-center justify-end gap-1">
+        <Typography>{'Last Updated'}</Typography>{' '}
+        <InfoTooltip
+          text={
+            'Displays the total amount of KLY tokens currently locked in escrow on the sidechain.'
+          }
+        />
+      </div>
+    ),
+    className: 'items-end text-end whitespace-nowrap',
   },
   {
     children: '',
-  }
+  },
 ];
 
 export const userTokensTableHead = [

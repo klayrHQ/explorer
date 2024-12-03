@@ -1,4 +1,4 @@
-import { AccountType, StakesCalculatorPeriodType, ValidatorType } from '../../types.ts';
+import {AccountType, StakesCalculatorPeriodType, TopAccountType, ValidatorType} from '../../types.ts';
 import { validatorsTableHead } from '../tableHeaders.tsx';
 import { convertKLYToBeddows, formatCommission, getTableSkeletons } from '../dataHelpers.tsx';
 import { FormattedValue } from '../../../components/formattedValue.tsx';
@@ -228,7 +228,7 @@ export const createValidatorsRows = (
     : getTableSkeletons(columnCount);
 };
 export const createAccountsRows = (
-  accounts: AccountType[],
+  accounts: TopAccountType[],
   loading: boolean,
   basePath: string,
   totalSupply: string,

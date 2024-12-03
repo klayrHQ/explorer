@@ -1,28 +1,33 @@
 import { useState, useCallback } from 'react';
 import {
   InputValues,
-  FilterValues,
   CheckedItems,
   HandleCheckboxChange,
   HandleSelectAllChange,
   HandleCheckboxClose,
   HandleClear,
+  FilterConfigType,
 } from '../../components/filterComponents/filterTypes.tsx';
 
-export const useFilterManagement = () => {
-  const [inputValues, setInputValues] = useState<InputValues>({ from: '', to: '' });
-  const [filterValues, setFilterValues] = useState<FilterValues>({
-    from: '',
-    to: '',
-    moduleCommand: '',
-  });
+export const useFilterManagement = (searchKeys: string[]) => {
+  const createInitialState = (keys: string[]): Record<string, string> => {
+    const initialState: Record<string, string> = {};
+    keys.forEach((key) => {
+      initialState[key] = '';
+    });
+    return initialState;
+  };
+  const initialState = createInitialState(searchKeys);
+
+  const [inputValues, setInputValues] = useState<Record<string, string>>(initialState);
+  const [filterValues, setFilterValues] = useState<Record<string, string>>(initialState);
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
 
   const clearAllFields = useCallback(() => {
-    setInputValues({ from: '', to: '' });
-    setFilterValues({ from: '', to: '', moduleCommand: '' });
+    setInputValues(initialState);
+    setFilterValues(initialState);
     setCheckedItems({});
-  }, []);
+  }, [initialState]);
 
   const handleClear: HandleClear = useCallback((field: keyof InputValues) => {
     setInputValues((prev) => ({ ...prev, [field]: '' }));
@@ -50,7 +55,23 @@ export const useFilterManagement = () => {
         .map(([value]) => `${category}:${value}`),
     );
 
-    setFilterValues({ ...inputValues, moduleCommand: selectedItems.join(',') });
+    const updatedFilterValues = { ...inputValues };
+
+    //Add search keys for new filters
+    searchKeys.forEach((key) => {
+      if (key === 'moduleCommand') {
+        updatedFilterValues[key] = selectedItems.join(',');
+      } else if (key === 'status') {
+        updatedFilterValues[key] = selectedItems
+          .filter((item) => item.startsWith('status:'))
+          .map((item) => item.split(':')[1])
+          .join(',');
+      } else {
+        updatedFilterValues[key] = inputValues[key];
+      }
+    });
+
+    setFilterValues(updatedFilterValues);
   };
 
   const handleCheckboxClose: HandleCheckboxClose = (category, value) => {
@@ -60,17 +81,29 @@ export const useFilterManagement = () => {
         [category]: { ...prevState[category], [value]: false },
       };
 
-      // Update filterValues based on checked items
       const selectedItems = Object.entries(updatedCheckedItems).flatMap(([cat, values]) =>
         Object.entries(values)
           .filter(([, isChecked]) => isChecked)
           .map(([val]) => `${cat}:${val}`),
       );
 
-      setFilterValues((prevFilterValues) => ({
-        ...prevFilterValues,
-        moduleCommand: selectedItems.join(','),
-      }));
+      const updatedFilterValues = { ...inputValues };
+
+      //Add search keys for new filters
+      searchKeys.forEach((key) => {
+        if (key === 'moduleCommand') {
+          updatedFilterValues[key] = selectedItems.join(',');
+        } else if (key === 'status') {
+          updatedFilterValues[key] = selectedItems
+            .filter((item) => item.startsWith('status:'))
+            .map((item) => item.split(':')[1])
+            .join(',');
+        } else {
+          updatedFilterValues[key] = inputValues[key];
+        }
+      });
+
+      setFilterValues(updatedFilterValues);
 
       return updatedCheckedItems;
     });
@@ -88,6 +121,18 @@ export const useFilterManagement = () => {
     handleCheckboxClose,
     clearAllFields,
   };
+};
+
+export const getSearchKeys = (config: FilterConfigType[]): string[] => {
+  return config.map(({ searchKey }) => searchKey).filter((key): key is string => key !== undefined);
+};
+
+const createInitialState = (keys: string[]): Record<string, string> => {
+  const initialState: Record<string, string> = {};
+  keys.forEach((key) => {
+    initialState[key] = '';
+  });
+  return initialState;
 };
 
 export default useFilterManagement;
