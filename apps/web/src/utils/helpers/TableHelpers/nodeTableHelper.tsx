@@ -10,7 +10,7 @@ export const createNodesRows = (nodes: NodeType[], loading: boolean) => {
         return {
           cells: [
             {
-              children: <FormattedValue format={'string'} value={node.ipAddress} />,
+              children: <FormattedValue format={'string'} value={node.ip} />,
             },
             {
               children: <FormattedValue format={'string'} value={node.port} />,
@@ -18,27 +18,40 @@ export const createNodesRows = (nodes: NodeType[], loading: boolean) => {
             {
               children: (
                 <div className="flex gap-2 items-center">
-                  <div className="flex h-6 w-6 bg-white rounded-full items-center justify-center">
-                    <div className="flex h-3 w-3 bg-error rounded-full"></div>
-                  </div>
+                  <div
+                    className="w-8 h-6 rounded-full bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(http://purecatamphetamine.github.io/country-flag-icons/3x2/${node.location.countryCode}.svg)`,
+                    }}
+                    title={node.location.countryName}
+                  ></div>
+
                   <Typography
                     color={'onBackgroundMedium'}
                     fontWeight={'semibold'}
                     variant={'paragraph-sm'}
                   >
-                    {'Japan'}
+                    {node.location.countryName}
                   </Typography>
                 </div>
               ),
             },
             {
-              children: <FormattedValue format={'number'} value={node.options.blockVersion} />,
+              children: <FormattedValue format={'number'} value={node.networkVersion} />,
             },
             {
-              children: <FormattedValue format={'number'} value={node.options.height} />,
+              children: <FormattedValue format={'number'} value={node.height} />,
             },
             {
-              children: <StatusBadge status={'online'} />,
+              children: (
+                <div>
+                  {node.state === 'connected' ? (
+                    <StatusBadge status={'online'} />
+                  ) : (
+                    <StatusBadge status={'offline'} />
+                  )}
+                </div>
+              ),
             },
           ],
         };
