@@ -18,12 +18,10 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // Redirect for Vercel previews: mainchain and mainnet by default, rest has to be done manually
+  // Redirect for Vercel previews: mainchain and testnet by default, rest has to be done manually
   if (hostname.split('.')[1] === 'vercel') {
-    if (url.searchParams.has('network') && url.searchParams.has('app')) {
-      return NextResponse.next(); // Skip the redirect and continue normally
-    }
-    url.searchParams.set('network', 'mainnet');
+    if (url.searchParams.entries.length > 0) return NextResponse.next();
+    url.searchParams.set('network', 'testnet');
     url.searchParams.set('app', 'klayr_mainchain');
 
     return NextResponse.redirect(url);
