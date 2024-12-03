@@ -452,10 +452,6 @@ export const chainsTableHead = [
     children: 'Created By',
   },
   {
-    children: 'Total Locked',
-    className: 'text-right',
-  },
-  {
     children: (
       <div className="flex items-center justify-end gap-1">
         <Typography>{'Total Locked'}</Typography>{' '}
