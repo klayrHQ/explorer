@@ -89,7 +89,8 @@ export const useInitializeCurrentChain = () => {
           chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
           setCurrentChain(chainMatch);
         } else if (pathName.split('/')[2] !== '404') {
-          router.push('/klayr_mainchain/404');
+          if (window?.location.hostname.includes('vercel')) console.error('404 triggered') // skip 404 page if on vercel preview because middleware doesn't work there
+          else router.push('/klayr_mainchain/404');
         }
       } catch (error) {
         console.error('Error fetching chains', error);
