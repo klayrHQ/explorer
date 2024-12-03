@@ -25,7 +25,7 @@ import {
   BlocksQueryParams,
   ChainsQueryParams,
   ChainTokenQueryParams,
-  EventsQueryParams,
+  EventsQueryParams, NodeQueryParams,
   StakersQueryParams,
   TokensQueryParams, TopAccountQueryParams,
   TransactionQueryParams,
@@ -151,8 +151,8 @@ export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayR
   return apiCall<TokenType>('token/balances', params);
 };
 
-export const callGetNodes = async (): Promise<GatewayRes<NodeType[]>> => {
-  return apiCall<NodeType[]>('network/peers');
+export const callGetNodes = async (params: NodeQueryParams): Promise<GatewayRes<NodeType[]>> => {
+  return apiCall<NodeType[]>('network/peers', params);
 };
 
 export const callGetNetworkStatus = async (): Promise<GatewayRes<NetworkStatus>> => {

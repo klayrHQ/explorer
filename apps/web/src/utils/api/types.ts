@@ -100,3 +100,13 @@ export interface AppsQueryParams {
   limit?: number;
   offset?: number;
 }
+
+export interface NodeQueryParams {
+  ip?: string;
+  height?: string;
+  state?: string;
+  networkVersion?: string;
+  sort?: string;
+  limit?: number;
+  offset?: number;
+}
