@@ -1,7 +1,7 @@
 import { Typography } from '../../atoms';
 import { Icon } from '../../atoms';
 import { FlexGrid } from '../../atoms';
-import { LinkComponent } from '../../../types/types.ts';
+import { TypographyComponent, TypographyVariant } from '../../../types/types.ts';
 import { Link } from '../../atoms';
 import { cls } from '../../../utils/functions.ts';
 
@@ -13,7 +13,6 @@ interface SectionHeaderProps {
   className?: string;
   href?: string;
   fullWidth?: boolean;
-  titleSizeNotLink?: 'h3' | 'h4' | 'h5' | 'h6';
   basePath?: string;
   linkOutgoing?: boolean;
 }
@@ -21,7 +20,6 @@ interface SectionHeaderProps {
 export const SectionHeader = ({
   title,
   titleSize = 'lg',
-  titleSizeNotLink = 'h3',
   subTitle,
   count,
   className,
@@ -30,6 +28,20 @@ export const SectionHeader = ({
   basePath,
   linkOutgoing,
 }: SectionHeaderProps) => {
+  let titleVariant: TypographyVariant = 'h4';
+  let titleComponent: TypographyComponent = 'h1';
+
+  switch (titleSize) {
+    case 'lg':
+      titleVariant = 'h4';
+      titleComponent = 'h1';
+      break;
+    case 'sm':
+      titleVariant = 'h6';
+      titleComponent = 'h2';
+      break;
+  }
+
   return (
     <FlexGrid
       className={cls([className, 'gap-5 desktop:gap-6 ', fullWidth && 'w-full'])}
@@ -41,9 +53,9 @@ export const SectionHeader = ({
             <Typography
               className=""
               color="gray-1"
-              component={titleSize === 'lg' ? 'h1' : 'h2'}
+              component={titleComponent}
               fontWeight="bold"
-              variant={titleSize === 'lg' ? 'h4' : 'h6'}
+              variant={titleVariant}
             >
               {title}
             </Typography>
@@ -61,9 +73,9 @@ export const SectionHeader = ({
         <FlexGrid alignItems="center" gap="3" justify="center" mobileDirection="row">
           <Typography
             color="gray-1"
-            component={titleSizeNotLink}
+            component={titleComponent}
             fontWeight="bold"
-            variant={titleSizeNotLink}
+            variant={titleVariant}
           >
             {title}
           </Typography>
