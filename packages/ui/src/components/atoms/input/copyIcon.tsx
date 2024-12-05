@@ -1,7 +1,7 @@
 'use client';
 
 // components/CopyToClipboardButton.js
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icon } from '../images/icon';
 import { Tooltip } from '../utilities/tooltip.tsx';
 import { cls } from '../../../utils/functions.ts';
@@ -93,6 +93,11 @@ export const CopyIcon = ({ content, size, hover }: CopyIconProps) => {
     setCopyTooltipText(isCopied ? 'Copied!' : 'Copy');
   }, [isCopied]);
 
+  const onCopy = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    copyToClipboard(content);
+  }
+
   return (
     <Tooltip placement={'bottom'} text={copyTooltipText}>
       <div
@@ -101,7 +106,7 @@ export const CopyIcon = ({ content, size, hover }: CopyIconProps) => {
           hover,
           className: cls(['cursor-pointer']),
         })}
-        onClick={() => copyToClipboard(content)}
+        onClick={(e) => onCopy(e)}
       >
         <Icon
           className={cls([hover ? 'desktop:group-hover/child:inline desktop:hidden' : ''])}
