@@ -102,7 +102,7 @@ export const Validators = () => {
           />
         </div>
         <div className="hidden desktop:flex">
-          <NextValidators validators={nextValidators} />
+          <NextValidators basePath={basePath} validators={nextValidators} />
         </div>
       </FlexGrid>
       <TableContainer
