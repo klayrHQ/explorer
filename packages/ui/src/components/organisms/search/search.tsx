@@ -116,7 +116,7 @@ export const Search = ({
         </div>
         <Popper
           anchorEl={anchorEl}
-          className="w-auto truncate z-10"
+          className="w-auto truncate z-1000"
           open={open}
           placement={'bottom'}
           popperOptions={{

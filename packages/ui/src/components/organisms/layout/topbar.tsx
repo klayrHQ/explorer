@@ -86,7 +86,12 @@ export const Topbar = ({
         gap={'3xl'}
         mobileDirection="row"
       >
-        <Logo altText={logo.altText} basePath={basePath} className={'shrink-0'} logoSrc={logo.logoSrc} />
+        <Logo
+          altText={logo.altText}
+          basePath={basePath}
+          className={'shrink-0'}
+          logoSrc={logo.logoSrc}
+        />
         <Popover
           button={
             <IconButton
@@ -117,7 +122,7 @@ export const Topbar = ({
             autoFocus
             basePath={basePath}
             callSearch={callSearch}
-            className="absolute left-0 top-0 w-screen h-full z-20"
+            className="absolute left-0 top-0 w-screen h-full z-1500"
             searchResult={searchResults}
             setSearchResults={setSearchResults}
           />
@@ -141,7 +146,12 @@ export const Topbar = ({
             onClick={() => setOpenMobileMenu(!openMobileMenu)}
             variant={'bordered'}
           />
-          <Modal hideBackdrop open={openMobileMenu} style={{ pointerEvents: 'none' }}>
+          <Modal
+            hideBackdrop
+            open={openMobileMenu}
+            onClose={() => setOpenMobileMenu(false)}
+            style={{ pointerEvents: 'none' }}
+          >
             <Slide direction={'left'} in={openMobileMenu} mountOnEnter unmountOnExit>
               <div style={{ pointerEvents: 'all' }}>
                 <MobileMenu
