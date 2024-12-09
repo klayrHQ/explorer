@@ -286,19 +286,27 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       icon: 'List',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <TableContainer
-            currentNumber={eventsPagination.pageNumber}
-            defaultValue={eventsPagination.limit}
-            headCols={eventsTableHead}
-            keyPrefix={'tx-events'}
-            onPerPageChange={eventsPagination.handleLimitChange}
-            pagination={
-              eventsMeta?.total ? eventsMeta?.total > parseInt(eventsPagination.limit) : false
-            }
-            rows={eventsRows}
-            setCurrentNumber={eventsPagination.handlePageChange}
-            totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(eventsPagination.limit))}
-          />
+          {events?.length && events.length > 0 ? (
+            <TableContainer
+              currentNumber={eventsPagination.pageNumber}
+              defaultValue={eventsPagination.limit}
+              headCols={eventsTableHead}
+              keyPrefix={'tx-events'}
+              onPerPageChange={eventsPagination.handleLimitChange}
+              pagination={
+                eventsMeta?.total ? eventsMeta?.total > parseInt(eventsPagination.limit) : false
+              }
+              rows={eventsRows}
+              setCurrentNumber={eventsPagination.handlePageChange}
+              totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(eventsPagination.limit))}
+            />
+          ) : (
+            <NotFound
+              className="mt-16"
+              headerText={'No transactions found'}
+              subheaderText={'We cannot find any transactions in this block'}
+            />
+          )}
         </FlexGrid>
       ),
     },
