@@ -1,5 +1,10 @@
-import {AccountType, StakesCalculatorPeriodType, TopAccountType, ValidatorType} from '../../types.ts';
-import {accountsTableHead, validatorsTableHead} from '../tableHeaders.tsx';
+import {
+  AccountType,
+  StakesCalculatorPeriodType,
+  TopAccountType,
+  ValidatorType,
+} from '../../types.ts';
+import { accountsTableHead, validatorsTableHead } from '../tableHeaders.tsx';
 import { convertKLYToBeddows, formatCommission, getTableSkeletons } from '../dataHelpers.tsx';
 import { FormattedValue } from '../../../components/formattedValue.tsx';
 import { NotificationIcon, StatusBadge, Typography } from '@repo/ui/atoms';
@@ -204,7 +209,7 @@ export const createValidatorsRows = (
               children: (
                 <FormattedValue
                   format={'percentage'}
-                  currencyProps={{ variant: 'paragraph-sm' }}
+                  typographyProps={{ variant: 'paragraph-sm' }}
                   value={formatCommission(validator?.commission)}
                 />
               ),
