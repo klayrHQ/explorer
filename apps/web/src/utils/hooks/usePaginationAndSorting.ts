@@ -112,8 +112,6 @@ export const usePaginationAndSorting = ({
     setSortOrder(order);
   };
 
-  console.log('Current pageNumber:', pageNumber);
-
   return {
     data,
     totalItems,
