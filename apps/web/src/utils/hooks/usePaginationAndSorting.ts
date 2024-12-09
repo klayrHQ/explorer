@@ -1,11 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
-import { usePathname, useRouter, } from 'next/navigation';
-import { useGatewayClientStore } from '../../store/clientStore.ts';
+import { usePathname, useRouter } from 'next/navigation';
 import { useSocketStore } from '../../store/socketStore.ts';
-import {useChainNetworkStore} from "../../store/chainNetworkStore.ts";
-
-
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 
 interface UsePaginationAndSortingProps {
   defaultLimit?: string;
@@ -14,7 +11,7 @@ interface UsePaginationAndSortingProps {
   initialSortOrder?: string;
   changeURL?: boolean;
   searchParams?: Record<string, any>;
-  useNewBlockEvent?: boolean; 
+  useNewBlockEvent?: boolean;
   additionalDependencies?: any[];
 }
 
@@ -25,11 +22,11 @@ export const usePaginationAndSorting = ({
   initialSortOrder = '',
   changeURL,
   searchParams = {},
-  useNewBlockEvent = false, 
+  useNewBlockEvent = false,
   additionalDependencies = [],
 }: UsePaginationAndSortingProps) => {
-    const router = useRouter();
-    const pathname = usePathname();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const [data, setData] = useState<any[]>([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -43,13 +40,11 @@ export const usePaginationAndSorting = ({
     debounce((pageNumber: number, limit: string) => {
       router.push(`${pathname}?page=${pageNumber}&limit=${limit}`);
     }, 300),
-    [router, pathname]
+    [router, pathname],
   );
 
   const network = useChainNetworkStore((state) => state.currentNetwork);
   const newBlockEvent = useSocketStore((state) => state.height);
-
-
 
   const fetchData = useCallback(
     debounce(async () => {
@@ -58,7 +53,7 @@ export const usePaginationAndSorting = ({
       const params: any = {
         limit,
         offset,
-        ...searchParams, 
+        ...searchParams,
       };
       if (sortField && sortOrder) {
         params.sort = `${sortField}:${sortOrder}`;
@@ -73,18 +68,35 @@ export const usePaginationAndSorting = ({
         setLoading(false);
       }
     }, 300),
-    [pageNumber, limit, sortField, sortOrder, fetchFunction, network, ...additionalDependencies, ...(useNewBlockEvent ? [newBlockEvent] : [])]
+    [
+      pageNumber,
+      limit,
+      sortField,
+      sortOrder,
+      fetchFunction,
+      network,
+      ...additionalDependencies,
+      ...(useNewBlockEvent ? [newBlockEvent] : []),
+    ],
   );
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-    useEffect(() => {
-        if (changeURL) {
-        updateURL(pageNumber, limit);
-        }
-    }, [pageNumber, limit, updateURL, changeURL, ]);
+  useEffect(() => {
+    if (changeURL) {
+      updateURL(pageNumber, limit);
+    }
+  }, [pageNumber, limit, updateURL, changeURL]);
+
+  useEffect(() => {
+    const totalPages = Math.ceil(totalItems / Number(limit))
+
+    if (pageNumber > totalPages) {
+      setPageNumber(totalPages);
+    }
+  }, [limit]);
 
   const handlePageChange = (newPageNumber: number) => {
     setPageNumber(newPageNumber);
