@@ -108,7 +108,6 @@ export const Validators = () => {
       <TableContainer
         headCols={validatorsTableHead(handleSort, sortField, sortOrder)}
         keyPrefix={'validators'}
-        pagination
         rows={rows}
         scrollRef={scrollRef}
       />
