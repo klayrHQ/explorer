@@ -1,6 +1,6 @@
 'use client';
 
-import { FlexGrid, TabButtons, ViewSwitcher } from '@repo/ui/atoms';
+import { FlexGrid, TabButtons, ViewSwitcher, NotFound } from '@repo/ui/atoms';
 import { DetailsSection, TableContainer, AccountBanner, ValidatorBanner } from '@repo/ui/organisms';
 import {
   AccountType,
@@ -540,25 +540,39 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const stakeViews = [
     {
       name: 'Outgoing',
-      view: (
-        <Table
-          className={'w-full'}
-          headCols={validatorStakeOutgoingTableHead}
-          keyPrefix={'validator-blocks'}
-          rows={outgoingStake}
-        />
-      ),
+      view:
+        outgoingStake.length > 0 ? (
+          <Table
+            className={'w-full'}
+            headCols={validatorStakeOutgoingTableHead}
+            keyPrefix={'validator-blocks'}
+            rows={outgoingStake}
+          />
+        ) : (
+          <NotFound
+            headerText={'No Outgoing Stakes'}
+            subheaderText={'There are no outgoing stakes for this validator.'}
+            className="my-16"
+          />
+        ),
     },
     {
       name: 'Incoming',
-      view: (
-        <Table
-          className={'w-full'}
-          headCols={validatorStakeIncomingTableHead}
-          keyPrefix={'validator-blocks'}
-          rows={incomingStake}
-        />
-      ),
+      view:
+        incomingStake.length > 0 ? (
+          <Table
+            className={'w-full'}
+            headCols={validatorStakeIncomingTableHead}
+            keyPrefix={'validator-blocks'}
+            rows={incomingStake}
+          />
+        ) : (
+          <NotFound
+            headerText={'No Incoming Stakes'}
+            subheaderText={'There are no incoming stakes for this validator.'}
+            className="my-16"
+          />
+        ),
       disabled: !isValidator,
     },
   ];
@@ -590,19 +604,31 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
             icon: 'Cube',
             content: (
               <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-                <TableContainer
-                  currentNumber={blocksPagination.pageNumber}
-                  defaultValue={blocksPagination.limit}
-                  headCols={validatorBlocksTableHead}
-                  keyPrefix={'validator-blocks'}
-                  onPerPageChange={blocksPagination.handleLimitChange}
-                  pagination={
-                    blocksMeta?.total ? blocksMeta?.total > parseInt(blocksPagination.limit) : false
-                  }
-                  rows={validatorBlocksRows}
-                  setCurrentNumber={blocksPagination.handlePageChange}
-                  totalPages={Math.ceil((blocksMeta?.total ?? 0) / Number(blocksPagination.limit))}
-                />
+                {blocks?.length && blocks.length > 0 ? (
+                  <TableContainer
+                    currentNumber={blocksPagination.pageNumber}
+                    defaultValue={blocksPagination.limit}
+                    headCols={validatorBlocksTableHead}
+                    keyPrefix={'validator-blocks'}
+                    onPerPageChange={blocksPagination.handleLimitChange}
+                    pagination={
+                      blocksMeta?.total
+                        ? blocksMeta?.total > parseInt(blocksPagination.limit)
+                        : false
+                    }
+                    rows={validatorBlocksRows}
+                    setCurrentNumber={blocksPagination.handlePageChange}
+                    totalPages={Math.ceil(
+                      (blocksMeta?.total ?? 0) / Number(blocksPagination.limit),
+                    )}
+                  />
+                ) : (
+                  <NotFound
+                    className="mt-16"
+                    headerText={'No blocks found'}
+                    subheaderText={'We cannot find any blocks'}
+                  />
+                )}
               </FlexGrid>
             ),
           },
@@ -615,23 +641,31 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       count: transactionsMeta?.total,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <TableContainer
-            currentNumber={transactionsPagination.pageNumber}
-            defaultValue={transactionsPagination.limit}
-            headCols={transactionTableHead(handleSort, sortField, sortOrder, false)}
-            keyPrefix={'validator-tx'}
-            onPerPageChange={transactionsPagination.handleLimitChange}
-            pagination={
-              transactionsMeta?.total
-                ? transactionsMeta?.total > parseInt(transactionsPagination.limit)
-                : false
-            }
-            rows={rows}
-            setCurrentNumber={transactionsPagination.handlePageChange}
-            totalPages={Math.ceil(
-              (transactionsMeta?.total ?? 0) / Number(transactionsPagination.limit),
-            )}
-          />
+          {transactions?.length && transactions.length > 0 ? (
+            <TableContainer
+              currentNumber={transactionsPagination.pageNumber}
+              defaultValue={transactionsPagination.limit}
+              headCols={transactionTableHead(handleSort, sortField, sortOrder, false)}
+              keyPrefix={'validator-tx'}
+              onPerPageChange={transactionsPagination.handleLimitChange}
+              pagination={
+                transactionsMeta?.total
+                  ? transactionsMeta?.total > parseInt(transactionsPagination.limit)
+                  : false
+              }
+              rows={rows}
+              setCurrentNumber={transactionsPagination.handlePageChange}
+              totalPages={Math.ceil(
+                (transactionsMeta?.total ?? 0) / Number(transactionsPagination.limit),
+              )}
+            />
+          ) : (
+            <NotFound
+              className="mt-16"
+              headerText={'No blocks found'}
+              subheaderText={'We cannot find any transactions'}
+            />
+          )}
         </FlexGrid>
       ),
     },
@@ -656,11 +690,19 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       count: tokens.length,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <TableContainer
-            headCols={userTokensTableHead}
-            keyPrefix={'validator-blocks'}
-            rows={tokensRows}
-          />
+          {tokens?.length && tokens.length > 0 ? (
+            <TableContainer
+              headCols={userTokensTableHead}
+              keyPrefix={'validator-blocks'}
+              rows={tokensRows}
+            />
+          ) : (
+            <NotFound
+              className="mt-16"
+              headerText={'No tokens found'}
+              subheaderText={'We cannot find any tokens'}
+            />
+          )}
         </FlexGrid>
       ),
     },
@@ -686,19 +728,27 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       count: eventsMeta?.total,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
-          <TableContainer
-            currentNumber={eventsPagination.pageNumber}
-            defaultValue={eventsPagination.limit}
-            headCols={validatorEventsTableHead}
-            keyPrefix={'validator-blocks'}
-            onPerPageChange={eventsPagination.handleLimitChange}
-            pagination={
-              eventsMeta?.total ? eventsMeta?.total > parseInt(eventsPagination.limit) : false
-            }
-            rows={eventsRows}
-            setCurrentNumber={eventsPagination.handlePageChange}
-            totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(eventsPagination.limit))}
-          />
+          {events?.length && events.length > 0 ? (
+            <TableContainer
+              currentNumber={eventsPagination.pageNumber}
+              defaultValue={eventsPagination.limit}
+              headCols={validatorEventsTableHead}
+              keyPrefix={'validator-blocks'}
+              onPerPageChange={eventsPagination.handleLimitChange}
+              pagination={
+                eventsMeta?.total ? eventsMeta?.total > parseInt(eventsPagination.limit) : false
+              }
+              rows={eventsRows}
+              setCurrentNumber={eventsPagination.handlePageChange}
+              totalPages={Math.ceil((eventsMeta?.total ?? 0) / Number(eventsPagination.limit))}
+            />
+          ) : (
+            <NotFound
+              className="mt-16"
+              headerText={'No events found'}
+              subheaderText={'We cannot find any events'}
+            />
+          )}
         </FlexGrid>
       ),
     },
