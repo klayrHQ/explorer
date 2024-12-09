@@ -96,7 +96,7 @@ export const Stakes = () => {
           pagination
           rows={rowsOverview}
           setCurrentNumber={handleOverviewPageChange}
-          totalPages={totalStakes / Number(overviewLimit)}
+          totalPages={Math.ceil(totalStakes / Number(overviewLimit))}
         />
       ),
     },
@@ -127,7 +127,7 @@ export const Stakes = () => {
           pagination
           rows={rowCalculator}
           setCurrentNumber={handleCalculatorPageChange}
-          totalPages={totalValidators / Number(calculatorLimit)}
+          totalPages={Math.ceil(totalValidators / Number(calculatorLimit))}
           scrollRef={scrollRef}
         />
       ),
