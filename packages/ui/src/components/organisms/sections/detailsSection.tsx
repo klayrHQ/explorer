@@ -57,7 +57,7 @@ export const DetailsSection = ({
           justify={'between'}
           mobileDirection={'row'}
         >
-          <SectionHeader title={title} titleSize={'sm'} titleSizeNotLink={'h5'} />
+          <SectionHeader title={title} titleSize={'sm'} />
           {json && (
             <Popover
               button={

@@ -1,12 +1,8 @@
 'use client';
 import { NewsCardGrid, PerformanceSection } from '@repo/ui/organisms';
-import {
-  performanceStatsSelectOptions,
-  newsTagColors,
-  currencies,
-} from '../../utils/constants.tsx';
+import { performanceStatsSelectOptions, newsTagColors } from '../../utils/constants.tsx';
 import { FlexGrid, SkeletonComponent } from '@repo/ui/atoms';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatDate, cleanText } from '../../utils/helpers/dataHelpers.tsx';
 import { NewsCardPropsArray, NewsCardProps } from '@repo/ui/types';
 import { Currency } from '../currency.tsx';
@@ -145,7 +141,6 @@ export const Home = () => {
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4xl'}>
       <PerformanceSection
-        href={'#'}
         options={performanceStatsSelectOptions}
         setStatsVS={setStatsVS}
         stats={performanceStatsArray}
