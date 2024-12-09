@@ -32,6 +32,7 @@ export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
 
 export const useInitializeCurrentChain = () => {
   const setChains = useChainNetworkStore((state) => state.setChains);
+  const chains = useChainNetworkStore((state) => state.chains);
   const setCurrentChain = useChainNetworkStore((state) => state.setCurrentChain);
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
@@ -82,6 +83,8 @@ export const useInitializeCurrentChain = () => {
         });
         setChains(chainsWithTokens);
 
+        console.log('Chains with tokens:', chainsWithTokens);
+
         const chainParam = searchParams.get('app');
         const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === chainParam);
         const chainMatch = matchingChains?.find((chain) => chain.networkType === networkParam);
@@ -89,7 +92,8 @@ export const useInitializeCurrentChain = () => {
           chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
           setCurrentChain(chainMatch);
         } else if (pathName.split('/')[2] !== '404') {
-          if (window?.location.hostname.includes('vercel')) console.error('404 triggered') // skip 404 page if on vercel preview because middleware doesn't work there
+          if (window?.location.hostname.includes('vercel'))
+            console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
           else router.push('/klayr_mainchain/404');
         }
       } catch (error) {
@@ -103,4 +107,8 @@ export const useInitializeCurrentChain = () => {
       hasMounted.current = true;
     }
   }, [searchParams, pathName]);
+
+  useEffect(() => {
+    console.log('Chains from store:', chains);
+  }, [chains]);
 };

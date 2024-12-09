@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { ChainType, NetworkType } from '../../../types/types.ts';
-import {Button, FlexGrid, KeyValueComponent, StatusIcon, Typography} from '../../atoms';
+import { Button, FlexGrid, KeyValueComponent, StatusIcon, Typography } from '../../atoms';
 import { ImageContainer } from '../../atoms';
 import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
@@ -25,7 +25,9 @@ export const ChainNetworkPicker = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChain, setSelectedChain] = useState<string>();
   const [selectedNetwork, setSelectedNetwork] = useState<string>();
-  const filteredChains = chains.filter((chain) => chain.networkType === (selectedNetwork ?? currentNetwork.networkName));
+  const filteredChains = chains.filter(
+    (chain) => chain.networkType === (selectedNetwork ?? currentNetwork.networkName),
+  );
   const router = useRouter();
   const baseExplorerUrl = `explorer.klayr.dev`;
   const localhostHostnames = ['localhost', 'explorer.localhost', 'testnet-explorer.localhost'];
@@ -33,7 +35,7 @@ export const ChainNetworkPicker = ({
   const handleNetworkSelect = (network: string) => {
     setSelectedNetwork(network);
     setSelectedChain(filteredChains[0].chainName);
-  }
+  };
 
   const chainOptions = filteredChains?.map((chain) => ({
     label: chain.displayName ?? chain.chainName,
@@ -88,11 +90,13 @@ export const ChainNetworkPicker = ({
       } else {
         network === 'mainnet'
           ? router.push(`http://explorer.localhost:${window.location.port}/${chain.chainName}`)
-          : router.push(`http://testnet-explorer.localhost:${window.location.port}/${chain.chainName}`);
+          : router.push(
+              `http://testnet-explorer.localhost:${window.location.port}/${chain.chainName}`,
+            );
       }
     }
     setIsModalOpen(false);
-  }
+  };
 
   const handleSave = () => {
     if (selectedChain && !selectedNetwork) {
@@ -132,6 +136,7 @@ export const ChainNetworkPicker = ({
     <FlexGrid gap="1.5xl" mobileDirection="row">
       <CustomModal onClose={handleClose} open={isModalOpen} title="Select environments">
         <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
+          <Button label={'test'} onClick={() => console.log('Chains in picker:', chains)} />
           <FlexGrid
             alignItems="center"
             className={'w-full'}
@@ -173,7 +178,13 @@ export const ChainNetworkPicker = ({
               onClick={handleClose}
               variant="transparent"
             />
-            <Button align="none" className="w-full desktop:w-auto" disabled={!selectedChain && !selectedNetwork} label="Save" onClick={handleSave} />
+            <Button
+              align="none"
+              className="w-full desktop:w-auto"
+              disabled={!selectedChain && !selectedNetwork}
+              label="Save"
+              onClick={handleSave}
+            />
           </FlexGrid>
         </FlexGrid>
       </CustomModal>
