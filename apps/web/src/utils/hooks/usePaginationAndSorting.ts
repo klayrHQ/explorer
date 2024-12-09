@@ -91,10 +91,10 @@ export const usePaginationAndSorting = ({
   }, [pageNumber, limit, updateURL, changeURL]);
 
   useEffect(() => {
-    const totalPages = Math.ceil(totalItems / Number(limit))
+    const totalPages = Math.ceil(totalItems / Number(limit));
 
     if (pageNumber > totalPages) {
-      setPageNumber(totalPages);
+      setPageNumber(totalPages + 1);
     }
   }, [limit]);
 
