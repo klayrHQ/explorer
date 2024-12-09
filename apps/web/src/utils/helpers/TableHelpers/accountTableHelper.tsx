@@ -1,5 +1,5 @@
 import {AccountType, StakesCalculatorPeriodType, TopAccountType, ValidatorType} from '../../types.ts';
-import { validatorsTableHead } from '../tableHeaders.tsx';
+import {accountsTableHead, validatorsTableHead} from '../tableHeaders.tsx';
 import { convertKLYToBeddows, formatCommission, getTableSkeletons } from '../dataHelpers.tsx';
 import { FormattedValue } from '../../../components/formattedValue.tsx';
 import { NotificationIcon, StatusBadge, Typography } from '@repo/ui/atoms';
@@ -330,5 +330,5 @@ export const createAccountsRows = (
           ],
         };
       })
-    : getTableSkeletons(6);
+    : getTableSkeletons(accountsTableHead().length);
 };

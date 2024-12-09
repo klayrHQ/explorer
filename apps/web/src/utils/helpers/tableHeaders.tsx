@@ -410,9 +410,9 @@ export const favouritesTableHead = [
 ];
 
 export const accountsTableHead = (
-  onSortChange: (column: string) => void,
-  sortField: string,
-  sortOrder: string,
+  onSortChange?: (column: string) => void,
+  sortField?: string,
+  sortOrder?: string,
 ): TableCellType[] => [
   {
     children: '#',
