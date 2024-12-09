@@ -60,6 +60,7 @@ export const useInitializeCurrentChain = () => {
     networkParam && networks.includes(networkParam) && setCurrentNetwork(networkParam);
 
     const fetchChains = async () => {
+      console.log('fetching chains run');
       try {
         // Fetch chains
         const chainsResponse = callGetChains({}).then((data) => {
@@ -89,15 +90,19 @@ export const useInitializeCurrentChain = () => {
           chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
           setCurrentChain(chainMatch);
         } else if (pathName.split('/')[2] !== '404') {
-          if (window?.location.hostname.includes('vercel')) console.error('404 triggered') // skip 404 page if on vercel preview because middleware doesn't work there
+          if (window?.location.hostname.includes('vercel'))
+            console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
           else router.push('/klayr_mainchain/404');
         }
+        console.log('done fetching chains');
       } catch (error) {
         console.error('Error fetching chains', error);
       }
     };
 
-    if (hasMounted.current) {
+    console.log(' mounted', hasMounted);
+
+    if (true) {
       fetchChains();
     } else {
       hasMounted.current = true;
