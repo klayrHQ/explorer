@@ -82,8 +82,6 @@ export const useInitializeCurrentChain = () => {
           return { ...chain, tokens: matchingTokens };
         });
         setChains(chainsWithTokens);
-
-        console.log('Chains with tokens', chainsWithTokens);
       } catch (error) {
         console.error('Error fetching chains', error);
       }
@@ -93,17 +91,10 @@ export const useInitializeCurrentChain = () => {
   }, [searchParams, pathName]);
 
   useEffect(() => {
-    console.log('Chains from store:', chains);
-    if (chains.length > 0) {
-      const matchingChains = chains?.filter((chain) => chain.chainName === chainParam);
+    if (chains.length > 0 && chainParam && networkParam) {
       const chainMatch = chains
         ?.filter((chain) => chain.chainName === chainParam)
         .find((chain) => chain.networkType === networkParam);
-      console.log('chains:', chains);
-      console.log('Chain param:', chainParam);
-      console.log('Network param:', networkParam);
-      console.log('Matching chains:', matchingChains);
-      console.log('Chain match:', chainMatch);
 
       if (chainMatch) {
         chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);

@@ -136,7 +136,6 @@ export const ChainNetworkPicker = ({
     <FlexGrid gap="1.5xl" mobileDirection="row">
       <CustomModal onClose={handleClose} open={isModalOpen} title="Select environments">
         <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
-          <Button label={'test'} onClick={() => console.log('Chains in picker:', chains)} />
           <FlexGrid
             alignItems="center"
             className={'w-full'}
