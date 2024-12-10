@@ -99,7 +99,9 @@ export const useInitializeCurrentChain = () => {
       const chainMatch = chains
         ?.filter((chain) => chain.chainName === chainParam)
         .find((chain) => chain.networkType === networkParam);
-
+      console.log('chains:', chains);
+      console.log('Chain param:', chainParam);
+      console.log('Network param:', networkParam);
       console.log('Matching chains:', matchingChains);
       console.log('Chain match:', chainMatch);
 
