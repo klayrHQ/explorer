@@ -95,9 +95,14 @@ export const useInitializeCurrentChain = () => {
   useEffect(() => {
     console.log('Chains from store:', chains);
     if (chains.length > 0) {
-      const chainParam = searchParams.get('app');
       const matchingChains = chains?.filter((chain) => chain.chainName === chainParam);
-      const chainMatch = matchingChains?.find((chain) => chain.networkType === networkParam);
+      const chainMatch = chains
+        ?.filter((chain) => chain.chainName === chainParam)
+        .find((chain) => chain.networkType === networkParam);
+
+      console.log('Matching chains:', matchingChains);
+      console.log('Chain match:', chainMatch);
+
       if (chainMatch) {
         chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
         setCurrentChain(chainMatch);
