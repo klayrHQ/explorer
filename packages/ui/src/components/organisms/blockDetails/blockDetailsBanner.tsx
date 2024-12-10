@@ -48,6 +48,7 @@ export const BlockDetailsBanner = ({
           numberOfTransactions={numberOfTransactions}
           reward={reward}
           symbol={symbol}
+          basePath={basePath}
         />
       </div>
     </BannerFrame>
