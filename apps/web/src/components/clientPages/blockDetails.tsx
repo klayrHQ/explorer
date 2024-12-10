@@ -304,8 +304,8 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
           ) : (
             <NotFound
               className="mt-16"
-              headerText={'No transactions found'}
-              subheaderText={'We cannot find any transactions in this block'}
+              headerText={'No events found'}
+              subheaderText={'We cannot find any events in this block'}
             />
           )}
         </FlexGrid>
