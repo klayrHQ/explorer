@@ -306,21 +306,6 @@ export const stakesCalculatorTableHead = (
   {
     children: (
       <div className="flex justify-end">
-        {' '}
-        <SortingTitle
-          onSortChange={onSortChange}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          sortValue="selfStake"
-          title="Stake capacity"
-        />
-      </div>
-    ),
-    className: 'items-end text-end whitespace-nowrap',
-  },
-  {
-    children: (
-      <div className="flex justify-end">
         <SortingTitle
           onSortChange={onSortChange}
           sortField={sortField}
