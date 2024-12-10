@@ -44,13 +44,13 @@ export const useInitializeCurrentChain = () => {
   };
 
   const searchParams = useSearchParams();
+  const networkParam = searchParams.get('network');
+  const chainParam = searchParams.get('app');
+
   const hasMounted = useRef(false);
   const router = useRouter();
 
   useEffect(() => {
-    const networkParam = searchParams.get('network');
-    const chainParam = searchParams.get('app');
-
     if (chainParam === 'klayr_mainchain') {
       if (networkParam === 'mainnet') {
         setBaseUrl(gateways.mainnet);
@@ -84,22 +84,6 @@ export const useInitializeCurrentChain = () => {
         setChains(chainsWithTokens);
 
         console.log('Chains with tokens', chainsWithTokens);
-
-        if (chainsWithTokens.length > 0) {
-          const chainParam = searchParams.get('app');
-          const matchingChains = chainsWithTokens?.filter(
-            (chain) => chain.chainName === chainParam,
-          );
-          const chainMatch = matchingChains?.find((chain) => chain.networkType === networkParam);
-          if (chainMatch) {
-            chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
-            setCurrentChain(chainMatch);
-          } else if (pathName.split('/')[2] !== '404') {
-            if (window?.location.hostname.includes('vercel'))
-              console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
-            else router.push('/klayr_mainchain/404');
-          }
-        }
       } catch (error) {
         console.error('Error fetching chains', error);
       }
@@ -110,5 +94,18 @@ export const useInitializeCurrentChain = () => {
 
   useEffect(() => {
     console.log('Chains from store:', chains);
+    if (chains.length > 0) {
+      const chainParam = searchParams.get('app');
+      const matchingChains = chains?.filter((chain) => chain.chainName === chainParam);
+      const chainMatch = matchingChains?.find((chain) => chain.networkType === networkParam);
+      if (chainMatch) {
+        chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
+        setCurrentChain(chainMatch);
+      } else if (pathName.split('/')[2] !== '404') {
+        if (window?.location.hostname.includes('vercel'))
+          console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
+        else router.push('/klayr_mainchain/404');
+      }
+    }
   }, [chains]);
 };
