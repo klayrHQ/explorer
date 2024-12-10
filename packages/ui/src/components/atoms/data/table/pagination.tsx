@@ -60,7 +60,7 @@ export const Pagination = ({
         <PageLimit defaultValue={defaultValue} onPerPageChange={handlePerPageChange} />
       </div>
 
-      <div className="flex justify-between gap-3 desktop:gap-6">
+      <div className="flex justify-between gap-3 desktop:gap-6 flex-wrap">
         <div className="flex items-center gap-1">
           <Typography color="onBackgroundLow" variant="paragraph-sm">
             {`Page`}
