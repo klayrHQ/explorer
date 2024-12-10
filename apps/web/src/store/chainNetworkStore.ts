@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
 import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
 
@@ -32,6 +32,7 @@ export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
 
 export const useInitializeCurrentChain = () => {
   const setChains = useChainNetworkStore((state) => state.setChains);
+  const chains = useChainNetworkStore((state) => state.chains);
   const setCurrentChain = useChainNetworkStore((state) => state.setCurrentChain);
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
@@ -43,13 +44,12 @@ export const useInitializeCurrentChain = () => {
   };
 
   const searchParams = useSearchParams();
-  const hasMounted = useRef(false);
+  const networkParam = searchParams.get('network');
+  const chainParam = searchParams.get('app');
+
   const router = useRouter();
 
   useEffect(() => {
-    const networkParam = searchParams.get('network');
-    const chainParam = searchParams.get('app');
-
     if (chainParam === 'klayr_mainchain') {
       if (networkParam === 'mainnet') {
         setBaseUrl(gateways.mainnet);
@@ -81,26 +81,28 @@ export const useInitializeCurrentChain = () => {
           return { ...chain, tokens: matchingTokens };
         });
         setChains(chainsWithTokens);
-
-        const chainParam = searchParams.get('app');
-        const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === chainParam);
-        const chainMatch = matchingChains?.find((chain) => chain.networkType === networkParam);
-        if (chainMatch) {
-          chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
-          setCurrentChain(chainMatch);
-        } else if (pathName.split('/')[2] !== '404') {
-          if (window?.location.hostname.includes('vercel')) console.error('404 triggered') // skip 404 page if on vercel preview because middleware doesn't work there
-          else router.push('/klayr_mainchain/404');
-        }
       } catch (error) {
         console.error('Error fetching chains', error);
       }
     };
 
-    if (hasMounted.current) {
-      fetchChains();
-    } else {
-      hasMounted.current = true;
-    }
+    fetchChains();
   }, [searchParams, pathName]);
+
+  useEffect(() => {
+    if (chains.length > 0 && chainParam && networkParam) {
+      const chainMatch = chains
+        ?.filter((chain) => chain.chainName === chainParam)
+        .find((chain) => chain.networkType === networkParam);
+
+      if (chainMatch) {
+        chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
+        setCurrentChain(chainMatch);
+      } else if (pathName.split('/')[2] !== '404') {
+        if (window?.location.hostname.includes('vercel'))
+          console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
+        else router.push('/klayr_mainchain/404');
+      }
+    }
+  }, [chains]);
 };
