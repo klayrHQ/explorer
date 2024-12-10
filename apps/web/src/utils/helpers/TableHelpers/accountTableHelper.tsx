@@ -4,10 +4,14 @@ import {
   TopAccountType,
   ValidatorType,
 } from '../../types.ts';
-import { accountsTableHead, validatorsTableHead } from '../tableHeaders.tsx';
+import {
+  accountsTableHead,
+  stakesCalculatorTableHead,
+  validatorsTableHead,
+} from '../tableHeaders.tsx';
 import { convertKLYToBeddows, formatCommission, getTableSkeletons } from '../dataHelpers.tsx';
 import { FormattedValue } from '../../../components/formattedValue.tsx';
-import { NotificationIcon, StatusBadge, Typography } from '@repo/ui/atoms';
+import { NotificationIcon, StatusBadge, Tooltip, Typography } from '@repo/ui/atoms';
 import { cls, fromNowFormatter } from '@repo/ui/utils';
 import { Currency } from '../../../components/currency.tsx';
 import React, { useEffect } from 'react';
@@ -30,7 +34,9 @@ export const createValidatorsRows = (
     totalActiveStake: BigInt(0),
   },
 ) => {
-  const columnCount = validatorsTableHead(() => '', '', '').length;
+  const columnCount = stakingRewards
+    ? stakesCalculatorTableHead(() => '', '', '').length
+    : validatorsTableHead(() => '', '', '').length;
   const { stakingCalculatorAmount, stakingCalculatorPeriod, totalActiveStake } =
     stakingCalculatorProps;
 
@@ -227,6 +233,31 @@ export const createValidatorsRows = (
               ),
               className: 'text-right',
             },
+            stakingRewards
+              ? {
+                  children: (
+                    <div className="flex flex-col items-end">
+                      <FormattedValue
+                        value={resultPerPeriod}
+                        format={'currency'}
+                        tooltip={{
+                          text: `Staking Rewards per ${stakingCalculatorAmount} KLY per ${stakingCalculatorPeriod}`,
+                          placement: 'top',
+                        }}
+                        currencyProps={{ className: 'text-paragraph-sm font-semibold' }}
+                      />
+                      <FormattedValue
+                        value={APR.toFixed(2)}
+                        format={'percentage'}
+                        tooltip={{
+                          text: `APR is the yearly rate of return on staking ${stakingCalculatorAmount} KLY`,
+                          placement: 'bottom',
+                        }}
+                      />
+                    </div>
+                  ),
+                }
+              : null,
           ].filter(Boolean),
         };
       })
