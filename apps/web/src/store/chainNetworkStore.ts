@@ -83,16 +83,22 @@ export const useInitializeCurrentChain = () => {
         });
         setChains(chainsWithTokens);
 
-        console.log('Chains with tokens:', chainsWithTokens);
+        console.log('Chains with tokens', chainsWithTokens);
 
-        const chainParam = searchParams.get('app');
-        const matchingChains = chainsWithTokens?.filter((chain) => chain.chainName === chainParam);
-        const chainMatch = matchingChains?.find((chain) => chain.networkType === networkParam);
-        if (chainMatch) {
-          chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
-          setCurrentChain(chainMatch);
-        } else if (pathName.split('/')[2] !== '404') {
-          console.error('404 triggered');
+        if (chainsWithTokens.length > 0) {
+          const chainParam = searchParams.get('app');
+          const matchingChains = chainsWithTokens?.filter(
+            (chain) => chain.chainName === chainParam,
+          );
+          const chainMatch = matchingChains?.find((chain) => chain.networkType === networkParam);
+          if (chainMatch) {
+            chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
+            setCurrentChain(chainMatch);
+          } else if (pathName.split('/')[2] !== '404') {
+            if (window?.location.hostname.includes('vercel'))
+              console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
+            else router.push('/klayr_mainchain/404');
+          }
         }
       } catch (error) {
         console.error('Error fetching chains', error);
@@ -100,11 +106,6 @@ export const useInitializeCurrentChain = () => {
     };
 
     fetchChains();
-    /*if (hasMounted.current) {
-      fetchChains();
-    } else {
-      hasMounted.current = true;
-    }*/
   }, [searchParams, pathName]);
 
   useEffect(() => {
