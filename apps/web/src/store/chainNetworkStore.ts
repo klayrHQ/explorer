@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { defaultChain } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
 import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
 
@@ -47,7 +47,6 @@ export const useInitializeCurrentChain = () => {
   const networkParam = searchParams.get('network');
   const chainParam = searchParams.get('app');
 
-  const hasMounted = useRef(false);
   const router = useRouter();
 
   useEffect(() => {
