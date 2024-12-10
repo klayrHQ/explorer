@@ -284,6 +284,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: 3,
       label: 'Events',
       icon: 'List',
+      count: eventsMeta?.count || '0',
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           {events?.length && events.length > 0 ? (
