@@ -41,7 +41,7 @@ export const BannerText = ({
   return (
     <div className="max-w-full flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
-      <Link basePath={basePath} href={`/account/${senderName ?? senderAddress}`}>
+      <Link basePath={basePath} href={`/account/${senderAddress}`}>
         <UserAccountCard
           address={senderAddress}
           addressColor="onBackground"
@@ -62,7 +62,7 @@ export const BannerText = ({
 
       {/* RECEIVER */}
       {receiverAddress && (
-        <Link basePath={basePath} href={`/account/${receiverName ?? receiverAddress}`}>
+        <Link basePath={basePath} href={`/account/${receiverAddress}`}>
           <UserAccountCard
             address={receiverAddress}
             addressColor="onBackground"
