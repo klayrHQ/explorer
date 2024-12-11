@@ -55,12 +55,12 @@ export const Pagination = ({
   };
 
   return (
-    <div className="flex justify-between items-center w-full relative ">
+    <div className="flex justify-center desktop:justify-between items-center w-full relative ">
       <div className="hidden desktop:flex ">
         <PageLimit defaultValue={defaultValue} onPerPageChange={handlePerPageChange} />
       </div>
 
-      <div className="flex justify-between gap-3 desktop:gap-6 flex-wrap">
+      <div className="flex justify-center desktop:justify-between gap-4 desktop:gap-6 flex-wrap">
         <div className="flex items-center gap-1">
           <Typography color="onBackgroundLow" variant="paragraph-sm">
             {`Page`}
