@@ -29,14 +29,14 @@ export const UniversalFilter = ({
 
   useEffect(() => {
     const newErrors: Record<string, boolean> = {};
-    filterConfigurations.forEach(({ type, dataKey, inputProps }) => {
+    filterConfigurations.forEach(({ type, dataKey, inputProps, searchKey }) => {
       if (type === 'input' && inputProps?.validation) {
-        const value = inputValues[dataKey];
+        const value = inputValues[searchKey ?? dataKey];
         if (value && value.length > 0) {
           const isValid = inputProps.validation(value);
-          newErrors[dataKey] = !isValid;
+          newErrors[searchKey ?? dataKey] = !isValid;
         } else {
-          newErrors[dataKey] = false;
+          newErrors[searchKey ?? dataKey] = false;
         }
       }
     });
@@ -116,7 +116,7 @@ export const UniversalFilter = ({
           style={{ maxHeight: '70vh' }}
           className="max-h-full overflow-auto flex flex-col justify-between px-4 items-center bg-backgroundSecondary border-1 gap-3 border-borderLow rounded-sm"
         >
-          {filterConfigurations.map(({ title, type, dataKey, inputProps }) => (
+          {filterConfigurations.map(({ title, type, dataKey, inputProps, searchKey }) => (
             <div key={dataKey} className="w-full flex flex-col">
               <Typography variant="paragraph-sm" className="text-gray-5 mb-2">
                 {title}
@@ -124,9 +124,9 @@ export const UniversalFilter = ({
               {type === 'input' && (
                 <Input
                   className="bg-backgroundSecondary"
-                  errorNotification={errors[dataKey] ? inputProps?.errorMessage : undefined}
-                  value={inputValues[dataKey]}
-                  onChange={(e) => handleInputChange(dataKey, (e.target as HTMLInputElement).value)}
+                  errorNotification={errors[searchKey ?? dataKey] ? inputProps?.errorMessage : undefined}
+                  value={inputValues[searchKey ?? dataKey]}
+                  onChange={(e) => handleInputChange(searchKey ?? dataKey, (e.target as HTMLInputElement).value)}
                   placeholder={inputProps?.placeholder || ''}
                   leftContent={
                     <span className="text-paragraph-sm">{capitalizeFirstLetter(dataKey)}</span>
@@ -134,15 +134,15 @@ export const UniversalFilter = ({
                   leftContentPadding="pl-16"
                   rightContent={
                     <div
-                      className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-tulipDark rounded-full transition-all ${inputValues[dataKey] ? 'opacity-100' : 'opacity-0'}`}
-                      onClick={() => handleClearField(dataKey)}
+                      className={`flex items-center cursor-pointer justify-center w-4 h-4 bg-tulipDark rounded-full transition-all ${inputValues[searchKey ?? dataKey] ? 'opacity-100' : 'opacity-0'}`}
+                      onClick={() => handleClearField(searchKey ?? dataKey)}
                     >
                       <Icon color="backgroundDark" icon="CrossClose" size="xxs" />
                     </div>
                   }
                   type="text"
                   variant="filters"
-                  isError={errors[dataKey]}
+                  isError={errors[searchKey ?? dataKey]}
                 />
               )}
               {type === 'checkbox' && (
