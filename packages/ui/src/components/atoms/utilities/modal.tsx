@@ -25,7 +25,7 @@ export const Modal = ({ open, onClose, title, subTitle, children, width }: Modal
     >
       <div
         className={cls([
-          'bg-backgroundSecondary text-white rounded-lg shadow-lg outline-none relative max-h-90vh flex flex-col',
+          'z-100 bg-backgroundSecondary text-white rounded-lg shadow-lg outline-none relative max-h-90vh flex flex-col',
           width ? `w-${width} max-w-95p` : 'w-modalWidthMobile desktop:w-modalWidth',
         ])}
       >

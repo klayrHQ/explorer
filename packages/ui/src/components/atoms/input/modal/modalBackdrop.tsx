@@ -13,7 +13,7 @@ export const Backdrop = React.forwardRef<
       <div
         className={cls(['fixed inset-0', className])}
         ref={ref}
-        style={{ backgroundColor: 'rgba(from var(--color-black) r g b / 0.8)' }}
+        style={{ backgroundColor: 'rgba(from var(--color-black) r g b / 0.8)', zIndex: 60 }}
         {...other}
       />
     </Fade>
