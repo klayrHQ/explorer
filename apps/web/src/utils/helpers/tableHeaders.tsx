@@ -431,6 +431,9 @@ export const chainsTableHead = [
     children: 'Name',
   },
   {
+    children: 'Chain ID',
+  },
+  {
     children: 'Status',
   },
   {
