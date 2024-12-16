@@ -496,10 +496,7 @@ export const tokensTableHead = [
     children: 'Token',
   },
   {
-    children: 'Active chain',
-  },
-  {
-    children: 'Network',
+    children: 'Chain',
   },
   {
     children: 'Description',
