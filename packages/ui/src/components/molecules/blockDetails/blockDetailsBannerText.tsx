@@ -55,7 +55,10 @@ export const BlockDetailsBannerText = ({
       </Typography>
 
       <Typography color="onBackgroundMedium" variant="paragraph-md">
-        {' transactions with a reward of'}
+        {' transactions'}
+      </Typography>
+      <Typography color="onBackgroundMedium" variant="paragraph-md">
+        {'with a reward of'}
       </Typography>
 
       {/* AMOUNT */}
