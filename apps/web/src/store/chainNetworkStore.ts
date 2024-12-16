@@ -14,6 +14,8 @@ interface ChainNetworkStoreProps {
   chains: ChainType[];
   setChains: (chains: ChainType[]) => void;
   networks: string[];
+  tokens: ChainTokenType[];
+  setTokens: (tokens: ChainTokenType[]) => void;
 }
 
 export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
@@ -27,6 +29,8 @@ export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
     chains: [],
     setChains: (chains: ChainType[]) => set({ chains }),
     networks: ['mainnet', 'testnet'],
+    tokens: [],
+    setTokens: (tokens: ChainTokenType[]) => set({ tokens }),
   };
 });
 
@@ -37,6 +41,7 @@ export const useInitializeCurrentChain = () => {
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
+  const setTokens = useChainNetworkStore((state) => state.setTokens);
   const pathName = usePathname();
   const gateways = {
     mainnet: 'https://gateway-mainnet.klayr.dev/api/v1/',
@@ -72,6 +77,11 @@ export const useInitializeCurrentChain = () => {
           return data.data;
         });
         const tokensData: ChainTokenType[] = await tokensResponse;
+
+        const tokensFilteredByNetwork = tokensData.filter(
+          (token) => token.networkType === networkParam,
+        );
+        setTokens(tokensFilteredByNetwork);
 
         // Match tokens to chains
         const chainsWithTokens = chainsData?.map((chain: ChainType) => {
