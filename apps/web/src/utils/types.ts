@@ -374,6 +374,12 @@ export interface ChainTokenType {
     svg: string;
     tokenID: string;
   };
+  chainLogo?: {
+    png: string;
+    svg: string;
+    appChainID: string;
+  };
+  chainDisplayName?: string;
   denomUnits: {
     denom: string;
     decimals: number;
