@@ -19,7 +19,7 @@ export const createNodesRows = (nodes: NodeType[], loading: boolean) => {
               children: (
                 <div className="flex gap-2 items-center">
                   <div
-                    className="w-8 h-6 rounded-xs bg-cover bg-center bg-no-repeat"
+                    className="w-8 h-6 rounded-xs bg-cover bg-center bg-no-repeat shrink-0"
                     style={{
                       backgroundImage: `url(http://purecatamphetamine.github.io/country-flag-icons/3x2/${node.location.countryCode}.svg)`,
                     }}
