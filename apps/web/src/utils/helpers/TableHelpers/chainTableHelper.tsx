@@ -1,6 +1,14 @@
 import { CombinedAppsType, ChainType } from '../../types.ts';
 import { ImageName } from '@repo/ui/molecules';
-import { Button, FlexGrid, IconButton, Link, StatusBadge, NotFound } from '@repo/ui/atoms';
+import {
+  Button,
+  FlexGrid,
+  IconButton,
+  Link,
+  StatusBadge,
+  NotFound,
+  Typography,
+} from '@repo/ui/atoms';
 import { Currency } from '../../../components/currency.tsx';
 import { getTableSkeletons } from '../dataHelpers.tsx';
 import { chainsTableHead } from '../tableHeaders.tsx';
@@ -24,6 +32,14 @@ export const createChainRows = (chains: CombinedAppsType[], loading: boolean, ba
                   />
                 ),
                 className: 'w-72',
+              },
+              {
+                children: (
+                  <Typography color="onBackgroundLow" variant="paragraph-sm">
+                    {chain.chainID}
+                  </Typography>
+                ),
+                className: 'w-44',
               },
               {
                 children: <StatusBadge status={chain.status} />,
