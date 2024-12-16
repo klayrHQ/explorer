@@ -103,7 +103,7 @@ export const ChainNetworkPicker = ({
   const handleSave = () => {
     if (selectedChain && !selectedNetwork) {
       handleChainChange(selectedChain);
-      onSaved();
+      onSaved?.();
       return;
     }
 
