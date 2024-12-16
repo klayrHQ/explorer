@@ -288,7 +288,9 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     blocksPagination.limit,
   ]);
 
-  const mainTokenBalance = account?.tokenBalances[tokenID][0];
+  const mainTokenBalance = account?.tokenBalances[tokenID]
+    ? account?.tokenBalances[tokenID][0]
+    : '';
 
   const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
     return { label: { label }, value, mobileWidth };
