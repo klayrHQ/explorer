@@ -291,6 +291,9 @@ export const createAccountsRows = (
                   }}
                   format={'account'}
                   value={account}
+                  copy
+                  showCopyOnHover
+                  copyIcon
                 />
               ),
             },
