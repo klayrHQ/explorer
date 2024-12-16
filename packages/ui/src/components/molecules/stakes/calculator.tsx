@@ -1,5 +1,6 @@
 import { Typography } from '../../atoms';
 import { CustomSelect, CustomSelectProps } from '../../atoms';
+import { ChangeEvent } from 'react';
 
 export interface CalculatorProps {
   amount: number;
@@ -9,6 +10,12 @@ export interface CalculatorProps {
 }
 
 export const Calculator = ({ amount, setAmount, options, setPeriod }: CalculatorProps) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) return;
+    if (isNaN(parseInt(e.target.value))) return;
+    setAmount(parseInt(e.target.value));
+  };
+
   return (
     <div className="max-w-calculatorWidth w-full flex items-center justify-between border-1 border-background rounded-md bg-backgroundSecondary max-w-calculatorWidth divide-x-2 divide-background">
       <div className="">
@@ -23,7 +30,8 @@ export const Calculator = ({ amount, setAmount, options, setPeriod }: Calculator
           type="text"
           inputMode={'numeric'}
           value={amount}
-          onChange={(e) => !isNaN(Number(e.target.value)) && setAmount(parseInt(e.target.value))}
+          pattern="[0-9]*"
+          onChange={(e) => handleInputChange(e)}
         />
       </div>
       <div className="">
