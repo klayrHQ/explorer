@@ -376,7 +376,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <FormattedValue
           format="currency"
           currencyProps={{ className: 'font-onBackgroundHigh' }}
-          value={mainTokenBalance?.totalBalance}
+          value={typeof mainTokenBalance === 'object' ? mainTokenBalance.totalBalance : ''}
         />
       </>,
     ),
@@ -386,7 +386,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <FormattedValue
           format="currency"
           currencyProps={{ className: 'font-onBackgroundHigh' }}
-          value={mainTokenBalance?.lockedBalance}
+          value={typeof mainTokenBalance === 'object' ? mainTokenBalance.totalBalance : ''}
         />
       </>,
     ),
@@ -396,7 +396,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <FormattedValue
           format="currency"
           currencyProps={{ className: 'font-onBackgroundHigh' }}
-          value={mainTokenBalance?.availableBalance}
+          value={typeof mainTokenBalance === 'object' ? mainTokenBalance.availableBalance : ''}
         />
       </>,
     ),
@@ -809,7 +809,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
               setIsFav(true);
             }
           }}
-          balance={mainTokenBalance?.totalBalance}
+          balance={typeof mainTokenBalance === 'object' ? mainTokenBalance.totalBalance : ''}
           balanceSymbol={symbol}
           status={''}
         />
