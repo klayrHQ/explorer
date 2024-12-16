@@ -59,7 +59,7 @@ export const MobileMenu = ({
             )}
           </div>
         </Link>
-        <ChainNetworkPicker {...chainNetworkData} />
+        <ChainNetworkPicker {...chainNetworkData} onSaved={onClose} />
         <IconButton
           align={'none'}
           icon={'Settings'}
