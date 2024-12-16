@@ -50,7 +50,8 @@ export const createValidatorsRows = (
       };
     }
 
-    const newStake = BigInt(stakingCalculatorAmount) * BigInt(1_0000_0000);
+    const newStake =
+      BigInt(stakingCalculatorAmount ? stakingCalculatorAmount : 0) * BigInt(1_0000_0000);
     const newStakeFloat = parseFloat(newStake.toString(10));
     const newTotalStake = totalActiveStake + BigInt(newStake);
     const newTotalStakeFloat = parseFloat(newTotalStake.toString(10));
