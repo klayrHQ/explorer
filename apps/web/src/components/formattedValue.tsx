@@ -42,6 +42,7 @@ interface FormattedValueProps {
   tooltip?: Omit<TooltipProps, 'children'> | string;
   tooltipContainerClassName?: string;
   accountIconComponent?: React.ReactNode;
+  copyIcon?: boolean;
 }
 
 function isAccountObject(value: any): value is AccountObject {
@@ -64,6 +65,7 @@ export const FormattedValue = ({
   tooltip,
   tooltipContainerClassName,
   accountIconComponent,
+  copyIcon,
 }: FormattedValueProps) => {
   const basePath = useBasePath();
 

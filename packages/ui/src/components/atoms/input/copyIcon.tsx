@@ -96,7 +96,7 @@ export const CopyIcon = ({ content, size, hover }: CopyIconProps) => {
   const onCopy = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     copyToClipboard(content);
-  }
+  };
 
   return (
     <Tooltip placement={'bottom'} text={copyTooltipText}>
@@ -104,7 +104,7 @@ export const CopyIcon = ({ content, size, hover }: CopyIconProps) => {
         className={containerStyles({
           size,
           hover,
-          className: cls(['cursor-pointer']),
+          className: cls(['cursor-pointer flex']),
         })}
         onClick={(e) => onCopy(e)}
       >

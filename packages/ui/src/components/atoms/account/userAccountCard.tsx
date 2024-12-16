@@ -36,7 +36,12 @@ export const UserAccountCard = ({
   truncateName = false,
 }: UserAccountCardProps) => {
   return (
-    <FlexGrid alignItems={'center'} className={`w-${width}`} gap={'md'} mobileDirection={'row'}>
+    <FlexGrid
+      alignItems={'center'}
+      className={`w-${width} group/child`}
+      gap={'md'}
+      mobileDirection={'row'}
+    >
       <Avatar address={address} circle size={size} />
       <FlexGrid direction={'col'} gap={'0'}>
         {name && nameOnly && !truncateName && (
@@ -59,18 +64,23 @@ export const UserAccountCard = ({
             <Typography color={nameColor} fontWeight={'semibold'} variant={nameVariant}>
               {name}
             </Typography>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ">
               <Typography color={addressColor} fontWeight={fontWeight} variant={addressVariant}>
                 {shortString(address, 12, 'center')}
               </Typography>
-              {copyIcon && <CopyIcon content={address} size={'xxs'} />}
+              <div>
+                <CopyIcon content={address} size={'xxs'} hover />
+              </div>
             </div>
           </>
         )}
         {!name && (
-          <Typography color={addressColor} fontWeight={fontWeight} variant={addressVariant}>
-            {shortString(address, 12, 'center')}
-          </Typography>
+          <div className="flex gap-1.5 items-center">
+            <Typography color={addressColor} fontWeight={fontWeight} variant={addressVariant}>
+              {shortString(address, 12, 'center')}
+            </Typography>
+            <CopyIcon content={address} size={'xxs'} hover />
+          </div>
         )}
       </FlexGrid>
     </FlexGrid>
