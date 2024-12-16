@@ -13,6 +13,7 @@ export interface ChainNetworkPickerProps {
   chains?: ChainType[];
   networks?: string[];
   imgComponent?: ReactElement;
+  onSaved?: () => void;
 }
 
 export const ChainNetworkPicker = ({
@@ -21,6 +22,7 @@ export const ChainNetworkPicker = ({
   chains = [],
   networks = [],
   imgComponent,
+  onSaved,
 }: ChainNetworkPickerProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChain, setSelectedChain] = useState<string>();
@@ -101,6 +103,7 @@ export const ChainNetworkPicker = ({
   const handleSave = () => {
     if (selectedChain && !selectedNetwork) {
       handleChainChange(selectedChain);
+      onSaved?.();
       return;
     }
 
