@@ -128,7 +128,7 @@ export const FormattedValue = ({
 
     if (format === 'account' && isAccountObject(value)) {
       return (
-        <Link basePath={basePath} href={`/account/${value.name ?? value.address}`}>
+        <Link basePath={basePath} href={`/account/${value.address}`}>
           {accountIconComponent ? (
             <div className={'relative inline-flex items-center gap-1'}>
               {accountIconComponent}
