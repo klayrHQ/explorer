@@ -18,13 +18,13 @@ interface ModalProps {
 export const CustomModal = ({ open, onClose, onSave, title, children }: ModalProps) => {
   return (
     <Modal
-      className="fixed inset-0 flex items-center justify-between p-4"
+      className="fixed inset-0 flex items-center justify-between p-4 "
       onClose={onClose}
       open={open}
       slots={{ backdrop: Backdrop }}
     >
       <div
-        className={` bg-backgroundSecondary text-white rounded-lg shadow-lg  outline-none relative w-modalWidthMobile desktop:w-modalWidth`}
+        className={`z-100 bg-backgroundSecondary text-white rounded-lg shadow-lg  outline-none relative w-modalWidthMobile desktop:w-modalWidth`}
       >
         <FlexGrid
           alignItems="center"

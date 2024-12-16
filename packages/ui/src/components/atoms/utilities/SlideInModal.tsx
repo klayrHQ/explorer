@@ -4,7 +4,7 @@ import { IconButton } from '../input/iconButton';
 import { Typography } from '../base/typography';
 import { FlexGrid } from '../base/flexGrid';
 import { Backdrop } from '../input/modal/modalBackdrop';
-import {Slide} from "@mui/material";
+import { Slide } from '@mui/material';
 
 interface SlideInModalProps {
   open: boolean;
@@ -19,7 +19,7 @@ export const SlideInModal = ({ open, onClose, title, children }: SlideInModalPro
       <BaseModal onClose={onClose} open={open} slots={{ backdrop: Backdrop }}>
         <Slide direction="left" in={open} mountOnEnter unmountOnExit>
           <div
-            className={`overflow-y-auto fixed top-0 right-0 h-full w-full desktop:w-1/3 bg-backgroundSecondary shadow-lg`}
+            className={`overflow-y-auto fixed top-0 right-0 h-full w-full desktop:w-1/3 bg-backgroundSecondary shadow-lg z-60`}
           >
             <FlexGrid
               alignItems="center"
