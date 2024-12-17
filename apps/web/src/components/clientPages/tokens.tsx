@@ -3,49 +3,32 @@
 import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { tokensTableHead } from '../../utils/helpers/tableHeaders';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TokenType } from '../../utils/types';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { createTokensRows } from '../../utils/helpers/TableHelpers/tokenTableHelper.tsx';
+import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 
 export const Tokens = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const basePath = useBasePath();
 
-  const tokens: TokenType[] = [
-    {
-      tokenId: 'Token 1',
-      availableBalance: '1000000000000000000',
-      lockedBalances: [
-        {
-          amount: '1000000000000000000',
-          module: 'Module 1',
-        },
-      ],
-    },
-    {
-      tokenId: 'Token 2',
-      availableBalance: '2000000000000000000',
-      lockedBalances: [
-        {
-          amount: '2000000000000000000',
-          module: 'Module 2',
-        },
-      ],
-    },
-    {
-      tokenId: 'Token 3',
-      availableBalance: '3000000000000000000',
-      lockedBalances: [
-        {
-          amount: '3000000000000000000',
-          module: 'Module 3',
-        },
-      ],
-    },
-  ];
+  const tokens = useChainNetworkStore((state) => state.tokens);
+  const chains = useChainNetworkStore((state) => state.chains);
+  const chainLogos = chains.map((chain) => chain.logo);
 
-  const rows = createTokensRows(tokens, loading, basePath);
+  const tokensWithChainLogo = tokens.map((token) => {
+    const chainLogo = chainLogos.find((chain) => chain.appChainID === token.chainID);
+    const chainDisplayName = chains.find((chain) => chain.chainID === token.chainID)?.displayName;
+    return { ...token, chainLogo, chainDisplayName };
+  });
+
+  useEffect(() => {
+    setLoading(true);
+    if (chains.length > 0 && tokens.length > 0) setLoading(false);
+  }, [chains, tokens]);
+
+  const rows = createTokensRows(tokensWithChainLogo, loading, basePath);
 
   return (
     <FlexGrid className="w-full gap-9 desktop:gap-12 mx-auto" direction={'col'}>

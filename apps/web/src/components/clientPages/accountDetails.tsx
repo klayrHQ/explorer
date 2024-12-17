@@ -689,7 +689,6 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       value: isValidator ? 6 : 4,
       label: 'Tokens',
       icon: 'CoinsStacked',
-      count: tokens.length,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           {tokens?.length && tokens.length > 0 ? (
@@ -707,6 +706,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           )}
         </FlexGrid>
       ),
+      disabled: true,
     },
     {
       value: isValidator ? 7 : 5,
