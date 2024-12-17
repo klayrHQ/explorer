@@ -62,18 +62,23 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <BannerFrame image={BannerBG}>
-        <div className="flex items-center ">
-          <div>
+        <div className="flex items-center gap-2 ">
+          <div className="w-10 h-10 aspect-square rounded-full">
             {tokenWithChainData?.logo?.png && (
               <img
                 src={tokenWithChainData.logo.png}
                 alt={tokenWithChainData.tokenName ?? 'Token logo'}
+                className="w-full h-full object-cover rounded-full"
               />
             )}
           </div>
           <div className="flex flex-col">
-            <Typography variant={'paragraph-md'}>{tokenWithChainData?.tokenName}</Typography>
-            <Typography variant={'paragraph-md'}>{tokenWithChainData?.symbol}</Typography>
+            <Typography fontWeight="bold" variant={'h3'}>
+              {tokenWithChainData?.tokenName}
+            </Typography>
+            <Typography color="onBackgroundMedium" variant={'caption'}>
+              {tokenWithChainData?.symbol}
+            </Typography>
           </div>
         </div>
       </BannerFrame>
