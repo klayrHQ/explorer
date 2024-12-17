@@ -29,7 +29,7 @@ export const formatCommission = (value: number | undefined): string => {
 export const getAmountFromTx = (tx: TransactionType) => {
   switch (`${tx.module}:${tx.command}`) {
     case TransactionCommands.POS_STAKE:
-      return tx.params.stakes.reduce((total: number, stake: any) => total + (stake.amount || 0), 0);
+      return tx.params.stakes.reduce((total: number, stake: any) => total + (Number(stake.amount) || 0), 0);
     // TODO: claimRewards based on the event
     default:
       return tx.params?.amount;
