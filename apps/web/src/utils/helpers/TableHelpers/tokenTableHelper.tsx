@@ -1,4 +1,4 @@
-import { TokenType } from '../../types.ts';
+import { ChainTokenType, TokenType } from '../../types.ts';
 import { ChainType } from '@repo/ui/types';
 import { KeyValueComponent, Link, StatusIcon, TokenCard } from '@repo/ui/atoms';
 import { Currency } from '../../../components/currency.tsx';
@@ -6,6 +6,7 @@ import { FormattedValue } from '../../../components/formattedValue.tsx';
 import { ImageName } from '@repo/ui/molecules';
 import { getTableSkeletons } from '../dataHelpers.tsx';
 import React from 'react';
+import { tokensTableHead } from '../tableHeaders.tsx';
 
 export const createUserDetailsTokensRow = (
   token: TokenType[],
@@ -30,9 +31,6 @@ export const createUserDetailsTokensRow = (
             {
               children: (
                 <TokenCard
-                  chainImage={
-                    'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
-                  }
                   image={'https://cdn.pixabay.com/photo/2023/10/17/17/01/cat-8321993_1280.jpg'}
                   name={'Monkeyz'}
                   symbol={'MON'}
@@ -88,59 +86,39 @@ export const createUserDetailsTokensRow = (
       })
     : getTableSkeletons(6);
 };
-export const createTokensRows = (tokens: TokenType[], loading: boolean, basePath: string) => {
+export const createTokensRows = (tokens: ChainTokenType[], loading: boolean, basePath: string) => {
+  const columnCount = tokensTableHead.length;
+
   return !loading
     ? tokens?.map((token) => {
         return {
           cells: [
             {
               children: (
-                <Link basePath={basePath} href={`/tokens/${token.tokenId}`}>
+                <Link basePath={basePath} href={`/tokens/${token.tokenID}`}>
                   <TokenCard
-                    chainImage={
-                      'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
-                    }
-                    image={'https://cdn.pixabay.com/photo/2023/10/17/17/01/cat-8321993_1280.jpg'}
-                    name={'Monkeyz'}
-                    symbol={'MON'}
+                    image={token.logo.png ?? token.logo.svg ?? ''}
+                    name={token.tokenName}
+                    symbol={token.symbol}
                   />
                 </Link>
               ),
             },
             {
               children: (
-                <ImageName
-                  imageUrl={
-                    'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/iajdm4uwsshvi1d4dt7g'
-                  }
-                  name={'Klayr-main'}
-                />
+                <Link basePath={basePath} href={`/chains/${token.chainID}`}>
+                  <ImageName
+                    imageUrl={token.chainLogo?.png ?? token.chainLogo?.svg ?? ''}
+                    name={token.chainDisplayName ?? token.chainName}
+                  />
+                </Link>
               ),
             },
             {
-              children: (
-                <KeyValueComponent
-                  contentValue={
-                    <FormattedValue
-                      format={'string'}
-                      typographyProps={{ color: 'onBackgroundHigh' }}
-                      value={'Testnet'}
-                    />
-                  }
-                  keyValue={<StatusIcon status={'successful'} />}
-                />
-              ),
-            },
-            {
-              children: (
-                <FormattedValue
-                  format={'string'}
-                  value={'The description of the token and its purpose'}
-                />
-              ),
+              children: <FormattedValue format={'string'} value={token.description} />,
             },
           ],
         };
       })
-    : getTableSkeletons(4);
+    : getTableSkeletons(columnCount);
 };
