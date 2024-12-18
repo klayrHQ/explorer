@@ -34,6 +34,7 @@ export const Accounts = () => {
   } = usePaginationAndSorting({
     fetchFunction: callGetTopAccounts,
     defaultLimit: searchParams.get('limit') || '100',
+    additionalDependencies: [tokenID],
     searchParams: {
       tokenID,
     },
