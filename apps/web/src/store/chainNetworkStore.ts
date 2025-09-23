@@ -44,8 +44,8 @@ export const useInitializeCurrentChain = () => {
   const setTokens = useChainNetworkStore((state) => state.setTokens);
   const pathName = usePathname();
   const gateways = {
-    mainnet: 'https://gateway-mainnet.klayr.dev/api/v1/',
-    testnet: 'https://gateway-testnet.klayr.dev/api/v1/',
+    mainnet: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
+    testnet: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
   };
 
   const searchParams = useSearchParams();

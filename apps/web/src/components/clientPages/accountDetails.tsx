@@ -265,10 +265,10 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       ]).finally(() => setLoading(false));
     }
 
-    if (validator && validator.account.address) {
+    if (validator && validator.address) {
       fetchPaginatedData(
         callGetBlocks,
-        { generatorAddress: validator.account.address },
+        { generatorAddress: validator.address },
         blocksPagination.pageNumber,
         blocksPagination.limit,
       ).then((data) => {
@@ -774,8 +774,8 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           }}
           selfStake={validator?.selfStake || 0}
           selfStakeSymbol={symbol}
-          senderAddress={validator?.account.address || ''}
-          senderName={validator?.account.name || ''}
+          senderAddress={validator?.address || ''}
+          senderName={validator?.name || ''}
           setFavorite={() => {
             if (account?.address) {
               addFavourite({ address: account.address });

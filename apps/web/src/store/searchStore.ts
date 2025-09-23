@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { SearchResultsType } from '@repo/ui/types';
+import { SearchResultsType, SearchResults } from '@repo/ui/types';
 import { useGatewayClientStore } from './clientStore';
 
 export interface SearchQueryParams {
@@ -22,15 +22,15 @@ export const useSearchStore = create<SearchStore>()((set, get) => ({
     const { setSearchResults } = get();
 
     try {
-      const { data } = await client.get<SearchResultsType>('search', {
+      const { data } = await client.get<SearchResults>('search', {
         params: {
           search,
         },
       });
 
       if (data) {
-        setSearchResults(data);
-        return data;
+        setSearchResults(data.data);
+        return data.data;
       } else {
         throw new Error('No data received');
       }

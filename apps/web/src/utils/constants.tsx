@@ -170,8 +170,8 @@ export const defaultChain = {
   },
   serviceURLs: [
     {
-      http: 'https://gateway-mainnet.klayr.dev/api/v1',
-      ws: 'wss://gateway-mainnet.klayr.dev/api/v1',
+      http: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
+      ws: `wss://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}`,
       apiCertificatePublicKey: '',
       appChainID: '00000000',
     },

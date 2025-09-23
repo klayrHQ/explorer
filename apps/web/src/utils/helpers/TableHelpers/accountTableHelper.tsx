@@ -136,7 +136,15 @@ export const createValidatorsRows = (
                     />
                   }
                   format={'account'}
-                  value={validator?.account}
+                  value={
+                    validator
+                      ? {
+                          address: validator.address,
+                          name: validator.name,
+                          publicKey: validator.publicKey,
+                        }
+                      : undefined
+                  }
                 />
               ),
               className: cls([

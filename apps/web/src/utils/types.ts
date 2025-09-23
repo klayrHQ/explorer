@@ -116,6 +116,8 @@ export interface EventsDataType {
 
 export interface ValidatorType {
   address: string;
+  name: string;
+  publicKey: string;
   totalStake: string;
   selfStake: string;
   validatorWeight: string;
@@ -133,7 +135,6 @@ export interface ValidatorType {
   commission: number;
   lastCommissionIncreaseHeight: number;
   sharingCoefficients: SharingCoefficientType[];
-  account: AccountSubType;
   nextAllocatedTime?: number;
   totalRewards: string;
   blockReward: string;

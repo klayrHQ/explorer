@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { NodeInfoType } from '../utils/types.ts';
-import { callGetNodeInfo } from '../utils/api/apiCalls.tsx';
-import {useEffect} from "react";
-import {usePathname} from "next/navigation";
+import { NetworkStatus, NodeInfoType } from '../utils/types.ts';
+import { callGetNetworkStatus } from '../utils/api/apiCalls.tsx';
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 interface NodeStoreProps {
   nodeInfo?: NodeInfoType;
@@ -13,7 +13,7 @@ export const useNodeStore = create<NodeStoreProps>((set) => {
   return {
     nodeInfo: {} as NodeInfoType,
     setNodeInfo: (nodeInfo: NodeInfoType) => set({ nodeInfo }),
-  }
+  };
 });
 
 export const useUpdateNodeInfo = () => {
@@ -22,10 +22,10 @@ export const useUpdateNodeInfo = () => {
 
   useEffect(() => {
     const fetchNodeInfo = async () => {
-      const data = await callGetNodeInfo();
-      setNodeInfo(data as unknown as NodeInfoType);
-    }
+      const data = await callGetNetworkStatus();
+      setNodeInfo(data as unknown as NetworkStatus);
+    };
 
     fetchNodeInfo();
   }, [pathName]);
-}
+};

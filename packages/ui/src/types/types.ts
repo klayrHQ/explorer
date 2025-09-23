@@ -214,6 +214,11 @@ export interface NextValidatorType {
 }
 
 //SEARCH TYPES
+export interface SearchResults {
+  data: SearchResultsType;
+  meta: Record<string, unknown>;
+}
+
 export interface SearchResultsType {
   accounts?: SearchAccount[];
   blocks?: SearchBlock[];

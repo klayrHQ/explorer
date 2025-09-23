@@ -14,7 +14,9 @@ import {
   StakersType,
   StakesType,
   TokenSummaryType,
-  TokenType, TopAccountsType, TopAccountType,
+  TokenType,
+  TopAccountsType,
+  TopAccountType,
   TransactionType,
   ValidatorType,
 } from '../types';
@@ -25,9 +27,11 @@ import {
   BlocksQueryParams,
   ChainsQueryParams,
   ChainTokenQueryParams,
-  EventsQueryParams, NodeQueryParams,
+  EventsQueryParams,
+  NodeQueryParams,
   StakersQueryParams,
-  TokensQueryParams, TopAccountQueryParams,
+  TokensQueryParams,
+  TopAccountQueryParams,
   TransactionQueryParams,
   ValidatorQueryParams,
 } from './types';
@@ -65,7 +69,6 @@ async function customApiCall<T>(
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'Access-Control-Allow-Methods': 'POST,GET',
     },
   });
 
@@ -115,10 +118,6 @@ export const callGetChartData = async (): Promise<GatewayRes<ChartDataType[]>> =
   return apiCall<ChartDataType[]>('pos/validators/status-count');
 };
 
-export const callGetNodeInfo = async (): Promise<GatewayRes<NodeInfoType>> => {
-  return apiCall<NodeInfoType>('node/info');
-};
-
 export const callGetTokenSummary = async (): Promise<GatewayRes<TokenSummaryType>> => {
   return apiCall<TokenSummaryType>('token/summary ');
 };
@@ -145,7 +144,7 @@ export const callGetTopAccounts = async (
   params: TopAccountQueryParams,
 ): Promise<GatewayRes<TopAccountsType>> => {
   return apiCall<TopAccountsType>('token/balances/top', params);
-}
+};
 
 export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayRes<TokenType>> => {
   return apiCall<TokenType>('token/balances', params);
@@ -163,12 +162,12 @@ export const callGetChains = async (
   params: ChainsQueryParams,
 ): Promise<GatewayRes<ChainType[]>> => {
   const mainnetResponse = await customApiCall<ChainType[]>(
-    'https://gateway-mainnet.klayr.dev/api/v1/',
+    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
     'blockchain/apps/meta',
     params,
   );
   const testnetResponse = await customApiCall<ChainType[]>(
-    'https://gateway-testnet.klayr.dev/api/v1/',
+    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
     'blockchain/apps/meta',
     params,
   );
@@ -182,12 +181,12 @@ export const callGetChainTokens = async (
   params: ChainTokenQueryParams,
 ): Promise<GatewayRes<ChainTokenType[]>> => {
   const mainnetResponse = await customApiCall<ChainTokenType[]>(
-    'https://gateway-mainnet.klayr.dev/api/v1/',
+    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
     'blockchain/apps/meta/tokens',
     params,
   );
   const testnetResponse = await customApiCall<ChainTokenType[]>(
-    'https://gateway-testnet.klayr.dev/api/v1/',
+    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
     'blockchain/apps/meta/tokens',
     params,
   );
