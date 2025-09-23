@@ -8,16 +8,21 @@ import {
   ChartDataType,
   EventsType,
   GatewayRes,
+  MetaTransaction,
   NetworkStatus,
+  NetworkStatusMeta,
   NodeInfoType,
   NodeType,
+  StakersMetaType,
   StakersType,
+  StakesMetaType,
   StakesType,
   TokenSummaryType,
   TokenType,
   TopAccountsType,
   TopAccountType,
   TransactionType,
+  ValidatorsStatusCount,
   ValidatorType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
@@ -38,14 +43,14 @@ import {
 import { NextValidatorType } from '@repo/ui/types';
 import axios from 'axios';
 
-async function apiCall<T>(
+async function apiCall<T, K extends MetaTransaction = MetaTransaction>(
   endpoint: string,
   params: Record<string, any> = {},
-): Promise<GatewayRes<T>> {
+): Promise<GatewayRes<T, K>> {
   const { client } = useGatewayClientStore.getState();
 
   try {
-    const { data } = await client.get<GatewayRes<T>>(endpoint, { params });
+    const { data } = await client.get<GatewayRes<T, K>>(endpoint, { params });
 
     if (data) {
       return data;
@@ -114,8 +119,8 @@ export const callGetNextValidators = async (): Promise<GatewayRes<NextValidatorT
   return apiCall<NextValidatorType[]>('generators', { limit: 3 });
 };
 
-export const callGetChartData = async (): Promise<GatewayRes<ChartDataType[]>> => {
-  return apiCall<ChartDataType[]>('pos/validators/status-count');
+export const callGetChartData = async (): Promise<GatewayRes<ValidatorsStatusCount>> => {
+  return apiCall<ValidatorsStatusCount>('pos/validators/status-count');
 };
 
 export const callGetTokenSummary = async (): Promise<GatewayRes<TokenSummaryType>> => {
@@ -124,14 +129,14 @@ export const callGetTokenSummary = async (): Promise<GatewayRes<TokenSummaryType
 
 export const callGetStakes = async (
   params: StakersQueryParams,
-): Promise<GatewayRes<StakesType>> => {
-  return apiCall<StakesType>('pos/stakes', params);
+): Promise<GatewayRes<StakesType, StakesMetaType>> => {
+  return apiCall<StakesType, StakesMetaType>('pos/stakes', params);
 };
 
 export const callGetStakers = async (
   params: StakersQueryParams,
-): Promise<GatewayRes<StakersType>> => {
-  return apiCall<StakersType>('pos/stakers', params);
+): Promise<GatewayRes<StakersType, StakersMetaType>> => {
+  return apiCall<StakersType, StakersMetaType>('pos/stakers', params);
 };
 
 export const callGetAccounts = async (
@@ -146,16 +151,20 @@ export const callGetTopAccounts = async (
   return apiCall<TopAccountsType>('token/balances/top', params);
 };
 
-export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayRes<TokenType>> => {
-  return apiCall<TokenType>('token/balances', params);
+export const callGetTokens = async (
+  params: TokensQueryParams,
+): Promise<GatewayRes<TokenType[]>> => {
+  return apiCall<TokenType[]>('token/balances', params);
 };
 
 export const callGetNodes = async (params: NodeQueryParams): Promise<GatewayRes<NodeType[]>> => {
   return apiCall<NodeType[]>('network/peers', params);
 };
 
-export const callGetNetworkStatus = async (): Promise<GatewayRes<NetworkStatus>> => {
-  return apiCall<NetworkStatus>('network/status');
+export const callGetNetworkStatus = async (): Promise<
+  GatewayRes<NetworkStatus, NetworkStatusMeta>
+> => {
+  return apiCall<NetworkStatus, NetworkStatusMeta>('network/status');
 };
 
 export const callGetChains = async (
