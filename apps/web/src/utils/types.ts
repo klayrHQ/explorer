@@ -86,6 +86,7 @@ export interface BlockDetailsType {
   reward: string;
   signature: string;
   isFinal: boolean;
+  assets: BlockAssetType[];
 }
 
 export interface AggregateCommit {
@@ -147,6 +148,8 @@ export interface ValidatorType {
   totalCommission: number;
   totalSelfStakeRewards: string;
   earnedRewards: string;
+  blockReward: string;
+  nextAllocatedTime: number;
 }
 
 export interface SharingCoefficientType {
@@ -172,24 +175,6 @@ export interface ChartDataType {
   id: number;
   label: string;
   value: number;
-}
-
-export interface NodeInfoType {
-  version: string;
-  networkVersion: string;
-  chainID: string;
-  lastBlockID: string;
-  height: number;
-  finalizedHeight: number;
-  syncing: boolean;
-  unconfirmedTransactions: number;
-  genesisHeight: number;
-  genesis: GenesisType;
-  network: {
-    version: string;
-    port: number;
-    seedPeers: string[];
-  };
 }
 
 export interface GenesisType {
@@ -218,6 +203,8 @@ export interface TokenSummaryType {
     tokenID: string;
     amount: string;
   }[];
+  totalAccounts: number;
+  totalTransactions: number;
 }
 
 export type StakesCalculatorPeriodType = 'block' | 'day' | 'month' | 'year' | string;
@@ -283,6 +270,8 @@ export type TopAccountType = {
   publicKey: string;
   name: string;
   balance: string;
+  availableBalance: string;
+  lockedBalance: string;
   knowledge: {
     owner: string;
     description: string;
@@ -392,6 +381,14 @@ export interface ChainTokenType {
     png: string;
     svg: string;
   };
+}
+
+export interface ChainTokenTypeWithLogoAndDisplayName extends ChainTokenType {
+  chainLogo: {
+    png: string;
+    svg: string;
+  };
+  displayName?: string;
 }
 
 export interface NetworkStatus {

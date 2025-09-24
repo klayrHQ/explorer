@@ -5,7 +5,8 @@ import { useSettingsStore } from '../store/settingsStore.ts';
 
 export const Currency = ({ symbol, decimals, ...props }: CurrencyProps) => {
   const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const currency = currentChain?.tokens[0]?.symbol;
+  const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
+  const currency = currentChainToken?.symbol;
   const {
     currency: { mantissaSize, trailingZeroes, decimalSeparator, formatting },
   } = useSettingsStore((state) => state.settings);

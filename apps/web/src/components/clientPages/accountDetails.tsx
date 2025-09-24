@@ -8,7 +8,7 @@ import {
   ValidatorType,
   TokenType,
   BlockDetailsType,
-  MetaType,
+  MetaTransaction,
 } from '../../utils/types.ts';
 import { NftCard, Table } from '@repo/ui/molecules';
 import React, { useState, useEffect } from 'react';
@@ -145,7 +145,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [incomingStakes, setIncomingStakes] = useState<any[]>([]);
   const [tokens, setTokens] = useState<TokenType[]>([]);
   const [blocks, setBlocks] = useState<BlockDetailsType[]>([]);
-  const [blocksMeta, setBlocksMeta] = useState<MetaType>({});
+  const [blocksMeta, setBlocksMeta] = useState<MetaTransaction>({ count: 0, offset: 0, total: 0 });
 
   const [loading, setLoading] = useState<boolean>(true);
   const [sortField, setSortField] = useState<string>('');
@@ -153,9 +153,10 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
   const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const tokenID = currentChain?.tokens[0]?.tokenID;
+  const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
+  const tokenID = currentChainToken?.tokenID;
   const chains = useChainNetworkStore((state) => state.chains);
-  const symbol = currentChain?.tokens[0]?.symbol;
+  const symbol = currentChainToken?.symbol;
   const { tokenPrice } = useMarketcap();
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
@@ -286,6 +287,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     transactionsPagination.limit,
     blocksPagination.pageNumber,
     blocksPagination.limit,
+    validator,
   ]);
 
   const mainTokenBalance = account?.tokenBalances[tokenID]
@@ -453,7 +455,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       <Currency amount={validator?.commission ?? 0} decimals={5} />,
     ),
     createDetails('Commission %', <Currency amount={validator?.commission ?? 0} decimals={5} />),
-    createDetails('Earned rewards', <Currency amount={validator?.totalRewards ?? 0} />),
+    createDetails('Earned rewards', <Currency amount={validator?.earnedRewards ?? 0} />),
     createDetails(
       'Total self stake rewards',
       <Currency amount={validator?.totalSelfStakeRewards ?? 0} />,

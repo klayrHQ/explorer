@@ -1,4 +1,4 @@
-import { BlockType } from '../../types.ts';
+import { BlockDetailsType } from '../../types.ts';
 import { FormattedValue } from '../../../components/formattedValue.tsx';
 import { Currency } from '../../../components/currency.tsx';
 import { getSeedRevealFromAssets, getTableSkeletons } from '../dataHelpers.tsx';
@@ -7,7 +7,7 @@ import React from 'react';
 import { KeyValueComponent, StatusIcon } from '@repo/ui/atoms';
 
 export const createValidatorBlockRows = (
-  blocks: BlockType[],
+  blocks: BlockDetailsType[],
   loading: boolean,
   basePath: string,
 ) => {
@@ -38,7 +38,7 @@ export const createValidatorBlockRows = (
     : getTableSkeletons(validatorBlocksTableHead.length);
 };
 export const createBlockRows = (
-  blocks: BlockType[],
+  blocks: BlockDetailsType[],
   loading: boolean,
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,

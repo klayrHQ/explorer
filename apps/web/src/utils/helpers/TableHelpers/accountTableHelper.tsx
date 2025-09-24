@@ -232,7 +232,7 @@ export const createValidatorsRows = (
             },
             {
               children: (
-                <Currency amount={validator.totalRewards} color={'onBackgroundLow'} decimals={0} />
+                <Currency amount={validator.earnedRewards} color={'onBackgroundLow'} decimals={0} />
               ),
               className: 'text-right',
             },
@@ -306,9 +306,9 @@ export const createAccountsRows = (
               ),
             },
             {
-              children: account?.description ? (
+              children: account?.knowledge.description ? (
                 <Typography color={'onBackgroundMedium'} variant={'caption'}>
-                  {account?.description}
+                  {account?.knowledge.description}
                 </Typography>
               ) : null,
             },
@@ -316,7 +316,7 @@ export const createAccountsRows = (
               //mock_data
               children: (
                 <div className="flex flex-col items-end">
-                  <Currency amount={account?.totalBalance} className="font-semibold" decimals={0} />
+                  <Currency amount={account?.balance} className="font-semibold" decimals={0} />
                 </div>
               ),
             },
@@ -333,8 +333,7 @@ export const createAccountsRows = (
                     format={'percentage'}
                     value={Number(
                       (
-                        (Number(account?.availableBalance || 0) /
-                          Number(account?.totalBalance || 1)) *
+                        (Number(account?.availableBalance || 0) / Number(account?.balance || 1)) *
                         100
                       ).toFixed(2),
                     )}
@@ -355,7 +354,7 @@ export const createAccountsRows = (
                     format={'percentage'}
                     value={Number(
                       (
-                        (Number(account?.lockedBalance || 0) / Number(account?.totalBalance || 1)) *
+                        (Number(account?.lockedBalance || 0) / Number(account?.balance || 1)) *
                         100
                       ).toFixed(2),
                     )}
@@ -368,9 +367,7 @@ export const createAccountsRows = (
               children: (
                 <FormattedValue
                   format={'percentage'}
-                  value={Number(
-                    ((Number(account?.totalBalance) || 0) / Number(totalSupply || 1)) * 100,
-                  )}
+                  value={Number(((Number(account?.balance) || 0) / Number(totalSupply || 1)) * 100)}
                 />
               ),
               className: 'text-right',

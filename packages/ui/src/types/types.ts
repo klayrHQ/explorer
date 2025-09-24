@@ -150,8 +150,8 @@ export type ColorType =
   | string;
 
 export interface ChainType {
-  chainID: string;
   chainName: string;
+  chainID: string;
   displayName: string;
   title: string;
   status: string;
@@ -160,25 +160,22 @@ export interface ChainType {
   isDefault: boolean;
   genesisURL: string;
   projectPage: string;
-  backgroundColor: string;
   serviceURLs: ServiceURLsType[];
   logo: {
     png: string;
     svg: string;
-    appChainID: string;
   };
+  appPage: string;
+  backgroundColor: string;
   explorers: {
     url: string;
     txnPage: string;
-    appChainID: string;
   }[];
   appNodes: {
     url: string;
     maintainer: string;
     apiCertificatePublicKey: string;
-    appChainID: string;
   }[];
-  tokens: ChainTokenType[];
 }
 
 export type NetworkType = {

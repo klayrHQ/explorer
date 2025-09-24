@@ -13,7 +13,7 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
   const chainLogo = chains?.find((chain) => chain.chainID === token?.chainID)?.logo;
   const displayName = chains?.find((chain) => chain.chainID === token?.chainID)?.displayName;
 
-  const tokenWithChainData = { ...token, chainLogo, chainDisplayName: displayName };
+  const tokenWithChainData = { ...token, chainLogo, displayName };
   console.log(chainLogo);
 
   const details = [
@@ -29,7 +29,7 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
       label: { label: 'Chain Name' },
       value: tokenWithChainData?.chainLogo?.png ? (
         <ImageName
-          name={tokenWithChainData.chainDisplayName ?? tokenWithChainData.chainName ?? ''}
+          name={tokenWithChainData.displayName ?? tokenWithChainData.chainName ?? ''}
           imageUrl={tokenWithChainData.chainLogo.png}
         />
       ) : (

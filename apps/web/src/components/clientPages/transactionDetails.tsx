@@ -21,8 +21,8 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);
   const [events, setEvents] = useState<EventsType[]>([]);
   const basePath = useBasePath();
-  const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const symbol = currentChain?.tokens[0]?.symbol;
+  const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
+  const symbol = currentChainToken?.symbol;
 
   useEffect(() => {
     setLoading(true);
@@ -74,7 +74,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'Module',
         tooltip: 'The module that the transaction belongs to',
       },
-      value: transaction?.module,
+      value: transaction?.moduleCommand.split(':')[0],
       mobileWidth: 'half',
     },
     {
@@ -82,7 +82,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'Command',
         tooltip: 'The command that the transaction belongs to',
       },
-      value: transaction?.command,
+      value: transaction?.moduleCommand.split(':')[1],
       mobileWidth: 'half',
     },
     {
@@ -139,13 +139,13 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       value: <FormattedValue format={'account'} value={transaction?.sender} />,
       mobileWidth: 'half',
     },
-    ...(transaction?.recipient
+    ...(transaction?.meta.recipient
       ? [
           {
             label: {
               label: 'To',
             },
-            value: <FormattedValue format={'account'} value={transaction?.recipient} />,
+            value: <FormattedValue format={'account'} value={transaction?.meta.recipient} />,
             mobileWidth: 'half',
           },
         ]
@@ -295,7 +295,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         executionStatus={transaction?.executionStatus}
         id={transaction?.id || ''}
         image={BannerBG.src}
-        moduleCommand={`${transaction?.module}:${transaction?.command}` || ''}
+        moduleCommand={`${transaction?.moduleCommand}` || ''}
         receiverAddress={transaction?.params?.recipientAddress}
         receiverName={transaction?.meta?.recipient?.name}
         senderAddress={transaction?.sender?.address || ''}

@@ -11,7 +11,6 @@ import {
   MetaTransaction,
   NetworkStatus,
   NetworkStatusMeta,
-  NodeInfoType,
   NodeType,
   StakersMetaType,
   StakersType,

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { defaultChain } from '../utils/constants.tsx';
+import { defaultChain, defaultChainToken } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
@@ -9,6 +9,8 @@ import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
 interface ChainNetworkStoreProps {
   currentChain: ChainType;
   setCurrentChain: (chain: ChainType) => void;
+  currentChainToken: ChainTokenType;
+  setCurrentChainToken: (token: ChainTokenType) => void;
   currentNetwork: string;
   setCurrentNetwork: (network: string) => void;
   chains: ChainType[];
@@ -22,6 +24,8 @@ export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
   return {
     currentChain: defaultChain,
     setCurrentChain: (chain: ChainType) => set({ currentChain: chain }),
+    currentChainToken: defaultChainToken,
+    setCurrentChainToken: (token: ChainTokenType) => set({ currentChainToken: token }),
     currentNetwork: defaultChain.networkType,
     setCurrentNetwork: (network: string) => {
       set({ currentNetwork: network });
@@ -38,6 +42,8 @@ export const useInitializeCurrentChain = () => {
   const setChains = useChainNetworkStore((state) => state.setChains);
   const chains = useChainNetworkStore((state) => state.chains);
   const setCurrentChain = useChainNetworkStore((state) => state.setCurrentChain);
+  const setCurrentChainToken = useChainNetworkStore((state) => state.setCurrentChainToken);
+  const tokens = useChainNetworkStore((state) => state.tokens);
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
@@ -97,6 +103,7 @@ export const useInitializeCurrentChain = () => {
     };
 
     fetchChains();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, pathName]);
 
   useEffect(() => {
@@ -114,5 +121,19 @@ export const useInitializeCurrentChain = () => {
         else router.push('/klayr_mainchain/404');
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chains]);
+
+  useEffect(() => {
+    if (tokens.length > 0 && chainParam && networkParam) {
+      const tokenMatch = tokens
+        ?.filter((token) => token.chainName === chainParam)
+        .find((token) => token.networkType === networkParam);
+
+      if (tokenMatch) {
+        setCurrentChainToken(tokenMatch);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tokens]);
 };

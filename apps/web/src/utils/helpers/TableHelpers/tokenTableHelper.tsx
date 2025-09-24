@@ -1,4 +1,4 @@
-import { ChainTokenType, TokenType } from '../../types.ts';
+import { ChainTokenType, ChainTokenTypeWithLogoAndDisplayName, TokenType } from '../../types.ts';
 import { ChainType } from '@repo/ui/types';
 import { KeyValueComponent, Link, StatusIcon, TokenCard } from '@repo/ui/atoms';
 import { Currency } from '../../../components/currency.tsx';
@@ -86,7 +86,11 @@ export const createUserDetailsTokensRow = (
       })
     : getTableSkeletons(6);
 };
-export const createTokensRows = (tokens: ChainTokenType[], loading: boolean, basePath: string) => {
+export const createTokensRows = (
+  tokens: ChainTokenTypeWithLogoAndDisplayName[],
+  loading: boolean,
+  basePath: string,
+) => {
   const columnCount = tokensTableHead.length;
 
   return !loading
@@ -109,7 +113,7 @@ export const createTokensRows = (tokens: ChainTokenType[], loading: boolean, bas
                 <Link basePath={basePath} href={`/chains/${token.chainID}`}>
                   <ImageName
                     imageUrl={token.chainLogo?.png ?? token.chainLogo?.svg ?? ''}
-                    name={token.chainDisplayName ?? token.chainName}
+                    name={token.displayName ?? token.chainName}
                   />
                 </Link>
               ),

@@ -5,7 +5,6 @@ export interface LogoProps {
   logoSrc: string;
   logoFullSrc?: string;
   altText: string;
-  logoText?: string;
   minimized?: boolean;
   className?: string;
   basePath?: string;

@@ -18,6 +18,7 @@ interface SidebarProps {
   basePath: string;
 }
 
+// eslint-disable-next-line comma-dangle
 export const Sidebar = ({ menuItems, logo, basePath }: SidebarProps) => {
   const [isMinimized, setIsMinimized] = useState(false);
 

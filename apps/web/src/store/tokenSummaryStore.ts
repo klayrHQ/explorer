@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { callGetTokenSummary } from '../utils/api/apiCalls';
 
 interface TokenSummary {
-  totalSupply: { totalSupply: string }[];
+  totalSupply: { tokenID: string; amount: string }[];
   escrowedAmounts: { amount: string }[];
   totalAccounts: number;
   totalTransactions: number;
@@ -29,7 +29,7 @@ export const tokenSummaryStore = create<TokenSummaryStore>((set) => ({
       const data = await callGetTokenSummary();
       const tokenSummary = data.data;
       const marketCap = tokenSummary.totalSupply.reduce(
-        (acc: number, token: { totalSupply: string }) => acc + parseInt(token.totalSupply),
+        (acc: number, token: { amount: string }) => acc + parseInt(token.amount),
         0,
       );
       const totalValueLocked = tokenSummary.escrowedAmounts.reduce(

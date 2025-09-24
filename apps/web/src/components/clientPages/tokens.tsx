@@ -4,10 +4,11 @@ import { FlexGrid } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { tokensTableHead } from '../../utils/helpers/tableHeaders';
 import { useEffect, useState } from 'react';
-import { TokenType } from '../../utils/types';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { createTokensRows } from '../../utils/helpers/TableHelpers/tokenTableHelper.tsx';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+
+const emptyLogo = { png: '', svg: '' };
 
 export const Tokens = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -15,12 +16,11 @@ export const Tokens = () => {
 
   const tokens = useChainNetworkStore((state) => state.tokens);
   const chains = useChainNetworkStore((state) => state.chains);
-  const chainLogos = chains.map((chain) => chain.logo);
 
   const tokensWithChainLogo = tokens.map((token) => {
-    const chainLogo = chainLogos.find((chain) => chain.appChainID === token.chainID);
-    const chainDisplayName = chains.find((chain) => chain.chainID === token.chainID)?.displayName;
-    return { ...token, chainLogo, chainDisplayName };
+    const chainLogo = chains.find((chain) => chain.chainID === token.chainID)?.logo ?? emptyLogo;
+    const displayName = chains.find((chain) => chain.chainID === token.chainID)?.displayName;
+    return { ...token, chainLogo, displayName };
   });
 
   useEffect(() => {
