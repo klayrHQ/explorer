@@ -139,13 +139,13 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       value: <FormattedValue format={'account'} value={transaction?.sender} />,
       mobileWidth: 'half',
     },
-    ...(transaction?.meta.recipient
+    ...(transaction?.meta?.recipient
       ? [
           {
             label: {
               label: 'To',
             },
-            value: <FormattedValue format={'account'} value={transaction?.meta.recipient} />,
+            value: <FormattedValue format={'account'} value={transaction?.meta?.recipient} />,
             mobileWidth: 'half',
           },
         ]

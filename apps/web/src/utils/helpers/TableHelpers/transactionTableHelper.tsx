@@ -104,11 +104,11 @@ export const createTransactionRows = (
               ),
             },
             {
-              children: transaction?.meta.recipient ? (
+              children: transaction?.meta?.recipient ? (
                 <div className="">
                   <FormattedValue
                     format={'account'}
-                    value={transaction?.meta.recipient}
+                    value={transaction?.meta?.recipient}
                     accountIconComponent={
                       transaction.params.receivingChainID ? (
                         <img
