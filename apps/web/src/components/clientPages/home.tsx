@@ -21,6 +21,7 @@ export const Home = () => {
     fetchTokenSummary: state.fetchTokenSummary,
   }));
 
+  // TODO: implement correct news fetching
   useEffect(() => {
     const getNews = async () => {
       try {
@@ -60,7 +61,7 @@ export const Home = () => {
         console.error(error);
       }
     };
-    getNews();
+    // getNews();
   }, []);
 
   useEffect(() => {
@@ -138,6 +139,7 @@ export const Home = () => {
     },
   ];
 
+  // TODO: activate news card grid later
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4xl'}>
       <PerformanceSection
@@ -145,7 +147,7 @@ export const Home = () => {
         setStatsVS={setStatsVS}
         stats={performanceStatsArray}
       />
-      <NewsCardGrid href={'https://klayr.xyz/blog'} newsCards={news} />
+      {/* <NewsCardGrid href={'https://klayr.xyz/blog'} newsCards={news} /> */}
     </FlexGrid>
   );
 };

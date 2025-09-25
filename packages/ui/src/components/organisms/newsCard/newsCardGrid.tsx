@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import { NewsCard } from './newsCard';
 import { IconComponent, LinkComponent } from '../../../types/types';
 import { FlexGrid } from '../../atoms';
