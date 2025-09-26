@@ -1,16 +1,17 @@
 'use client';
 import { ValidatorBannerButtons } from './validatorBannerButtons';
 import { Typography } from '../../atoms';
+import { fromNow } from '../../../utils/date';
 
 export interface ValidatorBannerCardProps {
-  blockTime: number;
+  nextAllocatedTime?: number;
   isFavorite: boolean;
   removeFavorite: () => void;
   setFavorite: () => void;
 }
 
 export const ValidatorBannerCard = ({
-  blockTime,
+  nextAllocatedTime,
   isFavorite,
   removeFavorite,
   setFavorite,
@@ -29,10 +30,10 @@ export const ValidatorBannerCard = ({
       <div className="border border-onBackground rounded-xl w-max  hidden desktop:block desktop:w-auto">
         <div className="p-6 flex flex-1 items-start flex-col gap-6 w-max">
           <Typography color="onBackground" fontWeight="semibold" variant="paragraph-md">
-            {'Next block in'}
+            {'Next block'}
           </Typography>
           <Typography color="onBackground" fontWeight="bold" variant="h3">
-            {blockTime} {'min'}
+            {nextAllocatedTime ? fromNow(nextAllocatedTime * 1000) : '-'}
           </Typography>
         </div>
       </div>

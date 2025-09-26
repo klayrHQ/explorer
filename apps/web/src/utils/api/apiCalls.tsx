@@ -6,6 +6,7 @@ import {
   ChainTokenType,
   ChainType,
   ChartDataType,
+  ClaimableReward,
   EventsType,
   GatewayRes,
   MetaTransaction,
@@ -33,6 +34,7 @@ import {
   ChainTokenQueryParams,
   EventsQueryParams,
   NodeQueryParams,
+  PosClaimableRewardsQueryParams,
   StakersQueryParams,
   TokensQueryParams,
   TopAccountQueryParams,
@@ -120,6 +122,12 @@ export const callGetNextValidators = async (): Promise<GatewayRes<NextValidatorT
 
 export const callGetChartData = async (): Promise<GatewayRes<ValidatorsStatusCount>> => {
   return apiCall<ValidatorsStatusCount>('pos/validators/status-count');
+};
+
+export const callGetPosClaimableRewards = async (
+  params: PosClaimableRewardsQueryParams,
+): Promise<GatewayRes<ClaimableReward[]>> => {
+  return apiCall<ClaimableReward[]>('pos/rewards/claimable', params);
 };
 
 export const callGetTokenSummary = async (): Promise<GatewayRes<TokenSummaryType>> => {

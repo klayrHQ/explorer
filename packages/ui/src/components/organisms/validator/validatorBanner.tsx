@@ -19,7 +19,7 @@ import { Link } from '../../atoms';
 interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBannerHeaderProps {
   image: string;
   senderName?: string;
-  blockTime?: number;
+  nextAllocatedTime?: number;
   basePath: string;
   isFavorite: boolean;
   removeFavorite: () => void;
@@ -38,7 +38,7 @@ export const ValidatorBanner = ({
   capacity,
   status,
   notificationValue,
-  blockTime,
+  nextAllocatedTime,
   basePath,
   isFavorite,
   removeFavorite,
@@ -77,8 +77,8 @@ export const ValidatorBanner = ({
         </div>
       </FlexGrid>
       <ValidatorBannerCard
-        blockTime={blockTime || 0}
         isFavorite={isFavorite}
+        nextAllocatedTime={nextAllocatedTime}
         removeFavorite={removeFavorite}
         setFavorite={setFavorite}
       />

@@ -36,6 +36,7 @@ export interface ValidatorQueryParams {
   offset?: number;
   sort?: string;
   name?: string;
+  includeStatusValue?: boolean;
 }
 
 export interface StakesQueryParams {
@@ -48,6 +49,14 @@ export interface StakersQueryParams {
   address?: string;
   publicKey?: string;
   name?: number;
+}
+
+export interface PosClaimableRewardsQueryParams {
+  address?: string;
+  publicKey?: string;
+  name?: string;
+  limit?: number;
+  offset?: number;
 }
 
 export interface AccountQueryParams {

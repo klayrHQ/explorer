@@ -9,6 +9,8 @@ import {
   TokenType,
   BlockDetailsType,
   MetaTransaction,
+  TokenBalancesType,
+  ClaimableReward,
 } from '../../utils/types.ts';
 import { NftCard, Table } from '@repo/ui/molecules';
 import React, { useState, useEffect } from 'react';
@@ -23,6 +25,7 @@ import {
   callGetAccounts,
   callGetTokens,
   callGetBlocks,
+  callGetPosClaimableRewards,
 } from '../../utils/api/apiCalls.tsx';
 import {
   transactionTableHead,
@@ -134,6 +137,8 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
 
   const paramIsName = paramAccount.length < 41;
   const [account, setAccount] = useState<AccountType>();
+  const [claimableRewards, setClaimableRewards] = useState<ClaimableReward[]>([]);
+  const [mainTokenBalance, setMainTokenbalance] = useState<TokenBalancesType>();
   const [validator, setValidator] = useState<ValidatorType>();
   const isValidator = !!validator;
 
@@ -152,6 +157,8 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [sortOrder, setSortOrder] = useState<string>('');
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
 
+  const tokensMeta = useChainNetworkStore((state) => state.tokens);
+  const chainsMeta = useChainNetworkStore((state) => state.chains);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
   const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
   const tokenID = currentChainToken?.tokenID;
@@ -179,7 +186,8 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     setLoading(true);
     callGetAccounts({ [paramIsName ? 'name' : 'address']: paramAccount })
       .then((data) => {
-        const AccountData = Array.isArray(data?.data) && data.data.length > 0 ? data.data[0] : null;
+        const AccountData: AccountType =
+          Array.isArray(data?.data) && data.data.length > 0 ? data.data[0] : null;
         setAccount(AccountData);
       })
       .catch((error) => console.error('Error fetching validator:', error))
@@ -187,8 +195,26 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   }, [paramAccount, paramIsName]);
 
   useEffect(() => {
+    callGetPosClaimableRewards({ [paramIsName ? 'name' : 'address']: paramAccount })
+      .then((data) => {
+        const ClaimableRewardsData: ClaimableReward[] =
+          Array.isArray(data?.data) && data.data.length > 0 ? data.data : [];
+        setClaimableRewards(ClaimableRewardsData);
+      })
+      .catch((error) => console.error('Error fetching validator:', error));
+  }, [paramAccount, paramIsName]);
+
+  useEffect(() => {
+    if (tokenID && account && account.tokenBalances.length > 0) {
+      const MainTokenBalanceData = account.tokenBalances.find((t) => t.tokenID === tokenID);
+      setMainTokenbalance(MainTokenBalanceData);
+    }
+  }, [account, tokenID]);
+
+  useEffect(() => {
     callGetValidators({
       ...(!paramIsName ? { address: paramAccount } : { name: paramAccount }),
+      includeStatusValue: true,
     })
       .then((data) => {
         setValidator(data.data[0]);
@@ -290,10 +316,6 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     validator,
   ]);
 
-  const mainTokenBalance = account?.tokenBalances[tokenID]
-    ? account?.tokenBalances[tokenID][0]
-    : '';
-
   const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
     return { label: { label }, value, mobileWidth };
   };
@@ -388,7 +410,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <FormattedValue
           format="currency"
           currencyProps={{ className: 'font-onBackgroundHigh' }}
-          value={typeof mainTokenBalance === 'object' ? mainTokenBalance.totalBalance : ''}
+          value={typeof mainTokenBalance === 'object' ? mainTokenBalance.lockedBalance : ''}
         />
       </>,
     ),
@@ -452,9 +474,16 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     ),
     createDetails(
       'Total commission',
-      <Currency amount={validator?.commission ?? 0} decimals={5} />,
+      <Currency amount={validator?.totalCommission ?? 0} decimals={5} />,
     ),
-    createDetails('Commission %', <Currency amount={validator?.commission ?? 0} decimals={5} />),
+    createDetails(
+      'Commission %',
+      <Currency
+        amount={validator ? validator.commission * 1000000 : 0}
+        decimals={2}
+        symbol={'%'}
+      />,
+    ),
     createDetails('Earned rewards', <Currency amount={validator?.earnedRewards ?? 0} />),
     createDetails(
       'Total self stake rewards',
@@ -465,7 +494,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       <FormattedValue
         format={'string'}
         typographyProps={{ color: 'onBackgroundHigh' }}
-        value={'-'}
+        value={validator?.statusValue?.maxHeightGenerated ?? '-'}
       />,
     ),
     createDetails(
@@ -473,7 +502,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       <FormattedValue
         format={'string'}
         typographyProps={{ color: 'onBackgroundHigh' }}
-        value={'-'}
+        value={validator?.statusValue?.maxHeightPrevoted ?? '-'}
       />,
     ),
   ];
@@ -500,7 +529,9 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     loading,
     basePath,
   );
-  const tokensRows = createUserDetailsTokensRow(tokens, currentChain, loading);
+
+  const meta = { tokens: tokensMeta, chains: chainsMeta };
+  const tokensRows = createUserDetailsTokensRow(tokens, claimableRewards, loading, meta);
   const validatorBlocksRows = createValidatorBlockRows(blocks, loading, basePath);
 
   const nftsRows = createNftsRows(nfts, loading);
@@ -708,7 +739,6 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           )}
         </FlexGrid>
       ),
-      disabled: true,
     },
     {
       value: isValidator ? 7 : 5,
@@ -763,8 +793,8 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       {isValidator ? (
         <ValidatorBanner
           basePath={basePath}
-          blockTime={2} // TODO: Implement
-          capacity={stakeCapacity} // TODO: Implement
+          nextAllocatedTime={validator?.nextAllocatedTime}
+          capacity={stakeCapacity}
           image={BannerBG.src}
           isFavorite={isFavourite({ address: account?.address ?? '' })}
           notificationValue={validator?.rank || 0}

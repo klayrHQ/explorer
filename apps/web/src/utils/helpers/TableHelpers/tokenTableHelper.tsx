@@ -1,4 +1,9 @@
-import { ChainTokenType, ChainTokenTypeWithLogoAndDisplayName, TokenType } from '../../types.ts';
+import {
+  ChainTokenType,
+  ChainTokenTypeWithLogoAndDisplayName,
+  ClaimableReward,
+  TokenType,
+} from '../../types.ts';
 import { ChainType } from '@repo/ui/types';
 import { KeyValueComponent, Link, StatusIcon, TokenCard } from '@repo/ui/atoms';
 import { Currency } from '../../../components/currency.tsx';
@@ -8,10 +13,31 @@ import { getTableSkeletons } from '../dataHelpers.tsx';
 import React from 'react';
 import { tokensTableHead } from '../tableHeaders.tsx';
 
+type TokensChainsMeta = { tokens: ChainTokenType[]; chains: ChainType[] };
+
+const getTokenMeta = (tokenID: string, meta: TokensChainsMeta) => {
+  const tokenMeta = meta.tokens.find((t) => t.tokenID === tokenID);
+  if (tokenMeta) return tokenMeta;
+  return undefined;
+};
+
+const getChainMeta = (tokenID: string, meta: TokensChainsMeta) => {
+  const chainMeta = meta.chains.find((t) => t.chainID === tokenID.substring(0, 8));
+  if (chainMeta) return chainMeta;
+  return undefined;
+};
+
+const getClaimableRewards = (tokenID: string, claimableRewards: ClaimableReward[]) => {
+  const claimable = claimableRewards.find((t) => t.tokenID === tokenID);
+  if (claimable) return claimable.reward;
+  return '0';
+};
+
 export const createUserDetailsTokensRow = (
   token: TokenType[],
-  chain: ChainType,
+  claimableRewards: ClaimableReward[],
   loading: boolean,
+  meta: TokensChainsMeta,
 ) => {
   return !loading
     ? token?.map((token) => {
@@ -26,14 +52,17 @@ export const createUserDetailsTokensRow = (
             ? ((Number(token.lockedBalances?.[0]?.amount ?? 0) / totalBalance) * 100).toFixed(2)
             : '0.00';
 
+        const tokenMeta = getTokenMeta(token.tokenID, meta);
+        const chainMeta = getChainMeta(token.tokenID, meta);
+
         return {
           cells: [
             {
               children: (
                 <TokenCard
-                  image={'https://cdn.pixabay.com/photo/2023/10/17/17/01/cat-8321993_1280.jpg'}
-                  name={'Monkeyz'}
-                  symbol={'MON'}
+                  image={tokenMeta?.logo?.png ?? ''}
+                  name={tokenMeta?.tokenName ?? ''}
+                  symbol={tokenMeta?.symbol ?? ''}
                 />
               ),
             },
@@ -41,12 +70,14 @@ export const createUserDetailsTokensRow = (
               children: (
                 <div className="flex flex-col">
                   <Currency amount={totalBalance} decimals={0} fontWeight={'semibold'} />
-                  <Currency
+                  {/* TODO: add market equivalent value later */}
+                  {/* <Currency
                     amount={Number(token.availableBalance) * 2}
                     className="text-onBackgroundLow text-caption"
                     decimals={2}
+                    symbol={'USD'}
                     sign={'$'}
-                  />
+                  /> */}
                 </div>
               ),
             },
@@ -71,13 +102,18 @@ export const createUserDetailsTokensRow = (
               ),
             },
             {
-              children: <FormattedValue format={'number'} value={2} />,
+              children: (
+                <Currency
+                  amount={getClaimableRewards(token.tokenID, claimableRewards)}
+                  decimals={0}
+                />
+              ),
             },
             {
               children: (
                 <ImageName
-                  imageUrl={chain.logo.png ?? ''}
-                  name={chain.displayName ?? chain.chainName ?? ''}
+                  imageUrl={chainMeta?.logo.png ?? ''}
+                  name={chainMeta?.displayName ?? chainMeta?.chainName ?? ''}
                 />
               ),
             },

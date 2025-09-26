@@ -150,6 +150,11 @@ export interface ValidatorType {
   earnedRewards: string;
   blockReward: string;
   nextAllocatedTime: number;
+  statusValue?: {
+    height: number;
+    maxHeightGenerated: number;
+    maxHeightPrevoted: number;
+  };
 }
 
 export interface SharingCoefficientType {
@@ -169,6 +174,11 @@ export interface ValidatorsStatusCount {
   standby: number;
   punished: number;
   banned: number;
+}
+
+export interface ClaimableReward {
+  tokenID: string;
+  reward: string;
 }
 
 export interface ChartDataType {
@@ -251,11 +261,12 @@ export type AccountType = {
   nonce: string;
   publicKey: string;
   name: string | null;
-  tokenBalances: Record<string, TokenBalancesType[]>;
   description: string | null;
+  tokenBalances: TokenBalancesType[];
 };
 
 export type TokenBalancesType = {
+  tokenID: string;
   totalBalance: string;
   availableBalance: string;
   lockedBalance: string | number;
