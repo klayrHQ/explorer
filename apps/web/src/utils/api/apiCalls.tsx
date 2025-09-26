@@ -120,7 +120,7 @@ export const callGetNextValidators = async (): Promise<GatewayRes<NextValidatorT
   return apiCall<NextValidatorType[]>('generators', { limit: 3 });
 };
 
-export const callGetChartData = async (): Promise<GatewayRes<ValidatorsStatusCount>> => {
+export const callGetValidatorStatusCount = async (): Promise<GatewayRes<ValidatorsStatusCount>> => {
   return apiCall<ValidatorsStatusCount>('pos/validators/status-count');
 };
 
