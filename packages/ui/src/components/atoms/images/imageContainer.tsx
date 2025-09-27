@@ -1,6 +1,6 @@
 'use client';
 import { cva } from 'class-variance-authority';
-import { cloneElement, ReactElement, useState } from 'react';
+import { cloneElement, ReactElement, useEffect, useState } from 'react';
 import { cls } from '../../../utils/functions.ts';
 import Placeholder from '../../../assets/images/placeholder.png';
 
@@ -37,6 +37,7 @@ export const ImageContainer = ({
   const [imgSrc, setImgSrc] = useState(src);
 
   const handleError = () => setImgSrc(Placeholder.src);
+  useEffect(() => setImgSrc(src), [src]);
 
   return (
     <div
