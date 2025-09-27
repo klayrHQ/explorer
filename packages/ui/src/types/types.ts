@@ -254,6 +254,7 @@ export type NewsCardPropsArray = NewsCardProps[];
 
 export interface AccountBannerProps {
   senderAddress?: string;
+  publicKey?: string;
   senderName?: string;
   status: string;
   transactions: string | number;

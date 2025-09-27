@@ -19,6 +19,7 @@ import { Link } from '../../atoms';
 interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBannerHeaderProps {
   image: string;
   senderName?: string;
+  publicKey?: string;
   nextAllocatedTime?: number;
   basePath?: string;
   isFavorite: boolean;
@@ -30,6 +31,7 @@ interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBanner
 export const ValidatorBanner = ({
   senderAddress,
   senderName,
+  publicKey,
   image,
   stakes,
   value,
@@ -60,6 +62,7 @@ export const ValidatorBanner = ({
           <ValidatorBannerHeader
             notificationValue={notificationValue}
             senderAddress={senderAddress}
+            publicKey={publicKey}
             senderName={senderName}
             status={status}
           />

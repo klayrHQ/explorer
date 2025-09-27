@@ -811,6 +811,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           selfStakeSymbol={symbol}
           senderAddress={validator?.address || ''}
           senderName={validator?.name || ''}
+          publicKey={validator?.publicKey || ''}
           setFavorite={() => {
             if (account?.address) {
               addFavourite({ address: account.address });
@@ -839,6 +840,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           }}
           senderAddress={account?.address ?? undefined}
           senderName={account?.name ?? undefined}
+          publicKey={account?.publicKey ?? undefined}
           setFavorite={() => {
             if (account?.address) {
               addFavourite({ address: account.address });

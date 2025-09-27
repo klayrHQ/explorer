@@ -8,6 +8,7 @@ import { UserAccountCentered } from '../../atoms/account/useAccountCentered';
 
 export interface ValidatorBannerHeaderProps {
   senderAddress: string;
+  publicKey?: string;
   senderName?: string;
   status?: string;
   notificationValue: number | string;
@@ -16,6 +17,7 @@ export interface ValidatorBannerHeaderProps {
 export const ValidatorBannerHeader = ({
   senderAddress,
   senderName,
+  publicKey,
   status,
   notificationValue,
 }: ValidatorBannerHeaderProps) => {
@@ -24,6 +26,7 @@ export const ValidatorBannerHeader = ({
       <UserAccountCentered
         address={senderAddress}
         name={senderName}
+        publicKey={publicKey}
         notificationValue={notificationValue}
         status={status}
       />
