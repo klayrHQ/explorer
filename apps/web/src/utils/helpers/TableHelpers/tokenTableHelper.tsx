@@ -12,6 +12,7 @@ import { ImageName } from '@repo/ui/molecules';
 import { getTableSkeletons } from '../dataHelpers.tsx';
 import React from 'react';
 import { tokensTableHead } from '../tableHeaders.tsx';
+import Placeholder from '../../../assets/images/placeholder.png';
 
 type TokensChainsMeta = { tokens: ChainTokenType[]; chains: ChainType[] };
 
@@ -60,9 +61,9 @@ export const createUserDetailsTokensRow = (
             {
               children: (
                 <TokenCard
-                  image={tokenMeta?.logo?.png ?? ''}
-                  name={tokenMeta?.tokenName ?? ''}
-                  symbol={tokenMeta?.symbol ?? ''}
+                  image={tokenMeta?.logo?.png ?? Placeholder.src}
+                  name={tokenMeta?.tokenName ?? '{Unknown}'}
+                  symbol={tokenMeta?.symbol ?? '???'}
                 />
               ),
             },
