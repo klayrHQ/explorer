@@ -77,21 +77,27 @@ export const useInitializeCurrentChain = () => {
           return data.data;
         });
         const chainsData: ChainType[] = await chainsResponse;
+        const uniqueChainsData = Array.from(
+          new Map(chainsData.map((item) => [item.chainID, item])).values(),
+        );
 
         // Fetch tokens
         const tokensResponse = callGetChainTokens({ network: networks.join(',') }).then((data) => {
           return data.data;
         });
         const tokensData: ChainTokenType[] = await tokensResponse;
+        const uniqueTokensData = Array.from(
+          new Map(tokensData.map((item) => [item.tokenID, item])).values(),
+        );
 
-        const tokensFilteredByNetwork = tokensData.filter(
+        const tokensFilteredByNetwork = uniqueTokensData.filter(
           (token) => token.networkType === networkParam,
         );
         setTokens(tokensFilteredByNetwork);
 
         // Match tokens to chains
-        const chainsWithTokens = chainsData?.map((chain: ChainType) => {
-          const matchingTokens = tokensData?.filter(
+        const chainsWithTokens = uniqueChainsData?.map((chain: ChainType) => {
+          const matchingTokens = uniqueTokensData?.filter(
             (token: ChainTokenType) => token.chainID === chain.chainID,
           );
           return { ...chain, tokens: matchingTokens };
