@@ -1,4 +1,6 @@
 'use client';
+
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
@@ -17,6 +19,7 @@ import { createEventsRows } from '../../utils/helpers/TableHelpers/eventTableHel
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
   const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);
   const [events, setEvents] = useState<EventsType[]>([]);
@@ -290,6 +293,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       <TransactionBanner
         amount={transaction?.params?.amount || '0'}
         basePath={basePath}
+        onBack={() => router.back()}
         blockHeight={transaction?.block.height || 0}
         blockId={transaction?.block.id || ''}
         executionStatus={transaction?.executionStatus}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { FlexGrid, TabButtons, ViewSwitcher, NotFound } from '@repo/ui/atoms';
 import { DetailsSection, TableContainer, AccountBanner, ValidatorBanner } from '@repo/ui/organisms';
 import {
@@ -135,6 +136,7 @@ const nfts = [
 export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   useInitializeFavourites();
 
+  const router = useRouter();
   const paramIsName = paramAccount.length < 41;
   const [account, setAccount] = useState<AccountType>();
   const [claimableRewards, setClaimableRewards] = useState<ClaimableReward[]>([]);
@@ -792,6 +794,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     <FlexGrid direction={'col'} gap={'5xl'}>
       {isValidator ? (
         <ValidatorBanner
+          onBack={() => router.back()}
           basePath={basePath}
           nextAllocatedTime={validator?.nextAllocatedTime}
           capacity={stakeCapacity}
@@ -821,6 +824,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         />
       ) : (
         <AccountBanner
+          onBack={() => router.back()}
           basePath={basePath}
           coinRate={tokenPrice}
           image={BannerBG.src}

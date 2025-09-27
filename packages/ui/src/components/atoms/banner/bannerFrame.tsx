@@ -7,6 +7,7 @@ interface BannerFrameProps {
   image: any;
 }
 
+// eslint-disable-next-line comma-dangle
 export const BannerFrame = ({ children, image }: BannerFrameProps) => {
   return (
     <div

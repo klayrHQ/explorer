@@ -1,6 +1,15 @@
 import { CSSProperties } from 'react';
 
-export const ArrowLeft = ({ className, style }: { className?: string; style: CSSProperties }) => {
+// eslint-disable-next-line comma-dangle
+export const ArrowLeft = ({
+  className,
+  style,
+  onClick,
+}: {
+  className?: string;
+  style: CSSProperties;
+  onClick: () => void;
+}) => {
   return (
     <svg
       className={className}
@@ -9,6 +18,7 @@ export const ArrowLeft = ({ className, style }: { className?: string; style: CSS
       strokeWidth="2"
       style={style}
       viewBox="0 0 24 24"
+      onClick={onClick}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

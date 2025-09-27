@@ -20,10 +20,11 @@ interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBanner
   image: string;
   senderName?: string;
   nextAllocatedTime?: number;
-  basePath: string;
+  basePath?: string;
   isFavorite: boolean;
   removeFavorite: () => void;
   setFavorite: () => void;
+  onBack: () => void;
 }
 
 export const ValidatorBanner = ({
@@ -43,19 +44,19 @@ export const ValidatorBanner = ({
   isFavorite,
   removeFavorite,
   setFavorite,
+  onBack,
   ...props
 }: ValidatorBannerProps) => {
   return (
     <BannerFrame image={image}>
       <FlexGrid direction="col" gap="0" justify="between">
         <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
-          <Link basePath={basePath} className="hidden desktop:block" href="/validators">
-            <Icon
-              className="hover:-translate-x-0.5 cursor-pointer transition-transform"
-              color="white"
-              icon="ArrowLeft"
-            />
-          </Link>
+          <Icon
+            onClick={onBack}
+            className="hover:-translate-x-0.5 cursor-pointer transition-transform"
+            color="white"
+            icon="ArrowLeft"
+          />
           <ValidatorBannerHeader
             notificationValue={notificationValue}
             senderAddress={senderAddress}

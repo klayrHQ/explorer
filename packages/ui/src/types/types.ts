@@ -266,6 +266,7 @@ export interface AccountBannerProps {
   isFavorite: boolean;
   setFavorite: () => void;
   removeFavorite: () => void;
+  onBack: () => void;
 }
 
 export interface SVGIconProps {

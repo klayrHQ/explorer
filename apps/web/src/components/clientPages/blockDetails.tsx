@@ -1,4 +1,6 @@
 'use client';
+
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import {
   BlockDetailsBanner,
@@ -33,6 +35,7 @@ import { createEventsRows } from '../../utils/helpers/TableHelpers/eventTableHel
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
+  const router = useRouter();
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
   const [block, setBlocks] = useState<BlockDetailsType | undefined>(undefined);
@@ -317,6 +320,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <BlockDetailsBanner
+        onBack={() => router.back()}
         basePath={basePath}
         generatorAddress={block?.generator.address || ''}
         generatorName={block?.generator.name || ''}

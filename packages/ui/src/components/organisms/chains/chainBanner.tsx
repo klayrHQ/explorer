@@ -10,6 +10,7 @@ interface ChainDetailsBannerProps {
   locked: number;
   status?: string;
   logo: string;
+  onBack: () => void;
 }
 
 export const ChainDetailsBanner = ({
@@ -18,18 +19,18 @@ export const ChainDetailsBanner = ({
   logo,
   locked,
   status,
+  onBack,
 }: ChainDetailsBannerProps) => {
   return (
     <BannerFrame image={image}>
       <div className="items-start justify-start flex flex-col gap-4">
         <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
-          <Link href="/chains">
-            <Icon
-              className="hover:-translate-x-0.5 cursor-pointer transition-transform"
-              color="white"
-              icon="ArrowLeft"
-            />
-          </Link>
+          <Icon
+            onClick={onBack}
+            className="hover:-translate-x-0.5 cursor-pointer transition-transform"
+            color="white"
+            icon="ArrowLeft"
+          />
           <div className="flex items-center gap-2">
             <ImageContainer
               alt={chain?.displayName ?? chain?.chainName ?? ''}
@@ -45,12 +46,7 @@ export const ChainDetailsBanner = ({
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'a total of '}
           </Typography>
-          <Currency
-            amount={locked}
-            decimals={3}
-            fontWeight="semibold"
-            symbol={'KLY'}
-          />
+          <Currency amount={locked} decimals={3} fontWeight="semibold" symbol={'KLY'} />
           <Typography color="onBackgroundMedium" variant="paragraph-md">
             {'is locked and the chain status is'}
           </Typography>

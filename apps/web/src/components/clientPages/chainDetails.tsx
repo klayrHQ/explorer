@@ -1,5 +1,7 @@
 'use client';
-import {Currency, FlexGrid, ImageContainer, Link, StatusBadge} from '@repo/ui/atoms';
+
+import { useRouter } from 'next/navigation';
+import { Currency, FlexGrid, ImageContainer, Link, StatusBadge } from '@repo/ui/atoms';
 import { DetailsSection } from '@repo/ui/organisms';
 import { createDetails } from '../../utils/helpers/dataHelpers';
 import BannerBG from '../../assets/images/bannerBG.png';
@@ -8,30 +10,33 @@ import { ChainDetailsBanner } from '@repo/ui/organisms';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { FormattedValue } from '../formattedValue.tsx';
 import Placeholder from '../../assets/images/placeholder.png';
-import {useCallback, useEffect, useState} from "react";
-import {AppsType} from "../../utils/types.ts";
-import {debounce} from "lodash";
-import {callGetApps} from "../../utils/api/apiCalls.tsx";
+import { useCallback, useEffect, useState } from 'react';
+import { AppsType } from '../../utils/types.ts';
+import { debounce } from 'lodash';
+import { callGetApps } from '../../utils/api/apiCalls.tsx';
 
 export const ChainDetails = ({ params }: { params: { id: string } }) => {
+  const router = useRouter();
   const chains = useChainNetworkStore((state) => state.chains);
   const chainMeta = chains?.find((chain) => chain.chainID === params.id);
   const [chainApp, setChainApp] = useState<AppsType>();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = useCallback(
     debounce(async () => {
       try {
-        const response = await callGetApps({chainID: params.id});
+        const response = await callGetApps({ chainID: params.id });
         setChainApp(response.data[0]);
       } catch (error) {
         console.error(error);
       }
     }, 300),
-    []
+    [],
   );
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainMeta]);
 
   const serviceURLDetails = chainMeta?.serviceURLs
@@ -91,7 +96,10 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
         variant={'avatar'}
       />,
     ),
-    createDetails('Total Locked', <Currency amount={Number(chainApp?.escrowedKLY)} symbol={'KLY'} />),
+    createDetails(
+      'Total Locked',
+      <Currency amount={Number(chainApp?.escrowedKLY)} symbol={'KLY'} />,
+    ),
     createDetails('Status', <StatusBadge status={chainMeta?.status ?? 'inactive'} />),
     createDetails(
       'Network',
@@ -143,6 +151,7 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <ChainDetailsBanner
+        onBack={() => router.back()}
         chain={chainMeta}
         image={BannerBG.src}
         locked={Number(chainApp?.escrowedKLY)}
