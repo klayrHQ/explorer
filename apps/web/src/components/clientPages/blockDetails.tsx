@@ -58,6 +58,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
     setLoading(true);
     callGetBlocks({
       blockID: id,
+      includeAssets: true,
     })
       .then((data) => setBlocks(data.data[0]))
       .catch((error) => console.error(error))
