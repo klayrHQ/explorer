@@ -113,8 +113,8 @@ export const createUserDetailsTokensRow = (
             {
               children: (
                 <ImageName
-                  imageUrl={chainMeta?.logo.png ?? ''}
-                  name={chainMeta?.displayName ?? chainMeta?.chainName ?? ''}
+                  imageUrl={chainMeta?.logo.png ?? Placeholder.src}
+                  name={chainMeta?.displayName ?? chainMeta?.chainName ?? '{Unknown}'}
                 />
               ),
             },
