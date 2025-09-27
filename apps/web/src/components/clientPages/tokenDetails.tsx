@@ -14,7 +14,6 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
   const displayName = chains?.find((chain) => chain.chainID === token?.chainID)?.displayName;
 
   const tokenWithChainData = { ...token, chainLogo, displayName };
-  console.log(chainLogo);
 
   const details = [
     {

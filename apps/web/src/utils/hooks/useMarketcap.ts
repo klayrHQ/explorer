@@ -6,8 +6,10 @@ const CACHE_KEY = `tokenData_${TOKEN_ID}`;
 
 const useMarketcap = () => {
   const [marketcap, setMarketcap] = useState(0);
-  const [tokenPrice, setTokenPrice] = useState(0);
+  const [klyPrice, setKLYPrice] = useState(0);
   const [trend, setTrend] = useState(0);
+  const [fiatSymbol, setFiatSymbol] = useState('USD');
+  const [fiatSign, setFiatSign] = useState('$');
 
   const { sendJsonMessage } = useWebSocket(
     'wss://push.coinmarketcap.com/ws?device=web&client_source=coin_detail_page',
@@ -27,15 +29,17 @@ const useMarketcap = () => {
           const newMarketcap = parseFloat((data.d.mc / data.d.p).toFixed(0));
           const newTrend = data.d.p24h;
 
-          setTokenPrice(newPrice);
+          setKLYPrice(newPrice);
           setMarketcap(newMarketcap);
           setTrend(newTrend);
+          setFiatSymbol('USD');
+          setFiatSign('$');
 
           if (typeof window !== 'undefined') {
             localStorage.setItem(
               CACHE_KEY,
               JSON.stringify({
-                tokenPrice: newPrice,
+                klyPrice: newPrice,
                 marketcap: newMarketcap,
                 trend: newTrend,
               }),
@@ -51,13 +55,13 @@ const useMarketcap = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
-      if (cached.tokenPrice) setTokenPrice(cached.tokenPrice);
+      if (cached.klyPrice) setKLYPrice(cached.klyPrice);
       if (cached.marketcap) setMarketcap(cached.marketcap);
       if (cached.trend) setTrend(cached.trend);
     }
   }, []);
 
-  return { marketcap, tokenPrice, trend };
+  return { marketcap, klyPrice, trend, fiatSymbol, fiatSign };
 };
 
 export default useMarketcap;

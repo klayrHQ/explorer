@@ -166,7 +166,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const tokenID = currentChainToken?.tokenID;
   const chains = useChainNetworkStore((state) => state.chains);
   const symbol = currentChainToken?.symbol;
-  const { tokenPrice } = useMarketcap();
+  const { klyPrice, fiatSymbol, fiatSign } = useMarketcap();
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
@@ -533,7 +533,15 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   );
 
   const meta = { tokens: tokensMeta, chains: chainsMeta };
-  const tokensRows = createUserDetailsTokensRow(tokens, claimableRewards, loading, meta);
+  const tokensRows = createUserDetailsTokensRow(
+    tokens,
+    claimableRewards,
+    loading,
+    meta,
+    klyPrice,
+    fiatSymbol,
+    fiatSign,
+  );
   const validatorBlocksRows = createValidatorBlockRows(blocks, loading, basePath);
 
   const nftsRows = createNftsRows(nfts, loading);
@@ -827,7 +835,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <AccountBanner
           onBack={() => router.back()}
           basePath={basePath}
-          coinRate={tokenPrice}
+          coinRate={klyPrice}
           image={BannerBG.src}
           isFavorite={isFavourite({ address: account?.address ?? '' })}
           transactions={transactionsMeta?.total || 0}

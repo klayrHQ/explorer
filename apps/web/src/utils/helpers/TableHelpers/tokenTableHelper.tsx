@@ -39,6 +39,9 @@ export const createUserDetailsTokensRow = (
   claimableRewards: ClaimableReward[],
   loading: boolean,
   meta: TokensChainsMeta,
+  tokenPrice: number,
+  fiatSymbol: string,
+  fiatSign: string,
 ) => {
   return !loading
     ? token?.map((token) => {
@@ -71,14 +74,13 @@ export const createUserDetailsTokensRow = (
               children: (
                 <div className="flex flex-col">
                   <Currency amount={totalBalance} decimals={0} fontWeight={'semibold'} />
-                  {/* TODO: add market equivalent value later */}
-                  {/* <Currency
-                    amount={Number(token.availableBalance) * 2}
+                  <Currency
+                    amount={totalBalance * Number(tokenPrice)}
                     className="text-onBackgroundLow text-caption"
                     decimals={2}
-                    symbol={'USD'}
-                    sign={'$'}
-                  /> */}
+                    symbol={fiatSymbol}
+                    sign={fiatSign}
+                  />
                 </div>
               ),
             },
