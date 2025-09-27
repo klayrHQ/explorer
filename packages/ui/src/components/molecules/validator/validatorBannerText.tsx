@@ -25,6 +25,8 @@ export const ValidatorBannerText = ({
     return stake > 1 || stake === 0 ? 'stakes' : 'stake';
   };
 
+  const capacityValue = capacity ? (Number.isNaN(Number(capacity)) ? 0 : Number(capacity)) : 0;
+
   return (
     <div className="flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
       <Typography className="capitalize" color="onBackgroundMedium" variant="paragraph-md">
@@ -59,19 +61,19 @@ export const ValidatorBannerText = ({
         {'and capacity of'}
       </Typography>
 
-      {Number(capacity) && Number(capacity) > 100 ? (
+      {capacityValue && Number(capacityValue) > 100 ? (
         <BadgeNoIcon
-          backgroundColor="greenOpacity"
-          borderColor="success"
-          label={`${capacity}%`}
+          backgroundColor="redOpacity"
+          borderColor="error"
+          label={`${capacityValue}%`}
           padding="1.5"
           typographyVariant="caption"
         />
       ) : (
         <BadgeNoIcon
-          backgroundColor="redOpacity"
-          borderColor="error"
-          label={`${capacity}%`}
+          backgroundColor="greenOpacity"
+          borderColor="success"
+          label={`${capacityValue}%`}
           padding="1.5"
           typographyVariant="caption"
         />
