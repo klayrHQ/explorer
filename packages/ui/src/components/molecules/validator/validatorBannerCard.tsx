@@ -1,7 +1,7 @@
 'use client';
 import { ValidatorBannerButtons } from './validatorBannerButtons';
 import { Typography } from '../../atoms';
-import { fromNow } from '../../../utils/date';
+import { fromNowFormatter } from '../../../utils/functions';
 
 export interface ValidatorBannerCardProps {
   nextAllocatedTime?: number;
@@ -16,6 +16,9 @@ export const ValidatorBannerCard = ({
   removeFavorite,
   setFavorite,
 }: ValidatorBannerCardProps) => {
+  const now = Date.now();
+  const blockPrefix = nextAllocatedTime && now > nextAllocatedTime * 1000 ? 'Last' : 'Next';
+
   return (
     <div className="hidden desktop:flex gap-4">
       <div className="hidden desktop:flex">
@@ -30,10 +33,10 @@ export const ValidatorBannerCard = ({
       <div className="border border-onBackground rounded-xl w-max  hidden desktop:block desktop:w-auto">
         <div className="p-6 flex flex-1 items-start flex-col gap-6 w-max">
           <Typography color="onBackground" fontWeight="semibold" variant="paragraph-md">
-            {'Next block'}
+            {`${blockPrefix} block`}
           </Typography>
           <Typography color="onBackground" fontWeight="bold" variant="h3">
-            {nextAllocatedTime ? fromNow(nextAllocatedTime * 1000) : '-'}
+            {nextAllocatedTime ? fromNowFormatter(nextAllocatedTime * 1000) : '-'}
           </Typography>
         </div>
       </div>
