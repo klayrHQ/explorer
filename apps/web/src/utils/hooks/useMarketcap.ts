@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import useWebSocket from 'react-use-websocket';
 
+const TOKEN_ID = 32308;
+const CACHE_KEY = `tokenData_${TOKEN_ID}`;
+
 const useMarketcap = () => {
   const [marketcap, setMarketcap] = useState(0);
   const [tokenPrice, setTokenPrice] = useState(0);
@@ -12,28 +15,46 @@ const useMarketcap = () => {
       onOpen: () => {
         sendJsonMessage({
           method: 'RSUBSCRIPTION',
-          params: ['main-site@crypto_price_15s@{}@detail', '32308'],
+          params: ['main-site@crypto_price_15s@{}@detail', String(TOKEN_ID)],
         });
       },
       onMessage: (e) => {
         const data = JSON.parse(e.data);
+        if (data?.d?.p24h === undefined) return;
 
-        if (data?.d?.p24h === undefined) {
-          return;
-        }
+        if (data.d.id === TOKEN_ID) {
+          const newPrice = data.d.p;
+          const newMarketcap = parseFloat((data.d.mc / data.d.p).toFixed(0));
+          const newTrend = data.d.p24h;
 
-        if (data.d.id === 32308) {
-          setTrend(data.d.p24h);
-          setMarketcap(parseFloat((data.d.mc / data.d.p).toFixed(0)));
-          setTokenPrice(data.d.p);
+          setTokenPrice(newPrice);
+          setMarketcap(newMarketcap);
+          setTrend(newTrend);
+
+          if (typeof window !== 'undefined') {
+            localStorage.setItem(
+              CACHE_KEY,
+              JSON.stringify({
+                tokenPrice: newPrice,
+                marketcap: newMarketcap,
+                trend: newTrend,
+              }),
+            );
+          }
         }
       },
       shouldReconnect: (closeEvent) => true,
     },
   );
 
+  // Load cached values on client only
   useEffect(() => {
-    // This effect ensures the WebSocket connection is established
+    if (typeof window !== 'undefined') {
+      const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+      if (cached.tokenPrice) setTokenPrice(cached.tokenPrice);
+      if (cached.marketcap) setMarketcap(cached.marketcap);
+      if (cached.trend) setTrend(cached.trend);
+    }
   }, []);
 
   return { marketcap, tokenPrice, trend };
