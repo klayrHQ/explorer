@@ -69,18 +69,18 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
       'Chain ID',
       <FormattedValue
         format={'string'}
-        value={chainMeta?.chainID ?? ''}
+        value={chainMeta?.chainID ?? '-'}
         copy
         typographyProps={{ color: 'onBackgroundHigh' }}
       />,
     ),
     createDetails(
       'Chain Name',
-      <Typography variant={'paragraph-sm'}>{chainMeta?.chainName}</Typography>,
+      <Typography variant={'paragraph-sm'}>{chainMeta?.chainName ?? '-'}</Typography>,
     ),
     createDetails(
       'Display Name',
-      <Typography variant={'paragraph-sm'}>{chainMeta?.displayName}</Typography>,
+      <Typography variant={'paragraph-sm'}>{chainMeta?.displayName ?? '-'}</Typography>,
     ),
     createDetails(
       'Description',
@@ -103,7 +103,7 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
     createDetails('Status', <StatusBadge status={chainMeta?.status ?? 'inactive'} />),
     createDetails(
       'Network',
-      <Typography variant={'paragraph-sm'}>{chainMeta?.networkType}</Typography>,
+      <Typography variant={'paragraph-sm'}>{chainMeta?.networkType ?? '-'}</Typography>,
     ),
     createDetails(
       'Project Page',
@@ -131,20 +131,24 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
     ),
     createDetails(
       'Service URLs',
-      <FlexGrid direction={'col'} gap={'md'}>
-        <FormattedValue
-          value={chainMeta?.serviceURLs[0]?.http}
-          format={'string'}
-          copy
-          typographyProps={{ color: 'onBackgroundHigh' }}
-        />
-        <FormattedValue
-          value={chainMeta?.serviceURLs[0]?.ws}
-          format={'string'}
-          copy
-          typographyProps={{ color: 'onBackgroundHigh' }}
-        />
-      </FlexGrid>,
+      chainMeta?.serviceURLs && chainMeta?.serviceURLs.length > 0 ? (
+        <FlexGrid direction={'col'} gap={'md'}>
+          <FormattedValue
+            value={chainMeta?.serviceURLs[0]?.http}
+            format={'string'}
+            copy
+            typographyProps={{ color: 'onBackgroundHigh' }}
+          />
+          <FormattedValue
+            value={chainMeta?.serviceURLs[0]?.ws}
+            format={'string'}
+            copy
+            typographyProps={{ color: 'onBackgroundHigh' }}
+          />
+        </FlexGrid>
+      ) : (
+        <Typography variant={'paragraph-sm'}>{'-'}</Typography>
+      ),
     ),
   ];
 
