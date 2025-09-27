@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import { Typography, ImageContainer } from '@repo/ui/atoms';
 
 interface TokenCardProps {

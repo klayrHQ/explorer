@@ -140,7 +140,7 @@ export const createTokensRows = (
               children: (
                 <Link basePath={basePath} href={`/tokens/${token.tokenID}`}>
                   <TokenCard
-                    image={token.logo.png ?? token.logo.svg ?? ''}
+                    image={token.logo.png ?? token.logo.svg ?? Placeholder.src}
                     name={token.tokenName}
                     symbol={token.symbol}
                   />
@@ -151,7 +151,7 @@ export const createTokensRows = (
               children: (
                 <Link basePath={basePath} href={`/chains/${token.chainID}`}>
                   <ImageName
-                    imageUrl={token.chainLogo?.png ?? token.chainLogo?.svg ?? ''}
+                    imageUrl={token.chainLogo?.png ?? token.chainLogo?.svg ?? Placeholder.src}
                     name={token.displayName ?? token.chainName}
                   />
                 </Link>
