@@ -186,6 +186,14 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const blocksPagination = usePagination();
   const basePath = useBasePath();
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(basePath + '/validators');
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     callGetAccounts({ [paramIsName ? 'name' : 'address']: paramAccount })
@@ -274,7 +282,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         eventsPagination.limit,
       )
         .then((data: GatewayRes<EventsType[]>) => {
-          setEvents(data.data.sort((a, b) => b.block.height - a.block.height));
+          setEvents(data.data);
           setEventsMeta(data.meta);
         })
         .catch((error) => console.error('Error fetching events:', error));
@@ -804,7 +812,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     <FlexGrid direction={'col'} gap={'5xl'}>
       {isValidator ? (
         <ValidatorBanner
-          onBack={() => router.back()}
+          onBack={handleBack}
           basePath={basePath}
           nextAllocatedTime={validator?.nextAllocatedTime}
           capacity={stakeCapacity}
@@ -835,7 +843,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         />
       ) : (
         <AccountBanner
-          onBack={() => router.back()}
+          onBack={handleBack}
           basePath={basePath}
           coinRate={klyPrice}
           image={BannerBG.src}

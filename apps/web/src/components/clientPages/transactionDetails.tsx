@@ -27,6 +27,14 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
   const symbol = currentChainToken?.symbol;
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(basePath + '/transactions');
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     callGetTransactions({
@@ -293,7 +301,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       <TransactionBanner
         amount={transaction?.params?.amount || '0'}
         basePath={basePath}
-        onBack={() => router.back()}
+        onBack={handleBack}
         blockHeight={transaction?.block.height || 0}
         blockId={transaction?.block.id || ''}
         executionStatus={transaction?.executionStatus}

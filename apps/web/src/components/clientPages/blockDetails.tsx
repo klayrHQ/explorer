@@ -54,6 +54,14 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const eventsPagination = usePagination();
   const basePath = useBasePath();
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(basePath + '/blocks');
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     callGetBlocks({
@@ -321,7 +329,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <BlockDetailsBanner
-        onBack={() => router.back()}
+        onBack={handleBack}
         basePath={basePath}
         generatorAddress={block?.generator.address || ''}
         generatorName={block?.generator.name || ''}

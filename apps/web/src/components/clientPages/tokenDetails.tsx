@@ -13,6 +13,7 @@ import {
 import { ImageName } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { DetailsSection } from '@repo/ui/organisms';
+import { useBasePath } from '../../utils/hooks/useBasePath';
 
 export const TokenDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -22,6 +23,15 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
   const chains = useChainNetworkStore((state) => state.chains);
   const chainLogo = chains?.find((chain) => chain.chainID === token?.chainID)?.logo;
   const displayName = chains?.find((chain) => chain.chainID === token?.chainID)?.displayName;
+  const basePath = useBasePath();
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(basePath + '/tokens');
+    }
+  };
 
   const tokenWithChainData = { ...token, chainLogo, displayName };
 
@@ -73,7 +83,7 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
       <BannerFrame image={BannerBG}>
         <div className="flex items-center gap-2 ">
           <Icon
-            onClick={() => router.back()}
+            onClick={handleBack}
             className="hover:-translate-x-0.5 cursor-pointer transition-transform"
             color="white"
             icon="ArrowLeft"

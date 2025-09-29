@@ -14,12 +14,22 @@ import { useCallback, useEffect, useState } from 'react';
 import { AppsType } from '../../utils/types.ts';
 import { debounce } from 'lodash';
 import { callGetApps } from '../../utils/api/apiCalls.tsx';
+import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 
 export const ChainDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const chains = useChainNetworkStore((state) => state.chains);
   const chainMeta = chains?.find((chain) => chain.chainID === params.id);
   const [chainApp, setChainApp] = useState<AppsType>();
+  const basePath = useBasePath();
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(basePath + '/chains');
+    }
+  };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = useCallback(
@@ -155,7 +165,7 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <ChainDetailsBanner
-        onBack={() => router.back()}
+        onBack={handleBack}
         chain={chainMeta}
         image={BannerBG.src}
         locked={Number(chainApp?.escrowedKLY)}
