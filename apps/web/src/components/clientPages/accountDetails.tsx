@@ -12,6 +12,8 @@ import {
   MetaTransaction,
   TokenBalancesType,
   ClaimableReward,
+  GatewayRes,
+  EventsType,
 } from '../../utils/types.ts';
 import { NftCard, Table } from '@repo/ui/molecules';
 import React, { useState, useEffect } from 'react';
@@ -267,12 +269,12 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
 
       const eventsPromise = fetchPaginatedData(
         callGetEvents,
-        { senderAddress: account.address },
+        { topic: account.address },
         eventsPagination.pageNumber,
         eventsPagination.limit,
       )
-        .then((data) => {
-          setEvents(data.data);
+        .then((data: GatewayRes<EventsType[]>) => {
+          setEvents(data.data.sort((a, b) => b.block.height - a.block.height));
           setEventsMeta(data.meta);
         })
         .catch((error) => console.error('Error fetching events:', error));

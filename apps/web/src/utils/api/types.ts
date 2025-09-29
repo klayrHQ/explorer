@@ -13,6 +13,7 @@ export interface EventsQueryParams {
   height?: string;
   transactionID?: string;
   senderAddress?: string;
+  topic?: string;
   offset?: number;
   limit?: string;
 }
