@@ -16,8 +16,12 @@ import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useIsHorizontallyScrolled } from '../../utils/hooks/useIsHorizontallyScrolled.ts';
 import { createValidatorsRows } from '../../utils/helpers/TableHelpers/accountTableHelper.tsx';
 import { createStakesOverviewRows } from '../../utils/helpers/TableHelpers/stakeTableHelper.tsx';
+import { useNodeStore } from '../../store/nodeStore.ts';
+import { usePosConstantsStore, useUpdatePosConstants } from '../../store/posConstantsStore.ts';
 
 export const Stakes = () => {
+  useUpdatePosConstants();
+
   const {
     data: stakes,
     totalItems: totalStakes,
@@ -40,6 +44,8 @@ export const Stakes = () => {
   const [stakingCalculatorPeriod, setStakingCalculatorPeriod] =
     useState<StakesCalculatorPeriodType>('month');
   const [totalActiveStake, setTotalActiveStake] = useState<bigint>(BigInt(0));
+  const nodeInfo = useNodeStore((state) => state.nodeInfo);
+  const posConstants = usePosConstantsStore((state) => state.posConstants);
   const basePath = useBasePath();
 
   const {
@@ -61,23 +67,34 @@ export const Stakes = () => {
   });
 
   useEffect(() => {
-    callGetValidators({}).then((data) => {
-      setTotalActiveStake(
-        data.data
-          .filter((v: ValidatorType) => v.rank <= 51)
-          .reduce((acc, val) => acc + BigInt(val.validatorWeight), BigInt(0)),
-      );
-    });
-  }, []);
+    if (totalValidators) {
+      callGetValidators({ limit: totalValidators.toString() }).then((data) => {
+        setTotalActiveStake(
+          data.data
+            .filter((v: ValidatorType) => v.rank <= 51)
+            .reduce((acc, val) => acc + BigInt(val.validatorWeight), BigInt(0)),
+        );
+      });
+    }
+  }, [totalValidators]);
 
   const [isScrolled, scrollRef] = useIsHorizontallyScrolled();
-
-  const rowsOverview = createStakesOverviewRows(stakes, loadingStakes, basePath);
-  const rowCalculator = createValidatorsRows(validators, loadingValidators, isScrolled, true, {
+  const stakeCalculatorProps = {
     stakingCalculatorAmount,
     stakingCalculatorPeriod,
     totalActiveStake,
-  }).map((row) => ({
+    blockTime: nodeInfo?.genesis?.blockTime ?? 0,
+    roundLength: posConstants?.roundLength ?? 0,
+  };
+
+  const rowsOverview = createStakesOverviewRows(stakes, loadingStakes, basePath);
+  const rowCalculator = createValidatorsRows(
+    validators,
+    loadingValidators,
+    isScrolled,
+    true,
+    stakeCalculatorProps,
+  ).map((row) => ({
     cells: row.cells.filter((cell) => cell !== null) as TableCellType[],
   }));
 

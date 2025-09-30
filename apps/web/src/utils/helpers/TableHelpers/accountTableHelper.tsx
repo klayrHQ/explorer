@@ -17,28 +17,37 @@ import { Currency } from '../../../components/currency.tsx';
 import React, { useEffect } from 'react';
 import { tokenSummaryStore } from '../../../store/tokenSummaryStore.ts';
 
+interface StakingCalculatorProps {
+  stakingCalculatorAmount: number;
+  stakingCalculatorPeriod: StakesCalculatorPeriodType;
+  totalActiveStake: bigint;
+  blockTime: number;
+  roundLength: number;
+}
+
 export const createValidatorsRows = (
   validators: ValidatorType[],
   loading: boolean,
   isScrolled: boolean,
   stakingRewards = false,
-  stakingCalculatorProps:
-    | {
-        stakingCalculatorAmount: number;
-        stakingCalculatorPeriod: StakesCalculatorPeriodType;
-        totalActiveStake: bigint;
-      }
-    | undefined = {
+  stakingCalculatorProps: StakingCalculatorProps = {
     stakingCalculatorAmount: 1000,
     stakingCalculatorPeriod: 'day',
     totalActiveStake: BigInt(0),
+    blockTime: 0,
+    roundLength: 0,
   },
 ) => {
   const columnCount = stakingRewards
     ? stakesCalculatorTableHead(() => '', '', '').length
     : validatorsTableHead(() => '', '', '').length;
-  const { stakingCalculatorAmount, stakingCalculatorPeriod, totalActiveStake } =
-    stakingCalculatorProps;
+  const {
+    stakingCalculatorAmount,
+    stakingCalculatorPeriod,
+    totalActiveStake,
+    blockTime,
+    roundLength,
+  } = stakingCalculatorProps;
 
   const calculateReward = (validator: ValidatorType) => {
     if (!totalActiveStake) {
@@ -110,18 +119,27 @@ export const createValidatorsRows = (
         };
         const weightPercents = getWeightPercents(validator);
 
+        const blockPerDay =
+          blockTime && roundLength ? Math.round(86400 / blockTime / roundLength) : 0;
+        const blockPerMonth =
+          blockTime && roundLength ? Math.round(2592000 / blockTime / roundLength) : 0;
+        const blockPerYear =
+          blockTime && roundLength ? Math.round(31536000 / blockTime / roundLength) : 0;
+
+        const resultPerYear = parseInt(newBlockReward) * blockPerYear;
+
         const resultPerPeriod =
           stakingCalculatorPeriod === 'block'
             ? newBlockReward
             : stakingCalculatorPeriod === 'day'
-              ? (parseInt(newBlockReward) * 84).toString(10)
+              ? (parseInt(newBlockReward) * blockPerDay).toString(10)
               : stakingCalculatorPeriod === 'month'
-                ? (parseInt(newBlockReward) * 2516).toString(10)
+                ? (parseInt(newBlockReward) * blockPerMonth).toString(10)
                 : stakingCalculatorPeriod === 'year'
-                  ? (parseInt(newBlockReward) * 2516 * 12).toString(10)
-                  : (parseInt(newBlockReward) * 2516 * 12).toString(10);
+                  ? resultPerYear.toString(10)
+                  : resultPerYear.toString(10);
 
-        const APR = ((parseInt(newBlockReward) * 2516 * 12) / inputStake) * 100;
+        const APR = parseInt(newBlockReward) ? (resultPerYear / inputStake) * 100 : 0;
 
         return {
           cells: [

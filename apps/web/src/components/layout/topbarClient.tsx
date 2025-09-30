@@ -77,6 +77,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
     setDecimalSeparator(currencySettings.decimalSeparator);
     setFormatting(currencySettings.formatting);
     setTrailingZeroes(currencySettings.trailingZeroes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings]);
 
   const kpisObject = [

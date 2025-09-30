@@ -157,6 +157,35 @@ export interface ValidatorType {
   };
 }
 
+export interface PosConstantsType {
+  factorSelfStakes: number;
+  maxLengthName: number;
+  maxNumberSentStakes: number;
+  maxNumberPendingUnlocks: number;
+  failSafeMissedBlocks: number;
+  failSafeInactiveWindow: number;
+  punishmentWindowStaking: number;
+  punishmentWindowSelfStaking: number;
+  roundLength: number;
+  minWeightStandby: string;
+  numberActiveValidators: number;
+  numberStandbyValidators: number;
+  posTokenID: string;
+  maxBFTWeightCap: number;
+  commissionIncreasePeriod: number;
+  maxCommissionIncreaseRate: number;
+  useInvalidBLSKey: boolean;
+  baseStakeAmount: string;
+  lockingPeriodStaking: number;
+  lockingPeriodSelfStaking: number;
+  reportMisbehaviorReward: string;
+  reportMisbehaviorLimitBanned: number;
+  weightScaleFactor: string;
+  extraCommandFees: {
+    validatorRegistrationFee: string;
+  };
+}
+
 export interface SharingCoefficientType {
   tokenID: string;
   coefficient: string;

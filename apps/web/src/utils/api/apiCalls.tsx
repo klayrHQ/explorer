@@ -13,6 +13,7 @@ import {
   NetworkStatus,
   NetworkStatusMeta,
   NodeType,
+  PosConstantsType,
   StakersMetaType,
   StakersType,
   StakesMetaType,
@@ -114,6 +115,10 @@ export const callGetValidators = async (
   params: ValidatorQueryParams,
 ): Promise<GatewayRes<ValidatorType[]>> => {
   return apiCall<ValidatorType[]>('pos/validators', params);
+};
+
+export const callGetPosConstants = async (): Promise<GatewayRes<PosConstantsType>> => {
+  return apiCall<PosConstantsType>('pos/constants');
 };
 
 export const callGetNextValidators = async (): Promise<GatewayRes<NextValidatorType[]>> => {
