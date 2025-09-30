@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import { Tooltip } from './tooltip';
 import { Icon } from '../images/icon';
 

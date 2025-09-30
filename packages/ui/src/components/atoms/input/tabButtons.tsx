@@ -8,6 +8,7 @@ import { Typography } from '../base/typography';
 import { IconComponent } from '../../../types/types';
 import { ReactNode } from 'react';
 import { cls } from '../../../utils/functions.ts';
+import { InfoTooltip } from '../utilities/infoTooltip.tsx';
 
 interface TabData {
   value: number;
@@ -16,6 +17,7 @@ interface TabData {
   content: ReactNode;
   count?: number | string;
   disabled?: boolean;
+  tooltip?: string;
 }
 
 interface TabButtonsProps {
@@ -64,9 +66,16 @@ export const TabButtons = ({
                 {tab.icon && <Icon color="" icon={tab.icon} size={'xs'} />}
 
                 {showLabel && (
-                  <Typography color="" fontWeight="semibold" variant="paragraph-md">
-                    {tab.label}
-                  </Typography>
+                  <div className="flex flex-1 min-w-0 items-center">
+                    <Typography color="" fontWeight="semibold" variant="paragraph-md">
+                      {tab.label}
+                    </Typography>
+                    {tab.tooltip && (
+                      <div className="ml-1">
+                        <InfoTooltip text={tab.tooltip} />
+                      </div>
+                    )}
+                  </div>
                 )}
 
                 {tab.count !== undefined && tab.count !== null && (

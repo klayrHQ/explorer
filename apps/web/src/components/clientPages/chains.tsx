@@ -120,6 +120,8 @@ export const Chains = () => {
     {
       value: 1,
       label: 'Blockchain Apps',
+      tooltip:
+        'Chains that host Blockchain Applications (bApps). Those apps have registered a chain metadata on Klayr App Registry',
       icon: 'Cube',
       count: blockchainAppsPagination.totalItems,
       content: (
@@ -152,6 +154,8 @@ export const Chains = () => {
     {
       value: 2,
       label: 'All Chains',
+      tooltip:
+        'All on-chain registered chains, including technical entries. Some entries may lack chain metadata on Klayr App Registry',
       icon: 'Cube',
       count: allChainsPagination.totalItems,
       content: (
