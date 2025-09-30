@@ -122,7 +122,7 @@ export const Chains = () => {
       label: 'Blockchain Apps',
       tooltip:
         'Chains that host Blockchain Applications (bApps). Those apps have registered a chain metadata on Klayr App Registry',
-      icon: 'Cube',
+      icon: 'Apps',
       count: blockchainAppsPagination.totalItems,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
@@ -156,7 +156,7 @@ export const Chains = () => {
       label: 'All Chains',
       tooltip:
         'All on-chain registered chains, including technical entries. Some entries may lack chain metadata on Klayr App Registry',
-      icon: 'Cube',
+      icon: 'Chain',
       count: allChainsPagination.totalItems,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
