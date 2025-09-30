@@ -44,8 +44,9 @@ import {
 } from './types';
 import { NextValidatorType } from '@repo/ui/types';
 import axios from 'axios';
+import { Coalescer } from './coalescer';
 
-async function apiCall<T, K extends MetaTransaction = MetaTransaction>(
+async function apiCallClient<T, K extends MetaTransaction = MetaTransaction>(
   endpoint: string,
   params: Record<string, any> = {},
 ): Promise<GatewayRes<T, K>> {
@@ -63,6 +64,17 @@ async function apiCall<T, K extends MetaTransaction = MetaTransaction>(
     console.error(error);
     throw error;
   }
+}
+
+async function apiCall<T, K extends MetaTransaction = MetaTransaction>(
+  endpoint: string,
+  params: Record<string, any> = {},
+): Promise<GatewayRes<T, K>> {
+  return Coalescer.getInstance().coalesce<Promise<GatewayRes<T, K>>, any[]>(
+    apiCallClient,
+    endpoint,
+    params,
+  );
 }
 
 async function customApiCall<T>(

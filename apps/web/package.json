@@ -18,6 +18,7 @@
     "react-dom": "^18.2.0",
     "react-use-websocket": "^4.8.1",
     "react-xml-parser": "^1.1.8",
+    "reqoal": "^1.0.2",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
