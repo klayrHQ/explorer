@@ -1,22 +1,32 @@
 'use client';
-import { FlexGrid, NotFound } from '@repo/ui/atoms';
+import { FlexGrid, NotFound, TabButtons } from '@repo/ui/atoms';
 import { SectionHeader, TableContainer } from '@repo/ui/organisms';
 import { chainsTableHead } from '../../utils/helpers/tableHeaders';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
-import { callGetApps } from '../../utils/api/apiCalls.tsx';
+import { callGetApps, callGetChains } from '../../utils/api/apiCalls.tsx';
 import { usePaginationAndSorting } from '../../utils/hooks/usePaginationAndSorting.ts';
 import { useSearchParams } from 'next/navigation';
-import { createChainRows } from '../../utils/helpers/TableHelpers/chainTableHelper.tsx';
+import {
+  createBlockchainAppRows,
+  createAllChainRows,
+} from '../../utils/helpers/TableHelpers/chainTableHelper.tsx';
 import { UniversalFilter } from '../filterComponents/UniversalFilter.tsx';
 import { useFilterManagement } from '../../utils/helpers/filterHandlers.ts';
 import { chainFilterConfig, constructSearchParams } from '../filterComponents/filtersConfig.tsx';
 import { useState } from 'react';
-import { FilterConfigType } from '../filterComponents/filterTypes.tsx';
 import { getSearchKeys } from '../../utils/helpers/filterHandlers.ts';
+import { ChainsQueryParams } from '../../utils/api/types.ts';
+
+const callUniqueGetChains = async (params: ChainsQueryParams) => {
+  const chainsResponse = await callGetChains(params);
+  return {
+    data: Array.from(new Map(chainsResponse.data.map((item) => [item.chainID, item])).values()),
+    meta: chainsResponse.meta,
+  };
+};
 
 export const Chains = () => {
-  const chains = useChainNetworkStore((state) => state.chains);
   const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
   const defaultLimit = '10';
   const searchParams = useSearchParams();
@@ -43,87 +53,162 @@ export const Chains = () => {
     clearAllFields,
   } = useFilterManagement(searchKeys);
 
-  const {
-    data: apps,
-    totalItems: totalApps,
-    loading,
-    pageNumber,
-    limit,
-    handlePageChange,
-    handleLimitChange,
-  } = usePaginationAndSorting({
-    fetchFunction: callGetApps,
+  const blockchainAppsPagination = usePaginationAndSorting({
+    fetchFunction: callUniqueGetChains,
     defaultLimit: searchParams.get('limit') || defaultLimit,
-    searchParams: constructSearchParams(filterValues, searchKeys),
+    searchParams: {
+      includeBlockchainApp: true,
+      excludeChainName: 'klayr_mainchain',
+      network: currentNetwork,
+      ...constructSearchParams(filterValues, searchKeys),
+    },
     changeURL: true,
     useNewBlockEvent: false,
     additionalDependencies: [filterValues],
   });
 
-  // const mappedApps = apps
-  //   .filter((app) => app.chainName !== 'klayr_mainchain')
-  //   .map((app) => {
-  //     const logo = chains.find((chain) => chain.chainID === app.chainID)?.logo;
-  //     const displayName = chains.find((chain) => chain.chainID === app.chainID)?.displayName;
-  //     const projectPage = chains.find((chain) => chain.chainID === app.chainID)?.projectPage;
-  //     const meta = chains.find((chain) => chain.chainID === app.chainID);
+  const allChainsPagination = usePaginationAndSorting({
+    fetchFunction: callGetApps,
+    defaultLimit: searchParams.get('limit') || defaultLimit,
+    searchParams: {
+      excludeChainName: 'klayr_mainchain',
+      ...constructSearchParams(filterValues, searchKeys),
+    },
+    changeURL: true,
+    useNewBlockEvent: false,
+    additionalDependencies: [filterValues],
+  });
 
-  //     return {
-  //       ...app,
-  //       logo,
-  //       displayName,
-  //       projectPage,
-  //       meta,
-  //     };
-  //   });
-
-  const filteredApps = apps
-    .filter((app) => app.chainName !== 'klayr_mainchain')
-    .filter((app) => !chains.some((chain) => chain.chainID === app.chainID));
-
-  const filteredChains = chains
-    .filter((chain) => chain.chainName !== 'klayr_mainchain')
-    .filter((chain) => chain.networkType === currentNetwork);
-
-  const combinedApps = [...filteredChains, ...filteredApps];
-
-  const rows = createChainRows(
-    pageNumber > 1 ? filteredApps : combinedApps || [],
-    loading,
+  const blockchainAppsRows = createBlockchainAppRows(
+    blockchainAppsPagination.data,
+    blockchainAppsPagination.loading,
     basePath,
   );
 
+  const allChainsRows = createAllChainRows(
+    allChainsPagination.data,
+    allChainsPagination.loading,
+    basePath,
+  );
+
+  const isFiltering = filterValues && filterValues.status;
+
+  const filterComponentClassName = 'flex items-center justify-end h-full min-w-[220px]';
+  const filterComponentContent = (
+    <UniversalFilter
+      inputValues={inputValues}
+      setInputValues={setInputValues}
+      handleClearField={(field: string | number) => handleClear(field)}
+      filterConfigurations={chainFilterConfig}
+      data={commandObject}
+      checkedItems={checkedItems}
+      handleCheckboxChange={handleCheckboxChange}
+      handleSelectAllChange={handleSelectAllChange}
+      handleApply={handleApply}
+      handleClear={clearAllFields}
+      handleCheckboxClose={handleCheckboxClose}
+      filterValues={filterValues}
+    />
+  );
+  const filterComponent = isFiltering ? (
+    filterComponentContent
+  ) : (
+    <div className={filterComponentClassName}>{filterComponentContent}</div>
+  );
+
+  const tabs = [
+    {
+      value: 1,
+      label: 'Blockchain Apps',
+      icon: 'Cube',
+      count: blockchainAppsPagination.totalItems,
+      content: (
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          {blockchainAppsRows?.length && blockchainAppsRows.length > 0 ? (
+            <TableContainer
+              headCols={chainsTableHead}
+              keyPrefix={'chains'}
+              rows={blockchainAppsRows}
+              pagination
+              onPerPageChange={blockchainAppsPagination.handleLimitChange}
+              totalPages={Math.ceil(
+                blockchainAppsPagination.totalItems / Number(blockchainAppsPagination.limit),
+              )}
+              setCurrentNumber={blockchainAppsPagination.handlePageChange}
+              currentNumber={blockchainAppsPagination.pageNumber}
+              defaultValue={defaultLimit}
+              filtersComponent={isFiltering ? filterComponent : undefined}
+            />
+          ) : (
+            <NotFound
+              className="mt-16"
+              headerText={'No blocks found'}
+              subheaderText={'We cannot find any blocks'}
+            />
+          )}
+        </FlexGrid>
+      ),
+    },
+    {
+      value: 2,
+      label: 'All Chains',
+      icon: 'Cube',
+      count: allChainsPagination.totalItems,
+      content: (
+        <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
+          {allChainsRows?.length && allChainsRows.length > 0 ? (
+            <TableContainer
+              headCols={chainsTableHead}
+              keyPrefix={'chains'}
+              rows={allChainsRows}
+              pagination
+              onPerPageChange={allChainsPagination.handleLimitChange}
+              totalPages={Math.ceil(
+                allChainsPagination.totalItems / Number(allChainsPagination.limit),
+              )}
+              setCurrentNumber={allChainsPagination.handlePageChange}
+              currentNumber={allChainsPagination.pageNumber}
+              defaultValue={defaultLimit}
+              filtersComponent={isFiltering ? filterComponent : undefined}
+            />
+          ) : (
+            <NotFound
+              className="mt-16"
+              headerText={'No blocks found'}
+              subheaderText={'We cannot find any blocks'}
+            />
+          )}
+        </FlexGrid>
+      ),
+    },
+  ];
+
   return (
     <FlexGrid className="w-full mx-auto" direction={'col'} gap={'5xl'}>
-      <SectionHeader count={totalApps} title={'Chains'} />
-
-      <TableContainer
-        headCols={chainsTableHead}
-        keyPrefix={'chains'}
-        rows={rows}
-        pagination
-        onPerPageChange={handleLimitChange}
-        totalPages={Math.ceil(totalApps / Number(limit))}
-        setCurrentNumber={handlePageChange}
-        currentNumber={pageNumber}
-        defaultValue={defaultLimit}
-        filtersComponent={
-          <UniversalFilter
-            inputValues={inputValues}
-            setInputValues={setInputValues}
-            handleClearField={(field: string | number) => handleClear(field)}
-            filterConfigurations={chainFilterConfig}
-            data={commandObject}
-            checkedItems={checkedItems}
-            handleCheckboxChange={handleCheckboxChange}
-            handleSelectAllChange={handleSelectAllChange}
-            handleApply={handleApply}
-            handleClear={clearAllFields}
-            handleCheckboxClose={handleCheckboxClose}
-            filterValues={filterValues}
-          />
-        }
+      <SectionHeader
+        title={'Chains'}
+        subTitle={'Overview of all Chains and Klayr bApps (Blockchain Apps)'}
       />
+
+      {/* Mobile: filter below tabs as before */}
+      <div className="desktop:hidden w-full">
+        <TabButtons
+          padding="6"
+          showLabel={false}
+          tabs={tabs}
+          width="full"
+          trailingComponent={isFiltering ? undefined : filterComponent}
+        />
+      </div>
+
+      {/* Desktop: filter at right end of tab bar using trailingComponent */}
+      <div className="hidden desktop:block w-full">
+        <TabButtons
+          tabs={tabs}
+          width="full"
+          trailingComponent={isFiltering ? undefined : filterComponent}
+        />
+      </div>
     </FlexGrid>
   );
 };

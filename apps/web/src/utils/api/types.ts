@@ -88,6 +88,7 @@ export interface ChainsQueryParams {
   limit?: number;
   offset?: number;
   sort?: string;
+  includeBlockchainApp?: boolean;
 }
 
 export interface ChainTokenQueryParams {

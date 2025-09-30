@@ -371,6 +371,14 @@ export interface ChainType {
     maintainer: string;
     apiCertificatePublicKey: string;
   }[];
+  blockchainApp?: {
+    status?: string;
+    address?: string;
+    lastCerticateHeight?: number;
+    lastUpdated?: number;
+    escrowedKLY?: string;
+    escrow?: Escrow[];
+  };
 }
 
 export interface ChainTokenType {

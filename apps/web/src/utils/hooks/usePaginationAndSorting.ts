@@ -36,6 +36,7 @@ export const usePaginationAndSorting = ({
   const [sortField, setSortField] = useState<string>(initialSortField);
   const [sortOrder, setSortOrder] = useState<string>(initialSortOrder);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateURL = useCallback(
     debounce((pageNumber: number, limit: string) => {
       router.push(`${pathname}?page=${pageNumber}&limit=${limit}`);
@@ -46,6 +47,7 @@ export const usePaginationAndSorting = ({
   const network = useChainNetworkStore((state) => state.currentNetwork);
   const newBlockEvent = useSocketStore((state) => state.height);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = useCallback(
     debounce(async () => {
       data.length <= 0 && setLoading(true);
@@ -96,6 +98,7 @@ export const usePaginationAndSorting = ({
     if (pageNumber > totalPages) {
       setPageNumber(totalPages + 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit]);
 
   const handlePageChange = (newPageNumber: number) => {
