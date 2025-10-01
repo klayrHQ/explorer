@@ -51,6 +51,7 @@ export const useSettings = () => {
 
   useEffect(() => {
     initializeSettings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setSettings]);
 
   return {
