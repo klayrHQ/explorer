@@ -35,7 +35,7 @@ export class Coalescer {
       Coalescer.coalescer = new ReqoalInstance(
         DEFAULT_PRUNE_INTERVAL_MS,
         DEFAULT_TTL_MS,
-        logger as unknown as Console,
+        logger as any,
       );
     }
     return Coalescer.coalescer;
