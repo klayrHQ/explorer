@@ -94,7 +94,7 @@ export const TabButtons = ({
           ))}
         </div>
         {trailingComponent && (
-          <div className="flex items-center justify-end ml-4">{trailingComponent}</div>
+          <div className="flex items-center justify-end ml-auto">{trailingComponent}</div>
         )}
       </TabsList>
       {tabs.map((tab) => (
