@@ -1,4 +1,6 @@
 'use client';
+
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import {
   BlockDetailsBanner,
@@ -33,6 +35,7 @@ import { createEventsRows } from '../../utils/helpers/TableHelpers/eventTableHel
 
 export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
+  const router = useRouter();
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy to clipboard');
   const [loading, setLoading] = useState<boolean>(true);
   const [block, setBlocks] = useState<BlockDetailsType | undefined>(undefined);
@@ -44,16 +47,26 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   const [sortOrder, setSortOrder] = useState<string>('');
   const chains = useChainNetworkStore((state) => state.chains);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const symbol = currentChain?.tokens[0]?.symbol;
+  const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
+  const symbol = currentChainToken?.symbol;
 
   const transactionsPagination = usePagination();
   const eventsPagination = usePagination();
   const basePath = useBasePath();
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(basePath + '/blocks');
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     callGetBlocks({
       blockID: id,
+      includeAssets: true,
     })
       .then((data) => setBlocks(data.data[0]))
       .catch((error) => console.error(error))
@@ -316,6 +329,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
   return (
     <FlexGrid direction={'col'} gap={'5xl'}>
       <BlockDetailsBanner
+        onBack={handleBack}
         basePath={basePath}
         generatorAddress={block?.generator.address || ''}
         generatorName={block?.generator.name || ''}

@@ -5,7 +5,12 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**", "storybook-static/**"],
-      "env": ["NEXT_PUBLIC_API_URL"]
+      "env": [
+        "NEXT_PUBLIC_API_URL",
+        "NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION",
+        "NEXT_PUBLIC_KLAYR_SERVICE_MAINNET",
+        "NEXT_PUBLIC_KLAYR_SERVICE_TESTNET"
+      ]
     },
     "lint": {},
     "type-check": {},

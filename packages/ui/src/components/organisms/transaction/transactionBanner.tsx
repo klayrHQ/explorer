@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-literals */
 import { FlexGrid, Icon } from '../../atoms';
 import { trimFour } from '../../../utils/functions';
 import { BannerText } from '../../molecules';
@@ -23,6 +24,7 @@ interface TransactionBannerProps {
   blockId: string;
   image: string;
   basePath?: string;
+  onBack: () => void;
 }
 
 export const TransactionBanner = ({
@@ -43,20 +45,19 @@ export const TransactionBanner = ({
   badgeColor,
   image,
   basePath,
+  onBack,
 }: TransactionBannerProps) => {
   return (
     <BannerFrame image={image}>
       <div className="items-start justify-start w-full flex flex-col">
         <FlexGrid alignItems="center" direction="row" gap="4" justify="start" mobileDirection="row">
-          <Link basePath={basePath} href="/transactions">
-            {' '}
-            <Icon
-              className="hover:-translate-x-0.5 cursor-pointer transition-transform"
-              color="white"
-              icon="ArrowLeft"
-            />
-          </Link>
-
+          {' '}
+          <Icon
+            onClick={onBack}
+            className="hover:-translate-x-0.5 cursor-pointer transition-transform"
+            color="white"
+            icon="ArrowLeft"
+          />
           <h3 className="text-heading-6 desktop:text-heading-3 text-white font-bold">
             <span className="mr-2">Transaction</span>
             {trimFour(id)}

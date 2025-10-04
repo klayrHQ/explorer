@@ -26,7 +26,7 @@ export const Currency = ({
     <Typography {...props} className={cls(['gap-0.5', className])}>
       {amount ? (
         <>
-          {sign && <span>{sign}</span>}
+          {sign && <span>{sign} </span>}
           {parseBeddows(Number(amount), decimals, separator, trailingZeroes)}
           {symbol && (
             <span>
@@ -42,7 +42,10 @@ export const Currency = ({
         <>
           {'\u00A0|\u00A0'}
           <span>{'$'}</span>
-          {marketValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2,})}
+          {marketValue.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </>
       )}
     </Typography>

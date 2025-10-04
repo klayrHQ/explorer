@@ -35,7 +35,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   const {
     // marketcap,
     trend,
-    tokenPrice,
+    klyPrice,
   } = useMarketcap();
 
   const currentChain = useChainNetworkStore((state) => state.currentChain);
@@ -77,6 +77,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
     setDecimalSeparator(currencySettings.decimalSeparator);
     setFormatting(currencySettings.formatting);
     setTrailingZeroes(currencySettings.trailingZeroes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings]);
 
   const kpisObject = [
@@ -102,7 +103,7 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
           variant={'paragraph-sm'}
           fontWeight={'medium'}
         >
-          {`$${parseFloat(tokenPrice.toFixed(5)).toLocaleString()}`}
+          {`$${parseFloat(klyPrice.toFixed(5)).toLocaleString()}`}
           <span
             className={`${trend < 0 ? 'text-error' : 'text-success'} text-paragraph-sm font-semibold inline-flex items-center gap-1`}
           >

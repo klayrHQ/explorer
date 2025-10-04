@@ -9,6 +9,7 @@ import { StatusBadge } from '@repo/ui/atoms';
 export interface UserAccountCenteredProps {
   address: string;
   name?: string;
+  publicKey?: string;
   status?: string;
   notificationValue?: number | string;
   role?: string;
@@ -18,11 +19,15 @@ export interface UserAccountCenteredProps {
 export const UserAccountCentered = ({
   address,
   name,
+  publicKey,
   status,
   notificationValue,
   role = 'Validator',
   validator = true,
 }: UserAccountCenteredProps) => {
+  const mainContentCopy = name ? '' : address;
+  const subContentCopy = name ? address : publicKey ? publicKey : '';
+
   return (
     <div className="flex gap-2 ">
       <div className="flex items-center">
@@ -33,14 +38,21 @@ export const UserAccountCentered = ({
         <div className="flex desktop:hidden">
           {status && <StatusBadge status={`${status} ${role}`} />}
         </div>
-        <Typography color={'onBackground'} fontWeight={'semibold'} variant={'h3'}>
-          {name ? name : '-'}
-        </Typography>
+        <div className="flex items-center gap-2">
+          <Typography color={'onBackground'} fontWeight={'semibold'} variant={'h3'}>
+            {name ? name : shortString(address, 12, 'center')}
+          </Typography>
+          {mainContentCopy ? <CopyIcon content={mainContentCopy} size={'small'} /> : null}
+        </div>
         <div className="flex items-center gap-2">
           <Typography color={'onBackgroundMedium'} fontWeight={'normal'} variant={'caption'}>
-            {shortString(address, 12, 'center')}
+            {name
+              ? shortString(address, 12, 'center')
+              : publicKey
+                ? shortString(publicKey, 12, 'center')
+                : ''}
           </Typography>
-          <CopyIcon content={address} size={'xxs'} />
+          {subContentCopy ? <CopyIcon content={subContentCopy} size={'xxs'} /> : null}
         </div>
       </div>
     </div>

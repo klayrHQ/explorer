@@ -19,16 +19,19 @@ import { Link } from '../../atoms';
 interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBannerHeaderProps {
   image: string;
   senderName?: string;
-  blockTime?: number;
-  basePath: string;
+  publicKey?: string;
+  nextAllocatedTime?: number;
+  basePath?: string;
   isFavorite: boolean;
   removeFavorite: () => void;
   setFavorite: () => void;
+  onBack: () => void;
 }
 
 export const ValidatorBanner = ({
   senderAddress,
   senderName,
+  publicKey,
   image,
   stakes,
   value,
@@ -38,27 +41,28 @@ export const ValidatorBanner = ({
   capacity,
   status,
   notificationValue,
-  blockTime,
+  nextAllocatedTime,
   basePath,
   isFavorite,
   removeFavorite,
   setFavorite,
+  onBack,
   ...props
 }: ValidatorBannerProps) => {
   return (
     <BannerFrame image={image}>
       <FlexGrid direction="col" gap="0" justify="between">
         <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
-          <Link basePath={basePath} className="hidden desktop:block" href="/validators">
-            <Icon
-              className="hover:-translate-x-0.5 cursor-pointer transition-transform"
-              color="white"
-              icon="ArrowLeft"
-            />
-          </Link>
+          <Icon
+            onClick={onBack}
+            className="hover:-translate-x-0.5 cursor-pointer transition-transform"
+            color="white"
+            icon="ArrowLeft"
+          />
           <ValidatorBannerHeader
             notificationValue={notificationValue}
             senderAddress={senderAddress}
+            publicKey={publicKey}
             senderName={senderName}
             status={status}
           />
@@ -77,8 +81,8 @@ export const ValidatorBanner = ({
         </div>
       </FlexGrid>
       <ValidatorBannerCard
-        blockTime={blockTime || 0}
         isFavorite={isFavorite}
+        nextAllocatedTime={nextAllocatedTime}
         removeFavorite={removeFavorite}
         setFavorite={setFavorite}
       />

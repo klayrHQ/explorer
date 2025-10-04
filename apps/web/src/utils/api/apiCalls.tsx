@@ -6,16 +6,24 @@ import {
   ChainTokenType,
   ChainType,
   ChartDataType,
+  ClaimableReward,
   EventsType,
   GatewayRes,
+  MetaTransaction,
   NetworkStatus,
-  NodeInfoType,
+  NetworkStatusMeta,
   NodeType,
+  PosConstantsType,
+  StakersMetaType,
   StakersType,
+  StakesMetaType,
   StakesType,
   TokenSummaryType,
-  TokenType, TopAccountsType, TopAccountType,
+  TokenType,
+  TopAccountsType,
+  TopAccountType,
   TransactionType,
+  ValidatorsStatusCount,
   ValidatorType,
 } from '../types';
 import { useGatewayClientStore } from '../../store/clientStore';
@@ -25,23 +33,27 @@ import {
   BlocksQueryParams,
   ChainsQueryParams,
   ChainTokenQueryParams,
-  EventsQueryParams, NodeQueryParams,
+  EventsQueryParams,
+  NodeQueryParams,
+  PosClaimableRewardsQueryParams,
   StakersQueryParams,
-  TokensQueryParams, TopAccountQueryParams,
+  TokensQueryParams,
+  TopAccountQueryParams,
   TransactionQueryParams,
   ValidatorQueryParams,
 } from './types';
 import { NextValidatorType } from '@repo/ui/types';
 import axios from 'axios';
+import { Coalescer } from './coalescer';
 
-async function apiCall<T>(
+async function apiCallClient<T, K extends MetaTransaction = MetaTransaction>(
   endpoint: string,
   params: Record<string, any> = {},
-): Promise<GatewayRes<T>> {
+): Promise<GatewayRes<T, K>> {
   const { client } = useGatewayClientStore.getState();
 
   try {
-    const { data } = await client.get<GatewayRes<T>>(endpoint, { params });
+    const { data } = await client.get<GatewayRes<T, K>>(endpoint, { params });
 
     if (data) {
       return data;
@@ -52,6 +64,17 @@ async function apiCall<T>(
     console.error(error);
     throw error;
   }
+}
+
+async function apiCall<T, K extends MetaTransaction = MetaTransaction>(
+  endpoint: string,
+  params: Record<string, any> = {},
+): Promise<GatewayRes<T, K>> {
+  return Coalescer.getInstance().coalesce<Promise<GatewayRes<T, K>>, any[]>(
+    apiCallClient,
+    endpoint,
+    params,
+  );
 }
 
 async function customApiCall<T>(
@@ -65,7 +88,6 @@ async function customApiCall<T>(
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'Access-Control-Allow-Methods': 'POST,GET',
     },
   });
 
@@ -107,16 +129,22 @@ export const callGetValidators = async (
   return apiCall<ValidatorType[]>('pos/validators', params);
 };
 
+export const callGetPosConstants = async (): Promise<GatewayRes<PosConstantsType>> => {
+  return apiCall<PosConstantsType>('pos/constants');
+};
+
 export const callGetNextValidators = async (): Promise<GatewayRes<NextValidatorType[]>> => {
   return apiCall<NextValidatorType[]>('generators', { limit: 3 });
 };
 
-export const callGetChartData = async (): Promise<GatewayRes<ChartDataType[]>> => {
-  return apiCall<ChartDataType[]>('pos/validators/status-count');
+export const callGetValidatorStatusCount = async (): Promise<GatewayRes<ValidatorsStatusCount>> => {
+  return apiCall<ValidatorsStatusCount>('pos/validators/status-count');
 };
 
-export const callGetNodeInfo = async (): Promise<GatewayRes<NodeInfoType>> => {
-  return apiCall<NodeInfoType>('node/info');
+export const callGetPosClaimableRewards = async (
+  params: PosClaimableRewardsQueryParams,
+): Promise<GatewayRes<ClaimableReward[]>> => {
+  return apiCall<ClaimableReward[]>('pos/rewards/claimable', params);
 };
 
 export const callGetTokenSummary = async (): Promise<GatewayRes<TokenSummaryType>> => {
@@ -125,14 +153,14 @@ export const callGetTokenSummary = async (): Promise<GatewayRes<TokenSummaryType
 
 export const callGetStakes = async (
   params: StakersQueryParams,
-): Promise<GatewayRes<StakesType>> => {
-  return apiCall<StakesType>('pos/stakes', params);
+): Promise<GatewayRes<StakesType, StakesMetaType>> => {
+  return apiCall<StakesType, StakesMetaType>('pos/stakes', params);
 };
 
 export const callGetStakers = async (
   params: StakersQueryParams,
-): Promise<GatewayRes<StakersType>> => {
-  return apiCall<StakersType>('pos/stakers', params);
+): Promise<GatewayRes<StakersType, StakersMetaType>> => {
+  return apiCall<StakersType, StakersMetaType>('pos/stakers', params);
 };
 
 export const callGetAccounts = async (
@@ -145,30 +173,34 @@ export const callGetTopAccounts = async (
   params: TopAccountQueryParams,
 ): Promise<GatewayRes<TopAccountsType>> => {
   return apiCall<TopAccountsType>('token/balances/top', params);
-}
+};
 
-export const callGetTokens = async (params: TokensQueryParams): Promise<GatewayRes<TokenType>> => {
-  return apiCall<TokenType>('token/balances', params);
+export const callGetTokens = async (
+  params: TokensQueryParams,
+): Promise<GatewayRes<TokenType[]>> => {
+  return apiCall<TokenType[]>('token/balances', params);
 };
 
 export const callGetNodes = async (params: NodeQueryParams): Promise<GatewayRes<NodeType[]>> => {
   return apiCall<NodeType[]>('network/peers', params);
 };
 
-export const callGetNetworkStatus = async (): Promise<GatewayRes<NetworkStatus>> => {
-  return apiCall<NetworkStatus>('network/status');
+export const callGetNetworkStatus = async (): Promise<
+  GatewayRes<NetworkStatus, NetworkStatusMeta>
+> => {
+  return apiCall<NetworkStatus, NetworkStatusMeta>('network/status');
 };
 
 export const callGetChains = async (
   params: ChainsQueryParams,
 ): Promise<GatewayRes<ChainType[]>> => {
   const mainnetResponse = await customApiCall<ChainType[]>(
-    'https://gateway-mainnet.klayr.dev/api/v1/',
+    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
     'blockchain/apps/meta',
     params,
   );
   const testnetResponse = await customApiCall<ChainType[]>(
-    'https://gateway-testnet.klayr.dev/api/v1/',
+    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
     'blockchain/apps/meta',
     params,
   );
@@ -182,12 +214,12 @@ export const callGetChainTokens = async (
   params: ChainTokenQueryParams,
 ): Promise<GatewayRes<ChainTokenType[]>> => {
   const mainnetResponse = await customApiCall<ChainTokenType[]>(
-    'https://gateway-mainnet.klayr.dev/api/v1/',
+    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
     'blockchain/apps/meta/tokens',
     params,
   );
   const testnetResponse = await customApiCall<ChainTokenType[]>(
-    'https://gateway-testnet.klayr.dev/api/v1/',
+    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
     'blockchain/apps/meta/tokens',
     params,
   );

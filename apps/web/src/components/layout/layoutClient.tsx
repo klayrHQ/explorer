@@ -25,7 +25,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               'desktop:rounded-tl-3xl',
             ])}
           >
-            <InfoBanner className={'mb-3xl rounded-md'}>
+            {/* <InfoBanner className={'mb-3xl rounded-md'}>
               <FlexGrid
                 alignItems={'center'}
                 gap={'1.5xl'}
@@ -41,7 +41,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                   {`due to ongoing work. `}
                 </Typography>
               </FlexGrid>
-            </InfoBanner>
+            </InfoBanner> */}
             {children}
           </main>
         </Grid>

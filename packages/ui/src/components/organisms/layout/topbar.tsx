@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 'use client';
 import {
   FlexGrid,

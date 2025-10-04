@@ -1,6 +1,6 @@
-export interface GatewayRes<T> {
+export interface GatewayRes<T, K extends MetaTransaction = MetaTransaction> {
   data: T;
-  meta: MetaTransaction;
+  meta: K;
 }
 
 export interface MetaTransaction {
@@ -11,24 +11,31 @@ export interface MetaTransaction {
 
 export interface TransactionType {
   id: string;
-  module: string;
-  command: string;
+  moduleCommand: string;
   nonce: string;
   fee: string;
   minFee: string;
   size: number;
-  block: BlockType;
+  block: BlockConciseWithFinalType;
   sender: AccountSubType;
-  params: any;
+  params: Record<string, any>;
   signatures: string[];
   executionStatus: string;
   index: number;
-  receivingChainID: string;
-  recipient: {
-    address: string;
-    name?: string;
-  };
   meta: MetaType;
+}
+
+export interface BlockConciseWithFinalType {
+  id: string;
+  height: number;
+  timestamp: number;
+  isFinal: boolean;
+}
+
+export interface BlockConciseType {
+  id: string;
+  height: number;
+  timestamp: number;
 }
 
 export interface BlockType {
@@ -53,36 +60,39 @@ export interface ParamsType {
 
 export interface MetaType {
   recipient?: AccountSubType;
-  count?: number;
-  total?: number;
 }
 
 export interface BlockDetailsType {
-  height: number;
   id: string;
   version: number;
+  height: number;
   timestamp: number;
   previousBlockID: string;
-  stateRoot: string;
-  assetRoot: string;
-  eventRoot: string;
-  transactionRoot: string;
-  validatorsHash: string;
   generator: BlockGeneratorType;
-  maxHeightPrevoted: number;
+  transactionRoot: string;
+  assetRoot: string;
+  stateRoot: string;
+  eventRoot: string;
   maxHeightGenerated: number;
-  impliesMaxPrevotes: boolean;
-  signature: string;
-  aggregatedCommit: {};
+  maxHeightPrevoted: number;
+  validatorsHash: string;
+  aggregateCommit: AggregateCommit;
   numberOfTransactions: number;
   numberOfEvents: number;
   numberOfAssets: number;
-  reward: string;
-  isFinal: boolean;
   totalBurnt: string;
   networkFee: string;
   totalForged: string;
+  reward: string;
+  signature: string;
+  isFinal: boolean;
   assets: BlockAssetType[];
+}
+
+export interface AggregateCommit {
+  height: number;
+  aggregationBits: string;
+  certificateSignature: string;
 }
 
 export interface BlockAssetType {
@@ -93,17 +103,17 @@ export interface BlockAssetType {
 export interface BlockGeneratorType {
   address: string;
   name: string;
+  publicKey: string;
 }
 
 export interface EventsType {
   id: number;
-  height: number;
   module: string;
   name: string;
   data: EventsDataType;
   topics: string[];
   index: number;
-  block: BlockType;
+  block: BlockConciseType;
 }
 
 export interface EventsDataType {
@@ -115,30 +125,65 @@ export interface EventsDataType {
 }
 
 export interface ValidatorType {
-  address: string;
+  name: string;
   totalStake: string;
   selfStake: string;
   validatorWeight: string;
-  generatedBlocks: number;
-  rank: number;
-  blsKey: string;
-  proofOfPossession: string;
-  generatorKey: string;
+  address: string;
+  publicKey: string;
   lastGeneratedHeight: number;
-  isBanned: boolean;
   status: string;
-  reportMisbehaviorHeights: string[];
-  punishmentPeriods: string;
+  isBanned: boolean;
+  reportMisbehaviorHeights: number[];
+  punishmentPeriods: {
+    start: number;
+    end: number;
+  }[];
   consecutiveMissedBlocks: number;
   commission: number;
   lastCommissionIncreaseHeight: number;
   sharingCoefficients: SharingCoefficientType[];
-  account: AccountSubType;
-  nextAllocatedTime?: number;
-  totalRewards: string;
-  blockReward: string;
+  rank: number;
+  generatedBlocks: number;
+  totalCommission: number;
   totalSelfStakeRewards: string;
-  totalSharedRewards: string;
+  earnedRewards: string;
+  blockReward: string;
+  nextAllocatedTime: number;
+  statusValue?: {
+    height: number;
+    maxHeightGenerated: number;
+    maxHeightPrevoted: number;
+  };
+}
+
+export interface PosConstantsType {
+  factorSelfStakes: number;
+  maxLengthName: number;
+  maxNumberSentStakes: number;
+  maxNumberPendingUnlocks: number;
+  failSafeMissedBlocks: number;
+  failSafeInactiveWindow: number;
+  punishmentWindowStaking: number;
+  punishmentWindowSelfStaking: number;
+  roundLength: number;
+  minWeightStandby: string;
+  numberActiveValidators: number;
+  numberStandbyValidators: number;
+  posTokenID: string;
+  maxBFTWeightCap: number;
+  commissionIncreasePeriod: number;
+  maxCommissionIncreaseRate: number;
+  useInvalidBLSKey: boolean;
+  baseStakeAmount: string;
+  lockingPeriodStaking: number;
+  lockingPeriodSelfStaking: number;
+  reportMisbehaviorReward: string;
+  reportMisbehaviorLimitBanned: number;
+  weightScaleFactor: string;
+  extraCommandFees: {
+    validatorRegistrationFee: string;
+  };
 }
 
 export interface SharingCoefficientType {
@@ -150,31 +195,25 @@ export interface AccountSubType {
   address: string;
   publicKey: string;
   name: string;
-  nonce: string;
+}
+
+export interface ValidatorsStatusCount {
+  active: number;
+  ineligible: number;
+  standby: number;
+  punished: number;
+  banned: number;
+}
+
+export interface ClaimableReward {
+  tokenID: string;
+  reward: string;
 }
 
 export interface ChartDataType {
   id: number;
   label: string;
   value: number;
-}
-
-export interface NodeInfoType {
-  version: string;
-  networkVersion: string;
-  chainID: string;
-  lastBlockID: string;
-  height: number;
-  finalizedHeight: number;
-  syncing: boolean;
-  unconfirmedTransactions: number;
-  genesisHeight: number;
-  genesis: GenesisType;
-  network: {
-    version: string;
-    port: number;
-    seedPeers: string[];
-  };
 }
 
 export interface GenesisType {
@@ -194,11 +233,15 @@ export interface TokenSummaryType {
     tokenID: string;
     amount: string;
   }[];
+  supportedTokens: {
+    isSupportAllTokens: boolean;
+    patternTokenIDs: string[];
+    exactTokenIDs: string[];
+  }[];
   totalSupply: {
     tokenID: string;
-    totalSupply: string;
+    amount: string;
   }[];
-  supportedTokens: string[];
   totalAccounts: number;
   totalTransactions: number;
 }
@@ -220,24 +263,39 @@ export type StakeType = {
 
 export type StakesType = {
   stakes: StakeType[];
-  meta: MetaTransaction;
 };
+
+export interface StakesMetaType extends MetaTransaction {
+  staker: {
+    address: string;
+    publicKey: string;
+    name: string;
+  };
+}
 
 export type StakersType = {
   stakers: StakeType[];
-  meta: MetaTransaction;
 };
+
+export interface StakersMetaType extends MetaTransaction {
+  validator: {
+    address: string;
+    publicKey: string;
+    name: string;
+  };
+}
 
 export type AccountType = {
   address: string;
   nonce: string;
   publicKey: string;
   name: string | null;
-  tokenBalances: Record<string, TokenBalancesType[]>;
   description: string | null;
+  tokenBalances: TokenBalancesType[];
 };
 
 export type TokenBalancesType = {
+  tokenID: string;
   totalBalance: string;
   availableBalance: string;
   lockedBalance: string | number;
@@ -251,10 +309,13 @@ export type TopAccountType = {
   address: string;
   publicKey: string;
   name: string;
-  description: string;
-  totalBalance: string;
+  balance: string;
   availableBalance: string;
   lockedBalance: string;
+  knowledge: {
+    owner: string;
+    description: string;
+  };
 };
 
 export type TopAccountsType = Record<string, TopAccountType[]>;
@@ -268,40 +329,31 @@ export interface FavouriteType {
 }
 
 export interface LocalTokenBalancesType {
-  amount: string;
   module: string;
+  amount: string;
 }
 
 export interface TokenType {
-  tokenId: string;
+  tokenID: string;
   availableBalance: string;
   lockedBalances: LocalTokenBalancesType[];
 }
 
 export interface NodeType {
-  chainID: string;
+  ip: string;
+  port: number;
   networkVersion: string;
-  nonce: string;
-  advertiseAddress: boolean;
+  chainID: string;
+  state: string;
   height: number;
-  options: {
-    height: number;
-    maxHeightPrevoted: number;
-    blockVersion: number;
-    lastBlockID: string;
-    legacy: any[];
-  };
   location: {
-    ip: string;
     countryCode: string;
     countryName: string;
+    hostname: string;
+    ip: string;
     latitude: number;
     longitude: number;
   };
-  ip: string;
-  port: number;
-  peerId: string;
-  state: string;
 }
 
 export interface NftType {
@@ -319,12 +371,11 @@ export interface ServiceURLsType {
   http: string;
   ws: string;
   apiCertificatePublicKey: string;
-  appChainID: string;
 }
 
 export interface ChainType {
-  chainID: string;
   chainName: string;
+  chainID: string;
   displayName: string;
   title: string;
   status: string;
@@ -333,59 +384,59 @@ export interface ChainType {
   isDefault: boolean;
   genesisURL: string;
   projectPage: string;
-  backgroundColor: string;
-  blockchainApp: {
-    address: string;
-    escrowedKLY: string | null;
-    lastUpdated: number | null;
-  };
   serviceURLs: ServiceURLsType[];
   logo: {
     png: string;
     svg: string;
-    appChainID: string;
   };
+  appPage: string;
+  backgroundColor: string;
   explorers: {
     url: string;
     txnPage: string;
-    appChainID: string;
   }[];
   appNodes: {
     url: string;
     maintainer: string;
     apiCertificatePublicKey: string;
-    appChainID: string;
   }[];
-  tokens: ChainTokenType[];
+  blockchainApp?: {
+    status?: string;
+    address?: string;
+    lastCerticateHeight?: number;
+    lastUpdated?: number;
+    escrowedKLY?: string;
+    escrow?: Escrow[];
+  };
 }
 
 export interface ChainTokenType {
-  chainName: string;
-  networkType: string;
-  tokenID: string;
   chainID: string;
+  chainName: string;
+  tokenID: string;
   tokenName: string;
+  networkType: string;
   description: string;
+  denomUnits: {
+    denom: string;
+    decimals: number;
+    aliases: string[];
+  }[];
   symbol: string;
   displayDenom: string;
   baseDenom: string;
   logo: {
     png: string;
     svg: string;
-    tokenID: string;
   };
-  chainLogo?: {
+}
+
+export interface ChainTokenTypeWithLogoAndDisplayName extends ChainTokenType {
+  chainLogo: {
     png: string;
     svg: string;
-    appChainID: string;
   };
-  chainDisplayName?: string;
-  denomUnits: {
-    denom: string;
-    decimals: number;
-    aliases: string[];
-    tokenID: string;
-  }[];
+  displayName?: string;
 }
 
 export interface NetworkStatus {
@@ -397,29 +448,38 @@ export interface NetworkStatus {
   finalizedHeight: 0;
   syncing: true;
   unconfirmedTransactions: number;
-  genesisHeight: number;
   genesis: {
     block: {
       fromFile: string;
     };
     blockTime: number;
-    bftBatchSize: number;
+    chainID: string;
     maxTransactionsSize: number;
     minimumCertifyHeight: number;
-    chainID: string;
+    bftBatchSize: number;
   };
+  genesisHeight: number;
+  registeredModules: string[];
+  moduleCommands: string[];
   network: {
     version: string;
     port: number;
-    seedPeers: [string];
+    seedPeers: {
+      ip: string;
+      port: number;
+    }[];
   };
-  registeredModules: [string];
-  moduleCommands: [string];
+}
+
+export interface NetworkStatusMeta extends MetaTransaction {
+  lastUpdate: string;
+  lastBlockHeight: number;
+  lastBlockID: string;
 }
 
 export interface AppsType {
-  chainID: string;
   chainName: string;
+  chainID: string;
   status: string;
   address: string;
   lastCerticateHeight: number;

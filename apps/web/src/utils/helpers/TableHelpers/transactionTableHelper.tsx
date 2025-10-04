@@ -77,8 +77,8 @@ export const createTransactionRows = (
             {
               children: (
                 <Badge
-                  colorVariant={commandColors[transaction.command]}
-                  label={replaceColonWithSpace(`${transaction?.module}:${transaction?.command}`)}
+                  colorVariant={commandColors[transaction.moduleCommand.split(':')[0]]}
+                  label={replaceColonWithSpace(`${transaction?.moduleCommand}`)}
                 />
               ),
             },
@@ -89,7 +89,7 @@ export const createTransactionRows = (
                     format={'account'}
                     value={transaction.sender}
                     accountIconComponent={
-                      transaction.receivingChainID ? (
+                      transaction.params.receivingChainID ? (
                         <img
                           alt="Chain Icon"
                           className="absolute -left-2 bottom-4 rounded-full"
@@ -104,18 +104,18 @@ export const createTransactionRows = (
               ),
             },
             {
-              children: transaction?.recipient ? (
+              children: transaction?.meta?.recipient ? (
                 <div className="">
                   <FormattedValue
                     format={'account'}
-                    value={transaction.recipient}
+                    value={transaction?.meta?.recipient}
                     accountIconComponent={
-                      transaction.receivingChainID ? (
+                      transaction.params.receivingChainID ? (
                         <img
                           alt="Chain Icon"
                           className="absolute -left-2 bottom-4 rounded-full"
                           height={20}
-                          src={getChainLogo(transaction.receivingChainID)}
+                          src={getChainLogo(transaction.params.receivingChainID)}
                           width={20}
                         />
                       ) : null

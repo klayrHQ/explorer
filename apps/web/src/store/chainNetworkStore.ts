@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { defaultChain } from '../utils/constants.tsx';
+import { defaultChain, defaultChainToken } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
@@ -9,6 +9,8 @@ import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
 interface ChainNetworkStoreProps {
   currentChain: ChainType;
   setCurrentChain: (chain: ChainType) => void;
+  currentChainToken: ChainTokenType;
+  setCurrentChainToken: (token: ChainTokenType) => void;
   currentNetwork: string;
   setCurrentNetwork: (network: string) => void;
   chains: ChainType[];
@@ -22,6 +24,8 @@ export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
   return {
     currentChain: defaultChain,
     setCurrentChain: (chain: ChainType) => set({ currentChain: chain }),
+    currentChainToken: defaultChainToken,
+    setCurrentChainToken: (token: ChainTokenType) => set({ currentChainToken: token }),
     currentNetwork: defaultChain.networkType,
     setCurrentNetwork: (network: string) => {
       set({ currentNetwork: network });
@@ -38,14 +42,16 @@ export const useInitializeCurrentChain = () => {
   const setChains = useChainNetworkStore((state) => state.setChains);
   const chains = useChainNetworkStore((state) => state.chains);
   const setCurrentChain = useChainNetworkStore((state) => state.setCurrentChain);
+  const setCurrentChainToken = useChainNetworkStore((state) => state.setCurrentChainToken);
+  const tokens = useChainNetworkStore((state) => state.tokens);
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
   const setTokens = useChainNetworkStore((state) => state.setTokens);
   const pathName = usePathname();
   const gateways = {
-    mainnet: 'https://gateway-mainnet.klayr.dev/api/v1/',
-    testnet: 'https://gateway-testnet.klayr.dev/api/v1/',
+    mainnet: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
+    testnet: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
   };
 
   const searchParams = useSearchParams();
@@ -71,21 +77,27 @@ export const useInitializeCurrentChain = () => {
           return data.data;
         });
         const chainsData: ChainType[] = await chainsResponse;
+        const uniqueChainsData = Array.from(
+          new Map(chainsData.map((item) => [item.chainID, item])).values(),
+        );
 
         // Fetch tokens
         const tokensResponse = callGetChainTokens({ network: networks.join(',') }).then((data) => {
           return data.data;
         });
         const tokensData: ChainTokenType[] = await tokensResponse;
+        const uniqueTokensData = Array.from(
+          new Map(tokensData.map((item) => [item.tokenID, item])).values(),
+        );
 
-        const tokensFilteredByNetwork = tokensData.filter(
+        const tokensFilteredByNetwork = uniqueTokensData.filter(
           (token) => token.networkType === networkParam,
         );
         setTokens(tokensFilteredByNetwork);
 
         // Match tokens to chains
-        const chainsWithTokens = chainsData?.map((chain: ChainType) => {
-          const matchingTokens = tokensData?.filter(
+        const chainsWithTokens = uniqueChainsData?.map((chain: ChainType) => {
+          const matchingTokens = uniqueTokensData?.filter(
             (token: ChainTokenType) => token.chainID === chain.chainID,
           );
           return { ...chain, tokens: matchingTokens };
@@ -97,6 +109,7 @@ export const useInitializeCurrentChain = () => {
     };
 
     fetchChains();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, pathName]);
 
   useEffect(() => {
@@ -114,5 +127,19 @@ export const useInitializeCurrentChain = () => {
         else router.push('/klayr_mainchain/404');
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chains]);
+
+  useEffect(() => {
+    if (tokens.length > 0 && chainParam && networkParam) {
+      const tokenMatch = tokens
+        ?.filter((token) => token.chainName === chainParam)
+        .find((token) => token.networkType === networkParam);
+
+      if (tokenMatch) {
+        setCurrentChainToken(tokenMatch);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tokens]);
 };

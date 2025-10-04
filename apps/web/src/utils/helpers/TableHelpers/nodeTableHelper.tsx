@@ -3,6 +3,7 @@ import { FormattedValue } from '../../../components/formattedValue.tsx';
 import { StatusBadge, Typography } from '@repo/ui/atoms';
 import { getTableSkeletons } from '../dataHelpers.tsx';
 import React from 'react';
+import Earth from '../../../public/images/earth.svg';
 
 export const createNodesRows = (nodes: NodeType[], loading: boolean) => {
   return !loading
@@ -21,9 +22,11 @@ export const createNodesRows = (nodes: NodeType[], loading: boolean) => {
                   <div
                     className="w-8 h-6 rounded-xs bg-cover bg-center bg-no-repeat shrink-0"
                     style={{
-                      backgroundImage: `url(http://purecatamphetamine.github.io/country-flag-icons/3x2/${node.location.countryCode}.svg)`,
+                      backgroundImage: node.location
+                        ? `url(http://purecatamphetamine.github.io/country-flag-icons/3x2/${node.location.countryCode}.svg)`
+                        : `url(${Earth.src})`,
                     }}
-                    title={node.location.countryName}
+                    title={node.location?.countryName || 'Earth'}
                   ></div>
 
                   <Typography
@@ -31,7 +34,7 @@ export const createNodesRows = (nodes: NodeType[], loading: boolean) => {
                     fontWeight={'semibold'}
                     variant={'paragraph-sm'}
                   >
-                    {node.location.countryName}
+                    {node.location?.countryName || 'Earth'}
                   </Typography>
                 </div>
               ),

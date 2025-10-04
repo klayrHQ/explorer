@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-literals */
 import { Typography } from '../../atoms';
 import { Currency } from '../../atoms/base/currency';
 export interface ValidatorBannerTextProps {

@@ -1,4 +1,6 @@
 'use client';
+
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { TransactionBanner } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
@@ -17,12 +19,21 @@ import { createEventsRows } from '../../utils/helpers/TableHelpers/eventTableHel
 
 export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
   const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);
   const [events, setEvents] = useState<EventsType[]>([]);
   const basePath = useBasePath();
-  const currentChain = useChainNetworkStore((state) => state.currentChain);
-  const symbol = currentChain?.tokens[0]?.symbol;
+  const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
+  const symbol = currentChainToken?.symbol;
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(basePath + '/transactions');
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -74,7 +85,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'Module',
         tooltip: 'The module that the transaction belongs to',
       },
-      value: transaction?.module,
+      value: transaction?.moduleCommand.split(':')[0],
       mobileWidth: 'half',
     },
     {
@@ -82,7 +93,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         label: 'Command',
         tooltip: 'The command that the transaction belongs to',
       },
-      value: transaction?.command,
+      value: transaction?.moduleCommand.split(':')[1],
       mobileWidth: 'half',
     },
     {
@@ -139,13 +150,13 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       value: <FormattedValue format={'account'} value={transaction?.sender} />,
       mobileWidth: 'half',
     },
-    ...(transaction?.recipient
+    ...(transaction?.meta?.recipient
       ? [
           {
             label: {
               label: 'To',
             },
-            value: <FormattedValue format={'account'} value={transaction?.recipient} />,
+            value: <FormattedValue format={'account'} value={transaction?.meta?.recipient} />,
             mobileWidth: 'half',
           },
         ]
@@ -290,12 +301,13 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       <TransactionBanner
         amount={transaction?.params?.amount || '0'}
         basePath={basePath}
+        onBack={handleBack}
         blockHeight={transaction?.block.height || 0}
         blockId={transaction?.block.id || ''}
         executionStatus={transaction?.executionStatus}
         id={transaction?.id || ''}
         image={BannerBG.src}
-        moduleCommand={`${transaction?.module}:${transaction?.command}` || ''}
+        moduleCommand={`${transaction?.moduleCommand}` || ''}
         receiverAddress={transaction?.params?.recipientAddress}
         receiverName={transaction?.meta?.recipient?.name}
         senderAddress={transaction?.sender?.address || ''}

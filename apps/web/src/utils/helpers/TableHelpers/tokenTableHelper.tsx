@@ -1,4 +1,9 @@
-import { ChainTokenType, TokenType } from '../../types.ts';
+import {
+  ChainTokenType,
+  ChainTokenTypeWithLogoAndDisplayName,
+  ClaimableReward,
+  TokenType,
+} from '../../types.ts';
 import { ChainType } from '@repo/ui/types';
 import { KeyValueComponent, Link, StatusIcon, TokenCard } from '@repo/ui/atoms';
 import { Currency } from '../../../components/currency.tsx';
@@ -7,11 +12,36 @@ import { ImageName } from '@repo/ui/molecules';
 import { getTableSkeletons } from '../dataHelpers.tsx';
 import React from 'react';
 import { tokensTableHead } from '../tableHeaders.tsx';
+import Placeholder from '../../../assets/images/placeholder.png';
+
+type TokensChainsMeta = { tokens: ChainTokenType[]; chains: ChainType[] };
+
+const getTokenMeta = (tokenID: string, meta: TokensChainsMeta) => {
+  const tokenMeta = meta.tokens.find((t) => t.tokenID === tokenID);
+  if (tokenMeta) return tokenMeta;
+  return undefined;
+};
+
+const getChainMeta = (tokenID: string, meta: TokensChainsMeta) => {
+  const chainMeta = meta.chains.find((t) => t.chainID === tokenID.substring(0, 8));
+  if (chainMeta) return chainMeta;
+  return undefined;
+};
+
+const getClaimableRewards = (tokenID: string, claimableRewards: ClaimableReward[]) => {
+  const claimable = claimableRewards.find((t) => t.tokenID === tokenID);
+  if (claimable) return claimable.reward;
+  return '0';
+};
 
 export const createUserDetailsTokensRow = (
   token: TokenType[],
-  chain: ChainType,
+  claimableRewards: ClaimableReward[],
   loading: boolean,
+  meta: TokensChainsMeta,
+  tokenPrice: number,
+  fiatSymbol: string,
+  fiatSign: string,
 ) => {
   return !loading
     ? token?.map((token) => {
@@ -26,14 +56,17 @@ export const createUserDetailsTokensRow = (
             ? ((Number(token.lockedBalances?.[0]?.amount ?? 0) / totalBalance) * 100).toFixed(2)
             : '0.00';
 
+        const tokenMeta = getTokenMeta(token.tokenID, meta);
+        const chainMeta = getChainMeta(token.tokenID, meta);
+
         return {
           cells: [
             {
               children: (
                 <TokenCard
-                  image={'https://cdn.pixabay.com/photo/2023/10/17/17/01/cat-8321993_1280.jpg'}
-                  name={'Monkeyz'}
-                  symbol={'MON'}
+                  image={tokenMeta?.logo?.png ?? Placeholder.src}
+                  name={tokenMeta?.tokenName ?? '{Unknown}'}
+                  symbol={tokenMeta?.symbol ?? '???'}
                 />
               ),
             },
@@ -42,10 +75,11 @@ export const createUserDetailsTokensRow = (
                 <div className="flex flex-col">
                   <Currency amount={totalBalance} decimals={0} fontWeight={'semibold'} />
                   <Currency
-                    amount={Number(token.availableBalance) * 2}
+                    amount={totalBalance * Number(tokenPrice)}
                     className="text-onBackgroundLow text-caption"
                     decimals={2}
-                    sign={'$'}
+                    symbol={fiatSymbol}
+                    sign={fiatSign}
                   />
                 </div>
               ),
@@ -71,13 +105,18 @@ export const createUserDetailsTokensRow = (
               ),
             },
             {
-              children: <FormattedValue format={'number'} value={2} />,
+              children: (
+                <Currency
+                  amount={getClaimableRewards(token.tokenID, claimableRewards)}
+                  decimals={0}
+                />
+              ),
             },
             {
               children: (
                 <ImageName
-                  imageUrl={chain.logo.png ?? ''}
-                  name={chain.displayName ?? chain.chainName ?? ''}
+                  imageUrl={chainMeta?.logo.png ?? Placeholder.src}
+                  name={chainMeta?.displayName ?? chainMeta?.chainName ?? '{Unknown}'}
                 />
               ),
             },
@@ -86,7 +125,11 @@ export const createUserDetailsTokensRow = (
       })
     : getTableSkeletons(6);
 };
-export const createTokensRows = (tokens: ChainTokenType[], loading: boolean, basePath: string) => {
+export const createTokensRows = (
+  tokens: ChainTokenTypeWithLogoAndDisplayName[],
+  loading: boolean,
+  basePath: string,
+) => {
   const columnCount = tokensTableHead.length;
 
   return !loading
@@ -97,7 +140,7 @@ export const createTokensRows = (tokens: ChainTokenType[], loading: boolean, bas
               children: (
                 <Link basePath={basePath} href={`/tokens/${token.tokenID}`}>
                   <TokenCard
-                    image={token.logo.png ?? token.logo.svg ?? ''}
+                    image={token.logo.png ?? token.logo.svg ?? Placeholder.src}
                     name={token.tokenName}
                     symbol={token.symbol}
                   />
@@ -108,8 +151,8 @@ export const createTokensRows = (tokens: ChainTokenType[], loading: boolean, bas
               children: (
                 <Link basePath={basePath} href={`/chains/${token.chainID}`}>
                   <ImageName
-                    imageUrl={token.chainLogo?.png ?? token.chainLogo?.svg ?? ''}
-                    name={token.chainDisplayName ?? token.chainName}
+                    imageUrl={token.chainLogo?.png ?? token.chainLogo?.svg ?? Placeholder.src}
+                    name={token.displayName ?? token.chainName}
                   />
                 </Link>
               ),

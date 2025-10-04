@@ -91,6 +91,7 @@ export const Favourites = () => {
   //set newFavourite to false when loading the favourites page and when favourites change while on the page
   useEffect(() => {
     setNewFavourite(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favourites]);
 
   return (

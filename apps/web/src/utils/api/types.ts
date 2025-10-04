@@ -13,6 +13,7 @@ export interface EventsQueryParams {
   height?: string;
   transactionID?: string;
   senderAddress?: string;
+  topic?: string;
   offset?: number;
   limit?: string;
 }
@@ -36,6 +37,7 @@ export interface ValidatorQueryParams {
   offset?: number;
   sort?: string;
   name?: string;
+  includeStatusValue?: boolean;
 }
 
 export interface StakesQueryParams {
@@ -48,6 +50,14 @@ export interface StakersQueryParams {
   address?: string;
   publicKey?: string;
   name?: number;
+}
+
+export interface PosClaimableRewardsQueryParams {
+  address?: string;
+  publicKey?: string;
+  name?: string;
+  limit?: number;
+  offset?: number;
 }
 
 export interface AccountQueryParams {
@@ -78,6 +88,7 @@ export interface ChainsQueryParams {
   limit?: number;
   offset?: number;
   sort?: string;
+  includeBlockchainApp?: boolean;
 }
 
 export interface ChainTokenQueryParams {

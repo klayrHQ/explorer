@@ -14,11 +14,11 @@ import { TopAccountsType } from '../../utils/types.ts';
 export const Accounts = () => {
   const searchParams = useSearchParams();
   const basePath = useBasePath();
-  const currentChain = useChainNetworkStore((state) => state.currentChain);
+  const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
   const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
 
   const fallbackTokenID = currentNetwork === 'mainnet' ? '0000000000000000' : '0100000000000000';
-  const tokenID: string = currentChain?.tokens[0]?.tokenID ?? fallbackTokenID;
+  const tokenID: string = currentChainToken?.tokenID ?? fallbackTokenID;
 
   const {
     data: accounts,

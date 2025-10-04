@@ -15,12 +15,11 @@ interface GatewayClientStore {
 
 export const useGatewayClientStore = create<GatewayClientStore>((set) => ({
   client: axios.create({
-    baseURL: 'https://gateway-mainnet.klayr.dev/api/v1/',
+    baseURL: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
     timeout: 13000,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'Access-Control-Allow-Methods': 'POST,GET',
     },
   }),
   setBaseURL: (gatewayUrl: string) =>

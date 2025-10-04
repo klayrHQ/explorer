@@ -33,6 +33,8 @@ export const BannerText = ({
   timestamp = 1,
   badgeColor,
   basePath,
+  senderImageUrl,
+  receiverImageUrl,
 }: TransactionBannerProps) => {
   const date = dayjs(timestamp * 1000);
 

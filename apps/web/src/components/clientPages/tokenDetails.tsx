@@ -1,20 +1,39 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useChainNetworkStore } from '../../store/chainNetworkStore';
-import { FlexGrid, TabButtons, BannerFrame, Typography } from '@repo/ui/atoms';
+import {
+  FlexGrid,
+  TabButtons,
+  BannerFrame,
+  Typography,
+  Icon,
+  ImageContainer,
+} from '@repo/ui/atoms';
 import { ImageName } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { DetailsSection } from '@repo/ui/organisms';
+import { useBasePath } from '../../utils/hooks/useBasePath';
+
 export const TokenDetails = ({ params }: { params: { id: string } }) => {
+  const router = useRouter();
   const token = useChainNetworkStore((state) => state.tokens).find(
     (token) => token.tokenID === params.id,
   );
   const chains = useChainNetworkStore((state) => state.chains);
   const chainLogo = chains?.find((chain) => chain.chainID === token?.chainID)?.logo;
   const displayName = chains?.find((chain) => chain.chainID === token?.chainID)?.displayName;
+  const basePath = useBasePath();
 
-  const tokenWithChainData = { ...token, chainLogo, chainDisplayName: displayName };
-  console.log(chainLogo);
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(basePath + '/tokens');
+    }
+  };
+
+  const tokenWithChainData = { ...token, chainLogo, displayName };
 
   const details = [
     {
@@ -29,7 +48,7 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
       label: { label: 'Chain Name' },
       value: tokenWithChainData?.chainLogo?.png ? (
         <ImageName
-          name={tokenWithChainData.chainDisplayName ?? tokenWithChainData.chainName ?? ''}
+          name={tokenWithChainData.displayName ?? tokenWithChainData.chainName ?? ''}
           imageUrl={tokenWithChainData.chainLogo.png}
         />
       ) : (
@@ -63,9 +82,15 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
     <FlexGrid direction={'col'} gap={'5xl'}>
       <BannerFrame image={BannerBG}>
         <div className="flex items-center gap-2 ">
+          <Icon
+            onClick={handleBack}
+            className="hover:-translate-x-0.5 cursor-pointer transition-transform"
+            color="white"
+            icon="ArrowLeft"
+          />
           <div className="w-10 h-10 aspect-square rounded-full">
             {tokenWithChainData?.logo?.png && (
-              <img
+              <ImageContainer
                 src={tokenWithChainData.logo.png}
                 alt={tokenWithChainData.tokenName ?? 'Token logo'}
                 className="w-full h-full object-cover rounded-full"

@@ -57,6 +57,8 @@ import { FilterLines } from './general/filter-lines.tsx';
 import { Check } from './general/check.tsx';
 import { LinkExternal } from './general/link-external-01.tsx';
 import { CoinsStacked } from './finance/coins-stacked.tsx';
+import { Apps } from './general/apps.tsx';
+import { Chain } from './general/chain.tsx';
 
 export const icons = {
   ChevronDown,
@@ -118,4 +120,6 @@ export const icons = {
   Check,
   LinkExternal,
   CoinsStacked,
+  Apps,
+  Chain,
 };

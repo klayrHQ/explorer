@@ -150,8 +150,8 @@ export type ColorType =
   | string;
 
 export interface ChainType {
-  chainID: string;
   chainName: string;
+  chainID: string;
   displayName: string;
   title: string;
   status: string;
@@ -160,25 +160,22 @@ export interface ChainType {
   isDefault: boolean;
   genesisURL: string;
   projectPage: string;
-  backgroundColor: string;
   serviceURLs: ServiceURLsType[];
   logo: {
     png: string;
     svg: string;
-    appChainID: string;
   };
+  appPage: string;
+  backgroundColor: string;
   explorers: {
     url: string;
     txnPage: string;
-    appChainID: string;
   }[];
   appNodes: {
     url: string;
     maintainer: string;
     apiCertificatePublicKey: string;
-    appChainID: string;
   }[];
-  tokens: ChainTokenType[];
 }
 
 export type NetworkType = {
@@ -214,6 +211,11 @@ export interface NextValidatorType {
 }
 
 //SEARCH TYPES
+export interface SearchResults {
+  data: SearchResultsType;
+  meta: Record<string, unknown>;
+}
+
 export interface SearchResultsType {
   accounts?: SearchAccount[];
   blocks?: SearchBlock[];
@@ -252,6 +254,7 @@ export type NewsCardPropsArray = NewsCardProps[];
 
 export interface AccountBannerProps {
   senderAddress?: string;
+  publicKey?: string;
   senderName?: string;
   status: string;
   transactions: string | number;
@@ -264,6 +267,7 @@ export interface AccountBannerProps {
   isFavorite: boolean;
   setFavorite: () => void;
   removeFavorite: () => void;
+  onBack: () => void;
 }
 
 export interface SVGIconProps {

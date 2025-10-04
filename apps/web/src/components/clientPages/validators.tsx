@@ -7,7 +7,7 @@ import { validatorsTableHead } from '../../utils/helpers/tableHeaders.tsx';
 import { useSocketStore } from '../../store/socketStore.ts';
 import { ChartDataType, ValidatorType } from '../../utils/types.ts';
 import {
-  callGetChartData,
+  callGetValidatorStatusCount,
   callGetNextValidators,
   callGetValidators,
 } from '../../utils/api/apiCalls.tsx';
@@ -34,7 +34,7 @@ export const Validators = () => {
   const basePath = useBasePath();
 
   useEffect(() => {
-    callGetChartData().then((data) => {
+    callGetValidatorStatusCount().then((data) => {
       const transformedData = Object.entries(data.data).map(([key, value], index) => ({
         id: index + 1,
         label: key.charAt(0).toUpperCase() + key.slice(1),

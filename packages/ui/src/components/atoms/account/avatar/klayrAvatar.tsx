@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import React from 'react';
 import { sha256 } from 'js-sha256';
 import { Gradients, gradientSchemes } from './avatarGradient';
@@ -24,7 +25,10 @@ export const KlayrAvatar = ({
     const gradientScheme =
       gradientSchemes[
         // @ts-ignore
-        addressHashChunks[0].substring(1, 2) % gradientSchemes.length
+
+        // NOTE: substr !== substring
+        // => substr(1, 2) is equal to substring(1, 3)
+        addressHashChunks[0].substring(1, 3) % gradientSchemes.length
       ];
 
     const gradientsSchemesUrlsHashed = {
@@ -244,7 +248,7 @@ const getShape = (chunk: any, size: number, gradient: any, sizeScale = 1) => {
       // @ts-ignore
       ...shapes[shapeNames[chunk.substring(0, 2) % shapeNames.length]].props,
       fill: gradient.url,
-      transform: `rotate(${chunk.substring(1, 2) * 3.6}, ${size / 2}, ${size / 2})`,
+      transform: `rotate(${chunk.substring(1, 3) * 3.6}, ${size / 2}, ${size / 2})`,
     },
   };
 };
@@ -263,7 +267,7 @@ const getBackgroundCircle = (size: number, gradient: any) => ({
 const pickTwo = (chunk: any, options: any) => [
   options[chunk.substring(0, 2) % options.length],
   options[
-    (chunk.substring(0, 2) - 0 + 1 + (chunk.substring(2, 2) % (options.length - 1))) %
+    (chunk.substring(0, 2) - 0 + 1 + (chunk.substring(2, 4) % (options.length - 1))) %
       options.length
   ],
 ];
