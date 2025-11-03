@@ -108,7 +108,7 @@ export const createUserDetailsTokensRow = (
               children: (
                 <Currency
                   amount={getClaimableRewards(token.tokenID, claimableRewards)}
-                  decimals={0}
+                  decimals={8}
                 />
               ),
             },
