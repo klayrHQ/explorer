@@ -244,6 +244,11 @@ export interface TokenSummaryType {
   }[];
   totalAccounts: number;
   totalTransactions: number;
+  totalLocked: {
+    tokenID: string;
+    module: string;
+    total: string;
+  }[];
 }
 
 export type StakesCalculatorPeriodType = 'block' | 'day' | 'month' | 'year' | string;

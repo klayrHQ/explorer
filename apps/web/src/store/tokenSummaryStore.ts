@@ -32,10 +32,15 @@ export const tokenSummaryStore = create<TokenSummaryStore>((set) => ({
         (acc: number, token: { amount: string }) => acc + parseInt(token.amount),
         0,
       );
-      const totalValueLocked = tokenSummary.escrowedAmounts.reduce(
+      const totalEscrowed = tokenSummary.escrowedAmounts.reduce(
         (acc: number, token: { amount: string }) => acc + parseInt(token.amount),
         0,
       );
+      const totalLocked = tokenSummary.totalLocked.reduce(
+        (acc: number, token: { total: string }) => acc + parseInt(token.total),
+        0,
+      );
+      const totalValueLocked = totalEscrowed + totalLocked;
 
       set(() => ({
         tokenSummary: {
