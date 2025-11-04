@@ -11,9 +11,9 @@ import { useApp } from '../utils/hooks/useApp.ts';
 interface ChainNetworkStoreProps {
   currentChain: ChainType | undefined;
   setCurrentChain: (chain: ChainType) => void;
-  currentChainToken: ChainTokenType;
+  currentChainToken: ChainTokenType | undefined;
   setCurrentChainToken: (token: ChainTokenType) => void;
-  currentNetwork: string;
+  currentNetwork: string | undefined;
   setCurrentNetwork: (network: string) => void;
   chains: ChainType[];
   setChains: (chains: ChainType[]) => void;
@@ -26,9 +26,9 @@ export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
   return {
     currentChain: undefined,
     setCurrentChain: (chain: ChainType) => set({ currentChain: chain }),
-    currentChainToken: defaultChainToken,
+    currentChainToken: undefined,
     setCurrentChainToken: (token: ChainTokenType) => set({ currentChainToken: token }),
-    currentNetwork: defaultChain.networkType,
+    currentNetwork: undefined,
     setCurrentNetwork: (network: string) => {
       set({ currentNetwork: network });
     },
@@ -134,7 +134,7 @@ export const useInitializeCurrentChain = () => {
       } else if (pathName.split('/')[2] !== '404') {
         if (window?.location.hostname.includes('vercel'))
           console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
-        else router.push('/klayr_mainchain/404');
+        else router.push(`/${chainParam}/404`);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

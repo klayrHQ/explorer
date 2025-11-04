@@ -9,7 +9,7 @@ import { Link } from '../../atoms';
 interface TransactionBannerProps {
   id: string;
   amount: string | number;
-  symbol: string;
+  symbol?: string;
   senderName?: string;
   senderAddress: string;
   senderImageUrl?: string | null;

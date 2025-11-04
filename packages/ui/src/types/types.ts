@@ -179,7 +179,7 @@ export interface ChainType {
 }
 
 export type NetworkType = {
-  networkName: string;
+  networkName?: string;
   syncing?: boolean | null;
 };
 
