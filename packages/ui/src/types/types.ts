@@ -222,7 +222,7 @@ export interface SearchResultsType {
   transactions?: SearchTransaction[];
 }
 
-interface SearchAccount {
+export interface SearchAccount {
   name: string;
   address: string;
   publicKey: string;

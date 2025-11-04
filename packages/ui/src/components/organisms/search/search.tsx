@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 'use client';
 import { FlexGrid, Typography, Avatar, Icon, NotFound } from '../../atoms';
 import { ClickAwayListener, Popper } from '@mui/base';
@@ -8,12 +9,9 @@ import { CrossClose } from '../../../assets/icons/general/x-close.tsx';
 import { Link } from '../../atoms';
 import debounce from 'lodash/debounce';
 import { truncate } from 'lodash';
-import {
-  SearchQueryParams,
-  useSearchStore,
-} from '../../../../../../apps/web/src/store/searchStore.ts';
+import { SearchQueryParams } from '../../../../../../apps/web/src/store/searchStore.ts';
 import { usePathname } from 'next/navigation';
-import { SearchResultsType } from '@repo/ui/types';
+import { SearchAccount, SearchResultsType } from '@repo/ui/types';
 
 interface SearchProps {
   className?: string;
@@ -40,10 +38,10 @@ export const Search = ({
 
   const pathname = usePathname();
 
-  const handleFocus = (open: boolean) => {
+  const handleFocus = useCallback((open: boolean) => {
     setAnchorEl(inputRef.current);
     setOpen(open);
-  };
+  }, []);
 
   const handleSearch = async (query: string) => {
     if (query.length > 0) {
@@ -61,6 +59,7 @@ export const Search = ({
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedHandleSearch = useCallback(debounce(handleSearch, 500), []);
 
   useEffect(() => {
@@ -102,7 +101,7 @@ export const Search = ({
               'hover:cursor-pointer text-onBackground border-borderLow min-w-full desktop:min-w-auto',
               'desktop:max-w-searchBarWidth placeholder:text-grayFiveOpacity placeholder:text-paragraph-m',
               inputValue.length > 0 && open && 'rounded-b-none',
-            ])}            
+            ])}
             onChange={(e) => {
               setInputValue(e.target.value);
               debouncedHandleSearch(e.target.value);
@@ -139,10 +138,10 @@ export const Search = ({
             >
               {searchResult?.accounts &&
                 searchResult.accounts.length > 0 &&
-                searchResult.accounts.map((account: any, index: number) => (
+                searchResult.accounts.map((account: SearchAccount, index: number) => (
                   <Link
                     basePath={basePath}
-                    href={`/account/${account.name ?? account.address}`}
+                    href={`/account/${account.name || account.address}`}
                     // eslint-disable-next-line react/no-array-index-key
                     key={index}
                   >
@@ -157,7 +156,7 @@ export const Search = ({
                           fontWeight="semibold"
                           variant="paragraph-md"
                         >
-                          {account.name ?? account.address}
+                          {account.name || account.address}
                         </Typography>
                       </FlexGrid>
                     </FlexGrid>
