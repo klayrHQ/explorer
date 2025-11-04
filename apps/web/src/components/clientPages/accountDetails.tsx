@@ -524,7 +524,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     10
   ).toFixed(2);
 
-  const rows = createTransactionRows(
+  const transactionRows = createTransactionRows(
     transactions,
     loading,
     currentChain,
@@ -708,7 +708,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
                   ? transactionsMeta?.total > parseInt(transactionsPagination.limit)
                   : false
               }
-              rows={rows}
+              rows={transactionRows}
               setCurrentNumber={transactionsPagination.handlePageChange}
               totalPages={Math.ceil(
                 (transactionsMeta?.total ?? 0) / Number(transactionsPagination.limit),

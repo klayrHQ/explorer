@@ -2,7 +2,7 @@ import { FlexGrid, MenuItemProps } from '../atoms';
 import { Sidebar, Topbar } from '../organisms';
 import { ReactNode } from 'react';
 import { ChainNetworkPickerProps } from '../molecules';
-import { cls } from '../../utils/functions.ts';
+import { cls } from '../../utils/functions';
 
 interface LayoutProps {
   children: ReactNode;

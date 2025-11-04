@@ -14,7 +14,7 @@ import Placeholder from '../../../assets/images/placeholder.png';
 export const createTransactionRows = (
   transactions: TransactionType[],
   loading: boolean,
-  currentChain: ChainType,
+  currentChain: ChainType | undefined,
   chains: ChainType[],
   copyTooltipText: string,
   setCopyTooltipText: (text: string) => void,
@@ -94,7 +94,7 @@ export const createTransactionRows = (
                           alt="Chain Icon"
                           className="absolute -left-2 bottom-4 rounded-full"
                           height={20}
-                          src={chainLogo.png ?? Placeholder.src}
+                          src={chainLogo?.png ?? Placeholder.src}
                           width={20}
                         />
                       ) : null

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { defaultChain, defaultChainToken } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
 import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
@@ -9,7 +9,7 @@ import { useNetwork } from '../utils/hooks/useNetwork.ts';
 import { useApp } from '../utils/hooks/useApp.ts';
 
 interface ChainNetworkStoreProps {
-  currentChain: ChainType;
+  currentChain: ChainType | undefined;
   setCurrentChain: (chain: ChainType) => void;
   currentChainToken: ChainTokenType;
   setCurrentChainToken: (token: ChainTokenType) => void;
@@ -24,7 +24,7 @@ interface ChainNetworkStoreProps {
 
 export const useChainNetworkStore = create<ChainNetworkStoreProps>((set) => {
   return {
-    currentChain: defaultChain,
+    currentChain: undefined,
     setCurrentChain: (chain: ChainType) => set({ currentChain: chain }),
     currentChainToken: defaultChainToken,
     setCurrentChainToken: (token: ChainTokenType) => set({ currentChainToken: token }),
@@ -127,10 +127,10 @@ export const useInitializeCurrentChain = () => {
       if (chainMatch) {
         if (chainMatch.serviceURLs.length > 0) {
           chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
-          setCurrentChain(chainMatch);
-        } else {
+        } else if (pathName.split('/')[2] !== '404') {
           router.push(`/${chainParam}/404`);
         }
+        setCurrentChain(chainMatch);
       } else if (pathName.split('/')[2] !== '404') {
         if (window?.location.hostname.includes('vercel'))
           console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
@@ -138,7 +138,7 @@ export const useInitializeCurrentChain = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chains]);
+  }, [chains, chainParam, networkParam]);
 
   useEffect(() => {
     if (tokens.length > 0 && chainParam && networkParam) {
@@ -151,5 +151,5 @@ export const useInitializeCurrentChain = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokens]);
+  }, [tokens, chainParam, networkParam]);
 };

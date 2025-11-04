@@ -1,14 +1,21 @@
 'use client';
 import React, { useState } from 'react';
 import { ChainType, NetworkType } from '../../../types/types.ts';
-import { Button, FlexGrid, KeyValueComponent, StatusIcon, Typography } from '../../atoms';
+import {
+  Button,
+  FlexGrid,
+  KeyValueComponent,
+  SkeletonComponent,
+  StatusIcon,
+  Typography,
+} from '../../atoms';
 import { ImageContainer } from '../../atoms';
 import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
 import { useRouter } from 'next/navigation';
 
 export interface ChainNetworkPickerProps {
-  currentChain: ChainType;
+  currentChain: ChainType | undefined;
   currentNetwork: NetworkType;
   chains?: ChainType[];
   networks?: string[];
@@ -137,78 +144,84 @@ export const ChainNetworkPicker = ({
 
   return (
     <FlexGrid gap="1.5xl" mobileDirection="row">
-      <CustomModal onClose={handleClose} open={isModalOpen} title="Select environments">
-        <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
-          <FlexGrid
-            alignItems="center"
-            className={'w-full'}
-            justify="between"
-            mobileDirection="row"
-          >
-            <Typography color="onBackgroundLow" variant="paragraph-md">
-              {'Network'}
-            </Typography>
-            <CustomSelect
-              classNameList="border-backgroundTertiary border-t-0"
-              defaultValue={currentNetwork?.networkName}
-              onChange={(value) => handleNetworkSelect(value)}
-              options={networkOptions}
-            />
+      {currentChain ? (
+        <CustomModal onClose={handleClose} open={isModalOpen} title="Select environments">
+          <FlexGrid alignItems="start" direction="col" gap="4" justify="end">
+            <FlexGrid
+              alignItems="center"
+              className={'w-full'}
+              justify="between"
+              mobileDirection="row"
+            >
+              <Typography color="onBackgroundLow" variant="paragraph-md">
+                {'Network'}
+              </Typography>
+              <CustomSelect
+                classNameList="border-backgroundTertiary border-t-0"
+                defaultValue={currentNetwork?.networkName}
+                onChange={(value) => handleNetworkSelect(value)}
+                options={networkOptions}
+              />
+            </FlexGrid>
+            <FlexGrid
+              alignItems="center"
+              className={'w-full'}
+              justify="between"
+              mobileDirection="row"
+            >
+              <Typography color="onBackgroundLow" variant="paragraph-md">
+                {'Chain'}
+              </Typography>
+              <CustomSelect
+                classNameList="border-backgroundTertiary border-t-0"
+                defaultValue={currentChain?.chainName}
+                onChange={(value) => setSelectedChain(value)}
+                options={chainOptions}
+                value={selectedChain}
+              />
+            </FlexGrid>
+            <FlexGrid alignItems="center" className="w-full mt-md" gap="1" justify="end">
+              <Button
+                align="none"
+                className="hidden desktop:flex text-gray-5 hover:text-gray-1"
+                label="Cancel"
+                onClick={handleClose}
+                variant="transparent"
+              />
+              <Button
+                align="none"
+                className="w-full desktop:w-auto"
+                disabled={!selectedChain && !selectedNetwork}
+                label="Save"
+                onClick={handleSave}
+              />
+            </FlexGrid>
           </FlexGrid>
-          <FlexGrid
-            alignItems="center"
-            className={'w-full'}
-            justify="between"
-            mobileDirection="row"
-          >
-            <Typography color="onBackgroundLow" variant="paragraph-md">
-              {'Chain'}
-            </Typography>
-            <CustomSelect
-              classNameList="border-backgroundTertiary border-t-0"
-              defaultValue={currentChain?.chainName}
-              onChange={(value) => setSelectedChain(value)}
-              options={chainOptions}
-              value={selectedChain}
-            />
-          </FlexGrid>
-          <FlexGrid alignItems="center" className="w-full mt-md" gap="1" justify="end">
-            <Button
-              align="none"
-              className="hidden desktop:flex text-gray-5 hover:text-gray-1"
-              label="Cancel"
-              onClick={handleClose}
-              variant="transparent"
-            />
-            <Button
-              align="none"
-              className="w-full desktop:w-auto"
-              disabled={!selectedChain && !selectedNetwork}
-              label="Save"
-              onClick={handleSave}
-            />
-          </FlexGrid>
-        </FlexGrid>
-      </CustomModal>
-      <FlexGrid gap="1.5xl" mobileDirection={'row'} onClick={handleOpen}>
+        </CustomModal>
+      ) : null}
+      <FlexGrid gap="1.5xl" mobileDirection={'row'} onClick={currentChain ? handleOpen : undefined}>
         <KeyValueComponent
           contentValue={currentNetwork.networkName || 'Network'}
           hover
           keyValue={<StatusIcon status={currentNetworkStatusClass} />}
         />
-        <KeyValueComponent
-          contentValue={currentChain?.displayName ?? currentChain?.chainName ?? 'Select chain'}
-          hover
-          keyValue={
-            <ImageContainer
-              alt={currentChain?.displayName}
-              component={imgComponent}
-              src={currentChain?.logo.png}
-              variant={'chainLogo'}
-            />
-          }
-          onClick={() => setIsModalOpen(true)}
-        />
+        {currentChain ? (
+          <KeyValueComponent
+            contentValue={currentChain?.displayName ?? currentChain?.chainName ?? 'Select chain'}
+            hover
+            keyValue={
+              <ImageContainer
+                alt={currentChain?.displayName}
+                component={imgComponent}
+                src={currentChain?.logo.png}
+                variant={'chainLogo'}
+              />
+            }
+            onClick={() => setIsModalOpen(true)}
+          />
+        ) : (
+          <SkeletonComponent width={'16'} height={'4'} />
+        )}
       </FlexGrid>
     </FlexGrid>
   );
