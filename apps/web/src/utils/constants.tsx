@@ -4,6 +4,7 @@ import LogoText from '../assets/images/logoText.svg';
 import { ColorType } from '@repo/ui/types';
 import React from 'react';
 import { ChainTokenType, ChainType } from './types';
+import Placeholder from '../assets/images/placeholder.png';
 
 export const currencies = [
   {
@@ -151,6 +152,28 @@ export const performanceStats = [
   },
 ];
 
+export const defaultUnknownChain: ChainType = {
+  title: '{Unknown}',
+  displayName: '{Unknown}',
+  description: '',
+  chainName: '{Unknown}',
+  chainID: 'XXXXXXXX',
+  networkType: '',
+  genesisURL: '',
+  projectPage: '',
+  appPage: '',
+  isDefault: false,
+  status: '',
+  logo: {
+    png: Placeholder.src,
+    svg: '',
+  },
+  backgroundColor: '',
+  serviceURLs: [],
+  explorers: [],
+  appNodes: [],
+};
+
 export const defaultChain: ChainType = {
   chainID: '00000000',
   chainName: 'klayr_mainchain',
@@ -245,6 +268,23 @@ export const defaultTestnetChain: ChainType = {
   blockchainApp: {
     status: 'activated',
   },
+};
+
+export const defaultUnknownChainToken: ChainTokenType = {
+  chainName: '{Unknown}',
+  networkType: '',
+  tokenID: 'XXXXXXXXXXXXXXXX',
+  chainID: 'XXXXXXXX',
+  tokenName: '{Unknown}',
+  description: '',
+  symbol: '',
+  displayDenom: '',
+  baseDenom: '',
+  logo: {
+    png: Placeholder.src,
+    svg: '',
+  },
+  denomUnits: [],
 };
 
 export const defaultChainToken: ChainTokenType = {

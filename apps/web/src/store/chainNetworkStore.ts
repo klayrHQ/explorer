@@ -4,6 +4,8 @@ import {
   defaultChainToken,
   defaultTestnetChain,
   defaultTestnetChainToken,
+  defaultUnknownChain,
+  defaultUnknownChainToken,
 } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
 import { usePathname, useRouter } from 'next/navigation';
@@ -144,6 +146,8 @@ export const useInitializeCurrentChain = () => {
         if (window?.location.hostname.includes('vercel'))
           console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
         else router.push(`/${chainParam}/404`);
+      } else {
+        chainParam !== 'klayr_mainchain' && setCurrentChain(defaultUnknownChain);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -157,6 +161,8 @@ export const useInitializeCurrentChain = () => {
 
       if (tokenMatch) {
         chainParam !== 'klayr_mainchain' && setCurrentChainToken(tokenMatch);
+      } else {
+        chainParam !== 'klayr_mainchain' && setCurrentChainToken(defaultUnknownChainToken);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
