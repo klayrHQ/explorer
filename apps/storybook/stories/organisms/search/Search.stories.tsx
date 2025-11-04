@@ -60,7 +60,7 @@ let searchResult = mockGetSearchResponse;
 export const Primary: Story = {
   args: {
     searchResult: searchResult,
-    callSearch: () => mockGetSearchResponse,
+    callSearch: () => Promise.resolve(mockGetSearchResponse),
     setSearchResults: (result: any) => {
       searchResult = result;
     },

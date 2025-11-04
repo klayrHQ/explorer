@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 import { Logo } from '@repo/ui/atoms';
-import LogoImg from "../../assets/images/logo.svg";
+import LogoImg from '../../assets/images/logo.svg';
 
 const meta = {
   title: 'Atoms/Images/Logo',
@@ -11,7 +11,7 @@ const meta = {
   tags: ['autodocs'],
   args: {
     logoSrc: LogoImg.src,
-    altText: "placeholder",
+    altText: 'placeholder',
   },
 };
 
@@ -20,12 +20,12 @@ type Story = StoryObj<typeof meta>;
 
 export const WithText: Story = {
   args: {
-    logoText: "klayr",
+    // logoText: "klayr",
   },
 };
 
 export const WithoutText: Story = {
   args: {
-    logoText: undefined
+    // logoText: undefined
   },
 };

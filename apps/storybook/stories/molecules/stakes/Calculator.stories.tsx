@@ -1,7 +1,7 @@
-import { StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Calculator } from '@repo/ui/molecules';
 
-const meta = {
+const meta: Meta<typeof Calculator> = {
   title: 'Molecules/Stakes/Calculator',
   component: Calculator,
   parameters: {

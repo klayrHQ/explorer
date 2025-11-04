@@ -1,9 +1,9 @@
-import type { StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { SubMenu } from '@repo/ui/molecules';
-import {MenuItem} from "@repo/ui/atoms";
-import {useEffect, useState} from "react";
+import { MenuItem } from '@repo/ui/atoms';
+import { useEffect, useState } from 'react';
 
-const meta = {
+const meta: Meta<typeof SubMenu> = {
   title: 'Molecules/Menu/SubMenu',
   component: SubMenu,
   parameters: {
@@ -40,34 +40,34 @@ const subMenu = [
 
 const Template: Story = {
   render: (args) => {
-    const [anchorElement, setAnchorElement] = useState<Element | null>(null)
+    const [anchorElement, setAnchorElement] = useState<Element | null>(null);
 
     useEffect(() => {
-      setAnchorElement(document.querySelector(".subMenu-container"));
+      setAnchorElement(document.querySelector('.subMenu-container'));
     }, []);
 
     return (
-      <div className={"subMenu-container ml-[-120px] w-[5px] h-[200px]"}>
+      <div className={'subMenu-container ml-[-120px] w-[5px] h-[200px]'}>
         <SubMenu {...args} anchorElement={anchorElement as HTMLElement} />
       </div>
-    )
+    );
   },
-}
+};
 
 const MenuItemTemplate: Story = {
   render: (args) => (
-    <div className={"w-[240px] h-[200px]"}>
-      <MenuItem icon={"DataFlow"} label={"Blockchain"} subMenu={args.menuItems} />
+    <div className={'w-[240px] h-[200px]'}>
+      <MenuItem icon={'DataFlow'} label={'Blockchain'} subMenu={args.menuItems} />
     </div>
   ),
-}
+};
 
 export const Default: Story = {
   ...Template,
   args: {
     menuItems: subMenu,
     open: true,
-    anchorElement: null
+    anchorElement: null,
   },
 };
 
@@ -76,6 +76,6 @@ export const WithMenuItem: Story = {
   args: {
     menuItems: subMenu,
     open: false,
-    anchorElement: null
+    anchorElement: null,
   },
 };

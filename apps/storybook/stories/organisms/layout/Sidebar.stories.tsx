@@ -1,10 +1,10 @@
-import type { StoryObj } from '@storybook/react';
-import {Sidebar} from "@repo/ui/organisms";
-import LogoImg from "../../assets/images/logo.svg";
-import LogoText from "../../assets/images/logoText.svg";
-import {menuItems} from "@/stories/utils/mockup";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Sidebar } from '@repo/ui/organisms';
+import LogoImg from '../../assets/images/logo.svg';
+import LogoText from '../../assets/images/logoText.svg';
+import { menuItems } from '@/stories/utils/mockup';
 
-const meta = {
+const meta: Meta<typeof Sidebar> = {
   title: 'Organisms/Layout/Sidebar',
   component: Sidebar,
   parameters: {
@@ -15,25 +15,25 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-type Template = Omit<Story, "args">;
+type Template = Omit<Story, 'args'>;
 
 const Template: Template = {
   render: (args) => (
-    <div className={"w-sidebarWidth"}>
+    <div className={'w-sidebarWidth'}>
       <Sidebar {...args} />
     </div>
   ),
-}
+};
 
 export const Default: Story = {
   ...Template,
   args: {
     menuItems,
     logo: {
-      logoText: 'klayr',
+      // logoText: 'klayr',
       logoSrc: LogoImg.src,
       logoFullSrc: LogoText.src,
       altText: 'klayr logo',
-    }
+    },
   },
 };

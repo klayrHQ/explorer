@@ -50,7 +50,7 @@ export const WithFilters: Story = {
     keyPrefix: 'sb-table',
     rows,
     headCols,
-    filters: true,
+    // filters: true,
     totalPages: 0,
   },
 };
@@ -62,7 +62,7 @@ export const WithPaginationAndFilters: Story = {
     rows,
     headCols,
     pagination: true,
-    filters: true,
+    // filters: true,
     totalPages: 15,
   },
 };
