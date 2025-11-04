@@ -129,4 +129,9 @@ export const safeLocalStorage = {
       window.localStorage.setItem(key, value);
     }
   },
+  removeItem: (key: string) => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(key);
+    }
+  },
 };
