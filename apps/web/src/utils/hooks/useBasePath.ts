@@ -1,6 +1,6 @@
-import { useSearchParams } from 'next/navigation';
+import { useApp } from './useApp';
 
 export const useBasePath = () => {
-  const searchParams = useSearchParams();
-  return searchParams.get('app') ? `/${searchParams.get('app')}` : '/klayr_mainchain';
+  const app = useApp();
+  return `/${app}`;
 };

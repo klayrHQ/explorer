@@ -5,6 +5,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
 import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
+import { useNetwork } from '../utils/hooks/useNetwork.ts';
+import { useApp } from '../utils/hooks/useApp.ts';
 
 interface ChainNetworkStoreProps {
   currentChain: ChainType;
@@ -54,9 +56,8 @@ export const useInitializeCurrentChain = () => {
     testnet: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
   };
 
-  const searchParams = useSearchParams();
-  const networkParam = searchParams.get('network');
-  const chainParam = searchParams.get('app');
+  const networkParam = useNetwork();
+  const chainParam = useApp();
 
   const router = useRouter();
 
@@ -71,46 +72,51 @@ export const useInitializeCurrentChain = () => {
     networkParam && networks.includes(networkParam) && setCurrentNetwork(networkParam);
 
     const fetchChains = async () => {
-      try {
-        // Fetch chains
-        const chainsResponse = callGetChains({}).then((data) => {
-          return data.data;
-        });
-        const chainsData: ChainType[] = await chainsResponse;
-        const uniqueChainsData = Array.from(
-          new Map(chainsData.map((item) => [item.chainID, item])).values(),
-        );
-
-        // Fetch tokens
-        const tokensResponse = callGetChainTokens({ network: networks.join(',') }).then((data) => {
-          return data.data;
-        });
-        const tokensData: ChainTokenType[] = await tokensResponse;
-        const uniqueTokensData = Array.from(
-          new Map(tokensData.map((item) => [item.tokenID, item])).values(),
-        );
-
-        const tokensFilteredByNetwork = uniqueTokensData.filter(
-          (token) => token.networkType === networkParam,
-        );
-        setTokens(tokensFilteredByNetwork);
-
-        // Match tokens to chains
-        const chainsWithTokens = uniqueChainsData?.map((chain: ChainType) => {
-          const matchingTokens = uniqueTokensData?.filter(
-            (token: ChainTokenType) => token.chainID === chain.chainID,
+      // Only fetch chains if both network and chain param is available
+      if (networkParam && chainParam) {
+        try {
+          // Fetch chains
+          const chainsResponse = callGetChains({}).then((data) => {
+            return data.data;
+          });
+          const chainsData: ChainType[] = await chainsResponse;
+          const uniqueChainsData = Array.from(
+            new Map(chainsData.map((item) => [item.chainID, item])).values(),
           );
-          return { ...chain, tokens: matchingTokens };
-        });
-        setChains(chainsWithTokens);
-      } catch (error) {
-        console.error('Error fetching chains', error);
+
+          // Fetch tokens
+          const tokensResponse = callGetChainTokens({ network: networks.join(',') }).then(
+            (data) => {
+              return data.data;
+            },
+          );
+          const tokensData: ChainTokenType[] = await tokensResponse;
+          const uniqueTokensData = Array.from(
+            new Map(tokensData.map((item) => [item.tokenID, item])).values(),
+          );
+
+          const tokensFilteredByNetwork = uniqueTokensData.filter(
+            (token) => token.networkType === networkParam,
+          );
+          setTokens(tokensFilteredByNetwork);
+
+          // Match tokens to chains
+          const chainsWithTokens = uniqueChainsData?.map((chain: ChainType) => {
+            const matchingTokens = uniqueTokensData?.filter(
+              (token: ChainTokenType) => token.chainID === chain.chainID,
+            );
+            return { ...chain, tokens: matchingTokens };
+          });
+          setChains(chainsWithTokens);
+        } catch (error) {
+          console.error('Error fetching chains', error);
+        }
       }
     };
 
     fetchChains();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, pathName]);
+  }, [networkParam, chainParam, pathName]);
 
   useEffect(() => {
     if (chains.length > 0 && chainParam && networkParam) {
