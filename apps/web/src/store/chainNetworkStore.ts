@@ -125,8 +125,12 @@ export const useInitializeCurrentChain = () => {
         .find((chain) => chain.networkType === networkParam);
 
       if (chainMatch) {
-        chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
-        setCurrentChain(chainMatch);
+        if (chainMatch.serviceURLs.length > 0) {
+          chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
+          setCurrentChain(chainMatch);
+        } else {
+          router.push(`/${chainParam}/404`);
+        }
       } else if (pathName.split('/')[2] !== '404') {
         if (window?.location.hostname.includes('vercel'))
           console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
