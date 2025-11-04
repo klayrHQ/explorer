@@ -159,7 +159,7 @@ export const defaultChain: ChainType = {
   status: 'activated',
   description: 'Metadata configuration for the Klayr blockchain (mainchain) in mainnet',
   networkType: 'mainnet',
-  isDefault: false,
+  isDefault: true,
   genesisURL:
     'https://github.com/KlayrHQ/klayr-core/blob/development/config/mainnet/genesis_assets.json',
   projectPage: 'https://klayr.xyz',
@@ -196,6 +196,57 @@ export const defaultChain: ChainType = {
   ],
 };
 
+export const defaultTestnetChain: ChainType = {
+  chainName: 'klayr_mainchain',
+  displayName: 'Klayr',
+  chainID: '01000000',
+  title: 'Klayr - Testnet',
+  description: 'Metadata configuration for the Klayr blockchain (mainchain) in testnet',
+  networkType: 'testnet',
+  isDefault: true,
+  status: 'activated',
+  genesisURL:
+    'https://github.com/KlayrHQ/klayr-core/blob/development/config/testnet/genesis_assets.json',
+  projectPage: 'https://klayr.xyz',
+  appPage: 'https://klayr.xyz',
+  serviceURLs: [
+    {
+      http: 'https://testnet-service.klayr.xyz',
+      ws: 'wss://testnet-service.klayr.xyz',
+      apiCertificatePublicKey:
+        '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoWCLObWsqufJm3aOSigy\nvc+kpjE2058UtgBgNfqp7nfcHePMzSpLZrLiILN8m5y0E4UYT4ywLSe7nzzbmLEW\n+BTSItaAPP/cOLPA89VhbmEDQJa2ndfGT5CGP++duvlQ6yH0JHdOkwIpr+o7Mjvs\nSfgIMtALtm5uNOGN4sJSFoNPjXDpskgHi6rOXXifN89wXx38KNCll+tlzUFjOtLR\nZI8ykq+5TDtS9NBJKqIHS3xIQXpXHK63mA9ogmmMwN/4cPh8S+vVUigzdorH6+4m\nFSdE+KfZHc+eK5mr+FfCRJOo6PKMCEeAM1ykBvyX93PwqCndeM+ldL2/EfQvijN+\n+wIDAQAB\n-----END PUBLIC KEY-----',
+    },
+  ],
+  logo: {
+    png: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/testnet/Klayr/images/application/klayr.png',
+    svg: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/testnet/Klayr/images/application/klayr.svg',
+  },
+  explorers: [
+    {
+      url: 'https://testnet-explorer.klayr.xyz',
+      txnPage: 'https://testnet-explorer.klayr.xyz/transactions',
+    },
+  ],
+  appNodes: [
+    {
+      url: 'https://testnet.klayr.xyz',
+      apiCertificatePublicKey:
+        '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoWCLObWsqufJm3aOSigy\nvc+kpjE2058UtgBgNfqp7nfcHePMzSpLZrLiILN8m5y0E4UYT4ywLSe7nzzbmLEW\n+BTSItaAPP/cOLPA89VhbmEDQJa2ndfGT5CGP++duvlQ6yH0JHdOkwIpr+o7Mjvs\nSfgIMtALtm5uNOGN4sJSFoNPjXDpskgHi6rOXXifN89wXx38KNCll+tlzUFjOtLR\nZI8ykq+5TDtS9NBJKqIHS3xIQXpXHK63mA9ogmmMwN/4cPh8S+vVUigzdorH6+4m\nFSdE+KfZHc+eK5mr+FfCRJOo6PKMCEeAM1ykBvyX93PwqCndeM+ldL2/EfQvijN+\n+wIDAQAB\n-----END PUBLIC KEY-----',
+      maintainer: 'Klayr Labs B.V.',
+    },
+    {
+      url: 'wss://testnet.klayr.xyz',
+      apiCertificatePublicKey:
+        '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoWCLObWsqufJm3aOSigy\nvc+kpjE2058UtgBgNfqp7nfcHePMzSpLZrLiILN8m5y0E4UYT4ywLSe7nzzbmLEW\n+BTSItaAPP/cOLPA89VhbmEDQJa2ndfGT5CGP++duvlQ6yH0JHdOkwIpr+o7Mjvs\nSfgIMtALtm5uNOGN4sJSFoNPjXDpskgHi6rOXXifN89wXx38KNCll+tlzUFjOtLR\nZI8ykq+5TDtS9NBJKqIHS3xIQXpXHK63mA9ogmmMwN/4cPh8S+vVUigzdorH6+4m\nFSdE+KfZHc+eK5mr+FfCRJOo6PKMCEeAM1ykBvyX93PwqCndeM+ldL2/EfQvijN+\n+wIDAQAB\n-----END PUBLIC KEY-----',
+      maintainer: 'Klayr Labs B.V.',
+    },
+  ],
+  backgroundColor: '#EDEDCE',
+  blockchainApp: {
+    status: 'activated',
+  },
+};
+
 export const defaultChainToken: ChainTokenType = {
   chainName: 'klayr_mainchain',
   networkType: 'mainnet',
@@ -210,6 +261,34 @@ export const defaultChainToken: ChainTokenType = {
     png: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/tokens/klayr.png',
     svg: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/mainnet/Klayr/images/tokens/klayr.svg',
   },
+  denomUnits: [
+    {
+      denom: 'beddows',
+      decimals: 0,
+      aliases: ['Beddows'],
+    },
+    {
+      denom: 'kly',
+      decimals: 8,
+      aliases: ['Klayr'],
+    },
+  ],
+};
+
+export const defaultTestnetChainToken: ChainTokenType = {
+  chainID: '01000000',
+  chainName: 'klayr_mainchain',
+  tokenID: '0100000000000000',
+  tokenName: 'Klayr',
+  networkType: 'testnet',
+  description: 'Default token for the entire Klayr ecosystem',
+  logo: {
+    png: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/testnet/Klayr/images/tokens/klayr.png',
+    svg: 'https://raw.githubusercontent.com/KlayrHQ/app-registry/main/testnet/Klayr/images/tokens/klayr.svg',
+  },
+  symbol: 'KLY',
+  displayDenom: 'kly',
+  baseDenom: 'beddows',
   denomUnits: [
     {
       denom: 'beddows',

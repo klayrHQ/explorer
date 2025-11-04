@@ -1,5 +1,10 @@
 import { create } from 'zustand';
-import { defaultChain, defaultChainToken } from '../utils/constants.tsx';
+import {
+  defaultChain,
+  defaultChainToken,
+  defaultTestnetChain,
+  defaultTestnetChainToken,
+} from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -58,18 +63,22 @@ export const useInitializeCurrentChain = () => {
 
   const networkParam = useNetwork();
   const chainParam = useApp();
-
   const router = useRouter();
 
   useEffect(() => {
+    networkParam && networks.includes(networkParam) && setCurrentNetwork(networkParam);
+
     if (chainParam === 'klayr_mainchain') {
       if (networkParam === 'mainnet') {
         setBaseUrl(gateways.mainnet);
+        setCurrentChain(defaultChain);
+        setCurrentChainToken(defaultChainToken);
       } else if (networkParam === 'testnet') {
         setBaseUrl(gateways.testnet);
+        setCurrentChain(defaultTestnetChain);
+        setCurrentChainToken(defaultTestnetChainToken);
       }
     }
-    networkParam && networks.includes(networkParam) && setCurrentNetwork(networkParam);
 
     const fetchChains = async () => {
       // Only fetch chains if both network and chain param is available
@@ -130,7 +139,7 @@ export const useInitializeCurrentChain = () => {
         } else if (pathName.split('/')[2] !== '404') {
           router.push(`/${chainParam}/404`);
         }
-        setCurrentChain(chainMatch);
+        chainParam !== 'klayr_mainchain' && setCurrentChain(chainMatch);
       } else if (pathName.split('/')[2] !== '404') {
         if (window?.location.hostname.includes('vercel'))
           console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
@@ -147,7 +156,7 @@ export const useInitializeCurrentChain = () => {
         .find((token) => token.networkType === networkParam);
 
       if (tokenMatch) {
-        setCurrentChainToken(tokenMatch);
+        chainParam !== 'klayr_mainchain' && setCurrentChainToken(tokenMatch);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
