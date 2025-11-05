@@ -13,6 +13,7 @@ import { ImageContainer } from '../../atoms';
 import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
 import { useRouter } from 'next/navigation';
+import { explorerURL } from 'web/src/utils/constants.tsx';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType | undefined;
@@ -38,7 +39,6 @@ export const ChainNetworkPicker = ({
     (chain) => chain.networkType === (selectedNetwork ?? currentNetwork.networkName),
   );
   const router = useRouter();
-  const baseExplorerUrl = `explorer.klayr.dev`;
   const localhostHostnames = ['localhost', 'explorer.localhost', 'testnet-explorer.localhost'];
 
   const handleNetworkSelect = (network: string) => {
@@ -76,8 +76,8 @@ export const ChainNetworkPicker = ({
     if (network) {
       if (!localhostHostnames.includes(window.location.hostname)) {
         network === 'mainnet'
-          ? router.push(`https://${baseExplorerUrl}`)
-          : router.push(`https://${network}-${baseExplorerUrl}`);
+          ? router.push(`https://${explorerURL}`)
+          : router.push(`https://${network}-${explorerURL}`);
       } else {
         network === 'mainnet'
           ? router.push(`http://explorer.localhost:${window.location.port}`)
@@ -94,8 +94,8 @@ export const ChainNetworkPicker = ({
       router.push(`/${chain.chainName}`);
       if (!localhostHostnames.includes(window.location.hostname)) {
         network === 'mainnet'
-          ? router.push(`https://${baseExplorerUrl}/${chain.chainName}`)
-          : router.push(`https://${network}-${baseExplorerUrl}/${chain.chainName}`);
+          ? router.push(`https://${explorerURL}/${chain.chainName}`)
+          : router.push(`https://${network}-${explorerURL}/${chain.chainName}`);
       } else {
         network === 'mainnet'
           ? router.push(`http://explorer.localhost:${window.location.port}/${chain.chainName}`)

@@ -12,6 +12,7 @@ export const serviceMainnetURL =
 export const serviceTestnetURL =
   process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET || 'testnet-service.klayr.xyz';
 export const serviceAPIVersion = process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION || 'v3';
+export const explorerURL = process.env.NEXT_PUBLIC_KLAYR_EXPLORER_URL || 'explorer.klayr.xyz';
 
 export const currencies = [
   {
@@ -208,8 +209,8 @@ export const defaultChain: ChainType = {
   },
   explorers: [
     {
-      url: 'https://explorer.klayr.dev/',
-      txnPage: 'https://explorer.klayr.dev/transactions',
+      url: `https://${explorerURL}/`,
+      txnPage: `https://${explorerURL}/transactions`,
     },
   ],
   appNodes: [
