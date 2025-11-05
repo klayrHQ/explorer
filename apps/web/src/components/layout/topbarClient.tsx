@@ -80,10 +80,10 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   const kpisObject = [
     {
       keyValue: 'Height: ',
-      contentValue: nodeInfo?.height ? (
+      contentValue: nodeInfo ? (
         <FormattedValue
-          value={nodeInfo?.height}
-          format={'number'}
+          value={nodeInfo?.height || '-'}
+          format={nodeInfo?.height ? 'number' : 'string'}
           typographyProps={{ fontWeight: 'medium' }}
         />
       ) : (
