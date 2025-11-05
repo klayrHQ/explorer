@@ -491,12 +491,32 @@ export const userTokensTableHead = [
   },
 ];
 
-export const tokensTableHead = [
+export const tokensTableHead = (
+  onSortChange: (column: string) => void,
+  sortField: string,
+  sortOrder: string,
+): TableCellType[] => [
   {
-    children: 'Token',
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="tokenName"
+        title="Token"
+      />
+    ),
   },
   {
-    children: 'Chain',
+    children: (
+      <SortingTitle
+        onSortChange={onSortChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        sortValue="chainName"
+        title="Chain"
+      />
+    ),
   },
   {
     children: 'Description',

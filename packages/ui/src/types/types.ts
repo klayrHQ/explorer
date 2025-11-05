@@ -179,7 +179,7 @@ export interface ChainType {
 }
 
 export type NetworkType = {
-  networkName: string;
+  networkName?: string;
   syncing?: boolean | null;
 };
 
@@ -222,7 +222,7 @@ export interface SearchResultsType {
   transactions?: SearchTransaction[];
 }
 
-interface SearchAccount {
+export interface SearchAccount {
   name: string;
   address: string;
   publicKey: string;
@@ -258,7 +258,7 @@ export interface AccountBannerProps {
   senderName?: string;
   status: string;
   transactions: string | number;
-  coinRate?: number;
+  coinRate?: number | string;
   balance?: string | number;
   balanceSymbol?: string;
   rank: number | string;

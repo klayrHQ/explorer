@@ -168,7 +168,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const tokenID = currentChainToken?.tokenID;
   const chains = useChainNetworkStore((state) => state.chains);
   const symbol = currentChainToken?.symbol;
-  const { klyPrice, fiatSymbol, fiatSign } = useMarketcap();
+  const { price, fiatSymbol, fiatSign } = useMarketcap();
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
@@ -524,7 +524,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     10
   ).toFixed(2);
 
-  const rows = createTransactionRows(
+  const transactionRows = createTransactionRows(
     transactions,
     loading,
     currentChain,
@@ -548,7 +548,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     claimableRewards,
     loading,
     meta,
-    klyPrice,
+    price,
     fiatSymbol,
     fiatSign,
   );
@@ -708,7 +708,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
                   ? transactionsMeta?.total > parseInt(transactionsPagination.limit)
                   : false
               }
-              rows={rows}
+              rows={transactionRows}
               setCurrentNumber={transactionsPagination.handlePageChange}
               totalPages={Math.ceil(
                 (transactionsMeta?.total ?? 0) / Number(transactionsPagination.limit),
@@ -845,7 +845,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
         <AccountBanner
           onBack={handleBack}
           basePath={basePath}
-          coinRate={klyPrice}
+          coinRate={price}
           image={BannerBG.src}
           isFavorite={isFavourite({ address: account?.address ?? '' })}
           transactions={transactionsMeta?.total || 0}

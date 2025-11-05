@@ -35,8 +35,8 @@ const Template = () => {
       <SlideInModal
         open={isModalOpen}
         onClose={handleCloseModal}
-        onSave={handleSave}
         title="View as .json"
+        // onSave={handleSave}
       >
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus iusto ullam unde magni

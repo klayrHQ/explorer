@@ -1,12 +1,8 @@
-import type { StoryObj } from '@storybook/react';
-import { ChainNetworkPicker, ChainNetworkPickerProps } from "@repo/ui/molecules";
+/* eslint-disable @next/next/no-img-element */
+import type { Meta, StoryObj } from '@storybook/react';
+import { ChainNetworkPicker, ChainNetworkPickerProps } from '@repo/ui/molecules';
 import React, { useState } from 'react';
-
-export type ChainType = {
-  chainId: string;
-  chainName: string;
-  chainLogo: string;
-};
+import { ChainType } from '@repo/ui/types';
 
 export type NetworkType = {
   networkId: string;
@@ -14,7 +10,7 @@ export type NetworkType = {
   connected: boolean;
 };
 
-const meta = {
+const meta: Meta<typeof ChainNetworkPicker> = {
   title: 'Molecules/Topbar/ChainNetworkPicker',
   component: ChainNetworkPicker,
   parameters: {
@@ -25,11 +21,25 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-type Template = Omit<Story, "args">;
+type Template = Omit<Story, 'args'>;
 
 const chains: ChainType[] = [
-  { chainId: '1', chainName: 'Klayr-main', chainLogo: 'https://explorer.klayr.dev/_next/static/media/logo.f350e9f3.svg' },
-  { chainId: '56', chainName: 'Binance', chainLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Binance_Logo.svg/254px-Binance_Logo.svg.png?20210315012944' },
+  {
+    chainID: '1',
+    chainName: 'Klayr-main',
+    logo: {
+      svg: 'https://explorer.klayr.dev/_next/static/media/logo.f350e9f3.svg',
+      png: '',
+    },
+  } as ChainType,
+  {
+    chainID: '56',
+    chainName: 'Binance',
+    logo: {
+      png: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Binance_Logo.svg/254px-Binance_Logo.svg.png?20210315012944',
+      svg: '',
+    },
+  } as ChainType,
 ];
 
 const networks: NetworkType[] = [
@@ -47,24 +57,24 @@ const Template: Template = {
       <ChainNetworkPicker
         {...args}
         currentChain={currentChain}
-        setCurrentChain={setCurrentChain}
+        // setCurrentChain={setCurrentChain}
         currentNetwork={currentNetwork}
-        setCurrentNetwork={setCurrentNetwork}
+        // setCurrentNetwork={setCurrentNetwork}
       />
     );
-  }
+  },
 };
 
 export const Main: Story = {
   ...Template,
   args: {
-    currentChain: chains[0],
-    setCurrentChain: () => {},
+    currentChain: chains[0] as ChainType,
+    // setCurrentChain: () => {},
     currentNetwork: networks[0],
-    setCurrentNetwork: () => {},
+    // setCurrentNetwork: () => {},
     chains,
-    networks,
+    networks: networks.map((network) => network.networkName),
     imgComponent: <img src="https://example.com/placeholder.png" alt="placeholder" />,
-    className: '',
+    // className: '',
   },
 };

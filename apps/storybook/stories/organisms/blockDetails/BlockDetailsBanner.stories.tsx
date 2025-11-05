@@ -1,8 +1,8 @@
-import { StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { BlockDetailsBanner } from '@repo/ui/organisms';
 import BannerBG from '../../assets/images/bannerBG.png';
 
-const meta = {
+const meta: Meta<typeof BlockDetailsBanner> = {
   title: 'Organisms/BlockDetails/BlockDetailsBanner',
   component: BlockDetailsBanner,
   tags: ['autodocs'],

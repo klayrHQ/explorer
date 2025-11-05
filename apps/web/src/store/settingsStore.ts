@@ -46,7 +46,13 @@ export const useSettings = () => {
   const initializeSettings = () => {
     const initialSettings = safeLocalStorage.getItem('settings');
     if (!initialSettings) return;
-    setSettings(JSON.parse(initialSettings));
+
+    // if settings are in invalid format, remove them
+    try {
+      setSettings(JSON.parse(initialSettings));
+    } catch {
+      safeLocalStorage.removeItem('settings');
+    }
   };
 
   useEffect(() => {

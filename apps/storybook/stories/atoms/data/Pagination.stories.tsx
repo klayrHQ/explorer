@@ -1,7 +1,7 @@
 import { Pagination } from '@repo/ui/atoms';
-import type { StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-const meta = {
+const meta: Meta<typeof Pagination> = {
   title: 'Atoms/Data/Pagination',
   component: Pagination,
   parameters: {
@@ -16,6 +16,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     totalPages: 16,
-    initialNumber: 1,
+    // initialNumber: 1,
   },
 };

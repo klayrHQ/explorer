@@ -6,11 +6,10 @@ export function middleware(req: NextRequest) {
   const hostname = req.headers.get('host')!;
   const subdomain = hostname.split('.')[0];
   const pathname = req.nextUrl.pathname;
-  const basePath = pathname.split('/')[1];
 
-  // Avoid infinite redirect loops by checking if "network" is already set in search params
-  if (url.searchParams.has('network') && url.searchParams.has('app')) {
-    return NextResponse.next(); // Skip the redirect and continue normally
+  // If accessing specific route with explorer subdomain, don't redirect
+  if (pathname !== '/' && subdomain.endsWith('explorer')) {
+    return NextResponse.next();
   }
 
   // Don't add params on 404 pages and don't redirect
@@ -18,44 +17,21 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // todo add permanent fix for vercel previews
+  // TODO: add permanent fix for vercel previews
   // Temporarily skip the redirect for Vercel previews
   if (hostname.split('.')[1] === 'vercel') {
     return NextResponse.next();
   }
 
-  // Set the default searchParams if the subdomain is not explorer or testnet-explorer (mainly for localhost)
-  if (subdomain !== 'explorer' && subdomain !== 'testnet-explorer') {
-    url.searchParams.set('network', 'mainnet');
-    url.searchParams.set('app', 'klayr_mainchain');
-    url.pathname = '/klayr_mainchain';
-
-    // Add a subdomain to the redirect
+  // Set the default subdomain if the subdomain is not explorer or testnet-explorer (mainly for localhost)
+  if (!subdomain.endsWith('explorer')) {
     let hostnameParts = hostname.split('.');
     hostnameParts.unshift('explorer');
     url.host = hostnameParts.join('.');
-
-    return NextResponse.redirect(url);
   }
 
-  // Set the network param based on the subdomain
-  if (subdomain === 'testnet-explorer') {
-    url.searchParams.set('network', 'testnet');
-  } else if (subdomain === 'explorer') {
-    url.searchParams.set('network', 'mainnet');
-  }
-
-  // If no app is specified, redirect to the mainchain app
-  if (pathname === '/') {
-    url.searchParams.set('app', 'klayr_mainchain');
-    url.pathname = '/klayr_mainchain';
-    return NextResponse.redirect(url);
-  }
-
-  // Set the app param based on the base path
-  url.searchParams.set('app', basePath);
-
-  // Redirect to the new URL with the updated search params
+  // Default to klayr_mainchain
+  if (pathname === '/') url.pathname = '/klayr_mainchain';
   return NextResponse.redirect(url);
 }
 
@@ -70,4 +46,4 @@ export const config = {
      */
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
-}
+};

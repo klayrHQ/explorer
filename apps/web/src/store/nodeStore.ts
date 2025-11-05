@@ -11,7 +11,7 @@ interface NodeStoreProps {
 
 export const useNodeStore = create<NodeStoreProps>((set) => {
   return {
-    nodeInfo: {} as NetworkStatus,
+    nodeInfo: undefined,
     setNodeInfo: (nodeInfo: NetworkStatus) => set({ nodeInfo }),
   };
 });
@@ -22,8 +22,9 @@ export const useUpdateNodeInfo = () => {
 
   useEffect(() => {
     const fetchNodeInfo = async () => {
-      const data = await callGetNetworkStatus();
-      setNodeInfo(data.data);
+      callGetNetworkStatus()
+        .then((data) => setNodeInfo(data.data))
+        .catch(() => setNodeInfo({} as NetworkStatus));
     };
 
     fetchNodeInfo();

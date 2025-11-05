@@ -1,7 +1,7 @@
-import type { StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { MainMenu } from '@repo/ui/molecules';
 
-const meta = {
+const meta: Meta<typeof MainMenu> = {
   title: 'Molecules/Menu/MainMenu',
   component: MainMenu,
   parameters: {
@@ -12,15 +12,15 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-type Template = Omit<Story, "args">;
+type Template = Omit<Story, 'args'>;
 
 const Template: Template = {
   render: (args) => (
-    <div className={args.minimized ? "w-max" : "w-[240px]"}>
+    <div className={args.minimized ? 'w-max' : 'w-[240px]'}>
       <MainMenu {...args} />
     </div>
   ),
-}
+};
 
 const menuItems = [
   {
@@ -78,7 +78,7 @@ export const Default: Story = {
         icon: 'DataFlow',
       },
       ...menuItems,
-    ]
+    ],
   },
 };
 
@@ -93,7 +93,7 @@ export const Hovered: Story = {
         hovered: true,
       },
       ...menuItems,
-    ]
+    ],
   },
 };
 
@@ -108,7 +108,7 @@ export const Active: Story = {
         active: true,
       },
       ...menuItems,
-    ]
+    ],
   },
 };
 
@@ -123,7 +123,7 @@ export const Disabled: Story = {
         disabled: true,
       },
       ...menuItems,
-    ]
+    ],
   },
 };
 
@@ -138,7 +138,7 @@ export const WithSubmenu: Story = {
         subMenu,
       },
       ...menuItems,
-    ]
+    ],
   },
 };
 
@@ -154,6 +154,6 @@ export const Minimized: Story = {
         subMenu,
       },
       ...menuItems,
-    ]
+    ],
   },
 };

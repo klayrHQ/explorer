@@ -1,14 +1,32 @@
+/* eslint-disable react/jsx-no-literals */
 'use client';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { FlexGrid, Grid, Typography } from '@repo/ui/atoms';
 import { Sidebar, InfoBanner } from '@repo/ui/organisms';
 import { cls } from '@repo/ui/utils';
 import { TopbarClient } from './topbarClient.tsx';
 import { logo, menuItems, mobileMenuItems } from '../../utils/constants.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { useAppErrorStore } from '../../store/appErrorStore.ts';
+import { usePathname } from 'next/navigation';
+import ErrorPage from '../../app/(user)/[chain]/error.tsx';
 
-export const Layout = ({ children }: { children: ReactNode }) => {
+export const Layout = ({
+  children,
+  bannerText,
+  bannerType,
+}: {
+  children: ReactNode;
+  bannerText?: ReactNode;
+  bannerType?: 'info' | 'warning' | 'error' | 'success';
+}) => {
   const basePath = useBasePath();
+  const pathname = usePathname();
+  const { error, clearError } = useAppErrorStore();
+
+  useEffect(() => {
+    clearError();
+  }, [pathname, clearError]);
 
   return (
     <Grid gap={'0'}>
@@ -25,24 +43,26 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               'desktop:rounded-tl-3xl',
             ])}
           >
-            {/* <InfoBanner className={'mb-3xl rounded-md'}>
-              <FlexGrid
-                alignItems={'center'}
-                gap={'1.5xl'}
-                justify={'between'}
-                mobileDirection={'row'}
-              >
-                <Typography color={'currentColor'} variant={'paragraph-sm'}>
-                  <span aria-label="warning" className="mr-3" role="img">
-                    ⚠️
-                  </span>
-                  {`Urgent Notice:  This is a development environment, and `}
-                  <span className="font-semibold">{`data is currently unreliable `}</span>
-                  {`due to ongoing work. `}
-                </Typography>
-              </FlexGrid>
-            </InfoBanner> */}
-            {children}
+            {bannerText ? (
+              <InfoBanner className={'mb-3xl rounded-md'}>
+                <FlexGrid
+                  alignItems={'center'}
+                  gap={'1.5xl'}
+                  justify={'between'}
+                  mobileDirection={'row'}
+                >
+                  <Typography color={'currentColor'} variant={'paragraph-sm'}>
+                    {bannerType === 'warning' && (
+                      <span aria-label="warning" className="mr-3" role="img">
+                        ⚠️
+                      </span>
+                    )}
+                    {bannerText}
+                  </Typography>
+                </FlexGrid>
+              </InfoBanner>
+            ) : null}
+            {error ? <ErrorPage error={error} /> : children}
           </main>
         </Grid>
       </FlexGrid>

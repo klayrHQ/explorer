@@ -12,14 +12,16 @@ export const getNews = async () => {
   }
 }*/
 
+import { nextAPIURL } from '../constants';
+
 const get = async (call: string, params?: any) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${call}`, params);
+  const response = await fetch(`${nextAPIURL}${call}`, params);
 
   return await response.json();
 };
 
 const post = async (call: string, data: any) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${call}`, {
+  const response = await fetch(`${nextAPIURL}${call}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

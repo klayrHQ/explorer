@@ -1,8 +1,9 @@
 import type { StoryObj } from '@storybook/react';
 import { MobileMenu } from '@repo/ui/molecules';
-import Logo from "@/stories/assets/images/logo.svg";
-import {DefaultImageComponent} from "@/stories/utils/constants";
-import {mobileMenuItems} from "@/stories/utils/mockup";
+import Logo from '@/stories/assets/images/logo.svg';
+import { DefaultImageComponent } from '@/stories/utils/constants';
+import { mobileMenuItems } from '@/stories/utils/mockup';
+import { ChainType } from '@repo/ui/types';
 
 const meta = {
   title: 'Molecules/Topbar/MobileMenu',
@@ -15,15 +16,15 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-type Template = Omit<Story, "args">;
+type Template = Omit<Story, 'args'>;
 
 const Template: Template = {
   render: (args) => (
-    <div className={"relative w-full desktop:w-[300px] h-screen"}>
-      <MobileMenu {...args} className={"absolute top-topbarMobileHeight"} />
+    <div className={'relative w-full desktop:w-[300px] h-screen'}>
+      <MobileMenu {...args} className={'absolute top-topbarMobileHeight'} />
     </div>
   ),
-}
+};
 
 export const Default: Story = {
   ...Template,
@@ -31,16 +32,18 @@ export const Default: Story = {
     menuItems: mobileMenuItems,
     chainNetworkData: {
       currentChain: {
-        chainName: "Klayr-main",
-        chainId: "00000000",
-        chainLogo: Logo.src,
-      },
+        chainName: 'Klayr-main',
+        chainID: '00000000',
+        logo: {
+          svg: Logo.src,
+          png: '',
+        },
+      } as ChainType,
       currentNetwork: {
-        networkName: "Testnet",
-        networkId: "01000000",
-        connected: true,
+        networkName: 'Testnet',
+        syncing: true,
       },
       imgComponent: DefaultImageComponent,
-    }
+    },
   },
 };

@@ -1,7 +1,7 @@
 import './(user)/globals.css';
 import '@repo/ui/styles.css';
 import type { Metadata } from 'next';
-import {ReactNode, Suspense} from 'react';
+import { ReactNode, Suspense } from 'react';
 import { Layout } from '../components/layout/layoutClient.tsx';
 import Favicon from '../public/images/favicon.ico';
 

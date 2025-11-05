@@ -1,12 +1,12 @@
-import { StoryObj } from "@storybook/react";
-import { PerformanceCardGrid } from "@repo/ui/organisms";
+import { StoryObj } from '@storybook/react';
+import { PerformanceCardGrid } from '@repo/ui/organisms';
 
 const meta = {
-  title: "Organisms/PerformanceSection/PerformanceCardGrid",
+  title: 'Organisms/PerformanceSection/PerformanceCardGrid',
   component: PerformanceCardGrid,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
 };
 
@@ -17,51 +17,49 @@ export const Default: Story = {
   args: {
     stats: [
       {
-        title: "Total Revenue",
-        value: "$ 1,204,000",
-        percentage: "20%",
-        statsVS: "vs last month",
+        title: 'Total Revenue',
+        value: '$ 1,204,000',
+        percentage: '20%',
+        statsVS: 'vs last month',
         trend: true,
-        icon: "",
-        color: "green",
+        // icon: "",
+        // color: "green",
       },
       {
-        title: "Total locked",
-        value: "32.633 KLY ",
-        percentage: "9.3%",
-        statsVS: "vs last month",
+        title: 'Total locked',
+        value: '32.633 KLY ',
+        percentage: '9.3%',
+        statsVS: 'vs last month',
         trend: false,
-        icon: "",
-        color: "lobster",
+        // icon: "",
+        // color: "lobster",
       },
       {
-        title: "Total Revenue",
-        value: "$ 1,204,000",
-        percentage: "20%",
-        statsVS: "vs last month",
+        title: 'Total Revenue',
+        value: '$ 1,204,000',
+        percentage: '20%',
+        statsVS: 'vs last month',
         trend: true,
-        icon: "",
-        color: "green",
+        // icon: "",
+        // color: "green",
       },
       {
-        title: "Total locked",
-        value: "32.633 KLY ",
-        percentage: "9.3%",
-        statsVS: "vs last month",
+        title: 'Total locked',
+        value: '32.633 KLY ',
+        percentage: '9.3%',
+        statsVS: 'vs last month',
         trend: false,
-        icon: "",
-        color: "lobster",
+        // icon: "",
+        // color: "lobster",
       },
       {
-        title: "Total Revenue",
-        value: "$ 1,204,000",
-        percentage: "20%",
-        statsVS: "vs last month",
+        title: 'Total Revenue',
+        value: '$ 1,204,000',
+        percentage: '20%',
+        statsVS: 'vs last month',
         trend: true,
-        icon: "",
-        color: "green",
-        
-        
+        // icon: "",
+        // color: "green",
       },
     ],
   },
