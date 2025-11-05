@@ -5,6 +5,7 @@
     "**/*.css"
   ],
   "exports": {
+    ".": "./dist/index.css",
     "./styles.css": "./dist/index.css",
     "./theme.css": "./src/theme.css",
     "./utils": "./src/utils/functions.ts",
