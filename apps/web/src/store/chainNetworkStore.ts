@@ -6,6 +6,8 @@ import {
   defaultTestnetChainToken,
   defaultUnknownChain,
   defaultUnknownChainToken,
+  serviceMainnetURL,
+  serviceTestnetURL,
 } from '../utils/constants.tsx';
 import { useGatewayClientStore } from './clientStore.ts';
 import { usePathname, useRouter } from 'next/navigation';
@@ -59,8 +61,8 @@ export const useInitializeCurrentChain = () => {
   const setTokens = useChainNetworkStore((state) => state.setTokens);
   const pathName = usePathname();
   const gateways = {
-    mainnet: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
-    testnet: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
+    mainnet: `https://${serviceMainnetURL}`,
+    testnet: `https://${serviceTestnetURL}`,
   };
 
   const networkParam = useNetwork();

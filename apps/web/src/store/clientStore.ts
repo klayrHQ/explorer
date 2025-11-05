@@ -1,30 +1,43 @@
 import { create } from 'zustand';
 import axios, { AxiosInstance } from 'axios';
-
-enum Networks {
-  MAINNET = '00000000',
-  TESTNET = '01000000',
-  PEPE_WORLD = '01371337',
-  SWAPTOSHI = '01555555',
-}
+import { serviceAPIVersion } from '../utils/constants';
 
 interface GatewayClientStore {
   client: AxiosInstance;
-  setBaseURL: (networkID: string) => void;
+  baseURL?: string;
+  setBaseURL: (gatewayUrl: string) => void;
+  waitBaseURL: () => Promise<string>;
 }
 
-export const useGatewayClientStore = create<GatewayClientStore>((set) => ({
-  client: axios.create({
-    baseURL: `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
+export const useGatewayClientStore = create<GatewayClientStore>((set, get) => {
+  let resolvers: ((url: string) => void)[] = [];
+
+  const client = axios.create({
+    baseURL: undefined,
     timeout: 13000,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
-  }),
-  setBaseURL: (gatewayUrl: string) =>
-    set((state) => {
-      state.client.defaults.baseURL = gatewayUrl;
-      return { client: state.client };
-    }),
-}));
+  });
+
+  return {
+    client,
+    baseURL: undefined,
+    setBaseURL: (gatewayUrl: string) => {
+      const { client } = get();
+      const baseURL = `${gatewayUrl}/api/${serviceAPIVersion}/`;
+      client.defaults.baseURL = baseURL;
+      resolvers.forEach((r) => r(baseURL));
+      resolvers = [];
+      set({ client, baseURL });
+    },
+    waitBaseURL: () => {
+      const { baseURL } = get();
+      if (baseURL) return Promise.resolve(baseURL);
+      return new Promise<string>((resolve) => {
+        resolvers.push(resolve);
+      });
+    },
+  };
+});

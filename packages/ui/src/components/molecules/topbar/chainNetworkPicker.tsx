@@ -200,11 +200,15 @@ export const ChainNetworkPicker = ({
         </CustomModal>
       ) : null}
       <FlexGrid gap="1.5xl" mobileDirection={'row'} onClick={currentChain ? handleOpen : undefined}>
-        <KeyValueComponent
-          contentValue={currentNetwork.networkName || 'Network'}
-          hover
-          keyValue={<StatusIcon status={currentNetworkStatusClass} />}
-        />
+        {currentNetwork && currentNetwork.networkName ? (
+          <KeyValueComponent
+            contentValue={currentNetwork.networkName || 'network'}
+            hover
+            keyValue={<StatusIcon status={currentNetworkStatusClass} />}
+          />
+        ) : (
+          <SkeletonComponent width={'16'} height={'4'} />
+        )}
         {currentChain ? (
           <KeyValueComponent
             contentValue={currentChain?.displayName ?? currentChain?.chainName ?? 'Select chain'}

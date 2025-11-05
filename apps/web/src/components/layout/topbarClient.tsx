@@ -32,11 +32,7 @@ interface TopbarClientProps {
 export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
   useInitializeCurrentChain();
   useUpdateNodeInfo();
-  const {
-    // marketcap,
-    trend,
-    klyPrice,
-  } = useMarketcap();
+  const { trend, klyPrice } = useMarketcap();
 
   const currentChain = useChainNetworkStore((state) => state.currentChain);
   const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
@@ -95,28 +91,32 @@ export const TopbarClient = ({ logo, mobileMenuItems }: TopbarClientProps) => {
       className: 'hidden desktop:flex',
     },
     {
+      // TODO: implement token price for other chains
       keyValue: 'KLY: ',
-      contentValue: (
-        <Typography
-          className={'inline-flex items-center gap-1'}
-          color={'gray-5'}
-          variant={'paragraph-sm'}
-          fontWeight={'medium'}
-        >
-          {`$${parseFloat(klyPrice.toFixed(5)).toLocaleString()}`}
-          <span
-            className={`${trend < 0 ? 'text-error' : 'text-success'} text-paragraph-sm font-semibold inline-flex items-center gap-1`}
+      contentValue:
+        klyPrice !== 0 ? (
+          <Typography
+            className={'inline-flex items-center gap-1'}
+            color={'gray-5'}
+            variant={'paragraph-sm'}
+            fontWeight={'medium'}
           >
-            <Icon
-              className={'mt-px'}
-              color={'inherit'}
-              icon={trend < 0 ? 'TrendDown' : 'TrendUp'}
-              size={'xs'}
-            />
-            {`${parseFloat(trend.toFixed(2)).toLocaleString()}%`}
-          </span>
-        </Typography>
-      ),
+            {`$${parseFloat(klyPrice.toFixed(5)).toLocaleString()}`}
+            <span
+              className={`${trend < 0 ? 'text-error' : 'text-success'} text-paragraph-sm font-semibold inline-flex items-center gap-1`}
+            >
+              <Icon
+                className={'mt-px'}
+                color={'inherit'}
+                icon={trend < 0 ? 'TrendDown' : 'TrendUp'}
+                size={'xs'}
+              />
+              {`${parseFloat(trend.toFixed(2)).toLocaleString()}%`}
+            </span>
+          </Typography>
+        ) : (
+          <SkeletonComponent width={'16'} height={'4'} />
+        ),
     },
     /*{
       keyValue: ' test',

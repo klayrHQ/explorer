@@ -5,7 +5,6 @@ import {
   BlockDetailsType,
   ChainTokenType,
   ChainType,
-  ChartDataType,
   ClaimableReward,
   EventsType,
   GatewayRes,
@@ -21,7 +20,6 @@ import {
   TokenSummaryType,
   TokenType,
   TopAccountsType,
-  TopAccountType,
   TransactionType,
   ValidatorsStatusCount,
   ValidatorType,
@@ -45,14 +43,16 @@ import {
 import { NextValidatorType } from '@repo/ui/types';
 import axios from 'axios';
 import { Coalescer } from './coalescer';
+import { serviceAPIVersion, serviceMainnetURL, serviceTestnetURL } from '../constants';
 
 async function apiCallClient<T, K extends MetaTransaction = MetaTransaction>(
   endpoint: string,
   params: Record<string, any> = {},
 ): Promise<GatewayRes<T, K>> {
-  const { client } = useGatewayClientStore.getState();
+  const { client, waitBaseURL } = useGatewayClientStore.getState();
 
   try {
+    await waitBaseURL();
     const { data } = await client.get<GatewayRes<T, K>>(endpoint, { params });
 
     if (data) {
@@ -195,12 +195,12 @@ export const callGetChains = async (
   params: ChainsQueryParams,
 ): Promise<GatewayRes<ChainType[]>> => {
   const mainnetResponse = await customApiCall<ChainType[]>(
-    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
+    `https://${serviceMainnetURL}/api/${serviceAPIVersion}/`,
     'blockchain/apps/meta',
     params,
   );
   const testnetResponse = await customApiCall<ChainType[]>(
-    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
+    `https://${serviceTestnetURL}/api/${serviceAPIVersion}/`,
     'blockchain/apps/meta',
     params,
   );
@@ -214,12 +214,12 @@ export const callGetChainTokens = async (
   params: ChainTokenQueryParams,
 ): Promise<GatewayRes<ChainTokenType[]>> => {
   const mainnetResponse = await customApiCall<ChainTokenType[]>(
-    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
+    `https://${serviceMainnetURL}/api/${serviceAPIVersion}/`,
     'blockchain/apps/meta/tokens',
     params,
   );
   const testnetResponse = await customApiCall<ChainTokenType[]>(
-    `https://${process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET}/api/${process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION}/`,
+    `https://${serviceTestnetURL}/api/${serviceAPIVersion}/`,
     'blockchain/apps/meta/tokens',
     params,
   );
