@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChainType, NetworkType } from '../../../types/types.ts';
 import {
   Button,
@@ -43,7 +43,7 @@ export const ChainNetworkPicker = ({
 
   const handleNetworkSelect = (network: string) => {
     setSelectedNetwork(network);
-    setSelectedChain(filteredChains[0].chainName);
+    setSelectedChain('klayr_mainchain');
   };
 
   const chainOptions = filteredChains?.map((chain) => ({
