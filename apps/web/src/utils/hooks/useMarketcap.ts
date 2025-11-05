@@ -59,17 +59,15 @@ const useMarketcap = () => {
           setMainchainTrend(newTrend);
           setMainchainMarketcapUSD(newMarketcap);
 
-          if (isKLYToken) {
-            if (typeof window !== 'undefined') {
-              localStorage.setItem(
-                getCacheKey(getTokenIDWithoutNetwork(MAINCHAIN_TOKEN_ID)),
-                JSON.stringify({
-                  priceUSD: newPrice,
-                  marketcapUSD: newMarketcap,
-                  trend: newTrend,
-                }),
-              );
-            }
+          if (typeof window !== 'undefined') {
+            localStorage.setItem(
+              getCacheKey(getTokenIDWithoutNetwork(MAINCHAIN_TOKEN_ID)),
+              JSON.stringify({
+                priceUSD: newPrice,
+                marketcapUSD: newMarketcap,
+                trend: newTrend,
+              }),
+            );
           }
         }
       },
