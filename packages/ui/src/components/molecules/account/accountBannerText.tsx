@@ -3,7 +3,7 @@ import { Typography } from '../../atoms';
 import { Currency } from '../../atoms/base/currency';
 export interface ValidatorBannerTextProps {
   transactions: string | number;
-  coinRate?: number;
+  coinRate?: number | string;
   balance?: string | number;
   balanceSymbol?: string;
 }
@@ -14,7 +14,8 @@ export const AccountBannerText = ({
   balance,
   balanceSymbol,
 }: ValidatorBannerTextProps) => {
-  const dollarValue = coinRate ? Number(balance) * Number(coinRate) : 0;
+  const dollarValue =
+    coinRate && typeof coinRate === 'number' ? Number(balance) * Number(coinRate) : 0;
 
   return (
     <div className="flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">

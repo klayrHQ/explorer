@@ -258,7 +258,7 @@ export interface AccountBannerProps {
   senderName?: string;
   status: string;
   transactions: string | number;
-  coinRate?: number;
+  coinRate?: number | string;
   balance?: string | number;
   balanceSymbol?: string;
   rank: number | string;

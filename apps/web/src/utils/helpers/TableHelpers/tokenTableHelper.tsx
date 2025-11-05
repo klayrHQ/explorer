@@ -39,7 +39,7 @@ export const createUserDetailsTokensRow = (
   claimableRewards: ClaimableReward[],
   loading: boolean,
   meta: TokensChainsMeta,
-  tokenPrice: number,
+  tokenPrice: number | string | undefined,
   fiatSymbol: string,
   fiatSign: string,
 ) => {
@@ -75,7 +75,11 @@ export const createUserDetailsTokensRow = (
                 <div className="flex flex-col">
                   <Currency amount={totalBalance} decimals={0} fontWeight={'semibold'} />
                   <Currency
-                    amount={totalBalance * Number(tokenPrice)}
+                    amount={
+                      tokenPrice !== undefined && typeof tokenPrice === 'number'
+                        ? totalBalance * Number(tokenPrice)
+                        : 0
+                    }
                     className="text-onBackgroundLow text-caption"
                     decimals={2}
                     symbol={fiatSymbol}
