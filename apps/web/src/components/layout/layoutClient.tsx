@@ -1,12 +1,15 @@
 /* eslint-disable react/jsx-no-literals */
 'use client';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { FlexGrid, Grid, Typography } from '@repo/ui/atoms';
 import { Sidebar, InfoBanner } from '@repo/ui/organisms';
 import { cls } from '@repo/ui/utils';
 import { TopbarClient } from './topbarClient.tsx';
 import { logo, menuItems, mobileMenuItems } from '../../utils/constants.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { useAppErrorStore } from '../../store/appErrorStore.ts';
+import { usePathname } from 'next/navigation';
+import ErrorPage from '../../app/(user)/[chain]/error.tsx';
 
 export const Layout = ({
   children,
@@ -18,6 +21,12 @@ export const Layout = ({
   bannerType?: 'info' | 'warning' | 'error' | 'success';
 }) => {
   const basePath = useBasePath();
+  const pathname = usePathname();
+  const { error, clearError } = useAppErrorStore();
+
+  useEffect(() => {
+    clearError();
+  }, [pathname, clearError]);
 
   return (
     <Grid gap={'0'}>
@@ -53,7 +62,7 @@ export const Layout = ({
                 </FlexGrid>
               </InfoBanner>
             ) : null}
-            {children}
+            {error ? <ErrorPage error={error} /> : children}
           </main>
         </Grid>
       </FlexGrid>
