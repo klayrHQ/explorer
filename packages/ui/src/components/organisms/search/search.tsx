@@ -47,7 +47,7 @@ export const Search = ({
     if (query.length > 0) {
       try {
         if (callSearch) {
-          await callSearch({ search: query });
+          await callSearch({ search: query.toLowerCase() });
         }
       } catch (error) {
         console.error('Search failed', error);
