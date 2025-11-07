@@ -16,7 +16,7 @@ import {
   EventsType,
 } from '../../utils/types.ts';
 import { NftCard, Table } from '@repo/ui/molecules';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { DataType } from '@repo/ui/types';
 import BannerBG from '../../assets/images/bannerBG.png';
 import {
@@ -139,7 +139,9 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   useInitializeFavourites();
 
   const router = useRouter();
-  const paramIsName = paramAccount.length < 41;
+  const accountDecoded = useMemo(() => decodeURIComponent(paramAccount), [paramAccount]);
+  const paramIsName = useMemo(() => accountDecoded.length < 41, [accountDecoded]);
+
   const [account, setAccount] = useState<AccountType>();
   const [claimableRewards, setClaimableRewards] = useState<ClaimableReward[]>([]);
   const [mainTokenBalance, setMainTokenbalance] = useState<TokenBalancesType>();
@@ -196,7 +198,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
 
   useEffect(() => {
     setLoading(true);
-    callGetAccounts({ [paramIsName ? 'name' : 'address']: paramAccount })
+    callGetAccounts({ [paramIsName ? 'name' : 'address']: accountDecoded })
       .then((data) => {
         const AccountData: AccountType =
           Array.isArray(data?.data) && data.data.length > 0 ? data.data[0] : null;
@@ -204,17 +206,17 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       })
       .catch((error) => console.error('Error fetching validator:', error))
       .finally(() => setLoading(false));
-  }, [paramAccount, paramIsName]);
+  }, [accountDecoded, paramIsName]);
 
   useEffect(() => {
-    callGetPosClaimableRewards({ [paramIsName ? 'name' : 'address']: paramAccount })
+    callGetPosClaimableRewards({ [paramIsName ? 'name' : 'address']: accountDecoded })
       .then((data) => {
         const ClaimableRewardsData: ClaimableReward[] =
           Array.isArray(data?.data) && data.data.length > 0 ? data.data : [];
         setClaimableRewards(ClaimableRewardsData);
       })
       .catch((error) => console.error('Error fetching validator:', error));
-  }, [paramAccount, paramIsName]);
+  }, [accountDecoded, paramIsName]);
 
   useEffect(() => {
     if (tokenID && account && account.tokenBalances.length > 0) {
@@ -225,14 +227,14 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
 
   useEffect(() => {
     callGetValidators({
-      ...(!paramIsName ? { address: paramAccount } : { name: paramAccount }),
+      ...(!paramIsName ? { address: accountDecoded } : { name: accountDecoded }),
       includeStatusValue: true,
     })
       .then((data) => {
         setValidator(data.data[0]);
       })
       .catch((error) => console.error('Error fetching validator:', error));
-  }, [paramAccount, paramIsName]);
+  }, [accountDecoded, paramIsName]);
 
   useEffect(() => {
     if (account && account.address) {
