@@ -7,11 +7,10 @@ import { ChainTokenType, ChainType } from './types';
 import Placeholder from '../assets/images/placeholder.png';
 
 export const nextAPIURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/';
-export const serviceMainnetURL =
-  process.env.NEXT_PUBLIC_KLAYR_SERVICE_MAINNET || 'service.klayr.xyz';
+export const serviceMainnetURL = process.env.NEXT_PUBLIC_APP_SERVICE_MAINNET || 'service.klayr.xyz';
 export const serviceTestnetURL =
-  process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET || 'testnet-service.klayr.xyz';
-export const serviceAPIVersion = process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION || 'v3';
+  process.env.NEXT_PUBLIC_APP_SERVICE_TESTNET || 'testnet-service.klayr.xyz';
+export const serviceAPIVersion = process.env.NEXT_PUBLIC_APP_SERVICE_API_VERSION || 'v3';
 export const defaultApp = process.env.NEXT_PUBLIC_DEFAULT_APP || 'klayr_mainchain';
 
 export const currencies = [

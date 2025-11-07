@@ -7,9 +7,9 @@
       "outputs": ["dist/**", ".next/**", "!.next/cache/**", "storybook-static/**"],
       "env": [
         "NEXT_PUBLIC_API_URL",
-        "NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION",
-        "NEXT_PUBLIC_KLAYR_SERVICE_MAINNET",
-        "NEXT_PUBLIC_KLAYR_SERVICE_TESTNET",
+        "NEXT_PUBLIC_APP_SERVICE_API_VERSION",
+        "NEXT_PUBLIC_APP_SERVICE_MAINNET",
+        "NEXT_PUBLIC_APP_SERVICE_TESTNET",
         "NEXT_PUBLIC_DEFAULT_APP"
       ]
     },
