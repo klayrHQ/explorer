@@ -14,9 +14,10 @@ import { useGatewayClientStore } from './clientStore.ts';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { ChainType, ChainTokenType } from '../utils/types.ts';
-import { callGetChains, callGetChainTokens } from '../utils/api/apiCalls.tsx';
+import { callGetChains, callGetChainTokens, callGetNetworkStatus } from '../utils/api/apiCalls.tsx';
 import { useNetwork } from '../utils/hooks/useNetwork.ts';
 import { useApp } from '../utils/hooks/useApp.ts';
+import { useAppErrorStore } from './appErrorStore.ts';
 
 interface ChainNetworkStoreProps {
   currentChain: ChainType | undefined;
@@ -58,6 +59,7 @@ export const useInitializeCurrentChain = () => {
   const tokens = useChainNetworkStore((state) => state.tokens);
   const setCurrentNetwork = useChainNetworkStore((state) => state.setCurrentNetwork);
   const networks = useChainNetworkStore((state) => state.networks);
+  const baseUrl = useGatewayClientStore((state) => state.baseURL);
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
   const setTokens = useChainNetworkStore((state) => state.setTokens);
   const pathName = usePathname();
@@ -145,6 +147,28 @@ export const useInitializeCurrentChain = () => {
       if (chainMatch) {
         if (chainMatch.serviceURLs.length > 0) {
           // setBaseUrl for defaultApp already assigned early above
+          if (chainParam !== 'klayr_mainchain') {
+            if (chainParam !== defaultApp) {
+              setBaseUrl(chainMatch.serviceURLs[0].http);
+            } else if (
+              chainParam === defaultApp &&
+              baseUrl &&
+              !chainMatch.serviceURLs.map((t) => t.http).includes(baseUrl)
+            ) {
+              callGetNetworkStatus()
+                .then((data) => {
+                  if (data.data.chainID !== chainMatch.chainID) {
+                    const { showError } = useAppErrorStore.getState();
+                    showError(
+                      new Error(
+                        `The base URL ${baseUrl} does not point to the ${defaultApp} ${networkParam} (Chain ID: ${chainMatch.chainID})`,
+                      ),
+                    );
+                  }
+                })
+                .catch((error) => console.error("Error validating chain's base url", error));
+            }
+          }
           chainParam !== 'klayr_mainchain' &&
             chainParam !== defaultApp &&
             setBaseUrl(chainMatch.serviceURLs[0].http);
@@ -163,7 +187,7 @@ export const useInitializeCurrentChain = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chains, chainParam, networkParam]);
+  }, [baseUrl, chains, chainParam, networkParam]);
 
   useEffect(() => {
     if (tokens.length > 0 && chainParam && networkParam) {
