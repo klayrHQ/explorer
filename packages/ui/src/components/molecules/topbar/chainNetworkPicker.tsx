@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ChainType, NetworkType } from '../../../types/types.ts';
 import {
   Button,
@@ -13,7 +13,7 @@ import { ImageContainer } from '../../atoms';
 import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
 import { useRouter } from 'next/navigation';
-import { explorerURL } from 'web/src/utils/constants.tsx';
+import { useHostname } from 'web/src/utils/hooks/useHostname';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType | undefined;
@@ -32,6 +32,40 @@ export const ChainNetworkPicker = ({
   imgComponent,
   onSaved,
 }: ChainNetworkPickerProps) => {
+  const hostname = useHostname();
+
+  const mainnetExplorerURL = useMemo(() => {
+    const hostnames = hostname.split('.');
+
+    if (hostnames[0] === 'explorer') {
+      return hostnames.join('.');
+    }
+
+    if (hostnames[0] === 'testnet-explorer') {
+      hostnames[0] = 'explorer';
+      return hostnames.join('.');
+    }
+
+    hostnames.unshift('explorer');
+    return hostnames.join('.');
+  }, [hostname]);
+
+  const testnetExplorerURL = useMemo(() => {
+    const hostnames = hostname.split('.');
+
+    if (hostnames[0] === 'explorer') {
+      hostnames[0] = 'testnet-explorer';
+      return hostnames.join('.');
+    }
+
+    if (hostnames[0] === 'testnet-explorer') {
+      return hostnames.join('.');
+    }
+
+    hostnames.unshift('testnet-explorer');
+    return hostnames.join('.');
+  }, [hostname]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChain, setSelectedChain] = useState<string>();
   const [selectedNetwork, setSelectedNetwork] = useState<string>();
@@ -76,12 +110,12 @@ export const ChainNetworkPicker = ({
     if (network) {
       if (!localhostHostnames.includes(window.location.hostname)) {
         network === 'mainnet'
-          ? router.push(`https://${explorerURL}`)
-          : router.push(`https://${network}-${explorerURL}`);
+          ? router.push(`https://${mainnetExplorerURL}`)
+          : router.push(`https://${testnetExplorerURL}`);
       } else {
         network === 'mainnet'
-          ? router.push(`http://explorer.localhost:${window.location.port}`)
-          : router.push(`http://testnet-explorer.localhost:${window.location.port}`);
+          ? router.push(`http://${mainnetExplorerURL}:${window.location.port}`)
+          : router.push(`http://${testnetExplorerURL}:${window.location.port}`);
       }
     }
   };
@@ -94,14 +128,12 @@ export const ChainNetworkPicker = ({
       router.push(`/${chain.chainName}`);
       if (!localhostHostnames.includes(window.location.hostname)) {
         network === 'mainnet'
-          ? router.push(`https://${explorerURL}/${chain.chainName}`)
-          : router.push(`https://${network}-${explorerURL}/${chain.chainName}`);
+          ? router.push(`https://${mainnetExplorerURL}/${chain.chainName}`)
+          : router.push(`https://${testnetExplorerURL}/${chain.chainName}`);
       } else {
         network === 'mainnet'
-          ? router.push(`http://explorer.localhost:${window.location.port}/${chain.chainName}`)
-          : router.push(
-              `http://testnet-explorer.localhost:${window.location.port}/${chain.chainName}`,
-            );
+          ? router.push(`http://${mainnetExplorerURL}:${window.location.port}/${chain.chainName}`)
+          : router.push(`http://${testnetExplorerURL}:${window.location.port}/${chain.chainName}`);
       }
     }
     setIsModalOpen(false);
