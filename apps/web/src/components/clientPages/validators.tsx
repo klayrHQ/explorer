@@ -4,7 +4,6 @@ import { Button, DonutChart, FlexGrid } from '@repo/ui/atoms';
 import { NextValidators } from '@repo/ui/molecules';
 import { useEffect, useState } from 'react';
 import { validatorsTableHead } from '../../utils/helpers/tableHeaders.tsx';
-import { useSocketStore } from '../../store/socketStore.ts';
 import { ChartDataType, ValidatorType } from '../../utils/types.ts';
 import {
   callGetValidatorStatusCount,
@@ -17,6 +16,7 @@ import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { useIsHorizontallyScrolled } from '../../utils/hooks/useIsHorizontallyScrolled.ts';
 import { createValidatorsRows } from '../../utils/helpers/TableHelpers/accountTableHelper.tsx';
+import { useNewBlock } from '../../utils/hooks/useNewBlock.ts';
 
 export const Validators = () => {
   const [validators, setValidators] = useState<ValidatorType[]>([]);
@@ -28,7 +28,7 @@ export const Validators = () => {
   const [sortOrder, setSortOrder] = useState<string>('asc');
 
   const network = useChainNetworkStore((state) => state.currentNetwork);
-  const newBlockEvent = useSocketStore((state) => state.height);
+  const newBlockEvent = useNewBlock();
 
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const basePath = useBasePath();

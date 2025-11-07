@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
 import { usePathname, useRouter } from 'next/navigation';
-import { useSocketStore } from '../../store/socketStore.ts';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
+import { useNewBlock } from './useNewBlock.ts';
 
 interface UsePaginationAndSortingProps {
   defaultLimit?: string;
@@ -45,7 +45,7 @@ export const usePaginationAndSorting = ({
   );
 
   const network = useChainNetworkStore((state) => state.currentNetwork);
-  const newBlockEvent = useSocketStore((state) => state.height);
+  const newBlockEvent = useNewBlock();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = useCallback(
