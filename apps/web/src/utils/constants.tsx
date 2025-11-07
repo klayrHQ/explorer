@@ -12,6 +12,7 @@ export const serviceMainnetURL =
 export const serviceTestnetURL =
   process.env.NEXT_PUBLIC_KLAYR_SERVICE_TESTNET || 'testnet-service.klayr.xyz';
 export const serviceAPIVersion = process.env.NEXT_PUBLIC_KLAYR_SERVICE_API_VERSION || 'v3';
+export const defaultApp = process.env.NEXT_PUBLIC_DEFAULT_APP || 'klayr_mainchain';
 
 export const currencies = [
   {

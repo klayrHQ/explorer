@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const defaultApp = process.env.NEXT_PUBLIC_DEFAULT_APP || 'klayr_mainchain';
+
 module.exports = {
   reactStrictMode: true,
   transpilePackages: ['@repo/ui'],
@@ -6,82 +9,82 @@ module.exports = {
     return [
       {
         source: '/account/:slug',
-        destination: '/klayr_mainchain/account/:slug',
+        destination: `/${defaultApp}/account/:slug`,
         permanent: true,
       },
       {
         source: '/transaction/:slug',
-        destination: '/klayr_mainchain/transactions/:slug',
+        destination: `/${defaultApp}/transactions/:slug`,
         permanent: true,
       },
       {
         source: '/block/:slug',
-        destination: '/klayr_mainchain/blocks/:slug',
+        destination: `/${defaultApp}/blocks/:slug`,
         permanent: true,
       },
       {
         source: '/event/:slug',
-        destination: '/klayr_mainchain',
+        destination: `/${defaultApp}`,
         permanent: true,
       },
       {
         source: '/transactions',
-        destination: '/klayr_mainchain/transactions',
+        destination: `/${defaultApp}/transactions`,
         permanent: true,
       },
       {
         source: '/validators/eligible',
-        destination: '/klayr_mainchain/validators',
+        destination: `/${defaultApp}/validators`,
         permanent: true,
       },
       {
         source: '/validators',
-        destination: '/klayr_mainchain/validators',
+        destination: `/${defaultApp}/validators`,
         permanent: true,
       },
       {
         source: '/stakes',
-        destination: '/klayr_mainchain/stakes',
+        destination: `/${defaultApp}/stakes`,
         permanent: true,
       },
       {
         source: '/apps',
-        destination: '/klayr_mainchain/chains',
+        destination: `/${defaultApp}/chains`,
         permanent: true,
       },
       {
         source: '/blocks',
-        destination: '/klayr_mainchain/blocks',
+        destination: `/${defaultApp}/blocks`,
         permanent: true,
       },
       {
         source: '/network',
-        destination: '/klayr_mainchain/nodes',
+        destination: `/${defaultApp}/nodes`,
         permanent: true,
       },
       {
         source: '/events',
-        destination: '/klayr_mainchain',
+        destination: `/${defaultApp}`,
         permanent: true,
       },
       {
         source: '/chain-info',
-        destination: '/klayr_mainchain',
+        destination: `/${defaultApp}`,
         permanent: true,
       },
       {
         source: '/analyze',
-        destination: '/klayr_mainchain',
+        destination: `/${defaultApp}`,
         permanent: true,
       },
       {
         source: '/tokens',
-        destination: '/klayr_mainchain/tokens',
+        destination: `/${defaultApp}/tokens`,
         permanent: true,
       },
       {
         source: '/top',
-        destination: '/klayr_mainchain/top-accounts',
+        destination: `/${defaultApp}/top-accounts`,
         permanent: true,
       },
     ];

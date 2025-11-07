@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import {
+  defaultApp,
   defaultChain,
   defaultChainToken,
   defaultTestnetChain,
@@ -60,10 +61,6 @@ export const useInitializeCurrentChain = () => {
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
   const setTokens = useChainNetworkStore((state) => state.setTokens);
   const pathName = usePathname();
-  const gateways = {
-    mainnet: `https://${serviceMainnetURL}`,
-    testnet: `https://${serviceTestnetURL}`,
-  };
 
   const networkParam = useNetwork();
   const chainParam = useApp();
@@ -72,15 +69,23 @@ export const useInitializeCurrentChain = () => {
   useEffect(() => {
     networkParam && networks.includes(networkParam) && setCurrentNetwork(networkParam);
 
-    if (chainParam === 'klayr_mainchain') {
-      if (networkParam === 'mainnet') {
-        setBaseUrl(gateways.mainnet);
+    // defaultChain and defaultChainToken on this codespace is klayr_mainchain
+    // we can use that to set state early
+    if (chainParam === defaultChain.chainName) {
+      if (networkParam === defaultChain.networkType) {
+        setBaseUrl(defaultChain.serviceURLs[0].http);
         setCurrentChain(defaultChain);
         setCurrentChainToken(defaultChainToken);
-      } else if (networkParam === 'testnet') {
-        setBaseUrl(gateways.testnet);
+      } else if (networkParam === defaultTestnetChain.networkType) {
+        setBaseUrl(defaultTestnetChain.serviceURLs[0].http);
         setCurrentChain(defaultTestnetChain);
         setCurrentChainToken(defaultTestnetChainToken);
+      }
+    } else if (chainParam === defaultApp) {
+      if (networkParam === 'mainnet') {
+        setBaseUrl(`https://${serviceMainnetURL}`);
+      } else if (networkParam === 'testnet') {
+        setBaseUrl(`https://${serviceTestnetURL}`);
       }
     }
 
@@ -139,16 +144,21 @@ export const useInitializeCurrentChain = () => {
 
       if (chainMatch) {
         if (chainMatch.serviceURLs.length > 0) {
-          chainParam !== 'klayr_mainchain' && setBaseUrl(chainMatch.serviceURLs[0].http);
+          // setBaseUrl for defaultApp already assigned early above
+          chainParam !== 'klayr_mainchain' &&
+            chainParam !== defaultApp &&
+            setBaseUrl(chainMatch.serviceURLs[0].http);
         } else if (pathName.split('/')[2] !== '404') {
           router.push(`/${chainParam}/404`);
         }
+        // setCurrentChain for klayr already assigned early above
         chainParam !== 'klayr_mainchain' && setCurrentChain(chainMatch);
       } else if (pathName.split('/')[2] !== '404') {
         if (window?.location.hostname.includes('vercel'))
           console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
         else router.push(`/${chainParam}/404`);
       } else {
+        // same as above
         chainParam !== 'klayr_mainchain' && setCurrentChain(defaultUnknownChain);
       }
     }
@@ -162,8 +172,10 @@ export const useInitializeCurrentChain = () => {
         .find((token) => token.networkType === networkParam);
 
       if (tokenMatch) {
+        // setCurrentChainToken for klayr already assigned early above
         chainParam !== 'klayr_mainchain' && setCurrentChainToken(tokenMatch);
       } else {
+        // same as above
         chainParam !== 'klayr_mainchain' && setCurrentChainToken(defaultUnknownChainToken);
       }
     }

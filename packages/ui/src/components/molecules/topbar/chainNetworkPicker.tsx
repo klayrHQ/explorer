@@ -14,6 +14,7 @@ import { ReactElement } from 'react';
 import { CustomModal, CustomSelect } from '../../atoms';
 import { useRouter } from 'next/navigation';
 import { useHostname } from 'web/src/utils/hooks/useHostname';
+import { defaultApp } from 'web/src/utils/constants.tsx';
 
 export interface ChainNetworkPickerProps {
   currentChain: ChainType | undefined;
@@ -77,7 +78,7 @@ export const ChainNetworkPicker = ({
 
   const handleNetworkSelect = (network: string) => {
     setSelectedNetwork(network);
-    setSelectedChain('klayr_mainchain');
+    setSelectedChain(defaultApp);
   };
 
   const chainOptions = filteredChains?.map((chain) => ({

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { defaultApp } from './utils/constants';
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
@@ -30,8 +31,8 @@ export function middleware(req: NextRequest) {
     url.host = hostnameParts.join('.');
   }
 
-  // Default to klayr_mainchain
-  if (pathname === '/') url.pathname = '/klayr_mainchain';
+  // Default to NEXT_PUBLIC_DEFAULT_APP
+  if (pathname === '/') url.pathname = `/${defaultApp}`;
   return NextResponse.redirect(url);
 }
 
