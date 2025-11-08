@@ -1,31 +1,18 @@
-import { io, Socket } from 'socket.io-client';
 import { useEffect, useState } from 'react';
 import { BlockDetailsType } from '../types';
-import { useGatewayClientStore } from '../../store/clientStore';
+import { useBlockchainSocket } from './useBlockchainSocket';
 
 export const useNewBlock = () => {
   const [block, setBlock] = useState<BlockDetailsType>();
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const hostname = useGatewayClientStore((state) => state.hostname);
+  const { blockchainSocket } = useBlockchainSocket();
 
   useEffect(() => {
-    if (!hostname) return;
-
-    const newSocket = io(`wss://${hostname}/blockchain`, {
-      transports: ['websocket'],
-    });
-
-    newSocket.on('new.block', (block: { data: [BlockDetailsType] }) => {
+    if (!blockchainSocket) return;
+    blockchainSocket.on('new.block', (block: { data: [BlockDetailsType] }) => {
+      console.log(block);
       setBlock(block.data[0]);
     });
+  }, [blockchainSocket]);
 
-    setSocket(newSocket);
-
-    // Cleanup when component unmounts or hostname changes
-    return () => {
-      newSocket.disconnect();
-    };
-  }, [hostname]);
-
-  return { block, setBlock, socket };
+  return { block, setBlock };
 };

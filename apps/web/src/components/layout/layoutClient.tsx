@@ -10,6 +10,7 @@ import { useBasePath } from '../../utils/hooks/useBasePath.ts';
 import { useAppErrorStore } from '../../store/appErrorStore.ts';
 import { usePathname } from 'next/navigation';
 import ErrorPage from '../../app/(user)/[chain]/error.tsx';
+import { useGatewaySocketStore } from '../../store/socketStore.ts';
 
 export const Layout = ({
   children,
@@ -23,10 +24,15 @@ export const Layout = ({
   const basePath = useBasePath();
   const pathname = usePathname();
   const { error, clearError } = useAppErrorStore();
+  const disconnectRpcSocket = useGatewaySocketStore((state) => state.disconnectRpcSocket);
 
   useEffect(() => {
     clearError();
   }, [pathname, clearError]);
+
+  useEffect(() => {
+    disconnectRpcSocket();
+  }, [pathname, disconnectRpcSocket]);
 
   return (
     <Grid gap={'0'}>

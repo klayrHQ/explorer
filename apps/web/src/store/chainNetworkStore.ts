@@ -18,6 +18,8 @@ import { callGetChains, callGetChainTokens, callGetNetworkStatus } from '../util
 import { useNetwork } from '../utils/hooks/useNetwork.ts';
 import { useApp } from '../utils/hooks/useApp.ts';
 import { useAppErrorStore } from './appErrorStore.ts';
+import { useGatewaySocketStore } from './socketStore.ts';
+import { emitGetNetworkStatus } from '../utils/api/ws.tsx';
 
 interface ChainNetworkStoreProps {
   currentChain: ChainType | undefined;
@@ -61,6 +63,8 @@ export const useInitializeCurrentChain = () => {
   const networks = useChainNetworkStore((state) => state.networks);
   const baseUrl = useGatewayClientStore((state) => state.baseURL);
   const setBaseUrl = useGatewayClientStore((state) => state.setBaseURL);
+  const baseWsUrl = useGatewaySocketStore((state) => state.baseWSURL);
+  const setBaseWsUrl = useGatewaySocketStore((state) => state.setBaseWSURL);
   const setTokens = useChainNetworkStore((state) => state.setTokens);
   const pathName = usePathname();
 
@@ -76,18 +80,22 @@ export const useInitializeCurrentChain = () => {
     if (chainParam === defaultChain.chainName) {
       if (networkParam === defaultChain.networkType) {
         setBaseUrl(defaultChain.serviceURLs[0].http);
+        setBaseWsUrl(defaultChain.serviceURLs[0].ws);
         setCurrentChain(defaultChain);
         setCurrentChainToken(defaultChainToken);
       } else if (networkParam === defaultTestnetChain.networkType) {
         setBaseUrl(defaultTestnetChain.serviceURLs[0].http);
+        setBaseWsUrl(defaultTestnetChain.serviceURLs[0].ws);
         setCurrentChain(defaultTestnetChain);
         setCurrentChainToken(defaultTestnetChainToken);
       }
     } else if (chainParam === defaultApp) {
       if (networkParam === 'mainnet') {
         setBaseUrl(`https://${serviceMainnetURL}`);
+        setBaseWsUrl(`wss://${serviceMainnetURL}`);
       } else if (networkParam === 'testnet') {
         setBaseUrl(`https://${serviceTestnetURL}`);
+        setBaseWsUrl(`wss://${serviceTestnetURL}`);
       }
     }
 
@@ -147,43 +155,63 @@ export const useInitializeCurrentChain = () => {
       if (chainMatch) {
         if (chainMatch.serviceURLs.length > 0) {
           // setBaseUrl for defaultApp already assigned early above
-          if (chainParam !== 'klayr_mainchain') {
+          if (chainParam !== defaultChain.chainName) {
             if (chainParam !== defaultApp) {
               setBaseUrl(chainMatch.serviceURLs[0].http);
-            } else if (
-              chainParam === defaultApp &&
-              baseUrl &&
-              !chainMatch.serviceURLs.map((t) => t.http).includes(baseUrl)
-            ) {
-              callGetNetworkStatus()
-                .then((data) => {
-                  if (data.data.chainID !== chainMatch.chainID) {
-                    const { showError } = useAppErrorStore.getState();
-                    showError(
-                      new Error(
-                        `The base URL ${baseUrl} does not point to the ${defaultApp} ${networkParam} (Chain ID: ${chainMatch.chainID})`,
-                      ),
-                    );
-                  }
-                })
-                .catch((error) => console.error("Error validating chain's base url", error));
+              setBaseWsUrl(chainMatch.serviceURLs[0].ws);
+            } else {
+              if (
+                chainParam === defaultApp &&
+                baseUrl &&
+                !chainMatch.serviceURLs.map((t) => t.http).includes(baseUrl)
+              ) {
+                callGetNetworkStatus()
+                  .then((data) => {
+                    if (data.data.chainID !== chainMatch.chainID) {
+                      const { showError } = useAppErrorStore.getState();
+                      showError(
+                        new Error(
+                          `The base URL ${baseUrl} does not point to the ${defaultApp} ${networkParam} (Chain ID: ${chainMatch.chainID})`,
+                        ),
+                      );
+                      return;
+                    }
+                  })
+                  .catch((error) => console.error("Error validating chain's base url", error));
+              }
+              if (
+                chainParam === defaultApp &&
+                baseWsUrl &&
+                !chainMatch.serviceURLs.map((t) => t.ws).includes(baseWsUrl)
+              ) {
+                emitGetNetworkStatus()
+                  .then((data) => {
+                    if (data.data.chainID !== chainMatch.chainID) {
+                      const { showError } = useAppErrorStore.getState();
+                      showError(
+                        new Error(
+                          `The base WS URL ${baseWsUrl} does not point to the ${defaultApp} ${networkParam} (Chain ID: ${chainMatch.chainID})`,
+                        ),
+                      );
+                      return;
+                    }
+                  })
+                  .catch((error) => console.error("Error validating chain's base ws url", error));
+              }
             }
           }
-          chainParam !== 'klayr_mainchain' &&
-            chainParam !== defaultApp &&
-            setBaseUrl(chainMatch.serviceURLs[0].http);
         } else if (pathName.split('/')[2] !== '404') {
           router.push(`/${chainParam}/404`);
         }
         // setCurrentChain for klayr already assigned early above
-        chainParam !== 'klayr_mainchain' && setCurrentChain(chainMatch);
+        chainParam !== defaultChain.chainName && setCurrentChain(chainMatch);
       } else if (pathName.split('/')[2] !== '404') {
         if (window?.location.hostname.includes('vercel'))
           console.error('404 triggered'); // skip 404 page if on vercel preview because middleware doesn't work there
         else router.push(`/${chainParam}/404`);
       } else {
         // same as above
-        chainParam !== 'klayr_mainchain' && setCurrentChain(defaultUnknownChain);
+        chainParam !== defaultChain.chainName && setCurrentChain(defaultUnknownChain);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -197,10 +225,10 @@ export const useInitializeCurrentChain = () => {
 
       if (tokenMatch) {
         // setCurrentChainToken for klayr already assigned early above
-        chainParam !== 'klayr_mainchain' && setCurrentChainToken(tokenMatch);
+        chainParam !== defaultChain.chainName && setCurrentChainToken(tokenMatch);
       } else {
         // same as above
-        chainParam !== 'klayr_mainchain' && setCurrentChainToken(defaultUnknownChainToken);
+        chainParam !== defaultChain.chainName && setCurrentChainToken(defaultUnknownChainToken);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
