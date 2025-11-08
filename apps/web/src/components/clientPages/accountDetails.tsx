@@ -153,6 +153,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const [events, setEvents] = useState<any[]>([]);
   const [eventsMeta, setEventsMeta] = useState<any>({});
   const [outgoingStakes, setOutgoingStakes] = useState<any[]>([]);
+  const [outgoingStakesValidators, setOutgoingStakesValidators] = useState<any[]>([]);
   const [incomingStakes, setIncomingStakes] = useState<any[]>([]);
   const [tokens, setTokens] = useState<TokenType[]>([]);
   const [blocks, setBlocks] = useState<BlockDetailsType[]>([]);
@@ -329,6 +330,20 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
     blocksPagination.limit,
     validator,
   ]);
+
+  useEffect(() => {
+    if (outgoingStakes.length > 0) {
+      const outgoingStakesValidatorsPromise = callGetValidators({
+        address: outgoingStakes.map((t) => t.address).join(','),
+      })
+        .then((data) => {
+          setOutgoingStakesValidators(data.data);
+        })
+        .catch((error) => console.error('Error fetching outgoing stakes:', error));
+
+      Promise.all([outgoingStakesValidatorsPromise]);
+    }
+  }, [outgoingStakes]);
 
   const createDetails = (label: string, value: any = ' - ', mobileWidth?: string) => {
     return { label: { label }, value, mobileWidth };
@@ -539,7 +554,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const eventsRows = createValidatorEventsRow(events, loading);
   const outgoingStake = createValidatorOutgoingStakeRows(
     outgoingStakes,
-    validator,
+    outgoingStakesValidators,
     loading,
     basePath,
   );

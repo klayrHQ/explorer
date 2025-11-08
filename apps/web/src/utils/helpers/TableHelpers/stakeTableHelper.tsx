@@ -34,12 +34,15 @@ export const createValidatorIncomingStakeRows = (
 };
 export const createValidatorOutgoingStakeRows = (
   outgoingStakes: StakeType[],
-  validator: ValidatorType | undefined,
+  validators: ValidatorType[] | undefined,
   loading: boolean,
   basePath: string,
 ) => {
   return !loading
     ? outgoingStakes?.map((outgoingStake) => {
+        const validator = validators?.find(
+          (validator) => validator.address === outgoingStake.address,
+        );
         return {
           cells: [
             {

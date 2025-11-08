@@ -9,7 +9,6 @@ export const useNewBlock = () => {
   useEffect(() => {
     if (!blockchainSocket) return;
     blockchainSocket.on('new.block', (block: { data: [BlockDetailsType] }) => {
-      console.log(block);
       setBlock(block.data[0]);
     });
   }, [blockchainSocket]);
