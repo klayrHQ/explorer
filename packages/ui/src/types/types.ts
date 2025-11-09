@@ -266,6 +266,7 @@ export interface AccountBannerProps {
   basePath: string;
   isFavorite: boolean;
   isMobile?: boolean;
+  loading?: boolean;
   setFavorite: () => void;
   removeFavorite: () => void;
   onBack: () => void;

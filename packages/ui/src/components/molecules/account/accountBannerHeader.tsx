@@ -7,6 +7,7 @@ export interface AccountBannerHeaderProps {
   senderName?: string;
   publicKey?: string;
   isMobile?: boolean;
+  loading?: boolean;
 }
 
 export const AccountBannerHeader = ({
@@ -15,6 +16,7 @@ export const AccountBannerHeader = ({
   publicKey,
   senderName,
   isMobile,
+  loading,
 }: AccountBannerHeaderProps) => {
   return (
     <div className="flex gap-1 desktop:gap-2  justify-between items-center " style={style}>
@@ -25,6 +27,7 @@ export const AccountBannerHeader = ({
         role=""
         validator={false}
         isMobile={isMobile}
+        loading={loading}
       />
     </div>
   );

@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-no-literals */
-import { Typography } from '../../atoms';
+import { SkeletonComponent, Typography } from '../../atoms';
 import { Currency } from '../../atoms/base/currency';
 export interface ValidatorBannerTextProps {
   transactions: string | number;
   coinRate?: number | string;
   balance?: string | number;
   balanceSymbol?: string;
+  loading?: boolean;
 }
 
 export const AccountBannerText = ({
@@ -13,11 +14,16 @@ export const AccountBannerText = ({
   coinRate,
   balance,
   balanceSymbol,
+  loading,
 }: ValidatorBannerTextProps) => {
   const dollarValue =
     coinRate && typeof coinRate === 'number' ? Number(balance) * Number(coinRate) : 0;
 
-  return (
+  return loading ? (
+    <div className="flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-5">
+      <SkeletonComponent width={'80'} height={'5'} />
+    </div>
+  ) : (
     <div className="flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
       <Typography color="onBackgroundMedium" variant="paragraph-md">
         {'user'}

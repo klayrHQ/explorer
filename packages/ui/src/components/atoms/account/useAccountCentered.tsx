@@ -1,4 +1,4 @@
-import { FlexGrid, Typography } from '@repo/ui/atoms';
+import { FlexGrid, SkeletonComponent, Typography } from '@repo/ui/atoms';
 import { shortString } from '@repo/ui/utils';
 import { Avatar } from './avatar/avatar.tsx';
 import { TypographyVariant, FontWeight } from '../../../types/types.ts';
@@ -16,6 +16,7 @@ export interface UserAccountCenteredProps {
   role?: string;
   validator?: boolean;
   isMobile?: boolean;
+  loading?: boolean;
 }
 
 export const UserAccountCentered = ({
@@ -27,6 +28,7 @@ export const UserAccountCentered = ({
   role = 'Validator',
   validator = true,
   isMobile,
+  loading,
 }: UserAccountCenteredProps) => {
   const mainContentCopy = name ? '' : address;
   const subContentCopy = name ? address : publicKey ? publicKey : '';
@@ -51,7 +53,9 @@ export const UserAccountCentered = ({
           {status && <StatusBadge status={`${status} ${role}`} />}
         </div>
         <div className="flex items-center gap-2">
-          {mainContentCopy ? (
+          {loading ? (
+            <SkeletonComponent width={'32'} height={'6'} className={'my-1'} />
+          ) : mainContentCopy ? (
             <CopyIcon content={mainContentCopy} size={'small'} isMobile={isMobile}>
               {MainAccountTitle}
             </CopyIcon>
@@ -60,7 +64,9 @@ export const UserAccountCentered = ({
           )}
         </div>
         <div className="flex items-center gap-2">
-          {subContentCopy ? (
+          {loading ? (
+            <SkeletonComponent width={'24'} height={'4'} className={'my-1'} />
+          ) : subContentCopy ? (
             <CopyIcon content={subContentCopy} size={'xxs'} isMobile={isMobile}>
               <Typography color={'onBackgroundMedium'} fontWeight={'normal'} variant={'caption'}>
                 {name

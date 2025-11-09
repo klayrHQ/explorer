@@ -20,6 +20,7 @@ export const AccountBanner = ({
   basePath,
   isFavorite,
   isMobile,
+  loading,
   setFavorite,
   removeFavorite,
   onBack,
@@ -52,6 +53,7 @@ export const AccountBanner = ({
             senderName={senderName}
             publicKey={publicKey}
             isMobile={isMobile}
+            loading={loading}
           />
           <ValidatorBannerButtons
             className="desktop:hidden ml-auto"
@@ -62,6 +64,7 @@ export const AccountBanner = ({
         </FlexGrid>
         <div className="hidden desktop:block">
           <AccountBannerText
+            loading={loading}
             coinRate={coinRate}
             transactions={transactions}
             balance={balance}

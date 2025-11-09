@@ -23,6 +23,7 @@ interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBanner
   nextAllocatedTime?: number;
   basePath?: string;
   isFavorite: boolean;
+  loading?: boolean;
   removeFavorite: () => void;
   setFavorite: () => void;
   onBack: () => void;
@@ -44,6 +45,7 @@ export const ValidatorBanner = ({
   nextAllocatedTime,
   basePath,
   isFavorite,
+  loading,
   removeFavorite,
   setFavorite,
   onBack,
@@ -65,6 +67,7 @@ export const ValidatorBanner = ({
             publicKey={publicKey}
             senderName={senderName}
             status={status}
+            loading={loading}
           />
         </FlexGrid>
         <div className="hidden desktop:block">
@@ -76,6 +79,7 @@ export const ValidatorBanner = ({
             stakes={stakes}
             value={value}
             valueSymbol={valueSymbol}
+            loading={loading}
             {...props}
           />
         </div>

@@ -1,4 +1,4 @@
-import { Typography } from '../../atoms';
+import { SkeletonComponent, Typography } from '../../atoms';
 import { Currency } from '../../atoms/base/currency';
 import { BadgeNoIcon } from '../../atoms';
 
@@ -10,6 +10,7 @@ export interface ValidatorBannerTextProps {
   selfStake?: string | number;
   selfStakeSymbol?: string;
   capacity?: number | string;
+  loading?: boolean;
 }
 
 export const ValidatorBannerText = ({
@@ -20,6 +21,7 @@ export const ValidatorBannerText = ({
   selfStake,
   selfStakeSymbol,
   capacity,
+  loading,
 }: ValidatorBannerTextProps) => {
   const getStakeWord = (stake: number) => {
     return stake > 1 || stake === 0 ? 'stakes' : 'stake';
@@ -27,7 +29,11 @@ export const ValidatorBannerText = ({
 
   const capacityValue = capacity ? (Number.isNaN(Number(capacity)) ? 0 : Number(capacity)) : 0;
 
-  return (
+  return loading ? (
+    <div className="flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-5">
+      <SkeletonComponent width={'80'} height={'5'} />
+    </div>
+  ) : (
     <div className="flex flex-wrap items-center gap-1.5 mt-5 desktop:mt-4">
       <Typography className="capitalize" color="onBackgroundMedium" variant="paragraph-md">
         {senderName}

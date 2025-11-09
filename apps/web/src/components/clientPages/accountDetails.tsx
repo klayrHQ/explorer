@@ -658,12 +658,14 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: <DetailsSection data={details} json={account as unknown as DataType} />,
+      content: (
+        <DetailsSection loading={loading} data={details} json={account as unknown as DataType} />
+      ),
     },
     ...(isValidator
       ? [
           {
-            content: <DetailsSection data={validatorDetails} />,
+            content: <DetailsSection loading={loading} data={validatorDetails} />,
             icon: 'Flag',
             label: 'Validator',
             value: 2,
@@ -859,6 +861,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           status={validator?.status || ''}
           value={validator?.totalStake}
           valueSymbol={symbol}
+          loading={loading}
         />
       ) : (
         <AccountBanner
@@ -888,6 +891,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           balanceSymbol={symbol}
           status={''}
           isMobile={isMobile}
+          loading={loading}
         />
       )}
       <div className="desktop:hidden w-full">

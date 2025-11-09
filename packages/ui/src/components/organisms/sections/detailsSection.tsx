@@ -6,6 +6,7 @@ import {
   IconButton,
   JsonViewer,
   Popover,
+  SkeletonComponent,
   SlideInModal,
   Tooltip,
   Typography,
@@ -27,6 +28,7 @@ interface DetailsSectionsProps {
     mobileWidth?: 'full' | 'half' | string;
     noTruncate?: boolean;
   }[];
+  loading?: boolean;
   json?: DataType;
 }
 
@@ -34,6 +36,7 @@ export const DetailsSection = ({
   title,
   data,
   json,
+  loading,
   headerWidth = 'detailsLabelWidth',
 }: DetailsSectionsProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -186,9 +189,16 @@ export const DetailsSection = ({
               )}
             </FlexGrid>
             <div className={'w-full inline-flex'}>
-              <Typography className={cls(['max-w-full inline-block', !noTruncate && 'truncate'])} variant={'paragraph-sm'}>
-                {value}
-              </Typography>
+              {!loading ? (
+                <Typography
+                  className={cls(['max-w-full inline-block', !noTruncate && 'truncate'])}
+                  variant={'paragraph-sm'}
+                >
+                  {value}
+                </Typography>
+              ) : (
+                <SkeletonComponent width={'44'} height={'5'} />
+              )}
             </div>
           </FlexGrid>
         ))}

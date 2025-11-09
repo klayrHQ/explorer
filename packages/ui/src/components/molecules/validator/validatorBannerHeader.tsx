@@ -11,6 +11,7 @@ export interface ValidatorBannerHeaderProps {
   publicKey?: string;
   senderName?: string;
   status?: string;
+  loading?: boolean;
   notificationValue: number | string;
 }
 
@@ -19,6 +20,7 @@ export const ValidatorBannerHeader = ({
   senderName,
   publicKey,
   status,
+  loading,
   notificationValue,
 }: ValidatorBannerHeaderProps) => {
   return (
@@ -29,6 +31,7 @@ export const ValidatorBannerHeader = ({
         publicKey={publicKey}
         notificationValue={notificationValue}
         status={status}
+        loading={loading}
       />
       <div className="hidden desktop:flex mb-4">
         <StatusBadge status={status || ''} />
