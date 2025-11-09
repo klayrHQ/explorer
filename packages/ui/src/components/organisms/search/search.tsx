@@ -44,6 +44,7 @@ export const Search = ({
   }, []);
 
   const handleSearch = async (query: string) => {
+    handleFocus(true);
     if (query.length > 0) {
       try {
         if (callSearch) {
