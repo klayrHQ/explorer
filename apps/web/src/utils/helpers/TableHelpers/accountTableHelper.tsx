@@ -166,7 +166,7 @@ export const createValidatorsRows = (
                 />
               ),
               className: cls([
-                !stakingRewards && 'sticky left-0 bg-background group-hover:bg-backgroundSecondary',
+                !stakingRewards && 'left-0 bg-background group-hover:bg-backgroundSecondary',
                 !stakingRewards && isScrolled ? 'shadow-border-r' : '',
               ]),
             },
