@@ -14,6 +14,7 @@ export interface UserAccountCenteredProps {
   notificationValue?: number | string;
   role?: string;
   validator?: boolean;
+  isMobile?: boolean;
 }
 
 export const UserAccountCentered = ({
@@ -24,6 +25,7 @@ export const UserAccountCentered = ({
   notificationValue,
   role = 'Validator',
   validator = true,
+  isMobile,
 }: UserAccountCenteredProps) => {
   const mainContentCopy = name ? '' : address;
   const subContentCopy = name ? address : publicKey ? publicKey : '';
@@ -39,20 +41,26 @@ export const UserAccountCentered = ({
           {status && <StatusBadge status={`${status} ${role}`} />}
         </div>
         <div className="flex items-center gap-2">
-          <Typography color={'onBackground'} fontWeight={'semibold'} variant={'h3'}>
-            {name ? name : shortString(address, 12, 'center')}
-          </Typography>
-          {mainContentCopy ? <CopyIcon content={mainContentCopy} size={'small'} /> : null}
+          {mainContentCopy ? (
+            <CopyIcon content={mainContentCopy} size={'small'} isMobile={isMobile}>
+              <Typography color={'onBackground'} fontWeight={'semibold'} variant={'h3'}>
+                {name ? name : shortString(address, 12, 'center')}
+              </Typography>
+            </CopyIcon>
+          ) : null}
         </div>
         <div className="flex items-center gap-2">
-          <Typography color={'onBackgroundMedium'} fontWeight={'normal'} variant={'caption'}>
-            {name
-              ? shortString(address, 12, 'center')
-              : publicKey
-                ? shortString(publicKey, 12, 'center')
-                : ''}
-          </Typography>
-          {subContentCopy ? <CopyIcon content={subContentCopy} size={'xxs'} /> : null}
+          {subContentCopy ? (
+            <CopyIcon content={subContentCopy} size={'xxs'} isMobile={isMobile}>
+              <Typography color={'onBackgroundMedium'} fontWeight={'normal'} variant={'caption'}>
+                {name
+                  ? shortString(address, 12, 'center')
+                  : publicKey
+                    ? shortString(publicKey, 12, 'center')
+                    : ''}
+              </Typography>
+            </CopyIcon>
+          ) : null}
         </div>
       </div>
     </div>

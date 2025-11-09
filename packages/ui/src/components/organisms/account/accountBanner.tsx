@@ -19,14 +19,27 @@ export const AccountBanner = ({
   image,
   basePath,
   isFavorite,
+  isMobile,
   setFavorite,
   removeFavorite,
   onBack,
 }: AccountBannerProps) => {
   return (
     <BannerFrame image={image}>
-      <FlexGrid direction="col" gap="0" justify="between">
-        <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
+      <FlexGrid
+        direction="col"
+        gap="0"
+        justify="between"
+        style={{ width: '100%', maxWidth: '100%' }}
+      >
+        <FlexGrid
+          alignItems="center"
+          className={'desktop:gap-4'}
+          style={{ width: '100%', maxWidth: '100%' }}
+          gap="1"
+          justify="start"
+          mobileDirection="row"
+        >
           <Icon
             onClick={onBack}
             className="hover:-translate-x-0.5 cursor-pointer transition-transform"
@@ -34,9 +47,17 @@ export const AccountBanner = ({
             icon="ArrowLeft"
           />
           <AccountBannerHeader
+            style={{ overflow: 'hidden' }}
             senderAddress={senderAddress}
             senderName={senderName}
             publicKey={publicKey}
+            isMobile={isMobile}
+          />
+          <ValidatorBannerButtons
+            className="desktop:hidden ml-auto"
+            isFavorite={isFavorite}
+            removeFavorite={removeFavorite}
+            setFavorite={setFavorite}
           />
         </FlexGrid>
         <div className="hidden desktop:block">
@@ -54,12 +75,6 @@ export const AccountBanner = ({
         removeFavorite={removeFavorite}
         setFavorite={setFavorite}
         validatorAddress={senderAddress || ''}
-      />
-      <ValidatorBannerButtons
-        className="desktop:hidden absolute top-6 right-6"
-        isFavorite={isFavorite}
-        removeFavorite={removeFavorite}
-        setFavorite={setFavorite}
       />
     </BannerFrame>
   );

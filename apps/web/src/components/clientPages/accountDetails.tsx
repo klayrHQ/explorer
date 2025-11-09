@@ -58,6 +58,7 @@ import { createValidatorEventsRow } from '../../utils/helpers/TableHelpers/event
 import { createUserDetailsTokensRow } from '../../utils/helpers/TableHelpers/tokenTableHelper.tsx';
 import { createNftsRows } from '../../utils/helpers/TableHelpers/nftTableHelper.tsx';
 import useMarketcap from '../../utils/hooks/useMarketcap.ts';
+import { useIsMobile } from '../../utils/hooks/useIsMobile.ts';
 
 //MOCK NFTs
 const nfts = [
@@ -172,6 +173,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
   const chains = useChainNetworkStore((state) => state.chains);
   const symbol = currentChainToken?.symbol;
   const { price, fiatSymbol, fiatSign } = useMarketcap();
+  const isMobile = useIsMobile();
 
   const addFavourite = useFavouritesStore((state) => state.addFavourite);
   const removeFavourite = useFavouritesStore((state) => state.removeFavourite);
@@ -885,6 +887,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           balance={typeof mainTokenBalance === 'object' ? mainTokenBalance.totalBalance : ''}
           balanceSymbol={symbol}
           status={''}
+          isMobile={isMobile}
         />
       )}
       <div className="desktop:hidden w-full">

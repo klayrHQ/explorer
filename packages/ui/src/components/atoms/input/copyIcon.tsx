@@ -28,6 +28,8 @@ interface CopyIconProps {
   content: string;
   size: 'xxs' | 'xs' | 'small' | 'medium' | 'large' | 'inherit' | 'custom';
   hover?: boolean;
+  children?: React.ReactNode;
+  isMobile?: boolean;
 }
 
 const containerStyles = cva([''], {
@@ -85,7 +87,7 @@ const containerStyles = cva([''], {
   ],
 });
 
-export const CopyIcon = ({ content, size, hover }: CopyIconProps) => {
+export const CopyIcon = ({ content, children, size, hover, isMobile }: CopyIconProps) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard();
   const [copyTooltipText, setCopyTooltipText] = useState<string>('Copy');
 
@@ -99,7 +101,7 @@ export const CopyIcon = ({ content, size, hover }: CopyIconProps) => {
   };
 
   return (
-    <Tooltip placement={'bottom'} text={copyTooltipText}>
+    <Tooltip placement={'bottom'} text={copyTooltipText} isMobile={isMobile}>
       <div
         className={containerStyles({
           size,
@@ -108,8 +110,13 @@ export const CopyIcon = ({ content, size, hover }: CopyIconProps) => {
         })}
         onClick={(e) => onCopy(e)}
       >
+        {children}
         <Icon
-          className={cls([hover ? 'desktop:group-hover/child:inline desktop:hidden' : ''])}
+          className={cls([
+            hover ? 'desktop:group-hover/child:inline desktop:hidden' : '',
+            'ml-1',
+            'my-auto',
+          ])}
           color="onBackgroundLow"
           hoverColor="onBackgroundMedium"
           icon="Copy"

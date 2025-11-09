@@ -21,7 +21,10 @@ export const BannerFrame = ({ children, image }: BannerFrameProps) => {
           background-size: 50%;
       `}
     >
-      <div className="flex items-start desktop:items-center justify-between px-6 py-3 desktop:p-6 desktop:flex-row flex-col gap-5">
+      <div
+        className="flex items-start desktop:items-center justify-between px-2 desktop:px-6 py-3 desktop:p-6 desktop:flex-row flex-col gap-5"
+        style={{ overflow: 'hidden' }}
+      >
         {children}
       </div>
     </div>

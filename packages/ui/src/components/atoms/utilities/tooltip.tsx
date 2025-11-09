@@ -1,9 +1,9 @@
 'use client';
 import { Popper } from '@mui/base';
-import { CSSProperties, ReactNode, useState } from 'react';
+import { CSSProperties, ReactNode, useCallback, useState } from 'react';
 import { Typography } from '../base/typography.tsx';
 import { cls } from '../../../utils/functions.ts';
-import {ClassNamesArg} from "@emotion/react";
+import { ClassNamesArg } from '@emotion/react';
 
 export interface TooltipProps {
   placement: 'top' | 'bottom' | 'left' | 'right';
@@ -11,9 +11,17 @@ export interface TooltipProps {
   children: ReactNode;
   hideMobile?: boolean;
   containerClassName?: string;
+  isMobile?: boolean;
 }
 
-export const Tooltip = ({ placement, text, children, hideMobile, containerClassName }: TooltipProps) => {
+export const Tooltip = ({
+  placement,
+  text,
+  children,
+  hideMobile,
+  containerClassName,
+  isMobile,
+}: TooltipProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const arrowSize = 4;
@@ -58,12 +66,17 @@ export const Tooltip = ({ placement, text, children, hideMobile, containerClassN
       break;
   }
 
+  const onMouseLeave = useCallback(
+    () => (isMobile ? setTimeout(() => setOpen(false), 750) : setOpen(false)),
+    [isMobile],
+  );
+
   return (
     <>
       <div
-        className={cls(['hidden desktop:flex', containerClassName])}
+        className={cls(['flex', containerClassName])}
         onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        onMouseLeave={onMouseLeave}
         ref={setAnchorEl}
       >
         {children}
@@ -100,7 +113,7 @@ export const Tooltip = ({ placement, text, children, hideMobile, containerClassN
           </div>
         </Popper>
       </div>
-      {!hideMobile && <div className={cls(['desktop:hidden', containerClassName])}>{children}</div>}
+      {/* {!hideMobile && <div className={cls(['desktop:hidden', containerClassName])}>{children}</div>} */}
     </>
   );
 };
