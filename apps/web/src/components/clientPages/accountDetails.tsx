@@ -861,6 +861,7 @@ export const AccountDetails = ({ paramAccount }: { paramAccount: string }) => {
           status={validator?.status || ''}
           value={validator?.totalStake}
           valueSymbol={symbol}
+          isMobile={isMobile}
           loading={loading}
         />
       ) : (

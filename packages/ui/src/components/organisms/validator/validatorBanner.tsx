@@ -24,6 +24,7 @@ interface ValidatorBannerProps extends ValidatorBannerTextProps, ValidatorBanner
   basePath?: string;
   isFavorite: boolean;
   loading?: boolean;
+  isMobile?: boolean;
   removeFavorite: () => void;
   setFavorite: () => void;
   onBack: () => void;
@@ -46,6 +47,7 @@ export const ValidatorBanner = ({
   basePath,
   isFavorite,
   loading,
+  isMobile,
   removeFavorite,
   setFavorite,
   onBack,
@@ -53,8 +55,20 @@ export const ValidatorBanner = ({
 }: ValidatorBannerProps) => {
   return (
     <BannerFrame image={image}>
-      <FlexGrid direction="col" gap="0" justify="between">
-        <FlexGrid alignItems="center" gap="4" justify="start" mobileDirection="row">
+      <FlexGrid
+        direction="col"
+        gap="0"
+        justify="between"
+        style={{ width: '100%', maxWidth: '100%' }}
+      >
+        <FlexGrid
+          alignItems="center"
+          className={'desktop:gap-4'}
+          style={{ width: '100%', maxWidth: '100%' }}
+          gap="1"
+          justify="start"
+          mobileDirection="row"
+        >
           <Icon
             onClick={onBack}
             className="hover:-translate-x-0.5 cursor-pointer transition-transform"
@@ -62,12 +76,20 @@ export const ValidatorBanner = ({
             icon="ArrowLeft"
           />
           <ValidatorBannerHeader
+            style={{ overflow: 'hidden' }}
             notificationValue={notificationValue}
             senderAddress={senderAddress}
             publicKey={publicKey}
             senderName={senderName}
             status={status}
             loading={loading}
+            isMobile={isMobile}
+          />
+          <ValidatorBannerButtons
+            className="desktop:hidden ml-auto"
+            isFavorite={isFavorite}
+            removeFavorite={removeFavorite}
+            setFavorite={setFavorite}
           />
         </FlexGrid>
         <div className="hidden desktop:block">

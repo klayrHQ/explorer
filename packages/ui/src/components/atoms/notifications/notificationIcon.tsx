@@ -1,16 +1,17 @@
-import {Typography} from "../base/typography.tsx";
-import {cls} from "../../../utils/functions.ts";
-import { cva } from "class-variance-authority";
+import { Typography } from '../base/typography.tsx';
+import { cls } from '../../../utils/functions.ts';
+import { cva } from 'class-variance-authority';
+import { CSSProperties } from 'react';
 
 interface NotificationIconProps {
-  className?: string
-  notificationValue: number | string
-  size?: "sm" | "lg"
+  className?: string;
+  notificationValue: number | string;
+  size?: 'sm' | 'lg';
+  style?: CSSProperties;
 }
 
-const notificationIconVariants = cva(
-  ["flex items-center justify-center bg-primary rounded-full"],
-  { variants: {
+const notificationIconVariants = cva(['flex items-center justify-center bg-primary rounded-full'], {
+  variants: {
     size: {
       sm: 'w-3.5 h-3.5',
       lg: 'w-5 h-5',
@@ -18,18 +19,20 @@ const notificationIconVariants = cva(
   },
   defaultVariants: {
     size: 'sm',
-  },},
-)
+  },
+});
 
-export const NotificationIcon = ({ className, notificationValue, size='sm', }: NotificationIconProps) => {
+export const NotificationIcon = ({
+  className,
+  notificationValue,
+  size = 'sm',
+  style,
+}: NotificationIconProps) => {
   return (
-    <div
-    className={cls([
-      notificationIconVariants({ size }),
-      className,
-    ])}
-    >
-      <Typography color={"onPrimary"} fontWeight={"semibold"} variant={"footer"}>{notificationValue}</Typography>
+    <div className={cls([notificationIconVariants({ size }), className])} style={style}>
+      <Typography color={'onPrimary'} fontWeight={'semibold'} variant={'footer'}>
+        {notificationValue}
+      </Typography>
     </div>
   );
-}
+};

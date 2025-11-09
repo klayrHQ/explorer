@@ -45,7 +45,12 @@ export const UserAccountCentered = ({
   return (
     <div className="flex gap-2 ">
       <div className="flex items-center">
-        {validator && <ImageNotification notificationValue={notificationValue ?? 0} />}
+        {validator && (
+          <ImageNotification
+            notificationValue={notificationValue ?? 0}
+            style={{ translate: '0.25rem' }}
+          />
+        )}
         <Avatar address={address} circle size={40} />
       </div>
       <div className="flex flex-col gap-1.5 desktop:gap-0">
