@@ -5,6 +5,7 @@ import { TypographyVariant, FontWeight } from '../../../types/types.ts';
 import { CopyIcon } from '../input/copyIcon.tsx';
 import { ImageNotification } from '@repo/ui/atoms';
 import { StatusBadge } from '@repo/ui/atoms';
+import { useMemo } from 'react';
 
 export interface UserAccountCenteredProps {
   address: string;
@@ -30,6 +31,15 @@ export const UserAccountCentered = ({
   const mainContentCopy = name ? '' : address;
   const subContentCopy = name ? address : publicKey ? publicKey : '';
 
+  const MainAccountTitle = useMemo(
+    () => (
+      <Typography color={'onBackground'} fontWeight={'semibold'} variant={'h3'}>
+        {name ? name : shortString(address, 12, 'center')}
+      </Typography>
+    ),
+    [address, name],
+  );
+
   return (
     <div className="flex gap-2 ">
       <div className="flex items-center">
@@ -43,11 +53,11 @@ export const UserAccountCentered = ({
         <div className="flex items-center gap-2">
           {mainContentCopy ? (
             <CopyIcon content={mainContentCopy} size={'small'} isMobile={isMobile}>
-              <Typography color={'onBackground'} fontWeight={'semibold'} variant={'h3'}>
-                {name ? name : shortString(address, 12, 'center')}
-              </Typography>
+              {MainAccountTitle}
             </CopyIcon>
-          ) : null}
+          ) : (
+            MainAccountTitle
+          )}
         </div>
         <div className="flex items-center gap-2">
           {subContentCopy ? (
