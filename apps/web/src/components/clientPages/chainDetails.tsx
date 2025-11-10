@@ -15,12 +15,14 @@ import { AppsType } from '../../utils/types.ts';
 import { debounce } from 'lodash';
 import { callGetApps } from '../../utils/api/apiCalls.tsx';
 import { useBasePath } from '../../utils/hooks/useBasePath.ts';
+import { ChainType } from '@repo/ui/types';
 
 export const ChainDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const chains = useChainNetworkStore((state) => state.chains);
-  const chainMeta = chains?.find((chain) => chain.chainID === params.id);
+  const [loading, setLoading] = useState<boolean>(true);
   const [chainApp, setChainApp] = useState<AppsType>();
+  const [chainMeta, setChainMeta] = useState<ChainType>();
   const basePath = useBasePath();
 
   const handleBack = () => {
@@ -36,43 +38,22 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
     debounce(async () => {
       try {
         const response = await callGetApps({ chainID: params.id });
+        const chainMetaData = chains?.find((chain) => chain.chainID === params.id);
         setChainApp(response.data[0]);
+        setChainMeta(chainMetaData);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
     }, 300),
-    [],
+    [chains],
   );
 
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainMeta]);
-
-  const serviceURLDetails = chainMeta?.serviceURLs
-    ? chainMeta?.serviceURLs?.map((serviceURL) => {
-        return (
-          createDetails(
-            'http',
-            <FormattedValue
-              value={serviceURL.http}
-              format={'string'}
-              copy
-              typographyProps={{ color: 'onBackgroundHigh' }}
-            />,
-          ),
-          createDetails(
-            'ws',
-            <FormattedValue
-              value={serviceURL.ws}
-              format={'string'}
-              copy
-              typographyProps={{ color: 'onBackgroundHigh' }}
-            />,
-          )
-        );
-      })
-    : [];
+    if (chains && chains.length) {
+      fetchData();
+    }
+  }, [fetchData, chains]);
 
   const details = [
     createDetails(
@@ -143,18 +124,23 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
       'Service URLs',
       chainMeta?.serviceURLs && chainMeta?.serviceURLs.length > 0 ? (
         <FlexGrid direction={'col'} gap={'md'}>
-          <FormattedValue
-            value={chainMeta?.serviceURLs[0]?.http}
-            format={'string'}
-            copy
-            typographyProps={{ color: 'onBackgroundHigh' }}
-          />
-          <FormattedValue
-            value={chainMeta?.serviceURLs[0]?.ws}
-            format={'string'}
-            copy
-            typographyProps={{ color: 'onBackgroundHigh' }}
-          />
+          {chainMeta.serviceURLs.map((serviceUrl) => (
+            <>
+              <FormattedValue
+                key={`service-url-${serviceUrl.http}`}
+                value={serviceUrl.http}
+                format={'string'}
+                copy
+                typographyProps={{ color: 'onBackgroundHigh' }}
+              />
+              <FormattedValue
+                value={serviceUrl.ws}
+                format={'string'}
+                copy
+                typographyProps={{ color: 'onBackgroundHigh' }}
+              />
+            </>
+          ))}
         </FlexGrid>
       ) : (
         <Typography variant={'paragraph-sm'}>{'-'}</Typography>
@@ -171,8 +157,9 @@ export const ChainDetails = ({ params }: { params: { id: string } }) => {
         locked={Number(chainApp?.escrowedKLY)}
         logo={chainMeta?.logo.png ?? chainMeta?.logo.svg ?? Placeholder.src}
         status={'Active'}
+        loading={loading}
       />
-      <DetailsSection data={details} title="Chain details" />
+      <DetailsSection loading={loading} data={details} title="Chain details" />
     </FlexGrid>
   );
 };

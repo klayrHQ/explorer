@@ -1,4 +1,11 @@
-import { BannerFrame, Currency, ImageContainer, StatusBadge, Typography } from '../../atoms';
+import {
+  BannerFrame,
+  Currency,
+  ImageContainer,
+  SkeletonComponent,
+  StatusBadge,
+  Typography,
+} from '../../atoms';
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
 import Link from 'next/link';
@@ -10,6 +17,7 @@ interface ChainDetailsBannerProps {
   locked: number;
   status?: string;
   logo: string;
+  loading?: boolean;
   onBack: () => void;
 }
 
@@ -19,6 +27,7 @@ export const ChainDetailsBanner = ({
   logo,
   locked,
   status,
+  loading,
   onBack,
 }: ChainDetailsBannerProps) => {
   return (
@@ -31,27 +40,39 @@ export const ChainDetailsBanner = ({
             color="white"
             icon="ArrowLeft"
           />
-          <div className="flex items-center gap-2">
-            <ImageContainer
-              alt={chain?.displayName ?? chain?.chainName ?? ''}
-              src={logo}
-              variant="avatarLg"
-            />
-            <Typography fontWeight="bold" variant={'h3'}>
-              {chain?.displayName ?? chain?.chainName}
-            </Typography>
-          </div>
+          {loading ? (
+            <div className="flex items-center gap-2">
+              <SkeletonComponent width={'32'} height={'6'} className={'my-2'} />
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <ImageContainer
+                alt={chain?.displayName ?? chain?.chainName ?? ''}
+                src={logo}
+                variant="avatarLg"
+              />
+              <Typography fontWeight="bold" variant={'h3'}>
+                {chain?.displayName ?? chain?.chainName}
+              </Typography>
+            </div>
+          )}
         </FlexGrid>
-        <div className="hidden desktop:flex items-center gap-1.5">
-          <Typography color="onBackgroundMedium" variant="paragraph-md">
-            {'a total of '}
-          </Typography>
-          <Currency amount={locked} decimals={3} fontWeight="semibold" symbol={'KLY'} />
-          <Typography color="onBackgroundMedium" variant="paragraph-md">
-            {'is locked and the chain status is'}
-          </Typography>
-          <StatusBadge status={chain?.status ?? 'inactive'} />
-        </div>
+        {loading ? (
+          <div className="hidden desktop:flex items-center gap-1.5">
+            <SkeletonComponent width={'80'} height={'5'} />
+          </div>
+        ) : (
+          <div className="hidden desktop:flex items-center gap-1.5">
+            <Typography color="onBackgroundMedium" variant="paragraph-md">
+              {'a total of '}
+            </Typography>
+            <Currency amount={locked} decimals={3} fontWeight="semibold" symbol={'KLY'} />
+            <Typography color="onBackgroundMedium" variant="paragraph-md">
+              {'is locked and the chain status is'}
+            </Typography>
+            <StatusBadge status={chain?.status ?? 'inactive'} />
+          </div>
+        )}
       </div>
     </BannerFrame>
   );
