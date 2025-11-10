@@ -22,7 +22,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
   const [transaction, setTransaction] = useState<TransactionType | undefined>(undefined);
-  const [events, setEvents] = useState<EventsType[]>([]);
+  const [events, setEvents] = useState<EventsType[]>();
   const basePath = useBasePath();
   const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
   const symbol = currentChainToken?.symbol;
@@ -281,7 +281,13 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: <DetailsSection data={details} json={transaction as unknown as DataType} />,
+      content: (
+        <DetailsSection
+          loading={loading}
+          data={details}
+          json={transaction as unknown as DataType}
+        />
+      ),
     },
     {
       value: 2,
@@ -314,6 +320,7 @@ export const TransactionDetails = ({ params }: { params: { id: string } }) => {
         senderName={transaction?.sender?.name}
         symbol={symbol}
         timestamp={transaction?.block.timestamp || 0}
+        loading={loading}
       />
       <TabButtons tabs={tabs} />
     </FlexGrid>

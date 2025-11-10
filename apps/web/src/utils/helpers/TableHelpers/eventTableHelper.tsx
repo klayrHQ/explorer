@@ -7,7 +7,7 @@ import { getTableSkeletons } from '../dataHelpers.tsx';
 import React from 'react';
 import { Currency } from '../../../components/currency.tsx';
 
-export const createEventsRows = (events: EventsType[], loading: boolean) => {
+export const createEventsRows = (events?: EventsType[], loading?: boolean) => {
   const columnCount = eventsTableHead.length;
 
   return !loading

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-literals */
-import { FlexGrid, Icon } from '../../atoms';
+import { FlexGrid, Icon, SkeletonComponent } from '../../atoms';
 import { trimFour } from '../../../utils/functions';
 import { BannerText } from '../../molecules';
 import { BannerCard } from '../../molecules';
@@ -24,6 +24,7 @@ interface TransactionBannerProps {
   blockId: string;
   image: string;
   basePath?: string;
+  loading?: boolean;
   onBack: () => void;
 }
 
@@ -45,6 +46,7 @@ export const TransactionBanner = ({
   badgeColor,
   image,
   basePath,
+  loading,
   onBack,
 }: TransactionBannerProps) => {
   return (
@@ -58,10 +60,16 @@ export const TransactionBanner = ({
             color="white"
             icon="ArrowLeft"
           />
-          <h3 className="text-heading-6 desktop:text-heading-3 text-white font-bold">
-            <span className="mr-2">Transaction</span>
-            {trimFour(id)}
-          </h3>
+          {loading ? (
+            <div className="text-heading-6 desktop:text-heading-3 text-white font-bold">
+              <SkeletonComponent width={'32'} height={'6'} className={'my-2'} />
+            </div>
+          ) : (
+            <h3 className="text-heading-6 desktop:text-heading-3 text-white font-bold">
+              <span className="mr-2">Transaction</span>
+              {trimFour(id)}
+            </h3>
+          )}
         </FlexGrid>
         <BannerText
           amount={amount}
@@ -77,9 +85,15 @@ export const TransactionBanner = ({
           senderName={senderName}
           symbol={symbol}
           timestamp={timestamp}
+          loading={loading}
         />
       </div>
-      <BannerCard blockHeight={blockHeight} blockId={blockId} basePath={basePath} />
+      <BannerCard
+        blockHeight={blockHeight}
+        blockId={blockId}
+        basePath={basePath}
+        loading={loading}
+      />
     </BannerFrame>
   );
 };

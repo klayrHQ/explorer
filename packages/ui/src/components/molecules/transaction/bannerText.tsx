@@ -1,4 +1,4 @@
-import { StatusBadge, Typography } from '../../atoms';
+import { SkeletonComponent, StatusBadge, Typography } from '../../atoms';
 import { Badge } from '../../atoms';
 import { Currency } from '../../atoms';
 import { UserAccountCard } from '../../atoms';
@@ -19,6 +19,7 @@ interface TransactionBannerProps {
   timestamp?: number;
   badgeColor?: string;
   basePath?: string;
+  loading?: boolean;
 }
 
 export const BannerText = ({
@@ -35,12 +36,17 @@ export const BannerText = ({
   basePath,
   senderImageUrl,
   receiverImageUrl,
+  loading,
 }: TransactionBannerProps) => {
   const date = dayjs(timestamp * 1000);
 
   const fromNowPrefix = dayjs().diff(date, 'hour') >= 1 ? 'on' : '';
 
-  return (
+  return loading ? (
+    <div className="max-w-full flex flex-wrap items-center gap-1.5 mt-5">
+      <SkeletonComponent width={'80'} height={'5'} />
+    </div>
+  ) : (
     <div className="max-w-full flex flex-wrap items-center gap-1.5 mt-5">
       {/* SENDER */}
       <Link basePath={basePath} href={`/account/${senderAddress}`}>
