@@ -9,11 +9,14 @@ import {
   Typography,
   Icon,
   ImageContainer,
+  SkeletonComponent,
 } from '@repo/ui/atoms';
 import { ImageName } from '@repo/ui/molecules';
 import BannerBG from '../../assets/images/bannerBG.png';
 import { DetailsSection } from '@repo/ui/organisms';
 import { useBasePath } from '../../utils/hooks/useBasePath';
+import { useEffect, useMemo, useState } from 'react';
+import Blank from '../../assets/images/blank.png';
 
 export const TokenDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -21,9 +24,22 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
     (token) => token.tokenID === params.id,
   );
   const chains = useChainNetworkStore((state) => state.chains);
-  const chainLogo = chains?.find((chain) => chain.chainID === token?.chainID)?.logo;
-  const displayName = chains?.find((chain) => chain.chainID === token?.chainID)?.displayName;
+  const chainLogo = useMemo(
+    () => chains?.find((chain) => chain.chainID === token?.chainID)?.logo,
+    [chains, token],
+  );
+  const displayName = useMemo(
+    () => chains?.find((chain) => chain.chainID === token?.chainID)?.displayName,
+    [chains, token],
+  );
+  const [loading, setLoading] = useState<boolean>(true);
   const basePath = useBasePath();
+
+  useEffect(() => {
+    if (token && chains && chainLogo && displayName) {
+      setLoading(false);
+    }
+  }, [chainLogo, chains, displayName, token]);
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -74,7 +90,7 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: <DetailsSection data={details} />,
+      content: <DetailsSection loading={loading} data={details} />,
     },
   ];
 
@@ -89,21 +105,27 @@ export const TokenDetails = ({ params }: { params: { id: string } }) => {
             icon="ArrowLeft"
           />
           <div className="w-10 h-10 aspect-square rounded-full">
-            {tokenWithChainData?.logo?.png && (
-              <ImageContainer
-                src={tokenWithChainData.logo.png}
-                alt={tokenWithChainData.tokenName ?? 'Token logo'}
-                className="w-full h-full object-cover rounded-full"
-              />
-            )}
+            <ImageContainer
+              src={tokenWithChainData?.logo?.png ?? Blank.src}
+              alt={tokenWithChainData?.tokenName ?? 'Token logo'}
+              className="w-full h-full object-cover rounded-full"
+            />
           </div>
           <div className="flex flex-col">
-            <Typography fontWeight="bold" variant={'h3'}>
-              {tokenWithChainData?.tokenName}
-            </Typography>
-            <Typography color="onBackgroundMedium" variant={'caption'}>
-              {tokenWithChainData?.symbol}
-            </Typography>
+            {loading ? (
+              <SkeletonComponent width={'32'} height={'6'} className={'my-1'} />
+            ) : (
+              <Typography fontWeight="bold" variant={'h3'}>
+                {tokenWithChainData?.tokenName}
+              </Typography>
+            )}
+            {loading ? (
+              <SkeletonComponent width={'24'} height={'4'} className={'my-1'} />
+            ) : (
+              <Typography color="onBackgroundMedium" variant={'caption'}>
+                {tokenWithChainData?.symbol}
+              </Typography>
+            )}
           </div>
         </div>
       </BannerFrame>
