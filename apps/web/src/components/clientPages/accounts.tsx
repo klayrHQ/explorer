@@ -10,6 +10,7 @@ import { createAccountsRows } from '../../utils/helpers/TableHelpers/accountTabl
 import { tokenSummaryStore } from '../../store/tokenSummaryStore.ts';
 import { useChainNetworkStore } from '../../store/chainNetworkStore.ts';
 import { TopAccountsType } from '../../utils/types.ts';
+import { useEffect } from 'react';
 
 export const Accounts = () => {
   const searchParams = useSearchParams();
@@ -47,9 +48,11 @@ export const Accounts = () => {
     fetchTokenSummary: state.fetchTokenSummary,
   }));
 
-  if (tokenSummary?.marketCap === undefined) {
-    fetchTokenSummary();
-  }
+  useEffect(() => {
+    if (tokenSummary?.marketCap === undefined && currentChainToken) {
+      fetchTokenSummary(currentChainToken);
+    }
+  }, [currentChainToken, fetchTokenSummary, tokenSummary]);
 
   const rows = createAccountsRows(
     typedAccounts[tokenID],

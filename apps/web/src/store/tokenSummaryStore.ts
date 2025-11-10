@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 import { callGetTokenSummary } from '../utils/api/apiCalls';
+import { ChainTokenType, TokenSummaryType } from '../utils/types';
 
 interface TokenSummary {
   totalSupply: { tokenID: string; amount: string }[];
-  escrowedAmounts: { amount: string }[];
+  escrowedAmounts: { escrowChainID: string; tokenID: string; amount: string }[];
   totalAccounts: number;
   totalTransactions: number;
   marketCap?: number;
@@ -13,7 +14,7 @@ interface TokenSummary {
 interface TokenSummaryStore {
   tokenSummary: TokenSummary;
   setTokenSummary: (tokenSummary: TokenSummary) => void;
-  fetchTokenSummary: () => Promise<void>;
+  fetchTokenSummary: (currentChainToken: ChainTokenType) => Promise<void>;
 }
 
 export const tokenSummaryStore = create<TokenSummaryStore>((set) => ({
@@ -24,20 +25,25 @@ export const tokenSummaryStore = create<TokenSummaryStore>((set) => ({
     totalTransactions: 0,
   },
   setTokenSummary: (tokenSummary) => set(() => ({ tokenSummary })),
-  fetchTokenSummary: async () => {
+  fetchTokenSummary: async (currentChainToken: ChainTokenType) => {
     try {
       const data = await callGetTokenSummary();
       const tokenSummary = data.data;
+      const currentTokenID = currentChainToken.tokenID;
+
       const marketCap = tokenSummary.totalSupply.reduce(
-        (acc: number, token: { amount: string }) => acc + parseInt(token.amount),
+        (acc: number, token: TokenSummaryType['totalSupply'][0]) =>
+          currentTokenID === token.tokenID ? acc + parseInt(token.amount) : acc,
         0,
       );
       const totalEscrowed = tokenSummary.escrowedAmounts.reduce(
-        (acc: number, token: { amount: string }) => acc + parseInt(token.amount),
+        (acc: number, token: TokenSummaryType['escrowedAmounts'][0]) =>
+          currentTokenID === token.tokenID ? acc + parseInt(token.amount) : acc,
         0,
       );
       const totalLocked = tokenSummary.totalLocked.reduce(
-        (acc: number, token: { total: string }) => acc + parseInt(token.total),
+        (acc: number, token: TokenSummaryType['totalLocked'][0]) =>
+          currentTokenID === token.tokenID ? acc + parseInt(token.total) : acc,
         0,
       );
       const totalValueLocked = totalEscrowed + totalLocked;

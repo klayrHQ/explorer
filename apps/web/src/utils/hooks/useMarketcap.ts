@@ -116,10 +116,10 @@ const useMarketcap = () => {
   }, [supply, priceUSD, currentChainToken]);
 
   useEffect(() => {
-    if (tokenSummary.totalSupply.length === 0) {
-      fetchTokenSummary();
-    } else {
-      if (currentChainToken) {
+    if (currentChainToken) {
+      if (tokenSummary.totalSupply.length === 0) {
+        fetchTokenSummary(currentChainToken);
+      } else {
         const currentChainTokenSupply = tokenSummary.totalSupply.find(
           (supply) => supply.tokenID === currentChainToken.tokenID,
         );

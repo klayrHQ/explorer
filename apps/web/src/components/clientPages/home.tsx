@@ -15,6 +15,7 @@ export const Home = () => {
   const [loadingStats, setLoadingStats] = useState<boolean>(true);
   const currentNetwork = useChainNetworkStore((state) => state.currentNetwork);
   const currentChain = useChainNetworkStore((state) => state.currentChain);
+  const currentChainToken = useChainNetworkStore((state) => state.currentChainToken);
 
   const { tokenSummary, fetchTokenSummary } = tokenSummaryStore((state) => ({
     tokenSummary: state.tokenSummary,
@@ -66,8 +67,10 @@ export const Home = () => {
 
   useEffect(() => {
     setLoadingStats(true);
-    fetchTokenSummary().finally(() => setLoadingStats(false));
-  }, [currentChain, currentNetwork, fetchTokenSummary]);
+    if (currentChainToken) {
+      fetchTokenSummary(currentChainToken).finally(() => setLoadingStats(false));
+    }
+  }, [currentChainToken, currentChain, currentNetwork, fetchTokenSummary]);
 
   let statsVSString;
 
