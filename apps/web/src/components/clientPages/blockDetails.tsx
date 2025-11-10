@@ -256,13 +256,15 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: 1,
       label: 'Details',
       icon: 'InfoSquare',
-      content: <DetailsSection data={details} json={block as unknown as DataType} />,
+      content: (
+        <DetailsSection loading={loading} data={details} json={block as unknown as DataType} />
+      ),
     },
     {
       value: 2,
       label: 'Transactions',
       icon: 'SwitchHorizontal',
-      count: transactionsMeta?.total || '0',
+      count: transactionsMeta?.total,
       content: (
         <FlexGrid className="w-full mx-auto" direction={'col'} gap={'4.5xl'}>
           {transactions?.length && transactions.length > 0 ? (
@@ -297,7 +299,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
       value: 3,
       label: 'Events',
       icon: 'List',
-      count: eventsMeta?.count || '0',
+      count: eventsMeta?.count,
       content: (
         <FlexGrid className={'w-full'} direction={'col'} gap={'4.5xl'}>
           {events?.length && events.length > 0 ? (
@@ -339,6 +341,7 @@ export const BlockDetails = ({ params }: { params: { id: string } }) => {
         numberOfTransactions={block?.numberOfTransactions || 0}
         reward={block?.reward || '0'}
         symbol={symbol}
+        loading={loading}
       />
       <TabButtons tabs={tabs} />
     </FlexGrid>

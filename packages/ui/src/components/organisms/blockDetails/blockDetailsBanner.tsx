@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-literals */
-import { BannerFrame } from '../../atoms';
+import { BannerFrame, SkeletonComponent } from '../../atoms';
 import { FlexGrid } from '../../atoms';
 import { Icon } from '../../atoms';
 import { Link } from '../../atoms';
@@ -12,6 +12,7 @@ interface BlockDetailsBannerProps extends BlockDetailsBannerTextProps {
   image: string;
   height: number;
   basePath?: string;
+  loading?: boolean;
   onBack: () => void;
 }
 
@@ -25,6 +26,7 @@ export const BlockDetailsBanner = ({
   generatorAddress,
   numberOfTransactions,
   basePath,
+  loading,
   onBack,
 }: BlockDetailsBannerProps) => {
   return (
@@ -38,10 +40,16 @@ export const BlockDetailsBanner = ({
             icon="ArrowLeft"
           />
 
-          <h3 className="text-heading-4 desktop:text-heading-3 text-white font-bold">
-            <span className="mr-2">Block</span>
-            {height}
-          </h3>
+          {loading ? (
+            <div className="text-heading-4 desktop:text-heading-3 text-white font-bold">
+              <SkeletonComponent width={'32'} height={'6'} className={'my-2'} />
+            </div>
+          ) : (
+            <h3 className="text-heading-4 desktop:text-heading-3 text-white font-bold">
+              <span className="mr-2">Block</span>
+              {height}
+            </h3>
+          )}
         </FlexGrid>
         <BlockDetailsBannerText
           generatorAddress={generatorAddress}
@@ -51,6 +59,7 @@ export const BlockDetailsBanner = ({
           reward={reward}
           symbol={symbol}
           basePath={basePath}
+          loading={loading}
         />
       </div>
     </BannerFrame>
