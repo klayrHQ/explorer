@@ -1,6 +1,6 @@
 'use client';
 import { cva } from 'class-variance-authority';
-import { cloneElement, ReactElement, useEffect, useState } from 'react';
+import { cloneElement, CSSProperties, ReactElement, useEffect, useState } from 'react';
 import { cls } from '../../../utils/functions.ts';
 import Placeholder from '../../../assets/images/placeholder.png';
 
@@ -11,6 +11,7 @@ interface ImageContainerProps {
   className?: string;
   imgClassName?: string;
   component?: ReactElement;
+  style?: CSSProperties;
 }
 
 const imageContainerStyles = cva(['overflow-hidden'], {
@@ -33,6 +34,7 @@ export const ImageContainer = ({
   className,
   imgClassName,
   component,
+  style,
 }: ImageContainerProps) => {
   const [imgSrc, setImgSrc] = useState(src);
 
@@ -45,6 +47,7 @@ export const ImageContainer = ({
         variant,
         className,
       })}
+      style={style}
     >
       {component ? (
         cloneElement(component, {
