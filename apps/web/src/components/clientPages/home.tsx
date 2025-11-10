@@ -97,7 +97,7 @@ export const Home = () => {
 
   const performanceStatsArray = [
     {
-      title: 'Market Cap',
+      title: 'Total Supply',
       value: loadingStats ? (
         <SkeletonComponent style={{ height: '28px' }} />
       ) : (
